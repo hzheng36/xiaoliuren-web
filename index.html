@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>小六壬占卜 · 个人网页版 v7 解读增强版 · 时辰信息新版 · 时辰信息新版</title>
+  <meta name="description" content="小六壬个人网页版 v7：数字起课、时辰起课、事件起课，含排盘、三象解读、雷达分析图、历史与收藏。QA 反馈修正版。" />
+  <style>
+    :root {
+      --bg: #f7f3ee;
+      --panel: rgba(255,255,255,.84);
+      --panel-strong: rgba(255,255,255,.95);
+      --text: #302846;
+      --muted: #827a95;
+      --primary: #6753a5;
+      --primary-2: #8976c2;
+      --line: rgba(103,83,165,.14);
+      --accent: #e5c48a;
+      --accent-soft: #f7eedf;
+      --shadow: 0 22px 55px rgba(66,49,109,.08);
+      --shadow-sm: 0 10px 24px rgba(66,49,109,.05);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(137,118,194,.10), transparent 24%),
+        radial-gradient(circle at 100% 100%, rgba(229,196,138,.13), transparent 25%),
+        linear-gradient(180deg, #fcfaf7 0%, #f6f1eb 100%);
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.25), transparent 28%);
+      z-index: -1;
+    }
+    .shell {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 330px minmax(0,1fr);
+      gap: 22px;
+    }
+    .card {
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content:'';
+      position:absolute; inset:0;
+      pointer-events:none;
+      background: linear-gradient(180deg, rgba(255,255,255,.28), transparent 26%);
+    }
+    .sidebar { position: sticky; top: 22px; align-self: start; padding: 24px; }
+    .brand-row { display:flex; gap:16px; align-items:center; }
+    .seal {
+      width: 82px; height: 82px; border-radius: 26px;
+      background: linear-gradient(145deg, var(--primary), #463975);
+      color:#fff; display:grid; place-items:center;
+      font-weight:700; letter-spacing:3px; font-size:1.1rem;
+      box-shadow: 0 18px 30px rgba(70,57,117,.22);
+    }
+    .brand h1 { margin: 0; font-size: 2.2rem; }
+    .brand p { margin: 6px 0 0; color: var(--muted); }
+    .art {
+      margin: 20px 0 18px;
+      height: 180px; border-radius: 22px; border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 72% 28%, rgba(229,196,138,.30) 0 34px, transparent 35px),
+        linear-gradient(180deg, rgba(247,243,235,.72), rgba(255,255,255,.92));
+      position: relative; overflow:hidden;
+    }
+    .art::before {
+      content:''; position:absolute; left:0; right:0; bottom:0; height:100%;
+      background:
+        radial-gradient(160px 55px at 12% 92%, rgba(119,107,154,.18), transparent 60%),
+        radial-gradient(170px 58px at 38% 82%, rgba(119,107,154,.14), transparent 60%),
+        radial-gradient(170px 58px at 66% 84%, rgba(119,107,154,.12), transparent 60%),
+        radial-gradient(170px 58px at 88% 88%, rgba(119,107,154,.10), transparent 60%);
+    }
+    .art::after {
+      content:''; position:absolute; right:22px; bottom:18px; width:74px; height:74px; border-radius:50%;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,.95) 0 14px, transparent 15px),
+        conic-gradient(from -12deg, rgba(239,205,209,.7) 0 14%, transparent 14% 18%, rgba(239,205,209,.7) 18% 32%, transparent 32% 36%, rgba(239,205,209,.7) 36% 50%, transparent 50% 54%, rgba(239,205,209,.7) 54% 68%, transparent 68% 72%, rgba(239,205,209,.7) 72% 86%, transparent 86% 90%, rgba(239,205,209,.7) 90% 100%);
+      filter: drop-shadow(0 8px 12px rgba(172,136,154,.18));
+    }
+    .feature-list { display:grid; gap:12px; }
+    .feature-item { background: rgba(255,255,255,.94); border:1px solid var(--line); border-radius:18px; padding:14px; box-shadow: var(--shadow-sm); }
+    .feature-item strong { display:block; margin-bottom:4px; }
+    .feature-item small { color: var(--muted); line-height: 1.6; }
+    .main { display:grid; gap:18px; }
+    .hero { padding: 22px 24px; display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:center; }
+    .hero h2 { margin:0 0 10px; font-size:1.68rem; }
+    .hero p { margin:0; color: var(--muted); line-height:1.75; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .section { padding:22px; }
+    .section-title { display:flex; gap:14px; align-items:flex-start; margin-bottom: 18px; }
+    .step {
+      width:36px; height:36px; flex:0 0 auto; border-radius:50%;
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      color:#fff; display:grid; place-items:center; font-weight:700;
+      box-shadow: 0 12px 20px rgba(103,83,165,.22);
+    }
+    .section-title h3 { margin:0; font-size:1.18rem; }
+    .section-title p { margin:5px 0 0; color: var(--muted); }
+    .scene-grid { display:grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap:12px; }
+    .scene-btn, .method-tab, .ghost-btn, .danger-btn, .primary-btn, .icon-btn, .pad-btn { border:none; font:inherit; cursor:pointer; }
+    .scene-btn {
+      padding:16px 14px; border-radius:18px; background: rgba(255,255,255,.95); color:var(--text);
+      border:1px solid var(--line); display:flex; gap:10px; align-items:center; justify-content:center;
+      box-shadow: 0 10px 18px rgba(91,69,146,.04); transition: .2s ease;
+    }
+    .scene-btn:hover, .method-tab:hover, .ghost-btn:hover, .pad-btn:hover { transform: translateY(-1px); }
+    .scene-btn.active { background: linear-gradient(180deg, rgba(103,83,165,.10), rgba(255,255,255,.98)); border-color: rgba(103,83,165,.28); box-shadow: 0 16px 24px rgba(103,83,165,.11); }
+    .scene-btn .emoji { font-size:1.18rem; }
+    .method-tabs { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; margin-bottom: 18px; }
+    .method-tab {
+      text-align:left; padding:18px 18px; border-radius:22px; background: rgba(255,255,255,.94); border:1px solid var(--line);
+      box-shadow: 0 10px 18px rgba(91,69,146,.04); color: var(--muted); transition:.2s ease;
+    }
+    .method-tab b { display:block; color: var(--primary); font-size: 1.02rem; margin-bottom: 8px; }
+    .method-tab small { font-size: .95rem; color: inherit; }
+    .method-tab.active { border-color: rgba(103,83,165,.42); box-shadow: inset 0 0 0 2px rgba(103,83,165,.06), 0 14px 22px rgba(103,83,165,.08); background: rgba(255,255,255,.98); }
+    .method-panel { display:grid; gap:14px; }
+    .hidden { display:none !important; }
+    label span { display:block; margin-bottom:8px; color: var(--muted); font-size:.96rem; }
+    .number-row { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; }
+    input, textarea {
+      width:100%; padding:15px 16px; border-radius:18px; border:1px solid var(--line); outline:none;
+      background: rgba(255,255,255,.96); color: var(--text); box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+    }
+    input:focus, textarea:focus { border-color: rgba(103,83,165,.36); box-shadow: 0 0 0 4px rgba(103,83,165,.08); }
+    textarea { min-height: 116px; resize: vertical; line-height: 1.7; }
+    .quick-pad { display:grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap:8px; }
+    .pad-btn { padding:10px 0; border-radius:12px; background: rgba(255,255,255,.96); border:1px solid var(--line); color: var(--text); }
+    .time-grid { display:grid; grid-template-columns: minmax(0,1fr) 180px; gap:14px; align-items:end; }
+    .time-field { display:block; }
+    .time-display-control { position: relative; }
+    .time-display-control input[type="datetime-local"] { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; z-index:2; }
+    .time-display-facade {
+      min-height: 62px; display:flex; align-items:center; justify-content:center; text-align:center;
+      padding:15px 18px; border-radius:18px; border:1px solid var(--line);
+      background: rgba(255,255,255,.96); color: var(--text); box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+      font-size: 1.02rem; font-weight: 500; letter-spacing:.01em;
+    }
+    .time-display-control:focus-within .time-display-facade {
+      border-color: rgba(103,83,165,.36); box-shadow: 0 0 0 4px rgba(103,83,165,.08);
+    }
+    .inline-action { height: 76px; }
+    .method-note { background: rgba(125,108,176,.08); border:1px solid var(--line); border-radius:18px; padding:16px 18px; color: var(--muted); line-height: 1.72; }
+    .time-info-lines { line-height: 1.8; }
+    .time-info-lines div { margin: 2px 0; }
+    .time-info-lines strong { color: var(--primary); font-weight: 700; margin-right: 6px; }
+    .event-tools { display:flex; justify-content:space-between; gap:12px; align-items:center; color: var(--muted); }
+    .primary-btn {
+      width:100%; margin-top: 14px; padding:16px 18px; border-radius:18px; color:#fff; font-weight:700; font-size:1.05rem;
+      background: linear-gradient(145deg, var(--primary), var(--primary-2)); box-shadow: 0 16px 28px rgba(103,83,165,.22);
+    }
+    .ghost-btn, .danger-btn, .icon-btn {
+      background: rgba(255,255,255,.96); color: var(--text); border:1px solid var(--line); padding: 12px 16px; border-radius: 16px;
+      box-shadow: 0 10px 18px rgba(103,83,165,.05);
+    }
+    .danger-btn { color:#b65353; background: rgba(255,244,244,.95); }
+    .icon-btn { font-size:1.55rem; line-height:1; padding:6px 12px; background: transparent; box-shadow:none; }
+    .hint { margin: 12px 0 0; color: var(--muted); font-size: .95rem; }
+    .result-section { padding:22px; }
+    .result-header { display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:center; margin-bottom:18px; padding-bottom:16px; border-bottom:1px dashed var(--line); }
+    .eyebrow { margin:0 0 6px; color: var(--muted); }
+    .result-header h3 { margin:0; font-size:1.48rem; }
+    .result-method { margin:8px 0 0; color: var(--muted); line-height:1.68; }
+    .block { background: rgba(255,255,255,.96); border:1px solid var(--line); border-radius:22px; padding:18px; box-shadow: var(--shadow-sm); }
+    .block h4 { margin:0 0 14px; font-size:1.08rem; display:flex; align-items:center; gap:8px; }
+    .block h4::before { content:''; width:8px; height:8px; border-radius:50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(229,196,138,.18); }
+    .top-results { display:grid; grid-template-columns: 1fr; gap:16px; }
+    .overall-wrap { margin-top: 16px; }
+    .stack-row { margin-top: 16px; }
+    .palace-cards { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; }
+    .palace-card { border:1px solid var(--line); border-radius:18px; padding:14px; background: linear-gradient(180deg, #fff, rgba(248,246,251,.92)); }
+    .palace-card .mini { color: var(--muted); font-size: .92rem; }
+    .palace-card h5 { margin: 10px 0 8px; font-size: 1.75rem; color: var(--primary); }
+    .palace-meta { display:grid; gap:6px; color: var(--muted); font-size: .94rem; }
+    .paipan-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+    .tag { background: linear-gradient(180deg, rgba(229,196,138,.35), rgba(247,238,223,.85)); color:#8d6631; border:1px solid rgba(188,133,65,.18); border-radius:999px; padding:6px 10px; font-size:.9rem; }
+    .paipan-wrap { display:grid; place-items:center; min-height: 302px; }
+    .hex-board { width:330px; height:302px; position:relative; }
+    .hex-board::before { content:''; position:absolute; inset:24px; border-radius:50%; border:1px dashed rgba(103,83,165,.13); }
+    .hex-center {
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:92px; height:92px; border-radius:50%;
+      background: radial-gradient(circle at center, rgba(255,255,255,.98) 0 38%, transparent 39%), conic-gradient(from 0deg, rgba(103,83,165,.16) 0 50%, rgba(229,196,138,.24) 50% 100%);
+      border:1px solid var(--line); box-shadow: inset 0 12px 18px rgba(255,255,255,.42), 0 14px 24px rgba(103,83,165,.08);
+    }
+    .hex-center::before, .hex-center::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border-radius:50%; }
+    .hex-center::before { width:54px; height:54px; background: linear-gradient(90deg, rgba(103,83,165,.72) 0 50%, rgba(229,196,138,.78) 50% 100%); mask: radial-gradient(circle at 50% 25%, transparent 0 5px, #000 6px), radial-gradient(circle at 50% 75%, transparent 0 5px, #000 6px), linear-gradient(#000 0 0); -webkit-mask: radial-gradient(circle at 50% 25%, transparent 0 5px, #000 6px), radial-gradient(circle at 50% 75%, transparent 0 5px, #000 6px), linear-gradient(#000 0 0); }
+    .hex-center::after { width:20px; height:20px; background:#fff; box-shadow: 0 -16px 0 0 #fff, 0 16px 0 0 #fff; }
+    .hex-node {
+      position:absolute; width:94px; height:88px; clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+      border:1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(245,241,250,.92)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow: 0 10px 18px rgba(103,83,165,.06);
+    }
+    .hex-node b { color: var(--primary); font-size:1.18rem; }
+    .hex-node small { color: var(--muted); font-size: .83rem; }
+    .node-tags { display:flex; gap:4px; flex-wrap:wrap; justify-content:center; padding: 0 6px; }
+    .node-tag { background: rgba(103,83,165,.10); color: var(--primary); border-radius:999px; padding:2px 6px; font-size:.76rem; }
+    .hex-node.active { background: linear-gradient(180deg, rgba(255,250,245,.96), rgba(250,245,255,.95)); box-shadow: 0 18px 26px rgba(103,83,165,.12); transform: scale(1.04); border-color: rgba(103,83,165,.24); }
+    .hex-da { left:118px; top:0; }
+    .hex-ll { left:223px; top:55px; }
+    .hex-sx { left:223px; top:160px; }
+    .hex-ck { left:118px; top:214px; }
+    .hex-xj { left:13px; top:160px; }
+    .hex-kw { left:13px; top:55px; }
+    .distribution-text { margin-top: 10px; color: var(--muted); line-height:1.78; }
+    .summary-grid { display:grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap:12px; margin: 16px 0; }
+    .summary-item { background: rgba(255,255,255,.96); border:1px solid var(--line); border-radius:18px; padding:14px; }
+    .summary-item span { display:block; color: var(--muted); font-size:.94rem; margin-bottom:6px; }
+    .summary-item b { font-size:1.05rem; }
+    .tri-reading { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:14px; }
+    .reading-card { background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,248,252,.94)); border:1px solid var(--line); border-radius:20px; padding:16px; }
+    .reading-card h5 { margin:0 0 10px; font-size:1.16rem; color: var(--primary); }
+    .tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+    .pill { display:inline-flex; align-items:center; border-radius:999px; padding:4px 10px; font-size:.86rem; background: rgba(103,83,165,.08); color: var(--primary); border:1px solid rgba(103,83,165,.08); }
+    .keyword-row { display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 10px; }
+    .keyword-chip { background: var(--accent-soft); color:#8b652f; border:1px solid rgba(188,133,65,.18); border-radius:999px; padding:4px 10px; font-size:.84rem; }
+    .reading-card p { margin:8px 0; line-height:1.78; color:#433b58; }
+    .reading-card strong { color: var(--text); }
+    .insight-grid { display:grid; grid-template-columns: 1fr; gap:16px; }
+    .gua-reading { display:grid; gap:12px; }
+    .gua-card { background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,248,252,.94)); border:1px solid var(--line); border-radius:18px; padding:15px 16px; line-height:1.78; color:#433b58; }
+    .gua-card h5 { margin:0 0 8px; color:var(--primary); font-size:1.06rem; }
+    .gua-card p { margin:6px 0; }
+    .gua-card strong { color:var(--text); }
+    .symbol-table { display:grid; gap:10px; }
+    .symbol-row { display:grid; grid-template-columns: 118px 1fr; gap:14px; padding-top:10px; border-top:1px dashed var(--line); }
+    .symbol-row:first-child { border-top:none; padding-top:0; }
+    .symbol-row .label { color: var(--muted); }
+    .radar-wrap { display:grid; place-items:center; padding-top: 4px; }
+    .radar-metrics { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:10px; margin-top: 10px; }
+    .radar-metric-pill { background: rgba(255,255,255,.96); border:1px solid rgba(103,83,165,.10); border-radius:999px; padding:9px 14px; color:#645b79; display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:.96rem; box-shadow: inset 0 1px 0 rgba(255,255,255,.65); }
+    .radar-metric-pill strong { color: var(--primary); font-weight: 700; }
+    #adviceList { margin:0; padding-left:1.15rem; line-height:1.95; }
+    #adviceList li::marker { color: var(--accent); }
+    dialog { width:min(980px, calc(100vw - 30px)); border:none; border-radius:28px; padding:0; background: var(--panel-strong); box-shadow: var(--shadow); overflow:hidden; }
+    dialog::backdrop { background: rgba(48,40,70,.35); }
+    .dialog-head { padding:22px 24px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px; border-bottom:1px solid rgba(103,83,165,.08); }
+    .dialog-head h3 { margin:0; }
+    .dialog-head p { margin:6px 0 0; color: var(--muted); }
+    .history-tools { padding: 16px 24px 0; display:flex; gap:10px; flex-wrap:wrap; }
+    .history-list { padding: 20px 24px 24px; display:grid; gap:12px; max-height:68vh; overflow:auto; }
+    .history-item { background: rgba(255,255,255,.97); border:1px solid var(--line); border-radius:18px; padding:15px 16px; box-shadow: var(--shadow-sm); }
+    .history-row, .history-meta, .history-actions { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .history-meta { margin-top:6px; color: var(--muted); font-size:.93rem; }
+    .history-actions { margin-top:12px; }
+    .history-empty { text-align:center; color: var(--muted); padding:28px 10px; }
+    @media (max-width: 1240px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .top-results { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width: 900px) {
+      .shell { padding:14px; gap:14px; }
+      .hero, .section, .result-section, .sidebar { padding:18px; }
+      .hero, .result-header { grid-template-columns: 1fr; }
+      .scene-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .method-tabs, .number-row, .palace-cards, .summary-grid, .tri-reading, .insight-grid, .radar-metrics { grid-template-columns: 1fr; }
+      .quick-pad { grid-template-columns: repeat(6,minmax(0,1fr)); }
+      .time-grid { grid-template-columns: 1fr; }
+      .inline-action { height: auto; }
+      .event-tools { flex-direction:column; align-items:flex-start; }
+      .symbol-row { grid-template-columns: 1fr; gap:4px; }
+      .hex-board { transform: scale(.92); transform-origin:center; }
+      .radar-wrap canvas { width:min(100%, 330px); }
+    }
+
+    /* v7 修复版：数字工具与主题插图 */
+    .number-tools { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-top:12px; }
+    .number-range-note { color: var(--muted); font-size:.94rem; line-height:1.6; }
+    .number-tool-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .number-tool-actions .ghost-btn { padding:11px 15px; }
+    .art.theme-illustration { background: linear-gradient(180deg, #fdf8f2, #f8f3ee); }
+    .art.theme-illustration::before, .art.theme-illustration::after { display:none; }
+    .art.theme-illustration svg { position:absolute; inset:0; width:100%; height:100%; display:block; }
+    @media (max-width: 900px) {
+      .number-tools { align-items:flex-start; }
+      .number-tool-actions { width:100%; display:grid; grid-template-columns:1fr 1fr; }
+      .number-tool-actions .ghost-btn { width:100%; min-height:44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar card">
+      <div class="brand-row">
+        <div class="seal">小六壬</div>
+        <div class="brand">
+          <h1>小六壬占卜</h1>
+          <p>三数知吉凶，事事有指引</p>
+        </div>
+      </div>
+      <div class="art theme-illustration" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fdf8f2"/><stop offset="100%" stop-color="#f8f3ee"/></linearGradient>
+    <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cbc0e5" stop-opacity="0.92"/><stop offset="100%" stop-color="#b7a9d7" stop-opacity="0.35"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f8e9cc"/><stop offset="100%" stop-color="#eed7aa"/></linearGradient>
+  </defs>
+  <rect width="1200" height="520" fill="url(#bg)"/>
+  <circle cx="920" cy="110" r="78" fill="url(#sun)" opacity=".92"/>
+  <g fill="#eee4d2" opacity=".78"><path d="M980 132c22-22 48-20 67-5 13-10 30-10 42 0 21-9 47 5 48 28-20-2-34-1-45 6-23-4-52-5-77 0-16 3-35 4-51 10-4-15 0-29 16-39z"/><path d="M120 178c22-20 48-19 67-5 12-8 29-8 40 0 18-8 41 1 47 19-18 2-34 4-48 10-35-8-68-5-101 12-8-12-10-25-5-36z" opacity=".55"/></g>
+  <g opacity=".58" fill="url(#mount)"><path d="M-30 334c70-46 112-98 154-145 61 51 76 122 140 146 72 27 178 4 280-49 99 57 172 83 246 77 86-7 128-53 197-104 43 55 76 102 163 130v70H-30z"/><path d="M26 356c48-23 78-60 112-101 33 31 45 74 96 93 52 19 112 9 178-17 51 33 113 44 180 38 56-5 110-31 169-73 30 41 57 78 116 100v76H26z" opacity=".8"/></g>
+  <g opacity=".24" fill="none" stroke="#ebd7b6"><circle cx="604" cy="258" r="150" stroke-width="2"/><circle cx="604" cy="258" r="104" stroke-width="2"/><circle cx="604" cy="258" r="60" stroke-width="2"/><path d="M604 108V408M454 258H754M497 151L711 365M497 365L711 151"/></g>
+  <g fill="#9b7a58" font-family="PingFang SC, Microsoft YaHei, sans-serif" text-anchor="middle"><text x="604" y="168" font-size="28" font-weight="700">大安</text><text x="760" y="222" font-size="28" font-weight="700">留连</text><text x="760" y="333" font-size="28" font-weight="700">速喜</text><text x="604" y="390" font-size="28" font-weight="700">赤口</text><text x="452" y="332" font-size="28" font-weight="700">小吉</text><text x="450" y="220" font-size="28" font-weight="700">空亡</text></g>
+  <g transform="translate(604 258)"><circle r="68" fill="#f5e8d5" stroke="#e8d3b2" stroke-width="2"/><path d="M0-42a42 42 0 1 1 0 84a21 21 0 1 0 0-42a21 21 0 1 1 0-42" fill="#9a8ad0"/><path d="M0-42a42 42 0 1 0 0 84a21 21 0 1 1 0-42a21 21 0 1 0 0-42" fill="#f6f1e6"/><circle cx="0" cy="-21" r="6" fill="#f7f4ee"/><circle cx="0" cy="21" r="6" fill="#9a8ad0"/></g>
+  <g stroke="#b8a9d8" fill="none" stroke-width="4" opacity=".55"><path d="M470 92h28M466 104h36M470 116h28"/><path d="M831 92h28M827 104h36M831 116h28"/><path d="M466 390h36M470 402h28M466 414h36"/></g>
+  <g fill="#dfbfd0" opacity=".85"><path d="M201 233c4-2 11 3 14 7-8 4-15 2-14-7z"/><path d="M302 307c5-4 12 1 15 6-8 5-15 5-15-6z"/><path d="M903 286c5-4 12 1 15 6-8 5-15 5-15-6z"/><path d="M785 349c4-2 11 3 14 7-8 4-15 2-14-7z"/></g>
+</svg></div>
+      <div class="feature-list">
+        <div class="feature-item"><strong>三法起课</strong><small>数字、时辰、事件三种起课方式，适配不同使用情境。</small></div>
+        <div class="feature-item"><strong>六宫排盘</strong><small>把三象直接落入六宫，直观看到本象、中象、末象的分布关系。</small></div>
+        <div class="feature-item"><strong>增强解读</strong><small>增加关键词、方位、颜色、五行、物象、地点和应期参考。</small></div>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="hero card">
+        <div>
+          <h2>个人占卜台 · v7 精修修复版</h2>
+          <p>本版继续微调结果页结构：把“三数落宫”和“六宫排盘”改成独立整行，并将“雷达分析图”进一步还原为接近 v3 的信息排序与视觉表现。</p>
+        </div>
+        <div class="actions">
+          <button class="ghost-btn" id="historyBtn">历史记录</button>
+          <button class="ghost-btn" id="resetBtn">重新占卜</button>
+        </div>
+      </header>
+      <section class="card section">
+        <div class="section-title">
+          <div class="step">1</div>
+          <div>
+            <h3>选择场景</h3>
+            <p>不同场景会影响本象、中象、末象的解释侧重点。</p>
+          </div>
+        </div>
+        <div class="scene-grid" id="sceneGrid"></div>
+      </section>
+      <section class="card section">
+        <div class="section-title">
+          <div class="step">2</div>
+          <div>
+            <h3>选择起课方式</h3>
+            <p>数字起课适合直接报数；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
+          </div>
+        </div>
+        <div class="method-tabs" id="methodTabs">
+          <button class="method-tab active" data-method="number"><b>数字起课</b><small>输入三个数字</small></button>
+          <button class="method-tab" data-method="time"><b>时辰起课</b><small>按时间取三象</small></button>
+          <button class="method-tab" data-method="event"><b>事件起课</b><small>以事件文字取数</small></button>
+        </div>
+        <div class="method-panel" id="numberPanel">
+          <div class="number-row">
+            <label><span>第一数</span><input id="num1" type="number" min="1" max="100" inputmode="numeric" placeholder="3"></label>
+            <label><span>第二数</span><input id="num2" type="number" min="1" max="100" inputmode="numeric" placeholder="7"></label>
+            <label><span>第三数</span><input id="num3" type="number" min="1" max="100" inputmode="numeric" placeholder="12"></label>
+          </div>
+          <div class="number-tools">
+            <span class="number-range-note">数字起课建议使用 1–100；下方 1–12 为快捷输入。</span>
+            <div class="number-tool-actions">
+              <button class="ghost-btn" id="randomNumbersBtn" type="button" onclick="randomNumbers()">随机数字</button>
+              <button class="ghost-btn" id="clearNumbersBtn" type="button" onclick="clearNumbers()">清空数字</button>
+            </div>
+          </div>
+          <div class="quick-pad" id="quickPad"></div>
+        </div>
+        <div class="method-panel hidden" id="timePanel">
+          <div class="time-grid">
+            <label class="time-field"><span>起课时间</span><div class="time-display-control"><input id="timeInput" type="datetime-local"><div class="time-display-facade" id="timeDisplayText">May 2, 2026 at 20:07</div></div></label>
+            <button class="ghost-btn inline-action" id="nowBtn" type="button">取当前时间</button>
+          </div>
+          <div class="method-note" id="timeNote">时辰起课将自动显示公历、农历、时辰与取数依据。</div>
+        </div>
+        <div class="method-panel hidden" id="eventPanel">
+          <label><span>事件描述</span><textarea id="eventText" maxlength="120" placeholder="例如：想问这次合作是否能顺利推进，接下来会不会有明确消息？"></textarea></label>
+          <div class="event-tools">
+            <span id="eventCount">0 / 120 字</span>
+            <button class="ghost-btn" id="clearEventBtn" type="button">清空事件</button>
+          </div>
+          <div class="method-note" id="eventNote">事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。</div>
+        </div>
+        <button class="primary-btn" id="divineBtn">开始占卜</button>
+        <p class="hint">提示：这个工具以传统文化娱乐与自我梳理为主，不替代医学、法律、投资等专业判断。</p>
+      </section>
+      <section class="card result-section hidden" id="resultCard">
+        <div class="result-header">
+          <div>
+            <p class="eyebrow" id="resultScene">占问场景</p>
+            <h3 id="resultTitle">占卜结果</h3>
+            <p class="result-method" id="resultMethod"></p>
+          </div>
+          <div class="actions">
+            <button class="ghost-btn" id="saveBtn">保存结果</button>
+            <button class="ghost-btn" id="favBtn">收藏</button>
+          </div>
+        </div>
+        <div class="top-results">
+          <article class="block">
+            <h4>三数落宫</h4>
+            <div class="palace-cards" id="palaceCards"></div>
+          </article>
+        </div>
+        <div class="stack-row">
+          <article class="block">
+            <div class="paipan-top">
+              <h4 style="margin:0">六宫排盘</h4>
+              <span class="tag" id="distributionTag">三象分布</span>
+            </div>
+            <div class="paipan-wrap">
+              <div class="hex-board" id="hexBoard"><div class="hex-center"></div></div>
+            </div>
+            <div class="distribution-text" id="distributionText"></div>
+          </article>
+        </div>
+        <div class="overall-wrap">
+          <article class="block"><h4>综合判断</h4><p id="overallText"></p></article>
+        </div>
+        <div class="summary-grid" id="summaryGrid"></div>
+        <article class="block">
+          <h4>三象解读</h4>
+          <div class="tri-reading" id="threeReading"></div>
+        </article>
+        <article class="block">
+          <h4>单宫断事解卦</h4>
+          <div class="gua-reading" id="singlePalaceReading"></div>
+        </article>
+        <article class="block">
+          <h4>双宫断事解卦</h4>
+          <div class="gua-reading" id="doublePalaceReading"></div>
+        </article>
+        <div class="insight-grid">
+          <article class="block"><h4>象意补充</h4><div class="symbol-table" id="symbolSupplement"></div></article>
+          <article class="block"><h4>雷达分析图</h4><div class="radar-wrap"><canvas id="radarCanvas" width="420" height="380"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
+        </div>
+        <article class="block"><h4>行动建议</h4><ul id="adviceList"></ul></article>
+      </section>
+    </main>
+  </div>
+  <dialog id="historyDialog">
+    <div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
+    <div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div>
+    <div class="history-list" id="historyList"></div>
+  </dialog>
+  <script>
+    const STORAGE_KEY = 'xlr_history_v7';
+    const LAST_VIEW_KEY = 'xlr_last_view_v7';
+    const PALACE_ORDER = ['大安', '留连', '速喜', '赤口', '小吉', '空亡'];
+    const POSITION_NAMES = ['本象', '中象', '末象'];
+    const PALACE_DATA = {
+      '大安': { luckScore: 82, speedScore: 42, resistScore: 26, nobleScore: 74, resultScore: 79, riskScore: 72, element: '木', direction: '东方', color: '青色 / 绿色', object: '文书、植物、木器、桌椅', place: '安静之地、办公室、书房、家中东侧', timing: '三日、五日、七日或较慢渐成', keywords: ['稳','守','安','缓'], summary: '主安稳、守成、平和，事情基础较正，适合稳步推进。' },
+      '留连': { luckScore: 38, speedScore: 24, resistScore: 72, nobleScore: 42, resultScore: 44, riskScore: 38, element: '土', direction: '中央 / 东南', color: '黄色 / 棕色', object: '旧物、绳线、杂物、包裹', place: '中间位置、转角、堆放处、库房', timing: '拖延反复，宜多等几日', keywords: ['拖','缠','反复','迟'], summary: '主拖延、停滞、反复，事情多有牵扯与未决之处。' },
+      '速喜': { luckScore: 78, speedScore: 86, resistScore: 34, nobleScore: 66, resultScore: 76, riskScore: 60, element: '火', direction: '南方', color: '红色 / 紫色', object: '电子讯息、灯火、喜庆物、证件', place: '明亮处、南侧、门口、热闹场所', timing: '一日、三日内，多主消息速来', keywords: ['喜','快','讯息','推进'], summary: '主喜讯、消息、机会来得快，往往有突然推进之象。' },
+      '赤口': { luckScore: 28, speedScore: 72, resistScore: 84, nobleScore: 34, resultScore: 36, riskScore: 26, element: '金', direction: '西方', color: '白色 / 金色', object: '刀剪、金属、合同、口舌文书', place: '门外、西侧、嘈杂场所、办事窗口', timing: '应得快，但多起争执', keywords: ['争','口舌','冲','误会'], summary: '主口舌、争执、误会与冲撞，推进虽快但容易带来阻碍。' },
+      '小吉': { luckScore: 68, speedScore: 63, resistScore: 38, nobleScore: 72, resultScore: 70, riskScore: 68, element: '水', direction: '北方 / 东南', color: '黑色 / 蓝色 / 青色', object: '饮品、小礼物、票据、流动物品', place: '流动场所、水边、交通动线、北方位', timing: '三至五日，多主小成渐进', keywords: ['小成','贵人','和缓','顺'], summary: '主小成、小利、贵人和顺，虽非大旺，但往往有实用结果。' },
+      '空亡': { luckScore: 22, speedScore: 36, resistScore: 66, nobleScore: 30, resultScore: 24, riskScore: 22, element: '土', direction: '西北 / 空处', color: '灰色 / 米白', object: '空盒、旧包、断线物、未完成品', place: '空位、高处、角落、无人处', timing: '落空延迟，或有期而无实', keywords: ['空','虚耗','延后','不实'], summary: '主虚耗、落空、不实与悬而未决，宜谨慎观察。' },
+    };
+    const SINGLE_PALACE_GUIDE = {
+      '大安': '单看大安，事情有根、有底、有稳定基础。它不是一下子爆发的象，而是慢慢落实、越做越稳的象。问合作，主关系能谈；问感情，主心态偏稳；问财事，主守财胜过冒险。',
+      '留连': '单看留连，事情卡在“拖、等、绕”上。不是完全没希望，而是过程容易反复，常见旧问题、旧人情、旧条件牵住。此宫最怕急催，越急越乱。',
+      '速喜': '单看速喜，事情动得快，有消息、有回应、有突然推进。它适合主动联系、趁热打铁，但也要防止只是一阵热度，后续仍要看能不能落地。',
+      '赤口': '单看赤口，重点在口舌、误会、争执、规则和边界。事情不是不能做，而是说法、合同、态度、沟通方式容易出问题。此宫宜少说气话，多留凭证。',
+      '小吉': '单看小吉，主小成、小利、小贵人。它不一定代表大成功，但往往能得到一点实际帮助或阶段成果。适合先做小目标，慢慢滚动推进。',
+      '空亡': '单看空亡，事情有虚、空、悬、未定之象。可能是信息不全、对方没定、条件没成熟，也可能是期待太高。此宫宜先核实，不宜马上押重注。'
+    };
+    const DOUBLE_PAIR_HINTS = {
+      '吉吉': '两宫皆偏吉，说明事情有可取之处，宜顺势推进，但仍要把细节落地，避免只凭感觉。',
+      '吉滞': '前后有吉有滞，说明机会存在，但会被拖延、误会或条件不成熟影响。做法是先抓机会，再处理卡点。',
+      '滞吉': '先难后顺，开始会有阻力或不确定，但只要稳住节奏，后面仍有转机。',
+      '滞滞': '两宫都偏阻滞，说明此事不宜急进。先查清原因、降低期待、减少投入，等条件明朗后再判断。'
+    };
+    const SCENES = [
+      { key: 'love', name: '感情', icon: '💗', positions: ['你方状态', '对方状态', '关系结果'] },
+      { key: 'career', name: '事业', icon: '💼', positions: ['当前基础', '推进过程', '最终趋势'] },
+      { key: 'wealth', name: '财运', icon: '💰', positions: ['财源机会', '风险阻力', '收益趋势'] },
+      { key: 'exam', name: '考试', icon: '📘', positions: ['基础水平', '临场发挥', '结果趋势'] },
+      { key: 'lost', name: '失物', icon: '🔎', positions: ['失物状态', '寻找过程', '能否找回'] },
+      { key: 'health', name: '健康', icon: '🩺', positions: ['当前状态', '调理过程', '恢复趋势'] },
+      { key: 'travel', name: '出行', icon: '✈️', positions: ['出行基础', '途中变化', '结果安稳'] },
+      { key: 'cooperation', name: '合作', icon: '🤝', positions: ['合作基础', '磨合过程', '合作结果'] },
+      { key: 'message', name: '消息等待', icon: '💬', positions: ['对方/事件状态', '消息阻滞', '是否回应'] },
+      { key: 'other', name: '其他', icon: '🧭', positions: ['起因状态', '过程变化', '最终趋势'] },
+    ];
+    const sceneGrid = document.getElementById('sceneGrid');
+    const historyDialog = document.getElementById('historyDialog');
+    let currentScene = 'love';
+    let currentMethod = 'number';
+    let currentResult = null;
+    let historyFilter = 'all';
+    function init() { renderScenes(); renderQuickPad(); bindEvents(); setNow(); updateEventCount(); clearStartupResult(); }
+    function renderScenes() { sceneGrid.innerHTML = SCENES.map(scene => `<button type="button" class="scene-btn ${scene.key === currentScene ? 'active' : ''}" data-scene="${scene.key}"><span class="emoji">${scene.icon}</span><span>${scene.name}</span></button>`).join(''); }
+    function renderQuickPad() { document.getElementById('quickPad').innerHTML = Array.from({length:12}, (_,i)=>i+1).map(n=>`<button type="button" class="pad-btn" data-pad="${n}">${n}</button>`).join(''); }
+    function bindEvents() {
+      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); });
+      document.getElementById('methodTabs').addEventListener('click', e => { const tab=e.target.closest('[data-method]'); if(!tab) return; currentMethod=tab.dataset.method; document.querySelectorAll('.method-tab').forEach(el=>el.classList.toggle('active', el.dataset.method===currentMethod)); document.getElementById('numberPanel').classList.toggle('hidden', currentMethod!=='number'); document.getElementById('timePanel').classList.toggle('hidden', currentMethod!=='time'); document.getElementById('eventPanel').classList.toggle('hidden', currentMethod!=='event'); });
+      document.getElementById('quickPad').addEventListener('click', e => { const btn=e.target.closest('[data-pad]'); if(!btn) return; const inputs=['num1','num2','num3'].map(id=>document.getElementById(id)); const empty=inputs.find(i=>!i.value); (empty || inputs[2]).value=btn.dataset.pad; });
+      document.getElementById('divineBtn').addEventListener('click', handleDivine);
+      document.getElementById('resetBtn').addEventListener('click', resetForm);
+      document.getElementById('historyBtn').addEventListener('click', openHistoryDialog);
+      document.getElementById('closeHistoryBtn').addEventListener('click', ()=>historyDialog.close());
+      document.getElementById('showAllBtn').addEventListener('click', ()=>{ historyFilter='all'; renderHistory(); });
+      document.getElementById('showFavBtn').addEventListener('click', ()=>{ historyFilter='fav'; renderHistory(); });
+      document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+      document.getElementById('historyList').addEventListener('click', handleHistoryActions);
+      document.getElementById('saveBtn').addEventListener('click', saveCurrentResult);
+      document.getElementById('favBtn').addEventListener('click', toggleCurrentFavorite);
+      document.getElementById('nowBtn').addEventListener('click', setNow);
+      document.getElementById('timeInput').addEventListener('change', updateTimeInfo);
+      document.getElementById('eventText').addEventListener('input', updateEventCount);
+      document.getElementById('clearEventBtn').addEventListener('click', ()=>{ document.getElementById('eventText').value=''; updateEventCount(); document.getElementById('eventNote').textContent='事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。'; });
+    }
+    function setNow() { const now=new Date(); const local=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,16); document.getElementById('timeInput').value=local; updateTimeInfo(); }
+    function updateTimeInfo() { const val=document.getElementById('timeInput').value; if(!val) return; const dt=new Date(val); const info=getTimeDerived(dt); const display=document.getElementById('timeDisplayText'); if(display) display.textContent = formatTimePretty(dt); document.getElementById('timeNote').innerHTML=`<div class="time-info-lines"><div><strong>公历：</strong>${formatDateTimeCN(dt)}</div><div><strong>农历：</strong>${formatLunarFull(info.lunar, dt)}</div><div><strong>时辰：</strong>${info.shichen}（${info.shichenRange}，序数${info.shichenIndex}）</div><div>本次按：${info.numbers[0]}月、${info.numbers[1]}日、${info.numbers[2]}取三数。</div></div>`; }
+    function updateEventCount() { const text=document.getElementById('eventText').value.trim(); document.getElementById('eventCount').textContent=`${text.length} / 120 字`; if(text){ const nums=textToNumbers(text); document.getElementById('eventNote').innerHTML=`预览三数：${nums.join(' / ')}。说明：基于文字内容生成，便于同一事件复盘。`; } else { document.getElementById('eventNote').textContent='事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。'; } }
+    function handleDivine() {
+      const scene = SCENES.find(s=>s.key===currentScene); let numbers=[], methodNote='', extraInfo='';
+      if(currentMethod==='number'){ numbers=['num1','num2','num3'].map(id=>Number(document.getElementById(id).value)).filter(Boolean); if(numbers.length!==3) return alert('请先输入三个数字。'); methodNote=`数字起课：${numbers.join(' / ')}`; }
+      if(currentMethod==='time'){ const val=document.getElementById('timeInput').value; if(!val) return alert('请先选择时间。'); const dt=new Date(val); const info=getTimeDerived(dt); numbers=info.numbers; methodNote=`时辰起课：${numbers.join(' / ')}`; extraInfo=`公历 ${formatDateTimeCN(dt)}；农历 ${formatLunarFull(info.lunar, dt)}；时辰 ${info.shichen}`; }
+      if(currentMethod==='event'){ const text=document.getElementById('eventText').value.trim(); if(!text) return alert('请先输入事件描述。'); numbers=textToNumbers(text); methodNote=`事件起课：${numbers.join(' / ')}`; extraInfo=`事件：${text}`; }
+      currentResult = divine(scene, numbers, currentMethod, methodNote, extraInfo); renderResult(currentResult); saveLastView(currentResult);
+    }
+    function divine(scene, numbers, method, methodNote, extraInfo) { const palaces=calculateSequentialPalaces(numbers); const details=palaces.map((name,idx)=>buildPositionDetail(scene, idx, name, numbers[idx])); const metrics=calcMetrics(palaces); const distribution=describeDistribution(palaces, metrics); const overallText=buildOverall(details, metrics, distribution); const advice=buildAdvice(details, metrics); const supplement=buildSupplement(details, metrics); return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, numbers, palaces, details, metrics, distribution, overallText, advice, supplement }; }
+    function calculateSequentialPalaces(numbers) { let startIndex = 0; return numbers.map(function(n, idx) { const step = Math.max(1, Math.abs(Number(n) || 1)); const palaceIndex = (idx === 0) ? ((step - 1) % 6) : ((startIndex + step - 1) % 6); startIndex = palaceIndex; return PALACE_ORDER[palaceIndex]; }); }
+    function numberToPalace(n) { return PALACE_ORDER[(Math.abs(n)-1)%6]; }
+    function buildPositionDetail(scene, index, palaceName, number) { const p=PALACE_DATA[palaceName]; const role=scene.positions[index] || POSITION_NAMES[index]; const summary=sceneSpecificSummary(scene.key, palaceName, index); return { positionName: POSITION_NAMES[index], role, number, palaceName, ...p, summary }; }
+    function sceneSpecificSummary(sceneKey, palace, idx) {
+      const rolePhraseMap = { love:['你这边','对方这边','关系结果'], career:['当前基础','推进过程','最终走势'], wealth:['财源机会','风险阻力','收益趋势'], exam:['基础状态','临场发挥','结果趋势'], lost:['失物状态','寻找过程','找回结果'], health:['当前状态','调理过程','恢复趋势'], travel:['出行基础','途中过程','出行结果'], cooperation:['合作基础','磨合过程','合作结果'], message:['对方/事件状态','消息推进','最终回应'], other:['起因','过程','结果'] };
+      const subject=(rolePhraseMap[sceneKey] || rolePhraseMap.other)[idx];
+      return { '大安':`${subject}偏稳，适合按部就班推进，重在守成与踏实落实。`,'留连':`${subject}有拖延与反复，容易被旧问题牵住，需要耐心拆解。`,'速喜':`${subject}有消息、有机会，发展较快，适合主动推动与联络。`,'赤口':`${subject}带有争执、误会或表达不顺，需防情绪化与硬碰硬。`,'小吉':`${subject}可见小成、小利或贵人助力，适合小步推进、积少成多。`,'空亡':`${subject}有虚浮、落空或不定之象，宜降低预期、复核信息。` }[palace];
+    }
+    function calcMetrics(palaces) {
+      const vals = palaces.map(p => PALACE_DATA[p]);
+      const avg = key => Math.round(vals.reduce((s,v)=>s+v[key],0) / vals.length);
+      const goodCount = palaces.filter(p => ['大安','速喜','小吉'].includes(p)).length;
+      const heavyCount = palaces.filter(p => ['留连','赤口','空亡'].includes(p)).length;
+      const endPalace = palaces[2];
+      const startPalace = palaces[0];
+      const middlePalace = palaces[1];
+
+      const elemCount = {};
+      vals.forEach(v => elemCount[v.element] = (elemCount[v.element] || 0) + 1);
+      const maxCount = Math.max(...Object.values(elemCount));
+      const maxElements = Object.keys(elemCount).filter(k => elemCount[k] === maxCount);
+      const mainElement = maxElements.length === 1 ? maxElements[0] : vals.map(v => v.element).join('、');
+      const elementText = maxElements.length === 1
+        ? ({木:'木气偏旺',火:'火气偏旺',土:'土气偏旺',金:'金气偏旺',水:'水气偏旺'})[mainElement]
+        : `${vals.map(v => v.element).join('、')}并见，不能简单说某一行独旺`;
+
+      const luck = avg('luckScore');
+      const speed = avg('speedScore');
+      const resist = avg('resistScore');
+      const noble = avg('nobleScore');
+      const result = avg('resultScore');
+      const risk = avg('riskScore');
+      let success = Math.round((luck * .3 + result * .3 + noble * .2 + risk * .2));
+
+      let luckText = luck >= 72 ? '上吉' : luck >= 60 ? '中上' : luck >= 45 ? '中平' : luck >= 30 ? '中下' : '偏凶';
+      let speedText = speed >= 72 ? '偏快' : speed >= 52 ? '中速' : speed >= 34 ? '偏慢' : '较慢';
+      let resistText = resist >= 72 ? '较高' : resist >= 52 ? '中等' : '较低';
+      let nobleText = noble >= 72 ? '较强' : noble >= 55 ? '中等' : '偏弱';
+      let successText = `约${success}%（娱乐参考）`;
+
+      if (startPalace === '速喜' && middlePalace === '大安') {
+        speedText = '先快后稳';
+      }
+      if (endPalace === '空亡') {
+        luckText = goodCount >= 2 ? '中平偏上' : '中平偏虚';
+        resistText = '后段防空';
+        successText = '前景可动，结果待核实';
+      } else if (endPalace === '留连') {
+        resistText = '后段易拖';
+        successText = success >= 60 ? '可成但慢' : '需等条件';
+      } else if (endPalace === '赤口') {
+        resistText = '后段防争';
+        successText = success >= 60 ? '可动但防口舌' : '谨慎推进';
+      } else if (success >= 70) {
+        successText = '偏高';
+      } else if (success >= 55) {
+        successText = '中等偏上';
+      } else if (success >= 40) {
+        successText = '中等';
+      } else {
+        successText = '偏低';
+      }
+
+      return {
+        luck, speed, resist, noble, result, risk, success,
+        goodCount, heavyCount, mainElement, endPalace,
+        luckText, speedText, resistText, nobleText, successText, elementText
+      };
+    }
+    function describeDistribution(palaces, metrics) { const counter={}; palaces.forEach((p,idx)=>{ if(!counter[p]) counter[p]=[]; counter[p].push(POSITION_NAMES[idx]); }); let text=''; if(Object.values(counter).some(arr=>arr.length===3)){ const palace=Object.keys(counter).find(k=>counter[k].length===3); text=`三象同落${palace}，说明此事气象集中，整体调性鲜明。`; } else if(Object.values(counter).some(arr=>arr.length===2)){ const palace=Object.keys(counter).find(k=>counter[k].length===2); text=`有两象同落${palace}，表示该宫气象对整体影响较重。`; } else { text='三象分散，说明事情包含起因、过程、结果三个不同层次。'; } if(metrics.goodCount>=2) text+=' 吉象偏多，整体趋势偏顺。'; if(metrics.heavyCount>=2) text+=' 阻滞宫较多，需防拖延、争执或落空。'; return { text, counter }; }
+    function buildOverall(details, metrics, distribution) { const [start,middle,end]=details; return `${distribution.text} 本象 ${start.palaceName}，表示${start.summary}；中象 ${middle.palaceName}，说明${middle.summary}；末象 ${end.palaceName}，意味着${end.summary}。综合来看，此课 ${metrics.luckText}，成事倾向约 ${metrics.success}% ，节奏 ${metrics.speedText}，阻力 ${metrics.resistText}。整体五行以${metrics.mainElement}为主，${metrics.elementText}，可据此在方位、颜色、行动节奏上顺势而为。`; }
+    function buildAdvice(details, metrics) {
+      const base=[]; const start=details[0], middle=details[1], end=details[2];
+
+      if (end.palaceName === '空亡') {
+        base.push('这课的重点不在“前面有没有机会”，而在“最后是否能真正落地”。可以推进，但要把信息、承诺、条件和时间点核实清楚。');
+        base.push('不要把一时的消息或顺利开头当成最终结果。末象空亡时，最怕想象过多、证据不足、条件未定。');
+      } else if(metrics.goodCount>=2) {
+        base.push('吉象较多，可以主动推进，但不要一口气把筹码全压上，先做最容易落地的一步。');
+      }
+      if(metrics.heavyCount>=2) base.push('阻滞宫较多，先处理卡点，再谈推进；尤其要把时间、条件、对方态度和关键证据确认清楚。');
+
+      base.push(`先看本象：${start.palaceName}代表起因和当前状态，处理此事要先顺着“${start.keywords.join('、')}”这个方向入手。`);
+      base.push(`再看中象：${middle.palaceName}代表过程变化，过程中容易出现${middle.summary.replace(/。$/,'')}，所以不要只看开头。`);
+      base.push(`最后看末象：${end.palaceName}代表结果趋势，最终判断要以末象为主，行动上要围绕“${end.keywords.join('、')}”调整。`);
+      base.push(`优先参考有利方位：${[...new Set(details.map(d=>d.direction.split(' / ')[0]))].join('、')}；可作为找人、找物、沟通或行动时的象意参考。`);
+      base.push(`颜色上可多留意：${[...new Set(details.map(d=>d.color.split(' / ')[0]))].join('、')}；不必迷信，可作为提醒自己进入相应状态的小锚点。`);
+
+      if (new Set(details.map(d=>d.element)).size === details.length) {
+        base.push(`五行不是单一独旺，而是${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}并见；宜理解为先动、再稳、最后看是否落地。`);
+      } else {
+        base.push(`五行主调为${metrics.mainElement}，${metrics.elementText}。做事节奏上，宜顺势，不宜和当前气象硬拧。`);
+      }
+
+      const special={ '大安':'末象大安，最终重在稳住和落实。不要频繁改主意，按原计划慢慢推进更有利。','留连':'末象留连，最后多半还要拖一拖、等一等。不要被一时停顿吓到，耐心拆解问题更重要。','速喜':'末象速喜，后续有消息或推进机会。适合主动联系、及时回应，但要把口头机会落实成具体动作。','赤口':'末象赤口，后续容易因话语、规则、态度出问题。少争论，多确认，重要内容最好留下文字记录。','小吉':'末象小吉，结果多是小成、小利、有人帮。不要贪大，先拿到可见的小成果。','空亡':'末象空亡，结果仍有不确定或落空风险。先降低期待，多核实，不要把想象当成结果。' };
+      base.push(special[end.palaceName]); return [...new Set(base)].slice(0,10);
+    }
+    function buildSupplement(details, metrics) {
+      const mainDirs=[...new Set(details.map(d=>d.direction))].join('、');
+      const mainColors=[...new Set(details.map(d=>d.color))].join('、');
+      const mainObjects=[...new Set(details.map(d=>d.object))].join('、');
+      const mainPlaces=[...new Set(details.map(d=>d.place))].join('、');
+      const timings=[...new Set(details.map(d=>d.timing))].join('；');
+      const keyWords=[...new Set(details.flatMap(d=>d.keywords))].join('、');
+      return [
+        { label:'有利方位', value:`${mainDirs}。可作为行动、寻找、沟通、摆放或出门方向的参考，不必机械照做，重点是借象提醒。` },
+        { label:'幸运颜色', value:`${mainColors}。适合用在穿搭、随身物、桌面小物或提醒卡上，帮助自己进入更合适的状态。` },
+        { label:'关键五行', value:`${metrics.mainElement}（${metrics.elementText}）。五行不是单看好坏，而是看当前气的偏向：旺则顺势，弱则补足，冲则缓和。` },
+        { label:'核心关键词', value:keyWords },
+        { label:'适合物品', value:`${mainObjects}。若问失物、找人、线索、合作资料，可优先留意这些象意相关的物品。` },
+        { label:'地点象意', value:`${mainPlaces}。可用于判断事情发生、停留、卡住或容易出现线索的位置。` },
+        { label:'应期参考', value:`${timings}。应期只作参考，若现实条件未成熟，则应期会后延。` },
+        { label:'处理原则', value:`本象看起因，中象看过程，末象看结果。若末象吉，可继续推进；若末象滞或空，先稳住、核实、等待。` }
+      ];
+    }
+    function palacePolarity(name){ return ['大安','速喜','小吉'].includes(name) ? '吉' : '滞'; }
+    function buildSinglePalaceReading(details){
+      return details.map(d=>{
+        const plain = `${d.positionName}主${d.role}，取数为${d.number}，顺推落宫为${d.palaceName}。通俗说，就是这一步的气象偏向“${d.keywords.join('、')}”。${SINGLE_PALACE_GUIDE[d.palaceName]}`;
+        const practical = `实际处理时，可重点看：方位取${d.direction}，五行属${d.element}，颜色应${d.color}。这里的“取数”是起课用数，“落宫”才是断事宫位，两者不要混在一起理解。`;
+        return `<div class="gua-card"><h5>${d.positionName} · ${d.palaceName}</h5><p><strong>断法：</strong>${plain}</p><p><strong>落地：</strong>${practical}</p></div>`;
+      }).join('');
+    }
+    function buildDoublePalaceReading(details){
+      const pairs = [
+        ['本象 → 中象', details[0], details[1], '看事情从起因到过程怎么变化。'],
+        ['中象 → 末象', details[1], details[2], '看过程中出现的变化会把结果带向哪里。'],
+        ['本象 → 末象', details[0], details[2], '看事情从开始到最后的总趋势。']
+      ];
+      return pairs.map(([title,a,b,scope])=>{
+        const key = palacePolarity(a.palaceName) + palacePolarity(b.palaceName);
+        const hint = DOUBLE_PAIR_HINTS[key] || '';
+        const move = `从${a.palaceName}到${b.palaceName}，气象由“${a.keywords.join('、')}”转向“${b.keywords.join('、')}”。`;
+        const advice = b.palaceName === '空亡' ? '后宫见空，最后一定要核实，不要只凭感觉定论。' : b.palaceName === '赤口' ? '后宫见赤口，结果阶段要特别注意沟通、规则和口舌。' : b.palaceName === '留连' ? '后宫见留连，结果阶段容易拖延，适合预留时间。' : b.palaceName === '速喜' ? '后宫见速喜，后面容易有消息，适合主动把握。' : b.palaceName === '小吉' ? '后宫见小吉，后面多有小成或小助力，宜先取小结果。' : '后宫见大安，后面重在稳定和落实，不宜反复变动。';
+        return `<div class="gua-card"><h5>${title}</h5><p><strong>用途：</strong>${scope}</p><p><strong>组合：</strong>${move}${hint}</p><p><strong>提醒：</strong>${advice}</p></div>`;
+      }).join('');
+    }
+    function renderResult(result) {
+      document.getElementById('resultCard').classList.remove('hidden');
+      document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
+      document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
+      document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}`;
+      document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
+      document.getElementById('summaryGrid').innerHTML=[ ['吉凶',result.metrics.luckText], ['快慢',result.metrics.speedText], ['阻力',result.metrics.resistText], ['成事倾向',result.metrics.successText], ['贵人助力',result.metrics.nobleText], ['五行气象',result.metrics.elementText] ].map(([label,val])=>`<div class="summary-item"><span>${label}</span><b>${val}</b></div>`).join('');
+      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div><div class="keyword-row">${d.keywords.map(k=>`<span class="keyword-chip">关键词：${k}</span>`).join('')}</div><p><strong>象意：</strong>${d.summary}</p><p><strong>通俗理解：</strong>这一象不是单纯说好坏，而是在提醒你：这一步最明显的气是“${d.keywords.join('、')}”。问事情，就看它卡在哪里、动在哪里；问人，就看对方或自己目前处在什么状态。</p><p><strong>现实提醒：</strong>${d.palaceName === '赤口' ? '少争论，多确认，话不要说满。' : d.palaceName === '空亡' ? '先查证，不要急着下结论。' : d.palaceName === '留连' ? '拖延反复是重点，先处理旧问题。' : d.palaceName === '速喜' ? '消息和机会来得快，要及时接住。' : d.palaceName === '小吉' ? '先取小成，不要贪大。' : '稳住节奏，按计划推进。'}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
+      document.getElementById('singlePalaceReading').innerHTML=buildSinglePalaceReading(result.details);
+      document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReading(result.details);
+      document.getElementById('overallText').textContent=result.overallText;
+      document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
+      document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
+      renderBoard(result); renderRadar(result.metrics); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+    }
+    function renderBoard(result) { const board=document.getElementById('hexBoard'); board.querySelectorAll('.hex-node').forEach(n=>n.remove()); const classes={ '大安':'hex-da','留连':'hex-ll','速喜':'hex-sx','赤口':'hex-ck','小吉':'hex-xj','空亡':'hex-kw' }; PALACE_ORDER.forEach(name=>{ const tags=[]; result.details.forEach(d=>{ if(d.palaceName===name) tags.push(d.positionName); }); const node=document.createElement('div'); node.className=`hex-node ${classes[name]} ${tags.length?'active':''}`; node.innerHTML=`<b>${name}</b><small>${PALACE_DATA[name].element} · ${PALACE_DATA[name].direction.split(' / ')[0]}</small><div class="node-tags">${tags.length ? tags.map(t=>`<span class="node-tag">${t}</span>`).join('') : '<span class="node-tag">未落</span>'}</div>`; board.appendChild(node); }); document.getElementById('distributionText').textContent=result.distribution.text; document.getElementById('distributionTag').textContent=result.metrics.goodCount >= 2 ? '吉宫偏多' : result.metrics.heavyCount >= 2 ? '阻滞偏多' : '三象分散'; }
+    function renderRadar(metrics) {
+      const canvas = document.getElementById('radarCanvas');
+      const ctx = canvas.getContext('2d');
+      const points = [
+        { label:'成事倾向', value:metrics.success },
+        { label:'推进速度', value:metrics.speed },
+        { label:'稳定性', value:metrics.risk },
+        { label:'贵人助力', value:metrics.noble },
+        { label:'风险控制', value:metrics.risk },
+        { label:'结果强度', value:metrics.result }
+      ];
+      const metricOrder = ['成事倾向','推进速度','稳定性','贵人助力','风险控制','结果强度'];
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2, cy = 155, radius = 82, levels = 5;
+      ctx.lineWidth = 1;
+      for (let l = 1; l <= levels; l++) {
+        ctx.beginPath();
+        points.forEach((_, i) => {
+          const angle = -Math.PI / 2 + i * (Math.PI * 2 / points.length);
+          const r = radius * (l / levels);
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(124,112,178,.18)';
+        ctx.stroke();
+      }
+      points.forEach((_, i) => {
+        const angle = -Math.PI / 2 + i * (Math.PI * 2 / points.length);
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = 'rgba(124,112,178,.14)';
+        ctx.stroke();
+      });
+      ctx.beginPath();
+      points.forEach((p, i) => {
+        const angle = -Math.PI / 2 + i * (Math.PI * 2 / points.length);
+        const r = radius * (p.value / 100);
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(103,83,165,.16)';
+      ctx.strokeStyle = '#6d5bab';
+      ctx.lineWidth = 2;
+      ctx.fill();
+      ctx.stroke();
+      const labelPositions = {
+        '成事倾向': {x: cx, y: cy - radius - 42, align: 'center'},
+        '推进速度': {x: cx + radius + 54, y: cy - 8, align: 'center'},
+        '稳定性': {x: cx + radius + 52, y: cy + 92, align: 'center'},
+        '贵人助力': {x: cx, y: cy + radius + 46, align: 'center'},
+        '风险控制': {x: cx - radius - 56, y: cy + 92, align: 'center'},
+        '结果强度': {x: cx - radius - 58, y: cy - 8, align: 'center'}
+      };
+      points.forEach((p) => {
+        const pos = labelPositions[p.label];
+        ctx.textAlign = pos.align;
+        ctx.fillStyle = '#4b425e';
+        ctx.font = '15px sans-serif';
+        ctx.fillText(p.label, pos.x, pos.y);
+        ctx.fillStyle = '#7c70b2';
+        ctx.font = '700 16px sans-serif';
+        ctx.fillText(String(p.value), pos.x, pos.y + 20);
+      });
+      const map = Object.fromEntries(points.map(p => [p.label, p.value]));
+      document.getElementById('radarMetrics').innerHTML = metricOrder.map(label => `<div class="radar-metric-pill"><span>${label}</span><strong>${map[label]}</strong></div>`).join('');
+    }
+    function saveCurrentResult() { if(!currentResult) return alert('请先占卜。'); const list=getHistory(); const exists=list.find(item=>item.id===currentResult.id); if(!exists) list.unshift({...currentResult}); else Object.assign(exists,currentResult); localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0,80))); alert('已保存到历史记录。'); }
+    function toggleCurrentFavorite() { if(!currentResult) return alert('请先占卜。'); currentResult.favorite=!currentResult.favorite; document.getElementById('favBtn').textContent=currentResult.favorite?'已收藏':'收藏'; const list=getHistory(); const found=list.find(item=>item.id===currentResult.id); if(found) found.favorite=currentResult.favorite; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+    function renderHistory() {
+      var list = getHistory();
+      var filtered = historyFilter === 'fav' ? list.filter(function(item){ return item.favorite; }) : list;
+      var container = document.getElementById('historyList');
+      if(!filtered.length){ container.innerHTML = '<div class="history-empty">暂无记录</div>'; return; }
+      container.innerHTML = filtered.map(function(item){
+        return '<div class="history-item"><div class="history-row"><strong>' + (item.sceneIcon || '') + ' ' + item.sceneName + '</strong><span style="color:var(--muted);font-size:.93rem;">' + formatISO(item.createdAt) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div><div class="history-meta"><span>' + item.methodNote + '</span><span>' + item.palaces.join(' / ') + '</span></div><div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + item.id + '\')">查看</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + item.id + '\')">删除</button></div></div>';
+      }).join('');
+    }
+    function handleHistoryActions(e) { const viewId=e.target.closest('[data-view]')?.dataset.view; if(viewId){ const item=getHistory().find(x=>x.id===viewId); if(item){ currentResult=item; renderResult(item); historyDialog.close(); } return; } const delId=e.target.closest('[data-delete]')?.dataset.delete; if(delId){ if(!confirm('确定删除这条历史记录吗？')) return; const list=getHistory().filter(x=>x.id!==delId); localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); renderHistory(); } }
+    function clearHistory(){ if(!confirm('确定清空所有历史记录吗？')) return; localStorage.removeItem(STORAGE_KEY); renderHistory(); }
+    function getHistory(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
+    function resetForm(){ ['num1','num2','num3'].forEach(id=>document.getElementById(id).value=''); document.getElementById('eventText').value=''; updateEventCount(); setNow(); currentResult=null; try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {} document.getElementById('resultCard').classList.add('hidden'); }
+    function saveLastView(result){ localStorage.setItem(LAST_VIEW_KEY, JSON.stringify(result)); }
+    function clearStartupResult(){ try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {} document.getElementById('resultCard').classList.add('hidden'); currentResult=null; }
+    function restoreLastView(){ /* 保留函数名以兼容旧代码，但启动时不再自动恢复上次占卜。 */ }
+    function getTimeDerived(dt){ const shichenMap=[{name:'子时',start:23,end:1,idx:1,range:'23:00-00:59'},{name:'丑时',start:1,end:3,idx:2,range:'01:00-02:59'},{name:'寅时',start:3,end:5,idx:3,range:'03:00-04:59'},{name:'卯时',start:5,end:7,idx:4,range:'05:00-06:59'},{name:'辰时',start:7,end:9,idx:5,range:'07:00-08:59'},{name:'巳时',start:9,end:11,idx:6,range:'09:00-10:59'},{name:'午时',start:11,end:13,idx:7,range:'11:00-12:59'},{name:'未时',start:13,end:15,idx:8,range:'13:00-14:59'},{name:'申时',start:15,end:17,idx:9,range:'15:00-16:59'},{name:'酉时',start:17,end:19,idx:10,range:'17:00-18:59'},{name:'戌时',start:19,end:21,idx:11,range:'19:00-20:59'},{name:'亥时',start:21,end:23,idx:12,range:'21:00-22:59'}]; const hour=dt.getHours(); const s=shichenMap.find(({start,end})=> start>end ? (hour>=start || hour<end) : (hour>=start && hour<end)) || shichenMap[0]; const lunar=formatChineseLunar(dt); const lunarNums=parseLunarNumbers(lunar); return { numbers:[lunarNums.month, lunarNums.day, s.idx], lunarMonth:lunarNums.month, lunarDay:lunarNums.day, shichen:s.name, shichenRange:s.range, shichenIndex:s.idx, lunar }; }
+    function formatChineseLunar(dt){ try { const fmt=new Intl.DateTimeFormat('zh-CN-u-ca-chinese', {year:'numeric', month:'long', day:'numeric'}); const text=fmt.format(dt).replace(/\s/g,''); return text.replace(/^.*年/,''); } catch { return '农历信息不可用'; } }
+    function parseLunarNumbers(lunarText){ const raw=String(lunarText || ''); const s=raw.replace(/农历/g,'').replace(/闰/g,'').replace(/正月/g,'一月').replace(/冬月/g,'十一月').replace(/腊月/g,'十二月').replace(/初/g,'').replace(/廿/g,'二十').replace(/卅/g,'三十'); const cnMap={一:1,二:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9,十:10,十一:11,十二:12}; function cnToNum(v){ v=String(v||'').trim(); if(/^\d+$/.test(v)) return parseInt(v,10); if(cnMap[v]) return cnMap[v]; if(v === '十') return 10; if(v.startsWith('十')) return 10 + (cnMap[v.slice(1)] || 0); if(v.indexOf('十') > -1){ const parts=v.split('十'); return (cnMap[parts[0]] || 1) * 10 + (cnMap[parts[1]] || 0); } return 1; } const m = s.match(/([一二三四五六七八九十]{1,3}|\d{1,2})月/); let rest = m ? s.slice(s.indexOf('月') + 1) : s; rest = rest.replace(/[日号]/g,''); const d = rest.match(/([一二三四五六七八九十]{1,4}|\d{1,2})/); return { month: m ? cnToNum(m[1]) : 1, day: d ? cnToNum(d[1]) : 1 }; }
+    function textToNumbers(text){ let h1=7,h2=11,h3=13; for(const ch of text){ const c=ch.codePointAt(0); h1=(h1*31+c)%9973; h2=(h2*37+c)%9967; h3=(h3*41+c)%9949; } return [h1%99+1, h2%99+1, h3%99+1]; }
+    function formatDateTime(dt){ return formatDateTimeCN(dt); }
+    function formatDateTimeCN(dt){ return `${dt.getFullYear()}年${String(dt.getMonth()+1).padStart(2,'0')}月${String(dt.getDate()).padStart(2,'0')}日 ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`; }
+    function formatTimePretty(dt){ const months=['January','February','March','April','May','June','July','August','September','October','November','December']; return `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()} at ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`; }
+    
+    function formatLunarFull(text, dt){ const raw=String(text || '').replace(/^\d{2,4}年\s*/,'').replace(/^农历/,'').replace(/^\s+/,'').replace(/\s+/g,''); return `${dt.getFullYear()}年 农历${raw}`; }
+    function formatISO(iso){ return formatDateTimeCN(new Date(iso)); }
+
+    function openHistoryDialog(){
+      historyFilter = 'all';
+      renderHistory();
+      if (historyDialog && typeof historyDialog.showModal === 'function') { historyDialog.showModal(); }
+      else if (historyDialog) { historyDialog.setAttribute('open','open'); }
+    }
+    function closeHistoryDialog(){
+      if (historyDialog && typeof historyDialog.close === 'function') { historyDialog.close(); }
+      else if (historyDialog) { historyDialog.removeAttribute('open'); }
+    }
+    function showAllHistory(){ historyFilter = 'all'; renderHistory(); }
+    function showFavHistory(){ historyFilter = 'fav'; renderHistory(); }
+    function viewHistoryItem(id){
+      var list = getHistory();
+      var item = null;
+      for (var i = 0; i < list.length; i++) { if (list[i].id === id) { item = list[i]; break; } }
+      if (item) { currentResult = item; renderResult(item); closeHistoryDialog(); }
+    }
+    function deleteHistoryItem(id){
+      if(!confirm('确定删除这条历史记录吗？')) return;
+      var list = getHistory().filter(function(x){ return x.id !== id; });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      renderHistory();
+    }
+    function randomNumbers(){
+      document.getElementById('num1').value = Math.floor(Math.random() * 100) + 1;
+      document.getElementById('num2').value = Math.floor(Math.random() * 100) + 1;
+      document.getElementById('num3').value = Math.floor(Math.random() * 100) + 1;
+    }
+    function clearNumbers(){
+      document.getElementById('num1').value = '';
+      document.getElementById('num2').value = '';
+      document.getElementById('num3').value = '';
+    }
+
+
+    /* QA refined logic overrides: scene-aware, more practical language, and clearer display */
+    function isGoodPalace(name){ return ['大安','速喜','小吉'].indexOf(name) >= 0; }
+    function isHeavyPalace(name){ return ['留连','赤口','空亡'].indexOf(name) >= 0; }
+    function palaceRoleSentence(d){ return `${d.positionName}为${d.role}，取数 ${d.number}，连续顺推落宫为${d.palaceName}`; }
+    function sceneLabel(sceneKey, genericLabel){
+      if(sceneKey === 'lost'){
+        return {
+          '吉凶':'找回希望',
+          '快慢':'找回速度',
+          '阻力':'寻找难点',
+          '成事倾向':'找回方式',
+          '贵人助力':'外人帮助',
+          '五行气象':'线索方向'
+        }[genericLabel] || genericLabel;
+      }
+      return genericLabel;
+    }
+    function sceneMetricValue(sceneKey, key, result){
+      const m = result.metrics, d = result.details, end = d[2];
+      if(sceneKey === 'lost'){
+        const palaces = result.palaces;
+        const hasKong = palaces.indexOf('空亡') >= 0;
+        const hasLiulian = palaces.indexOf('留连') >= 0;
+        const hasChikou = palaces.indexOf('赤口') >= 0;
+        const goodCount = palaces.filter(isGoodPalace).length;
+        const values = {
+          '吉凶': hasKong ? '未绝但需复查' : (goodCount >= 2 ? '有希望' : '偏低但未绝'),
+          '快慢': (end.palaceName === '留连' || hasLiulian) ? '偏慢，需复找' : (end.palaceName === '速喜' ? '较快有线索' : '不宜急找'),
+          '阻力': hasChikou ? '急躁/翻乱/误判' : (hasLiulian ? '夹住/压住/混旧物' : '线索不明显'),
+          '成事倾向': hasKong ? '先核实再下结论' : (hasLiulian ? '慢找、复找' : '按线索查找'),
+          '贵人助力': '外人帮助有限',
+          '五行气象': lostSearchClue(d)
+        };
+        return values[key];
+      }
+      return { '吉凶':m.luckText, '快慢':m.speedText, '阻力':m.resistText, '成事倾向':m.successText, '贵人助力':m.nobleText, '五行气象':m.elementText }[key];
+    }
+    function lostSearchClue(details){
+      const palaces = details.map(d=>d.palaceName);
+      const clues = [];
+      if(palaces.indexOf('赤口') >= 0) clues.push('金属/卡片票据');
+      if(palaces.indexOf('留连') >= 0) clues.push('旧物/夹层/堆放处');
+      if(palaces.indexOf('空亡') >= 0) clues.push('空盒/角落/遗漏处');
+      if(palaces.indexOf('大安') >= 0) clues.push('固定收纳处');
+      if(palaces.indexOf('小吉') >= 0) clues.push('包袋/流动物品旁');
+      if(palaces.indexOf('速喜') >= 0) clues.push('最近拿取处');
+      return clues.length ? clues.join('、') : '旧物与收纳处';
+    }
+    function buildLostOverall(details, metrics, distribution){
+      const [start,middle,end] = details;
+      const palaces = details.map(d=>d.palaceName).join('、');
+      let opening = `本课为${palaces}。`;
+      let conclusion = '';
+      if(start.palaceName === '留连' || end.palaceName === '留连'){
+        conclusion += '失物不像是明显掉在外面，更像被夹住、压住，或混进旧物、杂物、收纳盒、包袋夹层里。';
+      } else if(start.palaceName === '空亡' || end.palaceName === '空亡'){
+        conclusion += '失物线索不够实，可能在空盒、角落、高处、遗漏处，或当前记忆有偏差。';
+      } else {
+        conclusion += '失物仍有线索可循，宜从最近使用处和固定收纳处开始查。';
+      }
+      if(details.some(d=>d.palaceName === '赤口')){
+        conclusion += '中间见赤口时，寻找过程容易急躁、翻乱、判断错，也提示金属小物、钥匙硬币、卡片票据、文具、桌边门边等处有线索。';
+      }
+      if(end.palaceName === '留连'){
+        conclusion += '末象仍为留连，表示短时间不一定一下找到，需要反复回头找。';
+      } else if(end.palaceName === '空亡'){
+        conclusion += '末象空亡，表示结果未落定，可能出现“以为不在、其实漏看”的情况，先别急着定论。';
+      }
+      return opening + conclusion + '整体来看，找回不宜说死；重点不是大范围乱翻，而是小范围、按顺序、反复拆找。优先查：抽屉角落、桌面杂物堆、旧盒旧包装、包袋夹层、卡包/票据夹、钥匙盘、硬币盒、金属小物旁、文具盒、书本夹页和柜子转角。';
+    }
+    function buildGenericOverall(details, metrics, distribution){
+      const [start,middle,end]=details;
+      const palaceLine = `本课为${details.map(d=>d.palaceName).join('、')}。`;
+      let text = palaceLine + `前象${start.palaceName}，主${start.summary.replace(/。$/,'')}；中象${middle.palaceName}，主${middle.summary.replace(/。$/,'')}；末象${end.palaceName}，主${end.summary.replace(/。$/,'')}。`;
+      if(end.palaceName === '空亡'){
+        text += '综合来看，前中段即使有消息、机会或稳定基础，最后仍要防虚浮、落空、延迟、条件未实。此课不宜只说“偏顺”，更准确是：前段可动，中段能稳，末端需复核。';
+      } else if(end.palaceName === '留连'){
+        text += '综合来看，事情不是完全不能做，但最终节奏偏慢，容易反复拖延。宜把时间、条件、责任和下一步确认清楚。';
+      } else if(end.palaceName === '赤口'){
+        text += '综合来看，后段容易落在沟通、争执、规则或口舌问题上。能不能成，关键看是否把话说清、证据留好、边界立住。';
+      } else {
+        text += `综合来看，末象落${end.palaceName}，结果端比前期更重要。${metrics.successText}，节奏为${metrics.speedText}，但仍应以现实条件是否落实为准。`;
+      }
+      text += `五行方面，${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}；${metrics.elementText}。`;
+      return text;
+    }
+    function buildOverallByScene(sceneKey, details, metrics, distribution){
+      return sceneKey === 'lost' ? buildLostOverall(details, metrics, distribution) : buildGenericOverall(details, metrics, distribution);
+    }
+    function buildAdviceByScene(sceneKey, details, metrics){
+      if(sceneKey === 'lost'){
+        const palaces = details.map(d=>d.palaceName);
+        const list = [];
+        list.push('先不要认定已经丢了。重点查“夹、压、旧、金属、卡片、收纳”相关的位置。');
+        list.push('从最后一次拿出来、展示、把玩、拍照或收纳的地方开始，不要直接扩大范围乱找。');
+        list.push('建议顺序：桌面杂物 → 抽屉角落 → 包袋夹层 → 卡包/票据夹 → 旧盒旧包装 → 钥匙硬币/金属小物区。');
+        list.push('每找完一处就复原，避免赤口象导致越找越乱、越翻越漏。');
+        if(palaces.indexOf('赤口') >= 0) list.push('赤口提示金属、钥匙、硬币、刀剪、文具、票据、卡片和门口/桌边一类位置，优先细查。');
+        if(palaces.indexOf('留连') >= 0) list.push('留连提示旧物、夹层、堆放处、旧包、旧盒、包装、柜内转角，适合隔一两天回头复找。');
+        if(palaces.indexOf('空亡') >= 0) list.push('空亡提示记忆可能有偏差，或你以为找过的地方其实漏看了；重新按顺序复核更重要。');
+        return list;
+      }
+      const [start,middle,end] = details;
+      const list = [];
+      if(end.palaceName === '空亡'){
+        list.push('可以先推进，但不要过早下结论；末象空亡时，重点是核实信息、确认条件、避免落空。');
+        list.push('把口头消息、承诺、时间点、对方态度和实际证据逐一确认。');
+      } else if(end.palaceName === '留连'){
+        list.push('此课后段偏慢，适合预留时间，不宜急催急断。');
+      } else if(end.palaceName === '赤口'){
+        list.push('此课后段防口舌和规则问题，重要内容最好文字确认。');
+      } else {
+        list.push('可按当前趋势推进，但仍要看现实条件是否真正落实。');
+      }
+      list.push(`本象${start.palaceName}看起因，中象${middle.palaceName}看过程，末象${end.palaceName}看结果；断事应以后段是否落地为重点。`);
+      list.push(`五行呈现：${details.map(d=>`${d.palaceName}=${d.element}`).join('，')}。不宜只用单一五行下结论。`);
+      return list;
+    }
+    function buildSupplementByScene(sceneKey, details, metrics){
+      if(sceneKey === 'lost'){
+        const palaces = details.map(d=>d.palaceName);
+        const places = [];
+        if(palaces.indexOf('留连') >= 0) places.push('抽屉角落、旧盒旧包装、柜子转角、堆放处、旧包、收纳盒、包袋夹层');
+        if(palaces.indexOf('赤口') >= 0) places.push('钥匙盘、硬币盒、金属小物旁、文具盒、票据夹、卡包、桌边、门口');
+        if(palaces.indexOf('空亡') >= 0) places.push('空盒、空位、高处、角落、已经找过但可能漏看的地方');
+        if(palaces.indexOf('大安') >= 0) places.push('固定收纳处、书房、办公桌、柜内稳定位置');
+        if(palaces.indexOf('小吉') >= 0) places.push('包袋、流动物品旁、交通动线、随手放的小物区');
+        if(palaces.indexOf('速喜') >= 0) places.push('最近拿出来、展示、拍照、临时放下的位置');
+        return [
+          {label:'一句话结论', value:'短时间未必一下找到，但不像完全无望；更像被夹住、压住、混进旧物或小物收纳里。'},
+          {label:'优先位置', value:[...new Set(places.join('、').split('、'))].filter(Boolean).join('、')},
+          {label:'寻找顺序', value:'最后一次使用处 → 桌面杂物 → 抽屉角落 → 包袋夹层 → 卡包/票据夹 → 旧盒旧包装 → 金属小物区。'},
+          {label:'关键线索', value:lostSearchClue(details)},
+          {label:'方位参考', value:`${[...new Set(details.map(d=>d.direction))].join('、')}。方位只作辅助，不要替代现实寻找顺序。`},
+          {label:'颜色/材质', value:`${[...new Set(details.map(d=>d.color))].join('、')}；另可特别留意金属、小铜件、卡片大小的小物。`},
+          {label:'应期参考', value:'偏慢，适合当天细找一次；若未得，隔一两天按旧物和夹层再复查。'}
+        ];
+      }
+      const mainDirs=[...new Set(details.map(d=>d.direction))].join('、');
+      const mainColors=[...new Set(details.map(d=>d.color))].join('、');
+      const mainObjects=[...new Set(details.map(d=>d.object))].join('、');
+      const mainPlaces=[...new Set(details.map(d=>d.place))].join('、');
+      const timings=[...new Set(details.map(d=>d.timing))].join('；');
+      return [
+        { label:'关键判断', value:`${details.map(d=>`${d.positionName}${d.palaceName}`).join('，')}。重点看末象${details[2].palaceName}是否能落地。` },
+        { label:'有利方位', value:`${mainDirs}。作为行动、沟通、寻找或摆放方向的象意参考。` },
+        { label:'颜色参考', value:`${mainColors}。用于提醒状态即可，不必机械照做。` },
+        { label:'五行结构', value:`${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}；${metrics.elementText}。` },
+        { label:'相关物象', value:mainObjects },
+        { label:'地点象意', value:mainPlaces },
+        { label:'应期参考', value:`${timings}。若现实条件未成熟，应期会后延。` }
+      ];
+    }
+    function buildReadingCardText(sceneKey, d){
+      if(sceneKey === 'lost'){
+        if(d.palaceName === '留连') return '失物多半不在明面上，容易被压住、夹住，或混入旧物、旧包、旧盒、抽屉、收纳处。';
+        if(d.palaceName === '赤口') return '寻找过程容易急躁、翻乱、判断错；同时提示金属、钥匙、硬币、卡片票据、文具、桌边门边有线索。';
+        if(d.palaceName === '空亡') return '线索虚浮，可能漏看、记错位置，或在空盒、角落、高处、无人注意的位置。';
+        if(d.palaceName === '大安') return '更像在固定收纳处、书房、办公桌、柜内稳定位置，不像跑远。';
+        if(d.palaceName === '速喜') return '线索可能来自最近一次拿取、展示、聊天、拍照或临时放下的位置。';
+        if(d.palaceName === '小吉') return '可从包袋、流动物品、小礼物、票据、交通动线附近找，可能有小线索。';
+      }
+      return `这一象不是单纯说好坏，而是在提醒你：这一步最明显的气是“${d.keywords.join('、')}”。问事情，就看它卡在哪里、动在哪里；问人，就看对方或自己目前处在什么状态。`;
+    }
+    function buildSinglePalaceReadingByScene(sceneKey, details){
+      return details.map(d=>{
+        const prefix = sceneKey === 'lost' ? '失物断法' : '断法';
+        const plain = sceneKey === 'lost'
+          ? `${palaceRoleSentence(d)}。${buildReadingCardText(sceneKey, d)}`
+          : `${palaceRoleSentence(d)}。通俗说，就是这一步的气象偏向“${d.keywords.join('、')}”。${SINGLE_PALACE_GUIDE[d.palaceName]}`;
+        const practical = sceneKey === 'lost'
+          ? '这里的“取数”是起课用数，“落宫”才是断事宫位。找失物时，优先看现实位置和寻找顺序，方位颜色只作辅助。'
+          : '这里的“取数”是起课用数，“落宫”才是断事宫位，两者不要混在一起理解。';
+        return `<div class="gua-card"><h5>${d.positionName} · ${d.palaceName}</h5><p><strong>${prefix}：</strong>${plain}</p><p><strong>提醒：</strong>${practical}</p></div>`;
+      }).join('');
+    }
+    function buildDoublePalaceReadingByScene(sceneKey, details){
+      if(sceneKey === 'lost'){
+        const [a,b,c] = details;
+        return [
+          `<div class="gua-card"><h5>本象 → 中象</h5><p><strong>用途：</strong>看失物状态如何影响寻找过程。</p><p><strong>组合：</strong>从${a.palaceName}到${b.palaceName}，表示先看“东西藏在哪里”，再看“怎么找会出问题”。若中象见赤口，尤其要防急躁、翻乱和误判。</p></div>`,
+          `<div class="gua-card"><h5>中象 → 末象</h5><p><strong>用途：</strong>看寻找过程会导向什么结果。</p><p><strong>组合：</strong>从${b.palaceName}到${c.palaceName}，若末象为留连，说明还要复找；若末象为空亡，说明结果未实，要重新核实找过的位置。</p></div>`,
+          `<div class="gua-card"><h5>本象 → 末象</h5><p><strong>用途：</strong>看失物整体趋势。</p><p><strong>组合：</strong>从${a.palaceName}到${c.palaceName}，重点判断“能否马上找到”。若末象不是大吉，则不宜一次找不到就放弃，适合缩小范围反复拆找。</p></div>`
+        ].join('');
+      }
+      return buildDoublePalaceReading(details);
+    }
+    function calcMetricsByScene(sceneKey, palaces){
+      const metrics = calcMetrics(palaces);
+      const endPalace = palaces[2];
+      if(sceneKey !== 'lost'){
+        if(endPalace === '空亡'){
+          metrics.luckText = '中平偏虚';
+          metrics.successText = '前景可动，结果待核实';
+          metrics.resistText = '末象防空';
+        }
+        return metrics;
+      }
+      const hasLiulian = palaces.indexOf('留连') >= 0;
+      const hasChikou = palaces.indexOf('赤口') >= 0;
+      const hasKong = palaces.indexOf('空亡') >= 0;
+      metrics.luckText = hasKong ? '未绝但需核实' : (hasLiulian ? '偏低但未绝' : '仍有线索');
+      metrics.speedText = hasLiulian || endPalace === '留连' ? '偏慢' : (endPalace === '速喜' ? '较快' : '需复查');
+      metrics.resistText = hasChikou ? '急躁/误判' : (hasLiulian ? '夹压/混旧物' : '线索不明');
+      metrics.successText = hasLiulian ? '慢找、复找' : (hasKong ? '先核实再找' : '按线索找');
+      metrics.nobleText = '主要靠自查';
+      metrics.elementText = lostSearchClue(palaces.map(p=>PALACE_DATA[p]));
+      return metrics;
+    }
+    function divine(scene, numbers, method, methodNote, extraInfo) {
+      const palaces = calculateSequentialPalaces(numbers);
+      const details = palaces.map((name,idx)=>buildPositionDetail(scene, idx, name, numbers[idx]));
+      const metrics = calcMetricsByScene(scene.key, palaces);
+      const distribution = describeDistribution(palaces, metrics);
+      const overallText = buildOverallByScene(scene.key, details, metrics, distribution);
+      const advice = buildAdviceByScene(scene.key, details, metrics);
+      const supplement = buildSupplementByScene(scene.key, details, metrics);
+      return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, numbers, palaces, details, metrics, distribution, overallText, advice, supplement };
+    }
+    function renderResult(result) {
+      document.getElementById('resultCard').classList.remove('hidden');
+      document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
+      document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
+      document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}`;
+      if(!result.supplement || result.supplement.length < 2) result.supplement = buildSupplementByScene(result.sceneKey, result.details, result.metrics);
+      if(!result.advice || result.advice.length < 2) result.advice = buildAdviceByScene(result.sceneKey, result.details, result.metrics);
+      document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
+      const keys = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'];
+      document.getElementById('summaryGrid').innerHTML=keys.map(label=>`<div class="summary-item"><span>${sceneLabel(result.sceneKey,label)}</span><b>${sceneMetricValue(result.sceneKey,label,result)}</b></div>`).join('');
+      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div><div class="keyword-row">${d.keywords.map(k=>`<span class="keyword-chip">关键词：${k}</span>`).join('')}</div><p><strong>本象说明：</strong>${d.summary}</p><p><strong>通俗理解：</strong>${buildReadingCardText(result.sceneKey, d)}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
+      document.getElementById('singlePalaceReading').innerHTML=buildSinglePalaceReadingByScene(result.sceneKey, result.details);
+      document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
+      document.getElementById('overallText').textContent=result.overallText || buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
+      document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
+      document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
+      renderBoard(result); renderRadar(result.metrics); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+    }
+
+
+    /* Global plain-language refinement: keep terms, add user-friendly explanations for every scene */
+    const SCENE_PLAIN_INFO = {
+      love: {
+        focus: '感情关系',
+        plainGoal: '看双方状态、互动节奏和关系能不能落到实处。',
+        quickLabels: ['关系倾向','推进速度','主要卡点','结果落地','沟通助力','状态气象'],
+        lead: '感情课不要只看吉凶，更要看对方是否有实际行动、关系是否能稳定落地。',
+        advice: ['先看对方是否有实际回应，不要只凭一句话或一次互动下结论。','若见赤口，少争辩，多确认真实想法；若见留连，说明关系容易反复拖着。','末象若空亡，代表结果还虚，适合先观察，不宜急着定关系或定分合。']
+      },
+      career: {
+        focus: '事业工作',
+        plainGoal: '看当前基础、推进过程和最终能不能落实。',
+        quickLabels: ['发展倾向','推进速度','工作阻力','落地程度','助力资源','执行气象'],
+        lead: '事业课重点看事情能不能推进、谁能帮忙、最后是否真正落实。',
+        advice: ['把任务拆成可执行步骤，先推进确定的部分。','若见留连，说明流程拖延或旧问题未清；若见赤口，注意沟通、合同、规则和口头承诺。','末象若空亡，表示项目或承诺仍可能落空，需要留备选方案。']
+      },
+      wealth: {
+        focus: '财运钱财',
+        plainGoal: '看机会、风险、收益是否真实。',
+        quickLabels: ['财机倾向','资金快慢','风险点','收益落实','助力渠道','财象气场'],
+        lead: '财运课不能只看有没有钱，更要看这个钱是否稳定、是否能真正到手。',
+        advice: ['先确认钱的来源、规则和兑现条件。','见速喜可有消息或机会，但仍要防一时冲动；见空亡要尤其防空头承诺。','涉及投资、借贷、合同和大额支出时，以现实账目和专业意见为准。']
+      },
+      exam: {
+        focus: '考试学习',
+        plainGoal: '看基础、临场发挥和结果稳定度。',
+        quickLabels: ['通过倾向','发挥速度','失分点','结果稳定','外部助力','学习气象'],
+        lead: '考试课重点不是迷信结果，而是找出复习和临场最容易出问题的地方。',
+        advice: ['先补最薄弱的知识点，再做模拟和错题复盘。','见赤口，注意审题、表达和粗心；见留连，说明旧错题或拖延问题要处理。','末象若空亡，代表结果不稳，考前更要回到基础和核查细节。']
+      },
+      lost: {
+        focus: '失物寻找',
+        plainGoal: '看东西是否有希望、可能在哪里、应该怎么找。',
+        quickLabels: ['找回希望','找回速度','寻找难点','找回方式','外人帮助','线索方向'],
+        lead: '失物课重点是能不能找回、可能在哪、先找哪里、怎么找。',
+        advice: []
+      },
+      health: {
+        focus: '健康状态',
+        plainGoal: '看当前状态、恢复节奏和需要注意的风险。',
+        quickLabels: ['状态倾向','恢复速度','不适重点','恢复稳定','外部帮助','调理气象'],
+        lead: '健康课只能作自我提醒，不能代替医生诊断；重点看是否拖延、反复或需要复查。',
+        advice: ['身体问题先以医学检查和医生建议为准。','见留连，多主拖延反复，要规律作息和持续调理；见赤口，注意炎症、上火、口舌牙喉或急性不适象。','末象若空亡，不要凭感觉判断，适合复查或观察数据。']
+      },
+      travel: {
+        focus: '出行安排',
+        plainGoal: '看是否顺路、是否有延误和路上要注意什么。',
+        quickLabels: ['出行倾向','路程快慢','路上阻力','到达稳定','同行助力','出行气象'],
+        lead: '出行课重点看能不能顺利出发、路上是否拖延、最终是否安稳到达。',
+        advice: ['提前确认时间、路线、票证、证件和天气。','见留连，预留时间防拖延；见赤口，注意交通规则、争执、证件和口头沟通。','末象若空亡，计划可能临时变化，最好准备替代路线。']
+      },
+      cooperation: {
+        focus: '合作关系',
+        plainGoal: '看合作基础、磨合过程和最终是否能成。',
+        quickLabels: ['合作倾向','推进速度','磨合阻力','落地程度','贵人资源','合作气象'],
+        lead: '合作课重点看双方是否同心、规则是否清楚、最后是否能真正落地。',
+        advice: ['把利益、责任、时间节点和退出机制写清楚。','见赤口，要防争执、误会和合同细节；见留连，说明合作过程容易拖。','末象若空亡，代表承诺可能虚，先小规模试合作更稳。']
+      },
+      message: {
+        focus: '消息等待',
+        plainGoal: '看对方是否会回应、回应快慢和消息是否真实。',
+        quickLabels: ['回应倾向','消息快慢','卡住原因','结果明确度','沟通助力','消息气象'],
+        lead: '消息课重点看有没有回应、多久有回应、回应是否算数。',
+        advice: ['不要反复催问，先看对方是否有实际动作。','见速喜，消息来得快；见留连，容易拖延不回；见赤口，回应可能带情绪或误会。','末象若空亡，即使有消息也未必能落实，需要二次确认。']
+      },
+      other: {
+        focus: '一般事项',
+        plainGoal: '看起因、过程和结果是否能落地。',
+        quickLabels: ['整体倾向','推进速度','主要阻力','结果落地','助力情况','整体气象'],
+        lead: '通用课先看起因是否动，过程是否稳，结果是否落地。',
+        advice: ['先把问题拆清楚，再决定下一步。','若中象受阻，重点处理过程卡点；若末象不稳，重点复核结果条件。','不要只看吉凶，最好结合现实证据判断。']
+      }
+    };
+    const PALACE_PLAIN_EFFECT = {
+      '大安': {plain:'事情偏稳，适合按计划推进，但速度不会特别快。', risk:'防止过慢、保守或只想不动。'},
+      '留连': {plain:'事情被拖住，容易反复、犹豫、卡在旧问题上。', risk:'不要一直等，先把卡点拆出来处理。'},
+      '速喜': {plain:'有消息、有机会，推进较快，适合主动接住。', risk:'来得快也容易虚热，仍要看是否能落地。'},
+      '赤口': {plain:'容易有争执、误会、规则问题或沟通不顺。', risk:'少硬碰硬，重要内容写清楚。'},
+      '小吉': {plain:'有小机会、小成果或小助力，适合先小步推进。', risk:'不要贪大，先拿可落地的小结果。'},
+      '空亡': {plain:'事情有虚、空、未实、落空或延后的象。', risk:'必须核实信息，不宜过早下结论。'}
+    };
+    function sceneInfo(sceneKey){ return SCENE_PLAIN_INFO[sceneKey] || SCENE_PLAIN_INFO.other; }
+    function plainOutcomeByEnd(endPalace){
+      return {
+        '大安':'结果端偏稳，适合稳扎稳打，慢慢落实。',
+        '留连':'结果端偏慢，容易拖延、反复或迟迟不定。',
+        '速喜':'结果端有消息、有推进，容易较快出现动向。',
+        '赤口':'结果端防争执、误会、规则或沟通问题。',
+        '小吉':'结果端有小成、小利或小的转机，可以先取小结果。',
+        '空亡':'结果端不够实，防落空、延迟、条件未成或信息不准。'
+      }[endPalace] || '';
+    }
+    function buildPlainConclusion(sceneKey, details){
+      if(sceneKey === 'lost') return buildLostOverall(details, calcMetricsByScene(sceneKey, details.map(d=>d.palaceName)), describeDistribution(details.map(d=>d.palaceName), {}));
+      const info = sceneInfo(sceneKey), [a,b,c] = details;
+      return `白话结论：这是一个关于${info.focus}的课，重点是${info.plainGoal}${a.palaceName}在前，说明开头或当前状态是“${PALACE_PLAIN_EFFECT[a.palaceName].plain}”；${b.palaceName}在中，说明过程中会表现为“${PALACE_PLAIN_EFFECT[b.palaceName].plain}”；${c.palaceName}在末，说明最后要看“${plainOutcomeByEnd(c.palaceName)}”`;
+    }
+    function sceneLabel(sceneKey, genericLabel){
+      if(sceneKey === 'lost') return SCENE_PLAIN_INFO.lost.quickLabels[['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'].indexOf(genericLabel)] || genericLabel;
+      const idx = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'].indexOf(genericLabel);
+      return idx >= 0 ? sceneInfo(sceneKey).quickLabels[idx] : genericLabel;
+    }
+    function sceneMetricValue(sceneKey, key, result){
+      if(sceneKey === 'lost'){
+        const m = result.metrics, d = result.details, end = d[2];
+        const palaces = result.palaces;
+        const hasKong = palaces.indexOf('空亡') >= 0;
+        const hasLiulian = palaces.indexOf('留连') >= 0;
+        const hasChikou = palaces.indexOf('赤口') >= 0;
+        const goodCount = palaces.filter(isGoodPalace).length;
+        return {
+          '吉凶': hasKong ? '未绝但需复查' : (goodCount >= 2 ? '有希望' : '偏低但未绝'),
+          '快慢': (end.palaceName === '留连' || hasLiulian) ? '偏慢，需复找' : (end.palaceName === '速喜' ? '较快有线索' : '不宜急找'),
+          '阻力': hasChikou ? '急躁/翻乱/误判' : (hasLiulian ? '夹住/压住/混旧物' : '线索不明显'),
+          '成事倾向': hasKong ? '先核实再下结论' : (hasLiulian ? '慢找、复找' : '按线索查找'),
+          '贵人助力': '外人帮助有限',
+          '五行气象': lostSearchClue(d)
+        }[key];
+      }
+      const m=result.metrics, end=result.details[2].palaceName;
+      const plainEnd = plainOutcomeByEnd(end);
+      return {
+        '吉凶': m.luckText,
+        '快慢': m.speedText,
+        '阻力': m.resistText,
+        '成事倾向': end === '空亡' ? '需复核再定' : (end === '留连' ? '能动但偏慢' : (end === '赤口' ? '先解沟通关' : m.successText)),
+        '贵人助力': m.nobleText,
+        '五行气象': `${result.details.map(d=>d.element).join('、')}并见`
+      }[key] || plainEnd;
+    }
+    function buildOverallByScene(sceneKey, details, metrics, distribution){
+      if(sceneKey === 'lost') return buildLostOverall(details, metrics, distribution);
+      const [a,b,c]=details;
+      const plain = buildPlainConclusion(sceneKey, details);
+      const term = `术语断法：本象${a.palaceName}，中象${b.palaceName}，末象${c.palaceName}。${distribution.text} ${a.palaceName}属${a.element}，${b.palaceName}属${b.element}，${c.palaceName}属${c.element}；方位可参考${[...new Set(details.map(d=>d.direction))].join('、')}。`;
+      let caution = `现实提醒：${sceneInfo(sceneKey).lead}`;
+      if(c.palaceName === '空亡') caution += ' 末象空亡压结果，不能只看前面有动象，最后一定要核实条件是否真实。';
+      if(c.palaceName === '留连') caution += ' 末象留连，事情多半不是不能做，而是慢、拖、反复，需要耐心拆解。';
+      if(c.palaceName === '赤口') caution += ' 末象赤口，最后容易卡在话术、规则、争执或确认细节上。';
+      return `${plain}\n\n${term}\n\n${caution}`;
+    }
+    function buildAdviceByScene(sceneKey, details, metrics){
+      if(sceneKey === 'lost') return buildAdviceBySceneLost(details, metrics);
+      const [a,b,c] = details, info = sceneInfo(sceneKey);
+      const base = [
+        `先按白话结论处理：${PALACE_PLAIN_EFFECT[a.palaceName].plain}${PALACE_PLAIN_EFFECT[b.palaceName].plain}${plainOutcomeByEnd(c.palaceName)}`,
+        ...info.advice,
+        `本象看当前，中象看过程，末象看结果；本课末象为${c.palaceName}，所以最后要特别注意：${PALACE_PLAIN_EFFECT[c.palaceName].risk}`,
+        `术语可以保留参考：${details.map(d=>`${d.positionName}${d.palaceName}属${d.element}`).join('，')}；方位参考${[...new Set(details.map(d=>d.direction))].join('、')}。`
+      ];
+      return [...new Set(base)].filter(Boolean).slice(0,7);
+    }
+    function buildAdviceBySceneLost(details, metrics){
+      const list = [];
+      list.push('先不要认定已经丢了，重点查“夹、压、旧、金属、卡片、夹层”相关位置。');
+      list.push('从最后一次拿出来的地方开始，按顺序找：桌面杂物 → 抽屉角落 → 包袋夹层 → 卡包/票据夹 → 旧盒旧包装 → 钥匙硬币/金属小物区。');
+      list.push('找的时候不要一次性全翻乱，每找完一处就复原，避免赤口象导致越找越乱。');
+      list.push('若当天没找到，隔一两天再回头找旧物和收纳处，留连象常见“后来又翻出来”。');
+      return list;
+    }
+    function buildSupplementByScene(sceneKey, details, metrics){
+      if(sceneKey === 'lost'){
+        const palaces = details.map(d=>d.palaceName);
+        const places = [];
+        if(palaces.indexOf('留连') >= 0) places.push('抽屉角落、旧盒旧包装、柜子转角、堆放处、旧包、收纳盒、包袋夹层');
+        if(palaces.indexOf('赤口') >= 0) places.push('钥匙盘、硬币盒、金属小物旁、文具盒、票据夹、卡包、桌边、门口');
+        if(palaces.indexOf('空亡') >= 0) places.push('空盒、空位、高处、角落、已经找过但可能漏看的地方');
+        if(palaces.indexOf('大安') >= 0) places.push('固定收纳处、书房、办公桌、柜内稳定位置');
+        if(palaces.indexOf('小吉') >= 0) places.push('包袋、流动物品旁、交通动线、随手放的小物区');
+        if(palaces.indexOf('速喜') >= 0) places.push('最近拿出来、展示、拍照、临时放下的位置');
+        return [
+          {label:'一句话结论', value:'短时间未必一下找到，但不像完全无望；更像被夹住、压住、混进旧物或小物收纳里。'},
+          {label:'优先位置', value:[...new Set(places.join('、').split('、'))].filter(Boolean).join('、')},
+          {label:'寻找顺序', value:'最后一次使用处 → 桌面杂物 → 抽屉角落 → 包袋夹层 → 卡包/票据夹 → 旧盒旧包装 → 金属小物区。'},
+          {label:'关键线索', value:lostSearchClue(details)},
+          {label:'方位参考', value:`${[...new Set(details.map(d=>d.direction))].join('、')}。方位只作辅助，不要替代现实寻找顺序。`},
+          {label:'颜色/材质', value:`${[...new Set(details.map(d=>d.color))].join('、')}；另可特别留意金属、小铜件、卡片大小的小物。`},
+          {label:'应期参考', value:'偏慢，适合当天细找一次；若未得，隔一两天按旧物和夹层再复查。'}
+        ];
+      }
+      return [
+        {label:'一句话结论', value:buildPlainConclusion(sceneKey, details)},
+        {label:'用户重点', value:sceneInfo(sceneKey).lead},
+        {label:'术语结构', value:`${details.map(d=>`${d.positionName}${d.palaceName}`).join('，')}。重点看末象${details[2].palaceName}是否落地。`},
+        {label:'方位参考', value:`${[...new Set(details.map(d=>d.direction))].join('、')}。用于辅助行动、沟通或判断环境，不要机械套用。`},
+        {label:'颜色参考', value:`${[...new Set(details.map(d=>d.color))].join('、')}。可作为状态提醒，不必强行照做。`},
+        {label:'五行结构', value:`${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}；三象并看，不宜只用单一五行下结论。`},
+        {label:'物象/地点', value:`物象：${[...new Set(details.map(d=>d.object))].join('、')}。地点：${[...new Set(details.map(d=>d.place))].join('、')}。`},
+        {label:'应期参考', value:`${[...new Set(details.map(d=>d.timing))].join('；')}。若现实条件未成熟，应期会后延。`}
+      ];
+    }
+    function buildReadingCardText(sceneKey, d){
+      if(sceneKey === 'lost'){
+        if(d.palaceName === '留连') return '失物多半不在明面上，容易被压住、夹住，或混入旧物、旧包、旧盒、抽屉、收纳处。';
+        if(d.palaceName === '赤口') return '寻找过程容易急躁、翻乱、判断错；同时提示金属、钥匙、硬币、卡片票据、文具、桌边门边有线索。';
+        if(d.palaceName === '空亡') return '线索虚浮，可能漏看、记错位置，或在空盒、角落、高处、无人注意的位置。';
+        if(d.palaceName === '大安') return '更像在固定收纳处、书房、办公桌、柜内稳定位置，不像跑远。';
+        if(d.palaceName === '速喜') return '线索可能来自最近一次拿取、展示、聊天、拍照或临时放下的位置。';
+        if(d.palaceName === '小吉') return '可从包袋、流动物品、小礼物、票据、交通动线附近找，可能有小线索。';
+      }
+      return `${sceneInfo(sceneKey).focus}中，${d.positionName}代表“${d.role}”。落${d.palaceName}，白话就是：${PALACE_PLAIN_EFFECT[d.palaceName].plain}要注意的是：${PALACE_PLAIN_EFFECT[d.palaceName].risk}`;
+    }
+    function buildSinglePalaceReadingByScene(sceneKey, details){
+      return details.map(d=>{
+        const term = `${palaceRoleSentence(d)}。术语看：${d.palaceName}属${d.element}，方位${d.direction}，关键词${d.keywords.join('、')}。`;
+        const plain = buildReadingCardText(sceneKey, d);
+        return `<div class="gua-card"><h5>${d.positionName} · ${d.palaceName}</h5><p><strong>术语断法：</strong>${term}${SINGLE_PALACE_GUIDE[d.palaceName] || ''}</p><p><strong>白话解读：</strong>${plain}</p><p><strong>提醒：</strong>这里的“取数”是起课用数，“落宫”才是断事宫位，两者不要混在一起理解。</p></div>`;
+      }).join('');
+    }
+    function buildDoublePalaceReadingByScene(sceneKey, details){
+      if(sceneKey === 'lost') return buildDoublePalaceReading(details);
+      const [a,b,c]=details;
+      function pairCard(title, x, y, use){
+        return `<div class="gua-card"><h5>${title}</h5><p><strong>用途：</strong>${use}</p><p><strong>术语组合：</strong>${x.palaceName} → ${y.palaceName}，${x.palaceName}属${x.element}，${y.palaceName}属${y.element}。</p><p><strong>白话理解：</strong>先是“${PALACE_PLAIN_EFFECT[x.palaceName].plain}”，接着转成“${PALACE_PLAIN_EFFECT[y.palaceName].plain}”。所以不要只看单宫，要看事情是变顺、变慢、变虚，还是变得需要沟通确认。</p></div>`;
+      }
+      return [
+        pairCard('本象 → 中象', a, b, '看当前状态如何发展成过程变化。'),
+        pairCard('中象 → 末象', b, c, '看过程最后会导向什么结果。'),
+        pairCard('本象 → 末象', a, c, '看整件事从起因到结果的大方向。')
+      ].join('');
+    }
+    function renderResult(result) {
+      document.getElementById('resultCard').classList.remove('hidden');
+      document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
+      document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
+      document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}`;
+      result.metrics = calcMetricsByScene(result.sceneKey, result.palaces);
+      result.overallText = buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
+      result.advice = buildAdviceByScene(result.sceneKey, result.details, result.metrics);
+      result.supplement = buildSupplementByScene(result.sceneKey, result.details, result.metrics);
+      document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
+      const keys = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'];
+      document.getElementById('summaryGrid').innerHTML=keys.map(label=>`<div class="summary-item"><span>${sceneLabel(result.sceneKey,label)}</span><b>${sceneMetricValue(result.sceneKey,label,result)}</b></div>`).join('');
+      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div><div class="keyword-row">${d.keywords.map(k=>`<span class="keyword-chip">关键词：${k}</span>`).join('')}</div><p><strong>术语象意：</strong>${d.summary}</p><p><strong>白话理解：</strong>${buildReadingCardText(result.sceneKey, d)}</p><p><strong>现实提醒：</strong>${PALACE_PLAIN_EFFECT[d.palaceName].risk}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
+      document.getElementById('singlePalaceReading').innerHTML=buildSinglePalaceReadingByScene(result.sceneKey, result.details);
+      document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
+      document.getElementById('overallText').innerText=result.overallText;
+      document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
+      document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
+      renderBoard(result); renderRadar(result.metrics); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+    }
+
+    init();
+  </script>
+</body>
+</html>
