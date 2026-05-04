@@ -401,6 +401,25 @@
     #analyticsContent::-webkit-scrollbar { width:10px; }
     #analyticsContent::-webkit-scrollbar-track { background:rgba(103,83,165,.06); border-radius:999px; }
     #analyticsContent::-webkit-scrollbar-thumb { background:rgba(103,83,165,.38); border-radius:999px; border:2px solid rgba(255,255,255,.82); }
+
+    #historyDialog { max-height: min(88vh, 860px); overflow:hidden; }
+    #historyDialog[open] { display:flex; flex-direction:column; }
+    #historyDialog .dialog-head, #historyDialog .history-search-row, #historyDialog .history-tools { flex:0 0 auto; }
+    #historyDialog .history-list {
+      flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; overflow-x:hidden;
+      -webkit-overflow-scrolling:touch; padding-bottom:28px;
+      scrollbar-width:thin; scrollbar-color: rgba(103,83,165,.42) rgba(103,83,165,.08);
+    }
+    #historyDialog .history-list::-webkit-scrollbar { width:10px; }
+    #historyDialog .history-list::-webkit-scrollbar-track { background:rgba(103,83,165,.06); border-radius:999px; }
+    #historyDialog .history-list::-webkit-scrollbar-thumb { background:rgba(103,83,165,.38); border-radius:999px; border:2px solid rgba(255,255,255,.82); }
+    @media (max-width: 900px) {
+      #historyDialog { width:calc(100vw - 28px); max-height:82dvh; }
+      #historyDialog .history-list { padding:14px 18px 30px; }
+      #historyDialog .dialog-head { padding:18px; }
+      #historyDialog .history-search-row { padding:14px 18px 0; }
+      #historyDialog .history-tools { padding:14px 18px 0; }
+    }
     @media (max-width: 900px) { #analyticsDialog { width:calc(100vw - 28px); max-height:82dvh; } #analyticsContent { max-height:calc(82dvh - 112px); padding-bottom:28px; } .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
   </style>
 </head>
