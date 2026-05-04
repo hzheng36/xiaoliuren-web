@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v8.4 阅读增强版</title>
-  <meta name="description" content="小六壬个人网页版 v7：全场景术语+白话增强版，新增多关键词解读。QA 反馈修正版。" />
+  <title>小六壬占卜 · v8.8 场景规则查询版</title>
+  <meta name="description" content="小六壬个人网页版 v8.8：场景规则查询版，支持本地问事识别、历史分析与场景规则查询。" />
   <style>
     :root {
       --bg: #f7f3ee;
@@ -421,6 +421,27 @@
       #historyDialog .history-tools { padding:14px 18px 0; }
     }
     @media (max-width: 900px) { #analyticsDialog { width:calc(100vw - 28px); max-height:82dvh; } #analyticsContent { max-height:calc(82dvh - 112px); padding-bottom:28px; } .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
+
+
+    /* v8.8 场景规则查询 */
+    #rulesDialog { max-height: min(88vh, 860px); overflow:hidden; }
+    #rulesDialog[open] { display:flex; flex-direction:column; }
+    #rulesDialog .dialog-head, #rulesDialog .rules-toolbar { flex:0 0 auto; }
+    .rules-toolbar { padding:16px 24px 0; display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:12px; }
+    .rules-content { flex:1 1 auto; min-height:0; overflow:auto; -webkit-overflow-scrolling:touch; padding:18px 24px 28px; scrollbar-width:thin; scrollbar-color: rgba(103,83,165,.42) rgba(103,83,165,.08); }
+    .rules-content::-webkit-scrollbar { width:10px; }
+    .rules-content::-webkit-scrollbar-track { background:rgba(103,83,165,.06); border-radius:999px; }
+    .rules-content::-webkit-scrollbar-thumb { background:rgba(103,83,165,.38); border-radius:999px; border:2px solid rgba(255,255,255,.82); }
+    .rules-note { background:rgba(229,196,138,.12); border:1px solid rgba(188,133,65,.15); border-radius:18px; padding:14px 16px; color:#5b526a; line-height:1.75; margin-bottom:14px; }
+    .rules-grid { display:grid; gap:12px; }
+    .rule-card { background:rgba(255,255,255,.97); border:1px solid var(--line); border-radius:18px; padding:15px 16px; box-shadow:var(--shadow-sm); }
+    .rule-card h4 { margin:0 0 8px; color:var(--primary); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .rule-card p { margin:7px 0; color:#443b59; line-height:1.78; }
+    .rule-card .rule-scenes { color:var(--text); font-weight:700; }
+    .rule-card .rule-tag { display:inline-block; margin:4px 6px 0 0; padding:4px 8px; border-radius:999px; background:rgba(103,83,165,.08); color:var(--primary); font-size:.86rem; }
+    .rules-empty { padding:28px 10px; color:var(--muted); text-align:center; }
+    @media (max-width: 900px) { #rulesDialog { width:calc(100vw - 28px); max-height:82dvh; } .rules-toolbar { grid-template-columns:1fr; padding:14px 18px 0; } .rules-content { padding:14px 18px 26px; } }
+
   </style>
 </head>
 <body>
@@ -458,12 +479,13 @@
     <main class="main">
       <header class="hero card">
         <div>
-          <h2>个人占卜台 · v8.6 简洁答案版 + 详细解释版</h2>
-          <p>本版增强本地问事规则库，并新增一键复制结果；不联网、不接 API，仍在浏览器本地完成分析。</p>
+          <h2>个人占卜台 · v8.8 场景规则查询版</h2>
+          <p>本版增强本地问事规则库，并新增“场景规则”查询；不联网、不接 API，仍在浏览器本地完成分析。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
           <button class="ghost-btn" id="analyticsBtn">历史分析</button>
+          <button class="ghost-btn" id="rulesBtn">场景规则</button>
           <button class="ghost-btn" id="resetBtn">重新占卜</button>
         </div>
       </header>
@@ -641,6 +663,22 @@
     <div id="analyticsContent"></div>
   </dialog>
 
+
+  <dialog id="rulesDialog">
+    <div class="dialog-head">
+      <div>
+        <h3>场景规则</h3>
+        <p>首页选择“大场景”，占问事项会触发更细的“专项规则”。这里可查询该选哪个场景。</p>
+      </div>
+      <button class="icon-btn" id="closeRulesBtn" onclick="closeRulesDialog()">×</button>
+    </div>
+    <div class="rules-toolbar">
+      <input id="rulesSearchInput" type="search" placeholder="搜索规则：例如 油价 / 前任 / 宠物 / 签证 / 抽奖">
+      <select id="rulesSceneFilter"><option value="all">全部建议场景</option></select>
+    </div>
+    <div class="rules-content" id="rulesContent"></div>
+  </dialog>
+
   <dialog id="historyDialog">
     <div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
     <div class="history-search-row"><input id="historySearchInput" type="search" placeholder="搜索历史：场景 / 问题 / 宫位"><select id="historySceneFilter"><option value="all">全部场景</option></select></div><div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div>
@@ -706,6 +744,9 @@
       document.getElementById('resetBtn').addEventListener('click', resetForm);
       document.getElementById('historyBtn').addEventListener('click', openHistoryDialog);
       const analyticsBtn = document.getElementById('analyticsBtn'); if (analyticsBtn) analyticsBtn.addEventListener('click', openAnalyticsDialog);
+      const rulesBtn = document.getElementById('rulesBtn'); if (rulesBtn) rulesBtn.addEventListener('click', openRulesDialog);
+      const rulesSearchInput = document.getElementById('rulesSearchInput'); if (rulesSearchInput) rulesSearchInput.addEventListener('input', renderSceneRules);
+      const rulesSceneFilter = document.getElementById('rulesSceneFilter'); if (rulesSceneFilter) rulesSceneFilter.addEventListener('change', renderSceneRules);
       const closeAnalyticsBtn = document.getElementById('closeAnalyticsBtn'); if (closeAnalyticsBtn) closeAnalyticsBtn.addEventListener('click', closeAnalyticsDialog);
       document.getElementById('closeHistoryBtn').addEventListener('click', closeHistoryDialog);
       document.getElementById('showAllBtn').addEventListener('click', ()=>{ historyFilter='all'; renderHistory(); });
@@ -2897,6 +2938,49 @@ ${nextStep}`;
         return { key:bestKey, title:rule.title, question:q, hits:hits.length ? hits : ['按语义推断'], focus:rule.focus, advice:rule.advice, rule, manual:false };
       };
     }
+
+    /* v8.8 场景规则查询 */
+    const SCENE_RULE_ROWS = [{"type": "感情 / 前任 / 复合 / 暧昧", "scenes": ["感情"], "keywords": ["前任", "复合", "冷战", "断联", "暧昧", "表白", "主动联系"], "questions": "前任会不会联系我？能不能复合？对方是否真心？要不要主动？", "note": "重点看关系是否有实际行动、消息是否落实、末象是否空亡或赤口。"}, {"type": "人物态度判断", "scenes": ["感情", "事业", "合作", "其他"], "keywords": ["怎么看我", "态度", "真心", "领导态度", "客户态度", "朋友态度"], "questions": "他怎么看我？领导会不会同意？客户靠谱吗？", "note": "看对象是谁来归场景；感情对象选感情，领导选事业，客户伙伴选合作。"}, {"type": "消息 / 联系 / 等回复", "scenes": ["消息等待", "感情", "事业", "合作"], "keywords": ["回复", "联系", "消息", "通知", "电话", "微信", "邮件", "审批结果"], "questions": "对方会不会回复？通知什么时候来？邮件有没有结果？", "note": "重点看速喜、小吉是否有动，以及末象是否真正落实。"}, {"type": "财运 / 投资 / 回款 / 工资奖金", "scenes": ["财运"], "keywords": ["投资", "回款", "借钱", "欠款", "工资", "奖金", "副业", "赚钱"], "questions": "钱能不能回来？投资能不能做？工资奖金有没有消息？", "note": "重点看钱能否落袋，空亡防承诺落空，赤口防合同争议。"}, {"type": "行情 / 价格 / 涨跌", "scenes": ["财运"], "keywords": ["油价", "金价", "股价", "基金", "汇率", "价格", "行情", "上涨", "下跌"], "questions": "油价会不会下跌？黄金会不会涨？这只股票走势如何？", "note": "属于行情娱乐参考，不构成投资建议；重点看短线波动和末象落实。"}, {"type": "购物 / 消费 / 买不买", "scenes": ["财运", "选择"], "keywords": ["买不买", "值得买", "网购", "二手", "质量", "售后", "退货", "降价"], "questions": "这个东西值不值得买？现在买会不会后悔？", "note": "花钱决策偏财运；二选一或去不去买可用选择。"}, {"type": "彩票 / 抽奖 / 中奖娱乐", "scenes": ["其他", "财运"], "keywords": ["彩票", "抽奖", "中奖", "奖券", "刮刮乐", "小奖", "大奖"], "questions": "这次抽奖有没有机会？买彩票有没有小惊喜？", "note": "只作娱乐参考，不提供号码，不承诺中奖，不鼓励加注、追投或倍投。"}, {"type": "事业 / 工作 / 项目 / 职场", "scenes": ["事业"], "keywords": ["工作", "项目", "领导", "同事", "升职", "跳槽", "转岗", "绩效", "汇报"], "questions": "项目能不能推进？领导态度怎样？这次跳槽合不合适？", "note": "重点看流程是否推进、沟通是否顺、承诺是否真正落地。"}, {"type": "求职 / 面试 / Offer", "scenes": ["求职", "考试", "事业"], "keywords": ["面试", "offer", "入职", "岗位", "简历", "录用", "求职"], "questions": "这次面试能不能过？offer 会不会来？", "note": "求职相关优先选求职；偏考试申请也可选考试。"}, {"type": "学习 / 技能提升 / 课程", "scenes": ["考试"], "keywords": ["学习", "课程", "老师", "自学", "技能", "语言", "培训", "进步"], "questions": "适不适合学这个课程？学习效率会不会提高？", "note": "长期学习和考证准备都归考试/学习，重点看能否持续。"}, {"type": "考试 / 申请 / 证书", "scenes": ["考试"], "keywords": ["考试", "成绩", "通过", "证书", "报名", "录取", "资格"], "questions": "考试能不能过？申请会不会成功？", "note": "重点看基础、流程、结果是否真正落地。"}, {"type": "失物 / 找东西", "scenes": ["失物"], "keywords": ["丢了", "找不到", "放哪里", "失物", "钥匙", "钱包", "证件", "金属", "抽屉"], "questions": "东西放哪里了？钥匙钱包能不能找到？", "note": "重点看可能位置和寻找顺序，方位要转成现实地点。"}, {"type": "地点 / 方位 / 去哪里找", "scenes": ["失物", "出行", "其他"], "keywords": ["在哪里", "在哪", "去哪里", "哪个方向", "位置", "方位", "找哪里"], "questions": "东西在哪里？该往哪个方向找？适合去哪里？", "note": "找东西选失物；出门路线选出行；泛用地点选其他。"}, {"type": "宠物 / 动物", "scenes": ["失物", "健康", "其他"], "keywords": ["宠物", "猫", "狗", "走失", "跑丢", "宠物医院", "回来"], "questions": "猫狗会不会回来？宠物状态会不会好？", "note": "宠物走失归失物，宠物健康归健康，适应环境归其他。"}, {"type": "健康 / 身体状态", "scenes": ["健康"], "keywords": ["健康", "恢复", "复查", "感冒", "疼痛", "睡眠", "旧疾", "体检"], "questions": "状态会不会好转？复查结果怎样？", "note": "只作传统文化参考，不替代医疗判断。"}, {"type": "情绪 / 心理状态", "scenes": ["健康"], "keywords": ["焦虑", "压力", "心情", "情绪", "内耗", "失眠", "不安"], "questions": "这段时间状态能不能好起来？我是不是想太多？", "note": "偏自我状态观察；持续严重不适请寻求专业支持。"}, {"type": "天气 / 降雨 / 户外天气", "scenes": ["天气", "出行"], "keywords": ["下雨", "降雨", "天气", "阵雨", "晴天", "阴天", "刮风", "降温", "台风"], "questions": "明天会不会下雨？周末适不适合露营？", "note": "天气本身选天气；若问是否影响行程，可同时参考出行。"}, {"type": "出行 / 行程 / 交通", "scenes": ["出行"], "keywords": ["出行", "旅行", "开车", "航班", "火车", "堵车", "延误", "行程"], "questions": "路上顺不顺？航班会不会延误？适不适合出门？", "note": "重点看拖延、变动、规则和安全提醒。"}, {"type": "合作 / 合同 / 客户 / 合伙", "scenes": ["合作"], "keywords": ["合作", "合伙", "合同", "客户", "签约", "谈判", "协议", "订单"], "questions": "合同能不能签？客户靠谱吗？合作能不能成？", "note": "重点看条款、责任边界和承诺是否落实。"}, {"type": "法务 / 纠纷 / 投诉", "scenes": ["合作", "其他"], "keywords": ["纠纷", "投诉", "维权", "赔偿", "诉讼", "证据", "调解", "官司"], "questions": "投诉会不会有结果？纠纷能不能解决？", "note": "合同纠纷偏合作，其它维权投诉可选其他；不替代法律意见。"}, {"type": "手续 / 审批 / 证件", "scenes": ["其他", "事业", "考试"], "keywords": ["签证", "证件", "审批", "审核", "报销", "申请", "材料", "盖章"], "questions": "签证会不会过？报销什么时候下来？材料有没有问题？", "note": "工作审批选事业；报名资格选考试；签证证件选其他。"}, {"type": "家宅 / 房屋 / 搬家", "scenes": ["家宅"], "keywords": ["搬家", "租房", "买房", "装修", "邻里", "漏水", "维修", "家里"], "questions": "这个房子适不适合租？搬家顺不顺？", "note": "重点看居住稳定、家中旧问题、合同与维修争议。"}, {"type": "家人 / 长辈 / 子女", "scenes": ["其他", "健康", "考试"], "keywords": ["父母", "家人", "长辈", "孩子", "子女", "亲子", "家庭"], "questions": "父母会不会同意？孩子考试怎样？家人态度如何？", "note": "家人态度选其他，身体选健康，孩子考试选考试。"}, {"type": "人际关系 / 社交", "scenes": ["其他", "合作", "感情"], "keywords": ["朋友", "同学", "同事关系", "亲戚", "邻里", "社交", "误会", "和好"], "questions": "这个朋友是不是对我有意见？要不要解释？", "note": "普通关系选其他；合作关系选合作；带恋爱暧昧选感情。"}, {"type": "电子产品 / 设备故障", "scenes": ["其他", "选择", "财运"], "keywords": ["手机", "电脑", "家电", "网络", "账号", "软件", "故障", "维修", "数据"], "questions": "手机能不能修好？账号能不能找回？要不要换电脑？", "note": "故障维修选其他；要不要换/买选选择；价格问题选财运。"}, {"type": "创作 / 内容 / 发布", "scenes": ["事业", "其他"], "keywords": ["写作", "文章", "视频", "发布", "作品", "流量", "评论", "投稿", "审核"], "questions": "这篇文章反响如何？视频会不会有流量？", "note": "工作内容选事业，个人创作选其他。"}, {"type": "比赛 / 竞赛 / 游戏", "scenes": ["考试", "其他", "财运"], "keywords": ["比赛", "竞赛", "游戏", "胜负", "赢", "输", "排名", "抽卡"], "questions": "比赛能不能赢？竞赛发挥怎么样？", "note": "正式竞赛选考试，游戏胜负选其他，奖励收益才参考财运。"}, {"type": "梦境 / 预感 / 灵感", "scenes": ["其他"], "keywords": ["梦", "梦见", "预感", "直觉", "灵感", "征兆", "心慌"], "questions": "这个梦是什么意思？这个预感准不准？", "note": "用于自我梳理，不宜过度解读。"}, {"type": "选择 / 决策", "scenes": ["选择"], "keywords": ["要不要", "选哪个", "买不买", "去不去", "换不换", "继续还是放弃"], "questions": "要不要做？选 A 还是 B？现在做还是以后做？", "note": "适合所有二选一、要不要、去不去类问题。"}, {"type": "是 / 否判断", "scenes": ["跟随原问题场景"], "keywords": ["会不会", "能不能", "是否", "能否", "有没有希望", "成不成"], "questions": "会不会发生？能不能成功？有没有希望？", "note": "横向规则，不单独选场景；跟随具体问题类型。"}, {"type": "时间 / 何时发生", "scenes": ["跟随原问题场景"], "keywords": ["什么时候", "多久", "几天", "何时", "快不快"], "questions": "什么时候联系我？多久能找到？什么时候到账？", "note": "横向应期规则，跟随原问题场景。"}, {"type": "是否主动 / 是否等待", "scenes": ["感情", "消息等待", "事业", "合作", "选择"], "keywords": ["要不要主动", "该不该主动", "要不要联系", "要不要催", "等不等"], "questions": "要不要主动联系？要不要催？该不该现在做？", "note": "主动类问题看速喜/小吉是否可动，赤口要柔，空亡先核实。"}, {"type": "风险 / 坑点识别", "scenes": ["财运", "合作", "事业", "其他"], "keywords": ["风险", "坑", "踩坑", "隐患", "靠谱吗", "有没有问题"], "questions": "这件事有没有坑？对方靠谱吗？会不会出问题？", "note": "投资风险选财运，合同风险选合作，项目风险选事业。"}];
+    function allSceneFilterNames(){
+      const names = new Set(['all']);
+      SCENE_RULE_ROWS.forEach(row => (row.scenes || []).forEach(s => names.add(s)));
+      return Array.from(names).filter(x => x !== 'all');
+    }
+    function initRulesDialog(){
+      const sel = document.getElementById('rulesSceneFilter');
+      if (!sel) return;
+      const sceneNames = allSceneFilterNames();
+      sel.innerHTML = '<option value="all">全部建议场景</option>' + sceneNames.map(name => `<option value="${escapeHTML(name)}">${escapeHTML(name)}</option>`).join('');
+    }
+    function openRulesDialog(){
+      initRulesDialog();
+      renderSceneRules();
+      const dlg = document.getElementById('rulesDialog');
+      if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+      else if (dlg) dlg.setAttribute('open','open');
+    }
+    function closeRulesDialog(){
+      const dlg = document.getElementById('rulesDialog');
+      if (dlg && typeof dlg.close === 'function') dlg.close();
+      else if (dlg) dlg.removeAttribute('open');
+    }
+    function renderSceneRules(){
+      const box = document.getElementById('rulesContent');
+      if (!box) return;
+      const keyword = (document.getElementById('rulesSearchInput')?.value || '').trim().toLowerCase();
+      const scene = document.getElementById('rulesSceneFilter')?.value || 'all';
+      const rows = SCENE_RULE_ROWS.filter(row => {
+        const sceneOk = scene === 'all' || (row.scenes || []).includes(scene);
+        const hay = [row.type, (row.scenes||[]).join(' '), (row.keywords||[]).join(' '), row.questions, row.note].join(' ').toLowerCase();
+        const keywordOk = !keyword || hay.indexOf(keyword) !== -1;
+        return sceneOk && keywordOk;
+      });
+      const note = `<div class="rules-note"><strong>使用方法：</strong>首页选择的是“大场景”，例如财运、感情、失物；占问事项会触发更细的“专项规则”，例如油价会识别为行情/涨跌，前任会识别为感情/复合，抽奖会识别为彩票/抽奖娱乐。若识别不准，可在“识别到的问题类型”里手动修正。</div>`;
+      if (!rows.length) { box.innerHTML = note + '<div class="rules-empty">没有找到匹配的规则。可以换个关键词，例如“油价、前任、宠物、签证、抽奖”。</div>'; return; }
+      box.innerHTML = note + `<div class="rules-grid">${rows.map(row => `<article class="rule-card"><h4><span>${escapeHTML(row.type)}</span><span class="rule-scenes">${escapeHTML((row.scenes||[]).join(' / '))}</span></h4><p><strong>适合问题：</strong>${escapeHTML(row.questions || '')}</p><p><strong>说明：</strong>${escapeHTML(row.note || '')}</p><p><strong>关键词：</strong>${(row.keywords||[]).map(k=>`<span class="rule-tag">${escapeHTML(k)}</span>`).join('')}</p></article>`).join('')}</div>`;
+    }
+
+
     installV87ExpandedRules();
 
 
