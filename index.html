@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v8.1 场景规则增强版</title>
+  <title>小六壬占卜 · v8.2 综合增强版</title>
   <meta name="description" content="小六壬个人网页版 v7：全场景术语+白话增强版，新增多关键词解读。QA 反馈修正版。" />
   <style>
     :root {
@@ -193,6 +193,20 @@
     .context-card p { margin:8px 0; line-height:1.78; color:#443b58; }
     .context-summary { background: rgba(229,196,138,.13); border:1px solid rgba(188,133,65,.16); border-radius:18px; padding:14px 16px; line-height:1.78; }
 
+    .context-controls { display:grid; grid-template-columns: minmax(0,1fr) 170px; gap:12px; align-items:end; margin-top:10px; }
+    .select-control { width:100%; padding:12px 14px; border-radius:16px; border:1px solid var(--line); background:rgba(255,255,255,.96); color:var(--text); outline:none; }
+    .view-toggle { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .view-toggle .ghost-btn.active { background:rgba(103,83,165,.12); border-color:rgba(103,83,165,.35); color:var(--primary); font-weight:700; }
+    .result-section.simple-mode .detail-only { display:none !important; }
+    .simple-note { color:var(--muted); font-size:.92rem; line-height:1.6; margin-top:8px; }
+    .history-search-row { padding: 14px 24px 0; display:grid; grid-template-columns: minmax(0,1fr) 170px; gap:10px; }
+    .history-search-row input, .history-search-row select { padding:11px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; }
+    .about-rules { display:grid; gap:12px; }
+    .about-rules details { background:rgba(255,255,255,.72); border:1px solid var(--line); border-radius:16px; padding:12px 14px; }
+    .about-rules summary { cursor:pointer; color:var(--primary); font-weight:700; }
+    .about-rules p, .about-rules li { line-height:1.75; color:#443b58; }
+
+
     .result-section { padding:22px; }
     .result-header { display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:center; margin-bottom:18px; padding-bottom:16px; border-bottom:1px dashed var(--line); }
     .eyebrow { margin:0 0 6px; color: var(--muted); }
@@ -297,6 +311,7 @@
       .event-tools { flex-direction:column; align-items:flex-start; }
       .symbol-row { grid-template-columns: 1fr; gap:4px; }
       .context-cards { grid-template-columns: 1fr; }
+      .context-controls, .history-search-row { grid-template-columns: 1fr; }
       .hex-board { transform: scale(.92); transform-origin:center; }
       .radar-wrap canvas { width:min(100%, 330px); }
     }
@@ -351,7 +366,7 @@
     <main class="main">
       <header class="hero card">
         <div>
-          <h2>个人占卜台 · v8.1 场景规则增强版</h2>
+          <h2>个人占卜台 · v8.2 综合增强版</h2>
           <p>本版增强本地问事规则库，并新增一键复制结果；不联网、不接 API，仍在浏览器本地完成分析。</p>
         </div>
         <div class="actions">
@@ -383,7 +398,27 @@
             <span class="question-count" id="questionCount">0 / 160 字</span>
             <button class="ghost-btn" id="clearQuestionBtn" type="button">清空事项</button>
           </div>
-          <div class="question-tip">本功能是本地规则分析，不联网、不接 API；它会把你的问题转换成天气、消息、感情、财运、失物等专项断法。</div>
+          <div class="context-controls">
+            <label><span>识别到的问题类型，可手动修正</span><select id="contextTypeSelect" class="select-control">
+              <option value="auto">自动识别</option>
+              <option value="weather">天气 / 降雨</option>
+              <option value="message">消息 / 联系</option>
+              <option value="love">感情 / 复合</option>
+              <option value="money">财运 / 投资</option>
+              <option value="lost">失物 / 找东西</option>
+              <option value="career">事业 / 工作</option>
+              <option value="job">求职 / 面试</option>
+              <option value="cooperation">合作 / 合同</option>
+              <option value="exam">考试 / 申请</option>
+              <option value="travel">出行 / 行程</option>
+              <option value="health">健康 / 调理</option>
+              <option value="home">家宅 / 居住</option>
+              <option value="legal">文书 / 纠纷</option>
+              <option value="choice">选择 / 决策</option>
+            </select></label>
+            <button class="ghost-btn" id="resetContextTypeBtn" type="button">恢复自动</button>
+          </div>
+          <div class="question-tip">本功能是本地规则分析，不联网、不接 API；它会把你的问题转换成天气、消息、感情、财运、失物等专项断法。系统会自动识别，也可以手动修正类型。</div>
         </div>
       </section>
       <section class="card section">
@@ -440,7 +475,7 @@
             <p class="result-method" id="resultMethod"></p>
           </div>
           <div class="actions">
-            <button class="ghost-btn" id="copyResultBtn">复制结果</button>
+            <button class="ghost-btn" id="copyResultBtn">复制结果</button><span class="view-toggle"><button class="ghost-btn active" id="detailViewBtn" type="button">详细版</button><button class="ghost-btn" id="simpleViewBtn" type="button">简洁版</button></span>
             <button class="ghost-btn" id="saveBtn">保存结果</button>
             <button class="ghost-btn" id="favBtn">收藏</button>
           </div>
@@ -471,29 +506,30 @@
           <div class="context-analysis" id="contextAnalysisContent"></div>
         </article>
         <div class="summary-grid" id="summaryGrid"></div>
-        <article class="block">
+        <article class="block detail-only">
           <h4>三象解读</h4>
           <div class="tri-reading" id="threeReading"></div>
         </article>
-        <article class="block">
+        <article class="block detail-only">
           <h4>单宫断事解卦</h4>
           <div class="gua-reading" id="singlePalaceReading"></div>
         </article>
-        <article class="block">
+        <article class="block detail-only">
           <h4>双宫断事解卦</h4>
           <div class="gua-reading" id="doublePalaceReading"></div>
         </article>
-        <div class="insight-grid">
+        <div class="insight-grid detail-only">
           <article class="block"><h4>象意补充</h4><div class="symbol-table" id="symbolSupplement"></div></article>
           <article class="block"><h4>雷达分析图</h4><div class="radar-wrap"><canvas id="radarCanvas" width="420" height="380"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
         </div>
         <article class="block"><h4>行动建议</h4><ul id="adviceList"></ul></article>
+        <article class="block detail-only"><h4>版本说明 / 起课规则说明</h4><div class="about-rules" id="aboutRulesBlock"></div></article>
       </section>
     </main>
   </div>
   <dialog id="historyDialog">
     <div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
-    <div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div>
+    <div class="history-search-row"><input id="historySearchInput" type="search" placeholder="搜索历史：场景 / 问题 / 宫位"><select id="historySceneFilter"><option value="all">全部场景</option></select></div><div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div>
     <div class="history-list" id="historyList"></div>
   </dialog>
   <script>
@@ -533,6 +569,10 @@
       { key: 'travel', name: '出行', icon: '✈️', positions: ['出行基础', '途中变化', '结果安稳'] },
       { key: 'cooperation', name: '合作', icon: '🤝', positions: ['合作基础', '磨合过程', '合作结果'] },
       { key: 'message', name: '消息等待', icon: '💬', positions: ['对方/事件状态', '消息阻滞', '是否回应'] },
+      { key: 'weather', name: '天气', icon: '🌦️', positions: ['天气起势', '过程变化', '最终天气'] },
+      { key: 'job', name: '求职', icon: '🧑‍💼', positions: ['自身基础', '面试/流程', '结果趋势'] },
+      { key: 'home', name: '家宅', icon: '🏠', positions: ['家中气象', '过程变化', '最终安稳'] },
+      { key: 'choice', name: '选择', icon: '🧩', positions: ['当前想法', '过程权衡', '最终取舍'] },
       { key: 'other', name: '其他', icon: '🧭', positions: ['起因状态', '过程变化', '最终趋势'] },
     ];
     const sceneGrid = document.getElementById('sceneGrid');
@@ -551,7 +591,7 @@
       document.getElementById('divineBtn').addEventListener('click', handleDivine);
       document.getElementById('resetBtn').addEventListener('click', resetForm);
       document.getElementById('historyBtn').addEventListener('click', openHistoryDialog);
-      document.getElementById('closeHistoryBtn').addEventListener('click', ()=>historyDialog.close());
+      document.getElementById('closeHistoryBtn').addEventListener('click', closeHistoryDialog);
       document.getElementById('showAllBtn').addEventListener('click', ()=>{ historyFilter='all'; renderHistory(); });
       document.getElementById('showFavBtn').addEventListener('click', ()=>{ historyFilter='fav'; renderHistory(); });
       document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
@@ -565,7 +605,18 @@
       const questionInput = document.getElementById('questionInput');
       const clearQuestionBtn = document.getElementById('clearQuestionBtn');
       if (questionInput) questionInput.addEventListener('input', updateQuestionCount);
-      if (clearQuestionBtn) clearQuestionBtn.addEventListener('click', ()=>{ questionInput.value=''; updateQuestionCount(); questionInput.focus(); });
+      if (clearQuestionBtn) clearQuestionBtn.addEventListener('click', ()=>{ questionInput.value=''; updateQuestionCount(); questionInput.focus(); updateContextTypeAuto(); });
+      const resetContextTypeBtn = document.getElementById('resetContextTypeBtn');
+      if (resetContextTypeBtn) resetContextTypeBtn.addEventListener('click', ()=>{ document.getElementById('contextTypeSelect').value='auto'; updateContextTypeAuto(); });
+      if (questionInput) questionInput.addEventListener('input', updateContextTypeAuto);
+      const historySearchInput = document.getElementById('historySearchInput');
+      const historySceneFilter = document.getElementById('historySceneFilter');
+      if (historySearchInput) historySearchInput.addEventListener('input', renderHistory);
+      if (historySceneFilter) historySceneFilter.addEventListener('change', renderHistory);
+      const detailViewBtn = document.getElementById('detailViewBtn');
+      const simpleViewBtn = document.getElementById('simpleViewBtn');
+      if (detailViewBtn) detailViewBtn.addEventListener('click', ()=>setResultViewMode('detail'));
+      if (simpleViewBtn) simpleViewBtn.addEventListener('click', ()=>setResultViewMode('simple'));
       document.getElementById('eventText').addEventListener('input', updateEventCount);
       document.getElementById('clearEventBtn').addEventListener('click', ()=>{ document.getElementById('eventText').value=''; updateEventCount(); document.getElementById('eventNote').textContent='事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。'; });
     }
@@ -731,7 +782,7 @@
       document.getElementById('overallText').textContent=result.overallText;
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+      renderBoard(result); renderRadar(result.metrics); const about=document.getElementById('aboutRulesBlock'); if(about) about.innerHTML=buildAboutRulesHTML(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
     }
     function renderBoard(result) { const board=document.getElementById('hexBoard'); board.querySelectorAll('.hex-node').forEach(n=>n.remove()); const classes={ '大安':'hex-da','留连':'hex-ll','速喜':'hex-sx','赤口':'hex-ck','小吉':'hex-xj','空亡':'hex-kw' }; PALACE_ORDER.forEach(name=>{ const tags=[]; result.details.forEach(d=>{ if(d.palaceName===name) tags.push(d.positionName); }); const node=document.createElement('div'); node.className=`hex-node ${classes[name]} ${tags.length?'active':''}`; node.innerHTML=`<b>${name}</b><small>${PALACE_DATA[name].element} · ${PALACE_DATA[name].direction.split(' / ')[0]}</small><div class="node-tags">${tags.length ? tags.map(t=>`<span class="node-tag">${t}</span>`).join('') : '<span class="node-tag">未落</span>'}</div>`; board.appendChild(node); }); document.getElementById('distributionText').textContent=result.distribution.text; document.getElementById('distributionTag').textContent=result.metrics.goodCount >= 2 ? '吉宫偏多' : result.metrics.heavyCount >= 2 ? '阻滞偏多' : '三象分散'; }
     function renderRadar(metrics) {
@@ -884,11 +935,24 @@
     function toggleCurrentFavorite() { if(!currentResult) return alert('请先占卜。'); currentResult.favorite=!currentResult.favorite; document.getElementById('favBtn').textContent=currentResult.favorite?'已收藏':'收藏'; const list=getHistory(); const found=list.find(item=>item.id===currentResult.id); if(found) found.favorite=currentResult.favorite; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
     function renderHistory() {
       var list = getHistory();
-      var filtered = historyFilter === 'fav' ? list.filter(function(item){ return item.favorite; }) : list;
+      var qEl = document.getElementById('historySearchInput');
+      var sceneEl = document.getElementById('historySceneFilter');
+      var keyword = qEl ? String(qEl.value || '').trim() : '';
+      var sceneFilter = sceneEl ? sceneEl.value : 'all';
+      var filtered = list.filter(function(item){
+        if (historyFilter === 'fav' && !item.favorite) return false;
+        if (sceneFilter !== 'all' && item.sceneKey !== sceneFilter) return false;
+        if (keyword) {
+          var hay = [item.sceneName, item.question, item.methodNote, (item.palaces||[]).join(' / '), item.overallText].join(' ');
+          if (hay.indexOf(keyword) === -1) return false;
+        }
+        return true;
+      });
       var container = document.getElementById('historyList');
       if(!filtered.length){ container.innerHTML = '<div class="history-empty">暂无记录</div>'; return; }
       container.innerHTML = filtered.map(function(item){
-        return '<div class="history-item"><div class="history-row"><strong>' + (item.sceneIcon || '') + ' ' + item.sceneName + '</strong><span style="color:var(--muted);font-size:.93rem;">' + formatISO(item.createdAt) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div><div class="history-meta"><span>' + item.methodNote + '</span><span>' + item.palaces.join(' / ') + '</span></div><div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + item.id + '\')">查看</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + item.id + '\')">删除</button></div></div>';
+        var q = item.question ? '<div style="margin-top:6px;color:var(--muted);">问：' + escapeHTML(item.question).slice(0,80) + '</div>' : '';
+        return '<div class="history-item"><div class="history-row"><strong>' + (item.sceneIcon || '') + ' ' + item.sceneName + '</strong><span style="color:var(--muted);font-size:.93rem;">' + formatISO(item.createdAt) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div>' + q + '<div class="history-meta"><span>' + item.methodNote + '</span><span>' + item.palaces.join(' / ') + '</span></div><div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + item.id + '\')">查看</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + item.id + '\')">删除</button></div></div>';
       }).join('');
     }
     function handleHistoryActions(e) { const viewId=e.target.closest('[data-view]')?.dataset.view; if(viewId){ const item=getHistory().find(x=>x.id===viewId); if(item){ currentResult=item; renderResult(item); historyDialog.close(); } return; } const delId=e.target.closest('[data-delete]')?.dataset.delete; if(delId){ if(!confirm('确定删除这条历史记录吗？')) return; const list=getHistory().filter(x=>x.id!==delId); localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); renderHistory(); } }
@@ -1186,7 +1250,7 @@
       document.getElementById('overallText').textContent=result.overallText || buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+      renderBoard(result); renderRadar(result.metrics); const about=document.getElementById('aboutRulesBlock'); if(about) about.innerHTML=buildAboutRulesHTML(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
     }
 
 
@@ -1271,6 +1335,13 @@
       '小吉': {plain:'有小机会、小成果或小助力，适合先小步推进。', risk:'不要贪大，先拿可落地的小结果。'},
       '空亡': {plain:'事情有虚、空、未实、落空或延后的象。', risk:'必须核实信息，不宜过早下结论。'}
     };
+
+    Object.assign(SCENE_PLAIN_INFO, {
+      weather: { focus:'天气变化', plainGoal:'看天气是否有动、雨势是否成形、最终是否落到实处。', quickLabels:['天气倾向','变化快慢','天气阻力','落雨落实','外部助力','气象结构'], lead:'天气课重点看云雨是否有动、雨势是否稳定、最后是否真的落下。', advice:['天气判断要结合现实预报和当地情况。','见速喜多主变化快，见大安多主趋稳，见赤口多主阵雨或风雨断续，见空亡多主雨象落空。'] },
+      job: { focus:'求职面试', plainGoal:'看流程是否推进、反馈是否明确、offer 是否落地。', quickLabels:['录用倾向','反馈快慢','面试卡点','Offer落实','助力资源','流程气象'], lead:'求职课重点看机会是否真正落地，不要只看前期有没有反馈。', advice:['准备材料和表达，主动但不过度催促。','见赤口注意面试表达和薪资沟通；见空亡要等正式通知。'] },
+      home: { focus:'家宅居住', plainGoal:'看居住是否稳定、家中问题是否反复、是否适合处理。', quickLabels:['家宅倾向','变化快慢','隐患阻力','安稳程度','外部帮助','家宅气象'], lead:'家宅课重点看稳定性、旧问题和需要复查的隐患。', advice:['先处理现实隐患和旧问题。','见留连多主拖延反复，见赤口防邻里口舌或维修纠纷。'] },
+      choice: { focus:'选择决策', plainGoal:'看是否适合现在决定，还是需要先核实条件。', quickLabels:['选择倾向','决策快慢','风险卡点','落地程度','助力信息','决策气象'], lead:'选择课重点看信息是否足够、末象是否落地。', advice:['信息不足时不要急定。','见小吉可先小步试，见空亡先核实，见留连可再等等。'] }
+    });
     function sceneInfo(sceneKey){ return SCENE_PLAIN_INFO[sceneKey] || SCENE_PLAIN_INFO.other; }
     function plainOutcomeByEnd(endPalace){
       return {
@@ -1706,7 +1777,153 @@
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+      renderBoard(result); renderRadar(result.metrics); const about=document.getElementById('aboutRulesBlock'); if(about) about.innerHTML=buildAboutRulesHTML(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+    }
+
+
+
+    /* v8.2 综合增强：新增场景、手动修正识别类型、简洁/详细切换、历史搜索导出、版本说明 */
+    Object.assign(CONTEXT_INTENTS, {
+      job: {
+        title: '求职 / 面试 / Offer',
+        keys: ['求职','面试','offer','入职','录用','简历','岗位','公司','HR','猎头','二面','终面','背调'],
+        focus: ['流程推进','面试表现','通知快慢','录用落地','薪资条件'],
+        advice: ['求职类问题重点看流程是否推进、最终是否真正发 offer。', '见赤口要注意表达、薪资沟通和材料细节；见空亡防口头机会不落地。'],
+        palace: {
+          '大安':'流程偏稳，基础不差，但节奏可能偏慢，适合稳住准备、按要求补材料。',
+          '留连':'招聘流程拖延、反复确认、等待较久，可能卡在内部审批或岗位变化。',
+          '速喜':'通知、面试机会或反馈来得快，适合主动跟进。',
+          '赤口':'沟通、表达、薪资、条款或面试问答容易有卡点，需谨慎措辞。',
+          '小吉':'有小机会、小进展，可能先得到正面反馈或进入下一轮。',
+          '空亡':'机会可能有名无实，或期待与实际不符，需等正式通知。'
+        },
+        summary: '本课按求职面试断，重点看流程是否推进、反馈是否明确、offer 是否真正落地。'
+      },
+      home: {
+        title: '家宅 / 居住 / 搬家',
+        keys: ['家','家宅','房子','搬家','租房','买房','装修','邻居','漏水','风水','居住','家里'],
+        focus: ['居住稳定','家中变化','房屋问题','邻里关系','是否适合'],
+        advice: ['家宅类问题重点看稳定性和隐患，不要只看表面顺不顺。', '见留连多为旧问题反复，见赤口防邻里口舌或合同维修争执，见空亡防信息不实。'],
+        palace: {
+          '大安':'家宅偏稳，适合安住、修整、按计划处理。',
+          '留连':'旧问题、杂物、拖延、维修反复之象较重。',
+          '速喜':'家中事情很快有动静，可能有消息、搬动或临时变化。',
+          '赤口':'防口舌、邻里争执、合同维修纠纷、金属尖锐物或门口问题。',
+          '小吉':'有小改善、小帮助，适合小修小补、逐步整理。',
+          '空亡':'信息不实、期待落空或房屋问题暂时看不清，需要复查。'
+        },
+        summary: '本课按家宅居住断，重点看是否安稳、是否有旧问题和是否需要复查。'
+      },
+      legal: {
+        title: '文书 / 合同 / 纠纷',
+        keys: ['合同','协议','官司','纠纷','投诉','维权','法律','律师','文件','签字','赔偿','仲裁','条款','证据'],
+        focus: ['条款清楚','证据充分','沟通风险','拖延反复','结果落地'],
+        advice: ['文书纠纷类问题务必以现实证据、合同和专业法律意见为准。', '见赤口尤其要看文字、责任边界和证据；见空亡防口头承诺不算数。'],
+        palace: {
+          '大安':'文书基础较稳，适合按流程处理，慢但可落。',
+          '留连':'旧账旧事拖延反复，材料或沟通会来回。',
+          '速喜':'消息或推进较快，但要确认正式文件。',
+          '赤口':'争议、口舌、条款、证据和责任边界是核心。',
+          '小吉':'有小让步、小进展，可先解决一部分。',
+          '空亡':'口头说法或期待可能落空，必须以书面证据为准。'
+        },
+        summary: '本课按文书纠纷断，重点看证据、条款、责任边界和最终是否落实。'
+      },
+      choice: {
+        title: '选择 / 决策 / 取舍',
+        keys: ['选择','决定','要不要','该不该','是否','还是','哪个','取舍','犹豫','方案','方向','路线'],
+        focus: ['当前倾向','过程风险','结果落地','是否宜动','是否需等待'],
+        advice: ['选择类问题重点看末象是否落地，以及中象是否有阻碍。', '见空亡不要急着定，见留连先等条件明朗，见速喜可先小步试探。'],
+        palace: {
+          '大安':'宜稳妥方案，适合保守推进，不宜频繁变动。',
+          '留连':'条件未明、思路反复，暂不适合急定。',
+          '速喜':'可先动起来或做小范围尝试，机会来得快。',
+          '赤口':'选择中有争议、风险或代价，要看规则和边界。',
+          '小吉':'可选小成本方案，先试水再扩大。',
+          '空亡':'信息不足或期待不实，先核实再决定。'
+        },
+        summary: '本课按选择决策断，重点看是否适合马上做决定，还是需要先核实条件。'
+      }
+    });
+    // 增强既有规则库关键词
+    CONTEXT_INTENTS.weather.keys.push('台风','雾','霾','湿','冷','热','温度','气温','出太阳','会晴吗');
+    CONTEXT_INTENTS.love.keys.push('冷战','断联','相亲','结婚','离婚','对象','暧昧对象','喜欢的人');
+    CONTEXT_INTENTS.money.keys.push('副业','兼职','买卖','订单','生意','客户付款','退款','赔钱');
+    CONTEXT_INTENTS.lost.keys.push('手机','耳机','手表','证件','银行卡','护照','首饰','戒指','项链','眼镜');
+    CONTEXT_INTENTS.career.keys.push('加班','调薪','转正','试用期','裁员','绩效','述职','转岗');
+    CONTEXT_INTENTS.health.keys.push('复查','体检','牙','喉咙','皮肤','情绪','焦虑','失眠','旧疾');
+
+    const CONTEXT_OPTIONS = [
+      ['auto','自动识别'],['weather','天气 / 降雨'],['message','消息 / 联系'],['love','感情 / 复合'],['money','财运 / 投资'],['lost','失物 / 找东西'],['career','事业 / 工作'],['job','求职 / 面试'],['cooperation','合作 / 合同'],['exam','考试 / 申请'],['travel','出行 / 行程'],['health','健康 / 调理'],['home','家宅 / 居住'],['legal','文书 / 纠纷'],['choice','选择 / 决策']
+    ];
+    function getSelectedContextType(){ const el=document.getElementById('contextTypeSelect'); return el ? el.value : 'auto'; }
+    function updateContextTypeAuto(){
+      const el=document.getElementById('contextTypeSelect'); const q=document.getElementById('questionInput');
+      if(!el || !q || el.value !== 'auto') return;
+      const ctx = analyzeQuestionContext(q.value.trim(), currentScene, true);
+      el.title = ctx ? ('自动识别：' + ctx.title) : '自动识别';
+    }
+    function analyzeQuestionContext(question, sceneKey, forceAuto=false) {
+      const q = (question || '').trim();
+      if (!q) return null;
+      const selected = forceAuto ? 'auto' : getSelectedContextType();
+      const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
+      let bestKey = null, bestHits = [];
+      if (selected && selected !== 'auto' && CONTEXT_INTENTS[selected]) {
+        bestKey = selected;
+        const rule = CONTEXT_INTENTS[bestKey];
+        bestHits = rule.keys.filter(k => q.indexOf(k) !== -1);
+        if (!bestHits.length) bestHits = ['手动指定'];
+      } else {
+        const priority = ['weather','lost','job','love','money','career','cooperation','exam','message','travel','health','home','legal','choice'];
+        priority.forEach(key => {
+          const rule = CONTEXT_INTENTS[key]; if(!rule) return;
+          const hits = rule.keys.filter(k => q.indexOf(k) !== -1);
+          if (hits.length && (!bestKey || hits.length > bestHits.length)) { bestKey = key; bestHits = hits; }
+        });
+        if (!bestKey) { bestKey = sceneMap[sceneKey] || 'message'; bestHits = ['按所选场景推断']; }
+      }
+      const rule = CONTEXT_INTENTS[bestKey];
+      return { key: bestKey, title: rule.title, question: q, hits: bestHits, focus: rule.focus, advice: rule.advice, rule, manual: selected && selected !== 'auto' };
+    }
+    function setResultViewMode(mode){
+      const card=document.getElementById('resultCard'); if(!card) return;
+      card.classList.toggle('simple-mode', mode === 'simple');
+      const d=document.getElementById('detailViewBtn'), s=document.getElementById('simpleViewBtn');
+      if(d) d.classList.toggle('active', mode !== 'simple');
+      if(s) s.classList.toggle('active', mode === 'simple');
+      try { localStorage.setItem('xlr_view_mode_v8_2', mode); } catch(e) {}
+    }
+    function restoreResultViewMode(){ try { setResultViewMode(localStorage.getItem('xlr_view_mode_v8_2') || 'detail'); } catch(e) { setResultViewMode('detail'); } }
+    function renderHistorySceneFilter(){
+      const sel=document.getElementById('historySceneFilter'); if(!sel) return;
+      sel.innerHTML = '<option value="all">全部场景</option>' + SCENES.map(s=>`<option value="${s.key}">${s.icon || ''} ${s.name}</option>`).join('');
+    }
+    function exportHistory(){
+      const list=getHistory();
+      if(!list.length) return alert('暂无历史记录可导出。');
+      const lines=[];
+      list.forEach((item, i)=>{
+        lines.push(`#${i+1} ${item.sceneName || ''} ${formatISO(item.createdAt)}`);
+        if(item.question) lines.push(`占问事项：${item.question}`);
+        lines.push(`起课：${item.methodNote || ''}`);
+        lines.push(`取数：${(item.numbers||[]).join(' / ')}`);
+        lines.push(`落宫：${(item.palaces||[]).join(' / ')}`);
+        if(item.overallText) lines.push(`综合判断：${item.overallText}`);
+        lines.push('');
+      });
+      const content = lines.join('\n');
+      const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url; a.download='xiaoliuren_history_' + new Date().toISOString().slice(0,10) + '.txt';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    }
+    function buildAboutRulesHTML(){
+      return `<details open><summary>本版本说明</summary><p>本工具为“小六壬六宫顺推场景解读版”。它保留传统六宫术语，同时加入现代场景化白话解释，方便普通用户理解。</p><p>本地问事分析不联网、不接 API，只根据你填写的文字、所选场景和本地规则库进行辅助判断。</p></details>
+      <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>数字起课：三数连续顺推。第一数从大安起，第二数从第一宫继续起，第三数从第二宫继续起。</li><li>时辰起课：取农历月、农历日、时辰序数，再连续顺推。</li><li>事件起课：按事件文字生成三数，再连续顺推。</li></ul></details>
+      <details><summary>如何看结果</summary><ul><li>先看综合判断和问事专项解读，抓白话结论。</li><li>再看三象：本象看起因或当前，中象看过程，末象看最终落点。</li><li>单宫、双宫、象意补充属于详细学习内容，适合复盘时查看。</li></ul></details>`;
     }
 
     init();
