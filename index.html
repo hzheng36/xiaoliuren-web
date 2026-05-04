@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v8.2 综合增强版</title>
+  <title>小六壬占卜 · v8.4 阅读增强版</title>
   <meta name="description" content="小六壬个人网页版 v7：全场景术语+白话增强版，新增多关键词解读。QA 反馈修正版。" />
   <style>
     :root {
@@ -293,6 +293,38 @@
     .history-meta { margin-top:6px; color: var(--muted); font-size:.93rem; }
     .history-actions { margin-top:12px; }
     .history-empty { text-align:center; color: var(--muted); padding:28px 10px; }
+
+    /* v8.4 一键置顶 / 一键到底 */
+    .scroll-tools {
+      position: fixed;
+      right: max(18px, env(safe-area-inset-right));
+      bottom: max(22px, env(safe-area-inset-bottom));
+      z-index: 60;
+      display: grid;
+      gap: 10px;
+    }
+    .scroll-tool-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(103,83,165,.16);
+      background: rgba(255,255,255,.92);
+      color: var(--primary);
+      box-shadow: 0 12px 28px rgba(66,49,109,.16);
+      backdrop-filter: blur(10px);
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: grid;
+      place-items: center;
+      transition: .18s ease;
+    }
+    .scroll-tool-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 32px rgba(66,49,109,.20); }
+    .overall-rich { white-space: pre-line; line-height: 1.92; }
+    @media (max-width: 760px) {
+      .scroll-tools { right: 12px; bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
+      .scroll-tool-btn { width: 42px; height: 42px; font-size: .98rem; }
+    }
+
     @media (max-width: 1240px) {
       .shell { grid-template-columns: 1fr; }
       .sidebar { position: static; }
@@ -329,6 +361,25 @@
       .number-tool-actions { width:100%; display:grid; grid-template-columns:1fr 1fr; }
       .number-tool-actions .ghost-btn { width:100%; min-height:44px; }
     }
+
+    /* v8.3 历史分析 */
+    .analysis-grid { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; padding:18px 24px 0; }
+    .analysis-card { background:rgba(255,255,255,.97); border:1px solid var(--line); border-radius:18px; padding:15px 16px; box-shadow: var(--shadow-sm); }
+    .analysis-card span { display:block; color:var(--muted); font-size:.9rem; margin-bottom:6px; }
+    .analysis-card b { font-size:1.15rem; color:var(--primary); }
+    .analysis-section { padding:18px 24px 0; }
+    .analysis-section h4 { margin:0 0 12px; color:var(--text); }
+    .analysis-chart { display:grid; gap:10px; }
+    .chart-row { display:grid; grid-template-columns: 92px minmax(0,1fr) 46px; gap:10px; align-items:center; color:#433b58; }
+    .chart-label { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .bar-track { height:12px; border-radius:999px; background:rgba(103,83,165,.08); overflow:hidden; border:1px solid rgba(103,83,165,.08); }
+    .bar-fill { height:100%; border-radius:999px; background:linear-gradient(90deg, var(--primary), var(--primary-2)); min-width:4px; }
+    .analysis-table-wrap { overflow:auto; border:1px solid var(--line); border-radius:18px; background:#fff; }
+    .analysis-table { width:100%; border-collapse:collapse; min-width:820px; font-size:.93rem; }
+    .analysis-table th, .analysis-table td { padding:11px 12px; border-bottom:1px solid rgba(103,83,165,.08); text-align:left; vertical-align:top; }
+    .analysis-table th { background:rgba(103,83,165,.06); color:var(--primary); position:sticky; top:0; }
+    .analysis-empty { padding:28px 24px; text-align:center; color:var(--muted); }
+    @media (max-width: 900px) { .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
   </style>
 </head>
 <body>
@@ -366,11 +417,12 @@
     <main class="main">
       <header class="hero card">
         <div>
-          <h2>个人占卜台 · v8.2 综合增强版</h2>
+          <h2>个人占卜台 · v8.4 阅读增强版</h2>
           <p>本版增强本地问事规则库，并新增一键复制结果；不联网、不接 API，仍在浏览器本地完成分析。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
+          <button class="ghost-btn" id="analyticsBtn">历史分析</button>
           <button class="ghost-btn" id="resetBtn">重新占卜</button>
         </div>
       </header>
@@ -499,7 +551,7 @@
           </article>
         </div>
         <div class="overall-wrap">
-          <article class="block"><h4>综合判断</h4><p id="overallText"></p></article>
+          <article class="block"><h4>综合判断</h4><p id="overallText" class="overall-rich"></p></article>
         </div>
         <article class="block hidden" id="contextAnalysisBlock">
           <h4>问事专项解读</h4>
@@ -527,6 +579,23 @@
       </section>
     </main>
   </div>
+
+  <div class="scroll-tools" aria-label="页面快捷滚动">
+    <button class="scroll-tool-btn" type="button" onclick="scrollToTopQuick()" title="一键置顶" aria-label="一键置顶">↑</button>
+    <button class="scroll-tool-btn" type="button" onclick="scrollToBottomQuick()" title="一键到底" aria-label="一键到底">↓</button>
+  </div>
+
+  <dialog id="analyticsDialog">
+    <div class="dialog-head">
+      <div>
+        <h3>历史分析</h3>
+        <p>基于当前浏览器本地保存的历史记录统计，不联网、不上传数据。</p>
+      </div>
+      <button class="icon-btn" id="closeAnalyticsBtn">×</button>
+    </div>
+    <div id="analyticsContent"></div>
+  </dialog>
+
   <dialog id="historyDialog">
     <div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
     <div class="history-search-row"><input id="historySearchInput" type="search" placeholder="搜索历史：场景 / 问题 / 宫位"><select id="historySceneFilter"><option value="all">全部场景</option></select></div><div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div>
@@ -591,6 +660,8 @@
       document.getElementById('divineBtn').addEventListener('click', handleDivine);
       document.getElementById('resetBtn').addEventListener('click', resetForm);
       document.getElementById('historyBtn').addEventListener('click', openHistoryDialog);
+      const analyticsBtn = document.getElementById('analyticsBtn'); if (analyticsBtn) analyticsBtn.addEventListener('click', openAnalyticsDialog);
+      const closeAnalyticsBtn = document.getElementById('closeAnalyticsBtn'); if (closeAnalyticsBtn) closeAnalyticsBtn.addEventListener('click', closeAnalyticsDialog);
       document.getElementById('closeHistoryBtn').addEventListener('click', closeHistoryDialog);
       document.getElementById('showAllBtn').addEventListener('click', ()=>{ historyFilter='all'; renderHistory(); });
       document.getElementById('showFavBtn').addEventListener('click', ()=>{ historyFilter='fav'; renderHistory(); });
@@ -1392,15 +1463,61 @@
       }[key] || plainEnd;
     }
     function buildOverallByScene(sceneKey, details, metrics, distribution){
-      if(sceneKey === 'lost') return buildLostOverall(details, metrics, distribution);
       const [a,b,c]=details;
+      const info = sceneInfo(sceneKey);
+      const seq = details.map(d=>d.palaceName).join(' → ');
       const plain = buildPlainConclusion(sceneKey, details);
-      const term = `术语断法：本象${a.palaceName}，中象${b.palaceName}，末象${c.palaceName}。${distribution.text} ${a.palaceName}属${a.element}，${b.palaceName}属${b.element}，${c.palaceName}属${c.element}；方位可参考${[...new Set(details.map(d=>d.direction))].join('、')}。`;
-      let caution = `现实提醒：${sceneInfo(sceneKey).lead}`;
-      if(c.palaceName === '空亡') caution += ' 末象空亡压结果，不能只看前面有动象，最后一定要核实条件是否真实。';
-      if(c.palaceName === '留连') caution += ' 末象留连，事情多半不是不能做，而是慢、拖、反复，需要耐心拆解。';
-      if(c.palaceName === '赤口') caution += ' 末象赤口，最后容易卡在话术、规则、争执或确认细节上。';
-      return `${plain}\n\n${term}\n\n${caution}`;
+      const endMeaning = {
+        '大安':'末象大安，结果端重在稳定、守成、慢慢落地；它不主突然暴涨暴变，而是更适合按原计划稳住。',
+        '留连':'末象留连，结果端容易拖延、反复、卡在旧问题上；不是绝对不成，但需要耐心、复查和分步骤处理。',
+        '速喜':'末象速喜，结果端有较快消息或推进机会；但速喜来得快，也要防只是一时动静，仍需确认后续是否持续。',
+        '赤口':'末象赤口，结果端容易卡在沟通、规则、争执、细节确认或临门一脚的阻力上；越急越容易出错。',
+        '小吉':'末象小吉，结果端有小成、小利、小进展；适合先取可落实的小结果，再逐步扩大。',
+        '空亡':'末象空亡，结果端有虚、空、延迟或有名无实之象；前面即使有动静，也不能过早当成已经落实。'
+      }[c.palaceName] || '';
+      const favorable = [];
+      const risk = [];
+      details.forEach(d=>{
+        if(['大安','速喜','小吉'].indexOf(d.palaceName) >= 0) favorable.push(`${d.positionName}${d.palaceName}：${PALACE_PLAIN_EFFECT[d.palaceName].plain}`);
+        if(['留连','赤口','空亡'].indexOf(d.palaceName) >= 0) risk.push(`${d.positionName}${d.palaceName}：${PALACE_PLAIN_EFFECT[d.palaceName].risk}`);
+      });
+      if(!favorable.length) favorable.push('本课吉象不突出，优势不在“快成”，而在于及时看清阻力、减少误判。');
+      if(!risk.length) risk.push('本课阻滞象不重，但仍需把条件、时间、承诺和细节确认清楚。');
+      const elementText = details.map(d=>`${d.palaceName}属${d.element}`).join('，');
+      const directionText = [...new Set(details.map(d=>d.direction))].join('、');
+      const contextLine = info && info.lead ? info.lead : '先抓住事情的核心诉求，再看本象、中象、末象如何递进。';
+      let nextStep = `下一步重点：先看末象${c.palaceName}，因为末象代表最终落点；再倒回来看中象${b.palaceName}，判断过程中的阻力或助力；最后结合本象${a.palaceName}，确认起点是否可靠。`;
+      if(c.palaceName === '空亡') nextStep += ' 这类课最怕“看起来有、实际没落地”，所以要复核证据、时间、条件、承诺。';
+      if(c.palaceName === '留连') nextStep += ' 这类课不宜急推，适合分阶段处理，把拖住的环节逐个拆开。';
+      if(c.palaceName === '赤口') nextStep += ' 这类课要先处理沟通和规则，重要事项最好白纸黑字确认。';
+      if(sceneKey === 'lost') {
+        return `${plain}
+
+三象递进：本象${a.palaceName}看失物当前状态，中象${b.palaceName}看寻找过程，末象${c.palaceName}看最终找回节奏。本课顺序为 ${seq}，所以不要只看单宫吉凶，要看“东西状态 → 寻找过程 → 最终结果”的连续变化。
+
+现实含义：失物类问题最重要的是把宫位转成现实位置和寻找方法。留连多主夹住、压住、混旧物；赤口多提示金属、卡片、钥匙、票据、桌边门边，也提示寻找过程易急躁；空亡多主线索虚、记错位置、漏看。
+
+有利点：${favorable.join('；')}
+
+风险点：${risk.join('；')}
+
+术语依据：${distribution.text} ${elementText}；方位可参考${directionText}，但方位只是辅助，实际寻找仍以“最后一次使用处、收纳处、夹层、旧物、相关材质物品附近”为先。
+
+${nextStep}`;
+      }
+      return `${plain}
+
+三象递进：本象${a.palaceName}代表起因、当前状态或事情的第一层气象；中象${b.palaceName}代表推进过程、变化方式和中途阻力；末象${c.palaceName}代表结果落点。此课顺序为 ${seq}，所以判断时不能只看某一个宫，而要看它们如何从起点走到结果。
+
+现实含义：${contextLine} 本课的核心不是简单判断“好或坏”，而是看事情是否能动、过程是否稳、最后是否真正落地。${endMeaning}
+
+有利点：${favorable.join('；')}
+
+风险点：${risk.join('；')}
+
+术语依据：${distribution.text} ${elementText}；方位可参考${directionText}。这些术语不是单独使用，而是帮助你判断“哪里有助力、哪里有阻力、什么时候该进、什么时候该守”。
+
+${nextStep}`;
     }
     function buildAdviceByScene(sceneKey, details, metrics){
       if(sceneKey === 'lost') return buildAdviceBySceneLost(details, metrics);
@@ -1672,6 +1789,11 @@
         if (contextMatched(q, ['主动','联系','回复','消息'])) notes.push('主动联系：重点看速喜、小吉是否动，末象若赤口则联系中易有情绪或误会，末象空亡则可能有话题但难落定。');
         if (contextMatched(q, ['表白','暧昧','喜欢'])) notes.push('暧昧/表白：速喜主心动与互动，大安主慢热稳定，赤口要防表达太急，空亡要防一厢情愿。');
       }
+      if (context.key === 'market') {
+        if (contextMatched(q, ['油价','价格','物价','房价','金价','黄金','白银'])) notes.push('价格判断：重点看是否真有方向。大安多稳，留连多震荡，速喜多快动，赤口多急变，空亡多预期落空。');
+        if (contextMatched(q, ['涨','跌','上涨','下跌','涨价','降价','行情','走势'])) notes.push('涨跌判断：不要只看一时动静，要看末象能否落实；末象赤口多为急变或断续，末象空亡多为空信号。');
+        if (contextMatched(q, ['股票','基金','投资','市场'])) notes.push('行情提醒：本工具不构成投资建议，只能作为传统文化娱乐参考，现实操作仍需看风险、仓位和客观信息。');
+      }
       if (context.key === 'money') {
         if (contextMatched(q, ['投资','股票','基金','项目','入股'])) notes.push('投资判断：重点不是“有没有机会”，而是钱能不能落袋、风险是否可控；见空亡需防收益承诺不实，见赤口需看合同和规则。');
         if (contextMatched(q, ['回款','欠款','还钱','借钱'])) notes.push('回款/借钱：留连多为拖欠反复，赤口多为沟通争执或条件变化，空亡多为口头答应但实际不到位。');
@@ -1853,8 +1975,26 @@
     CONTEXT_INTENTS.career.keys.push('加班','调薪','转正','试用期','裁员','绩效','述职','转岗');
     CONTEXT_INTENTS.health.keys.push('复查','体检','牙','喉咙','皮肤','情绪','焦虑','失眠','旧疾');
 
+    // v8.4.1：更智能的问事识别，避免“明天油价会不会下跌”被误判为天气
+    CONTEXT_INTENTS.weather.keys = CONTEXT_INTENTS.weather.keys.filter(k => k !== '会不会下');
+    CONTEXT_INTENTS.market = {
+      title: '价格 / 行情 / 涨跌',
+      keys: ['油价','价格','物价','房价','金价','黄金','白银','汇率','美元','人民币','股票','股价','基金','指数','行情','走势','涨','跌','上涨','下跌','涨价','降价','回落','反弹','破位','回调','牛市','熊市','市场'],
+      focus: ['价格方向','涨跌节奏','行情变化','风险控制','是否落袋'],
+      advice: ['价格行情类问题不能只看“会不会涨跌”，还要看波动是否连续、结果是否落地、风险是否可控。', '见速喜多主变化快，见留连多主震荡拖延，见赤口多主急涨急跌或消息冲击，见空亡多主预期落空或虚假信号。', '行情判断仅供传统文化娱乐参考，不作为投资、交易或财务建议。'],
+      palace: {
+        '大安':'价格走势偏稳，短期不太像剧烈波动；若问涨跌，多主维持区间、缓慢变化，适合观察确认。',
+        '留连':'行情拖住、反复、震荡，涨跌不爽快；容易出现横盘、来回拉扯、消息迟迟不明。',
+        '速喜':'行情变化快，容易很快有动静、消息刺激或短线波动；若问涨跌，多主短时间内会有明显变化。',
+        '赤口':'赤口带冲、争、急变之象，用在行情上多见急涨急跌、冲高回落、消息冲击或分歧加大。',
+        '小吉':'小幅有利、小涨小跌、小范围波动，变化有但幅度不一定大；适合小心试探，不宜重仓冒进。',
+        '空亡':'行情信号虚，预期容易落空；可能看似要动但最后不成，或消息不实、判断落空。'
+      },
+      summary: '本课按价格行情断，重点看价格是否真有方向、波动是否连续、最后是否落实。'
+    };
+
     const CONTEXT_OPTIONS = [
-      ['auto','自动识别'],['weather','天气 / 降雨'],['message','消息 / 联系'],['love','感情 / 复合'],['money','财运 / 投资'],['lost','失物 / 找东西'],['career','事业 / 工作'],['job','求职 / 面试'],['cooperation','合作 / 合同'],['exam','考试 / 申请'],['travel','出行 / 行程'],['health','健康 / 调理'],['home','家宅 / 居住'],['legal','文书 / 纠纷'],['choice','选择 / 决策']
+      ['auto','自动识别'],['weather','天气 / 降雨'],['market','价格 / 行情 / 涨跌'],['message','消息 / 联系'],['love','感情 / 复合'],['money','财运 / 投资'],['lost','失物 / 找东西'],['career','事业 / 工作'],['job','求职 / 面试'],['cooperation','合作 / 合同'],['exam','考试 / 申请'],['travel','出行 / 行程'],['health','健康 / 调理'],['home','家宅 / 居住'],['legal','文书 / 纠纷'],['choice','选择 / 决策']
     ];
     function getSelectedContextType(){ const el=document.getElementById('contextTypeSelect'); return el ? el.value : 'auto'; }
     function updateContextTypeAuto(){
@@ -1868,23 +2008,117 @@
       if (!q) return null;
       const selected = forceAuto ? 'auto' : getSelectedContextType();
       const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
-      let bestKey = null, bestHits = [];
+      const explicitSceneKey = sceneMap[sceneKey] || 'message';
+
+      function has(words){ return contextMatched(q, words); }
+      function getHitsFor(key) {
+        const rule = CONTEXT_INTENTS[key];
+        if (!rule) return [];
+        return rule.keys.filter(k => q.indexOf(k) !== -1);
+      }
+      function addScoreByHits(hits) {
+        let score = 0;
+        (hits || []).forEach(h => {
+          // 单字词容易误判，只给很低分；真正识别主要靠强特征词和组合词。
+          if (h.length <= 1) score += 1;
+          else if (h.length === 2) score += 7;
+          else if (h.length === 3) score += 12;
+          else score += 16;
+        });
+        return score;
+      }
+
+      // 强特征词：这些词一出现，通常就能明确问题方向。
+      const strong = {
+        market: ['油价','价格','物价','房价','金价','银价','黄金','白银','汇率','美元','人民币','股票','股价','基金','指数','行情','走势','涨价','降价','上涨','下跌','回落','反弹','回调','牛市','熊市'],
+        weather: ['下雨','降雨','阵雨','小雨','大雨','暴雨','雷雨','下雪','天气','阴天','晴天','多云','刮风','风大','台风','气温','温度','降温','升温','雾霾','出太阳'],
+        lost: ['丢了','丢失','找不到','放哪里','不见了','遗失','失物','钥匙','钱包','证件','银行卡','护照','手机','耳机','戒指','项链','眼镜','抽屉','柜子','包里','盒子','收纳'],
+        love: ['前任','复合','感情','恋爱','喜欢','表白','暧昧','分手','对象','相亲','结婚','离婚','冷战','断联','桃花','他还会不会','她还会不会'],
+        money: ['赚钱','财运','收入','工资','奖金','回款','欠款','还钱','借钱','收益','盈利','亏钱','生意','副业','订单','客户付款','退款'],
+        career: ['工作','事业','项目','领导','老板','同事','客户','升职','跳槽','转岗','离职','入职','绩效','岗位','职场','推进','方案','汇报','审批','加薪','裁员','试用期','转正'],
+        job: ['求职','面试','offer','录用','简历','HR','猎头','二面','终面','背调'],
+        cooperation: ['合作','合伙','合同','签约','谈判','协议','订单','客户合作','伙伴'],
+        exam: ['考试','成绩','通过','录取','申请','考研','考公','证书','笔试','面试结果'],
+        message: ['联系','回复','消息','通知','电话','微信','短信','邮件','回应','回我','来信','主动找'],
+        travel: ['出行','旅行','开车','航班','火车','高铁','路上','堵车','迟到','赶路','行程','能不能去'],
+        health: ['健康','病','不舒服','头痛','感冒','发烧','咳嗽','胃','睡眠','恢复','调理','身体','复查','体检','牙','喉咙','皮肤','焦虑','失眠','旧疾','摔倒','跌倒'],
+        home: ['家宅','房子','搬家','租房','买房','装修','邻居','漏水','风水','居住','家里'],
+        legal: ['官司','纠纷','投诉','维权','法律','律师','文件','签字','赔偿','仲裁','条款','证据'],
+        choice: ['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线']
+      };
+
+      // 排除/降权：防止短词造成误判。
+      const negative = {
+        weather: ['油价','价格','物价','房价','金价','股价','股票','基金','行情','走势','上涨','下跌','涨价','降价','涨','跌','冷战','风控','风险'],
+        market: ['下雨','降雨','天气','阵雨','小雨','大雨','暴雨','下雪','跌倒','摔倒'],
+        message: ['消息面','市场消息','新闻行情'],
+        love: ['喜欢这个工作','喜欢这个项目'],
+        money: ['天气','下雨','感情']
+      };
+
+      function scoreContext(key, hits) {
+        let score = addScoreByHits(hits);
+        if (key === explicitSceneKey) score += 10;
+        if (has(strong[key] || [])) score += 45;
+        if (negative[key] && has(negative[key])) score -= 55;
+
+        // 细分优先级与常见误判修正
+        if (key === 'market') {
+          if (has(strong.market)) score += 35;
+          if (has(['涨','跌']) && has(['油价','价格','股价','股票','基金','黄金','金价','行情','走势','市场','汇率'])) score += 25;
+          if (has(['跌倒','摔倒'])) score -= 80;
+        }
+        if (key === 'weather') {
+          const strongWeather = has(strong.weather);
+          if (!strongWeather) score -= 45;
+          // “明天/今天/今晚/会不会”只是时间或疑问词，不算天气。
+          if (has(['明天','今天','今晚','后天','上午','下午','晚上','会不会','能不能']) && !strongWeather) score -= 35;
+          // 单字“雨/风/冷/热/云”只有在天气语境下才加分。
+          if (has(['雨','风','冷','热','云']) && strongWeather) score += 8;
+        }
+        if (key === 'money') {
+          if (has(['投资','股票','基金']) && has(['涨','跌','行情','走势','价格'])) score -= 25; // 更偏行情
+          if (has(['回款','欠款','还钱','借钱','工资','奖金','收入','赚钱','收益'])) score += 30;
+        }
+        if (key === 'job') {
+          if (has(['面试','offer']) && has(['求职','入职','录用','HR','简历','背调'])) score += 35;
+        }
+        if (key === 'exam') {
+          if (has(['考试','成绩','通过','录取','申请','证书','笔试'])) score += 30;
+          if (has(['面试']) && has(['offer','入职','公司','HR','求职'])) score -= 25; // 更偏求职
+        }
+        if (key === 'legal') {
+          if (has(['合同','协议']) && has(['合作','客户','订单','合伙'])) score -= 20; // 更偏合作
+          if (has(['官司','纠纷','投诉','维权','律师','赔偿','仲裁','证据'])) score += 35;
+        }
+        if (key === 'cooperation') {
+          if (has(['合同','协议']) && has(['合作','客户','订单','合伙','签约'])) score += 25;
+        }
+        if (key === 'choice') {
+          // “会不会/能不能/是否”太通用，不单独触发选择类；必须有明确取舍词。
+          if (!has(['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线'])) score -= 25;
+        }
+        return score;
+      }
+
+      let bestKey = null, bestHits = [], bestScore = -999;
       if (selected && selected !== 'auto' && CONTEXT_INTENTS[selected]) {
         bestKey = selected;
-        const rule = CONTEXT_INTENTS[bestKey];
-        bestHits = rule.keys.filter(k => q.indexOf(k) !== -1);
+        bestHits = getHitsFor(bestKey);
         if (!bestHits.length) bestHits = ['手动指定'];
       } else {
-        const priority = ['weather','lost','job','love','money','career','cooperation','exam','message','travel','health','home','legal','choice'];
+        // 优先级从“强专门领域”到“较通用领域”，降低泛化误判。
+        const priority = ['market','weather','lost','job','exam','love','money','career','cooperation','legal','message','travel','health','home','choice'];
         priority.forEach(key => {
-          const rule = CONTEXT_INTENTS[key]; if(!rule) return;
-          const hits = rule.keys.filter(k => q.indexOf(k) !== -1);
-          if (hits.length && (!bestKey || hits.length > bestHits.length)) { bestKey = key; bestHits = hits; }
+          const hits = getHitsFor(key);
+          const score = scoreContext(key, hits);
+          if (score > bestScore) { bestScore = score; bestKey = key; bestHits = hits; }
         });
-        if (!bestKey) { bestKey = sceneMap[sceneKey] || 'message'; bestHits = ['按所选场景推断']; }
+        // 如果没有任何明确命中，就回退到用户选择的主场景，而不是硬猜。
+        if (!bestKey || bestScore <= 8) { bestKey = explicitSceneKey; bestHits = ['按所选场景推断']; }
       }
-      const rule = CONTEXT_INTENTS[bestKey];
-      return { key: bestKey, title: rule.title, question: q, hits: bestHits, focus: rule.focus, advice: rule.advice, rule, manual: selected && selected !== 'auto' };
+      const rule = CONTEXT_INTENTS[bestKey] || CONTEXT_INTENTS[explicitSceneKey] || CONTEXT_INTENTS.message;
+      return { key: bestKey, title: rule.title, question: q, hits: bestHits.length ? bestHits : ['按语义推断'], focus: rule.focus, advice: rule.advice, rule, manual: selected && selected !== 'auto' };
     }
     function setResultViewMode(mode){
       const card=document.getElementById('resultCard'); if(!card) return;
@@ -1925,6 +2159,100 @@
       <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>数字起课：三数连续顺推。第一数从大安起，第二数从第一宫继续起，第三数从第二宫继续起。</li><li>时辰起课：取农历月、农历日、时辰序数，再连续顺推。</li><li>事件起课：按事件文字生成三数，再连续顺推。</li></ul></details>
       <details><summary>如何看结果</summary><ul><li>先看综合判断和问事专项解读，抓白话结论。</li><li>再看三象：本象看起因或当前，中象看过程，末象看最终落点。</li><li>单宫、双宫、象意补充属于详细学习内容，适合复盘时查看。</li></ul></details>`;
     }
+
+
+    /* v8.3 历史分析功能 */
+    const analyticsDialog = document.getElementById('analyticsDialog');
+    function openAnalyticsDialog(){
+      renderAnalytics();
+      if (analyticsDialog && typeof analyticsDialog.showModal === 'function') analyticsDialog.showModal();
+      else if (analyticsDialog) analyticsDialog.setAttribute('open','open');
+    }
+    function closeAnalyticsDialog(){
+      if (analyticsDialog && typeof analyticsDialog.close === 'function') analyticsDialog.close();
+      else if (analyticsDialog) analyticsDialog.removeAttribute('open');
+    }
+    function countBy(list, getter){
+      const map = {};
+      list.forEach(item => {
+        const value = getter(item) || '未记录';
+        map[value] = (map[value] || 0) + 1;
+      });
+      return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+    }
+    function palaceFrequency(list){
+      const map = {};
+      PALACE_ORDER.forEach(p => map[p] = 0);
+      list.forEach(item => (item.palaces || []).forEach(p => { map[p] = (map[p] || 0) + 1; }));
+      return PALACE_ORDER.map(p => [p, map[p] || 0]).sort((a,b)=>b[1]-a[1]);
+    }
+    function topName(entries){ return entries && entries.length ? entries[0][0] : '暂无'; }
+    function renderBarChart(entries, maxRows){
+      const rows = (entries || []).slice(0, maxRows || 8);
+      const max = rows.length ? Math.max.apply(null, rows.map(r=>r[1])) : 1;
+      if (!rows.length) return '<div class="analysis-empty">暂无数据</div>';
+      return '<div class="analysis-chart">' + rows.map(([label,value]) => {
+        const pct = Math.max(4, Math.round(value / max * 100));
+        return `<div class="chart-row"><div class="chart-label" title="${escapeHTML(label)}">${escapeHTML(label)}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><div>${value}</div></div>`;
+      }).join('') + '</div>';
+    }
+    function methodLabel(item){
+      if (item.method === 'number') return '数字起课';
+      if (item.method === 'time') return '时辰起课';
+      if (item.method === 'event') return '事件起课';
+      const note = item.methodNote || '';
+      if (note.indexOf('数字') >= 0) return '数字起课';
+      if (note.indexOf('时辰') >= 0) return '时辰起课';
+      if (note.indexOf('事件') >= 0) return '事件起课';
+      return '未记录';
+    }
+    function renderAnalyticsTable(list){
+      if (!list.length) return '<div class="analysis-empty">暂无历史记录。保存几条占卜结果后，这里会自动生成分析。</div>';
+      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>场景</th><th>起课方式</th><th>占问事项</th><th>三数</th><th>落宫</th><th>识别类型</th></tr></thead><tbody>` + list.map(item => {
+        const contextTitle = item.context && item.context.title ? item.context.title : '—';
+        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(methodLabel(item))}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.numbers || []).join(' / '))}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${escapeHTML(contextTitle)}</td></tr>`;
+      }).join('') + '</tbody></table></div>';
+    }
+    function renderAnalytics(){
+      const container = document.getElementById('analyticsContent');
+      if (!container) return;
+      const list = getHistory();
+      if (!list.length) {
+        container.innerHTML = '<div class="analysis-empty">暂无历史记录。先占卜并点击“保存结果”，再回来查看分析。</div>';
+        return;
+      }
+      const sceneEntries = countBy(list, item => item.sceneName || '未记录');
+      const methodEntries = countBy(list, item => methodLabel(item));
+      const palaceEntries = palaceFrequency(list);
+      const favCount = list.filter(item => item.favorite).length;
+      const lastTime = list[0] && list[0].createdAt ? formatISO(list[0].createdAt) : '暂无';
+      container.innerHTML = `
+        <div class="analysis-grid">
+          <div class="analysis-card"><span>总占卜次数</span><b>${list.length}</b></div>
+          <div class="analysis-card"><span>收藏记录</span><b>${favCount}</b></div>
+          <div class="analysis-card"><span>最近一次</span><b>${lastTime}</b></div>
+          <div class="analysis-card"><span>最常问场景</span><b>${escapeHTML(topName(sceneEntries))}</b></div>
+          <div class="analysis-card"><span>最常用起课</span><b>${escapeHTML(topName(methodEntries))}</b></div>
+          <div class="analysis-card"><span>最常见宫位</span><b>${escapeHTML(topName(palaceEntries))}</b></div>
+        </div>
+        <div class="analysis-section"><h4>场景分布</h4>${renderBarChart(sceneEntries, 10)}</div>
+        <div class="analysis-section"><h4>起课方式分布</h4>${renderBarChart(methodEntries, 6)}</div>
+        <div class="analysis-section"><h4>六宫出现频率</h4>${renderBarChart(palaceEntries, 6)}</div>
+        <div class="analysis-section"><h4>历史明细表</h4>${renderAnalyticsTable(list)}</div>
+        <div style="height:24px"></div>`;
+    }
+
+
+    function scrollToTopQuick(){
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      catch(e) { window.scrollTo(0, 0); }
+    }
+    function scrollToBottomQuick(){
+      var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      try { window.scrollTo({ top: h, behavior: 'smooth' }); }
+      catch(e) { window.scrollTo(0, h); }
+    }
+
 
     init();
   </script>
