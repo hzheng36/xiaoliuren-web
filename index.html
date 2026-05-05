@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.9 全局弹窗滚动修正版</title>
+  <title>小六壬占卜 · v9.9.10 日期筛选修正版</title>
   <meta name="description" content="小六壬个人网页版 v9.9.6：章节卡点根据当前主页或结果内容智能显示，并保持版本更新默认关闭。" />
   <style>
     :root {
@@ -296,7 +296,7 @@
     }
     .date-picker-shell .date-text-input::placeholder { color:var(--muted); opacity:1; text-transform:uppercase; }
     .date-picker-shell .date-text-input:focus { border-color: rgba(103,83,165,.36); box-shadow:0 0 0 4px rgba(103,83,165,.08); }
-    .date-picker-shell .date-native-input { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+    .date-picker-shell .date-native-input { position:absolute; right:0; top:0; width:56px; min-width:56px; height:100%; opacity:0; pointer-events:auto; cursor:pointer; z-index:6; }
     .date-picker-btn {
       flex:0 0 auto; min-height:43px; padding:10px 12px; border-radius:14px; border:1px solid var(--line);
       background:#fff; color:var(--primary); box-shadow:0 8px 14px rgba(103,83,165,.05); cursor:pointer;
@@ -786,7 +786,7 @@
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.9 全局弹窗滚动修正版</h2>
+          <h2>个人占卜台 · v9.9.10 日期筛选修正版</h2>
           <p>本版优化章节卡点导航：主页只显示主页相关卡点，占卜或查看历史结果时再显示答案、专项、三象等结果卡点。</p>
         </div>
         <div class="actions">
@@ -1989,6 +1989,8 @@
     function normalizeDateString(value){
       const raw = String(value || '').trim();
       if (!raw) return '';
+      const compact = raw.match(/^(\d{4})(\d{2})(\d{2})$/);
+      if (compact) return `${compact[1]}-${compact[2]}-${compact[3]}`;
       const m = raw.match(/^(\d{4})[-\/.年](\d{1,2})[-\/.月](\d{1,2})日?$/);
       if (!m) return raw;
       return `${m[1]}-${String(Number(m[2])).padStart(2,'0')}-${String(Number(m[3])).padStart(2,'0')}`;
@@ -3716,7 +3718,7 @@ ${nextStep}`;
         { v:'v9.5–v9.9 模板系统', items:['新增问题模板，按场景分类，点击自动填入占问事项。','支持我的模板、自定义模板、模板导入导出、模板与场景联动。','支持模板收藏、最近使用、使用次数、常用模板区。','增强模板搜索、排序、批量管理、导入去重与选中模板导出。'] },
         { v:'v9.9.1 起课规则规范版', items:['回归并固定唯一正式起课规则：三数连续顺推法。','不加入三数直取法，避免混用规则影响复盘。','结果页、历史、复制、导出、备份中记录起课规则。'] },
         { v:'v9.9.7 导入导出管理版', items:['整理导入导出按钮为历史记录、完整备份、模板工具等子目录。','新增历史记录 JSON 导出 / 导入，与完整备份 JSON 做出区分。','明确 TXT 用于阅读，JSON 用于恢复和迁移。'] },
-        { v:'v9.9.9 全局弹窗滚动修正版', items:['问题模板弹窗增加搜索、我的模板、模板工具、批量管理、模板列表等分组折叠。','手机端默认不再一次性铺开所有内容，便于查看和操作。'] },
+        { v:'v9.9.10 日期筛选修正版', items:['问题模板弹窗增加搜索、我的模板、模板工具、批量管理、模板列表等分组折叠。','手机端默认不再一次性铺开所有内容，便于查看和操作。'] },
         { v:'v9.9.2 版本更新记录版', items:['新增版本内容更新板块。','可在阅读设置中开启或关闭，默认关闭。','用于查看本工具从早期 v7 到当前版本的主要演进记录。'] },
         { v:'v9.9.3 主页说明版', items:['将“版本说明 / 起课规则说明”和“版本内容更新”从占卜结果页移到主页。','不占卜也可以在设置中开启查看说明内容。','两个板块仍由设置开关控制，默认关闭，避免主页过长。'] },
         { v:'v9.9.4 底部说明与阅读进度版', items:['将“版本说明 / 起课规则说明”和“版本内容更新”统一移到页面最底部。','两个板块仍由设置开关控制，默认关闭。','新增顶部阅读进度条，主页和占卜页都能显示当前阅读进度。'] },
