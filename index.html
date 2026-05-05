@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v8.8 场景规则查询版</title>
-  <meta name="description" content="小六壬个人网页版 v8.8：场景规则查询版，支持本地问事识别、历史分析与场景规则查询。" />
+  <title>小六壬占卜 · v9.9.6 智能章节导航版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.6：章节卡点根据当前主页或结果内容智能显示，并保持版本更新默认关闭。" />
   <style>
     :root {
       --bg: #f7f3ee;
@@ -180,6 +180,45 @@
     .icon-btn { font-size:1.55rem; line-height:1; padding:6px 12px; background: transparent; box-shadow:none; }
     .hint { margin: 12px 0 0; color: var(--muted); font-size: .95rem; }
 
+    /* v9.9.4 全站阅读进度条 */
+    .page-progress { position:fixed; left:0; right:0; top:0; height:4px; z-index:9999; background:rgba(103,83,165,.08); pointer-events:none; }
+    .page-progress > div { height:100%; width:0%; background:linear-gradient(90deg,var(--primary),var(--accent)); box-shadow:0 0 12px rgba(103,83,165,.25); transition:width .12s ease-out; }
+    .home-info { margin-top:18px; display:grid; gap:18px; }
+    .home-info:empty { display:none; }
+    .home-info.hide-about #homeAboutRulesBlockWrap, .home-info.hide-version-updates #homeVersionUpdatesBlockWrap { display:none; }
+
+
+
+    /* v9.2 A/B 选择起课 */
+    .ab-choice-panel { margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.74); box-shadow: var(--shadow-sm); }
+    .ab-choice-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; margin-bottom: 12px; }
+    .ab-choice-head h4 { margin:0 0 6px; font-size:1.02rem; }
+    .ab-choice-head p { margin:0; color:var(--muted); line-height:1.65; }
+    .ab-toggle { display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:10px 15px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.95); color:var(--text); white-space:nowrap; min-height:44px; box-shadow:0 8px 16px rgba(103,83,165,.05); }
+    .ab-toggle input { width:18px; height:18px; flex:0 0 auto; }
+    .ab-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .ab-grid textarea { min-height: 70px; resize:vertical; }
+    .ab-mini { color:var(--muted); font-size:.92rem; line-height:1.65; margin-top:10px; }
+    .ab-choice-result { display:grid; gap:14px; }
+    .ab-summary-box { background: rgba(103,83,165,.06); border:1px solid rgba(103,83,165,.12); border-radius:18px; padding:14px 16px; line-height:1.82; }
+    .ab-result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .ab-option-card { border:1px solid var(--line); border-radius:18px; padding:15px; background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(250,248,252,.94)); }
+    .ab-option-card.recommend { border-color:rgba(103,83,165,.34); box-shadow:0 16px 24px rgba(103,83,165,.08); }
+    .ab-option-card h5 { margin:0 0 10px; color:var(--primary); font-size:1.12rem; }
+    .ab-palaces { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 12px; }
+    .ab-palace-pill { border-radius:999px; padding:5px 10px; background:rgba(103,83,165,.08); color:var(--primary); font-size:.88rem; }
+    .ab-score { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:10px 0; }
+    .ab-score div { border:1px solid var(--line); border-radius:14px; padding:9px; background:#fff; }
+    .ab-score span { display:block; color:var(--muted); font-size:.84rem; margin-bottom:4px; }
+    .ab-score b { font-size:.98rem; }
+    .ab-option-card p { margin:8px 0; line-height:1.76; }
+    .ab-warn { color:var(--muted); font-size:.92rem; line-height:1.7; }
+    @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+ .ab-choice-head { grid-template-columns:1fr; align-items:stretch; } .ab-toggle { width:100%; border-radius:16px; } .ab-grid, .ab-result-grid { grid-template-columns:1fr; } .ab-score { grid-template-columns:1fr; } }
+
     .question-panel { display:grid; gap:10px; }
     .question-panel textarea { min-height: 86px; }
     .question-tip { color: var(--muted); font-size:.94rem; line-height:1.7; }
@@ -199,6 +238,38 @@
     .view-toggle .ghost-btn.active { background:rgba(103,83,165,.12); border-color:rgba(103,83,165,.35); color:var(--primary); font-weight:700; }
     .result-section.simple-mode .detail-only { display:none !important; }
 
+    /* v9.1 阅读设置 */
+    .settings-form { padding:18px 24px 24px; display:grid; gap:14px; max-height:70vh; overflow:auto; -webkit-overflow-scrolling:touch; }
+    .settings-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:15px 16px; display:grid; gap:10px; }
+    .settings-card h4 { margin:0; color:var(--primary); font-size:1.02rem; }
+    .settings-row { display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:8px; border-top:1px dashed rgba(103,83,165,.12); }
+    .settings-row:first-of-type { border-top:none; padding-top:0; }
+    .settings-row span { color:var(--text); line-height:1.55; }
+    .settings-row small { display:block; color:var(--muted); margin-top:3px; line-height:1.5; }
+    .settings-row input[type="checkbox"] { width:22px; height:22px; flex:0 0 auto; accent-color: var(--primary); }
+    .settings-row select { min-width:140px; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; color:var(--text); }
+    .settings-actions { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .collapsible-block > h4 { justify-content:space-between; }
+    .collapse-toggle { margin-left:auto; border:1px solid var(--line); background:rgba(255,255,255,.96); color:var(--primary); border-radius:999px; padding:5px 10px; font-size:.85rem; cursor:pointer; }
+    .collapsible-block.is-collapsed > *:not(h4) { display:none !important; }
+    .result-section.hide-radar #radarBlock { display:none !important; }
+    .result-section.hide-about #aboutRulesBlockWrap { display:none !important; }
+    .result-section.hide-version-updates #versionUpdatesBlockWrap { display:none !important; }
+    .home-info { display:grid; gap:14px; }
+    .home-info.hide-about #homeAboutRulesBlockWrap { display:none !important; }
+    .home-info.hide-version-updates #homeVersionUpdatesBlockWrap { display:none !important; }
+    .home-info.hide-about.hide-version-updates { display:none !important; }
+    
+    .version-log { display:grid; gap:12px; }
+    .version-log-note { background:rgba(229,196,138,.13); border:1px solid rgba(188,133,65,.16); border-radius:16px; padding:12px 14px; color:#5b526a; line-height:1.75; }
+    .version-log details { background:rgba(255,255,255,.74); border:1px solid var(--line); border-radius:16px; padding:12px 14px; }
+    .version-log summary { cursor:pointer; color:var(--primary); font-weight:750; }
+    .version-log ul { margin:10px 0 0; padding-left:1.2rem; }
+    .version-log li { line-height:1.78; color:#443b58; }
+
+    @media (max-width:900px){ .settings-form { padding:14px 18px 24px; max-height:72vh; } .settings-row { align-items:flex-start; } }
+
+
     .answer-summary { display:grid; gap:14px; }
     .answer-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px; }
     .answer-card { background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,248,252,.94)); border:1px solid var(--line); border-radius:18px; padding:15px 16px; line-height:1.78; }
@@ -214,7 +285,31 @@
 
     .simple-note { color:var(--muted); font-size:.92rem; line-height:1.6; margin-top:8px; }
     .history-search-row { padding: 14px 24px 0; display:grid; grid-template-columns: minmax(0,1fr) 170px; gap:10px; }
-    .history-search-row input, .history-search-row select { padding:11px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; }
+    .history-date-row, .analytics-date-row { padding: 12px 24px 0; display:flex; align-items:end; gap:10px; flex-wrap:wrap; }
+    .history-date-row label, .analytics-date-row label { display:flex; flex-direction:column; gap:7px; color:var(--muted); font-size:.94rem; }
+    .history-date-row input, .analytics-date-row input { min-width:180px; }
+    .history-search-row input, .history-search-row select, .history-date-row input, .analytics-date-row input { padding:11px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; }
+    .date-picker-shell { position:relative; min-width:210px; display:flex; gap:8px; align-items:center; }
+    .date-picker-shell .date-text-input {
+      min-width: 156px; flex:1 1 156px; padding:11px 12px; border-radius:14px; border:1px solid var(--line);
+      background:#fff; color:var(--text); outline:none;
+    }
+    .date-picker-shell .date-text-input::placeholder { color:var(--muted); opacity:1; text-transform:uppercase; }
+    .date-picker-shell .date-text-input:focus { border-color: rgba(103,83,165,.36); box-shadow:0 0 0 4px rgba(103,83,165,.08); }
+    .date-picker-shell .date-native-input { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+    .date-picker-btn {
+      flex:0 0 auto; min-height:43px; padding:10px 12px; border-radius:14px; border:1px solid var(--line);
+      background:#fff; color:var(--primary); box-shadow:0 8px 14px rgba(103,83,165,.05); cursor:pointer;
+    }
+    .review-summary { margin-top:10px; padding:10px 12px; border-radius:14px; background:rgba(103,83,165,.06); border:1px solid rgba(103,83,165,.08); color:#514967; line-height:1.65; }
+    .review-summary strong { color:var(--primary); }
+    .review-form { padding: 18px 24px 24px; display:grid; gap:14px; }
+    .review-form label { display:grid; gap:8px; color:var(--muted); }
+    .review-form select, .review-form textarea { width:100%; padding:12px 14px; border-radius:16px; border:1px solid var(--line); background:#fff; color:var(--text); }
+    .review-form textarea { min-height:110px; resize:vertical; line-height:1.7; }
+    .review-target { background:rgba(255,255,255,.96); border:1px solid var(--line); border-radius:18px; padding:14px 16px; color:#514967; line-height:1.7; }
+    .review-actions { display:flex; gap:10px; flex-wrap:wrap; }
+
     .about-rules { display:grid; gap:12px; }
     .about-rules details { background:rgba(255,255,255,.72); border:1px solid var(--line); border-radius:16px; padding:12px 14px; }
     .about-rules summary { cursor:pointer; color:var(--primary); font-weight:700; }
@@ -333,6 +428,7 @@
       transition: .18s ease;
     }
     .scroll-tool-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 32px rgba(66,49,109,.20); }
+    .scroll-tool-btn.wide { width:54px; font-size:.78rem; font-weight:800; letter-spacing:0; }
     .overall-rich { white-space: pre-line; line-height: 1.92; }
     .question-linked { background: rgba(229,196,138,.12); border:1px solid rgba(188,133,65,.16); border-radius:16px; padding:12px 14px; margin:10px 0; line-height:1.78; }
     .question-linked strong { color: var(--primary); }
@@ -340,6 +436,7 @@
     @media (max-width: 760px) {
       .scroll-tools { right: 12px; bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
       .scroll-tool-btn { width: 42px; height: 42px; font-size: .98rem; }
+      .scroll-tool-btn.wide { width: 48px; font-size:.72rem; }
     }
 
     @media (max-width: 1240px) {
@@ -349,6 +446,10 @@
       .summary-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
     }
     @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+
       .shell { padding:14px; gap:14px; }
       .hero, .section, .result-section, .sidebar { padding:18px; }
       .hero, .result-header { grid-template-columns: 1fr; }
@@ -374,6 +475,10 @@
     .art.theme-illustration::before, .art.theme-illustration::after { display:none; }
     .art.theme-illustration svg { position:absolute; inset:0; width:100%; height:100%; display:block; }
     @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+
       .number-tools { align-items:flex-start; }
       .number-tool-actions { width:100%; display:grid; grid-template-columns:1fr 1fr; }
       .number-tool-actions .ghost-btn { width:100%; min-height:44px; }
@@ -404,7 +509,7 @@
 
     #historyDialog { max-height: min(88vh, 860px); overflow:hidden; }
     #historyDialog[open] { display:flex; flex-direction:column; }
-    #historyDialog .dialog-head, #historyDialog .history-search-row, #historyDialog .history-tools { flex:0 0 auto; }
+    #historyDialog .dialog-head, #historyDialog .history-search-row, #historyDialog .history-date-row, #historyDialog .history-tools { flex:0 0 auto; }
     #historyDialog .history-list {
       flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; overflow-x:hidden;
       -webkit-overflow-scrolling:touch; padding-bottom:28px;
@@ -414,19 +519,88 @@
     #historyDialog .history-list::-webkit-scrollbar-track { background:rgba(103,83,165,.06); border-radius:999px; }
     #historyDialog .history-list::-webkit-scrollbar-thumb { background:rgba(103,83,165,.38); border-radius:999px; border:2px solid rgba(255,255,255,.82); }
     @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+
       #historyDialog { width:calc(100vw - 28px); max-height:82dvh; }
       #historyDialog .history-list { padding:14px 18px 30px; }
       #historyDialog .dialog-head { padding:18px; }
       #historyDialog .history-search-row { padding:14px 18px 0; }
       #historyDialog .history-tools { padding:14px 18px 0; }
     }
-    @media (max-width: 900px) { #analyticsDialog { width:calc(100vw - 28px); max-height:82dvh; } #analyticsContent { max-height:calc(82dvh - 112px); padding-bottom:28px; } .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
+    @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+ #reviewDialog { width:calc(100vw - 28px); max-height:82dvh; } #reviewDialog .review-form { padding:14px 18px 24px; } #analyticsDialog { width:calc(100vw - 28px); max-height:82dvh; } #analyticsContent { max-height:calc(82dvh - 112px); padding-bottom:28px; } .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .analytics-date-row { padding:14px 18px 0; align-items:stretch; } .history-date-row { padding:12px 18px 0; align-items:stretch; } .history-date-row label, .analytics-date-row label { flex:1 1 100%; } .history-date-row input, .analytics-date-row input { width:100%; } .date-picker-shell { width:100%; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
 
 
     /* v8.8 场景规则查询 */
     #rulesDialog { max-height: min(88vh, 860px); overflow:hidden; }
     #rulesDialog[open] { display:flex; flex-direction:column; }
     #rulesDialog .dialog-head, #rulesDialog .rules-toolbar { flex:0 0 auto; }
+
+    /* v9.5 问题模板 */
+    .template-toolbar { padding:16px 24px 0; display:grid; grid-template-columns:minmax(0,1fr) 190px 160px; gap:12px; }
+    .template-content { padding:18px 24px 26px; max-height:68dvh; overflow:auto; }
+    .template-intro { background: rgba(103,83,165,.07); border:1px solid var(--line); border-radius:18px; padding:14px 16px; color:#4a425e; line-height:1.75; margin-bottom:14px; }
+    .template-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .template-card { background:rgba(255,255,255,.96); border:1px solid var(--line); border-radius:18px; padding:14px; box-shadow: var(--shadow-sm); }
+    .template-card h4 { margin:0 0 10px; display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--primary); }
+    .template-card small { color:var(--muted); font-weight:400; }
+    .template-list { display:grid; gap:8px; }
+    .template-btn { border:1px solid rgba(103,83,165,.12); background:rgba(250,249,253,.98); color:#3f3754; text-align:left; border-radius:14px; padding:10px 12px; line-height:1.55; cursor:pointer; font:inherit; }
+    .template-btn:hover { background:rgba(103,83,165,.08); border-color:rgba(103,83,165,.24); transform: translateY(-1px); }
+    .template-empty { color:var(--muted); text-align:center; padding:22px; }
+    @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+ #templateDialog { width:calc(100vw - 28px); max-height:82dvh; } .template-toolbar { grid-template-columns:1fr; padding:14px 18px 0; } .template-content { padding:14px 18px 26px; max-height:calc(82dvh - 126px); } .template-grid { grid-template-columns:1fr; } .question-tools { align-items:stretch; } .question-tools .question-actions { width:100%; display:grid; grid-template-columns:1fr 1fr; gap:10px; } }
+    /* v9.6 自定义问题模板 */
+    .custom-template-box { margin:0 24px 0; padding:14px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.88); box-shadow:var(--shadow-sm); }
+    .custom-template-box h4 { margin:0 0 10px; color:var(--primary); display:flex; align-items:center; gap:8px; }
+    .custom-template-form { display:grid; grid-template-columns:160px minmax(0,1fr) auto; gap:10px; align-items:end; }
+    .custom-template-form label { margin:0; }
+    .custom-template-form input, .custom-template-form select { width:100%; }
+    .custom-template-note { margin:10px 0 0; color:var(--muted); font-size:.92rem; line-height:1.65; }
+    .custom-template-tag { display:inline-flex; align-items:center; gap:6px; color:#8d6631; background:var(--accent-soft); border:1px solid rgba(188,133,65,.16); border-radius:999px; padding:3px 8px; font-size:.82rem; margin-left:6px; }
+    .template-btn-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:stretch; }
+    .template-delete-btn { border:1px solid rgba(182,83,83,.16); background:rgba(255,244,244,.95); color:#b65353; border-radius:14px; padding:0 10px; cursor:pointer; font:inherit; }
+    .template-manage-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .template-manage-actions .ghost-btn, .template-manage-actions .danger-btn { padding:10px 12px; }
+    .template-count-pill { color:#8d6631; background:var(--accent-soft); border:1px solid rgba(188,133,65,.16); border-radius:999px; padding:3px 8px; font-size:.82rem; margin-left:6px; }
+    .template-bulk-tools { margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding-top:12px; border-top:1px dashed var(--line); }
+    .template-bulk-tools span { color:var(--muted); font-size:.92rem; }
+    .template-bulk-tools select { min-width:150px; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; color:var(--text); }
+    .template-select-box { display:flex; align-items:center; justify-content:center; padding:0 2px; }
+    .template-select-box input { width:18px; height:18px; accent-color:var(--primary); }
+    .template-meta-line { display:block; color:var(--muted); font-size:.8rem; margin-top:4px; }
+
+    @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+ .custom-template-box { margin:0 18px 0; } .custom-template-form { grid-template-columns:1fr; } .template-btn-row { grid-template-columns:minmax(0,1fr) 48px; } .template-manage-actions { display:grid; grid-template-columns:1fr; } }
+
+    /* v9.8 模板收藏与常用模板 */
+    .template-quick-section { background:rgba(255,255,255,.88); border:1px solid var(--line); border-radius:18px; padding:14px; margin:0 0 14px; box-shadow:var(--shadow-sm); }
+    .template-quick-section h4 { margin:0 0 10px; color:var(--primary); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .template-quick-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .template-meta-row { display:grid; grid-template-columns:minmax(0,1fr) 42px; gap:8px; align-items:stretch; }
+    .template-star-btn { border:1px solid rgba(229,196,138,.34); background:rgba(255,251,244,.96); color:#b08035; border-radius:14px; padding:0 10px; cursor:pointer; font:inherit; min-width:42px; }
+    .template-star-btn.active { background:linear-gradient(180deg, rgba(229,196,138,.38), rgba(255,251,244,.98)); color:#8d6631; border-color:rgba(188,133,65,.28); font-weight:700; }
+    .template-use-count { display:inline-flex; align-items:center; gap:4px; color:#8d6631; background:var(--accent-soft); border:1px solid rgba(188,133,65,.16); border-radius:999px; padding:2px 7px; font-size:.78rem; margin-left:6px; white-space:nowrap; }
+    .template-recent-title { margin:14px 0 10px; color:#4a425e; font-weight:700; }
+    @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+ .template-quick-grid { grid-template-columns:1fr; } .template-meta-row { grid-template-columns:minmax(0,1fr) 44px; } }
+
+
+
     .rules-toolbar { padding:16px 24px 0; display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:12px; }
     .rules-content { flex:1 1 auto; min-height:0; overflow:auto; -webkit-overflow-scrolling:touch; padding:18px 24px 28px; scrollbar-width:thin; scrollbar-color: rgba(103,83,165,.42) rgba(103,83,165,.08); }
     .rules-content::-webkit-scrollbar { width:10px; }
@@ -440,11 +614,87 @@
     .rule-card .rule-scenes { color:var(--text); font-weight:700; }
     .rule-card .rule-tag { display:inline-block; margin:4px 6px 0 0; padding:4px 8px; border-radius:999px; background:rgba(103,83,165,.08); color:var(--primary); font-size:.86rem; }
     .rules-empty { padding:28px 10px; color:var(--muted); text-align:center; }
-    @media (max-width: 900px) { #rulesDialog { width:calc(100vw - 28px); max-height:82dvh; } .rules-toolbar { grid-template-columns:1fr; padding:14px 18px 0; } .rules-content { padding:14px 18px 26px; } }
+    @media (max-width: 900px) {
+      .template-toolbar { grid-template-columns: 1fr; }
+      .template-bulk-tools { display:grid; grid-template-columns:1fr; }
+      .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
+ #rulesDialog { width:calc(100vw - 28px); max-height:82dvh; } .rules-toolbar { grid-template-columns:1fr; padding:14px 18px 0; } .rules-content { padding:14px 18px 26px; } }
 
-  </style>
+  
+    .rule-badge { display:inline-flex; align-items:center; gap:6px; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(103,83,165,.08); color:var(--primary); border:1px solid rgba(103,83,165,.12); font-size:.9rem; font-weight:650; }
+    .rule-note { color:var(--muted); font-size:.92rem; line-height:1.7; margin-top:6px; }
+
+
+    /* v9.9.6 智能章节卡点导航 */
+    .section-jump-nav {
+      position: fixed;
+      left: max(18px, env(safe-area-inset-left));
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 58;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 168px;
+      pointer-events: auto;
+    }
+    .jump-chip {
+      border: 1px solid rgba(103,83,165,.16);
+      background: rgba(255,255,255,.92);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 8px 12px;
+      box-shadow: 0 10px 22px rgba(66,49,109,.12);
+      backdrop-filter: blur(10px);
+      font-size: .82rem;
+      font-weight: 750;
+      white-space: nowrap;
+      text-align: left;
+      transition: .18s ease;
+      opacity: .72;
+    }
+    .jump-chip:hover { opacity: 1; transform: translateX(2px); }
+    .jump-chip.active {
+      opacity: 1;
+      color: #fff;
+      border-color: rgba(103,83,165,.35);
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 14px 28px rgba(66,49,109,.18);
+    }
+    .jump-chip .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background: currentColor; margin-right:6px; vertical-align:middle; opacity:.78; }
+    .jump-mini-toggle { display:none; }
+    html { scroll-padding-top: 16px; }
+    @media (max-width: 1240px) {
+      .section-jump-nav {
+        left: 50%;
+        right: auto;
+        top: auto;
+        bottom: max(14px, env(safe-area-inset-bottom));
+        transform: translateX(-50%);
+        flex-direction: row;
+        max-width: calc(100vw - 112px);
+        overflow-x: auto;
+        padding: 4px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.72);
+        box-shadow: 0 12px 28px rgba(66,49,109,.10);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .section-jump-nav::-webkit-scrollbar { display:none; }
+      .jump-chip { flex:0 0 auto; padding: 8px 10px; font-size:.78rem; box-shadow:none; }
+      .scroll-tools { bottom: max(70px, env(safe-area-inset-bottom)); }
+    }
+    @media (max-width: 760px) {
+      .section-jump-nav { max-width: calc(100vw - 92px); gap:6px; }
+      .jump-chip { padding:7px 9px; }
+    }
+
+</style>
 </head>
 <body>
+  <div class="page-progress" aria-hidden="true"><div id="pageProgressBar"></div></div>
+  <nav class="section-jump-nav" id="sectionJumpNav" aria-label="章节卡点导航"></nav>
   <div class="shell">
     <aside class="sidebar card">
       <div class="brand-row">
@@ -477,19 +727,21 @@
       </div>
     </aside>
     <main class="main">
-      <header class="hero card">
+      <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v8.8 场景规则查询版</h2>
-          <p>本版增强本地问事规则库，并新增“场景规则”查询；不联网、不接 API，仍在浏览器本地完成分析。</p>
+          <h2>个人占卜台 · v9.9.6 智能章节导航版</h2>
+          <p>本版优化章节卡点导航：主页只显示主页相关卡点，占卜或查看历史结果时再显示答案、专项、三象等结果卡点。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
           <button class="ghost-btn" id="analyticsBtn">历史分析</button>
           <button class="ghost-btn" id="rulesBtn">场景规则</button>
+          <button class="ghost-btn" id="settingsBtn">设置</button>
           <button class="ghost-btn" id="resetBtn">重新占卜</button>
         </div>
       </header>
-      <section class="card section">
+
+      <section class="card section" id="sceneSection">
         <div class="section-title">
           <div class="step">1</div>
           <div>
@@ -499,7 +751,7 @@
         </div>
         <div class="scene-grid" id="sceneGrid"></div>
       </section>
-      <section class="card section">
+      <section class="card section" id="questionSection">
         <div class="section-title">
           <div class="step">2</div>
           <div>
@@ -511,7 +763,10 @@
           <label><span>你具体想问什么？</span><textarea id="questionInput" maxlength="160" placeholder="例如：今天会不会下雨？ / 前任会不会主动联系我？ / 铜制小算盘放哪里了？ / 这次投资能不能做？"></textarea></label>
           <div class="question-tools">
             <span class="question-count" id="questionCount">0 / 160 字</span>
-            <button class="ghost-btn" id="clearQuestionBtn" type="button">清空事项</button>
+            <div class="question-actions">
+              <button class="ghost-btn" id="templateBtn" type="button">问题模板</button>
+              <button class="ghost-btn" id="clearQuestionBtn" type="button">清空事项</button>
+            </div>
           </div>
           <div class="context-controls">
             <label><span>识别到的问题类型，可手动修正</span><select id="contextTypeSelect" class="select-control">
@@ -534,9 +789,23 @@
             <button class="ghost-btn" id="resetContextTypeBtn" type="button">恢复自动</button>
           </div>
           <div class="question-tip">本功能是本地规则分析，不联网、不接 API；它会把你的问题转换成天气、消息、感情、财运、失物等专项断法。系统会自动识别，也可以手动修正类型。</div>
+          <div class="ab-choice-panel" id="abChoicePanel">
+            <div class="ab-choice-head">
+              <div>
+                <h4>A/B 选择起课（可选）</h4>
+                <p>适合“选 A 还是 B”“买这个还是那个”“去还是不去”“留还是走”等决策问题。开启后会分别为 A、B 两个选项生成辅助课，并给出对比建议。</p>
+              </div>
+              <label class="ab-toggle"><input type="checkbox" id="abEnable"> 开启 A/B 对比</label>
+            </div>
+            <div class="ab-grid hidden" id="abFields">
+              <label><span>选项 A</span><textarea id="optionAInput" maxlength="100" placeholder="例如：留在现在的工作 / 买 A 款手机 / 明天出门"></textarea></label>
+              <label><span>选项 B</span><textarea id="optionBInput" maxlength="100" placeholder="例如：跳槽去新公司 / 买 B 款手机 / 改天再去"></textarea></label>
+            </div>
+            <div class="ab-mini hidden" id="abMiniTip">A/B 对比为辅助判断：系统会把“占问事项 + 选项文字”分别转成事件三数，再按连续顺推落宫。主课仍按你下面选择的起课方式生成。</div>
+          </div>
         </div>
       </section>
-      <section class="card section">
+      <section class="card section" id="methodSection">
         <div class="section-title">
           <div class="step">3</div>
           <div>
@@ -599,6 +868,10 @@
           <h4>答案摘要</h4>
           <div class="answer-summary" id="answerSummaryContent"></div>
         </article>
+        <article class="block hidden" id="abChoiceResultBlock">
+          <h4>A/B 选择对比</h4>
+          <div class="ab-choice-result" id="abChoiceResultContent"></div>
+        </article>
         <div class="top-results">
           <article class="block">
             <h4>三数落宫</h4>
@@ -618,39 +891,96 @@
           </article>
         </div>
         <div class="overall-wrap">
-          <article class="block"><h4>综合判断</h4><p id="overallText" class="overall-rich"></p></article>
+          <article class="block" id="overallBlock"><h4>综合判断</h4><p id="overallText" class="overall-rich"></p></article>
         </div>
         <article class="block hidden" id="contextAnalysisBlock">
           <h4>问事专项解读</h4>
           <div class="context-analysis" id="contextAnalysisContent"></div>
         </article>
         <div class="summary-grid" id="summaryGrid"></div>
-        <article class="block detail-only">
+        <article class="block detail-only collapsible-block" data-collapse-key="tri" id="triReadingBlock">
           <h4>三象解读</h4>
           <div class="tri-reading" id="threeReading"></div>
         </article>
-        <article class="block detail-only">
+        <article class="block detail-only collapsible-block" data-collapse-key="single" id="singlePalaceBlock">
           <h4>单宫断事解卦</h4>
           <div class="gua-reading" id="singlePalaceReading"></div>
         </article>
-        <article class="block detail-only">
+        <article class="block detail-only collapsible-block" data-collapse-key="double" id="doublePalaceBlock">
           <h4>双宫断事解卦</h4>
           <div class="gua-reading" id="doublePalaceReading"></div>
         </article>
         <div class="insight-grid detail-only">
-          <article class="block"><h4>象意补充</h4><div class="symbol-table" id="symbolSupplement"></div></article>
-          <article class="block"><h4>雷达分析图</h4><div class="radar-wrap"><canvas id="radarCanvas" width="420" height="380"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
+          <article class="block collapsible-block" data-collapse-key="symbol" id="symbolBlock"><h4>象意补充</h4><div class="symbol-table" id="symbolSupplement"></div></article>
+          <article class="block collapsible-block" data-collapse-key="radar" id="radarBlock"><h4>雷达分析图</h4><div class="radar-wrap"><canvas id="radarCanvas" width="420" height="380"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
         </div>
-        <article class="block"><h4>行动建议</h4><ul id="adviceList"></ul></article>
-        <article class="block detail-only"><h4>版本说明 / 起课规则说明</h4><div class="about-rules" id="aboutRulesBlock"></div></article>
+        <article class="block" id="adviceBlock"><h4>行动建议</h4><ul id="adviceList"></ul></article>
+      </section>
+      <!-- 底部说明区：由设置控制显示，默认关闭 -->
+      <section class="home-info hide-about hide-version-updates" id="homeInfoBlocks">
+        <article class="card section" id="homeAboutRulesBlockWrap">
+          <div class="section-title">
+            <div class="step">i</div>
+            <div>
+              <h3>版本说明 / 起课规则说明</h3>
+              <p>这里说明本工具采用的起课规则、六宫顺序和结果阅读方式。</p>
+            </div>
+          </div>
+          <div class="about-rules" id="homeAboutRulesBlock"></div>
+        </article>
+        <article class="card section" id="homeVersionUpdatesBlockWrap">
+          <div class="section-title">
+            <div class="step">v</div>
+            <div>
+              <h3>版本内容更新</h3>
+              <p>这里记录本工具从 v7 到当前版本的主要功能演进。</p>
+            </div>
+          </div>
+          <div class="version-log" id="homeVersionUpdatesBlock"></div>
+        </article>
       </section>
     </main>
   </div>
 
-  <div class="scroll-tools" aria-label="页面快捷滚动">
+  <div class="scroll-tools" aria-label="页面快捷操作">
+    <button class="scroll-tool-btn wide" type="button" onclick="expandAllResultBlocks()" title="一键展开结果模块" aria-label="一键展开结果模块">展开</button>
+    <button class="scroll-tool-btn wide" type="button" onclick="collapseAllResultBlocks()" title="一键折叠结果模块" aria-label="一键折叠结果模块">折叠</button>
     <button class="scroll-tool-btn" type="button" onclick="scrollToTopQuick()" title="一键置顶" aria-label="一键置顶">↑</button>
     <button class="scroll-tool-btn" type="button" onclick="scrollToBottomQuick()" title="一键到底" aria-label="一键到底">↓</button>
   </div>
+
+
+  <dialog id="settingsDialog">
+    <div class="dialog-head">
+      <div>
+        <h3>阅读设置</h3>
+        <p>设置会保存在当前浏览器本地，下次打开自动沿用。</p>
+      </div>
+      <button class="icon-btn" id="closeSettingsBtn" type="button">×</button>
+    </div>
+    <div class="settings-form">
+      <div class="settings-card">
+        <h4>结果页显示</h4>
+        <div class="settings-row">
+          <span>默认阅读模式<small>打开结果时默认使用简洁版或详细版。</small></span>
+          <select id="settingDefaultView"><option value="detail">详细版</option><option value="simple">简洁版</option></select>
+        </div>
+        <label class="settings-row"><span>详细模块默认折叠<small>三象、单宫、双宫、象意补充等模块可先折叠，需要时再展开。</small></span><input id="settingCollapseDetails" type="checkbox"></label>
+        <label class="settings-row"><span>显示雷达分析图<small>关闭后结果页不显示雷达图模块。</small></span><input id="settingShowRadar" type="checkbox"></label>
+        <label class="settings-row"><span>显示版本说明 / 起课规则<small>开启后在页面底部显示版本说明和起课规则；默认关闭。</small></span><input id="settingShowAbout" type="checkbox"></label>
+        <label class="settings-row"><span>显示版本内容更新<small>开启后在页面底部显示历代主要更新记录；默认关闭。</small></span><input id="settingShowVersionUpdates" type="checkbox"></label>
+      </div>
+      <div class="settings-card">
+        <h4>起课习惯</h4>
+        <label class="settings-row"><span>记住上次选择的场景<small>例如上次选择“财运”，下次打开仍停留在财运。</small></span><input id="settingRememberScene" type="checkbox"></label>
+        <label class="settings-row"><span>记住上次选择的起课方式<small>例如上次使用“时辰起课”，下次打开仍显示时辰起课。</small></span><input id="settingRememberMethod" type="checkbox"></label>
+      </div>
+      <div class="settings-actions">
+        <button class="ghost-btn" id="resetSettingsBtn" type="button">恢复默认</button>
+        <button class="primary-btn" id="saveSettingsBtn" type="button" style="width:auto;margin-top:0;">保存设置</button>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="analyticsDialog">
     <div class="dialog-head">
@@ -660,9 +990,58 @@
       </div>
       <button class="icon-btn" id="closeAnalyticsBtn">×</button>
     </div>
+    <div class="analytics-date-row">
+      <label>分析日期<div class="date-picker-shell"><input id="analyticsDateInput" class="date-text-input" type="text" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off"><button class="date-picker-btn" id="analyticsDatePickBtn" type="button" aria-label="选择分析日期">📅</button><input id="analyticsDatePicker" class="date-native-input" type="date"></div></label>
+      <button class="ghost-btn" id="clearAnalyticsDateBtn" type="button">清除日期</button>
+      <button class="ghost-btn" id="exportReviewBtn" type="button" onclick="exportReviews()">导出复盘</button>
+      <button class="ghost-btn" type="button" onclick="exportBackupJSON()">导出备份JSON</button>
+      <button class="ghost-btn" type="button" onclick="triggerImportBackup()">导入备份JSON</button>
+      <span class="hint" id="analyticsDateHint">不选日期时统计全部历史。</span>
+    </div>
     <div id="analyticsContent"></div>
   </dialog>
 
+
+
+  <dialog id="templateDialog">
+    <div class="dialog-head">
+      <div>
+        <h3>问题模板</h3>
+        <p>按场景选择常用问法，点击后会自动填入“占问事项”，你可以再自行修改。</p>
+      </div>
+      <button class="icon-btn" id="closeTemplateBtn" onclick="closeTemplateDialog()">×</button>
+    </div>
+    <div class="template-toolbar">
+      <input id="templateSearchInput" type="search" placeholder="搜索模板：支持多个词，例如 前任 联系 / 油价 下跌">
+      <select id="templateSceneFilter"><option value="all">全部模板场景</option></select>
+      <select id="templateSortMode"><option value="default">默认排序</option><option value="favorite">收藏优先</option><option value="recent">最近使用</option><option value="usage">使用次数</option></select>
+    </div>
+    <div class="custom-template-box">
+      <h4>⭐ 我的模板</h4>
+      <div class="custom-template-form">
+        <label><span>模板场景</span><select id="customTemplateScene"></select></label>
+        <label><span>模板内容</span><input id="customTemplateText" type="text" maxlength="120" placeholder="例如：这个选择 A 和 B 哪个更适合我？"></label>
+        <button class="ghost-btn" id="saveCustomTemplateBtn" type="button">保存模板</button>
+      </div>
+      <div class="template-manage-actions">
+        <button class="ghost-btn" id="exportTemplatesBtn" type="button">导出模板JSON</button>
+        <button class="ghost-btn" id="importTemplatesBtn" type="button">导入模板JSON</button>
+        <button class="danger-btn" id="clearCustomTemplatesBtn" type="button">清空我的模板</button>
+      </div>
+      <div class="template-bulk-tools">
+        <span id="templateSelectedCount">已选 0 条</span>
+        <button class="ghost-btn" id="selectAllCustomTemplatesBtn" type="button">全选当前我的模板</button>
+        <button class="ghost-btn" id="clearTemplateSelectionBtn" type="button">取消选择</button>
+        <select id="bulkTemplateScene"><option value="">批量改场景</option></select>
+        <button class="ghost-btn" id="applyBulkTemplateSceneBtn" type="button">应用场景</button>
+        <button class="ghost-btn" id="exportSelectedTemplatesBtn" type="button">导出选中</button>
+        <button class="danger-btn" id="deleteSelectedTemplatesBtn" type="button">删除选中</button>
+      </div>
+      <input id="templateImportInput" type="file" accept="application/json,.json" style="display:none">
+      <p class="custom-template-note" id="customTemplateStats">自定义模板会保存在当前浏览器本地，也会随完整备份 JSON 一起导出。点击模板可填入占问事项并自动切换到对应场景。</p>
+    </div>
+    <div class="template-content" id="templateContent"></div>
+  </dialog>
 
   <dialog id="rulesDialog">
     <div class="dialog-head">
@@ -681,10 +1060,351 @@
 
   <dialog id="historyDialog">
     <div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
-    <div class="history-search-row"><input id="historySearchInput" type="search" placeholder="搜索历史：场景 / 问题 / 宫位"><select id="historySceneFilter"><option value="all">全部场景</option></select></div><div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div>
+    <div class="history-search-row"><input id="historySearchInput" type="search" placeholder="搜索历史：场景 / 问题 / 宫位"><select id="historySceneFilter"><option value="all">全部场景</option></select></div><div class="history-date-row"><label>选择日期<div class="date-picker-shell"><input id="historyDateInput" class="date-text-input" type="text" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off"><button class="date-picker-btn" id="historyDatePickBtn" type="button" aria-label="选择历史日期">📅</button><input id="historyDatePicker" class="date-native-input" type="date"></div></label><button class="ghost-btn" id="clearHistoryDateBtn" type="button">清除日期</button><span class="hint">不选日期时显示全部历史。</span></div><div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button><button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史</button><button class="ghost-btn" id="exportReviewHistoryBtn" onclick="exportReviews()">导出复盘</button><button class="ghost-btn" id="exportBackupBtn" onclick="exportBackupJSON()">导出备份JSON</button><button class="ghost-btn" id="importBackupBtn" onclick="triggerImportBackup()">导入备份JSON</button><button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button></div><input id="backupImportInput" type="file" accept="application/json,.json" style="display:none">
     <div class="history-list" id="historyList"></div>
   </dialog>
+
+
+  <dialog id="reviewDialog">
+    <div class="dialog-head">
+      <div>
+        <h3>复盘记录</h3>
+        <p>记录实际结果与准确度，方便以后回看和改进判断。</p>
+      </div>
+      <button class="icon-btn" id="closeReviewBtn" type="button" onclick="closeReviewDialog()">×</button>
+    </div>
+    <div class="review-form">
+      <div class="review-target" id="reviewTargetText">请选择一条历史记录。</div>
+      <label>准确度
+        <select id="reviewAccuracy">
+          <option value="pending">还没发生 / 待验证</option>
+          <option value="accurate">准</option>
+          <option value="partial">部分准</option>
+          <option value="miss">不准</option>
+        </select>
+      </label>
+      <label>实际结果
+        <textarea id="reviewActual" maxlength="500" placeholder="例如：后来对方在第二天回复了，但没有明确答复；或者：当天没有下雨，只是阴天。"></textarea>
+      </label>
+      <label>复盘备注
+        <textarea id="reviewNote" maxlength="500" placeholder="可以记录哪些地方应验、哪些地方偏差、下次要注意什么。"></textarea>
+      </label>
+      <div class="review-actions">
+        <button class="primary-btn" type="button" onclick="saveReview()" style="width:auto;margin-top:0;">保存复盘</button>
+        <button class="ghost-btn" type="button" onclick="clearReviewForm()">清空复盘</button>
+      </div>
+    </div>
+  </dialog>
+
   <script>
+
+    const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
+    let selectedCustomTemplateIds = new Set();
+
+    const QUESTION_TEMPLATES = [
+      { scene:'感情', icon:'💗', note:'关系、前任、复合、主动联系', items:['对方会不会主动联系我？','我和这个人接下来还有没有发展机会？','这段关系接下来会变好还是变淡？','我要不要主动联系对方？','前任还会不会回头？','这次冷战能不能缓和？','对方现在对我是什么态度？','这次表白合不合适？'] },
+      { scene:'事业', icon:'💼', note:'工作、项目、领导、跳槽', items:['这个项目能不能顺利推进？','这次工作机会适不适合我？','领导对这件事是什么态度？','我要不要换工作？','这个方案能不能通过？','这次岗位调整对我有利吗？','这个客户后续能不能谈成？','我现在适不适合主动推进这件事？'] },
+      { scene:'财运', icon:'💰', note:'回款、投资、行情、价格', items:['这笔钱能不能顺利回来？','这次投资风险大不大？','最近财运有没有起色？','这个价格后面会不会下跌？','明天的油价会不会下跌？','这件东西现在买合不合适？','这个项目能不能赚钱？','对方会不会按时付款？'] },
+      { scene:'考试', icon:'📘', note:'考试、申请、学习、证书', items:['这次考试能不能顺利通过？','这次面试发挥会怎么样？','这个申请有没有希望？','这段时间学习效率会不会提高？','这个课程适不适合我？','成绩结果会不会比预期好？','资格审核能不能通过？','我现在复习方向对不对？'] },
+      { scene:'失物', icon:'🔎', note:'找东西、宠物走失、物品位置', items:['这个东西还能不能找到？','这个东西大概在哪里？','是不是被我放在某个收纳处？','我的钥匙/钱包/证件还能不能找到？','手机是不是落在家里或包里了？','宠物会不会自己回来？','这个快递/包裹现在在哪里？','我应该先从哪里开始找？'] },
+      { scene:'健康', icon:'🩺', note:'身体、情绪、睡眠、恢复', items:['这几天身体状态会不会好转？','这次复查结果会不会稳定？','我的睡眠状态能不能改善？','这段时间焦虑会不会缓解？','这个症状会不会反复？','我现在适不适合休息调整？','宠物身体状态会不会好转？','这件事是不是我想太多了？'] },
+      { scene:'出行', icon:'✈️', note:'行程、天气影响、延误', items:['这次出行能不能顺利？','明天适不适合出门？','这趟行程会不会延误？','路上会不会遇到麻烦？','这次自驾顺不顺？','航班/火车会不会受影响？','周末适不适合户外活动？','这次旅行安排会不会有变动？'] },
+      { scene:'合作', icon:'🤝', note:'合同、客户、谈判、分账', items:['这个合作能不能谈成？','对方靠不靠谱？','这个合同能不能签？','条款里有没有需要注意的风险？','这次谈判会不会顺利？','对方会不会按约定落实？','这笔分账会不会有争议？','这个合作后续有没有长期机会？'] },
+      { scene:'消息等待', icon:'💬', note:'回复、通知、邮件、审批消息', items:['对方会不会回复我？','今天会不会有消息？','这个通知什么时候会来？','邮件会不会有结果？','审批结果会不会顺利下来？','offer 通知会不会来？','快递物流今天会不会更新？','这个消息是不是真的？'] },
+      { scene:'天气', icon:'🌦️', note:'下雨、晴天、降温、风雨', items:['明天会不会下雨？','今天下午会不会有阵雨？','周末天气适不适合出门？','今晚会不会降温？','明天会不会刮风？','这场雨会不会很快停？','会不会出现大雨或雷雨？','户外活动会不会受天气影响？'] },
+      { scene:'求职', icon:'🧭', note:'面试、offer、跳槽、入职', items:['这次面试能不能过？','这个 offer 有没有希望？','这个岗位适不适合我？','我现在要不要跳槽？','入职流程会不会顺利？','HR 什么时候会有反馈？','这个公司靠不靠谱？','这次谈薪能不能谈好？'] },
+      { scene:'家宅', icon:'🏠', note:'搬家、租房、装修、家庭', items:['这个房子适不适合租？','这次搬家顺不顺？','装修会不会顺利？','家里这个问题会不会很麻烦？','邻里关系会不会有影响？','家人会不会同意这件事？','这个维修问题能不能解决？','家中气氛接下来会不会缓和？'] },
+      { scene:'选择', icon:'⚖️', note:'要不要、A/B、买不买、去不去', items:['我该选 A 还是选 B？','这件事我要不要做？','现在做还是以后做更好？','我要不要主动联系？','这件东西买不买合适？','我是继续还是放弃？','这次机会要不要把握？','去还是不去更合适？'] },
+      { scene:'其他', icon:'✨', note:'抽奖、梦境、人际、创作、比赛', items:['这次抽奖有没有小惊喜？','这个梦主要提醒我什么？','这个朋友对我是不是有意见？','我要不要主动解释这件事？','这篇文章/视频发布后反馈如何？','这场比赛发挥会怎么样？','这个账号/设备问题能不能解决？','这件事有没有隐藏风险？'] }
+    ];
+
+    const TEMPLATE_SCENE_TO_KEY = {
+      '感情':'love', '事业':'career', '财运':'wealth', '考试':'exam', '失物':'lost', '健康':'health', '出行':'travel',
+      '合作':'cooperation', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '其他':'other'
+    };
+    function findTemplateSceneByText(text){
+      const value=String(text || '');
+      for(const group of buildTemplateGroups()){
+        if((group.items || []).includes(value)) return group.scene;
+        if((group.customItems || []).some(item=>item.text===value)) return group.scene;
+      }
+      return null;
+    }
+    function selectSceneByName(sceneName){
+      const key=TEMPLATE_SCENE_TO_KEY[sceneName];
+      if(!key || !SCENES.some(s=>s.key===key)) return;
+      currentScene=key;
+      renderScenes();
+      persistChoiceIfNeeded('scene', currentScene);
+    }
+    function updateCustomTemplateStats(){
+      const el=document.getElementById('customTemplateStats');
+      if(!el) return;
+      const list=getCustomTemplates();
+      const byScene={};
+      list.forEach(t=>{ byScene[t.scene]=(byScene[t.scene]||0)+1; });
+      const summary=Object.entries(byScene).map(([scene,count])=>scene+count+'条').join('、') || '暂无我的模板';
+      el.innerHTML='自定义模板会保存在当前浏览器本地，也会随完整备份 JSON 一起导出。当前共有 <span class="template-count-pill">'+list.length+' 条</span>。'+summary+'。点击模板可填入占问事项并自动切换到对应场景。';
+    }
+    function exportCustomTemplatesJSON(){
+      const payload={
+        app:'xiaoliuren-web',
+        exportType:'customQuestionTemplates',
+        sourceVersion:'v9.9.2',
+        exportedAt:new Date().toISOString(),
+        templates:getCustomTemplates()
+      };
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+      const url=URL.createObjectURL(blob); const a=document.createElement('a');
+      a.href=url; a.download='xiaoliuren_custom_templates_'+new Date().toISOString().slice(0,10)+'.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+    function triggerImportCustomTemplates(){
+      const input=document.getElementById('templateImportInput');
+      if(!input) return alert('模板导入控件未找到。');
+      input.value=''; input.click();
+    }
+    function normalizeImportedTemplates(data){
+      if(Array.isArray(data)) return data;
+      if(data && Array.isArray(data.templates)) return data.templates;
+      if(data && Array.isArray(data.customTemplates)) return data.customTemplates;
+      throw new Error('未找到 templates 数组。');
+    }
+    function mergeCustomTemplates(current, imported, duplicateMode='skip'){
+      const map=new Map();
+      const output=[];
+      (current || []).forEach(t=>{
+        if(t && t.scene && t.text){
+          const key=t.scene+'|'+t.text;
+          map.set(key, t);
+          output.push(t);
+        }
+      });
+      (imported || []).forEach(t=>{
+        if(!t) return;
+        const scene=String(t.scene || '其他').trim() || '其他';
+        const value=String(t.text || t.template || t.content || '').trim();
+        if(!value) return;
+        const key=scene+'|'+value;
+        const item={ id:t.id || ('tpl_'+Date.now()+'_'+Math.random().toString(16).slice(2)), scene, text:value, createdAt:t.createdAt || new Date().toISOString(), note:t.note || '' };
+        if(map.has(key)){
+          if(duplicateMode==='keep'){
+            item.id='tpl_'+Date.now()+'_'+Math.random().toString(16).slice(2);
+            output.push(item);
+          } else if(duplicateMode==='overwrite') {
+            const idx=output.findIndex(x=>x.scene+'|'+x.text===key);
+            if(idx>=0) output[idx]={...output[idx], ...item, id:output[idx].id || item.id};
+          }
+        } else {
+          map.set(key,item); output.push(item);
+        }
+      });
+      return output.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0)).slice(0,300);
+    }
+    function handleImportTemplateFile(e){
+      const file=e && e.target && e.target.files ? e.target.files[0] : null;
+      if(!file) return;
+      const reader=new FileReader();
+      reader.onload=function(){
+        try{
+          const imported=normalizeImportedTemplates(JSON.parse(reader.result));
+          const mode=prompt('请选择模板导入方式：\n输入 merge：与当前我的模板合并\n输入 replace：覆盖当前我的模板\n输入 cancel：取消导入','merge');
+          if(!mode || mode.toLowerCase()==='cancel') return;
+          const normalized=mode.toLowerCase().trim();
+          if(normalized!=='merge' && normalized!=='replace') return alert('未识别的导入方式，已取消。');
+          let duplicateMode='skip';
+          if(normalized==='merge'){
+            const dup=prompt('遇到重复模板时如何处理？\n输入 skip：跳过重复\n输入 keep：保留重复\n输入 overwrite：覆盖旧模板','skip');
+            duplicateMode=(dup || 'skip').toLowerCase().trim();
+            if(!['skip','keep','overwrite'].includes(duplicateMode)) duplicateMode='skip';
+          }
+          const next=normalized==='replace' ? mergeCustomTemplates([], imported, 'keep') : mergeCustomTemplates(getCustomTemplates(), imported, duplicateMode);
+          saveCustomTemplates(next); selectedCustomTemplateIds.clear(); initTemplateFilters(); renderQuestionTemplates(); updateCustomTemplateStats();
+          alert('模板导入完成：当前共有 '+next.length+' 条我的模板。');
+        }catch(err){ alert('模板导入失败：'+(err && err.message ? err.message : err)); }
+      };
+      reader.onerror=function(){ alert('读取模板文件失败。'); };
+      reader.readAsText(file,'utf-8');
+    }
+    function clearCustomTemplates(){
+      const list=getCustomTemplates();
+      if(!list.length) return alert('目前没有自定义模板。');
+      if(!confirm('确定清空全部“我的模板”吗？此操作只影响当前浏览器本地模板。')) return;
+      saveCustomTemplates([]); renderQuestionTemplates(); updateCustomTemplateStats();
+    }
+
+    function initTemplateFilters(){
+      const sel=document.getElementById('templateSceneFilter');
+      if(sel && !sel.dataset.ready){
+        QUESTION_TEMPLATES.forEach(group=>{ const opt=document.createElement('option'); opt.value=group.scene; opt.textContent=group.scene; sel.appendChild(opt); });
+        sel.dataset.ready='1';
+      }
+      const customSel=document.getElementById('customTemplateScene');
+      if(customSel && !customSel.dataset.ready){
+        QUESTION_TEMPLATES.forEach(group=>{ const opt=document.createElement('option'); opt.value=group.scene; opt.textContent=group.scene; customSel.appendChild(opt); });
+        customSel.dataset.ready='1';
+      }
+      const bulkSel=document.getElementById('bulkTemplateScene');
+      if(bulkSel && !bulkSel.dataset.ready){
+        QUESTION_TEMPLATES.forEach(group=>{ const opt=document.createElement('option'); opt.value=group.scene; opt.textContent=group.scene; bulkSel.appendChild(opt); });
+        bulkSel.dataset.ready='1';
+      }
+    }
+    function getCustomTemplates(){
+      try { return JSON.parse(localStorage.getItem(CUSTOM_TEMPLATE_KEY) || '[]'); } catch { return []; }
+    }
+    function saveCustomTemplates(list){ localStorage.setItem(CUSTOM_TEMPLATE_KEY, JSON.stringify(list || [])); }
+    function addCustomTemplate(){
+      const scene=document.getElementById('customTemplateScene')?.value || '其他';
+      const input=document.getElementById('customTemplateText');
+      const text=(input?.value || '').trim();
+      if(!text){ alert('请先输入模板内容。'); return; }
+      const list=getCustomTemplates();
+      if(list.some(t=>t.text===text && t.scene===scene)){ alert('这个模板已经存在。'); return; }
+      list.unshift({ id:'tpl_'+Date.now(), scene, text, createdAt:new Date().toISOString() });
+      saveCustomTemplates(list.slice(0,80));
+      if(input) input.value='';
+      renderQuestionTemplates();
+    }
+    function deleteCustomTemplate(id){
+      if(!confirm('确定删除这个自定义模板吗？')) return;
+      saveCustomTemplates(getCustomTemplates().filter(t=>t.id!==id));
+      renderQuestionTemplates();
+    }
+    function buildTemplateGroups(){
+      const custom=getCustomTemplates();
+      const customByScene={};
+      custom.forEach(t=>{ if(!customByScene[t.scene]) customByScene[t.scene]=[]; customByScene[t.scene].push(t); });
+      const groups=QUESTION_TEMPLATES.map(group=>({ ...group, customItems: customByScene[group.scene] || [] }));
+      Object.keys(customByScene).forEach(scene=>{
+        if(!QUESTION_TEMPLATES.some(g=>g.scene===scene)) groups.push({ scene, icon:'⭐', note:'我的自定义模板', items:[], customItems:customByScene[scene] });
+      });
+      return groups;
+    }
+    function openTemplateDialog(){ initTemplateFilters(); renderQuestionTemplates(); const dlg=document.getElementById('templateDialog'); if(dlg && dlg.showModal) dlg.showModal(); else if(dlg) dlg.setAttribute('open','open'); }
+    function closeTemplateDialog(){ const dlg=document.getElementById('templateDialog'); if(dlg && dlg.close) dlg.close(); else if(dlg) dlg.removeAttribute('open'); }
+    function templateSearchTerms(){
+      return (document.getElementById('templateSearchInput')?.value || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    }
+    function templateMatches(hay, terms){
+      const source=String(hay || '').toLowerCase();
+      return !terms.length || terms.every(term=>source.includes(term));
+    }
+    function templateSortMode(){ return document.getElementById('templateSortMode')?.value || 'default'; }
+    function getTemplateUsageKey(scene, text){ return scene+'|'+text; }
+    function getTemplateStats(){
+      try { return JSON.parse(localStorage.getItem('xlr_template_usage_stats_v1') || '{}'); } catch { return {}; }
+    }
+    function getFavoriteTemplates(){
+      try { return JSON.parse(localStorage.getItem('xlr_favorite_templates_v1') || '[]'); } catch { return []; }
+    }
+    function sortTemplateItems(items, scene, isCustom){
+      const mode=templateSortMode();
+      const stats=getTemplateStats();
+      const favs=new Set(getFavoriteTemplates());
+      const arr=(items || []).slice();
+      if(mode==='default') return arr;
+      return arr.sort((a,b)=>{
+        const ta=isCustom ? a.text : a;
+        const tb=isCustom ? b.text : b;
+        const ka=getTemplateUsageKey(scene, ta), kb=getTemplateUsageKey(scene, tb);
+        if(mode==='favorite') return (favs.has(kb)?1:0)-(favs.has(ka)?1:0) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
+        if(mode==='usage') return ((stats[kb]||0)-(stats[ka]||0)) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
+        if(mode==='recent') return ((stats[kb+'_last']||0)-(stats[ka+'_last']||0)) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
+        return 0;
+      });
+    }
+    function updateSelectedTemplateCount(){
+      const el=document.getElementById('templateSelectedCount');
+      if(el) el.textContent='已选 '+selectedCustomTemplateIds.size+' 条';
+    }
+    function renderQuestionTemplates(){
+      const box=document.getElementById('templateContent'); if(!box) return;
+      const terms=templateSearchTerms();
+      const scene=(document.getElementById('templateSceneFilter')?.value || 'all');
+      const groups=buildTemplateGroups().map(group=>{
+        const builtinItems=sortTemplateItems((group.items || []).filter(t=>{
+          const hay=group.scene+' '+group.note+' '+t;
+          return (scene==='all' || group.scene===scene) && templateMatches(hay, terms);
+        }), group.scene, false);
+        const customItems=sortTemplateItems((group.customItems || []).filter(t=>{
+          const hay=group.scene+' 我的模板 '+(t.text||'')+' '+(t.note||'');
+          return (scene==='all' || group.scene===scene) && templateMatches(hay, terms);
+        }), group.scene, true);
+        return {...group, items:builtinItems, customItems};
+      }).filter(g=>g.items.length || g.customItems.length);
+      if(!groups.length){ box.innerHTML='<div class="template-empty">没有找到匹配的问题模板。</div>'; updateCustomTemplateStats(); updateSelectedTemplateCount(); return; }
+      const stats=getTemplateStats();
+      const favs=new Set(getFavoriteTemplates());
+      box.innerHTML='<div class="template-intro">选择一个模板后会自动填入“占问事项”。搜索支持多个词同时匹配；自定义模板可勾选后批量改场景、导出或删除。</div><div class="template-grid">'+groups.map(group=>`<div class="template-card"><h4><span>${group.icon} ${escapeHTML(group.scene)}</span><small>${escapeHTML(group.note)}</small></h4><div class="template-list">${(group.customItems || []).map(item=>{ const key=getTemplateUsageKey(group.scene,item.text); return `<div class="template-btn-row"><label class="template-select-box"><input type="checkbox" data-select-template="${escapeAttr(item.id)}" ${selectedCustomTemplateIds.has(item.id)?'checked':''}></label><button type="button" class="template-btn" data-template="${escapeAttr(item.text)}" data-template-scene="${escapeAttr(group.scene)}">${escapeHTML(item.text)}<span class="custom-template-tag">我的模板</span><span class="template-meta-line">${stats[key] ? '用过'+stats[key]+'次' : '未使用'}${item.note ? '｜'+escapeHTML(item.note) : ''}</span></button><button type="button" class="template-delete-btn" data-delete-template="${escapeAttr(item.id)}">删</button></div>`; }).join('')}${(group.items || []).map(item=>{ const key=getTemplateUsageKey(group.scene,item); return `<button type="button" class="template-btn" data-template="${escapeAttr(item)}" data-template-scene="${escapeAttr(group.scene)}">${favs.has(key)?'★ ':''}${escapeHTML(item)}${stats[key] ? `<span class="template-meta-line">用过${stats[key]}次</span>` : ''}</button>`; }).join('')}</div></div>`).join('')+'</div>';
+      updateCustomTemplateStats(); updateSelectedTemplateCount();
+    }
+    function handleTemplateClick(e){
+      const selector=e.target.closest('[data-select-template]');
+      if(selector){
+        const id=selector.getAttribute('data-select-template');
+        if(selector.checked) selectedCustomTemplateIds.add(id); else selectedCustomTemplateIds.delete(id);
+        updateSelectedTemplateCount();
+        return;
+      }
+      const del=e.target.closest('[data-delete-template]');
+      if(del){ deleteCustomTemplate(del.getAttribute('data-delete-template')); return; }
+      const btn=e.target.closest('[data-template]'); if(!btn) return;
+      const value=btn.getAttribute('data-template') || '';
+      const sceneName=btn.getAttribute('data-template-scene') || findTemplateSceneByText(value);
+      recordTemplateUsage(sceneName, value);
+      if(sceneName) selectSceneByName(sceneName);
+      const input=document.getElementById('questionInput');
+      if(input){ input.value=value; updateQuestionCount(); updateContextTypeAuto(); input.focus(); }
+      closeTemplateDialog();
+    }
+    function recordTemplateUsage(scene, text){
+      const key=getTemplateUsageKey(scene || '其他', text || '');
+      const stats=getTemplateStats();
+      stats[key]=(stats[key] || 0)+1;
+      stats[key+'_last']=Date.now();
+      localStorage.setItem('xlr_template_usage_stats_v1', JSON.stringify(stats));
+    }
+    function getSelectedCustomTemplates(){
+      const ids=new Set(selectedCustomTemplateIds);
+      return getCustomTemplates().filter(t=>ids.has(t.id));
+    }
+    function selectAllCurrentCustomTemplates(){
+      const scene=(document.getElementById('templateSceneFilter')?.value || 'all');
+      const terms=templateSearchTerms();
+      getCustomTemplates().forEach(t=>{
+        const hay=(t.scene+' 我的模板 '+t.text+' '+(t.note||''));
+        if((scene==='all' || t.scene===scene) && templateMatches(hay, terms)) selectedCustomTemplateIds.add(t.id);
+      });
+      renderQuestionTemplates();
+    }
+    function clearTemplateSelection(){ selectedCustomTemplateIds.clear(); renderQuestionTemplates(); }
+    function deleteSelectedTemplates(){
+      if(!selectedCustomTemplateIds.size) return alert('请先勾选要删除的自定义模板。');
+      if(!confirm('确定删除选中的 '+selectedCustomTemplateIds.size+' 条自定义模板吗？')) return;
+      const ids=new Set(selectedCustomTemplateIds);
+      saveCustomTemplates(getCustomTemplates().filter(t=>!ids.has(t.id)));
+      selectedCustomTemplateIds.clear(); renderQuestionTemplates();
+    }
+    function applyBulkTemplateScene(){
+      if(!selectedCustomTemplateIds.size) return alert('请先勾选要改场景的自定义模板。');
+      const scene=document.getElementById('bulkTemplateScene')?.value;
+      if(!scene) return alert('请选择要改成的场景。');
+      const ids=new Set(selectedCustomTemplateIds);
+      const next=getCustomTemplates().map(t=>ids.has(t.id)?{...t, scene}:t);
+      saveCustomTemplates(next); renderQuestionTemplates();
+    }
+    function exportSelectedTemplatesJSON(){
+      const selected=getSelectedCustomTemplates();
+      if(!selected.length) return alert('请先勾选要导出的自定义模板。');
+      const payload={ app:'xiaoliuren-web', exportType:'selectedCustomQuestionTemplates', sourceVersion:'v9.9.2', exportedAt:new Date().toISOString(), templates:selected };
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+      const url=URL.createObjectURL(blob); const a=document.createElement('a');
+      a.href=url; a.download='xiaoliuren_selected_templates_'+new Date().toISOString().slice(0,10)+'.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+    function escapeAttr(str){ return String(str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
     const STORAGE_KEY = 'xlr_history_v7';
     const LAST_VIEW_KEY = 'xlr_last_view_v7';
     const PALACE_ORDER = ['大安', '留连', '速喜', '赤口', '小吉', '空亡'];
@@ -732,19 +1452,55 @@
     let currentScene = 'love';
     let currentMethod = 'number';
     let currentResult = null;
+
+    const DIVINATION_RULE = {
+      id: 'sequential',
+      name: '三数连续顺推法',
+      shortName: '连续顺推',
+      description: '第一数从大安起，第二数从第一数落宫继续起，第三数从第二数落宫继续起。'
+    };
+    function getDivinationRule(){ return DIVINATION_RULE; }
+    function ruleDisplayText(){ return `${DIVINATION_RULE.name}：${DIVINATION_RULE.description}`; }
+    function ensureRuleInfo(result){
+      if(!result) return result;
+      if(!result.rule) result.rule = Object.assign({}, DIVINATION_RULE);
+      return result;
+    }
     let historyFilter = 'all';
-    function init() { renderScenes(); renderQuickPad(); bindEvents(); setNow(); updateEventCount(); updateQuestionCount(); clearStartupResult(); }
+    function init() { restoreSavedChoices(); renderScenes(); renderQuickPad(); bindEvents(); applyMethodPanel(currentMethod); setNow(); updateEventCount(); updateQuestionCount(); updateDateControl('historyDateInput','historyDatePicker'); updateDateControl('analyticsDateInput','analyticsDatePicker'); applyUserSettingsToPage(); clearStartupResult(); }
     function renderScenes() { sceneGrid.innerHTML = SCENES.map(scene => `<button type="button" class="scene-btn ${scene.key === currentScene ? 'active' : ''}" data-scene="${scene.key}"><span class="emoji">${scene.icon}</span><span>${scene.name}</span></button>`).join(''); }
     function renderQuickPad() { document.getElementById('quickPad').innerHTML = Array.from({length:12}, (_,i)=>i+1).map(n=>`<button type="button" class="pad-btn" data-pad="${n}">${n}</button>`).join(''); }
     function bindEvents() {
-      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); });
-      document.getElementById('methodTabs').addEventListener('click', e => { const tab=e.target.closest('[data-method]'); if(!tab) return; currentMethod=tab.dataset.method; document.querySelectorAll('.method-tab').forEach(el=>el.classList.toggle('active', el.dataset.method===currentMethod)); document.getElementById('numberPanel').classList.toggle('hidden', currentMethod!=='number'); document.getElementById('timePanel').classList.toggle('hidden', currentMethod!=='time'); document.getElementById('eventPanel').classList.toggle('hidden', currentMethod!=='event'); });
+      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); persistChoiceIfNeeded('scene', currentScene); });
+      document.getElementById('methodTabs').addEventListener('click', e => { const tab=e.target.closest('[data-method]'); if(!tab) return; currentMethod=tab.dataset.method; applyMethodPanel(currentMethod); persistChoiceIfNeeded('method', currentMethod); });
       document.getElementById('quickPad').addEventListener('click', e => { const btn=e.target.closest('[data-pad]'); if(!btn) return; const inputs=['num1','num2','num3'].map(id=>document.getElementById(id)); const empty=inputs.find(i=>!i.value); (empty || inputs[2]).value=btn.dataset.pad; });
       document.getElementById('divineBtn').addEventListener('click', handleDivine);
       document.getElementById('resetBtn').addEventListener('click', resetForm);
       document.getElementById('historyBtn').addEventListener('click', openHistoryDialog);
       const analyticsBtn = document.getElementById('analyticsBtn'); if (analyticsBtn) analyticsBtn.addEventListener('click', openAnalyticsDialog);
       const rulesBtn = document.getElementById('rulesBtn'); if (rulesBtn) rulesBtn.addEventListener('click', openRulesDialog);
+      const settingsBtn = document.getElementById('settingsBtn'); if (settingsBtn) settingsBtn.addEventListener('click', openSettingsDialog);
+      const templateBtn = document.getElementById('templateBtn'); if (templateBtn) templateBtn.addEventListener('click', openTemplateDialog);
+      const closeTemplateBtn = document.getElementById('closeTemplateBtn'); if (closeTemplateBtn) closeTemplateBtn.addEventListener('click', closeTemplateDialog);
+      const templateSearchInput = document.getElementById('templateSearchInput'); if (templateSearchInput) templateSearchInput.addEventListener('input', renderQuestionTemplates);
+      const templateSceneFilter = document.getElementById('templateSceneFilter'); if (templateSceneFilter) templateSceneFilter.addEventListener('change', renderQuestionTemplates);
+      const templateSortModeSelect = document.getElementById('templateSortMode'); if (templateSortModeSelect) templateSortModeSelect.addEventListener('change', renderQuestionTemplates);
+      const templateContent = document.getElementById('templateContent'); if (templateContent) templateContent.addEventListener('click', handleTemplateClick);
+      const saveCustomTemplateBtn = document.getElementById('saveCustomTemplateBtn'); if (saveCustomTemplateBtn) saveCustomTemplateBtn.addEventListener('click', addCustomTemplate);
+      const customTemplateText = document.getElementById('customTemplateText'); if (customTemplateText) customTemplateText.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); addCustomTemplate(); } });
+      const exportTemplatesBtn = document.getElementById('exportTemplatesBtn'); if (exportTemplatesBtn) exportTemplatesBtn.addEventListener('click', exportCustomTemplatesJSON);
+      const importTemplatesBtn = document.getElementById('importTemplatesBtn'); if (importTemplatesBtn) importTemplatesBtn.addEventListener('click', triggerImportCustomTemplates);
+      const clearCustomTemplatesBtn = document.getElementById('clearCustomTemplatesBtn'); if (clearCustomTemplatesBtn) clearCustomTemplatesBtn.addEventListener('click', clearCustomTemplates);
+      const templateImportInput = document.getElementById('templateImportInput'); if (templateImportInput) templateImportInput.addEventListener('change', handleImportTemplateFile);
+      const selectAllCustomTemplatesBtn = document.getElementById('selectAllCustomTemplatesBtn'); if (selectAllCustomTemplatesBtn) selectAllCustomTemplatesBtn.addEventListener('click', selectAllCurrentCustomTemplates);
+      const clearTemplateSelectionBtn = document.getElementById('clearTemplateSelectionBtn'); if (clearTemplateSelectionBtn) clearTemplateSelectionBtn.addEventListener('click', clearTemplateSelection);
+      const applyBulkTemplateSceneBtn = document.getElementById('applyBulkTemplateSceneBtn'); if (applyBulkTemplateSceneBtn) applyBulkTemplateSceneBtn.addEventListener('click', applyBulkTemplateScene);
+      const exportSelectedTemplatesBtn = document.getElementById('exportSelectedTemplatesBtn'); if (exportSelectedTemplatesBtn) exportSelectedTemplatesBtn.addEventListener('click', exportSelectedTemplatesJSON);
+      const deleteSelectedTemplatesBtn = document.getElementById('deleteSelectedTemplatesBtn'); if (deleteSelectedTemplatesBtn) deleteSelectedTemplatesBtn.addEventListener('click', deleteSelectedTemplates);
+
+      const closeSettingsBtn = document.getElementById('closeSettingsBtn'); if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', closeSettingsDialog);
+      const saveSettingsBtn = document.getElementById('saveSettingsBtn'); if (saveSettingsBtn) saveSettingsBtn.addEventListener('click', saveSettingsFromDialog);
+      const resetSettingsBtn = document.getElementById('resetSettingsBtn'); if (resetSettingsBtn) resetSettingsBtn.addEventListener('click', resetUserSettings);
       const rulesSearchInput = document.getElementById('rulesSearchInput'); if (rulesSearchInput) rulesSearchInput.addEventListener('input', renderSceneRules);
       const rulesSceneFilter = document.getElementById('rulesSceneFilter'); if (rulesSceneFilter) rulesSceneFilter.addEventListener('change', renderSceneRules);
       const closeAnalyticsBtn = document.getElementById('closeAnalyticsBtn'); if (closeAnalyticsBtn) closeAnalyticsBtn.addEventListener('click', closeAnalyticsDialog);
@@ -770,6 +1526,30 @@
       const historySceneFilter = document.getElementById('historySceneFilter');
       if (historySearchInput) historySearchInput.addEventListener('input', renderHistory);
       if (historySceneFilter) historySceneFilter.addEventListener('change', renderHistory);
+      const historyDateInput = document.getElementById('historyDateInput');
+      const historyDatePicker = document.getElementById('historyDatePicker');
+      const historyDatePickBtn = document.getElementById('historyDatePickBtn');
+      const clearHistoryDateBtn = document.getElementById('clearHistoryDateBtn');
+      if (historyDateInput) {
+        historyDateInput.addEventListener('input', function(){ syncTypedDate('historyDateInput','historyDatePicker', renderHistory); });
+        historyDateInput.addEventListener('change', function(){ syncTypedDate('historyDateInput','historyDatePicker', renderHistory, true); });
+      }
+      if (historyDatePicker) historyDatePicker.addEventListener('change', function(){ syncPickedDate('historyDateInput','historyDatePicker', renderHistory); });
+      if (historyDatePickBtn) historyDatePickBtn.addEventListener('click', function(){ openNativeDatePicker('historyDatePicker'); });
+      if (clearHistoryDateBtn) clearHistoryDateBtn.addEventListener('click', function(){ clearDateControl('historyDateInput','historyDatePicker'); renderHistory(); });
+      const analyticsDateInput = document.getElementById('analyticsDateInput');
+      const analyticsDatePicker = document.getElementById('analyticsDatePicker');
+      const analyticsDatePickBtn = document.getElementById('analyticsDatePickBtn');
+      const clearAnalyticsDateBtn = document.getElementById('clearAnalyticsDateBtn');
+      if (analyticsDateInput) {
+        analyticsDateInput.addEventListener('input', function(){ syncTypedDate('analyticsDateInput','analyticsDatePicker', renderAnalytics); });
+        analyticsDateInput.addEventListener('change', function(){ syncTypedDate('analyticsDateInput','analyticsDatePicker', renderAnalytics, true); });
+      }
+      if (analyticsDatePicker) analyticsDatePicker.addEventListener('change', function(){ syncPickedDate('analyticsDateInput','analyticsDatePicker', renderAnalytics); });
+      if (analyticsDatePickBtn) analyticsDatePickBtn.addEventListener('click', function(){ openNativeDatePicker('analyticsDatePicker'); });
+      if (clearAnalyticsDateBtn) clearAnalyticsDateBtn.addEventListener('click', function(){ clearDateControl('analyticsDateInput','analyticsDatePicker'); renderAnalytics(); });
+      const backupImportInput = document.getElementById('backupImportInput');
+      if (backupImportInput) backupImportInput.addEventListener('change', handleImportBackupFile);
       const detailViewBtn = document.getElementById('detailViewBtn');
       const simpleViewBtn = document.getElementById('simpleViewBtn');
       if (detailViewBtn) detailViewBtn.addEventListener('click', ()=>setResultViewMode('detail'));
@@ -788,7 +1568,7 @@
       if(currentMethod==='event'){ const text=document.getElementById('eventText').value.trim(); if(!text) return alert('请先输入事件描述。'); numbers=textToNumbers(text); methodNote=`事件起课：${numbers.join(' / ')}`; extraInfo=`事件：${text}`; }
       currentResult = divine(scene, numbers, currentMethod, methodNote, extraInfo); renderResult(currentResult); saveLastView(currentResult);
     }
-    function divine(scene, numbers, method, methodNote, extraInfo) { const palaces=calculateSequentialPalaces(numbers); const details=palaces.map((name,idx)=>buildPositionDetail(scene, idx, name, numbers[idx])); const metrics=calcMetrics(palaces); const distribution=describeDistribution(palaces, metrics); const overallText=buildOverall(details, metrics, distribution); const advice=buildAdvice(details, metrics); const supplement=buildSupplement(details, metrics); return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, numbers, palaces, details, metrics, distribution, overallText, advice, supplement }; }
+    function divine(scene, numbers, method, methodNote, extraInfo) { const palaces=calculateSequentialPalaces(numbers); const details=palaces.map((name,idx)=>buildPositionDetail(scene, idx, name, numbers[idx])); const metrics=calcMetrics(palaces); const distribution=describeDistribution(palaces, metrics); const overallText=buildOverall(details, metrics, distribution); const advice=buildAdvice(details, metrics); const supplement=buildSupplement(details, metrics); return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, rule:Object.assign({}, DIVINATION_RULE), sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, numbers, palaces, details, metrics, distribution, overallText, advice, supplement }; }
     function calculateSequentialPalaces(numbers) { let startIndex = 0; return numbers.map(function(n, idx) { const step = Math.max(1, Math.abs(Number(n) || 1)); const palaceIndex = (idx === 0) ? ((step - 1) % 6) : ((startIndex + step - 1) % 6); startIndex = palaceIndex; return PALACE_ORDER[palaceIndex]; }); }
     function numberToPalace(n) { return PALACE_ORDER[(Math.abs(n)-1)%6]; }
     function buildPositionDetail(scene, index, palaceName, number) { const p=PALACE_DATA[palaceName]; const role=scene.positions[index] || POSITION_NAMES[index]; const summary=sceneSpecificSummary(scene.key, palaceName, index); return { positionName: POSITION_NAMES[index], role, number, palaceName, ...p, summary }; }
@@ -930,7 +1710,7 @@
       document.getElementById('resultCard').classList.remove('hidden');
       document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
       document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
-      document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}`;
+      ensureRuleInfo(result); document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}<br><span class="rule-badge">起课规则：${result.rule.name}</span><div class="rule-note">${result.rule.description}</div>`;
       document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
       document.getElementById('summaryGrid').innerHTML=[ ['吉凶',result.metrics.luckText], ['快慢',result.metrics.speedText], ['阻力',result.metrics.resistText], ['成事倾向',result.metrics.successText], ['贵人助力',result.metrics.nobleText], ['五行气象',result.metrics.elementText] ].map(([label,val])=>`<div class="summary-item"><span>${label}</span><b>${val}</b></div>`).join('');
       document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div><div class="keyword-row">${d.keywords.map(k=>`<span class="keyword-chip">关键词：${k}</span>`).join('')}</div><p><strong>象意：</strong>${d.summary}</p><p><strong>通俗理解：</strong>这一象不是单纯说好坏，而是在提醒你：这一步最明显的气是“${d.keywords.join('、')}”。问事情，就看它卡在哪里、动在哪里；问人，就看对方或自己目前处在什么状态。</p><p><strong>现实提醒：</strong>${d.palaceName === '赤口' ? '少争论，多确认，话不要说满。' : d.palaceName === '空亡' ? '先查证，不要急着下结论。' : d.palaceName === '留连' ? '拖延反复是重点，先处理旧问题。' : d.palaceName === '速喜' ? '消息和机会来得快，要及时接住。' : d.palaceName === '小吉' ? '先取小成，不要贪大。' : '稳住节奏，按计划推进。'}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
@@ -939,7 +1719,7 @@
       document.getElementById('overallText').textContent=result.overallText;
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); const about=document.getElementById('aboutRulesBlock'); if(about) about.innerHTML=buildAboutRulesHTML(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+      renderBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
     function renderBoard(result) { const board=document.getElementById('hexBoard'); board.querySelectorAll('.hex-node').forEach(n=>n.remove()); const classes={ '大安':'hex-da','留连':'hex-ll','速喜':'hex-sx','赤口':'hex-ck','小吉':'hex-xj','空亡':'hex-kw' }; PALACE_ORDER.forEach(name=>{ const tags=[]; result.details.forEach(d=>{ if(d.palaceName===name) tags.push(d.positionName); }); const node=document.createElement('div'); node.className=`hex-node ${classes[name]} ${tags.length?'active':''}`; node.innerHTML=`<b>${name}</b><small>${PALACE_DATA[name].element} · ${PALACE_DATA[name].direction.split(' / ')[0]}</small><div class="node-tags">${tags.length ? tags.map(t=>`<span class="node-tag">${t}</span>`).join('') : '<span class="node-tag">未落</span>'}</div>`; board.appendChild(node); }); document.getElementById('distributionText').textContent=result.distribution.text; document.getElementById('distributionTag').textContent=result.metrics.goodCount >= 2 ? '吉宫偏多' : result.metrics.heavyCount >= 2 ? '阻滞偏多' : '三象分散'; }
     function renderRadar(metrics) {
@@ -1024,6 +1804,7 @@
       lines.push(`场景：${result.sceneName || ''}`);
       if (result.question) lines.push(`占问事项：${result.question}`);
       lines.push(`起课方式：${result.methodNote || ''}`);
+      lines.push(`起课规则：${(result.rule && result.rule.name) || DIVINATION_RULE.name}`);
       if (result.extraInfo) lines.push(`补充信息：${result.extraInfo}`);
       lines.push(`取数：${(result.numbers || []).join(' / ')}`);
       lines.push(`落宫：${(result.palaces || []).join(' / ')}`);
@@ -1088,15 +1869,81 @@
       });
     }
 
-    function saveCurrentResult() { if(!currentResult) return alert('请先占卜。'); const list=getHistory(); const exists=list.find(item=>item.id===currentResult.id); if(!exists) list.unshift({...currentResult}); else Object.assign(exists,currentResult); localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0,80))); alert('已保存到历史记录。'); }
-    function toggleCurrentFavorite() { if(!currentResult) return alert('请先占卜。'); currentResult.favorite=!currentResult.favorite; document.getElementById('favBtn').textContent=currentResult.favorite?'已收藏':'收藏'; const list=getHistory(); const found=list.find(item=>item.id===currentResult.id); if(found) found.favorite=currentResult.favorite; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+    function saveCurrentResult() { if(!currentResult) return alert('请先占卜。'); ensureRuleInfo(currentResult); const list=getHistory(); const exists=list.find(item=>item.id===currentResult.id); if(!exists) list.unshift({...currentResult}); else Object.assign(exists,currentResult); localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0,80))); alert('已保存到历史记录。'); }
+    function toggleCurrentFavorite() { if(!currentResult) return alert('请先占卜。'); ensureRuleInfo(currentResult); currentResult.favorite=!currentResult.favorite; document.getElementById('favBtn').textContent=currentResult.favorite?'已收藏':'收藏'; const list=getHistory(); const found=list.find(item=>item.id===currentResult.id); if(found) found.favorite=currentResult.favorite; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+    function normalizeDateString(value){
+      const raw = String(value || '').trim();
+      if (!raw) return '';
+      const m = raw.match(/^(\d{4})[-\/.年](\d{1,2})[-\/.月](\d{1,2})日?$/);
+      if (!m) return raw;
+      return `${m[1]}-${String(Number(m[2])).padStart(2,'0')}-${String(Number(m[3])).padStart(2,'0')}`;
+    }
+    function isValidDateString(value){
+      const v = String(value || '').trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+      const d = new Date(v + 'T00:00:00');
+      return !isNaN(d.getTime()) && `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` === v;
+    }
+    function updateDateControl(textInputId, pickerId){
+      const input = document.getElementById(textInputId);
+      const picker = document.getElementById(pickerId);
+      if (!input) return;
+      const normalized = normalizeDateString(input.value);
+      if (normalized !== input.value && isValidDateString(normalized)) input.value = normalized;
+      if (picker && isValidDateString(input.value)) picker.value = input.value;
+      if (picker && !input.value) picker.value = '';
+    }
+    function syncTypedDate(textInputId, pickerId, callback, forceNormalize){
+      const input = document.getElementById(textInputId);
+      const picker = document.getElementById(pickerId);
+      if (!input) return;
+      const normalized = normalizeDateString(input.value);
+      if ((forceNormalize || normalized.length === 10) && isValidDateString(normalized)) input.value = normalized;
+      if (picker) picker.value = isValidDateString(input.value) ? input.value : '';
+      if (!input.value || isValidDateString(input.value)) callback && callback();
+    }
+    function syncPickedDate(textInputId, pickerId, callback){
+      const input = document.getElementById(textInputId);
+      const picker = document.getElementById(pickerId);
+      if (!input || !picker) return;
+      input.value = picker.value || '';
+      callback && callback();
+    }
+    function clearDateControl(textInputId, pickerId){
+      const input = document.getElementById(textInputId);
+      const picker = document.getElementById(pickerId);
+      if (input) input.value = '';
+      if (picker) picker.value = '';
+    }
+    function openNativeDatePicker(pickerId){
+      const picker = document.getElementById(pickerId);
+      if (!picker) return;
+      try { if (picker.showPicker) { picker.showPicker(); return; } } catch(e) {}
+      picker.focus();
+      picker.click();
+    }
+    function itemDateKey(item){
+      if(!item || !item.createdAt) return '';
+      const d = new Date(item.createdAt);
+      if (isNaN(d.getTime())) return '';
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function filterHistoryByDate(list, dateValue){
+      if(!dateValue) return list;
+      return (list || []).filter(item => itemDateKey(item) === dateValue);
+    }
+    function renderDateScopeLabel(dateValue){
+      return dateValue ? `日期：${dateValue}` : '全部日期';
+    }
     function renderHistory() {
       var list = getHistory();
       var qEl = document.getElementById('historySearchInput');
       var sceneEl = document.getElementById('historySceneFilter');
+      var dateEl = document.getElementById('historyDateInput');
       var keyword = qEl ? String(qEl.value || '').trim() : '';
       var sceneFilter = sceneEl ? sceneEl.value : 'all';
-      var filtered = list.filter(function(item){
+      var dateFilter = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
+      var filtered = filterHistoryByDate(list, dateFilter).filter(function(item){
         if (historyFilter === 'fav' && !item.favorite) return false;
         if (sceneFilter !== 'all' && item.sceneKey !== sceneFilter) return false;
         if (keyword) {
@@ -1106,10 +1953,11 @@
         return true;
       });
       var container = document.getElementById('historyList');
-      if(!filtered.length){ container.innerHTML = '<div class="history-empty">暂无记录</div>'; return; }
+      if(!filtered.length){ container.innerHTML = '<div class="history-empty">暂无记录' + (dateFilter ? '：' + dateFilter : '') + '</div>'; return; }
       container.innerHTML = filtered.map(function(item){
         var q = item.question ? '<div style="margin-top:6px;color:var(--muted);">问：' + escapeHTML(item.question).slice(0,80) + '</div>' : '';
-        return '<div class="history-item"><div class="history-row"><strong>' + (item.sceneIcon || '') + ' ' + item.sceneName + '</strong><span style="color:var(--muted);font-size:.93rem;">' + formatISO(item.createdAt) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div>' + q + '<div class="history-meta"><span>' + item.methodNote + '</span><span>' + item.palaces.join(' / ') + '</span></div><div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + item.id + '\')">查看</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + item.id + '\')">删除</button></div></div>';
+        var review = item.review ? '<div class="review-summary"><strong>复盘：</strong>' + reviewAccuracyLabel(item.review.accuracy) + (item.review.actual ? '｜实际：' + escapeHTML(item.review.actual).slice(0,80) : '') + '</div>' : '';
+        return '<div class="history-item"><div class="history-row"><strong>' + (item.sceneIcon || '') + ' ' + item.sceneName + '</strong><span style="color:var(--muted);font-size:.93rem;">' + formatISO(item.createdAt) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div>' + q + '<div class="history-meta"><span>' + item.methodNote + '</span><span>规则：' + ((item.rule && item.rule.name) || DIVINATION_RULE.name) + '</span><span>' + item.palaces.join(' / ') + '</span></div>' + review + '<div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + item.id + '\')">查看</button><button class="ghost-btn" type="button" onclick="openReviewDialog(\'' + item.id + '\')">复盘</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + item.id + '\')">删除</button></div></div>';
       }).join('');
     }
     function handleHistoryActions(e) { const viewId=e.target.closest('[data-view]')?.dataset.view; if(viewId){ const item=getHistory().find(x=>x.id===viewId); if(item){ currentResult=item; renderResult(item); historyDialog.close(); } return; } const delId=e.target.closest('[data-delete]')?.dataset.delete; if(delId){ if(!confirm('确定删除这条历史记录吗？')) return; const list=getHistory().filter(x=>x.id!==delId); localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); renderHistory(); } }
@@ -1154,6 +2002,63 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
       renderHistory();
     }
+
+    let currentReviewId = null;
+    function reviewAccuracyLabel(value){
+      const map = { pending:'还没发生 / 待验证', accurate:'准', partial:'部分准', miss:'不准' };
+      return map[value] || '未复盘';
+    }
+    function openReviewDialog(id){
+      const item = getHistory().find(function(x){ return x.id === id; });
+      if(!item) return alert('没有找到这条历史记录。');
+      currentReviewId = id;
+      const target = document.getElementById('reviewTargetText');
+      if(target) target.innerHTML = '<strong>' + escapeHTML(item.sceneName || '') + '</strong>｜' + escapeHTML(formatISO(item.createdAt)) + '<br>取数：' + escapeHTML((item.numbers||[]).join(' / ')) + ' ｜ 落宫：' + escapeHTML((item.palaces||[]).join(' / ')) + (item.question ? '<br>问：' + escapeHTML(item.question) : '');
+      const review = item.review || {};
+      document.getElementById('reviewAccuracy').value = review.accuracy || 'pending';
+      document.getElementById('reviewActual').value = review.actual || '';
+      document.getElementById('reviewNote').value = review.note || '';
+      const dialog = document.getElementById('reviewDialog');
+      if(dialog && typeof dialog.showModal === 'function') dialog.showModal();
+      else if(dialog) dialog.setAttribute('open','open');
+    }
+    function closeReviewDialog(){
+      const dialog = document.getElementById('reviewDialog');
+      if(dialog && typeof dialog.close === 'function') dialog.close();
+      else if(dialog) dialog.removeAttribute('open');
+    }
+    function saveReview(){
+      if(!currentReviewId) return;
+      const list = getHistory();
+      const item = list.find(function(x){ return x.id === currentReviewId; });
+      if(!item) return alert('没有找到这条历史记录。');
+      item.review = {
+        accuracy: document.getElementById('reviewAccuracy').value || 'pending',
+        actual: document.getElementById('reviewActual').value.trim(),
+        note: document.getElementById('reviewNote').value.trim(),
+        reviewedAt: new Date().toISOString()
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      renderHistory();
+      renderAnalytics();
+      closeReviewDialog();
+      alert('复盘已保存。');
+    }
+    function clearReviewForm(){
+      if(!currentReviewId) return;
+      if(!confirm('确定清空这条记录的复盘内容吗？')) return;
+      const list = getHistory();
+      const item = list.find(function(x){ return x.id === currentReviewId; });
+      if(item) delete item.review;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      document.getElementById('reviewAccuracy').value = 'pending';
+      document.getElementById('reviewActual').value = '';
+      document.getElementById('reviewNote').value = '';
+      renderHistory();
+      renderAnalytics();
+      alert('复盘已清空。');
+    }
+
     function randomNumbers(){
       document.getElementById('num1').value = Math.floor(Math.random() * 100) + 1;
       document.getElementById('num2').value = Math.floor(Math.random() * 100) + 1;
@@ -1389,13 +2294,13 @@
         advice = mergeContextAdvice(advice, context, details);
       }
       const supplement = buildSupplementByScene(scene.key, details, metrics);
-      return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, question, context, numbers, palaces, details, metrics, distribution, overallText, advice, supplement };
+      return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, rule:Object.assign({}, DIVINATION_RULE), sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, question, context, numbers, palaces, details, metrics, distribution, overallText, advice, supplement };
     }
     function renderResult(result) {
       document.getElementById('resultCard').classList.remove('hidden');
       document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
       document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
-      document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}`;
+      ensureRuleInfo(result); document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}<br><span class="rule-badge">起课规则：${result.rule.name}</span><div class="rule-note">${result.rule.description}</div>`;
       if(!result.supplement || result.supplement.length < 2) result.supplement = buildSupplementByScene(result.sceneKey, result.details, result.metrics);
       if(!result.advice || result.advice.length < 2) result.advice = buildAdviceByScene(result.sceneKey, result.details, result.metrics);
       document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
@@ -1407,7 +2312,7 @@
       document.getElementById('overallText').textContent=result.overallText || buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); const about=document.getElementById('aboutRulesBlock'); if(about) about.innerHTML=buildAboutRulesHTML(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+      renderBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -2176,7 +3081,7 @@ ${nextStep}`;
       document.getElementById('resultCard').classList.remove('hidden');
       document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
       document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
-      document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}`;
+      ensureRuleInfo(result); document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}<br><span class="rule-badge">起课规则：${result.rule.name}</span><div class="rule-note">${result.rule.description}</div>`;
       result.metrics = calcMetricsByScene(result.sceneKey, result.palaces);
       result.overallText = buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
       result.advice = buildAdviceByScene(result.sceneKey, result.details, result.metrics);
@@ -2194,7 +3099,7 @@ ${nextStep}`;
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); const about=document.getElementById('aboutRulesBlock'); if(about) about.innerHTML=buildAboutRulesHTML(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' });
+      renderBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -2421,9 +3326,16 @@ ${nextStep}`;
       const d=document.getElementById('detailViewBtn'), s=document.getElementById('simpleViewBtn');
       if(d) d.classList.toggle('active', mode !== 'simple');
       if(s) s.classList.toggle('active', mode === 'simple');
-      try { localStorage.setItem('xlr_view_mode_v8_6', mode); } catch(e) {}
+      try { localStorage.setItem('xlr_view_mode_v9_1', mode); } catch(e) {}
     }
-    function restoreResultViewMode(){ try { setResultViewMode(localStorage.getItem('xlr_view_mode_v8_6') || 'detail'); } catch(e) { setResultViewMode('detail'); } }
+    function restoreResultViewMode(){
+      try {
+        const saved = localStorage.getItem('xlr_view_mode_v9_1');
+        if(saved) return setResultViewMode(saved);
+        const settings = getUserSettings();
+        return setResultViewMode(settings.defaultView || 'detail');
+      } catch(e) { setResultViewMode('detail'); }
+    }
     function renderHistorySceneFilter(){
       const sel=document.getElementById('historySceneFilter'); if(!sel) return;
       sel.innerHTML = '<option value="all">全部场景</option>' + SCENES.map(s=>`<option value="${s.key}">${s.icon || ''} ${s.name}</option>`).join('');
@@ -2436,9 +3348,11 @@ ${nextStep}`;
         lines.push(`#${i+1} ${item.sceneName || ''} ${formatISO(item.createdAt)}`);
         if(item.question) lines.push(`占问事项：${item.question}`);
         lines.push(`起课：${item.methodNote || ''}`);
+        lines.push(`起课规则：${(item.rule && item.rule.name) || DIVINATION_RULE.name}`);
         lines.push(`取数：${(item.numbers||[]).join(' / ')}`);
         lines.push(`落宫：${(item.palaces||[]).join(' / ')}`);
         if(item.overallText) lines.push(`综合判断：${item.overallText}`);
+        if(item.review){ lines.push(`复盘准确度：${reviewAccuracyLabel(item.review.accuracy)}`); if(item.review.actual) lines.push(`实际结果：${item.review.actual}`); if(item.review.note) lines.push(`复盘备注：${item.review.note}`); }
         lines.push('');
       });
       const content = lines.join('\n');
@@ -2449,10 +3363,329 @@ ${nextStep}`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(()=>URL.revokeObjectURL(url), 1000);
     }
+    function exportReviews(){
+      const list=getHistory().filter(item=>item.review);
+      if(!list.length) return alert('暂无复盘内容可导出。');
+      const lines=[];
+      lines.push('小六壬复盘导出');
+      lines.push('导出时间：' + formatDateTimeCN(new Date()));
+      lines.push('说明：本文件仅导出已填写复盘的记录，方便后续验证规则库、优化断法与回看实际应验情况。');
+      lines.push('');
+      list.forEach((item, i)=>{
+        lines.push('='.repeat(36));
+        lines.push(`#${i+1} ${item.sceneName || ''} ${formatISO(item.createdAt)}`);
+        if(item.question) lines.push(`占问事项：${item.question}`);
+        if(item.issueLabel || item.detectedIssueLabel) lines.push(`识别类型：${item.issueLabel || item.detectedIssueLabel}`);
+        lines.push(`起课方式：${item.methodNote || ''}`);
+        lines.push(`起课规则：${(item.rule && item.rule.name) || DIVINATION_RULE.name}`);
+        lines.push(`取数：${(item.numbers||[]).join(' / ')}`);
+        lines.push(`落宫：${(item.palaces||[]).join(' / ')}`);
+        if(item.overallText) lines.push(`原综合判断：${item.overallText}`);
+        if(item.answerSummary){
+          if(item.answerSummary.direct) lines.push(`直接答案：${item.answerSummary.direct}`);
+          if(item.answerSummary.reason) lines.push(`判断依据：${item.answerSummary.reason}`);
+        }
+        lines.push('');
+        lines.push('【复盘内容】');
+        lines.push(`准确度：${reviewAccuracyLabel(item.review.accuracy)}`);
+        lines.push(`实际结果：${item.review.actual || '未填写'}`);
+        lines.push(`复盘备注：${item.review.note || '未填写'}`);
+        if(item.review.updatedAt) lines.push(`复盘时间：${formatISO(item.review.updatedAt)}`);
+        lines.push('');
+      });
+      const reviewed=list.length;
+      const accCount=list.filter(item=>item.review && item.review.accuracy==='accurate').length;
+      const partialCount=list.filter(item=>item.review && item.review.accuracy==='partial').length;
+      const inaccurateCount=list.filter(item=>item.review && item.review.accuracy==='inaccurate').length;
+      const pendingCount=list.filter(item=>item.review && item.review.accuracy==='pending').length;
+      lines.push('='.repeat(36));
+      lines.push('复盘汇总');
+      lines.push(`已复盘记录：${reviewed}`);
+      lines.push(`准：${accCount}`);
+      lines.push(`部分准：${partialCount}`);
+      lines.push(`不准：${inaccurateCount}`);
+      lines.push(`还没发生：${pendingCount}`);
+      const content = lines.join('\n');
+      const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url; a.download='xiaoliuren_reviews_' + new Date().toISOString().slice(0,10) + '.txt';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    }
+
+    function getBackupPayload(){
+      let history = getHistory();
+      let settings = null, savedChoices = null, viewMode = null, lastView = null;
+      try { settings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null'); } catch(e) { settings = null; }
+      try { savedChoices = JSON.parse(localStorage.getItem(SAVED_CHOICE_KEY) || 'null'); } catch(e) { savedChoices = null; }
+      try { viewMode = localStorage.getItem('xlr_view_mode_v9_1') || null; } catch(e) { viewMode = null; }
+      try { lastView = JSON.parse(localStorage.getItem(LAST_VIEW_KEY) || 'null'); } catch(e) { lastView = null; }
+      return {
+        app: 'xiaoliuren-web',
+        backupVersion: '1.0',
+        sourceVersion: 'v9.9.2',
+        exportedAt: new Date().toISOString(),
+        note: '这是小六壬个人占卜台完整备份 JSON。TXT 适合阅读，JSON 用于恢复历史、收藏、复盘、A/B 对比等结构化数据。',
+        storageKeys: {
+          history: STORAGE_KEY,
+          settings: SETTINGS_KEY,
+          savedChoices: SAVED_CHOICE_KEY,
+          viewMode: 'xlr_view_mode_v9_1',
+          lastView: LAST_VIEW_KEY
+        },
+        history: history,
+        settings: settings,
+        savedChoices: savedChoices,
+        viewMode: viewMode,
+        lastView: lastView,
+        customTemplates: getCustomTemplates(),
+        templateMeta: getTemplateMeta()
+      };
+    }
+    function exportBackupJSON(){
+      const payload = getBackupPayload();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'xiaoliuren_backup_' + new Date().toISOString().slice(0,10) + '.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    }
+    function triggerImportBackup(){
+      const input = document.getElementById('backupImportInput');
+      if(!input) return alert('导入控件未找到。');
+      input.value = '';
+      input.click();
+    }
+    function normalizeImportedBackup(data){
+      if(Array.isArray(data)) return { history: data };
+      if(!data || typeof data !== 'object') throw new Error('备份文件格式不正确。');
+      if(Array.isArray(data.history)) return data;
+      if(Array.isArray(data.records)) return Object.assign({}, data, { history: data.records });
+      throw new Error('未在备份文件中找到 history 数组。');
+    }
+    function mergeHistoryRecords(current, imported){
+      const map = new Map();
+      (current || []).forEach(item => { if(item && item.id) map.set(item.id, item); });
+      (imported || []).forEach(item => {
+        if(!item) return;
+        const id = item.id || ('import_' + Date.now() + '_' + Math.random().toString(16).slice(2));
+        item.id = id;
+        if(map.has(id)) map.set(id, Object.assign({}, map.get(id), item));
+        else map.set(id, item);
+      });
+      return Array.from(map.values()).sort((a,b)=> new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    }
+    function handleImportBackupFile(e){
+      const file = e && e.target && e.target.files ? e.target.files[0] : null;
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(){
+        try {
+          const data = normalizeImportedBackup(JSON.parse(reader.result));
+          const importedHistory = data.history || [];
+          if(!Array.isArray(importedHistory)) throw new Error('history 不是数组。');
+          const mode = prompt('请选择导入方式：\n输入 merge：与当前历史合并\n输入 replace：覆盖当前历史\n输入 cancel：取消导入', 'merge');
+          if(!mode || mode.toLowerCase() === 'cancel') return;
+          const normalizedMode = mode.toLowerCase().trim();
+          if(normalizedMode !== 'merge' && normalizedMode !== 'replace') return alert('未识别的导入方式，已取消。');
+          const current = getHistory();
+          const nextHistory = normalizedMode === 'replace' ? importedHistory : mergeHistoryRecords(current, importedHistory);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(nextHistory));
+          if(data.settings && typeof data.settings === 'object') localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, data.settings)));
+          if(data.savedChoices && typeof data.savedChoices === 'object') localStorage.setItem(SAVED_CHOICE_KEY, JSON.stringify(data.savedChoices));
+          if(data.viewMode) localStorage.setItem('xlr_view_mode_v9_1', data.viewMode);
+          if(data.lastView && typeof data.lastView === 'object') localStorage.setItem(LAST_VIEW_KEY, JSON.stringify(data.lastView));
+          if(Array.isArray(data.customTemplates) || Array.isArray(data.templates)){
+            const importedTemplates = Array.isArray(data.customTemplates) ? data.customTemplates : data.templates;
+            const nextTemplates = normalizedMode === 'replace' ? mergeCustomTemplates([], importedTemplates) : mergeCustomTemplates(getCustomTemplates(), importedTemplates);
+            saveCustomTemplates(nextTemplates);
+          }
+          if(data.templateMeta && typeof data.templateMeta === 'object') saveTemplateMeta(data.templateMeta);
+          renderHistorySceneFilter();
+          renderHistory();
+          if(typeof renderAnalytics === 'function') renderAnalytics();
+          applyUserSettingsToPage();
+          alert('导入完成：' + importedHistory.length + ' 条备份记录；当前历史共 ' + nextHistory.length + ' 条。我的模板也已同步处理。');
+        } catch(err) {
+          alert('导入失败：' + (err && err.message ? err.message : err));
+        }
+      };
+      reader.onerror = function(){ alert('读取文件失败，请重新选择 JSON 备份文件。'); };
+      reader.readAsText(file, 'utf-8');
+    }
+
     function buildAboutRulesHTML(){
-      return `<details open><summary>本版本说明</summary><p>本工具为“小六壬六宫顺推场景解读版”。它保留传统六宫术语，同时加入现代场景化白话解释，方便普通用户理解。</p><p>本地问事分析不联网、不接 API，只根据你填写的文字、所选场景和本地规则库进行辅助判断。</p></details>
-      <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>数字起课：三数连续顺推。第一数从大安起，第二数从第一宫继续起，第三数从第二宫继续起。</li><li>时辰起课：取农历月、农历日、时辰序数，再连续顺推。</li><li>事件起课：按事件文字生成三数，再连续顺推。</li></ul></details>
+      return `<details open><summary>本版本说明</summary><p>本工具为“小六壬六宫连续顺推场景解读版”。它保留传统六宫术语，同时加入现代场景化白话解释，方便普通用户理解。当前版本将“三数连续顺推法”作为唯一正式起课规则，不提供三数直取等对照算法，避免复盘时混用规则。</p><p>本地问事分析不联网、不接 API，只根据你填写的文字、所选场景和本地规则库进行辅助判断。历史记录保存在当前浏览器本地；TXT 用于阅读，JSON 用于备份恢复。</p></details>
+      <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>本工具唯一正式规则：三数连续顺推法。</li><li>第一数：从大安起数，落到第一宫。</li><li>第二数：从第一数落宫继续顺推，落到第二宫。</li><li>第三数：从第二数落宫继续顺推，落到第三宫。</li><li>时辰起课：取农历月、农历日、时辰序数，再按连续顺推落宫。</li><li>事件起课：按事件文字生成三数，再按连续顺推落宫。</li></ul></details>
       <details><summary>如何看结果</summary><ul><li>先看综合判断和问事专项解读，抓白话结论。</li><li>再看三象：本象看起因或当前，中象看过程，末象看最终落点。</li><li>单宫、双宫、象意补充属于详细学习内容，适合复盘时查看。</li></ul></details>`;
+    }
+
+
+
+    function buildVersionUpdatesHTML(){
+      const versions = [
+        { v:'v7 稳定底版', items:['确立电脑端和手机端兼容较好的主线界面。','修正数字起课、时辰起课、事件起课的基础流程。','加入随机数字、清空数字、历史记录、单条删除、插图替换与 GoodReader 兼容修复。'] },
+        { v:'v7 全场景术语 + 白话增强版', items:['在保留宫位、五行、方位、物象、应期等术语层的同时，加入更通俗的白话解释。','修正时辰起课为农历月、农历日、时辰序数取数。','修正落宫为三数连续顺推法。','增强失物等场景的可执行建议。'] },
+        { v:'v8 场景化问事断法版', items:['新增占问事项输入框，支持本地问事分析，不联网、不接 API。','根据用户填写的问题识别天气、行情、感情、失物、消息等专项类型。','将宫位解释转译成对应领域语言，例如天气、油价、前任联系、失物寻找等。'] },
+        { v:'v8.1–v8.4 阅读与规则增强', items:['增强问事专项规则库与复制结果功能。','增加历史记录搜索、筛选、TXT 导出与版本说明。','加入历史分析图表：场景分布、起课方式、六宫频次与明细表。','增加一键置顶、一键到底，并修复历史记录与历史分析弹窗滚动问题。'] },
+        { v:'v8.5–v8.6 简洁答案 / 详细解释', items:['让白话解释更直接联系用户填写的占问事项。','新增答案摘要：直接答案、为什么这么看、现在怎么做、需要注意。','形成简洁版与详细版两种阅读模式。'] },
+        { v:'v8.7–v8.9 规则库与日期筛选', items:['扩展专项断法库：人际、学习、购物、设备、宠物、法务、审批、家人、情绪、梦境、比赛、创作、人物态度、时间、是非、主动等待、风险、地点、彩票/抽奖娱乐等。','新增场景规则查询弹窗，帮助用户知道具体问题该选什么大场景。','历史记录与历史分析增加日期筛选。'] },
+        { v:'v9.0 复盘功能版', items:['历史记录中新增复盘：准确度、实际结果、备注。','历史分析增加复盘统计。','TXT 导出包含复盘内容，方便后期优化规则库。'] },
+        { v:'v9.1 阅读设置版', items:['新增阅读设置：默认简洁/详细、模块默认折叠、显示雷达图、显示规则说明、记住上次场景和起课方式。','结果模块支持折叠/展开。','右下角增加一键展开、一键折叠、置顶、到底。'] },
+        { v:'v9.2 A/B 选择起课版', items:['新增 A/B 选择对比，适合选 A 还是 B、买不买、去不去、换不换等问题。','复制结果中包含 A/B 对比内容。'] },
+        { v:'v9.3–v9.4 复盘分析与备份恢复', items:['增强复盘分析：准确度分布、已复盘场景分布、复盘明细表。','新增复盘导出 TXT。','新增 JSON 完整备份与导入恢复，支持历史、收藏、复盘、A/B、阅读设置等迁移。'] },
+        { v:'v9.5–v9.9 模板系统', items:['新增问题模板，按场景分类，点击自动填入占问事项。','支持我的模板、自定义模板、模板导入导出、模板与场景联动。','支持模板收藏、最近使用、使用次数、常用模板区。','增强模板搜索、排序、批量管理、导入去重与选中模板导出。'] },
+        { v:'v9.9.1 起课规则规范版', items:['回归并固定唯一正式起课规则：三数连续顺推法。','不加入三数直取法，避免混用规则影响复盘。','结果页、历史、复制、导出、备份中记录起课规则。'] },
+        { v:'v9.9.2 版本更新记录版', items:['新增版本内容更新板块。','可在阅读设置中开启或关闭，默认关闭。','用于查看本工具从早期 v7 到当前版本的主要演进记录。'] },
+        { v:'v9.9.3 主页说明版', items:['将“版本说明 / 起课规则说明”和“版本内容更新”从占卜结果页移到主页。','不占卜也可以在设置中开启查看说明内容。','两个板块仍由设置开关控制，默认关闭，避免主页过长。'] },
+        { v:'v9.9.4 底部说明与阅读进度版', items:['将“版本说明 / 起课规则说明”和“版本内容更新”统一移到页面最底部。','两个板块仍由设置开关控制，默认关闭。','新增顶部阅读进度条，主页和占卜页都能显示当前阅读进度。'] },
+        { v:'v9.9.5–v9.9.6 章节导航优化', items:['新增章节卡点导航，点击卡点可快速跳转到对应模块。','v9.9.6 优化为智能显示：主页只显示主页相关卡点，出现占卜结果或查看历史结果后再显示结果相关卡点。','版本内容更新继续默认关闭，只有在设置中手动开启后才显示。'] }
+      ];
+      return `<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+    }
+
+
+    /* v9.1 阅读设置与折叠模块 */
+    const SETTINGS_KEY = 'xlr_user_settings_v9_1';
+    const SAVED_CHOICE_KEY = 'xlr_saved_choice_v9_1';
+    const DEFAULT_SETTINGS = {
+      defaultView: 'detail',
+      collapseDetails: false,
+      showRadar: true,
+      showAbout: false,
+      showVersionUpdates: false,
+      rememberScene: false,
+      rememberMethod: false
+    };
+    function getUserSettings(){
+      try { return Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
+      catch(e){ return Object.assign({}, DEFAULT_SETTINGS); }
+    }
+    function saveUserSettings(settings){ try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, settings || {}))); } catch(e){} }
+    function openSettingsDialog(){
+      fillSettingsDialog();
+      const dlg=document.getElementById('settingsDialog');
+      if(dlg && typeof dlg.showModal === 'function') dlg.showModal();
+      else if(dlg) dlg.setAttribute('open','open');
+    }
+    function closeSettingsDialog(){
+      const dlg=document.getElementById('settingsDialog');
+      if(dlg && typeof dlg.close === 'function') dlg.close();
+      else if(dlg) dlg.removeAttribute('open');
+    }
+    function fillSettingsDialog(){
+      const s=getUserSettings();
+      const map = {
+        settingDefaultView: s.defaultView || 'detail',
+        settingCollapseDetails: !!s.collapseDetails,
+        settingShowRadar: !!s.showRadar,
+        settingShowAbout: !!s.showAbout,
+        settingShowVersionUpdates: !!s.showVersionUpdates,
+        settingRememberScene: !!s.rememberScene,
+        settingRememberMethod: !!s.rememberMethod
+      };
+      Object.keys(map).forEach(id=>{
+        const el=document.getElementById(id); if(!el) return;
+        if(el.type === 'checkbox') el.checked = !!map[id]; else el.value = map[id];
+      });
+    }
+    function saveSettingsFromDialog(){
+      const settings = {
+        defaultView: document.getElementById('settingDefaultView')?.value || 'detail',
+        collapseDetails: !!document.getElementById('settingCollapseDetails')?.checked,
+        showRadar: !!document.getElementById('settingShowRadar')?.checked,
+        showAbout: !!document.getElementById('settingShowAbout')?.checked,
+        showVersionUpdates: !!document.getElementById('settingShowVersionUpdates')?.checked,
+        rememberScene: !!document.getElementById('settingRememberScene')?.checked,
+        rememberMethod: !!document.getElementById('settingRememberMethod')?.checked
+      };
+      saveUserSettings(settings);
+      if(settings.rememberScene) persistChoiceIfNeeded('scene', currentScene);
+      if(settings.rememberMethod) persistChoiceIfNeeded('method', currentMethod);
+      applyUserSettingsToPage();
+      restoreResultViewMode();
+      closeSettingsDialog();
+      alert('设置已保存。');
+    }
+    function resetUserSettings(){
+      saveUserSettings(DEFAULT_SETTINGS);
+      try { localStorage.removeItem(SAVED_CHOICE_KEY); localStorage.removeItem('xlr_view_mode_v9_1'); } catch(e) {}
+      fillSettingsDialog();
+      applyUserSettingsToPage();
+      restoreResultViewMode();
+      alert('已恢复默认设置。');
+    }
+    function getSavedChoices(){ try { return JSON.parse(localStorage.getItem(SAVED_CHOICE_KEY) || '{}'); } catch(e){ return {}; } }
+    function setSavedChoices(obj){ try { localStorage.setItem(SAVED_CHOICE_KEY, JSON.stringify(obj || {})); } catch(e){} }
+    function persistChoiceIfNeeded(type, value){
+      const settings=getUserSettings();
+      if((type === 'scene' && settings.rememberScene) || (type === 'method' && settings.rememberMethod)){
+        const saved=getSavedChoices(); saved[type]=value; setSavedChoices(saved);
+      }
+    }
+    function restoreSavedChoices(){
+      const settings=getUserSettings();
+      const saved=getSavedChoices();
+      if(settings.rememberScene && saved.scene && SCENES.some(s=>s.key===saved.scene)) currentScene=saved.scene;
+      if(settings.rememberMethod && saved.method && ['number','time','event'].includes(saved.method)) currentMethod=saved.method;
+    }
+    function applyMethodPanel(method){
+      currentMethod = method || 'number';
+      document.querySelectorAll('.method-tab').forEach(el=>el.classList.toggle('active', el.dataset.method===currentMethod));
+      const numberPanel=document.getElementById('numberPanel'), timePanel=document.getElementById('timePanel'), eventPanel=document.getElementById('eventPanel');
+      if(numberPanel) numberPanel.classList.toggle('hidden', currentMethod!=='number');
+      if(timePanel) timePanel.classList.toggle('hidden', currentMethod!=='time');
+      if(eventPanel) eventPanel.classList.toggle('hidden', currentMethod!=='event');
+    }
+    function enhanceCollapsibleBlocks(){
+      document.querySelectorAll('.collapsible-block').forEach(block=>{
+        const h=block.querySelector('h4'); if(!h) return;
+        if(!h.querySelector('.collapse-toggle')){
+          const btn=document.createElement('button');
+          btn.type='button'; btn.className='collapse-toggle'; btn.textContent='折叠';
+          btn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleBlockCollapsed(block); });
+          h.appendChild(btn);
+        }
+        updateCollapseButton(block);
+      });
+      setTimeout(updatePageProgress, 30);
+    }
+    function toggleBlockCollapsed(block){ block.classList.toggle('is-collapsed'); updateCollapseButton(block); }
+    function updateCollapseButton(block){
+      const btn=block.querySelector('.collapse-toggle'); if(!btn) return;
+      btn.textContent = block.classList.contains('is-collapsed') ? '展开' : '折叠';
+      btn.setAttribute('aria-expanded', block.classList.contains('is-collapsed') ? 'false' : 'true');
+    }
+    function renderHomeInfoBlocks(){
+      const about=document.getElementById('homeAboutRulesBlock');
+      if(about) about.innerHTML=buildAboutRulesHTML();
+      const versionLog=document.getElementById('homeVersionUpdatesBlock');
+      if(versionLog) versionLog.innerHTML=buildVersionUpdatesHTML();
+    }
+    function applyUserSettingsToPage(){
+      renderHomeInfoBlocks();
+      const settings=getUserSettings();
+      const card=document.getElementById('resultCard');
+      if(card){
+        card.classList.toggle('hide-radar', !settings.showRadar);
+        card.classList.toggle('hide-about', !settings.showAbout);
+        card.classList.toggle('hide-version-updates', !settings.showVersionUpdates);
+      }
+      const home=document.getElementById('homeInfoBlocks');
+      if(home){
+        home.classList.toggle('hide-about', !settings.showAbout);
+        home.classList.toggle('hide-version-updates', !settings.showVersionUpdates);
+      }
+      enhanceCollapsibleBlocks();
+      document.querySelectorAll('.collapsible-block').forEach(block=>{
+        if(settings.collapseDetails) block.classList.add('is-collapsed');
+        else block.classList.remove('is-collapsed');
+        updateCollapseButton(block);
+      });
+      refreshSectionJumpNavSoon();
     }
 
 
@@ -2503,28 +3736,65 @@ ${nextStep}`;
     }
     function renderAnalyticsTable(list){
       if (!list.length) return '<div class="analysis-empty">暂无历史记录。保存几条占卜结果后，这里会自动生成分析。</div>';
-      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>场景</th><th>起课方式</th><th>占问事项</th><th>三数</th><th>落宫</th><th>识别类型</th></tr></thead><tbody>` + list.map(item => {
+      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>场景</th><th>起课方式</th><th>占问事项</th><th>三数</th><th>落宫</th><th>识别类型</th><th>复盘</th></tr></thead><tbody>` + list.map(item => {
         const contextTitle = item.context && item.context.title ? item.context.title : '—';
-        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(methodLabel(item))}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.numbers || []).join(' / '))}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${escapeHTML(contextTitle)}</td></tr>`;
+        const reviewText = item.review ? reviewAccuracyLabel(item.review.accuracy) : '—';
+        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(methodLabel(item))}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.numbers || []).join(' / '))}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${escapeHTML(contextTitle)}</td><td>${escapeHTML(reviewText)}</td></tr>`;
       }).join('') + '</tbody></table></div>';
+    }
+
+    function renderReviewAnalyticsTable(list){
+      const reviewed = list.filter(item => item.review);
+      if (!reviewed.length) return '<div class="analysis-empty">当前范围内还没有复盘记录。你可以在“历史记录”中点击“复盘”补充实际结果。</div>';
+      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>场景</th><th>占问事项</th><th>落宫</th><th>准确度</th><th>实际结果</th><th>复盘备注</th></tr></thead><tbody>` + reviewed.map(item => {
+        const review = item.review || {};
+        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${escapeHTML(reviewAccuracyLabel(review.accuracy))}</td><td>${escapeHTML(review.actual || '—')}</td><td>${escapeHTML(review.note || '—')}</td></tr>`;
+      }).join('') + '</tbody></table></div>';
+    }
+    function reviewRateText(list){
+      const reviewed = list.filter(item => item.review && item.review.accuracy && item.review.accuracy !== 'pending');
+      if(!reviewed.length) return '暂无';
+      const good = reviewed.filter(item => item.review.accuracy === 'accurate' || item.review.accuracy === 'partial').length;
+      return Math.round(good / reviewed.length * 100) + '%';
     }
     function renderAnalytics(){
       const container = document.getElementById('analyticsContent');
       if (!container) return;
-      const list = getHistory();
-      if (!list.length) {
+      const rawList = getHistory();
+      const dateEl = document.getElementById('analyticsDateInput');
+      const selectedDate = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
+      const list = filterHistoryByDate(rawList, selectedDate);
+      const hint = document.getElementById('analyticsDateHint');
+      if (hint) hint.textContent = selectedDate ? `当前只统计 ${selectedDate} 当天记录。` : '不选日期时统计全部历史。';
+      if (!rawList.length) {
         container.innerHTML = '<div class="analysis-empty">暂无历史记录。先占卜并点击“保存结果”，再回来查看分析。</div>';
+        return;
+      }
+      if (!list.length) {
+        container.innerHTML = '<div class="analysis-empty">' + (selectedDate ? '这一天暂无占卜记录：' + selectedDate : '暂无历史记录。') + '</div>';
         return;
       }
       const sceneEntries = countBy(list, item => item.sceneName || '未记录');
       const methodEntries = countBy(list, item => methodLabel(item));
       const palaceEntries = palaceFrequency(list);
       const favCount = list.filter(item => item.favorite).length;
+      const reviewCount = list.filter(item => item.review).length;
+      const accurateCount = list.filter(item => item.review && item.review.accuracy === 'accurate').length;
+      const partialCount = list.filter(item => item.review && item.review.accuracy === 'partial').length;
+      const inaccurateCount = list.filter(item => item.review && item.review.accuracy === 'inaccurate').length;
+      const pendingCount = list.filter(item => item.review && item.review.accuracy === 'pending').length;
+      const reviewEntries = countBy(list.filter(item => item.review), item => reviewAccuracyLabel(item.review.accuracy));
+      const reviewedSceneEntries = countBy(list.filter(item => item.review), item => item.sceneName || '未记录');
       const lastTime = list[0] && list[0].createdAt ? formatISO(list[0].createdAt) : '暂无';
       container.innerHTML = `
         <div class="analysis-grid">
+          <div class="analysis-card"><span>统计范围</span><b>${escapeHTML(renderDateScopeLabel(selectedDate))}</b></div>
           <div class="analysis-card"><span>总占卜次数</span><b>${list.length}</b></div>
           <div class="analysis-card"><span>收藏记录</span><b>${favCount}</b></div>
+          <div class="analysis-card"><span>已复盘</span><b>${reviewCount}</b></div>
+          <div class="analysis-card"><span>复盘准/部分准</span><b>${accurateCount}/${partialCount}</b></div>
+          <div class="analysis-card"><span>复盘不准/未发生</span><b>${inaccurateCount}/${pendingCount}</b></div>
+          <div class="analysis-card"><span>复盘参考率</span><b>${reviewRateText(list)}</b></div>
           <div class="analysis-card"><span>最近一次</span><b>${lastTime}</b></div>
           <div class="analysis-card"><span>最常问场景</span><b>${escapeHTML(topName(sceneEntries))}</b></div>
           <div class="analysis-card"><span>最常用起课</span><b>${escapeHTML(topName(methodEntries))}</b></div>
@@ -2533,10 +3803,27 @@ ${nextStep}`;
         <div class="analysis-section"><h4>场景分布</h4>${renderBarChart(sceneEntries, 10)}</div>
         <div class="analysis-section"><h4>起课方式分布</h4>${renderBarChart(methodEntries, 6)}</div>
         <div class="analysis-section"><h4>六宫出现频率</h4>${renderBarChart(palaceEntries, 6)}</div>
+        <div class="analysis-section"><h4>复盘准确度分布</h4>${renderBarChart(reviewEntries, 6)}</div>
+        <div class="analysis-section"><h4>已复盘场景分布</h4>${renderBarChart(reviewedSceneEntries, 10)}</div>
         <div class="analysis-section"><h4>历史明细表</h4>${renderAnalyticsTable(list)}</div>
+        <div class="analysis-section"><h4>复盘明细表</h4>${renderReviewAnalyticsTable(list)}</div>
         <div style="height:24px"></div>`;
     }
 
+
+    function setAllResultBlocksCollapsed(shouldCollapse){
+      document.querySelectorAll('.collapsible-block').forEach(block=>{
+        if(shouldCollapse) block.classList.add('is-collapsed');
+        else block.classList.remove('is-collapsed');
+        updateCollapseButton(block);
+      });
+    }
+    function collapseAllResultBlocks(){
+      setAllResultBlocksCollapsed(true);
+    }
+    function expandAllResultBlocks(){
+      setAllResultBlocksCollapsed(false);
+    }
 
     function scrollToTopQuick(){
       try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -2547,6 +3834,22 @@ ${nextStep}`;
       try { window.scrollTo({ top: h, behavior: 'smooth' }); }
       catch(e) { window.scrollTo(0, h); }
     }
+
+    function updatePageProgress(){
+      const bar = document.getElementById('pageProgressBar');
+      if(!bar) return;
+      const doc = document.documentElement;
+      const scrollTop = window.pageYOffset || doc.scrollTop || document.body.scrollTop || 0;
+      const scrollHeight = Math.max(doc.scrollHeight, document.body.scrollHeight || 0);
+      const clientHeight = window.innerHeight || doc.clientHeight || 1;
+      const max = Math.max(scrollHeight - clientHeight, 1);
+      const pct = Math.min(100, Math.max(0, scrollTop / max * 100));
+      bar.style.width = pct.toFixed(2) + '%';
+    }
+    window.addEventListener('scroll', updatePageProgress, { passive:true });
+    window.addEventListener('resize', updatePageProgress);
+    window.addEventListener('load', updatePageProgress);
+    setTimeout(updatePageProgress, 50);
 
 
     /* v8.7 规则库扩容版：新增子场景与横向断法 */
@@ -2981,10 +4284,462 @@ ${nextStep}`;
     }
 
 
+
+
+    /* v9.2 A/B 选择起课增强 */
+    function initABChoiceUI(){
+      const abEnable = document.getElementById('abEnable');
+      const abFields = document.getElementById('abFields');
+      const abTip = document.getElementById('abMiniTip');
+      if (!abEnable || !abFields) return;
+      abEnable.addEventListener('change', function(){
+        abFields.classList.toggle('hidden', !abEnable.checked);
+        if (abTip) abTip.classList.toggle('hidden', !abEnable.checked);
+      });
+    }
+    function getABInput(){
+      const enabled = !!document.getElementById('abEnable')?.checked;
+      const optionA = (document.getElementById('optionAInput')?.value || '').trim();
+      const optionB = (document.getElementById('optionBInput')?.value || '').trim();
+      return { enabled, optionA, optionB };
+    }
+    function makeABOptionReading(label, optionText, baseQuestion, sceneKey){
+      const seed = [baseQuestion || '选择题', label, optionText].filter(Boolean).join('｜');
+      const numbers = textToNumbers(seed);
+      const palaces = calculateSequentialPalaces(numbers);
+      const details = palaces.map((name, idx)=>buildPositionDetail(SCENES.find(s=>s.key===sceneKey) || SCENES.find(s=>s.key==='choice') || SCENES[0], idx, name, numbers[idx]));
+      const score = scoreABPalaces(palaces);
+      const pros = buildABPros(palaces);
+      const cons = buildABCons(palaces);
+      const summary = buildABOptionSummary(label, optionText, palaces, score);
+      return { label, optionText, seed, numbers, palaces, details, score, pros, cons, summary };
+    }
+    function scoreABPalaces(palaces){
+      const base = { '大安':72, '留连':42, '速喜':76, '赤口':34, '小吉':68, '空亡':24 };
+      const stability = { '大安':86, '留连':38, '速喜':58, '赤口':28, '小吉':66, '空亡':22 };
+      const riskControl = { '大安':82, '留连':44, '速喜':56, '赤口':26, '小吉':70, '空亡':24 };
+      const weighted = Math.round((base[palaces[0]]*0.22 + base[palaces[1]]*0.30 + base[palaces[2]]*0.48));
+      const stable = Math.round((stability[palaces[0]]*0.25 + stability[palaces[1]]*0.35 + stability[palaces[2]]*0.40));
+      const risk = Math.round((riskControl[palaces[0]]*0.25 + riskControl[palaces[1]]*0.30 + riskControl[palaces[2]]*0.45));
+      return { overall: weighted, stability: stable, riskControl: risk };
+    }
+    function buildABPros(palaces){
+      const map = {
+        '大安':'稳定、可控、适合长期推进',
+        '留连':'能保留余地，适合再观察和慢慢谈',
+        '速喜':'行动快、消息快，容易有短期推进',
+        '赤口':'能把问题暴露出来，适合先谈清边界',
+        '小吉':'小步有利，可先试水、先取小成',
+        '空亡':'能提醒你降低预期，先核实真实性'
+      };
+      return [...new Set(palaces.map(p=>map[p]))].slice(0,3);
+    }
+    function buildABCons(palaces){
+      const map = {
+        '大安':'节奏偏慢，短期惊喜不多',
+        '留连':'容易拖延、反复、纠结不清',
+        '速喜':'容易快进快出，需防一时冲动',
+        '赤口':'容易有争执、沟通成本或细节冲突',
+        '小吉':'收益或成果偏小，不宜期待过大',
+        '空亡':'结果不实、承诺落空或信息不全的风险较高'
+      };
+      return [...new Set(palaces.map(p=>map[p]))].slice(0,3);
+    }
+    function buildABOptionSummary(label, optionText, palaces, score){
+      const seq = palaces.join(' → ');
+      const last = palaces[2];
+      const lastText = {
+        '大安':'最终趋稳，适合稳扎稳打，但不要急于求成。',
+        '留连':'最后容易拖住或反复，适合再等等、再确认。',
+        '速喜':'后面仍有快速推进机会，适合抓时机行动。',
+        '赤口':'后段容易有争执或冲突，需要先把条件说清。',
+        '小吉':'最终有小成、小利或小帮助，适合小步试。',
+        '空亡':'末象空亡，结果最需要复核，防止想得多、落地少。'
+      }[last];
+      return `${label}「${escapeHTML(optionText || '未填写')}」的辅助课为 ${seq}，综合倾向 ${score.overall}/100。${lastText}`;
+    }
+    function buildABChoice(result){
+      const ab = getABInput();
+      if (!ab.enabled || !ab.optionA || !ab.optionB) return null;
+      const q = (document.getElementById('questionInput')?.value || result.question || '').trim();
+      const sceneKey = result.sceneKey || 'choice';
+      const A = makeABOptionReading('A', ab.optionA, q, sceneKey);
+      const B = makeABOptionReading('B', ab.optionB, q, sceneKey);
+      let recommendation = '两边差距不大，建议先看现实条件，再小步验证。';
+      let winner = null;
+      const diff = A.score.overall - B.score.overall;
+      if (Math.abs(diff) >= 8) {
+        winner = diff > 0 ? 'A' : 'B';
+        const selected = diff > 0 ? A : B;
+        recommendation = `倾向先考虑 ${winner}「${escapeHTML(selected.optionText)}」。它的整体倾向更稳，尤其要看末象 ${selected.palaces[2]} 对最终落地的影响。`;
+      } else {
+        const ALast = A.palaces[2], BLast = B.palaces[2];
+        if (['空亡','赤口','留连'].includes(ALast) && !['空亡','赤口','留连'].includes(BLast)) { winner='B'; recommendation=`两边分数接近，但 A 末象 ${ALast} 阻滞较重，B 的结果端相对更稳，可优先看 B「${escapeHTML(B.optionText)}」。`; }
+        else if (['空亡','赤口','留连'].includes(BLast) && !['空亡','赤口','留连'].includes(ALast)) { winner='A'; recommendation=`两边分数接近，但 B 末象 ${BLast} 阻滞较重，A 的结果端相对更稳，可优先看 A「${escapeHTML(A.optionText)}」。`; }
+      }
+      result.abChoice = { enabled:true, question:q, A, B, winner, recommendation };
+      return result.abChoice;
+    }
+    function buildABChoiceHTML(ab){
+      if (!ab) return '';
+      const render = (opt) => `<div class="ab-option-card ${ab.winner===opt.label?'recommend':''}">
+        <h5>选项 ${opt.label}：${escapeHTML(opt.optionText)}</h5>
+        <div class="ab-palaces">${opt.palaces.map((p,i)=>`<span class="ab-palace-pill">${POSITION_NAMES[i]}：${p}</span>`).join('')}</div>
+        <p><strong>辅助取数：</strong>${opt.numbers.join(' / ')}</p>
+        <div class="ab-score"><div><span>综合倾向</span><b>${opt.score.overall}/100</b></div><div><span>稳定性</span><b>${opt.score.stability}/100</b></div><div><span>风险控制</span><b>${opt.score.riskControl}/100</b></div></div>
+        <p><strong>白话判断：</strong>${opt.summary}</p>
+        <p><strong>有利点：</strong>${opt.pros.join('；')}。</p>
+        <p><strong>需要注意：</strong>${opt.cons.join('；')}。</p>
+      </div>`;
+      return `<div class="ab-summary-box"><p><strong>对比结论：</strong>${ab.recommendation}</p><p><strong>占问事项：</strong>${escapeHTML(ab.question || '未填写')}</p><p class="ab-warn">A/B 对比是辅助判断，不是替你强行决定；如果现实条件、成本、责任边界不清，仍建议先补信息、再小步验证。</p></div><div class="ab-result-grid">${render(ab.A)}${render(ab.B)}</div>`;
+    }
+    function renderABChoiceResult(result){
+      const block = document.getElementById('abChoiceResultBlock');
+      const content = document.getElementById('abChoiceResultContent');
+      if (!block || !content) return;
+      let ab = result.abChoice || null;
+      // 历史记录回看时使用已保存的 A/B 结果；新占卜时则从当前输入生成。
+      if (!ab && document.getElementById('abEnable')?.checked) ab = buildABChoice(result);
+      if (ab) { block.classList.remove('hidden'); content.innerHTML = buildABChoiceHTML(ab); }
+      else { block.classList.add('hidden'); content.innerHTML = ''; }
+    }
+    const __v92_oldDivine = divine;
+    divine = function(scene, numbers, method, methodNote, extraInfo){
+      const result = __v92_oldDivine(scene, numbers, method, methodNote, extraInfo);
+      const ab = getABInput();
+      if (ab.enabled) {
+        if (!ab.optionA || !ab.optionB) {
+          alert('已开启 A/B 对比，请填写选项 A 和选项 B；如果不需要，请关闭 A/B 对比。');
+        } else {
+          buildABChoice(result);
+        }
+      }
+      return result;
+    };
+    const __v92_oldRenderResult = renderResult;
+    renderResult = function(result){
+      __v92_oldRenderResult(result);
+      renderABChoiceResult(result);
+    };
+    const __v92_oldBuildCopyResultText = buildCopyResultText;
+    buildCopyResultText = function(result){
+      let text = __v92_oldBuildCopyResultText(result);
+      if (result && result.abChoice) {
+        const ab = result.abChoice;
+        text += `\n\n【A/B 选择对比】\n占问事项：${ab.question || ''}\n选项 A：${ab.A.optionText}\nA 取数：${ab.A.numbers.join(' / ')}｜落宫：${ab.A.palaces.join(' / ')}｜倾向：${ab.A.score.overall}/100\n选项 B：${ab.B.optionText}\nB 取数：${ab.B.numbers.join(' / ')}｜落宫：${ab.B.palaces.join(' / ')}｜倾向：${ab.B.score.overall}/100\n对比结论：${ab.recommendation}`;
+      }
+      return text;
+    };
+    const __v92_oldResetForm = resetForm;
+    resetForm = function(){
+      __v92_oldResetForm();
+      const abEnable = document.getElementById('abEnable');
+      const abFields = document.getElementById('abFields');
+      const abTip = document.getElementById('abMiniTip');
+      if (abEnable) abEnable.checked = false;
+      if (abFields) abFields.classList.add('hidden');
+      if (abTip) abTip.classList.add('hidden');
+      const a=document.getElementById('optionAInput'), b=document.getElementById('optionBInput');
+      if (a) a.value=''; if (b) b.value='';
+    };
+    // 初始化 A/B 选择 UI
+    initABChoiceUI();
+
+
+    /* v9.8 模板收藏、最近使用与使用次数 */
+    const TEMPLATE_META_KEY = 'xlr_question_template_meta_v9_8';
+    function getTemplateMeta(){
+      try {
+        const data = JSON.parse(localStorage.getItem(TEMPLATE_META_KEY) || '{}');
+        return {
+          favorites: Array.isArray(data.favorites) ? data.favorites : [],
+          recent: Array.isArray(data.recent) ? data.recent : [],
+          usage: data.usage && typeof data.usage === 'object' ? data.usage : {}
+        };
+      } catch { return {favorites:[], recent:[], usage:{}}; }
+    }
+    function saveTemplateMeta(meta){
+      const safe = meta && typeof meta === 'object' ? meta : {};
+      localStorage.setItem(TEMPLATE_META_KEY, JSON.stringify({
+        favorites: Array.isArray(safe.favorites) ? safe.favorites.slice(0,300) : [],
+        recent: Array.isArray(safe.recent) ? safe.recent.slice(0,30) : [],
+        usage: safe.usage && typeof safe.usage === 'object' ? safe.usage : {}
+      }));
+    }
+    function getTemplateKey(scene, text, kind, id){
+      const s=String(scene || '其他').trim() || '其他';
+      const t=String(text || '').trim();
+      const k=String(kind || 'builtin');
+      return k === 'custom' && id ? 'custom:'+id : 'builtin:'+s+'|'+t;
+    }
+    function getAllTemplateRecords(){
+      const records=[];
+      QUESTION_TEMPLATES.forEach(group=>{
+        (group.items || []).forEach(text=>records.push({kind:'builtin', scene:group.scene, icon:group.icon, note:group.note, text, id:'', key:getTemplateKey(group.scene,text,'builtin','')}));
+      });
+      getCustomTemplates().forEach(item=>{
+        const scene=item.scene || '其他';
+        const group=QUESTION_TEMPLATES.find(g=>g.scene===scene) || {icon:'⭐', note:'我的自定义模板'};
+        records.push({kind:'custom', scene, icon:group.icon || '⭐', note:group.note || '我的自定义模板', text:item.text, id:item.id, key:getTemplateKey(scene,item.text,'custom',item.id), createdAt:item.createdAt});
+      });
+      const meta=getTemplateMeta();
+      records.forEach(r=>{ r.favorite=meta.favorites.includes(r.key); r.uses=Number(meta.usage[r.key] || 0); const recent=meta.recent.find(x=>x.key===r.key); r.lastUsed=recent ? recent.usedAt : ''; });
+      return records;
+    }
+    function recordTemplateUse(scene, text, kind, id){
+      const key=getTemplateKey(scene,text,kind,id);
+      const meta=getTemplateMeta();
+      meta.usage[key]=(Number(meta.usage[key] || 0)+1);
+      meta.recent=[{key, scene, text, kind:kind || 'builtin', id:id || '', usedAt:new Date().toISOString()}].concat((meta.recent || []).filter(x=>x.key!==key)).slice(0,20);
+      saveTemplateMeta(meta);
+    }
+    function toggleTemplateFavorite(scene, text, kind, id){
+      const key=getTemplateKey(scene,text,kind,id);
+      const meta=getTemplateMeta();
+      if(meta.favorites.includes(key)) meta.favorites=meta.favorites.filter(k=>k!==key);
+      else meta.favorites=[key].concat(meta.favorites || []).slice(0,300);
+      saveTemplateMeta(meta);
+      renderQuestionTemplates();
+    }
+    function templateButtonHTML(rec, withDelete){
+      const count = rec.uses ? `<span class="template-use-count">用过${rec.uses}次</span>` : '';
+      const star = `<button type="button" class="template-star-btn ${rec.favorite?'active':''}" title="收藏/取消收藏" data-fav-template="1" data-template-text="${escapeAttr(rec.text)}" data-template-scene="${escapeAttr(rec.scene)}" data-template-kind="${escapeAttr(rec.kind)}" data-template-id="${escapeAttr(rec.id || '')}">${rec.favorite?'★':'☆'}</button>`;
+      const main = `<button type="button" class="template-btn" data-template="${escapeAttr(rec.text)}" data-template-scene="${escapeAttr(rec.scene)}" data-template-kind="${escapeAttr(rec.kind)}" data-template-id="${escapeAttr(rec.id || '')}">${escapeHTML(rec.text)}${rec.kind==='custom'?'<span class="custom-template-tag">我的模板</span>':''}${count}</button>`;
+      const del = withDelete ? `<button type="button" class="template-delete-btn" data-delete-template="${escapeAttr(rec.id)}">删</button>` : '';
+      if(withDelete) return `<div class="template-btn-row"><div class="template-meta-row">${main}${star}</div>${del}</div>`;
+      return `<div class="template-meta-row">${main}${star}</div>`;
+    }
+    function quickTemplateSectionHTML(keyword, scene){
+      if(keyword || scene !== 'all') return '';
+      const records=getAllTemplateRecords();
+      const fav=records.filter(r=>r.favorite).sort((a,b)=>(b.uses||0)-(a.uses||0) || new Date(b.lastUsed||0)-new Date(a.lastUsed||0)).slice(0,8);
+      const recent=records.filter(r=>r.lastUsed).sort((a,b)=>new Date(b.lastUsed||0)-new Date(a.lastUsed||0)).slice(0,8);
+      let html='';
+      if(fav.length || recent.length){
+        html+='<div class="template-quick-section"><h4><span>⭐ 常用模板</span><small>收藏与最近使用</small></h4>';
+        if(fav.length) html+='<div class="template-recent-title">我的收藏</div><div class="template-quick-grid">'+fav.map(r=>templateButtonHTML(r,false)).join('')+'</div>';
+        if(recent.length) html+='<div class="template-recent-title">最近使用</div><div class="template-quick-grid">'+recent.map(r=>templateButtonHTML(r,false)).join('')+'</div>';
+        html+='</div>';
+      }
+      return html;
+    }
+    function updateCustomTemplateStats(){
+      const el=document.getElementById('customTemplateStats');
+      if(!el) return;
+      const list=getCustomTemplates();
+      const meta=getTemplateMeta();
+      const byScene={}; list.forEach(t=>{ byScene[t.scene]=(byScene[t.scene]||0)+1; });
+      const summary=Object.entries(byScene).map(([scene,count])=>scene+count+'条').join('、') || '暂无我的模板';
+      el.innerHTML='自定义模板会保存在当前浏览器本地，也会随完整备份 JSON 一起导出。当前共有 <span class="template-count-pill">'+list.length+' 条</span>，收藏模板 <span class="template-count-pill">'+(meta.favorites||[]).length+' 条</span>。'+summary+'。点击模板可填入占问事项并自动切换到对应场景。';
+    }
+    function templateSearchTerms(){
+      return (document.getElementById('templateSearchInput')?.value || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    }
+    function templateMatches(hay, terms){
+      const source=String(hay || '').toLowerCase();
+      return !terms.length || terms.every(term=>source.includes(term));
+    }
+    function templateSortMode(){ return document.getElementById('templateSortMode')?.value || 'default'; }
+    function getTemplateUsageKey(scene, text){ return scene+'|'+text; }
+    function getTemplateStats(){
+      try { return JSON.parse(localStorage.getItem('xlr_template_usage_stats_v1') || '{}'); } catch { return {}; }
+    }
+    function getFavoriteTemplates(){
+      try { return JSON.parse(localStorage.getItem('xlr_favorite_templates_v1') || '[]'); } catch { return []; }
+    }
+    function sortTemplateItems(items, scene, isCustom){
+      const mode=templateSortMode();
+      const stats=getTemplateStats();
+      const favs=new Set(getFavoriteTemplates());
+      const arr=(items || []).slice();
+      if(mode==='default') return arr;
+      return arr.sort((a,b)=>{
+        const ta=isCustom ? a.text : a;
+        const tb=isCustom ? b.text : b;
+        const ka=getTemplateUsageKey(scene, ta), kb=getTemplateUsageKey(scene, tb);
+        if(mode==='favorite') return (favs.has(kb)?1:0)-(favs.has(ka)?1:0) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
+        if(mode==='usage') return ((stats[kb]||0)-(stats[ka]||0)) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
+        if(mode==='recent') return ((stats[kb+'_last']||0)-(stats[ka+'_last']||0)) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
+        return 0;
+      });
+    }
+    function updateSelectedTemplateCount(){
+      const el=document.getElementById('templateSelectedCount');
+      if(el) el.textContent='已选 '+selectedCustomTemplateIds.size+' 条';
+    }
+    function renderQuestionTemplates(){
+      const box=document.getElementById('templateContent'); if(!box) return;
+      const keyword=(document.getElementById('templateSearchInput')?.value || '').trim().toLowerCase();
+      const scene=(document.getElementById('templateSceneFilter')?.value || 'all');
+      const quick=quickTemplateSectionHTML(keyword, scene);
+      const groups=buildTemplateGroups().map(group=>{
+        const builtinRecords=(group.items || []).map(text=>({kind:'builtin', scene:group.scene, icon:group.icon, note:group.note, text, id:'', key:getTemplateKey(group.scene,text,'builtin','')})).filter(r=>{
+          const hay=(group.scene+' '+group.note+' '+r.text).toLowerCase();
+          return (scene==='all' || group.scene===scene) && (!keyword || hay.includes(keyword));
+        });
+        const customRecords=(group.customItems || []).map(item=>({kind:'custom', scene:group.scene, icon:group.icon, note:group.note, text:item.text, id:item.id, key:getTemplateKey(group.scene,item.text,'custom',item.id)})).filter(r=>{
+          const hay=(group.scene+' 我的模板 '+r.text).toLowerCase();
+          return (scene==='all' || group.scene===scene) && (!keyword || hay.includes(keyword));
+        });
+        const meta=getTemplateMeta();
+        [...builtinRecords,...customRecords].forEach(r=>{ r.favorite=meta.favorites.includes(r.key); r.uses=Number(meta.usage[r.key] || 0); const recent=meta.recent.find(x=>x.key===r.key); r.lastUsed=recent ? recent.usedAt : ''; });
+        return {...group, builtinRecords, customRecords};
+      }).filter(g=>g.builtinRecords.length || g.customRecords.length);
+      if(!groups.length){ box.innerHTML=quick+'<div class="template-empty">没有找到匹配的问题模板。</div>'; updateCustomTemplateStats(); return; }
+      box.innerHTML=quick+'<div class="template-intro">选择一个模板后会自动填入“占问事项”。你可以把常用模板点 ☆ 收藏，也可以直接使用后在“最近使用”里快速找到。</div><div class="template-grid">'+groups.map(group=>`<div class="template-card"><h4><span>${group.icon} ${escapeHTML(group.scene)}</span><small>${escapeHTML(group.note)}</small></h4><div class="template-list">${(group.customRecords || []).map(r=>templateButtonHTML(r,true)).join('')}${(group.builtinRecords || []).map(r=>templateButtonHTML(r,false)).join('')}</div></div>`).join('')+'</div>';
+      updateCustomTemplateStats();
+    }
+    function handleTemplateClick(e){
+      const fav=e.target.closest('[data-fav-template]');
+      if(fav){ toggleTemplateFavorite(fav.getAttribute('data-template-scene'), fav.getAttribute('data-template-text'), fav.getAttribute('data-template-kind'), fav.getAttribute('data-template-id')); return; }
+      const del=e.target.closest('[data-delete-template]');
+      if(del){ deleteCustomTemplate(del.getAttribute('data-delete-template')); return; }
+      const btn=e.target.closest('[data-template]'); if(!btn) return;
+      const value=btn.getAttribute('data-template') || '';
+      const sceneName=btn.getAttribute('data-template-scene') || findTemplateSceneByText(value);
+      const kind=btn.getAttribute('data-template-kind') || 'builtin';
+      const id=btn.getAttribute('data-template-id') || '';
+      if(sceneName) selectSceneByName(sceneName);
+      recordTemplateUse(sceneName || '其他', value, kind, id);
+      const input=document.getElementById('questionInput');
+      if(input){ input.value=value; updateQuestionCount(); updateContextTypeAuto(); input.focus(); }
+      closeTemplateDialog();
+    }
+    function exportCustomTemplatesJSON(){
+      const payload={
+        app:'xiaoliuren-web', exportType:'customQuestionTemplates', sourceVersion:'v9.9.2', exportedAt:new Date().toISOString(),
+        templates:getCustomTemplates(), templateMeta:getTemplateMeta()
+      };
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+      const url=URL.createObjectURL(blob); const a=document.createElement('a');
+      a.href=url; a.download='xiaoliuren_custom_templates_'+new Date().toISOString().slice(0,10)+'.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+    function handleImportTemplateFile(e){
+      const file=e && e.target && e.target.files ? e.target.files[0] : null;
+      if(!file) return;
+      const reader=new FileReader();
+      reader.onload=function(){
+        try{
+          const data=JSON.parse(reader.result);
+          const imported=normalizeImportedTemplates(data);
+          const mode=prompt('请选择模板导入方式：\n输入 merge：与当前我的模板合并\n输入 replace：覆盖当前我的模板\n输入 cancel：取消导入','merge');
+          if(!mode || mode.toLowerCase()==='cancel') return;
+          const normalized=mode.toLowerCase().trim();
+          if(normalized!=='merge' && normalized!=='replace') return alert('未识别的导入方式，已取消。');
+          const next=normalized==='replace' ? mergeCustomTemplates([], imported) : mergeCustomTemplates(getCustomTemplates(), imported);
+          saveCustomTemplates(next);
+          if(data && data.templateMeta && typeof data.templateMeta === 'object'){
+            if(normalized==='replace') saveTemplateMeta(data.templateMeta);
+            else {
+              const current=getTemplateMeta(); const incoming=data.templateMeta;
+              saveTemplateMeta({
+                favorites:Array.from(new Set([...(current.favorites||[]), ...(incoming.favorites||[])])),
+                recent:[...(incoming.recent||[]), ...(current.recent||[])].slice(0,30),
+                usage:Object.assign({}, current.usage||{}, incoming.usage||{})
+              });
+            }
+          }
+          initTemplateFilters(); renderQuestionTemplates(); updateCustomTemplateStats();
+          alert('模板导入完成：当前共有 '+next.length+' 条我的模板。');
+        }catch(err){ alert('模板导入失败：'+(err && err.message ? err.message : err)); }
+      };
+      reader.onerror=function(){ alert('读取模板文件失败。'); };
+      reader.readAsText(file,'utf-8');
+    }
+    const __v98_oldGetBackupPayload = getBackupPayload;
+    getBackupPayload = function(){ const payload=__v98_oldGetBackupPayload(); payload.sourceVersion='v9.8'; payload.templateMeta=getTemplateMeta(); return payload; };
+    const __v98_oldHandleImportBackupFile = handleImportBackupFile;
+    handleImportBackupFile = function(e){
+      // 保留原导入逻辑；完整备份里的 templateMeta 会在原导入后的文件读取流程中无法直接二次读取，
+      // 所以此处只作为兼容占位。模板单独导入可完整同步收藏/最近使用。
+      return __v98_oldHandleImportBackupFile(e);
+    };
+
+
+    // v9.9.6 智能章节卡点导航
+    const SECTION_JUMP_TARGETS = {
+      home: [
+        { id:'homeTopSection', label:'顶部' },
+        { id:'sceneSection', label:'场景' },
+        { id:'questionSection', label:'问事' },
+        { id:'methodSection', label:'起课' },
+        { id:'homeInfoBlocks', label:'说明' }
+      ],
+      result: [
+        { id:'homeTopSection', label:'顶部' },
+        { id:'resultCard', label:'结果' },
+        { id:'answerSummaryBlock', label:'答案' },
+        { id:'abChoiceResultBlock', label:'A/B' },
+        { id:'overallBlock', label:'综合' },
+        { id:'contextAnalysisBlock', label:'专项' },
+        { id:'triReadingBlock', label:'三象' },
+        { id:'singlePalaceBlock', label:'单宫' },
+        { id:'doublePalaceBlock', label:'双宫' },
+        { id:'symbolBlock', label:'象意' },
+        { id:'radarBlock', label:'雷达' },
+        { id:'adviceBlock', label:'建议' },
+        { id:'homeInfoBlocks', label:'说明' }
+      ]
+    };
+    function sectionIsJumpVisible(el){
+      if(!el) return false;
+      if(el.classList && el.classList.contains('hidden')) return false;
+      if(el.closest && el.closest('.hidden')) return false;
+      const style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+      if(style && (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0')) return false;
+      const rect = el.getBoundingClientRect();
+      return !!(rect.width || rect.height || el.offsetHeight || el.offsetWidth);
+    }
+    function getJumpMode(){
+      const result=document.getElementById('resultCard');
+      return sectionIsJumpVisible(result) ? 'result' : 'home';
+    }
+    function currentJumpTargets(){
+      const mode = getJumpMode();
+      const source = SECTION_JUMP_TARGETS[mode] || SECTION_JUMP_TARGETS.home;
+      return source.map(t => ({...t, el: document.getElementById(t.id)})).filter(t => sectionIsJumpVisible(t.el));
+    }
+    function renderSectionJumpNav(){
+      const nav=document.getElementById('sectionJumpNav');
+      if(!nav) return;
+      const items=currentJumpTargets();
+      nav.innerHTML=items.map(t=>`<button class="jump-chip" type="button" data-jump-target="${t.id}" title="跳转到${t.label}"><span class="dot"></span>${t.label}</button>`).join('');
+      nav.querySelectorAll('[data-jump-target]').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const target=document.getElementById(btn.getAttribute('data-jump-target'));
+          if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+        });
+      });
+      updateSectionJumpNav();
+    }
+    function updateSectionJumpNav(){
+      const nav=document.getElementById('sectionJumpNav');
+      if(!nav) return;
+      const items=currentJumpTargets();
+      let activeId = items.length ? items[0].id : '';
+      const marker = (window.innerHeight || 700) * 0.28;
+      items.forEach(t=>{
+        const top=t.el.getBoundingClientRect().top;
+        if(top <= marker) activeId=t.id;
+      });
+      nav.querySelectorAll('[data-jump-target]').forEach(btn=>btn.classList.toggle('active', btn.getAttribute('data-jump-target')===activeId));
+    }
+    let __sectionJumpTimer = null;
+    function refreshSectionJumpNavSoon(){
+      clearTimeout(__sectionJumpTimer);
+      __sectionJumpTimer = setTimeout(renderSectionJumpNav, 80);
+    }
+    window.addEventListener('scroll', updateSectionJumpNav, {passive:true});
+    window.addEventListener('resize', refreshSectionJumpNavSoon);
+    window.addEventListener('load', refreshSectionJumpNavSoon);
+
+
     installV87ExpandedRules();
 
 
     init();
+    refreshSectionJumpNavSoon();
   </script>
 </body>
 </html>
