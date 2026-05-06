@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.20 起课说明与单数起课版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.20：补充起课注意事项、月日时起课说明，并新增单数起课。" />
+  <title>小六壬占卜 · v9.9.21 场景扩展与命运排盘版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.21：新增寻人、贵人、命运场景，增强六宫排盘说明，并加入命运六亲参考盘。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -901,7 +901,22 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 .quick-config-note { color:var(--muted); line-height:1.65; margin:0; }
 @media (max-width:760px){ .quick-config-row { grid-template-columns:1fr; } .quick-config-actions { justify-content:flex-end; } }
 
-</style>
+
+    /* v9.9.21 场景扩展与命运排盘 */
+    body.destiny-scene .method-tab:not([data-method="time"]) { display:none; }
+    body.destiny-scene .method-tabs { grid-template-columns: 1fr !important; }
+    .paipan-explain { margin-top:14px; padding:14px 16px; border-radius:18px; background:rgba(246,241,237,.72); color:var(--muted); line-height:1.85; border:1px solid rgba(124,112,178,.12); }
+    .paipan-explain strong { color:var(--text); }
+    .destiny-board-grid { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .destiny-cell { border:1px solid rgba(124,112,178,.16); background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(247,244,250,.72)); border-radius:18px; padding:16px; min-height:136px; box-shadow:0 14px 28px rgba(54,45,80,.05); }
+    .destiny-cell h5 { margin:0 0 8px; color:var(--primary); font-size:1.08rem; display:flex; justify-content:space-between; gap:8px; align-items:center; }
+    .destiny-cell .branch { color:#b8614f; font-weight:800; font-size:1.18rem; }
+    .destiny-cell p { margin:6px 0 0; color:var(--muted); line-height:1.65; }
+    .destiny-summary { margin-top:16px; padding:16px 18px; border-radius:20px; background:rgba(255,248,236,.82); border:1px solid rgba(201,164,92,.20); color:var(--text); line-height:1.9; }
+    .destiny-note { color:var(--muted); font-size:.95rem; margin-top:10px; line-height:1.75; }
+    @media (max-width: 760px){ .destiny-board-grid { grid-template-columns:1fr; } }
+
+  </style>
 </head>
 <body>
   <div class="page-progress" aria-hidden="true"><div id="pageProgressBar"></div></div>
@@ -940,8 +955,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.20 起课说明与单数起课版</h2>
-          <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
+          <h2>个人占卜台 · v9.9.21 场景扩展与命运排盘版</h2>
+          <p>本版新增寻人、贵人、命运场景，命运场景支持出生时间参考盘，并增强六宫排盘说明。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1021,7 +1036,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <div class="step">3</div>
           <div>
             <h3>选择起课方式</h3>
-            <p>数字起课适合直接报数；单数起课适合快速判断；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
+            <p id="methodDescription">数字起课适合直接报数；单数起课适合快速判断；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
           </div>
         </div>
         <div class="method-tabs" id="methodTabs">
@@ -1061,7 +1076,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
         </div>
         <div class="method-panel hidden" id="timePanel">
           <div class="time-grid">
-            <label class="time-field"><span>起课时间</span><div class="time-display-control"><input id="timeInput" type="datetime-local"><div class="time-display-facade" id="timeDisplayText">May 2, 2026 at 20:07</div></div></label>
+            <label class="time-field"><span id="timeFieldLabel">起课时间</span><div class="time-display-control"><input id="timeInput" type="datetime-local"><div class="time-display-facade" id="timeDisplayText">May 2, 2026 at 20:07</div></div></label>
             <button class="ghost-btn inline-action" id="nowBtn" type="button">取当前时间</button>
           </div>
           <div class="method-note" id="timeNote">时辰起课将自动显示公历、农历、时辰与取数依据。</div>
@@ -1105,7 +1120,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           </article>
         </div>
         <div class="stack-row">
-          <article class="block">
+          <article class="block" id="paipanBlock">
             <div class="paipan-top">
               <h4 style="margin:0">六宫排盘</h4>
               <span class="tag" id="distributionTag">三象分布</span>
@@ -1116,6 +1131,12 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
             <div class="distribution-text" id="distributionText"></div>
           </article>
         </div>
+        <article class="block hidden detail-only collapsible-block" data-collapse-key="destiny" id="destinyBoardBlock">
+          <h4>命运六亲参考盘</h4>
+          <div class="destiny-summary" id="destinyBoardIntro"></div>
+          <div class="destiny-board-grid" id="destinyBoardGrid"></div>
+          <div class="destiny-note" id="destinyBoardNote"></div>
+        </article>
         <div class="overall-wrap">
           <article class="block" id="overallBlock"><h4>综合判断</h4><p id="overallText" class="overall-rich"></p></article>
         </div>
@@ -1401,12 +1422,15 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       { scene:'求职', icon:'🧭', note:'面试、offer、跳槽、入职', items:['这次面试能不能过？','这个 offer 有没有希望？','这个岗位适不适合我？','我现在要不要跳槽？','入职流程会不会顺利？','HR 什么时候会有反馈？','这个公司靠不靠谱？','这次谈薪能不能谈好？'] },
       { scene:'家宅', icon:'🏠', note:'搬家、租房、装修、家庭', items:['这个房子适不适合租？','这次搬家顺不顺？','装修会不会顺利？','家里这个问题会不会很麻烦？','邻里关系会不会有影响？','家人会不会同意这件事？','这个维修问题能不能解决？','家中气氛接下来会不会缓和？'] },
       { scene:'选择', icon:'⚖️', note:'要不要、A/B、买不买、去不去', items:['我该选 A 还是选 B？','这件事我要不要做？','现在做还是以后做更好？','我要不要主动联系？','这件东西买不买合适？','我是继续还是放弃？','这次机会要不要把握？','去还是不去更合适？'] },
+      { scene:'寻人', icon:'🧭', note:'找人、失联、联系、方位', items:['这个人现在大概在哪里？','我还能不能联系上这个人？','这个人会不会主动出现？','这次寻人有没有线索？','我应该先从哪个方向找人？','对方是不是暂时不方便回应？'] },
+      { scene:'贵人', icon:'🤲', note:'帮助、助力、谁能帮、贵人方向', items:['这件事有没有贵人帮忙？','谁比较可能帮到我？','我应该主动找人帮忙吗？','贵人线索大概在哪个方向？','这件事靠自己推进还是找人协助更好？','这个人是不是我的贵人？'] },
+      { scene:'命运', icon:'🪷', note:'出生时间参考、六亲象意、自我观察', items:['用出生时间看整体象意参考。','从出生时辰看性格和处事节奏。','从出生时间看人际与助力参考。','从出生时间看事业方向参考。','从出生时间看财务习惯参考。','从出生时间看自我观察重点。'] },
       { scene:'其他', icon:'✨', note:'抽奖、梦境、人际、创作、比赛', items:['这次抽奖有没有小惊喜？','这个梦主要提醒我什么？','这个朋友对我是不是有意见？','我要不要主动解释这件事？','这篇文章/视频发布后反馈如何？','这场比赛发挥会怎么样？','这个账号/设备问题能不能解决？','这件事有没有隐藏风险？'] }
     ];
 
     const TEMPLATE_SCENE_TO_KEY = {
       '感情':'love', '事业':'career', '财运':'wealth', '考试':'exam', '失物':'lost', '健康':'health', '出行':'travel',
-      '合作':'cooperation', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '其他':'other'
+      '合作':'cooperation', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '寻人':'people', '贵人':'noble', '命运':'destiny', '其他':'other'
     };
     function findTemplateSceneByText(text){
       const value=String(text || '');
@@ -1421,6 +1445,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       if(!key || !SCENES.some(s=>s.key===key)) return;
       currentScene=key;
       renderScenes();
+      if(typeof updateSceneMode === 'function') updateSceneMode();
       persistChoiceIfNeeded('scene', currentScene);
     }
     function updateCustomTemplateStats(){
@@ -1731,7 +1756,10 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       { key: 'job', name: '求职', icon: '🧑‍💼', positions: ['自身基础', '面试/流程', '结果趋势'] },
       { key: 'home', name: '家宅', icon: '🏠', positions: ['家中气象', '过程变化', '最终安稳'] },
       { key: 'choice', name: '选择', icon: '🧩', positions: ['当前想法', '过程权衡', '最终取舍'] },
-      { key: 'other', name: '其他', icon: '🧭', positions: ['起因状态', '过程变化', '最终趋势'] },
+      { key: 'people', name: '寻人', icon: '🧭', positions: ['线索状态', '寻找过程', '能否相见'] },
+      { key: 'noble', name: '贵人', icon: '🤲', positions: ['助力来源', '帮助过程', '最终助力'] },
+      { key: 'destiny', name: '命运', icon: '🪷', positions: ['自身气象', '关系与助力', '整体走向'] },
+      { key: 'other', name: '其他', icon: '✨', positions: ['起因状态', '过程变化', '最终趋势'] },
     ];
     const sceneGrid = document.getElementById('sceneGrid');
     const historyDialog = document.getElementById('historyDialog');
@@ -1753,7 +1781,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       return result;
     }
     let historyFilter = 'all';
-    function init() { restoreSavedChoices(); renderScenes(); renderQuickPad(); bindEvents(); applyMethodPanel(currentMethod); setNow(); updateEventCount(); updateQuestionCount(); updateDateControl('historyDateInput','historyDatePicker'); updateDateControl('analyticsDateInput','analyticsDatePicker'); applyUserSettingsToPage(); clearStartupResult(); }
+    function init() { restoreSavedChoices(); renderScenes(); renderQuickPad(); bindEvents(); updateSceneMode(); applyMethodPanel(currentMethod); setNow(); updateEventCount(); updateQuestionCount(); updateDateControl('historyDateInput','historyDatePicker'); updateDateControl('analyticsDateInput','analyticsDatePicker'); applyUserSettingsToPage(); clearStartupResult(); }
     function renderScenes() { sceneGrid.innerHTML = SCENES.map(scene => `<button type="button" class="scene-btn ${scene.key === currentScene ? 'active' : ''}" data-scene="${scene.key}"><span class="emoji">${scene.icon}</span><span>${scene.name}</span></button>`).join(''); }
     function renderQuickPad() {
       const padHTML = Array.from({length:12}, (_,i)=>i+1).map(n=>`<button type="button" class="pad-btn" data-pad="${n}">${n}</button>`).join('');
@@ -1761,7 +1789,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       const singleQuickPad=document.getElementById('singleQuickPad'); if(singleQuickPad) singleQuickPad.innerHTML = padHTML;
     }
     function bindEvents() {
-      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); persistChoiceIfNeeded('scene', currentScene); });
+      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); updateSceneMode(); persistChoiceIfNeeded('scene', currentScene); });
       document.getElementById('methodTabs').addEventListener('click', e => { const tab=e.target.closest('[data-method]'); if(!tab) return; currentMethod=tab.dataset.method; applyMethodPanel(currentMethod); persistChoiceIfNeeded('method', currentMethod); });
       document.getElementById('quickPad').addEventListener('click', e => { const btn=e.target.closest('[data-pad]'); if(!btn) return; const inputs=['num1','num2','num3'].map(id=>document.getElementById(id)); const empty=inputs.find(i=>!i.value); (empty || inputs[2]).value=btn.dataset.pad; });
       const singleQuickPad = document.getElementById('singleQuickPad');
@@ -1859,7 +1887,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       const scene = SCENES.find(s=>s.key===currentScene); let numbers=[], methodNote='', extraInfo='';
       if(currentMethod==='number'){ numbers=['num1','num2','num3'].map(id=>Number(document.getElementById(id).value)).filter(Boolean); if(numbers.length!==3) return alert('请先输入三个数字。'); methodNote=`数字起课：${numbers.join(' / ')}`; }
       if(currentMethod==='single'){ const n=Number(document.getElementById('singleNum').value); if(!n) return alert('请先输入一个数字。'); const palace=numberToPalace(n); numbers=[n,1,1]; methodNote=`单数起课：${n}（主宫：${palace}）`; extraInfo='单数起课为快捷单宫判断；为统一显示，本工具以主宫贯穿三象阅读。'; }
-      if(currentMethod==='time'){ const val=document.getElementById('timeInput').value; if(!val) return alert('请先选择时间。'); const dt=new Date(val); const info=getTimeDerived(dt); numbers=info.numbers; methodNote=`时辰起课：${numbers.join(' / ')}`; extraInfo=`公历 ${formatDateTimeCN(dt)}；农历 ${formatLunarFull(info.lunar, dt)}；时辰 ${info.shichen}`; }
+      if(currentMethod==='time'){ const val=document.getElementById('timeInput').value; if(!val) return alert('请先选择时间。'); const dt=new Date(val); const info=getTimeDerived(dt); numbers=info.numbers; methodNote=`${currentScene === 'destiny' ? '命运时辰起盘' : '时辰起课'}：${numbers.join(' / ')}`; extraInfo=`${currentScene === 'destiny' ? '出生时间' : '起课时间'}：公历 ${formatDateTimeCN(dt)}；农历 ${formatLunarFull(info.lunar, dt)}；时辰 ${info.shichen}`; }
       if(currentMethod==='event'){ const text=document.getElementById('eventText').value.trim(); if(!text) return alert('请先输入事件描述。'); numbers=textToNumbers(text); methodNote=`事件起课：${numbers.join(' / ')}`; extraInfo=`事件：${text}`; }
       currentResult = divine(scene, numbers, currentMethod, methodNote, extraInfo); renderResult(currentResult); saveLastView(currentResult);
     }
@@ -1868,7 +1896,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     function numberToPalace(n) { return PALACE_ORDER[(Math.abs(n)-1)%6]; }
     function buildPositionDetail(scene, index, palaceName, number) { const p=PALACE_DATA[palaceName]; const role=scene.positions[index] || POSITION_NAMES[index]; const summary=sceneSpecificSummary(scene.key, palaceName, index); return { positionName: POSITION_NAMES[index], role, number, palaceName, ...p, summary }; }
     function sceneSpecificSummary(sceneKey, palace, idx) {
-      const rolePhraseMap = { love:['你这边','对方这边','关系结果'], career:['当前基础','推进过程','最终走势'], wealth:['财源机会','风险阻力','收益趋势'], exam:['基础状态','临场发挥','结果趋势'], lost:['失物状态','寻找过程','找回结果'], health:['当前状态','调理过程','恢复趋势'], travel:['出行基础','途中过程','出行结果'], cooperation:['合作基础','磨合过程','合作结果'], message:['对方/事件状态','消息推进','最终回应'], other:['起因','过程','结果'] };
+      const rolePhraseMap = { love:['你这边','对方这边','关系结果'], career:['当前基础','推进过程','最终走势'], wealth:['财源机会','风险阻力','收益趋势'], exam:['基础状态','临场发挥','结果趋势'], lost:['失物状态','寻找过程','找回结果'], health:['当前状态','调理过程','恢复趋势'], travel:['出行基础','途中过程','出行结果'], cooperation:['合作基础','磨合过程','合作结果'], message:['对方/事件状态','消息推进','最终回应'], people:['寻人线索','寻找过程','能否相见'], noble:['助力来源','帮助过程','最终助力'], destiny:['自身气象','关系助力','整体走向'], other:['起因','过程','结果'] };
       const subject=(rolePhraseMap[sceneKey] || rolePhraseMap.other)[idx];
       return { '大安':`${subject}偏稳，适合按部就班推进，重在守成与踏实落实。`,'留连':`${subject}有拖延与反复，容易被旧问题牵住，需要耐心拆解。`,'速喜':`${subject}有消息、有机会，发展较快，适合主动推动与联络。`,'赤口':`${subject}带有争执、误会或表达不顺，需防情绪化与硬碰硬。`,'小吉':`${subject}可见小成、小利或贵人助力，适合小步推进、积少成多。`,'空亡':`${subject}有虚浮、落空或不定之象，宜降低预期、复核信息。` }[palace];
     }
@@ -2014,9 +2042,52 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       document.getElementById('overallText').textContent=result.overallText;
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
-    function renderBoard(result) { const board=document.getElementById('hexBoard'); board.querySelectorAll('.hex-node').forEach(n=>n.remove()); const classes={ '大安':'hex-da','留连':'hex-ll','速喜':'hex-sx','赤口':'hex-ck','小吉':'hex-xj','空亡':'hex-kw' }; PALACE_ORDER.forEach(name=>{ const tags=[]; result.details.forEach(d=>{ if(d.palaceName===name) tags.push(d.positionName); }); const node=document.createElement('div'); node.className=`hex-node ${classes[name]} ${tags.length?'active':''}`; node.innerHTML=`<b>${name}</b><small>${PALACE_DATA[name].element} · ${PALACE_DATA[name].direction.split(' / ')[0]}</small><div class="node-tags">${tags.length ? tags.map(t=>`<span class="node-tag">${t}</span>`).join('') : '<span class="node-tag">未落</span>'}</div>`; board.appendChild(node); }); document.getElementById('distributionText').textContent=result.distribution.text; document.getElementById('distributionTag').textContent=result.metrics.goodCount >= 2 ? '吉宫偏多' : result.metrics.heavyCount >= 2 ? '阻滞偏多' : '三象分散'; }
+
+    function buildPaipanExplanation(result){
+      const d=result.details || [];
+      if(d.length < 3) return result.distribution ? result.distribution.text : '';
+      const [a,b,c]=d;
+      const repeat = result.distribution && result.distribution.text ? result.distribution.text : '';
+      const main = `<strong>排盘说明：</strong>本象落${a.palaceName}，代表起初/当前的气象；中象落${b.palaceName}，代表过程变化；末象落${c.palaceName}，代表结果落点。`;
+      const plain = `通俗看，就是“${a.palaceName}”先起作用，“${b.palaceName}”影响中段，“${c.palaceName}”决定最后更容易走向哪里。`;
+      const focus = c.palaceName === '空亡' ? '末象空亡，尤其要防事情最后没有真正落实，先核实再定论。' : c.palaceName === '留连' ? '末象留连，最后容易拖延反复，时间要预留。' : c.palaceName === '赤口' ? '末象赤口，最后要防口舌、争执、规则或沟通问题。' : c.palaceName === '速喜' ? '末象速喜，后面容易有消息或快速变化。' : c.palaceName === '小吉' ? '末象小吉，后面多主小成、小助力，宜先取小结果。' : '末象大安，后面重在稳定和落实。';
+      return `${main}<br>${plain}<br><strong>分布重点：</strong>${repeat} ${focus}`;
+    }
+    function branchFromNumber(n){ const b=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']; return b[(Math.abs(Number(n)||1)-1)%12]; }
+    function branchGroupText(z){
+      if(['寅','卯'].includes(z)) return '青龙象，主生发、向上、行动与新机会。';
+      if(['巳','午'].includes(z)) return '朱雀象，主表达、消息、热度与外显。';
+      if(['丑','辰'].includes(z)) return '勾陈象，主积累、牵挂、现实事务与拖延。';
+      if(['未','戌'].includes(z)) return '腾蛇象，主想法、变化、虚实与反复。';
+      if(['申','酉'].includes(z)) return '白虎象，主规则、压力、果断与边界。';
+      return '玄武象，主内在、隐情、流动与不确定。';
+    }
+    function renderDestinyBoard(result){
+      const block=document.getElementById('destinyBoardBlock');
+      if(!block) return;
+      const isDestiny = result && result.sceneKey === 'destiny';
+      block.classList.toggle('hidden', !isDestiny);
+      if(!isDestiny) return;
+      const nums=result.numbers || [1,1,1];
+      const base=(Math.abs(nums[0]||1)+Math.abs(nums[1]||1)+Math.abs(nums[2]||1))%12;
+      const relations=[
+        ['自身', result.palaces[0], nums[0], '看自我状态、性格底色和做事起势。'],
+        ['父母', result.palaces[1], nums[1], '看长辈、资源、学习、规则与保护。'],
+        ['官鬼', result.palaces[2], nums[2], '看压力、责任、事业规则与需要面对的课题。'],
+        ['兄弟', PALACE_ORDER[(PALACE_ORDER.indexOf(result.palaces[0])+1)%6], nums[0]+1, '看同辈、人际竞争、朋友兄弟与协作消耗。'],
+        ['妻财', PALACE_ORDER[(PALACE_ORDER.indexOf(result.palaces[1])+1)%6], nums[1]+1, '看财务习惯、现实资源、关系中的经营能力。'],
+        ['子孙', PALACE_ORDER[(PALACE_ORDER.indexOf(result.palaces[2])+1)%6], nums[2]+1, '看表达、成果、兴趣、后续发展与轻松感。']
+      ];
+      const grid=document.getElementById('destinyBoardGrid');
+      if(grid) grid.innerHTML=relations.map((r,i)=>{ const z=branchFromNumber(base+i+1); return `<div class="destiny-cell"><h5><span>${r[0]}</span><span class="branch">${z}</span></h5><p><strong>落宫：</strong>${r[1]}</p><p><strong>象意：</strong>${PALACE_DATA[r[1]].summary}</p><p><strong>参考：</strong>${r[3]}</p><p>${branchGroupText(z)}</p></div>`; }).join('');
+      const intro=document.getElementById('destinyBoardIntro');
+      if(intro) intro.innerHTML=`本盘以出生时间取象，重点看六亲分布与整体气象。当前三象为 <strong>${result.palaces.join(' / ')}</strong>，可作为性格倾向、处事节奏、人际助力、事业方向、财务习惯与自我观察的参考。`;
+      const note=document.getElementById('destinyBoardNote');
+      if(note) note.innerHTML='说明：命运场景以出生时间起象，仅作传统象意、自我观察与人生规划参考，不作为人生定论，也不替代专业建议。地支六神参考：寅卯为青龙，巳午为朱雀，丑辰为勾陈，未戌为腾蛇，申酉为白虎，亥子为玄武。';
+    }
+    function renderBoard(result) { const board=document.getElementById('hexBoard'); board.querySelectorAll('.hex-node').forEach(n=>n.remove()); const classes={ '大安':'hex-da','留连':'hex-ll','速喜':'hex-sx','赤口':'hex-ck','小吉':'hex-xj','空亡':'hex-kw' }; PALACE_ORDER.forEach(name=>{ const tags=[]; result.details.forEach(d=>{ if(d.palaceName===name) tags.push(d.positionName); }); const node=document.createElement('div'); node.className=`hex-node ${classes[name]} ${tags.length?'active':''}`; node.innerHTML=`<b>${name}</b><small>${PALACE_DATA[name].element} · ${PALACE_DATA[name].direction.split(' / ')[0]}</small><div class="node-tags">${tags.length ? tags.map(t=>`<span class="node-tag">${t}</span>`).join('') : '<span class="node-tag">未落</span>'}</div>`; board.appendChild(node); }); document.getElementById('distributionText').innerHTML=buildPaipanExplanation(result); document.getElementById('distributionTag').textContent=result.metrics.goodCount >= 2 ? '吉宫偏多' : result.metrics.heavyCount >= 2 ? '阻滞偏多' : '三象分散'; }
     function renderRadar(metrics) {
       const canvas = document.getElementById('radarCanvas');
       const ctx = canvas.getContext('2d');
@@ -2661,7 +2732,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       document.getElementById('overallText').textContent=result.overallText || buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -3448,7 +3519,7 @@ ${nextStep}`;
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -4049,14 +4120,27 @@ ${nextStep}`;
       if(settings.rememberScene && saved.scene && SCENES.some(s=>s.key===saved.scene)) currentScene=saved.scene;
       if(settings.rememberMethod && saved.method && ['number','single','time','event'].includes(saved.method)) currentMethod=saved.method;
     }
+    function updateSceneMode(){
+      const isDestiny = currentScene === 'destiny';
+      document.body.classList.toggle('destiny-scene', isDestiny);
+      const desc=document.getElementById('methodDescription');
+      if(desc) desc.textContent = isDestiny ? '命运场景以出生年月日和出生时辰起盘，用于查看六亲分布、性格倾向、处事节奏与自我观察参考。' : '数字起课适合直接报数；单数起课适合快速判断；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。';
+      const timeLabel=document.getElementById('timeFieldLabel');
+      if(timeLabel) timeLabel.textContent = isDestiny ? '出生年月日与出生时辰' : '起课时间';
+      const timeSmall=document.querySelector('[data-method="time"] small');
+      if(timeSmall) timeSmall.textContent = isDestiny ? '按出生时间起盘' : '按时间取三象';
+      if(isDestiny && currentMethod !== 'time') currentMethod='time';
+    }
     function applyMethodPanel(method){
       currentMethod = method || 'number';
+      if(currentScene === 'destiny') currentMethod = 'time';
       document.querySelectorAll('.method-tab').forEach(el=>el.classList.toggle('active', el.dataset.method===currentMethod));
       const numberPanel=document.getElementById('numberPanel'), singlePanel=document.getElementById('singlePanel'), timePanel=document.getElementById('timePanel'), eventPanel=document.getElementById('eventPanel');
       if(numberPanel) numberPanel.classList.toggle('hidden', currentMethod!=='number');
       if(singlePanel) singlePanel.classList.toggle('hidden', currentMethod!=='single');
       if(timePanel) timePanel.classList.toggle('hidden', currentMethod!=='time');
       if(eventPanel) eventPanel.classList.toggle('hidden', currentMethod!=='event');
+      updateSceneMode();
     }
     function enhanceCollapsibleBlocks(){
       document.querySelectorAll('.collapsible-block').forEach(block=>{
@@ -4663,7 +4747,7 @@ ${nextStep}`;
     }
 
     /* v8.8 场景规则查询 */
-    const SCENE_RULE_ROWS = [{"type": "感情 / 前任 / 复合 / 暧昧", "scenes": ["感情"], "keywords": ["前任", "复合", "冷战", "断联", "暧昧", "表白", "主动联系"], "questions": "前任会不会联系我？能不能复合？对方是否真心？要不要主动？", "note": "重点看关系是否有实际行动、消息是否落实、末象是否空亡或赤口。"}, {"type": "人物态度判断", "scenes": ["感情", "事业", "合作", "其他"], "keywords": ["怎么看我", "态度", "真心", "领导态度", "客户态度", "朋友态度"], "questions": "他怎么看我？领导会不会同意？客户靠谱吗？", "note": "看对象是谁来归场景；感情对象选感情，领导选事业，客户伙伴选合作。"}, {"type": "消息 / 联系 / 等回复", "scenes": ["消息等待", "感情", "事业", "合作"], "keywords": ["回复", "联系", "消息", "通知", "电话", "微信", "邮件", "审批结果"], "questions": "对方会不会回复？通知什么时候来？邮件有没有结果？", "note": "重点看速喜、小吉是否有动，以及末象是否真正落实。"}, {"type": "财运 / 投资 / 回款 / 工资奖金", "scenes": ["财运"], "keywords": ["投资", "回款", "借钱", "欠款", "工资", "奖金", "副业", "赚钱"], "questions": "钱能不能回来？投资能不能做？工资奖金有没有消息？", "note": "重点看钱能否落袋，空亡防承诺落空，赤口防合同争议。"}, {"type": "行情 / 价格 / 涨跌", "scenes": ["财运"], "keywords": ["油价", "金价", "股价", "基金", "汇率", "价格", "行情", "上涨", "下跌"], "questions": "油价会不会下跌？黄金会不会涨？这只股票走势如何？", "note": "属于行情娱乐参考，不构成投资建议；重点看短线波动和末象落实。"}, {"type": "购物 / 消费 / 买不买", "scenes": ["财运", "选择"], "keywords": ["买不买", "值得买", "网购", "二手", "质量", "售后", "退货", "降价"], "questions": "这个东西值不值得买？现在买会不会后悔？", "note": "花钱决策偏财运；二选一或去不去买可用选择。"}, {"type": "彩票 / 抽奖 / 中奖娱乐", "scenes": ["其他", "财运"], "keywords": ["彩票", "抽奖", "中奖", "奖券", "刮刮乐", "小奖", "大奖"], "questions": "这次抽奖有没有机会？买彩票有没有小惊喜？", "note": "只作娱乐参考，不提供号码，不承诺中奖，不鼓励加注、追投或倍投。"}, {"type": "事业 / 工作 / 项目 / 职场", "scenes": ["事业"], "keywords": ["工作", "项目", "领导", "同事", "升职", "跳槽", "转岗", "绩效", "汇报"], "questions": "项目能不能推进？领导态度怎样？这次跳槽合不合适？", "note": "重点看流程是否推进、沟通是否顺、承诺是否真正落地。"}, {"type": "求职 / 面试 / Offer", "scenes": ["求职", "考试", "事业"], "keywords": ["面试", "offer", "入职", "岗位", "简历", "录用", "求职"], "questions": "这次面试能不能过？offer 会不会来？", "note": "求职相关优先选求职；偏考试申请也可选考试。"}, {"type": "学习 / 技能提升 / 课程", "scenes": ["考试"], "keywords": ["学习", "课程", "老师", "自学", "技能", "语言", "培训", "进步"], "questions": "适不适合学这个课程？学习效率会不会提高？", "note": "长期学习和考证准备都归考试/学习，重点看能否持续。"}, {"type": "考试 / 申请 / 证书", "scenes": ["考试"], "keywords": ["考试", "成绩", "通过", "证书", "报名", "录取", "资格"], "questions": "考试能不能过？申请会不会成功？", "note": "重点看基础、流程、结果是否真正落地。"}, {"type": "失物 / 找东西", "scenes": ["失物"], "keywords": ["丢了", "找不到", "放哪里", "失物", "钥匙", "钱包", "证件", "金属", "抽屉"], "questions": "东西放哪里了？钥匙钱包能不能找到？", "note": "重点看可能位置和寻找顺序，方位要转成现实地点。"}, {"type": "地点 / 方位 / 去哪里找", "scenes": ["失物", "出行", "其他"], "keywords": ["在哪里", "在哪", "去哪里", "哪个方向", "位置", "方位", "找哪里"], "questions": "东西在哪里？该往哪个方向找？适合去哪里？", "note": "找东西选失物；出门路线选出行；泛用地点选其他。"}, {"type": "宠物 / 动物", "scenes": ["失物", "健康", "其他"], "keywords": ["宠物", "猫", "狗", "走失", "跑丢", "宠物医院", "回来"], "questions": "猫狗会不会回来？宠物状态会不会好？", "note": "宠物走失归失物，宠物健康归健康，适应环境归其他。"}, {"type": "健康 / 身体状态", "scenes": ["健康"], "keywords": ["健康", "恢复", "复查", "感冒", "疼痛", "睡眠", "旧疾", "体检"], "questions": "状态会不会好转？复查结果怎样？", "note": "只作传统文化参考，不替代医疗判断。"}, {"type": "情绪 / 心理状态", "scenes": ["健康"], "keywords": ["焦虑", "压力", "心情", "情绪", "内耗", "失眠", "不安"], "questions": "这段时间状态能不能好起来？我是不是想太多？", "note": "偏自我状态观察；持续严重不适请寻求专业支持。"}, {"type": "天气 / 降雨 / 户外天气", "scenes": ["天气", "出行"], "keywords": ["下雨", "降雨", "天气", "阵雨", "晴天", "阴天", "刮风", "降温", "台风"], "questions": "明天会不会下雨？周末适不适合露营？", "note": "天气本身选天气；若问是否影响行程，可同时参考出行。"}, {"type": "出行 / 行程 / 交通", "scenes": ["出行"], "keywords": ["出行", "旅行", "开车", "航班", "火车", "堵车", "延误", "行程"], "questions": "路上顺不顺？航班会不会延误？适不适合出门？", "note": "重点看拖延、变动、规则和安全提醒。"}, {"type": "合作 / 合同 / 客户 / 合伙", "scenes": ["合作"], "keywords": ["合作", "合伙", "合同", "客户", "签约", "谈判", "协议", "订单"], "questions": "合同能不能签？客户靠谱吗？合作能不能成？", "note": "重点看条款、责任边界和承诺是否落实。"}, {"type": "法务 / 纠纷 / 投诉", "scenes": ["合作", "其他"], "keywords": ["纠纷", "投诉", "维权", "赔偿", "诉讼", "证据", "调解", "官司"], "questions": "投诉会不会有结果？纠纷能不能解决？", "note": "合同纠纷偏合作，其它维权投诉可选其他；不替代法律意见。"}, {"type": "手续 / 审批 / 证件", "scenes": ["其他", "事业", "考试"], "keywords": ["签证", "证件", "审批", "审核", "报销", "申请", "材料", "盖章"], "questions": "签证会不会过？报销什么时候下来？材料有没有问题？", "note": "工作审批选事业；报名资格选考试；签证证件选其他。"}, {"type": "家宅 / 房屋 / 搬家", "scenes": ["家宅"], "keywords": ["搬家", "租房", "买房", "装修", "邻里", "漏水", "维修", "家里"], "questions": "这个房子适不适合租？搬家顺不顺？", "note": "重点看居住稳定、家中旧问题、合同与维修争议。"}, {"type": "家人 / 长辈 / 子女", "scenes": ["其他", "健康", "考试"], "keywords": ["父母", "家人", "长辈", "孩子", "子女", "亲子", "家庭"], "questions": "父母会不会同意？孩子考试怎样？家人态度如何？", "note": "家人态度选其他，身体选健康，孩子考试选考试。"}, {"type": "人际关系 / 社交", "scenes": ["其他", "合作", "感情"], "keywords": ["朋友", "同学", "同事关系", "亲戚", "邻里", "社交", "误会", "和好"], "questions": "这个朋友是不是对我有意见？要不要解释？", "note": "普通关系选其他；合作关系选合作；带恋爱暧昧选感情。"}, {"type": "电子产品 / 设备故障", "scenes": ["其他", "选择", "财运"], "keywords": ["手机", "电脑", "家电", "网络", "账号", "软件", "故障", "维修", "数据"], "questions": "手机能不能修好？账号能不能找回？要不要换电脑？", "note": "故障维修选其他；要不要换/买选选择；价格问题选财运。"}, {"type": "创作 / 内容 / 发布", "scenes": ["事业", "其他"], "keywords": ["写作", "文章", "视频", "发布", "作品", "流量", "评论", "投稿", "审核"], "questions": "这篇文章反响如何？视频会不会有流量？", "note": "工作内容选事业，个人创作选其他。"}, {"type": "比赛 / 竞赛 / 游戏", "scenes": ["考试", "其他", "财运"], "keywords": ["比赛", "竞赛", "游戏", "胜负", "赢", "输", "排名", "抽卡"], "questions": "比赛能不能赢？竞赛发挥怎么样？", "note": "正式竞赛选考试，游戏胜负选其他，奖励收益才参考财运。"}, {"type": "梦境 / 预感 / 灵感", "scenes": ["其他"], "keywords": ["梦", "梦见", "预感", "直觉", "灵感", "征兆", "心慌"], "questions": "这个梦是什么意思？这个预感准不准？", "note": "用于自我梳理，不宜过度解读。"}, {"type": "选择 / 决策", "scenes": ["选择"], "keywords": ["要不要", "选哪个", "买不买", "去不去", "换不换", "继续还是放弃"], "questions": "要不要做？选 A 还是 B？现在做还是以后做？", "note": "适合所有二选一、要不要、去不去类问题。"}, {"type": "是 / 否判断", "scenes": ["跟随原问题场景"], "keywords": ["会不会", "能不能", "是否", "能否", "有没有希望", "成不成"], "questions": "会不会发生？能不能成功？有没有希望？", "note": "横向规则，不单独选场景；跟随具体问题类型。"}, {"type": "时间 / 何时发生", "scenes": ["跟随原问题场景"], "keywords": ["什么时候", "多久", "几天", "何时", "快不快"], "questions": "什么时候联系我？多久能找到？什么时候到账？", "note": "横向应期规则，跟随原问题场景。"}, {"type": "是否主动 / 是否等待", "scenes": ["感情", "消息等待", "事业", "合作", "选择"], "keywords": ["要不要主动", "该不该主动", "要不要联系", "要不要催", "等不等"], "questions": "要不要主动联系？要不要催？该不该现在做？", "note": "主动类问题看速喜/小吉是否可动，赤口要柔，空亡先核实。"}, {"type": "风险 / 坑点识别", "scenes": ["财运", "合作", "事业", "其他"], "keywords": ["风险", "坑", "踩坑", "隐患", "靠谱吗", "有没有问题"], "questions": "这件事有没有坑？对方靠谱吗？会不会出问题？", "note": "投资风险选财运，合同风险选合作，项目风险选事业。"}];
+    const SCENE_RULE_ROWS = [{"type":"寻人 / 找人 / 失联联系","scenes":["寻人","消息等待","失物"],"keywords":["寻人","找人","失联","联系不上","在哪里","出现","回来","线索"],"questions":"这个人在哪里？还能不能联系上？会不会主动出现？","note":"重点看方位、消息、是否有人见过、能否主动出现；不替代报警或现实寻找。"}, {"type":"贵人 / 助力 / 谁能帮","scenes":["贵人","事业","合作","其他"],"keywords":["贵人","帮忙","助力","谁能帮","支持","介绍","资源","人脉"],"questions":"这件事有没有贵人帮忙？该找谁帮？这个人是不是贵人？","note":"重点看小吉、大安、速喜等助力象，也看方位、人物关系和主动求助时机。"}, {"type":"命运 / 出生时间参考 / 六亲象意","scenes":["命运"],"keywords":["命运","出生","生辰","出生时间","六亲","性格","人生","自我观察"],"questions":"用出生时间看整体象意、性格倾向、处事节奏、人际助力与自我观察。","note":"命运场景只用时辰起课，作为出生时间参考盘，不作人生定论。"}, {"type": "感情 / 前任 / 复合 / 暧昧", "scenes": ["感情"], "keywords": ["前任", "复合", "冷战", "断联", "暧昧", "表白", "主动联系"], "questions": "前任会不会联系我？能不能复合？对方是否真心？要不要主动？", "note": "重点看关系是否有实际行动、消息是否落实、末象是否空亡或赤口。"}, {"type": "人物态度判断", "scenes": ["感情", "事业", "合作", "其他"], "keywords": ["怎么看我", "态度", "真心", "领导态度", "客户态度", "朋友态度"], "questions": "他怎么看我？领导会不会同意？客户靠谱吗？", "note": "看对象是谁来归场景；感情对象选感情，领导选事业，客户伙伴选合作。"}, {"type": "消息 / 联系 / 等回复", "scenes": ["消息等待", "感情", "事业", "合作"], "keywords": ["回复", "联系", "消息", "通知", "电话", "微信", "邮件", "审批结果"], "questions": "对方会不会回复？通知什么时候来？邮件有没有结果？", "note": "重点看速喜、小吉是否有动，以及末象是否真正落实。"}, {"type": "财运 / 投资 / 回款 / 工资奖金", "scenes": ["财运"], "keywords": ["投资", "回款", "借钱", "欠款", "工资", "奖金", "副业", "赚钱"], "questions": "钱能不能回来？投资能不能做？工资奖金有没有消息？", "note": "重点看钱能否落袋，空亡防承诺落空，赤口防合同争议。"}, {"type": "行情 / 价格 / 涨跌", "scenes": ["财运"], "keywords": ["油价", "金价", "股价", "基金", "汇率", "价格", "行情", "上涨", "下跌"], "questions": "油价会不会下跌？黄金会不会涨？这只股票走势如何？", "note": "属于行情娱乐参考，不构成投资建议；重点看短线波动和末象落实。"}, {"type": "购物 / 消费 / 买不买", "scenes": ["财运", "选择"], "keywords": ["买不买", "值得买", "网购", "二手", "质量", "售后", "退货", "降价"], "questions": "这个东西值不值得买？现在买会不会后悔？", "note": "花钱决策偏财运；二选一或去不去买可用选择。"}, {"type": "彩票 / 抽奖 / 中奖娱乐", "scenes": ["其他", "财运"], "keywords": ["彩票", "抽奖", "中奖", "奖券", "刮刮乐", "小奖", "大奖"], "questions": "这次抽奖有没有机会？买彩票有没有小惊喜？", "note": "只作娱乐参考，不提供号码，不承诺中奖，不鼓励加注、追投或倍投。"}, {"type": "事业 / 工作 / 项目 / 职场", "scenes": ["事业"], "keywords": ["工作", "项目", "领导", "同事", "升职", "跳槽", "转岗", "绩效", "汇报"], "questions": "项目能不能推进？领导态度怎样？这次跳槽合不合适？", "note": "重点看流程是否推进、沟通是否顺、承诺是否真正落地。"}, {"type": "求职 / 面试 / Offer", "scenes": ["求职", "考试", "事业"], "keywords": ["面试", "offer", "入职", "岗位", "简历", "录用", "求职"], "questions": "这次面试能不能过？offer 会不会来？", "note": "求职相关优先选求职；偏考试申请也可选考试。"}, {"type": "学习 / 技能提升 / 课程", "scenes": ["考试"], "keywords": ["学习", "课程", "老师", "自学", "技能", "语言", "培训", "进步"], "questions": "适不适合学这个课程？学习效率会不会提高？", "note": "长期学习和考证准备都归考试/学习，重点看能否持续。"}, {"type": "考试 / 申请 / 证书", "scenes": ["考试"], "keywords": ["考试", "成绩", "通过", "证书", "报名", "录取", "资格"], "questions": "考试能不能过？申请会不会成功？", "note": "重点看基础、流程、结果是否真正落地。"}, {"type": "失物 / 找东西", "scenes": ["失物"], "keywords": ["丢了", "找不到", "放哪里", "失物", "钥匙", "钱包", "证件", "金属", "抽屉"], "questions": "东西放哪里了？钥匙钱包能不能找到？", "note": "重点看可能位置和寻找顺序，方位要转成现实地点。"}, {"type": "地点 / 方位 / 去哪里找", "scenes": ["失物", "出行", "其他"], "keywords": ["在哪里", "在哪", "去哪里", "哪个方向", "位置", "方位", "找哪里"], "questions": "东西在哪里？该往哪个方向找？适合去哪里？", "note": "找东西选失物；出门路线选出行；泛用地点选其他。"}, {"type": "宠物 / 动物", "scenes": ["失物", "健康", "其他"], "keywords": ["宠物", "猫", "狗", "走失", "跑丢", "宠物医院", "回来"], "questions": "猫狗会不会回来？宠物状态会不会好？", "note": "宠物走失归失物，宠物健康归健康，适应环境归其他。"}, {"type": "健康 / 身体状态", "scenes": ["健康"], "keywords": ["健康", "恢复", "复查", "感冒", "疼痛", "睡眠", "旧疾", "体检"], "questions": "状态会不会好转？复查结果怎样？", "note": "只作传统文化参考，不替代医疗判断。"}, {"type": "情绪 / 心理状态", "scenes": ["健康"], "keywords": ["焦虑", "压力", "心情", "情绪", "内耗", "失眠", "不安"], "questions": "这段时间状态能不能好起来？我是不是想太多？", "note": "偏自我状态观察；持续严重不适请寻求专业支持。"}, {"type": "天气 / 降雨 / 户外天气", "scenes": ["天气", "出行"], "keywords": ["下雨", "降雨", "天气", "阵雨", "晴天", "阴天", "刮风", "降温", "台风"], "questions": "明天会不会下雨？周末适不适合露营？", "note": "天气本身选天气；若问是否影响行程，可同时参考出行。"}, {"type": "出行 / 行程 / 交通", "scenes": ["出行"], "keywords": ["出行", "旅行", "开车", "航班", "火车", "堵车", "延误", "行程"], "questions": "路上顺不顺？航班会不会延误？适不适合出门？", "note": "重点看拖延、变动、规则和安全提醒。"}, {"type": "合作 / 合同 / 客户 / 合伙", "scenes": ["合作"], "keywords": ["合作", "合伙", "合同", "客户", "签约", "谈判", "协议", "订单"], "questions": "合同能不能签？客户靠谱吗？合作能不能成？", "note": "重点看条款、责任边界和承诺是否落实。"}, {"type": "法务 / 纠纷 / 投诉", "scenes": ["合作", "其他"], "keywords": ["纠纷", "投诉", "维权", "赔偿", "诉讼", "证据", "调解", "官司"], "questions": "投诉会不会有结果？纠纷能不能解决？", "note": "合同纠纷偏合作，其它维权投诉可选其他；不替代法律意见。"}, {"type": "手续 / 审批 / 证件", "scenes": ["其他", "事业", "考试"], "keywords": ["签证", "证件", "审批", "审核", "报销", "申请", "材料", "盖章"], "questions": "签证会不会过？报销什么时候下来？材料有没有问题？", "note": "工作审批选事业；报名资格选考试；签证证件选其他。"}, {"type": "家宅 / 房屋 / 搬家", "scenes": ["家宅"], "keywords": ["搬家", "租房", "买房", "装修", "邻里", "漏水", "维修", "家里"], "questions": "这个房子适不适合租？搬家顺不顺？", "note": "重点看居住稳定、家中旧问题、合同与维修争议。"}, {"type": "家人 / 长辈 / 子女", "scenes": ["其他", "健康", "考试"], "keywords": ["父母", "家人", "长辈", "孩子", "子女", "亲子", "家庭"], "questions": "父母会不会同意？孩子考试怎样？家人态度如何？", "note": "家人态度选其他，身体选健康，孩子考试选考试。"}, {"type": "人际关系 / 社交", "scenes": ["其他", "合作", "感情"], "keywords": ["朋友", "同学", "同事关系", "亲戚", "邻里", "社交", "误会", "和好"], "questions": "这个朋友是不是对我有意见？要不要解释？", "note": "普通关系选其他；合作关系选合作；带恋爱暧昧选感情。"}, {"type": "电子产品 / 设备故障", "scenes": ["其他", "选择", "财运"], "keywords": ["手机", "电脑", "家电", "网络", "账号", "软件", "故障", "维修", "数据"], "questions": "手机能不能修好？账号能不能找回？要不要换电脑？", "note": "故障维修选其他；要不要换/买选选择；价格问题选财运。"}, {"type": "创作 / 内容 / 发布", "scenes": ["事业", "其他"], "keywords": ["写作", "文章", "视频", "发布", "作品", "流量", "评论", "投稿", "审核"], "questions": "这篇文章反响如何？视频会不会有流量？", "note": "工作内容选事业，个人创作选其他。"}, {"type": "比赛 / 竞赛 / 游戏", "scenes": ["考试", "其他", "财运"], "keywords": ["比赛", "竞赛", "游戏", "胜负", "赢", "输", "排名", "抽卡"], "questions": "比赛能不能赢？竞赛发挥怎么样？", "note": "正式竞赛选考试，游戏胜负选其他，奖励收益才参考财运。"}, {"type": "梦境 / 预感 / 灵感", "scenes": ["其他"], "keywords": ["梦", "梦见", "预感", "直觉", "灵感", "征兆", "心慌"], "questions": "这个梦是什么意思？这个预感准不准？", "note": "用于自我梳理，不宜过度解读。"}, {"type": "选择 / 决策", "scenes": ["选择"], "keywords": ["要不要", "选哪个", "买不买", "去不去", "换不换", "继续还是放弃"], "questions": "要不要做？选 A 还是 B？现在做还是以后做？", "note": "适合所有二选一、要不要、去不去类问题。"}, {"type": "是 / 否判断", "scenes": ["跟随原问题场景"], "keywords": ["会不会", "能不能", "是否", "能否", "有没有希望", "成不成"], "questions": "会不会发生？能不能成功？有没有希望？", "note": "横向规则，不单独选场景；跟随具体问题类型。"}, {"type": "时间 / 何时发生", "scenes": ["跟随原问题场景"], "keywords": ["什么时候", "多久", "几天", "何时", "快不快"], "questions": "什么时候联系我？多久能找到？什么时候到账？", "note": "横向应期规则，跟随原问题场景。"}, {"type": "是否主动 / 是否等待", "scenes": ["感情", "消息等待", "事业", "合作", "选择"], "keywords": ["要不要主动", "该不该主动", "要不要联系", "要不要催", "等不等"], "questions": "要不要主动联系？要不要催？该不该现在做？", "note": "主动类问题看速喜/小吉是否可动，赤口要柔，空亡先核实。"}, {"type": "风险 / 坑点识别", "scenes": ["财运", "合作", "事业", "其他"], "keywords": ["风险", "坑", "踩坑", "隐患", "靠谱吗", "有没有问题"], "questions": "这件事有没有坑？对方靠谱吗？会不会出问题？", "note": "投资风险选财运，合同风险选合作，项目风险选事业。"}];
     function allSceneFilterNames(){
       const names = new Set(['all']);
       SCENE_RULE_ROWS.forEach(row => (row.scenes || []).forEach(s => names.add(s)));
@@ -5092,6 +5176,8 @@ ${nextStep}`;
         { id:'resultCard', label:'结果' },
         { id:'answerSummaryBlock', label:'答案' },
         { id:'abChoiceResultBlock', label:'A/B' },
+        { id:'paipanBlock', label:'排盘' },
+        { id:'destinyBoardBlock', label:'命盘' },
         { id:'overallBlock', label:'综合' },
         { id:'contextAnalysisBlock', label:'专项' },
         { id:'triReadingBlock', label:'三象' },
@@ -5422,7 +5508,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.20 起课说明与单数起课版';
+  const VERSION = 'v9.9.21 场景扩展与命运排盘版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6234,7 +6320,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.20 起课说明与单数起课版';
+  const VERSION = 'v9.9.21 场景扩展与命运排盘版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6391,6 +6477,46 @@ body.hide-progress-bar .page-progress { display:none !important; }
     return html;
   };
   try { if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); } catch(e) {}
+})();
+</script>
+
+
+<script id="v9921-scene-destiny-updates">
+(function(){
+  function installVersionLog(){
+    window.buildVersionUpdatesHTML = function(){
+      const versions = [
+        ['v7–v8 视觉与基础结构', ['完成个人占卜台的核心界面、三法起课、六宫排盘和基础解读。','优化手机端与电脑端布局，逐步加入三数落宫、六宫排盘、综合判断和象意补充。']],
+        ['v8.1–v8.4 阅读与规则增强', ['增强问事专项规则库与复制结果功能。','增加历史记录搜索、筛选、TXT 导出与版本说明。','加入历史分析图表、置顶/到底和弹窗滚动修复。']],
+        ['v8.5–v8.6 白话联动与简洁/详细版', ['白话解释开始联系用户填写的占问事项。','新增答案摘要，简洁版偏直接答案，详细版保留术语和研究内容。']],
+        ['v8.7–v8.9 规则库与日期筛选', ['扩展场景规则库，加入场景规则查询。','历史记录与历史分析支持日期筛选。']],
+        ['v9.0–v9.4 复盘与备份恢复', ['新增复盘功能，后续增强为复盘分析和复盘导出。','新增完整备份 JSON，可迁移历史、设置、模板等数据。']],
+        ['v9.5–v9.9 模板系统', ['新增问题模板、我的模板、模板备份、收藏、最近使用、使用次数。','v9.9 加强模板搜索、排序、批量管理和导入去重。']],
+        ['v9.9.1 起课规则规范版', ['明确唯一正式主规则为三数连续顺推法。','结果、历史、导出和说明中记录起课规则。']],
+        ['v9.9.2 版本更新记录版', ['新增版本内容更新板块，默认关闭，可在设置中开启。']],
+        ['v9.9.3 主页说明版', ['将版本说明与起课规则说明移到主页，未占卜也能查看。']],
+        ['v9.9.4 底部说明与阅读进度版', ['说明与版本更新统一移到底部。','新增顶部阅读进度条。']],
+        ['v9.9.5–v9.9.6 章节导航优化', ['新增章节卡点导航。','v9.9.6 优化为智能显示，主页和结果页显示不同卡点。']],
+        ['v9.9.7 导入导出管理版', ['整理导入/导出结构：完整备份、历史记录、问题模板分组管理。']],
+        ['v9.9.8–v9.9.9 弹窗滚动修复', ['模板弹窗增加分组折叠。','全局修复历史记录、历史分析、模板、规则、设置等弹窗滚动问题。']],
+        ['v9.9.10 日期筛选修正版', ['修复日期选择按钮和手动日期输入筛选。','支持 20260504、2026/5/4、2026年5月4日 等格式自动规范。']],
+        ['v9.9.11 版本导航增强版', ['章节导航新增“版本”卡点。','说明与版本更新可分别跳转。']],
+        ['v9.9.12 复盘时间线版', ['复盘支持多条时间线，可持续追加实际结果、准确度和备注。','历史分析与复盘导出同步支持时间线。']],
+        ['v9.9.13 按钮修复版', ['修复按钮失效问题。','同步生成 README 仓库说明。']],
+        ['v9.9.14 多端布局与结果页优化版', ['优化顶部插图完整显示、标题与按钮分排。','占卜后进入独立结果页，并加入返回主页与重新占卜入口。']],
+        ['v9.9.15 显示与桌面模式优化版', ['恢复更克制的默认阅读字号，并保留输入体验优化。','统一快捷按钮尺寸，增强手机/平板电脑模式。']],
+        ['v9.9.16 设置增强与图标版', ['设置中加入快捷按钮、章节导航、阅读进度条、默认客户端模式等开关。','新增主屏幕图标与 manifest。']],
+        ['v9.9.17 PWA离线缓存与白话可读性增强版', ['新增 PWA 离线缓存。','答案摘要加入一句话直断、偏向判断、结果节奏、通俗解释和行动建议。']],
+        ['v9.9.18 白话答案增强版', ['进一步增强通俗答案，让结论更贴近用户填写的问题。']],
+        ['v9.9.19 快捷按钮自定义版', ['设置中新增快捷按钮设置，可选择显示内容并用 ↑/↓ 调整顺序。']],
+        ['v9.9.20 起课说明与单数起课版', ['补充起课注意事项：问题清晰具体、一事不二占、一时不起二课、心念专一。','补充月上起日、日上起时的时辰起课步骤与示例。','新增单数起课作为快捷判断方式。']],
+        ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']]
+      ];
+      return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
+    };
+    try { if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); } catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', installVersionLog); else installVersionLog();
 })();
 </script>
 
