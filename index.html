@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.26 历史兼容修复版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.26：修复旧版本历史记录查看兼容问题，并增强旧历史自动补齐。" />
+  <title>小六壬占卜 · v9.9.27 结果页分离修正版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.27：修复占卜后结果页未与主页输入区分离的问题，并保留历史兼容修复。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -929,7 +929,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
 
-    /* v9.9.26 历史兼容修复版 */
+    /* v9.9.27 结果页分离修正版 */
     body.result-page #homeInfoBlocks { display: none !important; }
     body.destiny-scene #numberPanel,
     body.destiny-scene #singlePanel,
@@ -979,8 +979,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.26 历史兼容修复版</h2>
-          <p>本版深化命盘阅读层次，新增场景判断重心，让占卜结果更贴题、更容易抓重点。</p>
+          <h2>个人占卜台 · v9.9.27 结果页分离修正版</h2>
+          <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5687,7 +5687,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.26 历史兼容修复版';
+  const VERSION = 'v9.9.27 结果页分离修正版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6499,7 +6499,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.26 历史兼容修复版';
+  const VERSION = 'v9.9.27 结果页分离修正版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6692,7 +6692,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
         ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
         ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']],
-        ['v9.9.26 历史兼容修复版', ['命盘板块继续增强，新增命盘总览、助力来源、阻力来源和更清晰的命盘阅读顺序。','六宫排盘说明增强，补充顺阻判断与复盘建议。','占卜结果新增“本场景判断重心”，帮助用户先抓重点，再看详细解释。','运势、命运、寻人、贵人等新场景同步加入判断重心说明。']]
+        ['v9.9.27 结果页分离修正版', ['修复占卜完成后结果页没有与主页输入区分离的问题。','占卜结果和查看历史结果时，隐藏选择场景、占问事项、起课方式、快捷数字与开始占卜等主页内容。','点击返回主页或重新占卜时再回到输入主页。','保留 v9.9.26 的旧历史兼容修复能力。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
@@ -6706,7 +6706,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9925-history-view-confirm-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.26 历史兼容修复版';
+  const PATCH_VERSION = 'v9.9.27 结果页分离修正版';
 
   function $(id){ return document.getElementById(id); }
   function hasValue(ids){ return ids.some(id => { const el=$(id); return el && String(el.value || '').trim(); }); }
@@ -6862,7 +6862,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9926-history-compat-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.26 历史兼容修复版';
+  const PATCH_VERSION = 'v9.9.27 结果页分离修正版';
   function $(id){ return document.getElementById(id); }
   function sceneFromAny(item){
     const key = item && item.sceneKey;
@@ -7017,12 +7017,172 @@ body.hide-progress-bar .page-progress { display:none !important; }
   const oldVersion = window.buildVersionUpdatesHTML;
   window.buildVersionUpdatesHTML = function(){
     let html = typeof oldVersion === 'function' ? oldVersion() : '';
-    if(!html.includes('v9.9.26 历史兼容修复版')){
-      html += '<details><summary>v9.9.26 历史兼容修复版</summary><ul><li>修复旧版本历史记录因字段缺失而无法“查看”的问题。</li><li>查看历史时会根据场景、取数、落宫和占问事项自动补齐新版结果页需要的字段。</li><li>新增“修复旧历史”按钮，可批量补齐旧历史记录，便于继续复盘和查看。</li><li>即使部分旧记录无法完整还原，也会显示基础历史结果页，不再直接中断。</li></ul></details>';
+    if(!html.includes('v9.9.27 结果页分离修正版')){
+      html += '<details><summary>v9.9.27 结果页分离修正版</summary><ul><li>修复旧版本历史记录因字段缺失而无法“查看”的问题。</li><li>查看历史时会根据场景、取数、落宫和占问事项自动补齐新版结果页需要的字段。</li><li>新增“修复旧历史”按钮，可批量补齐旧历史记录，便于继续复盘和查看。</li><li>即使部分旧记录无法完整还原，也会显示基础历史结果页，不再直接中断。</li></ul></details>';
     }
     return html;
   };
   window.__XLR_PATCH_VERSION__ = PATCH_VERSION;
+})();
+</script>
+
+
+
+<!-- v9.9.27 结果页分离修复补丁：强制结果页与主页输入区分离 -->
+<style id="v9927-result-page-separation-fix-style">
+  /* 只要进入结果页状态，就隐藏所有主页输入与起课区域 */
+  body.result-page #homeTopSection,
+  body.result-page #sceneSection,
+  body.result-page #questionSection,
+  body.result-page #methodSection,
+  body.result-page .sidebar {
+    display: none !important;
+  }
+  body.result-page .shell {
+    display: block !important;
+    max-width: 1180px !important;
+    width: min(1180px, calc(100% - 24px)) !important;
+    margin: 0 auto !important;
+  }
+  body.result-page .main { width: 100% !important; display: block !important; }
+  body.result-page #resultCard { display: block !important; }
+
+  /* 回到主页时，确保结果卡片隐藏后不占位 */
+  body:not(.result-page) #resultCard.hidden { display: none !important; }
+
+  /* 电脑模式下查看结果页，也只显示结果，不显示左侧介绍与主页输入 */
+  body.result-page.force-desktop-mode {
+    min-width: 0 !important;
+    overflow-x: auto !important;
+  }
+  body.result-page.force-desktop-mode .shell {
+    display: block !important;
+    width: 1180px !important;
+    min-width: 1180px !important;
+    max-width: none !important;
+  }
+  body.result-page.force-desktop-mode .sidebar { display: none !important; }
+</style>
+<script id="v9927-result-page-separation-fix-script">
+(function(){
+  'use strict';
+  const VERSION = 'v9.9.27 结果页分离修正版';
+  function $(id){ return document.getElementById(id); }
+  function isResultVisible(){
+    const card = $('resultCard');
+    return !!card && !card.classList.contains('hidden');
+  }
+  function refreshNav(){
+    try { if (typeof window.refreshSectionJumpNavSoon === 'function') window.refreshSectionJumpNavSoon(); } catch(e) {}
+  }
+  function enterResultPage(){
+    const card = $('resultCard');
+    if(!card) return;
+    if(!card.classList.contains('hidden')){
+      document.body.classList.add('result-page');
+      const noteId='resultPageNote';
+      const title=$('resultTitle');
+      if(title && !$(noteId)){
+        const note=document.createElement('p');
+        note.id=noteId;
+        note.className='result-page-title-note';
+        note.textContent='当前为独立结果页，只显示本次占卜结果；可返回主页修改条件，或重新占卜。';
+        title.insertAdjacentElement('afterend', note);
+      }
+      refreshNav();
+    }
+  }
+  function leaveResultPage(){
+    document.body.classList.remove('result-page');
+    refreshNav();
+  }
+  function goHome(){
+    const card=$('resultCard');
+    if(card) card.classList.add('hidden');
+    leaveResultPage();
+    const target=$('homeTopSection') || $('sceneSection') || document.body;
+    try { target.scrollIntoView({behavior:'smooth', block:'start'}); } catch(e) { window.scrollTo(0,0); }
+  }
+  function resetAndHome(){
+    try { if(typeof window.resetForm === 'function') { window.resetForm(); } } catch(e) {}
+    const card=$('resultCard');
+    if(card) card.classList.add('hidden');
+    leaveResultPage();
+    const target=$('homeTopSection') || $('sceneSection') || document.body;
+    try { target.scrollIntoView({behavior:'smooth', block:'start'}); } catch(e) { window.scrollTo(0,0); }
+  }
+  function ensureResultNav(){
+    const resultCard=$('resultCard');
+    if(!resultCard) return;
+    if(!$('resultTopNav')){
+      const top=document.createElement('div');
+      top.id='resultTopNav';
+      top.className='result-nav-actions top';
+      top.innerHTML='<button class="ghost-btn" type="button" data-v9927-home>返回主页</button><button class="ghost-btn" type="button" data-v9927-reset>重新占卜</button><button class="ghost-btn" type="button" data-v9927-copy>复制结果</button><button class="ghost-btn" type="button" data-v9927-history>查看历史</button>';
+      const header=resultCard.querySelector('.result-header');
+      if(header) header.insertAdjacentElement('afterend', top);
+    }
+    if(!$('resultBottomNav')){
+      const bottom=document.createElement('div');
+      bottom.id='resultBottomNav';
+      bottom.className='result-nav-actions bottom';
+      bottom.innerHTML='<button class="ghost-btn" type="button" data-v9927-home>返回主页</button><button class="ghost-btn" type="button" data-v9927-reset>重新占卜</button><button class="ghost-btn" type="button" data-v9927-copy>复制结果</button><button class="ghost-btn" type="button" data-v9927-history>查看历史</button>';
+      resultCard.appendChild(bottom);
+    }
+  }
+  function patchQuickButtons(){
+    const tools=document.querySelector('.scroll-tools');
+    if(!tools) return;
+    const homeBtn=[...tools.querySelectorAll('button')].find(b=>b.textContent.trim()==='主页');
+    if(homeBtn) homeBtn.onclick=goHome;
+    const resetBtn=[...tools.querySelectorAll('button')].find(b=>['重占','重新'].includes(b.textContent.trim()));
+    if(resetBtn) resetBtn.onclick=resetAndHome;
+  }
+  function installDelegates(){
+    if(document.__v9927Delegates) return;
+    document.__v9927Delegates=true;
+    document.addEventListener('click', function(e){
+      if(e.target.closest('[data-v9927-home]') || e.target.closest('[data-v9914-home]')){ e.preventDefault(); goHome(); return; }
+      if(e.target.closest('[data-v9927-reset]') || e.target.closest('[data-v9914-reset]')){ e.preventDefault(); resetAndHome(); return; }
+      if(e.target.closest('[data-v9927-copy]') || e.target.closest('[data-v9914-copy]')){ const b=$('copyResultBtn'); if(b){ e.preventDefault(); b.click(); } return; }
+      if(e.target.closest('[data-v9927-history]') || e.target.closest('[data-v9914-history]')){ const b=$('historyBtn'); if(b){ e.preventDefault(); b.click(); } return; }
+    }, true);
+    const reset=$('resetBtn');
+    if(reset && !reset.__v9927){ reset.__v9927=true; reset.addEventListener('click', function(){ setTimeout(leaveResultPage,0); }, true); }
+  }
+  function observeResultCard(){
+    const card=$('resultCard');
+    if(!card || card.__v9927Observer) return;
+    card.__v9927Observer=true;
+    const obs=new MutationObserver(function(){
+      if(isResultVisible()) enterResultPage(); else leaveResultPage();
+    });
+    obs.observe(card, {attributes:true, attributeFilter:['class','style']});
+  }
+  function patchExistingRenderIfGlobal(){
+    try {
+      if(typeof window.renderResult === 'function' && !window.renderResult.__v9927Patched){
+        const old=window.renderResult;
+        window.renderResult=function(){
+          const ret=old.apply(this, arguments);
+          setTimeout(enterResultPage,0);
+          return ret;
+        };
+        window.renderResult.__v9927Patched=true;
+      }
+    } catch(e) {}
+  }
+  function boot(){
+    ensureResultNav();
+    installDelegates();
+    observeResultCard();
+    patchExistingRenderIfGlobal();
+    patchQuickButtons();
+    if(isResultVisible()) enterResultPage(); else leaveResultPage();
+    setTimeout(function(){ if(isResultVisible()) enterResultPage(); patchQuickButtons(); }, 250);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', boot);
 })();
 </script>
 
