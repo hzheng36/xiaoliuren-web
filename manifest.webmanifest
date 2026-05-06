@@ -1,21 +1,25 @@
 {
   "name": "小六壬个人占卜台",
   "short_name": "小六壬",
-  "description": "小六壬个人占卜台，纯前端、本地保存、不联网。",
+  "description": "小六壬个人占卜台，纯前端、本地保存、支持 PWA 离线缓存。",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#f7f3ee",
   "theme_color": "#6753a5",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

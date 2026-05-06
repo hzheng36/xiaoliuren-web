@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.16 设置增强与图标版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.16：恢复默认字号，增强阅读设置与移动端桌面模式，并新增 Home Screen 图标。" />
+  <title>小六壬占卜 · v9.9.17 PWA离线缓存与白话可读性增强版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.17：新增 PWA 离线缓存，并增强答案摘要的白话可读性。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -872,6 +872,18 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
 /* v9.9.15 更新记录补丁 */
 
+
+/* v9.9.17 PWA离线缓存与白话可读性增强版 */
+.answer-readable-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:12px; }
+.answer-card.answer-one-line { background:linear-gradient(180deg,rgba(103,83,165,.09),rgba(255,255,255,.98)); border-color:rgba(103,83,165,.18); }
+.answer-card.answer-one-line h5::before { content:'✨ '; }
+.answer-bias-pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:rgba(103,83,165,.08); color:var(--primary); font-weight:800; margin-bottom:8px; border:1px solid rgba(103,83,165,.12); }
+.answer-rhythm { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.answer-rhythm span { border-radius:999px; padding:5px 10px; background:var(--accent-soft); color:#8d6631; border:1px solid rgba(188,133,65,.18); font-size:.9rem; }
+.pwa-status { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:9999; background:rgba(47,41,65,.92); color:#fff; border-radius:999px; padding:9px 14px; font-size:.9rem; box-shadow:0 12px 30px rgba(47,41,65,.22); opacity:0; pointer-events:none; transition:opacity .25s ease; }
+.pwa-status.show { opacity:1; }
+@media(max-width:760px){ .answer-readable-grid { grid-template-columns:1fr; } }
+
 </style>
 </head>
 <body>
@@ -911,7 +923,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.16 设置增强与图标版</h2>
+          <h2>个人占卜台 · v9.9.17 PWA离线缓存与白话可读性增强版</h2>
           <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
@@ -5356,7 +5368,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.16 设置增强与图标版';
+  const VERSION = 'v9.9.17 PWA离线缓存与白话可读性增强版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -5777,5 +5789,187 @@ body.hide-progress-bar .page-progress { display:none !important; }
   window.addEventListener('load', function(){ setTimeout(boot, 80); });
 })();
 </script>
+
+<script>
+(function(){
+  const VERSION_9917 = 'v9.9.17 PWA离线缓存与白话可读性增强版';
+  function safe(fn, fallback){ try { return fn(); } catch(e){ return fallback; } }
+  function esc(s){
+    if (typeof escapeHTML === 'function') return escapeHTML(String(s || ''));
+    return String(s || '').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+  function getCtx(result){ return result.context || (typeof analyzeQuestionContext === 'function' ? analyzeQuestionContext(result.question, result.sceneKey) : null); }
+  function getQ(result){ return result.question ? `你问「${esc(result.question)}」` : `你问的是${esc(result.sceneName || '这件事')}`; }
+  function palacePlain(p){
+    const map = {
+      '大安':'偏稳、偏慢、适合守住和确认',
+      '留连':'容易拖延、反复、卡在旧问题上',
+      '速喜':'来得快、有消息、有变化',
+      '赤口':'容易有争执、反复、急变或沟通卡点',
+      '小吉':'有小机会、小进展、小帮助',
+      '空亡':'容易落空、虚耗、信息未落实'
+    };
+    return map[p] || '需要结合前后变化来看';
+  }
+  function simpleTrend(p){
+    const map = {'大安':'稳住','留连':'拖住','速喜':'快动','赤口':'反复','小吉':'小成','空亡':'落空'};
+    return map[p] || p || '变化';
+  }
+  function buildBias(result){
+    const palaces = result.palaces || [];
+    const end = palaces[2] || '';
+    const good = palaces.filter(p=>['大安','速喜','小吉'].includes(p)).length;
+    const heavy = palaces.filter(p=>['留连','赤口','空亡'].includes(p)).length;
+    if (end === '空亡') return '需要再观察，结果未完全坐实';
+    if (end === '赤口') return '有机会但不顺，后面容易反复';
+    if (end === '留连') return '不宜急定，事情容易拖着';
+    if (end === '速喜') return '偏向有动静，短期会有变化';
+    if (end === '小吉') return '偏向小有进展，但别期待过大';
+    if (end === '大安') return '偏向稳定，慢慢落实更好';
+    if (good >= 2) return '整体偏有机会';
+    if (heavy >= 2) return '阻力偏多，需要谨慎';
+    return '好坏参半，重点看后续落实';
+  }
+  function buildRhythm(result){
+    const d = result.details || [];
+    if (d.length >= 3) return `${simpleTrend(d[0].palaceName)} → ${simpleTrend(d[1].palaceName)} → ${simpleTrend(d[2].palaceName)}`;
+    const p = result.palaces || [];
+    return p.map(simpleTrend).join(' → ') || '需要看后续变化';
+  }
+  function buildPlainExplanation(result){
+    const d = result.details || [];
+    if (d.length < 3) return '这课要把前面、中间、最后三步连起来看，不能只看一个宫位。';
+    return `${d[0].palaceName}表示开头${palacePlain(d[0].palaceName)}；${d[1].palaceName}表示过程中${palacePlain(d[1].palaceName)}；${d[2].palaceName}是结果落点，说明最后更偏向“${palacePlain(d[2].palaceName)}”。`;
+  }
+  function directByContext(result){
+    const ctx = getCtx(result);
+    const key = ctx ? ctx.key : result.sceneKey;
+    const p = result.palaces || [];
+    const end = p[2] || '';
+    const q = getQ(result);
+    // If the original function exists, use it as base for unusual cases, but simplify common categories.
+    if (key === 'weather') {
+      if (end === '空亡') return `${q}，更像“有雨意但不一定真下明显”，可能云多、预报有变化，但实际落雨有限。`;
+      if (end === '赤口') return `${q}，更像短时阵雨、小雨或忽停忽下，不像长时间稳定下雨。`;
+      if (end === '速喜') return `${q}，短时间内容易有明显天气变化，有雨云或雨势动起来的可能。`;
+      if (end === '大安') return `${q}，整体偏稳，就算有雨也多半不算猛烈。`;
+      if (end === '小吉') return `${q}，有小范围、小雨量变化的可能，影响不算大。`;
+      return `${q}，天气容易阴着、闷着或拖着变化，雨势不算干脆。`;
+    }
+    if (key === 'market' || key === 'money') {
+      if (end === '空亡') return `${q}，目前信号不够实，别把传闻或一时预期当成定局。`;
+      if (end === '赤口') return `${q}，短线会有波动和反复，更像忽上忽下，不适合只看一瞬间。`;
+      if (end === '速喜') return `${q}，短期容易很快出现价格变化或消息刺激，但变化来得快也可能反复。`;
+      if (end === '大安') return `${q}，走势更偏稳定，变化可能不会太极端。`;
+      if (end === '小吉') return `${q}，可能有小幅有利变化，但幅度不宜期待太大。`;
+      return `${q}，走势容易拖住或反复，短期方向不够干脆。`;
+    }
+    if (key === 'love') {
+      if (end === '空亡') return `${q}，现在不要只靠猜，对方实际行动不足，期待容易落空。`;
+      if (end === '赤口') return `${q}，容易因为表达、误会或情绪起冲突，先别急着硬碰硬。`;
+      if (end === '留连') return `${q}，牵扯和反复较多，短期容易拖着不明朗。`;
+      if (end === '速喜' || end === '小吉') return `${q}，还有互动或缓和机会，但要看对方有没有实际行动。`;
+      return `${q}，关系偏稳但推进慢，适合慢慢观察，不宜逼问。`;
+    }
+    if (key === 'lost') {
+      if (end === '空亡') return `${q}，短期方向可能不对，先确认是否还在原来的寻找范围。`;
+      if (end === '留连') return `${q}，更像被夹住、压住、混进旧物或收纳里，需要反复细找。`;
+      if (end === '赤口') return `${q}，注意金属、边角、门口、文书票据、卡片或小物附近。`;
+      return `${q}，仍有找回希望，先按最后出现的位置往周边小范围细找。`;
+    }
+    if (typeof answerDirectByContext === 'function' && answerDirectByContext.__v9917 !== true) {
+      return safe(()=>answerDirectByContext(result), `${q}，要看三象的前后变化，尤其是末象能否落实。`);
+    }
+    return `${q}，${buildBias(result)}。节奏上是：${buildRhythm(result)}。`;
+  }
+  function focusPoint(result){
+    const end = (result.palaces || [])[2] || '';
+    if (end === '空亡') return '重点看“有没有真正落实”。有影子、有消息，不等于已经成了。';
+    if (end === '赤口') return '重点看“后面会不会反复”。说话、合同、价格、沟通都要留余地。';
+    if (end === '留连') return '重点看“是否拖延”。这类课不怕慢，怕一直绕圈不确认。';
+    if (end === '速喜') return '重点看“短期动静”。有变化很快，但还要看后面能不能稳住。';
+    if (end === '小吉') return '重点看“小进展”。先拿小结果，不要一开始就期待大成。';
+    if (end === '大安') return '重点看“稳不稳”。慢一点没关系，按计划推进更有利。';
+    return '重点看末象，因为末象更像这件事最后的落点。';
+  }
+  const oldBuildAnswerActions = window.buildAnswerActions;
+  function readableActions(result){
+    let list = [];
+    if (typeof oldBuildAnswerActions === 'function') list = safe(()=>oldBuildAnswerActions(result), []);
+    if (!Array.isArray(list) || list.length === 0) list = [];
+    const end = (result.palaces || [])[2];
+    const q = result.question ? '这件事' : '当前问题';
+    const base = [];
+    if (end === '空亡') base.push('先核实信息来源，不要只凭感觉或口头消息判断。');
+    if (end === '赤口') base.push('先控制沟通和节奏，避免因为急躁让事情变复杂。');
+    if (end === '留连') base.push('给事情一点时间，同时把卡住的条件逐项确认清楚。');
+    if (end === '速喜') base.push('短期可以关注消息或变化，但不要一有动静就下最终结论。');
+    if (end === '大安') base.push('按原计划稳住推进，不必急着改变方向。');
+    if (end === '小吉') base.push('先争取小进展，小步试探比一次做大更稳。');
+    return Array.from(new Set([...base, ...list])).slice(0,4);
+  }
+  const oldBuildAnswerSummaryHTML = window.buildAnswerSummaryHTML;
+  window.buildAnswerActions = readableActions;
+  window.buildAnswerSummaryHTML = function(result){
+    const actions = readableActions(result);
+    const direct = directByContext(result);
+    const rhythm = buildRhythm(result);
+    const bias = buildBias(result);
+    const plain = buildPlainExplanation(result);
+    const warning = (typeof buildAnswerWarning === 'function') ? safe(()=>buildAnswerWarning(result), focusPoint(result)) : focusPoint(result);
+    return `<div class="answer-card answer-one-line"><h5>一句话直断</h5><p>${direct}</p></div>
+      <div class="answer-readable-grid">
+        <div class="answer-card"><h5>偏向判断</h5><span class="answer-bias-pill">${esc(bias)}</span><p>这不是绝对好坏，而是根据三象最后的落点给出的倾向。</p></div>
+        <div class="answer-card"><h5>结果节奏</h5><p>这件事大致是：</p><div class="answer-rhythm">${rhythm.split('→').map(x=>`<span>${esc(x.trim())}</span>`).join('')}</div></div>
+      </div>
+      <div class="answer-card"><h5>通俗解释</h5><p>${plain}</p><p><strong>本课重点：</strong>${focusPoint(result)}</p></div>
+      <div class="answer-readable-grid">
+        <div class="answer-card"><h5>你现在该怎么做</h5><ul class="answer-list">${actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>
+        <div class="answer-card"><h5>需要注意</h5><p>${warning}</p></div>
+      </div>`;
+  };
+  window.buildAnswerSummaryHTML.__v9917 = true;
+  window.answerDirectByContext = directByContext;
+  window.answerDirectByContext.__v9917 = true;
+  function patchVersionLog(){
+    if(typeof window.buildVersionUpdatesHTML === 'function' && !window.buildVersionUpdatesHTML.__v9917Patched){
+      const old = window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML = function(){
+        let html = old.call(this);
+        if(html.indexOf(VERSION_9917) < 0){
+          html += '<details><summary>v9.9.17 PWA离线缓存与白话可读性增强版</summary><ul><li>新增 PWA 离线缓存：支持添加到主屏幕后离线打开和更快加载。</li><li>答案摘要升级为更直观的结构：一句话直断、偏向判断、结果节奏、通俗解释、行动建议和注意事项。</li><li>白话表达更贴近用户填写的占问事项，减少术语门槛，让普通用户更快读懂结果。</li><li>同步更新 README，增加 PWA 使用与部署说明。</li></ul></details>';
+        }
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v9917Patched = true;
+    }
+  }
+  function showPwaStatus(msg){
+    let el = document.getElementById('pwaStatusToast');
+    if(!el){ el = document.createElement('div'); el.id='pwaStatusToast'; el.className='pwa-status'; document.body.appendChild(el); }
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'), 2600);
+  }
+  function registerSW(){
+    if(!('serviceWorker' in navigator)) return;
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./service-worker.js').then(function(reg){
+        if(reg.waiting) showPwaStatus('离线缓存已准备好');
+        reg.addEventListener('updatefound', function(){
+          const nw = reg.installing;
+          if(!nw) return;
+          nw.addEventListener('statechange', function(){
+            if(nw.state === 'installed' && navigator.serviceWorker.controller) showPwaStatus('新版本已缓存，刷新后生效');
+          });
+        });
+      }).catch(function(){ /* GitHub Pages 或本地 file 模式异常时静默失败 */ });
+    });
+  }
+  function boot9917(){ patchVersionLog(); registerSW(); if(typeof window.renderHomeInfoBlocks === 'function') setTimeout(window.renderHomeInfoBlocks, 30); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot9917); else boot9917();
+})();
+</script>
+
 </body>
 </html>
