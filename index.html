@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.13 按钮修复版</title>
+  <title>小六壬占卜 · v9.9.14 多端布局与结果页优化版</title>
   <meta name="description" content="小六壬个人网页版 v9.9.11：保持版本更新记录同步，并在章节卡点导航中新增“版本”入口。" />
   <style>
     :root {
@@ -770,7 +770,7 @@
           <p>三数知吉凶，事事有指引</p>
         </div>
       </div>
-      <div class="art theme-illustration" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+      <div class="art theme-illustration" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid meet">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fdf8f2"/><stop offset="100%" stop-color="#f8f3ee"/></linearGradient>
     <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cbc0e5" stop-opacity="0.92"/><stop offset="100%" stop-color="#b7a9d7" stop-opacity="0.35"/></linearGradient>
@@ -795,8 +795,8 @@
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.13 按钮修复版</h2>
-          <p>本版修复按钮失效问题，复盘升级为时间线，并同步生成 README 仓库说明。</p>
+          <h2>个人占卜台 · v9.9.14 多端布局与结果页优化版</h2>
+          <p>本版优化多端插图显示、结果页阅读、快捷按钮与输入体验，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -4981,5 +4981,284 @@ ${nextStep}`;
     init();
     refreshSectionJumpNavSoon();
   </script>
+
+
+<!-- v9.9.14 多端布局与结果页优化补丁 -->
+<style id="v9914-layout-result-page-style">
+  /* 顶部插图：多端完整显示，不裁切 */
+  .art.theme-illustration {
+    height: clamp(180px, 28vw, 360px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background: linear-gradient(180deg, rgba(253,248,242,.95), rgba(248,243,238,.88)) !important;
+  }
+  .art.theme-illustration svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    display:block !important;
+  }
+
+  /* 个人占卜台标题与按钮分两排 */
+  .hero.card {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    align-items: start !important;
+  }
+  .hero.card > .actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+  .hero.card > .actions .ghost-btn {
+    flex: 0 1 auto !important;
+    min-width: 108px !important;
+  }
+
+  /* 输入框字体整体放大，手机端更好读 */
+  input, textarea, select, .date-text-input, .select-control {
+    font-size: clamp(16px, 1.02rem + .15vw, 20px) !important;
+    line-height: 1.55 !important;
+  }
+  input::placeholder, textarea::placeholder {
+    font-size: clamp(15px, .98rem + .12vw, 18px) !important;
+  }
+  label span, .question-count, #eventCount, .number-range-note { font-size: clamp(15px, .96rem + .08vw, 17px) !important; }
+
+  /* 独立结果页：有结果时只显示结果相关内容 */
+  body.result-page .sidebar,
+  body.result-page #homeTopSection,
+  body.result-page #sceneSection,
+  body.result-page #questionSection,
+  body.result-page #methodSection {
+    display: none !important;
+  }
+  body.result-page .shell {
+    display: block !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+  }
+  body.result-page .main { width: 100% !important; }
+  body.result-page #resultCard { display:block !important; }
+
+  .result-nav-actions {
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin: 14px 0 18px;
+    align-items:center;
+  }
+  .result-nav-actions.bottom {
+    border-top: 1px dashed var(--line, #e5e1ee);
+    padding-top: 18px;
+    margin-top: 22px;
+  }
+  .result-nav-actions .ghost-btn, .result-nav-actions .primary-btn {
+    width: auto !important;
+    margin-top: 0 !important;
+    min-width: 102px;
+  }
+  .result-page-title-note {
+    color: var(--muted, #7e7690);
+    line-height: 1.7;
+    margin: 0 0 4px;
+  }
+
+  /* 右侧快捷按钮：增加主页、重占、模式 */
+  .scroll-tools { z-index: 40 !important; }
+  .scroll-tools .scroll-tool-btn.mini-wide { min-width: 54px; padding-left: 10px; padding-right: 10px; }
+
+  /* 客户端模式切换：强制桌面宽度，适合手机/平板临时横向查看 */
+  body.force-desktop-mode { overflow-x: auto !important; }
+  body.force-desktop-mode .shell {
+    width: 1180px !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  body.force-desktop-mode .scene-grid { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
+  body.force-desktop-mode .number-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  body.force-desktop-mode .method-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  body.force-desktop-mode .summary-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+
+  @media (max-width: 760px) {
+    .art.theme-illustration { height: clamp(160px, 48vw, 240px) !important; }
+    .hero.card > .actions .ghost-btn { flex: 1 1 calc(50% - 10px) !important; min-width: 0 !important; }
+    .result-nav-actions .ghost-btn, .result-nav-actions .primary-btn { flex: 1 1 calc(50% - 10px); min-width: 0; }
+  }
+</style>
+<script id="v9914-layout-result-page-script">
+(function(){
+  'use strict';
+  const VERSION = 'v9.9.14 多端布局与结果页优化版';
+
+  function qs(id){ return document.getElementById(id); }
+  function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
+
+  function ensureResultNav(){
+    const resultCard = qs('resultCard');
+    if(!resultCard) return;
+    if(!qs('resultTopNav')){
+      const top = document.createElement('div');
+      top.id = 'resultTopNav';
+      top.className = 'result-nav-actions top';
+      top.innerHTML = `
+        <button class="ghost-btn" type="button" data-v9914-home>返回主页</button>
+        <button class="ghost-btn" type="button" data-v9914-reset>重新占卜</button>
+        <button class="ghost-btn" type="button" data-v9914-copy>复制结果</button>
+        <button class="ghost-btn" type="button" data-v9914-history>查看历史</button>
+      `;
+      const header = resultCard.querySelector('.result-header');
+      if(header) header.insertAdjacentElement('afterend', top);
+    }
+    if(!qs('resultBottomNav')){
+      const bottom = document.createElement('div');
+      bottom.id = 'resultBottomNav';
+      bottom.className = 'result-nav-actions bottom';
+      bottom.innerHTML = `
+        <button class="ghost-btn" type="button" data-v9914-home>返回主页</button>
+        <button class="ghost-btn" type="button" data-v9914-reset>重新占卜</button>
+        <button class="ghost-btn" type="button" data-v9914-copy>复制结果</button>
+        <button class="ghost-btn" type="button" data-v9914-history>查看历史</button>
+      `;
+      resultCard.appendChild(bottom);
+    }
+  }
+
+  window.goHomeV9914 = function(){
+    document.body.classList.remove('result-page');
+    const resultCard = qs('resultCard');
+    if(resultCard) resultCard.classList.add('hidden');
+    const top = qs('homeTopSection') || qs('sceneSection') || document.body;
+    top.scrollIntoView({behavior:'smooth', block:'start'});
+    if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon();
+  };
+
+  window.resetForNewDivinationV9914 = function(){
+    document.body.classList.remove('result-page');
+    if(typeof resetForm === 'function') resetForm();
+    const top = qs('homeTopSection') || qs('sceneSection') || document.body;
+    top.scrollIntoView({behavior:'smooth', block:'start'});
+    if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon();
+  };
+
+  window.toggleClientModeV9914 = function(){
+    const on = !document.body.classList.contains('force-desktop-mode');
+    document.body.classList.toggle('force-desktop-mode', on);
+    try { localStorage.setItem('xiaoliuren_client_mode_v9914', on ? 'desktop' : 'auto'); } catch(e) {}
+    updateModeButton();
+    setTimeout(()=>{ if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon(); }, 80);
+  };
+
+  function updateModeButton(){
+    document.querySelectorAll('[data-v9914-mode]').forEach(btn=>{
+      btn.textContent = document.body.classList.contains('force-desktop-mode') ? '自适应' : '桌面';
+      btn.title = document.body.classList.contains('force-desktop-mode') ? '切回自适应模式' : '切换为桌面宽度模式';
+    });
+  }
+
+  function installQuickButtons(){
+    const tools = document.querySelector('.scroll-tools');
+    if(!tools || tools.dataset.v9914Installed) return;
+    tools.dataset.v9914Installed = '1';
+    const home = document.createElement('button');
+    home.className='scroll-tool-btn mini-wide'; home.type='button'; home.textContent='主页'; home.title='返回主页';
+    home.onclick=window.goHomeV9914;
+    const reset = document.createElement('button');
+    reset.className='scroll-tool-btn mini-wide'; reset.type='button'; reset.textContent='重占'; reset.title='重新占卜';
+    reset.onclick=window.resetForNewDivinationV9914;
+    const mode = document.createElement('button');
+    mode.className='scroll-tool-btn mini-wide'; mode.type='button'; mode.setAttribute('data-v9914-mode',''); mode.onclick=window.toggleClientModeV9914;
+    tools.insertBefore(mode, tools.firstChild);
+    tools.insertBefore(reset, tools.firstChild);
+    tools.insertBefore(home, tools.firstChild);
+    updateModeButton();
+  }
+
+  function installDelegates(){
+    document.addEventListener('click', function(e){
+      if(e.target.closest('[data-v9914-home]')){ window.goHomeV9914(); }
+      if(e.target.closest('[data-v9914-reset]')){ window.resetForNewDivinationV9914(); }
+      if(e.target.closest('[data-v9914-copy]')){ const b=qs('copyResultBtn'); if(b) b.click(); }
+      if(e.target.closest('[data-v9914-history]')){ const b=qs('historyBtn'); if(b) b.click(); }
+    });
+  }
+
+  function patchRenderResult(){
+    if(typeof window.renderResult !== 'function' || window.renderResult.__v9914Patched) return;
+    const old = window.renderResult;
+    window.renderResult = function(result){
+      ensureResultNav();
+      old.call(this, result);
+      ensureResultNav();
+      document.body.classList.add('result-page');
+      const resultCard = qs('resultCard');
+      if(resultCard) resultCard.classList.remove('hidden');
+      const title = qs('resultTitle');
+      if(title && !qs('resultPageNote')){
+        const note = document.createElement('p');
+        note.id = 'resultPageNote';
+        note.className = 'result-page-title-note';
+        note.textContent = '当前为独立结果页，只显示本次占卜结果；可随时返回主页或重新占卜。';
+        title.insertAdjacentElement('afterend', note);
+      }
+      setTimeout(()=>{
+        if(resultCard) resultCard.scrollIntoView({behavior:'smooth', block:'start'});
+        if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon();
+      }, 60);
+    };
+    window.renderResult.__v9914Patched = true;
+  }
+
+  function patchReset(){
+    if(typeof window.resetForm === 'function' && !window.resetForm.__v9914Patched){
+      const oldReset = window.resetForm;
+      window.resetForm = function(){
+        document.body.classList.remove('result-page');
+        oldReset.call(this);
+        if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon();
+      };
+      window.resetForm.__v9914Patched = true;
+    }
+  }
+
+  function patchSectionTargets(){
+    // 兼容原有章节导航：结果页只显示结果相关，主页只显示主页相关。
+    if(window.SECTION_JUMP_TARGETS){
+      const home = window.SECTION_JUMP_TARGETS.home || [];
+      const result = window.SECTION_JUMP_TARGETS.result || [];
+      if(!home.some(x=>x.id==='homeTopSection')) home.unshift({id:'homeTopSection', label:'顶部'});
+      if(!result.some(x=>x.id==='resultCard')) result.unshift({id:'resultCard', label:'结果'});
+    }
+  }
+
+  function applySavedClientMode(){
+    try {
+      if(localStorage.getItem('xiaoliuren_client_mode_v9914') === 'desktop') document.body.classList.add('force-desktop-mode');
+    } catch(e) {}
+    updateModeButton();
+  }
+
+  function boot(){
+    ensureResultNav();
+    installQuickButtons();
+    installDelegates();
+    patchRenderResult();
+    patchReset();
+    patchSectionTargets();
+    applySavedClientMode();
+    if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon();
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+
 </body>
 </html>
