@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v9-9-22';
+const CACHE_NAME = 'xiaoliuren-v9-9-23';
 const APP_SHELL = [
   './',
   './index.html',
@@ -18,7 +18,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => Promise.all(keys.map(key => {
-      if (key !== CACHE_NAME && key.startsWith('xiaoliuren-v9-9-22')) return caches.delete(key);
+      if (key !== CACHE_NAME && key.startsWith('xiaoliuren-v9-9-23')) return caches.delete(key);
     }))).then(() => self.clients.claim())
   );
 });

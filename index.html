@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.22 命运解读增强版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.22：增强命运场景解读、六宫排盘说明与命运六亲参考盘，并优化版本更新只在主页显示。" />
+  <title>小六壬占卜 · v9.9.23 运势与命运修正版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.23：新增运势场景，修复命运场景起课显示，进一步增强命运排盘解读。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -928,6 +928,18 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .paipan-explain-card b { color:var(--deep); }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
+
+    /* v9.9.23 运势与命运修正版 */
+    body.result-page #homeInfoBlocks { display: none !important; }
+    body.destiny-scene #numberPanel,
+    body.destiny-scene #singlePanel,
+    body.destiny-scene #eventPanel { display: none !important; }
+    body.destiny-scene #timePanel { display: block !important; }
+    body.destiny-scene #methodTabs .method-tab:not([data-method="time"]) { display: none !important; }
+    body.destiny-scene #methodTabs { grid-template-columns: 1fr !important; }
+    .fortune-note { margin-top:12px; padding:14px 16px; border-radius:18px; background:rgba(255,248,236,.76); border:1px solid rgba(201,164,92,.2); line-height:1.75; color:var(--muted); }
+
+
   </style>
 </head>
 <body>
@@ -967,8 +979,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.22 命运解读增强版</h2>
-          <p>本版增强命运场景的六亲参考盘、性格倾向、处事节奏、人际助力等解释，并让六宫排盘说明更直观。</p>
+          <h2>个人占卜台 · v9.9.23 运势与命运修正版</h2>
+          <p>本版新增运势场景，修复命运场景只保留时辰起盘，并继续增强六宫排盘与命运六亲参考盘说明。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1437,13 +1449,14 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       { scene:'选择', icon:'⚖️', note:'要不要、A/B、买不买、去不去', items:['我该选 A 还是选 B？','这件事我要不要做？','现在做还是以后做更好？','我要不要主动联系？','这件东西买不买合适？','我是继续还是放弃？','这次机会要不要把握？','去还是不去更合适？'] },
       { scene:'寻人', icon:'🧭', note:'找人、失联、联系、方位', items:['这个人现在大概在哪里？','我还能不能联系上这个人？','这个人会不会主动出现？','这次寻人有没有线索？','我应该先从哪个方向找人？','对方是不是暂时不方便回应？'] },
       { scene:'贵人', icon:'🤲', note:'帮助、助力、谁能帮、贵人方向', items:['这件事有没有贵人帮忙？','谁比较可能帮到我？','我应该主动找人帮忙吗？','贵人线索大概在哪个方向？','这件事靠自己推进还是找人协助更好？','这个人是不是我的贵人？'] },
+      { scene:'运势', icon:'🌟', note:'近期趋势、整体状态、阶段提醒', items:['我最近整体运势怎么样？','这周运势需要注意什么？','接下来一个月做事顺不顺？','我现在适合主动推进事情吗？','近期有没有贵人或机会？','这段时间最需要防什么？'] },
       { scene:'命运', icon:'🪷', note:'出生时间参考、六亲象意、自我观察', items:['用出生时间看整体象意参考。','从出生时辰看性格和处事节奏。','从出生时间看人际与助力参考。','从出生时间看事业方向参考。','从出生时间看财务习惯参考。','从出生时间看自我观察重点。'] },
       { scene:'其他', icon:'✨', note:'抽奖、梦境、人际、创作、比赛', items:['这次抽奖有没有小惊喜？','这个梦主要提醒我什么？','这个朋友对我是不是有意见？','我要不要主动解释这件事？','这篇文章/视频发布后反馈如何？','这场比赛发挥会怎么样？','这个账号/设备问题能不能解决？','这件事有没有隐藏风险？'] }
     ];
 
     const TEMPLATE_SCENE_TO_KEY = {
       '感情':'love', '事业':'career', '财运':'wealth', '考试':'exam', '失物':'lost', '健康':'health', '出行':'travel',
-      '合作':'cooperation', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '寻人':'people', '贵人':'noble', '命运':'destiny', '其他':'other'
+      '合作':'cooperation', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '寻人':'people', '贵人':'noble', '运势':'fortune', '命运':'destiny', '其他':'other'
     };
     function findTemplateSceneByText(text){
       const value=String(text || '');
@@ -1458,7 +1471,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       if(!key || !SCENES.some(s=>s.key===key)) return;
       currentScene=key;
       renderScenes();
-      if(typeof updateSceneMode === 'function') updateSceneMode();
+      if(typeof applyMethodPanel === 'function') applyMethodPanel(currentMethod); else if(typeof updateSceneMode === 'function') updateSceneMode();
       persistChoiceIfNeeded('scene', currentScene);
     }
     function updateCustomTemplateStats(){
@@ -1771,6 +1784,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       { key: 'choice', name: '选择', icon: '🧩', positions: ['当前想法', '过程权衡', '最终取舍'] },
       { key: 'people', name: '寻人', icon: '🧭', positions: ['线索状态', '寻找过程', '能否相见'] },
       { key: 'noble', name: '贵人', icon: '🤲', positions: ['助力来源', '帮助过程', '最终助力'] },
+      { key: 'fortune', name: '运势', icon: '🌟', positions: ['当前气势', '阶段起伏', '近期走向'] },
       { key: 'destiny', name: '命运', icon: '🪷', positions: ['自身气象', '关系与助力', '整体走向'] },
       { key: 'other', name: '其他', icon: '✨', positions: ['起因状态', '过程变化', '最终趋势'] },
     ];
@@ -1802,7 +1816,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       const singleQuickPad=document.getElementById('singleQuickPad'); if(singleQuickPad) singleQuickPad.innerHTML = padHTML;
     }
     function bindEvents() {
-      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); updateSceneMode(); persistChoiceIfNeeded('scene', currentScene); });
+      sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); applyMethodPanel(currentMethod); persistChoiceIfNeeded('scene', currentScene); });
       document.getElementById('methodTabs').addEventListener('click', e => { const tab=e.target.closest('[data-method]'); if(!tab) return; currentMethod=tab.dataset.method; applyMethodPanel(currentMethod); persistChoiceIfNeeded('method', currentMethod); });
       document.getElementById('quickPad').addEventListener('click', e => { const btn=e.target.closest('[data-pad]'); if(!btn) return; const inputs=['num1','num2','num3'].map(id=>document.getElementById(id)); const empty=inputs.find(i=>!i.value); (empty || inputs[2]).value=btn.dataset.pad; });
       const singleQuickPad = document.getElementById('singleQuickPad');
@@ -2122,7 +2136,10 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <div class="destiny-deep-card"><h5>🤝 人际与助力</h5><p>贵人和助力不一定是突然出现的“神助攻”，更多时候是愿意提醒你、提供资源、帮你确认信息的人。若盘中见小吉、速喜、大安，遇事适合主动请教；若见留连、赤口、空亡，则要防人际拖延、沟通误会或承诺落空。</p></div>
           <div class="destiny-deep-card"><h5>💼 事业方向参考</h5><p>事业方向不宜直接断职业好坏，而应看适合的做事方式。大安重稳定积累；速喜重信息、机会和行动；小吉重服务、协助和细水长流；留连适合处理长期事务但要防拖延；赤口适合规则、表达和边界清楚的事；空亡提醒目标要落地，别只停在想法。</p></div>
           <div class="destiny-deep-card"><h5>💰 财务习惯参考</h5><p>财务象意主要看现实资源与钱财处理方式。若财象偏稳，适合长期规划；若见速喜，容易有短线机会也容易冲动；若见留连，钱财容易被拖住；若见赤口，要防合同、口头承诺和争议；若见空亡，不宜把未到账的钱当成已经到手。</p></div>
-          <div class="destiny-deep-card"><h5>🌙 情绪与自我观察</h5><p>这部分用于自我提醒，不作心理诊断。留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p></div>
+          <div class="destiny-deep-card"><h5>🌙 情绪与自我观察</h5><p>这部分用于自我提醒，不作心理诊断。留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p><p><strong>日常建议：</strong>若盘中动象多，适合用记录和复盘稳定节奏；若阻象多，适合先减少干扰，把眼前最确定的一步做好。</p></div>
+          <div class="destiny-deep-card full"><h5>🧩 命盘阅读顺序</h5><p><strong>第一步：</strong>先看三象主线，也就是 ${p0} → ${p1} → ${p2}。它代表从个人起势、过程变化到长期提醒的基本节奏。</p><p><strong>第二步：</strong>再看六亲格子。自身看自己，父母看规则与保护，官鬼看压力责任，兄弟看同辈竞争，妻财看现实资源，子孙看表达成果。哪个格子落到留连、赤口、空亡，就说明那个主题更需要慢慢处理。</p><p><strong>第三步：</strong>最后看地支六神。青龙偏生发，朱雀偏表达，勾陈偏现实牵绊，腾蛇偏虚实变化，白虎偏规则压力，玄武偏隐情与流动。六神不是绝对吉凶，而是补充“这件事的气质”。</p></div>
+          <div class="destiny-deep-card"><h5>🧱 稳定点与薄弱点</h5><p><strong>稳定点：</strong>盘中见大安、小吉，多为可长期积累、有人相助或小步可成之处。适合把这些地方作为人生规划中的基础。</p><p><strong>薄弱点：</strong>盘中见留连、赤口、空亡，多提示拖延、沟通冲突或目标未实。不是说不好，而是提醒这些主题要靠现实行动、复盘和规则来修正。</p></div>
+          <div class="destiny-deep-card"><h5>🧭 阶段行动建议</h5><p>命运盘不建议用来断“能不能成功一辈子”，更适合看自己做事的惯性。若起势强，就要学会稳住；若起势慢，就要学会持续；若末象虚，就要多核实承诺；若末象稳，就适合长期积累。</p><p><strong>最实用的用法：</strong>把它当作个人提醒卡，遇到重大选择时回头看：我是不是又陷入拖延、急躁、空想或过度保守？</p></div>
         `;
       }
       const note=document.getElementById('destinyBoardNote');
@@ -2860,6 +2877,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     };
 
     Object.assign(SCENE_PLAIN_INFO, {
+      fortune: { focus:'近期运势', plainGoal:'看当前阶段整体气势、顺阻变化和近期重点提醒。', quickLabels:['运势倾向','变化快慢','主要阻力','近期落点','助力机会','整体气象'], lead:'运势课适合看一个阶段的整体状态，不宜把它当成绝对定论；重点看当前气、过程起伏和最后落点。', advice:['先看末象落在哪一宫，判断近期结果更偏稳、动、拖、冲、小成或落空。','见速喜多主阶段有动、有消息；见大安适合稳扎稳打；见留连要处理拖延；见赤口注意口舌规则；见空亡先核实再行动。','运势只是阶段提醒，具体事情仍建议按具体场景另起一课。'] },
       weather: { focus:'天气变化', plainGoal:'看天气是否有动、雨势是否成形、最终是否落到实处。', quickLabels:['天气倾向','变化快慢','天气阻力','落雨落实','外部助力','气象结构'], lead:'天气课重点看云雨是否有动、雨势是否稳定、最后是否真的落下。', advice:['天气判断要结合现实预报和当地情况。','见速喜多主变化快，见大安多主趋稳，见赤口多主阵雨或风雨断续，见空亡多主雨象落空。'] },
       job: { focus:'求职面试', plainGoal:'看流程是否推进、反馈是否明确、offer 是否落地。', quickLabels:['录用倾向','反馈快慢','面试卡点','Offer落实','助力资源','流程气象'], lead:'求职课重点看机会是否真正落地，不要只看前期有没有反馈。', advice:['准备材料和表达，主动但不过度催促。','见赤口注意面试表达和薪资沟通；见空亡要等正式通知。'] },
       home: { focus:'家宅居住', plainGoal:'看居住是否稳定、家中问题是否反复、是否适合处理。', quickLabels:['家宅倾向','变化快慢','隐患阻力','安稳程度','外部帮助','家宅气象'], lead:'家宅课重点看稳定性、旧问题和需要复查的隐患。', advice:['先处理现实隐患和旧问题。','见留连多主拖延反复，见赤口防邻里口舌或维修纠纷。'] },
@@ -4171,6 +4189,14 @@ ${nextStep}`;
       const timeSmall=document.querySelector('[data-method="time"] small');
       if(timeSmall) timeSmall.textContent = isDestiny ? '按出生时间起盘' : '按时间取三象';
       if(isDestiny && currentMethod !== 'time') currentMethod='time';
+      const numberPanel=document.getElementById('numberPanel'), singlePanel=document.getElementById('singlePanel'), timePanel=document.getElementById('timePanel'), eventPanel=document.getElementById('eventPanel');
+      if(isDestiny){
+        if(numberPanel) numberPanel.classList.add('hidden');
+        if(singlePanel) singlePanel.classList.add('hidden');
+        if(eventPanel) eventPanel.classList.add('hidden');
+        if(timePanel) timePanel.classList.remove('hidden');
+        document.querySelectorAll('.method-tab').forEach(el=>el.classList.toggle('active', el.dataset.method==='time'));
+      }
     }
     function applyMethodPanel(method){
       currentMethod = method || 'number';
@@ -4788,7 +4814,7 @@ ${nextStep}`;
     }
 
     /* v8.8 场景规则查询 */
-    const SCENE_RULE_ROWS = [{"type":"寻人 / 找人 / 失联联系","scenes":["寻人","消息等待","失物"],"keywords":["寻人","找人","失联","联系不上","在哪里","出现","回来","线索"],"questions":"这个人在哪里？还能不能联系上？会不会主动出现？","note":"重点看方位、消息、是否有人见过、能否主动出现；不替代报警或现实寻找。"}, {"type":"贵人 / 助力 / 谁能帮","scenes":["贵人","事业","合作","其他"],"keywords":["贵人","帮忙","助力","谁能帮","支持","介绍","资源","人脉"],"questions":"这件事有没有贵人帮忙？该找谁帮？这个人是不是贵人？","note":"重点看小吉、大安、速喜等助力象，也看方位、人物关系和主动求助时机。"}, {"type":"命运 / 出生时间参考 / 六亲象意","scenes":["命运"],"keywords":["命运","出生","生辰","出生时间","六亲","性格","人生","自我观察"],"questions":"用出生时间看整体象意、性格倾向、处事节奏、人际助力与自我观察。","note":"命运场景只用时辰起课，作为出生时间参考盘，不作人生定论。"}, {"type": "感情 / 前任 / 复合 / 暧昧", "scenes": ["感情"], "keywords": ["前任", "复合", "冷战", "断联", "暧昧", "表白", "主动联系"], "questions": "前任会不会联系我？能不能复合？对方是否真心？要不要主动？", "note": "重点看关系是否有实际行动、消息是否落实、末象是否空亡或赤口。"}, {"type": "人物态度判断", "scenes": ["感情", "事业", "合作", "其他"], "keywords": ["怎么看我", "态度", "真心", "领导态度", "客户态度", "朋友态度"], "questions": "他怎么看我？领导会不会同意？客户靠谱吗？", "note": "看对象是谁来归场景；感情对象选感情，领导选事业，客户伙伴选合作。"}, {"type": "消息 / 联系 / 等回复", "scenes": ["消息等待", "感情", "事业", "合作"], "keywords": ["回复", "联系", "消息", "通知", "电话", "微信", "邮件", "审批结果"], "questions": "对方会不会回复？通知什么时候来？邮件有没有结果？", "note": "重点看速喜、小吉是否有动，以及末象是否真正落实。"}, {"type": "财运 / 投资 / 回款 / 工资奖金", "scenes": ["财运"], "keywords": ["投资", "回款", "借钱", "欠款", "工资", "奖金", "副业", "赚钱"], "questions": "钱能不能回来？投资能不能做？工资奖金有没有消息？", "note": "重点看钱能否落袋，空亡防承诺落空，赤口防合同争议。"}, {"type": "行情 / 价格 / 涨跌", "scenes": ["财运"], "keywords": ["油价", "金价", "股价", "基金", "汇率", "价格", "行情", "上涨", "下跌"], "questions": "油价会不会下跌？黄金会不会涨？这只股票走势如何？", "note": "属于行情娱乐参考，不构成投资建议；重点看短线波动和末象落实。"}, {"type": "购物 / 消费 / 买不买", "scenes": ["财运", "选择"], "keywords": ["买不买", "值得买", "网购", "二手", "质量", "售后", "退货", "降价"], "questions": "这个东西值不值得买？现在买会不会后悔？", "note": "花钱决策偏财运；二选一或去不去买可用选择。"}, {"type": "彩票 / 抽奖 / 中奖娱乐", "scenes": ["其他", "财运"], "keywords": ["彩票", "抽奖", "中奖", "奖券", "刮刮乐", "小奖", "大奖"], "questions": "这次抽奖有没有机会？买彩票有没有小惊喜？", "note": "只作娱乐参考，不提供号码，不承诺中奖，不鼓励加注、追投或倍投。"}, {"type": "事业 / 工作 / 项目 / 职场", "scenes": ["事业"], "keywords": ["工作", "项目", "领导", "同事", "升职", "跳槽", "转岗", "绩效", "汇报"], "questions": "项目能不能推进？领导态度怎样？这次跳槽合不合适？", "note": "重点看流程是否推进、沟通是否顺、承诺是否真正落地。"}, {"type": "求职 / 面试 / Offer", "scenes": ["求职", "考试", "事业"], "keywords": ["面试", "offer", "入职", "岗位", "简历", "录用", "求职"], "questions": "这次面试能不能过？offer 会不会来？", "note": "求职相关优先选求职；偏考试申请也可选考试。"}, {"type": "学习 / 技能提升 / 课程", "scenes": ["考试"], "keywords": ["学习", "课程", "老师", "自学", "技能", "语言", "培训", "进步"], "questions": "适不适合学这个课程？学习效率会不会提高？", "note": "长期学习和考证准备都归考试/学习，重点看能否持续。"}, {"type": "考试 / 申请 / 证书", "scenes": ["考试"], "keywords": ["考试", "成绩", "通过", "证书", "报名", "录取", "资格"], "questions": "考试能不能过？申请会不会成功？", "note": "重点看基础、流程、结果是否真正落地。"}, {"type": "失物 / 找东西", "scenes": ["失物"], "keywords": ["丢了", "找不到", "放哪里", "失物", "钥匙", "钱包", "证件", "金属", "抽屉"], "questions": "东西放哪里了？钥匙钱包能不能找到？", "note": "重点看可能位置和寻找顺序，方位要转成现实地点。"}, {"type": "地点 / 方位 / 去哪里找", "scenes": ["失物", "出行", "其他"], "keywords": ["在哪里", "在哪", "去哪里", "哪个方向", "位置", "方位", "找哪里"], "questions": "东西在哪里？该往哪个方向找？适合去哪里？", "note": "找东西选失物；出门路线选出行；泛用地点选其他。"}, {"type": "宠物 / 动物", "scenes": ["失物", "健康", "其他"], "keywords": ["宠物", "猫", "狗", "走失", "跑丢", "宠物医院", "回来"], "questions": "猫狗会不会回来？宠物状态会不会好？", "note": "宠物走失归失物，宠物健康归健康，适应环境归其他。"}, {"type": "健康 / 身体状态", "scenes": ["健康"], "keywords": ["健康", "恢复", "复查", "感冒", "疼痛", "睡眠", "旧疾", "体检"], "questions": "状态会不会好转？复查结果怎样？", "note": "只作传统文化参考，不替代医疗判断。"}, {"type": "情绪 / 心理状态", "scenes": ["健康"], "keywords": ["焦虑", "压力", "心情", "情绪", "内耗", "失眠", "不安"], "questions": "这段时间状态能不能好起来？我是不是想太多？", "note": "偏自我状态观察；持续严重不适请寻求专业支持。"}, {"type": "天气 / 降雨 / 户外天气", "scenes": ["天气", "出行"], "keywords": ["下雨", "降雨", "天气", "阵雨", "晴天", "阴天", "刮风", "降温", "台风"], "questions": "明天会不会下雨？周末适不适合露营？", "note": "天气本身选天气；若问是否影响行程，可同时参考出行。"}, {"type": "出行 / 行程 / 交通", "scenes": ["出行"], "keywords": ["出行", "旅行", "开车", "航班", "火车", "堵车", "延误", "行程"], "questions": "路上顺不顺？航班会不会延误？适不适合出门？", "note": "重点看拖延、变动、规则和安全提醒。"}, {"type": "合作 / 合同 / 客户 / 合伙", "scenes": ["合作"], "keywords": ["合作", "合伙", "合同", "客户", "签约", "谈判", "协议", "订单"], "questions": "合同能不能签？客户靠谱吗？合作能不能成？", "note": "重点看条款、责任边界和承诺是否落实。"}, {"type": "法务 / 纠纷 / 投诉", "scenes": ["合作", "其他"], "keywords": ["纠纷", "投诉", "维权", "赔偿", "诉讼", "证据", "调解", "官司"], "questions": "投诉会不会有结果？纠纷能不能解决？", "note": "合同纠纷偏合作，其它维权投诉可选其他；不替代法律意见。"}, {"type": "手续 / 审批 / 证件", "scenes": ["其他", "事业", "考试"], "keywords": ["签证", "证件", "审批", "审核", "报销", "申请", "材料", "盖章"], "questions": "签证会不会过？报销什么时候下来？材料有没有问题？", "note": "工作审批选事业；报名资格选考试；签证证件选其他。"}, {"type": "家宅 / 房屋 / 搬家", "scenes": ["家宅"], "keywords": ["搬家", "租房", "买房", "装修", "邻里", "漏水", "维修", "家里"], "questions": "这个房子适不适合租？搬家顺不顺？", "note": "重点看居住稳定、家中旧问题、合同与维修争议。"}, {"type": "家人 / 长辈 / 子女", "scenes": ["其他", "健康", "考试"], "keywords": ["父母", "家人", "长辈", "孩子", "子女", "亲子", "家庭"], "questions": "父母会不会同意？孩子考试怎样？家人态度如何？", "note": "家人态度选其他，身体选健康，孩子考试选考试。"}, {"type": "人际关系 / 社交", "scenes": ["其他", "合作", "感情"], "keywords": ["朋友", "同学", "同事关系", "亲戚", "邻里", "社交", "误会", "和好"], "questions": "这个朋友是不是对我有意见？要不要解释？", "note": "普通关系选其他；合作关系选合作；带恋爱暧昧选感情。"}, {"type": "电子产品 / 设备故障", "scenes": ["其他", "选择", "财运"], "keywords": ["手机", "电脑", "家电", "网络", "账号", "软件", "故障", "维修", "数据"], "questions": "手机能不能修好？账号能不能找回？要不要换电脑？", "note": "故障维修选其他；要不要换/买选选择；价格问题选财运。"}, {"type": "创作 / 内容 / 发布", "scenes": ["事业", "其他"], "keywords": ["写作", "文章", "视频", "发布", "作品", "流量", "评论", "投稿", "审核"], "questions": "这篇文章反响如何？视频会不会有流量？", "note": "工作内容选事业，个人创作选其他。"}, {"type": "比赛 / 竞赛 / 游戏", "scenes": ["考试", "其他", "财运"], "keywords": ["比赛", "竞赛", "游戏", "胜负", "赢", "输", "排名", "抽卡"], "questions": "比赛能不能赢？竞赛发挥怎么样？", "note": "正式竞赛选考试，游戏胜负选其他，奖励收益才参考财运。"}, {"type": "梦境 / 预感 / 灵感", "scenes": ["其他"], "keywords": ["梦", "梦见", "预感", "直觉", "灵感", "征兆", "心慌"], "questions": "这个梦是什么意思？这个预感准不准？", "note": "用于自我梳理，不宜过度解读。"}, {"type": "选择 / 决策", "scenes": ["选择"], "keywords": ["要不要", "选哪个", "买不买", "去不去", "换不换", "继续还是放弃"], "questions": "要不要做？选 A 还是 B？现在做还是以后做？", "note": "适合所有二选一、要不要、去不去类问题。"}, {"type": "是 / 否判断", "scenes": ["跟随原问题场景"], "keywords": ["会不会", "能不能", "是否", "能否", "有没有希望", "成不成"], "questions": "会不会发生？能不能成功？有没有希望？", "note": "横向规则，不单独选场景；跟随具体问题类型。"}, {"type": "时间 / 何时发生", "scenes": ["跟随原问题场景"], "keywords": ["什么时候", "多久", "几天", "何时", "快不快"], "questions": "什么时候联系我？多久能找到？什么时候到账？", "note": "横向应期规则，跟随原问题场景。"}, {"type": "是否主动 / 是否等待", "scenes": ["感情", "消息等待", "事业", "合作", "选择"], "keywords": ["要不要主动", "该不该主动", "要不要联系", "要不要催", "等不等"], "questions": "要不要主动联系？要不要催？该不该现在做？", "note": "主动类问题看速喜/小吉是否可动，赤口要柔，空亡先核实。"}, {"type": "风险 / 坑点识别", "scenes": ["财运", "合作", "事业", "其他"], "keywords": ["风险", "坑", "踩坑", "隐患", "靠谱吗", "有没有问题"], "questions": "这件事有没有坑？对方靠谱吗？会不会出问题？", "note": "投资风险选财运，合同风险选合作，项目风险选事业。"}];
+    const SCENE_RULE_ROWS = [{"type":"寻人 / 找人 / 失联联系","scenes":["寻人","消息等待","失物"],"keywords":["寻人","找人","失联","联系不上","在哪里","出现","回来","线索"],"questions":"这个人在哪里？还能不能联系上？会不会主动出现？","note":"重点看方位、消息、是否有人见过、能否主动出现；不替代报警或现实寻找。"}, {"type":"贵人 / 助力 / 谁能帮","scenes":["贵人","事业","合作","其他"],"keywords":["贵人","帮忙","助力","谁能帮","支持","介绍","资源","人脉"],"questions":"这件事有没有贵人帮忙？该找谁帮？这个人是不是贵人？","note":"重点看小吉、大安、速喜等助力象，也看方位、人物关系和主动求助时机。"}, {"type":"运势 / 近期趋势 / 阶段提醒","scenes":["运势","其他"],"keywords":["运势","最近","近期","这周","本月","这段时间","阶段","趋势","整体状态"],"questions":"最近整体运势怎么样？这周需要注意什么？接下来一个月顺不顺？","note":"运势场景用于阶段性自我观察，重点看当前气势、过程起伏与近期落点，不作为绝对定论。"}, {"type":"命运 / 出生时间参考 / 六亲象意","scenes":["命运"],"keywords":["命运","出生","生辰","出生时间","六亲","性格","人生","自我观察"],"questions":"用出生时间看整体象意、性格倾向、处事节奏、人际助力与自我观察。","note":"命运场景只用时辰起课，作为出生时间参考盘，不作人生定论。"}, {"type": "感情 / 前任 / 复合 / 暧昧", "scenes": ["感情"], "keywords": ["前任", "复合", "冷战", "断联", "暧昧", "表白", "主动联系"], "questions": "前任会不会联系我？能不能复合？对方是否真心？要不要主动？", "note": "重点看关系是否有实际行动、消息是否落实、末象是否空亡或赤口。"}, {"type": "人物态度判断", "scenes": ["感情", "事业", "合作", "其他"], "keywords": ["怎么看我", "态度", "真心", "领导态度", "客户态度", "朋友态度"], "questions": "他怎么看我？领导会不会同意？客户靠谱吗？", "note": "看对象是谁来归场景；感情对象选感情，领导选事业，客户伙伴选合作。"}, {"type": "消息 / 联系 / 等回复", "scenes": ["消息等待", "感情", "事业", "合作"], "keywords": ["回复", "联系", "消息", "通知", "电话", "微信", "邮件", "审批结果"], "questions": "对方会不会回复？通知什么时候来？邮件有没有结果？", "note": "重点看速喜、小吉是否有动，以及末象是否真正落实。"}, {"type": "财运 / 投资 / 回款 / 工资奖金", "scenes": ["财运"], "keywords": ["投资", "回款", "借钱", "欠款", "工资", "奖金", "副业", "赚钱"], "questions": "钱能不能回来？投资能不能做？工资奖金有没有消息？", "note": "重点看钱能否落袋，空亡防承诺落空，赤口防合同争议。"}, {"type": "行情 / 价格 / 涨跌", "scenes": ["财运"], "keywords": ["油价", "金价", "股价", "基金", "汇率", "价格", "行情", "上涨", "下跌"], "questions": "油价会不会下跌？黄金会不会涨？这只股票走势如何？", "note": "属于行情娱乐参考，不构成投资建议；重点看短线波动和末象落实。"}, {"type": "购物 / 消费 / 买不买", "scenes": ["财运", "选择"], "keywords": ["买不买", "值得买", "网购", "二手", "质量", "售后", "退货", "降价"], "questions": "这个东西值不值得买？现在买会不会后悔？", "note": "花钱决策偏财运；二选一或去不去买可用选择。"}, {"type": "彩票 / 抽奖 / 中奖娱乐", "scenes": ["其他", "财运"], "keywords": ["彩票", "抽奖", "中奖", "奖券", "刮刮乐", "小奖", "大奖"], "questions": "这次抽奖有没有机会？买彩票有没有小惊喜？", "note": "只作娱乐参考，不提供号码，不承诺中奖，不鼓励加注、追投或倍投。"}, {"type": "事业 / 工作 / 项目 / 职场", "scenes": ["事业"], "keywords": ["工作", "项目", "领导", "同事", "升职", "跳槽", "转岗", "绩效", "汇报"], "questions": "项目能不能推进？领导态度怎样？这次跳槽合不合适？", "note": "重点看流程是否推进、沟通是否顺、承诺是否真正落地。"}, {"type": "求职 / 面试 / Offer", "scenes": ["求职", "考试", "事业"], "keywords": ["面试", "offer", "入职", "岗位", "简历", "录用", "求职"], "questions": "这次面试能不能过？offer 会不会来？", "note": "求职相关优先选求职；偏考试申请也可选考试。"}, {"type": "学习 / 技能提升 / 课程", "scenes": ["考试"], "keywords": ["学习", "课程", "老师", "自学", "技能", "语言", "培训", "进步"], "questions": "适不适合学这个课程？学习效率会不会提高？", "note": "长期学习和考证准备都归考试/学习，重点看能否持续。"}, {"type": "考试 / 申请 / 证书", "scenes": ["考试"], "keywords": ["考试", "成绩", "通过", "证书", "报名", "录取", "资格"], "questions": "考试能不能过？申请会不会成功？", "note": "重点看基础、流程、结果是否真正落地。"}, {"type": "失物 / 找东西", "scenes": ["失物"], "keywords": ["丢了", "找不到", "放哪里", "失物", "钥匙", "钱包", "证件", "金属", "抽屉"], "questions": "东西放哪里了？钥匙钱包能不能找到？", "note": "重点看可能位置和寻找顺序，方位要转成现实地点。"}, {"type": "地点 / 方位 / 去哪里找", "scenes": ["失物", "出行", "其他"], "keywords": ["在哪里", "在哪", "去哪里", "哪个方向", "位置", "方位", "找哪里"], "questions": "东西在哪里？该往哪个方向找？适合去哪里？", "note": "找东西选失物；出门路线选出行；泛用地点选其他。"}, {"type": "宠物 / 动物", "scenes": ["失物", "健康", "其他"], "keywords": ["宠物", "猫", "狗", "走失", "跑丢", "宠物医院", "回来"], "questions": "猫狗会不会回来？宠物状态会不会好？", "note": "宠物走失归失物，宠物健康归健康，适应环境归其他。"}, {"type": "健康 / 身体状态", "scenes": ["健康"], "keywords": ["健康", "恢复", "复查", "感冒", "疼痛", "睡眠", "旧疾", "体检"], "questions": "状态会不会好转？复查结果怎样？", "note": "只作传统文化参考，不替代医疗判断。"}, {"type": "情绪 / 心理状态", "scenes": ["健康"], "keywords": ["焦虑", "压力", "心情", "情绪", "内耗", "失眠", "不安"], "questions": "这段时间状态能不能好起来？我是不是想太多？", "note": "偏自我状态观察；持续严重不适请寻求专业支持。"}, {"type": "天气 / 降雨 / 户外天气", "scenes": ["天气", "出行"], "keywords": ["下雨", "降雨", "天气", "阵雨", "晴天", "阴天", "刮风", "降温", "台风"], "questions": "明天会不会下雨？周末适不适合露营？", "note": "天气本身选天气；若问是否影响行程，可同时参考出行。"}, {"type": "出行 / 行程 / 交通", "scenes": ["出行"], "keywords": ["出行", "旅行", "开车", "航班", "火车", "堵车", "延误", "行程"], "questions": "路上顺不顺？航班会不会延误？适不适合出门？", "note": "重点看拖延、变动、规则和安全提醒。"}, {"type": "合作 / 合同 / 客户 / 合伙", "scenes": ["合作"], "keywords": ["合作", "合伙", "合同", "客户", "签约", "谈判", "协议", "订单"], "questions": "合同能不能签？客户靠谱吗？合作能不能成？", "note": "重点看条款、责任边界和承诺是否落实。"}, {"type": "法务 / 纠纷 / 投诉", "scenes": ["合作", "其他"], "keywords": ["纠纷", "投诉", "维权", "赔偿", "诉讼", "证据", "调解", "官司"], "questions": "投诉会不会有结果？纠纷能不能解决？", "note": "合同纠纷偏合作，其它维权投诉可选其他；不替代法律意见。"}, {"type": "手续 / 审批 / 证件", "scenes": ["其他", "事业", "考试"], "keywords": ["签证", "证件", "审批", "审核", "报销", "申请", "材料", "盖章"], "questions": "签证会不会过？报销什么时候下来？材料有没有问题？", "note": "工作审批选事业；报名资格选考试；签证证件选其他。"}, {"type": "家宅 / 房屋 / 搬家", "scenes": ["家宅"], "keywords": ["搬家", "租房", "买房", "装修", "邻里", "漏水", "维修", "家里"], "questions": "这个房子适不适合租？搬家顺不顺？", "note": "重点看居住稳定、家中旧问题、合同与维修争议。"}, {"type": "家人 / 长辈 / 子女", "scenes": ["其他", "健康", "考试"], "keywords": ["父母", "家人", "长辈", "孩子", "子女", "亲子", "家庭"], "questions": "父母会不会同意？孩子考试怎样？家人态度如何？", "note": "家人态度选其他，身体选健康，孩子考试选考试。"}, {"type": "人际关系 / 社交", "scenes": ["其他", "合作", "感情"], "keywords": ["朋友", "同学", "同事关系", "亲戚", "邻里", "社交", "误会", "和好"], "questions": "这个朋友是不是对我有意见？要不要解释？", "note": "普通关系选其他；合作关系选合作；带恋爱暧昧选感情。"}, {"type": "电子产品 / 设备故障", "scenes": ["其他", "选择", "财运"], "keywords": ["手机", "电脑", "家电", "网络", "账号", "软件", "故障", "维修", "数据"], "questions": "手机能不能修好？账号能不能找回？要不要换电脑？", "note": "故障维修选其他；要不要换/买选选择；价格问题选财运。"}, {"type": "创作 / 内容 / 发布", "scenes": ["事业", "其他"], "keywords": ["写作", "文章", "视频", "发布", "作品", "流量", "评论", "投稿", "审核"], "questions": "这篇文章反响如何？视频会不会有流量？", "note": "工作内容选事业，个人创作选其他。"}, {"type": "比赛 / 竞赛 / 游戏", "scenes": ["考试", "其他", "财运"], "keywords": ["比赛", "竞赛", "游戏", "胜负", "赢", "输", "排名", "抽卡"], "questions": "比赛能不能赢？竞赛发挥怎么样？", "note": "正式竞赛选考试，游戏胜负选其他，奖励收益才参考财运。"}, {"type": "梦境 / 预感 / 灵感", "scenes": ["其他"], "keywords": ["梦", "梦见", "预感", "直觉", "灵感", "征兆", "心慌"], "questions": "这个梦是什么意思？这个预感准不准？", "note": "用于自我梳理，不宜过度解读。"}, {"type": "选择 / 决策", "scenes": ["选择"], "keywords": ["要不要", "选哪个", "买不买", "去不去", "换不换", "继续还是放弃"], "questions": "要不要做？选 A 还是 B？现在做还是以后做？", "note": "适合所有二选一、要不要、去不去类问题。"}, {"type": "是 / 否判断", "scenes": ["跟随原问题场景"], "keywords": ["会不会", "能不能", "是否", "能否", "有没有希望", "成不成"], "questions": "会不会发生？能不能成功？有没有希望？", "note": "横向规则，不单独选场景；跟随具体问题类型。"}, {"type": "时间 / 何时发生", "scenes": ["跟随原问题场景"], "keywords": ["什么时候", "多久", "几天", "何时", "快不快"], "questions": "什么时候联系我？多久能找到？什么时候到账？", "note": "横向应期规则，跟随原问题场景。"}, {"type": "是否主动 / 是否等待", "scenes": ["感情", "消息等待", "事业", "合作", "选择"], "keywords": ["要不要主动", "该不该主动", "要不要联系", "要不要催", "等不等"], "questions": "要不要主动联系？要不要催？该不该现在做？", "note": "主动类问题看速喜/小吉是否可动，赤口要柔，空亡先核实。"}, {"type": "风险 / 坑点识别", "scenes": ["财运", "合作", "事业", "其他"], "keywords": ["风险", "坑", "踩坑", "隐患", "靠谱吗", "有没有问题"], "questions": "这件事有没有坑？对方靠谱吗？会不会出问题？", "note": "投资风险选财运，合同风险选合作，项目风险选事业。"}];
     function allSceneFilterNames(){
       const names = new Set(['all']);
       SCENE_RULE_ROWS.forEach(row => (row.scenes || []).forEach(s => names.add(s)));
@@ -5548,7 +5574,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.22 命运解读增强版';
+  const VERSION = 'v9.9.23 运势与命运修正版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6360,7 +6386,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.22 命运解读增强版';
+  const VERSION = 'v9.9.23 运势与命运修正版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6551,7 +6577,8 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.19 快捷按钮自定义版', ['设置中新增快捷按钮设置，可选择显示内容并用 ↑/↓ 调整顺序。']],
         ['v9.9.20 起课说明与单数起课版', ['补充起课注意事项：问题清晰具体、一事不二占、一时不起二课、心念专一。','补充月上起日、日上起时的时辰起课步骤与示例。','新增单数起课作为快捷判断方式。']],
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
-        ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']]
+        ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
+        ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
