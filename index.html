@@ -3,8 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.15 显示与桌面模式优化版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.15：优化阅读字号、快捷按钮尺寸与移动端电脑布局模式。" />
+  <title>小六壬占卜 · v9.9.16 设置增强与图标版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.16：恢复默认字号，增强阅读设置与移动端桌面模式，并新增 Home Screen 图标。" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-title" content="小六壬" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#6753a5" />
   <style>
     :root {
       --bg: #f7f3ee;
@@ -904,7 +911,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.15 显示与桌面模式优化版</h2>
+          <h2>个人占卜台 · v9.9.16 设置增强与图标版</h2>
           <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
@@ -5310,11 +5317,46 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
 /* v9.9.15 更新记录补丁 */
 
+
+
+/* v9.9.16 设置增强与图标版 */
+/* 恢复默认基础字号：不再强制放大所有 input；阅读文字大小仍可在设置中调节。 */
+:root { --xlr-reading-scale: 1; }
+body.reading-size-small { --xlr-reading-scale: .94; }
+body.reading-size-normal { --xlr-reading-scale: 1; }
+body.reading-size-large { --xlr-reading-scale: 1.08; }
+body.reading-size-xlarge { --xlr-reading-scale: 1.16; }
+input, textarea, select, .date-text-input, .select-control {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+}
+input::placeholder, textarea::placeholder {
+  font-size: .95rem !important;
+}
+.block, .reading-card, .gua-card, .answer-card, .context-card, .summary-item,
+.overall-rich, .question-linked, .rule-note, .version-log-note,
+.feature-item small, .history-meta, .analysis-table, .template-intro,
+.custom-template-note, .tool-folder-note, .simple-note, .ab-mini, .ab-warn,
+.palace-meta, .tag, .pill, .keyword-chip, .radar-metric-pill {
+  font-size: calc(1rem * var(--xlr-reading-scale)) !important;
+}
+.block h4, .reading-card h5, .gua-card h5, .answer-card h5, .context-card h5,
+.settings-card h4, .rule-card h4 {
+  font-size: calc(1.06rem * var(--xlr-reading-scale)) !important;
+}
+body.hide-quick-buttons .scroll-tools { display:none !important; }
+body.hide-section-nav .section-jump-nav { display:none !important; }
+body.hide-progress-bar .page-progress { display:none !important; }
+.settings-mini-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.settings-mini-grid .ghost-btn, .settings-mini-grid .danger-btn { width:100% !important; margin-top:0 !important; }
+@media (max-width:760px){ .settings-mini-grid { grid-template-columns:1fr; } }
+/* v9.9.16: 顶部应用图标在支持处使用圆角显示 */
+.app-icon-preview { width:46px; height:46px; border-radius:14px; object-fit:cover; box-shadow:0 8px 18px rgba(66,49,109,.12); }
 </style>
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.15 显示与桌面模式优化版';
+  const VERSION = 'v9.9.16 设置增强与图标版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -5556,8 +5598,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     const old = window.buildVersionUpdatesHTML;
     window.buildVersionUpdatesHTML = function(){
       let html = old.call(this);
-      if(html.indexOf('v9.9.15 显示与桌面模式优化版') < 0){
-        html += '<details><summary>v9.9.15 显示与桌面模式优化版</summary><ul><li>正文阅读字号恢复为更克制的默认大小，同时保留输入框较大的文字体验。</li><li>阅读设置新增“阅读文字大小”，用户可调节结果和说明文字大小。</li><li>右侧快捷按钮统一尺寸，让“主页、重占、电脑”与展开、折叠、置顶、到底大小一致。</li><li>优化移动端电脑布局模式，切换后使用更接近电脑端的宽页面和桌面栅格布局。</li></ul></details>';
+      if(html.indexOf('v9.9.16 设置增强与图标版') < 0){
+        html += '<details><summary>v9.9.16 设置增强与图标版</summary><ul><li>正文阅读字号恢复为更克制的默认大小，同时保留输入框较大的文字体验。</li><li>阅读设置新增“阅读文字大小”，用户可调节结果和说明文字大小。</li><li>右侧快捷按钮统一尺寸，让“主页、重占、电脑”与展开、折叠、置顶、到底大小一致。</li><li>优化移动端电脑布局模式，切换后使用更接近电脑端的宽页面和桌面栅格布局。</li></ul></details>';
       }
       return html;
     };
@@ -5582,5 +5624,158 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 })();
 </script>
 
+
+
+<script id="v9916-settings-icon-script">
+(function(){
+  'use strict';
+  const UI_KEY = 'xiaoliuren_ui_settings_v9916';
+  const SIZE_KEY = 'xiaoliuren_reading_text_size_v9915';
+  const MODE_KEY = 'xiaoliuren_client_mode_v9914';
+  const DEFAULT_UI = {
+    showQuickButtons: true,
+    showSectionNav: true,
+    showProgressBar: true,
+    defaultClientMode: 'auto'
+  };
+  function $(id){ return document.getElementById(id); }
+  function loadUI(){
+    try { return Object.assign({}, DEFAULT_UI, JSON.parse(localStorage.getItem(UI_KEY) || '{}')); }
+    catch(e){ return Object.assign({}, DEFAULT_UI); }
+  }
+  function saveUI(s){ try { localStorage.setItem(UI_KEY, JSON.stringify(Object.assign({}, DEFAULT_UI, s || {}))); } catch(e){} }
+  function applyReadingSize(size){
+    size = size || localStorage.getItem(SIZE_KEY) || 'normal';
+    document.body.classList.remove('reading-size-small','reading-size-normal','reading-size-large','reading-size-xlarge');
+    document.body.classList.add('reading-size-' + size);
+    const sel = $('settingReadingTextSize'); if(sel) sel.value = size;
+  }
+  function applyUISettings(){
+    const s = loadUI();
+    document.body.classList.toggle('hide-quick-buttons', !s.showQuickButtons);
+    document.body.classList.toggle('hide-section-nav', !s.showSectionNav);
+    document.body.classList.toggle('hide-progress-bar', !s.showProgressBar);
+    if(s.defaultClientMode === 'desktop'){
+      document.body.classList.add('force-desktop-mode');
+      try { localStorage.setItem(MODE_KEY, 'desktop'); } catch(e){}
+    } else if(s.defaultClientMode === 'auto') {
+      /* 默认自适应：不强制桌面。用户仍可通过右侧“电脑”快捷按钮临时切换。 */
+      if(localStorage.getItem(MODE_KEY) !== 'desktop') document.body.classList.remove('force-desktop-mode');
+    }
+    const quick = $('settingUiShowQuickButtons'); if(quick) quick.checked = !!s.showQuickButtons;
+    const nav = $('settingUiShowSectionNav'); if(nav) nav.checked = !!s.showSectionNav;
+    const progress = $('settingUiShowProgress'); if(progress) progress.checked = !!s.showProgressBar;
+    const mode = $('settingUiDefaultClientMode'); if(mode) mode.value = s.defaultClientMode || 'auto';
+    const size = $('settingReadingTextSize'); if(size) size.value = localStorage.getItem(SIZE_KEY) || 'normal';
+    if(typeof window.refreshSectionJumpNavSoon === 'function') window.refreshSectionJumpNavSoon();
+  }
+  function ensureSettingRows(){
+    const form = document.querySelector('#settingsDialog .settings-form');
+    if(!form) return;
+    if(!$('settingReadingTextSize')){
+      const defaultView = $('settingDefaultView');
+      const row = document.createElement('div');
+      row.className = 'settings-row';
+      row.innerHTML = '<span>阅读文字大小<small>调整解读正文、卡片说明和结果文字；默认保持原始字号。</small></span><select id="settingReadingTextSize"><option value="small">偏小</option><option value="normal">标准</option><option value="large">偏大</option><option value="xlarge">更大</option></select>';
+      const parentRow = defaultView ? defaultView.closest('.settings-row') : null;
+      if(parentRow && parentRow.parentNode) parentRow.insertAdjacentElement('afterend', row);
+      else form.prepend(row);
+      $('settingReadingTextSize').addEventListener('change', function(){ try{ localStorage.setItem(SIZE_KEY, this.value); }catch(e){} applyReadingSize(this.value); });
+    } else {
+      const small = $('settingReadingTextSize').closest('.settings-row')?.querySelector('small');
+      if(small) small.textContent = '调整解读正文、卡片说明和结果文字；默认保持原始字号。';
+    }
+    if(!$('settingUiEnhancedCard')){
+      const card = document.createElement('div');
+      card.className = 'settings-card';
+      card.id = 'settingUiEnhancedCard';
+      card.innerHTML = `
+        <h4>界面与快捷操作</h4>
+        <label class="settings-row"><span>显示右侧快捷按钮<small>控制“主页、重占、电脑、展开、折叠、置顶、到底”等浮动按钮。</small></span><input id="settingUiShowQuickButtons" type="checkbox"></label>
+        <label class="settings-row"><span>显示章节卡点导航<small>关闭后隐藏底部/侧边的章节跳转卡点。</small></span><input id="settingUiShowSectionNav" type="checkbox"></label>
+        <label class="settings-row"><span>显示阅读进度条<small>关闭后隐藏页面顶部的进度条。</small></span><input id="settingUiShowProgress" type="checkbox"></label>
+        <div class="settings-row"><span>默认客户端模式<small>自适应适合日常使用；电脑模式适合手机/iPad 横向查看更宽布局。</small></span><select id="settingUiDefaultClientMode"><option value="auto">自适应</option><option value="desktop">电脑模式</option></select></div>
+      `;
+      const actions = form.querySelector('.settings-actions');
+      form.insertBefore(card, actions || null);
+    }
+    if(!$('settingDataManagementCard')){
+      const card = document.createElement('div');
+      card.className = 'settings-card';
+      card.id = 'settingDataManagementCard';
+      card.innerHTML = `
+        <h4>数据管理</h4>
+        <div class="settings-mini-grid">
+          <button class="ghost-btn" type="button" id="settingOpenHistoryBtn">历史记录</button>
+          <button class="ghost-btn" type="button" id="settingExportBackupBtn">导出完整备份</button>
+          <button class="ghost-btn" type="button" id="settingImportBackupBtn">导入完整备份</button>
+          <button class="danger-btn" type="button" id="settingResetAllSettingsBtn">恢复默认设置</button>
+        </div>
+        <small style="color:var(--muted);line-height:1.7;">TXT 适合阅读；JSON 适合迁移和恢复。完整备份包含历史、复盘、模板和设置。</small>
+      `;
+      const actions = form.querySelector('.settings-actions');
+      form.insertBefore(card, actions || null);
+      $('settingOpenHistoryBtn')?.addEventListener('click', function(){ try{ if(typeof closeSettingsDialog==='function') closeSettingsDialog(); if(typeof openHistoryDialog==='function') openHistoryDialog(); }catch(e){} });
+      $('settingExportBackupBtn')?.addEventListener('click', function(){ if(typeof exportBackupJSON==='function') exportBackupJSON(); else alert('完整备份功能暂不可用。'); });
+      $('settingImportBackupBtn')?.addEventListener('click', function(){ if(typeof triggerImportBackup==='function') triggerImportBackup(); else alert('导入完整备份功能暂不可用。'); });
+      $('settingResetAllSettingsBtn')?.addEventListener('click', function(){ if(typeof resetUserSettings==='function') resetUserSettings(); try{ localStorage.removeItem(UI_KEY); localStorage.removeItem(SIZE_KEY); }catch(e){} applyReadingSize('normal'); applyUISettings(); });
+    }
+    ['settingUiShowQuickButtons','settingUiShowSectionNav','settingUiShowProgress','settingUiDefaultClientMode'].forEach(id=>{
+      const el=$(id); if(el && !el.dataset.v9916Bound){ el.dataset.v9916Bound='1'; el.addEventListener('change', saveEnhancedSettings); }
+    });
+    applyReadingSize();
+    applyUISettings();
+  }
+  function saveEnhancedSettings(){
+    const current = loadUI();
+    const next = {
+      showQuickButtons: $('settingUiShowQuickButtons') ? $('settingUiShowQuickButtons').checked : current.showQuickButtons,
+      showSectionNav: $('settingUiShowSectionNav') ? $('settingUiShowSectionNav').checked : current.showSectionNav,
+      showProgressBar: $('settingUiShowProgress') ? $('settingUiShowProgress').checked : current.showProgressBar,
+      defaultClientMode: $('settingUiDefaultClientMode') ? $('settingUiDefaultClientMode').value : current.defaultClientMode
+    };
+    saveUI(next);
+    const size = $('settingReadingTextSize') ? $('settingReadingTextSize').value : 'normal';
+    try { localStorage.setItem(SIZE_KEY, size); } catch(e){}
+    applyReadingSize(size);
+    if(next.defaultClientMode !== 'desktop'){ try{ localStorage.setItem(MODE_KEY,'auto'); }catch(e){} document.body.classList.remove('force-desktop-mode'); }
+    applyUISettings();
+  }
+  function patchSettingsOpen(){
+    const btn = $('settingsBtn');
+    if(btn && !btn.dataset.v9916OpenPatch){
+      btn.dataset.v9916OpenPatch='1';
+      btn.addEventListener('click', function(){ setTimeout(ensureSettingRows, 20); }, true);
+    }
+    const saveBtn = $('saveSettingsBtn');
+    if(saveBtn && !saveBtn.dataset.v9916SavePatch){
+      saveBtn.dataset.v9916SavePatch='1';
+      saveBtn.addEventListener('click', function(){ saveEnhancedSettings(); }, true);
+    }
+  }
+  function patchVersionLog(){
+    if(typeof window.buildVersionUpdatesHTML !== 'function' || window.buildVersionUpdatesHTML.__v9916Patched) return;
+    const old = window.buildVersionUpdatesHTML;
+    window.buildVersionUpdatesHTML = function(){
+      let html = old.call(this);
+      if(html.indexOf('v9.9.16 设置增强与图标版') < 0){
+        html += '<details><summary>v9.9.16 设置增强与图标版</summary><ul><li>默认字体恢复到原来的精致比例，阅读文字大小改为用户可选设置。</li><li>设置中新增快捷按钮、章节导航、阅读进度条、默认客户端模式等开关。</li><li>设置中新增数据管理入口，方便打开历史、完整备份和恢复默认设置。</li><li>新增 Apple Home Screen 图标文件，添加到主屏幕后显示定制图标。</li></ul></details>';
+      }
+      return html;
+    };
+    window.buildVersionUpdatesHTML.__v9916Patched = true;
+  }
+  function boot(){
+    ensureSettingRows();
+    patchSettingsOpen();
+    patchVersionLog();
+    applyReadingSize();
+    applyUISettings();
+    if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function(){ setTimeout(boot, 80); });
+})();
+</script>
 </body>
 </html>
