@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.21 场景扩展与命运排盘版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.21：新增寻人、贵人、命运场景，增强六宫排盘说明，并加入命运六亲参考盘。" />
+  <title>小六壬占卜 · v9.9.22 命运解读增强版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.22：增强命运场景解读、六宫排盘说明与命运六亲参考盘，并优化版本更新只在主页显示。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -916,6 +916,18 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-note { color:var(--muted); font-size:.95rem; margin-top:10px; line-height:1.75; }
     @media (max-width: 760px){ .destiny-board-grid { grid-template-columns:1fr; } }
 
+
+    /* v9.9.22 命运解读增强 */
+    .destiny-deep { margin-top: 16px; display: grid; gap: 12px; }
+    .destiny-deep-card { border: 1px solid rgba(124,112,178,.18); border-radius: 18px; padding: 16px; background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(250,247,255,.72)); box-shadow: 0 8px 20px rgba(51,43,71,.05); }
+    .destiny-deep-card h5 { margin: 0 0 8px; font-size: 1rem; color: var(--deep); display:flex; align-items:center; gap:8px; }
+    .destiny-deep-card p { margin: 6px 0; line-height: 1.75; color: var(--muted); }
+    .destiny-deep-card strong { color: var(--ink); }
+    .paipan-explain-grid { display:grid; gap:10px; margin-top:10px; }
+    .paipan-explain-card { padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.78); border:1px solid rgba(124,112,178,.14); line-height:1.75; }
+    .paipan-explain-card b { color:var(--deep); }
+    @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
+
   </style>
 </head>
 <body>
@@ -955,8 +967,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.21 场景扩展与命运排盘版</h2>
-          <p>本版新增寻人、贵人、命运场景，命运场景支持出生时间参考盘，并增强六宫排盘说明。</p>
+          <h2>个人占卜台 · v9.9.22 命运解读增强版</h2>
+          <p>本版增强命运场景的六亲参考盘、性格倾向、处事节奏、人际助力等解释，并让六宫排盘说明更直观。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1135,6 +1147,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <h4>命运六亲参考盘</h4>
           <div class="destiny-summary" id="destinyBoardIntro"></div>
           <div class="destiny-board-grid" id="destinyBoardGrid"></div>
+          <div class="destiny-deep" id="destinyDeepContent"></div>
           <div class="destiny-note" id="destinyBoardNote"></div>
         </article>
         <div class="overall-wrap">
@@ -2050,10 +2063,22 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       if(d.length < 3) return result.distribution ? result.distribution.text : '';
       const [a,b,c]=d;
       const repeat = result.distribution && result.distribution.text ? result.distribution.text : '';
-      const main = `<strong>排盘说明：</strong>本象落${a.palaceName}，代表起初/当前的气象；中象落${b.palaceName}，代表过程变化；末象落${c.palaceName}，代表结果落点。`;
-      const plain = `通俗看，就是“${a.palaceName}”先起作用，“${b.palaceName}”影响中段，“${c.palaceName}”决定最后更容易走向哪里。`;
-      const focus = c.palaceName === '空亡' ? '末象空亡，尤其要防事情最后没有真正落实，先核实再定论。' : c.palaceName === '留连' ? '末象留连，最后容易拖延反复，时间要预留。' : c.palaceName === '赤口' ? '末象赤口，最后要防口舌、争执、规则或沟通问题。' : c.palaceName === '速喜' ? '末象速喜，后面容易有消息或快速变化。' : c.palaceName === '小吉' ? '末象小吉，后面多主小成、小助力，宜先取小结果。' : '末象大安，后面重在稳定和落实。';
-      return `${main}<br>${plain}<br><strong>分布重点：</strong>${repeat} ${focus}`;
+      const palaceTone = (x)=>{
+        if(x==='大安') return '稳定、守成、慢慢落实';
+        if(x==='留连') return '拖延、反复、被旧问题牵住';
+        if(x==='速喜') return '消息快、变化快、有动象';
+        if(x==='赤口') return '口舌、争执、规则、急促变化';
+        if(x==='小吉') return '小顺、小利、小帮助、先有小成果';
+        return '虚、空、未定、需要核实';
+      };
+      const finalFocus = c.palaceName === '空亡' ? '末象空亡，结果最怕“看起来有、最后没落地”。后续一定要看证据、通知、实际动作，不要只凭感觉。' : c.palaceName === '留连' ? '末象留连，最后多半不会一下子结束，容易拖延、反复或需要多次沟通。' : c.palaceName === '赤口' ? '末象赤口，后段要防争执、误会、规则卡点、口头承诺不一致。' : c.palaceName === '速喜' ? '末象速喜，后面容易很快有消息或变化，但也要防来得快、变得也快。' : c.palaceName === '小吉' ? '末象小吉，后面多见小成、小帮助或小范围好转，适合先取小结果。' : '末象大安，后面重在稳定与落实，适合按计划慢慢推进。';
+      return `<div class="paipan-explain-grid">
+        <div class="paipan-explain-card"><b>怎么看这个排盘：</b>六宫排盘不是只看哪个宫“好”或“不好”，而是看三象落在六宫里的顺序。本象看开头和当前气，中象看过程怎么变化，末象看最后更容易落到哪里。</div>
+        <div class="paipan-explain-card"><b>本象：</b>${a.positionName}落在 <b>${a.palaceName}</b>，表示这件事的起头或当前状态偏向“${palaceTone(a.palaceName)}”。如果用户刚开始问这件事，这一宫就是最先冒出来的气。</div>
+        <div class="paipan-explain-card"><b>中象：</b>${b.positionName}落在 <b>${b.palaceName}</b>，表示过程中的变化。它说明事情不是静止的，中间会受到“${palaceTone(b.palaceName)}”的影响。</div>
+        <div class="paipan-explain-card"><b>末象：</b>${c.positionName}落在 <b>${c.palaceName}</b>，这是结果落点，也是判断时最该重视的一宫。${finalFocus}</div>
+        <div class="paipan-explain-card"><b>整体分布：</b>${repeat} 通俗看，就是“${a.palaceName}”先起作用，“${b.palaceName}”影响中段，“${c.palaceName}”决定最后更容易走向哪里。读盘时先看末象，再回头看本象和中象怎样把事情推到这个结果。</div>
+      </div>`;
     }
     function branchFromNumber(n){ const b=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']; return b[(Math.abs(Number(n)||1)-1)%12]; }
     function branchGroupText(z){
@@ -2084,6 +2109,22 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       if(grid) grid.innerHTML=relations.map((r,i)=>{ const z=branchFromNumber(base+i+1); return `<div class="destiny-cell"><h5><span>${r[0]}</span><span class="branch">${z}</span></h5><p><strong>落宫：</strong>${r[1]}</p><p><strong>象意：</strong>${PALACE_DATA[r[1]].summary}</p><p><strong>参考：</strong>${r[3]}</p><p>${branchGroupText(z)}</p></div>`; }).join('');
       const intro=document.getElementById('destinyBoardIntro');
       if(intro) intro.innerHTML=`本盘以出生时间取象，重点看六亲分布与整体气象。当前三象为 <strong>${result.palaces.join(' / ')}</strong>，可作为性格倾向、处事节奏、人际助力、事业方向、财务习惯与自我观察的参考。`;
+      const deep=document.getElementById('destinyDeepContent');
+      if(deep){
+        const [p0,p1,p2]=result.palaces;
+        const heavy=result.metrics && result.metrics.heavyCount>=2;
+        const good=result.metrics && result.metrics.goodCount>=2;
+        deep.innerHTML=`
+          <div class="destiny-deep-card full"><h5>📌 出生时间参考盘</h5><p><strong>用途：</strong>这一盘不是断“一生定局”，而是把出生年月日时转换成一组传统象意，用来看个人气质、处事节奏和自我观察重点。</p><p><strong>本盘重点：</strong>三象为 <strong>${result.palaces.join(' / ')}</strong>。可先看第一象的起势，再看第二象的过程，最后看第三象给出的长期提醒。</p></div>
+          <div class="destiny-deep-card"><h5>👥 六亲象意参考</h5><p><strong>自身</strong>看自我状态和性格底色；<strong>父母</strong>看长辈、规则、学习与保护；<strong>官鬼</strong>看压力、责任和事业规则；<strong>兄弟</strong>看同辈、人际竞争与协作；<strong>妻财</strong>看现实资源、钱财习惯和经营能力；<strong>子孙</strong>看表达、兴趣、成果和放松感。</p><p>读六亲时不要只看好坏，更要看哪一格落宫偏稳、哪一格落宫偏阻，哪里就是人生中较常需要留意的主题。</p></div>
+          <div class="destiny-deep-card"><h5>🧭 性格倾向</h5><p>${p0==='速喜'?'起势偏快，反应灵敏，遇事容易先动起来。优点是行动力强，缺点是有时会太急。':p0==='大安'?'性格底色偏稳，重安全感和秩序，适合长期积累。缺点是遇到变化时可能较慢热。':p0==='留连'?'思虑较多，容易反复考虑，重感受和旧经验。优点是细腻，缺点是容易拖住自己。':p0==='赤口'?'表达和边界感较强，遇事容易直接判断。优点是果断，缺点是容易急躁或话说重。':p0==='小吉'?'性格中有柔和、善意和求和的一面，适合小步推进。缺点是有时不愿把话说太满。':'内在感受较强，容易对未确定的事情敏感。优点是直觉强，缺点是容易想多或担心落空。'}</p></div>
+          <div class="destiny-deep-card"><h5>⏱ 处事节奏</h5><p>${p0}起头，${p1}过渡，${p2}收尾。通俗说，做事不是只看开头顺不顺，而是要看中间能不能稳住、最后能不能落地。${heavy?'本盘阻滞象较明显，做大事宜预留时间，先处理卡点，再谈推进。':good?'本盘顺象较多，适合主动把握机会，但也要看末象是否真正落实。':'本盘顺阻参半，适合先小步试行，边走边核实。'}</p></div>
+          <div class="destiny-deep-card"><h5>🤝 人际与助力</h5><p>贵人和助力不一定是突然出现的“神助攻”，更多时候是愿意提醒你、提供资源、帮你确认信息的人。若盘中见小吉、速喜、大安，遇事适合主动请教；若见留连、赤口、空亡，则要防人际拖延、沟通误会或承诺落空。</p></div>
+          <div class="destiny-deep-card"><h5>💼 事业方向参考</h5><p>事业方向不宜直接断职业好坏，而应看适合的做事方式。大安重稳定积累；速喜重信息、机会和行动；小吉重服务、协助和细水长流；留连适合处理长期事务但要防拖延；赤口适合规则、表达和边界清楚的事；空亡提醒目标要落地，别只停在想法。</p></div>
+          <div class="destiny-deep-card"><h5>💰 财务习惯参考</h5><p>财务象意主要看现实资源与钱财处理方式。若财象偏稳，适合长期规划；若见速喜，容易有短线机会也容易冲动；若见留连，钱财容易被拖住；若见赤口，要防合同、口头承诺和争议；若见空亡，不宜把未到账的钱当成已经到手。</p></div>
+          <div class="destiny-deep-card"><h5>🌙 情绪与自我观察</h5><p>这部分用于自我提醒，不作心理诊断。留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p></div>
+        `;
+      }
       const note=document.getElementById('destinyBoardNote');
       if(note) note.innerHTML='说明：命运场景以出生时间起象，仅作传统象意、自我观察与人生规划参考，不作为人生定论，也不替代专业建议。地支六神参考：寅卯为青龙，巳午为朱雀，丑辰为勾陈，未戌为腾蛇，申酉为白虎，亥子为玄武。';
     }
@@ -5186,8 +5227,7 @@ ${nextStep}`;
         { id:'symbolBlock', label:'象意' },
         { id:'radarBlock', label:'雷达' },
         { id:'adviceBlock', label:'建议' },
-        { id:'homeAboutRulesBlockWrap', label:'说明' },
-        { id:'homeVersionUpdatesBlockWrap', label:'版本' }
+        { id:'homeAboutRulesBlockWrap', label:'说明' }
       ]
     };
     function sectionIsJumpVisible(el){
@@ -5508,7 +5548,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.21 场景扩展与命运排盘版';
+  const VERSION = 'v9.9.22 命运解读增强版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6320,7 +6360,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.21 场景扩展与命运排盘版';
+  const VERSION = 'v9.9.22 命运解读增强版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6510,7 +6550,8 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.18 白话答案增强版', ['进一步增强通俗答案，让结论更贴近用户填写的问题。']],
         ['v9.9.19 快捷按钮自定义版', ['设置中新增快捷按钮设置，可选择显示内容并用 ↑/↓ 调整顺序。']],
         ['v9.9.20 起课说明与单数起课版', ['补充起课注意事项：问题清晰具体、一事不二占、一时不起二课、心念专一。','补充月上起日、日上起时的时辰起课步骤与示例。','新增单数起课作为快捷判断方式。']],
-        ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']]
+        ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
+        ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
