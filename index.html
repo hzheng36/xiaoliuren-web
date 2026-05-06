@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.18 白话答案增强版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.18：保留 PWA 离线缓存，并进一步增强占卜结果的通俗答案表达。" />
+  <title>小六壬占卜 · v9.9.19 快捷按钮自定义版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.19：保留 PWA 离线缓存与白话可读性增强，并新增浮动快捷按钮自定义。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -884,6 +884,23 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 .pwa-status.show { opacity:1; }
 @media(max-width:760px){ .answer-readable-grid { grid-template-columns:1fr; } }
 
+
+
+/* v9.9.19 快捷按钮自定义版 */
+.quick-button-config { display:grid; gap:9px; }
+.quick-config-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:center; padding:10px 0; border-top:1px dashed rgba(103,83,165,.12); }
+.quick-config-row:first-child { border-top:0; }
+.quick-config-main { display:flex; align-items:center; gap:10px; min-width:0; }
+.quick-config-main input[type="checkbox"] { width:20px; height:20px; accent-color:var(--primary); flex:0 0 auto; }
+.quick-config-label { min-width:0; }
+.quick-config-label b { display:block; color:var(--text); line-height:1.4; }
+.quick-config-label small { display:block; color:var(--muted); line-height:1.45; margin-top:2px; }
+.quick-config-actions { display:flex; gap:6px; }
+.quick-order-btn { width:34px; height:34px; border-radius:12px; border:1px solid var(--line); background:#fff; color:var(--primary); font-weight:800; }
+.quick-order-btn:disabled { opacity:.35; cursor:not-allowed; }
+.quick-config-note { color:var(--muted); line-height:1.65; margin:0; }
+@media (max-width:760px){ .quick-config-row { grid-template-columns:1fr; } .quick-config-actions { justify-content:flex-end; } }
+
 </style>
 </head>
 <body>
@@ -923,7 +940,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.18 白话答案增强版</h2>
+          <h2>个人占卜台 · v9.9.19 快捷按钮自定义版</h2>
           <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
@@ -6173,6 +6190,167 @@ body.hide-progress-bar .page-progress { display:none !important; }
     }
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', patchVersionLog); else patchVersionLog();
+})();
+</script>
+
+
+<script id="v9919-custom-quick-buttons-script">
+(function(){
+  'use strict';
+  const VERSION = 'v9.9.19 快捷按钮自定义版';
+  const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
+  const ALL_QUICK_ITEMS = [
+    {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
+    {id:'reset', label:'重占', note:'清空当前结果并重新占卜', title:'重新占卜'},
+    {id:'mode', label:'电脑', note:'切换自适应 / 电脑模式', title:'切换客户端模式'},
+    {id:'expand', label:'展开', note:'展开所有结果模块', title:'一键展开结果模块'},
+    {id:'collapse', label:'折叠', note:'折叠所有结果模块', title:'一键折叠结果模块'},
+    {id:'top', label:'↑', note:'回到页面顶部', title:'一键置顶'},
+    {id:'bottom', label:'↓', note:'跳到页面底部', title:'一键到底'},
+    {id:'history', label:'历史', note:'打开历史记录', title:'历史记录'},
+    {id:'analytics', label:'分析', note:'打开历史分析', title:'历史分析'},
+    {id:'rules', label:'规则', note:'打开场景规则', title:'场景规则'},
+    {id:'templates', label:'模板', note:'打开问题模板', title:'问题模板'},
+    {id:'settings', label:'设置', note:'打开阅读设置', title:'设置'},
+    {id:'copy', label:'复制', note:'复制当前结果', title:'复制结果'}
+  ];
+  const DEFAULT_ORDER = ['home','reset','mode','expand','collapse','top','bottom','history','analytics','rules','settings'];
+  const DEFAULT_ENABLED = {home:true, reset:true, mode:true, expand:true, collapse:true, top:true, bottom:true, history:false, analytics:false, rules:false, templates:false, settings:false, copy:false};
+  function $(id){ return document.getElementById(id); }
+  function itemById(id){ return ALL_QUICK_ITEMS.find(x=>x.id===id); }
+  function normalizeConfig(raw){
+    const ids = ALL_QUICK_ITEMS.map(x=>x.id);
+    const cfg = raw && typeof raw === 'object' ? raw : {};
+    let order = Array.isArray(cfg.order) ? cfg.order.filter(id=>ids.includes(id)) : DEFAULT_ORDER.slice();
+    ids.forEach(id=>{ if(!order.includes(id)) order.push(id); });
+    const enabled = Object.assign({}, DEFAULT_ENABLED, cfg.enabled || {});
+    ids.forEach(id=>{ enabled[id] = !!enabled[id]; });
+    return { order, enabled };
+  }
+  function getQuickConfig(){
+    try { return normalizeConfig(JSON.parse(localStorage.getItem(STORE_KEY) || 'null')); }
+    catch(e){ return normalizeConfig(null); }
+  }
+  function saveQuickConfig(cfg){
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(normalizeConfig(cfg))); } catch(e) {}
+  }
+  function quickLabel(id){
+    if(id === 'mode') return document.body.classList.contains('force-desktop-mode') ? '自适' : '电脑';
+    const item=itemById(id); return item ? item.label : id;
+  }
+  function runQuickAction(id){
+    const clickId = (btnId)=>{ const b=$(btnId); if(b) b.click(); else alert('当前按钮暂不可用。'); };
+    if(id === 'home') return (typeof window.goHomeV9914 === 'function' ? window.goHomeV9914() : window.scrollTo({top:0,behavior:'smooth'}));
+    if(id === 'reset') return (typeof window.resetForNewDivinationV9914 === 'function' ? window.resetForNewDivinationV9914() : clickId('resetBtn'));
+    if(id === 'mode') { if(typeof window.toggleClientModeV9914 === 'function') window.toggleClientModeV9914(); else document.body.classList.toggle('force-desktop-mode'); setTimeout(renderQuickTools, 30); return; }
+    if(id === 'expand') return (typeof window.expandAllResultBlocks === 'function' ? window.expandAllResultBlocks() : null);
+    if(id === 'collapse') return (typeof window.collapseAllResultBlocks === 'function' ? window.collapseAllResultBlocks() : null);
+    if(id === 'top') return (typeof window.scrollToTopQuick === 'function' ? window.scrollToTopQuick() : window.scrollTo({top:0,behavior:'smooth'}));
+    if(id === 'bottom') return (typeof window.scrollToBottomQuick === 'function' ? window.scrollToBottomQuick() : window.scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}));
+    if(id === 'history') return clickId('historyBtn');
+    if(id === 'analytics') return clickId('analyticsBtn');
+    if(id === 'rules') return clickId('rulesBtn');
+    if(id === 'templates') return clickId('templateBtn');
+    if(id === 'settings') return clickId('settingsBtn');
+    if(id === 'copy') return clickId('copyResultBtn');
+  }
+  function renderQuickTools(){
+    const tools = document.querySelector('.scroll-tools');
+    if(!tools) return;
+    const cfg = getQuickConfig();
+    const html = cfg.order.filter(id=>cfg.enabled[id]).map(id=>{
+      const item=itemById(id); if(!item) return '';
+      const cls = (['expand','collapse','history','analytics','rules','templates','settings','copy'].includes(id)) ? ' wide' : '';
+      return `<button class="scroll-tool-btn${cls}" type="button" data-v9919-quick="${id}" title="${item.title}" aria-label="${item.title}">${quickLabel(id)}</button>`;
+    }).join('');
+    tools.innerHTML = html || '<button class="scroll-tool-btn" type="button" data-v9919-quick="settings" title="设置" aria-label="设置">设置</button>';
+    tools.dataset.v9919Rendered = '1';
+  }
+  function injectQuickSettingsCard(){
+    const form = document.querySelector('#settingsDialog .settings-form');
+    if(!form || $('quickButtonSettingsCard')) return;
+    const actions = form.querySelector('.settings-actions');
+    const card = document.createElement('div');
+    card.className = 'settings-card';
+    card.id = 'quickButtonSettingsCard';
+    card.innerHTML = `
+      <h4>快捷按钮设置</h4>
+      <p class="quick-config-note">选择右侧/底部浮动快捷区要显示的按钮，并用 ↑ ↓ 调整顺序。设置会保存在当前浏览器本地。</p>
+      <div class="quick-button-config" id="quickButtonConfigList"></div>
+      <div class="settings-mini-grid">
+        <button class="ghost-btn" type="button" id="quickButtonsSelectCoreBtn">恢复默认快捷按钮</button>
+        <button class="ghost-btn" type="button" id="quickButtonsSelectAllBtn">显示全部快捷按钮</button>
+      </div>
+    `;
+    if(actions) form.insertBefore(card, actions); else form.appendChild(card);
+    card.addEventListener('change', function(e){
+      const input = e.target.closest('[data-quick-enabled]');
+      if(!input) return;
+      const cfg = getQuickConfig();
+      cfg.enabled[input.dataset.quickEnabled] = !!input.checked;
+      saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools();
+    });
+    card.addEventListener('click', function(e){
+      const btn = e.target.closest('[data-quick-move]');
+      if(btn){
+        const id = btn.dataset.quickMove, dir = Number(btn.dataset.dir || 0);
+        const cfg = getQuickConfig();
+        const idx = cfg.order.indexOf(id), ni = idx + dir;
+        if(idx >= 0 && ni >= 0 && ni < cfg.order.length){
+          const tmp = cfg.order[idx]; cfg.order[idx] = cfg.order[ni]; cfg.order[ni] = tmp;
+          saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools();
+        }
+      }
+    });
+    const core = $('quickButtonsSelectCoreBtn');
+    if(core) core.addEventListener('click', function(){ saveQuickConfig({order:DEFAULT_ORDER.slice(), enabled:Object.assign({}, DEFAULT_ENABLED)}); renderQuickSettingsList(); renderQuickTools(); });
+    const all = $('quickButtonsSelectAllBtn');
+    if(all) all.addEventListener('click', function(){ const cfg=getQuickConfig(); ALL_QUICK_ITEMS.forEach(x=>cfg.enabled[x.id]=true); saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools(); });
+    renderQuickSettingsList();
+  }
+  function renderQuickSettingsList(){
+    const box = $('quickButtonConfigList');
+    if(!box) return;
+    const cfg = getQuickConfig();
+    box.innerHTML = cfg.order.map((id,idx)=>{
+      const item=itemById(id); if(!item) return '';
+      return `<div class="quick-config-row">
+        <label class="quick-config-main">
+          <input type="checkbox" data-quick-enabled="${id}" ${cfg.enabled[id] ? 'checked' : ''}>
+          <span class="quick-config-label"><b>${item.label}</b><small>${item.note}</small></span>
+        </label>
+        <span class="quick-config-actions">
+          <button class="quick-order-btn" type="button" data-quick-move="${id}" data-dir="-1" ${idx===0?'disabled':''}>↑</button>
+          <button class="quick-order-btn" type="button" data-quick-move="${id}" data-dir="1" ${idx===cfg.order.length-1?'disabled':''}>↓</button>
+        </span>
+      </div>`;
+    }).join('');
+  }
+  function install(){
+    injectQuickSettingsCard();
+    renderQuickTools();
+    document.addEventListener('click', function(e){
+      const btn = e.target.closest('[data-v9919-quick]');
+      if(!btn) return;
+      e.preventDefault();
+      runQuickAction(btn.dataset.v9919Quick);
+    }, true);
+    const settingsBtn = $('settingsBtn');
+    if(settingsBtn){ settingsBtn.addEventListener('click', function(){ setTimeout(()=>{ injectQuickSettingsCard(); renderQuickSettingsList(); }, 30); }); }
+    setTimeout(renderQuickTools, 250);
+    setTimeout(renderQuickTools, 900);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install); else install();
+
+  const oldBuild = window.buildVersionUpdatesHTML;
+  window.buildVersionUpdatesHTML = function(){
+    let html = typeof oldBuild === 'function' ? oldBuild() : '';
+    if(!html.includes('v9.9.19 快捷按钮自定义版')){
+      html += '<details><summary>v9.9.19 快捷按钮自定义版</summary><ul><li>设置中新增“快捷按钮设置”，可选择浮动快捷区显示哪些按钮。</li><li>支持用 ↑ ↓ 调整“主页、重占、电脑、展开、折叠、置顶、到底、历史、分析、规则、模板、设置、复制”等快捷按钮顺序。</li><li>快捷按钮配置保存在当前浏览器本地，便于手机、平板、电脑端按自己的习惯使用。</li></ul></details>';
+    }
+    return html;
+  };
+  try { if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); } catch(e) {}
 })();
 </script>
 

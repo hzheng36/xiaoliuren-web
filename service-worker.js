@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-pwa-v9-9-17';
+const CACHE_NAME = 'xiaoliuren-pwa-v9-9-19';
 const APP_SHELL = [
   './',
   './index.html',
