@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.14 多端布局与结果页优化版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.11：保持版本更新记录同步，并在章节卡点导航中新增“版本”入口。" />
+  <title>小六壬占卜 · v9.9.15 显示与桌面模式优化版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.15：优化阅读字号、快捷按钮尺寸与移动端电脑布局模式。" />
   <style>
     :root {
       --bg: #f7f3ee;
@@ -756,7 +756,116 @@
       .dialog-head { padding: 18px !important; }
     }
 
-  </style>
+  
+
+/* v9.9.15 显示与桌面模式优化 */
+/* 正文阅读字号回到更克制的默认值；输入框字号继续保持较大。 */
+body { --xlr-reading-scale: 1; }
+body.reading-size-small { --xlr-reading-scale: .94; }
+body.reading-size-normal { --xlr-reading-scale: 1; }
+body.reading-size-large { --xlr-reading-scale: 1.08; }
+body.reading-size-xlarge { --xlr-reading-scale: 1.16; }
+
+label span, .question-count, #eventCount, .number-range-note {
+  font-size: .96rem !important;
+}
+.block, .reading-card, .gua-card, .answer-card, .context-card, .summary-item,
+.overall-rich, .question-linked, .rule-note, .version-log-note,
+.feature-item small, .history-meta, .analysis-table, .template-intro,
+.custom-template-note, .tool-folder-note, .simple-note, .ab-mini, .ab-warn,
+.palace-meta, .tag, .pill, .keyword-chip, .radar-metric-pill {
+  font-size: calc(1rem * var(--xlr-reading-scale)) !important;
+}
+.block h4, .reading-card h5, .gua-card h5, .answer-card h5, .context-card h5,
+.settings-card h4, .rule-card h4 {
+  font-size: calc(1.06rem * var(--xlr-reading-scale)) !important;
+}
+input, textarea, select, .date-text-input, .select-control {
+  font-size: clamp(16px, 1.02rem + .15vw, 20px) !important;
+  line-height: 1.55 !important;
+}
+input::placeholder, textarea::placeholder {
+  font-size: clamp(15px, .98rem + .12vw, 18px) !important;
+}
+
+/* 快捷按钮统一尺寸：主页、重占、桌面与展开/折叠/置顶/到底一致 */
+.scroll-tools .scroll-tool-btn,
+.scroll-tools .scroll-tool-btn.wide,
+.scroll-tools .scroll-tool-btn.mini-wide {
+  width: 46px !important;
+  min-width: 46px !important;
+  max-width: 46px !important;
+  height: 46px !important;
+  padding: 0 !important;
+  font-size: .72rem !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  text-align: center !important;
+}
+@media (max-width: 760px) {
+  .scroll-tools .scroll-tool-btn,
+  .scroll-tools .scroll-tool-btn.wide,
+  .scroll-tools .scroll-tool-btn.mini-wide {
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    height: 42px !important;
+    font-size: .66rem !important;
+  }
+}
+
+/* 更接近电脑端的移动设备桌面模式：强制使用桌面画布宽度与桌面栅格。 */
+body.force-desktop-mode {
+  overflow-x: auto !important;
+  min-width: 1500px !important;
+}
+body.force-desktop-mode .shell {
+  width: 1500px !important;
+  max-width: none !important;
+  min-width: 1500px !important;
+  display: grid !important;
+  grid-template-columns: 330px minmax(0, 1fr) !important;
+  gap: 22px !important;
+  padding: 22px !important;
+  margin: 0 auto !important;
+}
+body.force-desktop-mode .sidebar {
+  display: block !important;
+  position: sticky !important;
+  top: 22px !important;
+  align-self: start !important;
+}
+body.force-desktop-mode .main { display: grid !important; gap: 18px !important; }
+body.force-desktop-mode .hero,
+body.force-desktop-mode .result-header {
+  grid-template-columns: 1fr auto !important;
+}
+body.force-desktop-mode .scene-grid { grid-template-columns: repeat(5, minmax(0,1fr)) !important; }
+body.force-desktop-mode .method-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .number-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .palace-cards,
+body.force-desktop-mode .summary-grid,
+body.force-desktop-mode .tri-reading,
+body.force-desktop-mode .insight-grid,
+body.force-desktop-mode .radar-metrics,
+body.force-desktop-mode .answer-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .top-results { grid-template-columns: 1fr 1.15fr !important; }
+body.force-desktop-mode .history-search-row,
+body.force-desktop-mode .context-controls { grid-template-columns: 1.4fr .8fr !important; }
+body.force-desktop-mode .art.theme-illustration { height: 240px !important; }
+
+/* 结果页中启用桌面模式时仍保持“只看结果”，但使用桌面宽度。 */
+body.result-page.force-desktop-mode .shell {
+  display: block !important;
+  width: 1180px !important;
+  min-width: 1180px !important;
+}
+body.result-page.force-desktop-mode .sidebar { display: none !important; }
+
+/* v9.9.15 更新记录补丁 */
+
+</style>
 </head>
 <body>
   <div class="page-progress" aria-hidden="true"><div id="pageProgressBar"></div></div>
@@ -795,8 +904,8 @@
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.14 多端布局与结果页优化版</h2>
-          <p>本版优化多端插图显示、结果页阅读、快捷按钮与输入体验，并继续生成 README 仓库说明。</p>
+          <h2>个人占卜台 · v9.9.15 显示与桌面模式优化版</h2>
+          <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5092,11 +5201,120 @@ ${nextStep}`;
     .hero.card > .actions .ghost-btn { flex: 1 1 calc(50% - 10px) !important; min-width: 0 !important; }
     .result-nav-actions .ghost-btn, .result-nav-actions .primary-btn { flex: 1 1 calc(50% - 10px); min-width: 0; }
   }
+
+
+/* v9.9.15 显示与桌面模式优化 */
+/* 正文阅读字号回到更克制的默认值；输入框字号继续保持较大。 */
+body { --xlr-reading-scale: 1; }
+body.reading-size-small { --xlr-reading-scale: .94; }
+body.reading-size-normal { --xlr-reading-scale: 1; }
+body.reading-size-large { --xlr-reading-scale: 1.08; }
+body.reading-size-xlarge { --xlr-reading-scale: 1.16; }
+
+label span, .question-count, #eventCount, .number-range-note {
+  font-size: .96rem !important;
+}
+.block, .reading-card, .gua-card, .answer-card, .context-card, .summary-item,
+.overall-rich, .question-linked, .rule-note, .version-log-note,
+.feature-item small, .history-meta, .analysis-table, .template-intro,
+.custom-template-note, .tool-folder-note, .simple-note, .ab-mini, .ab-warn,
+.palace-meta, .tag, .pill, .keyword-chip, .radar-metric-pill {
+  font-size: calc(1rem * var(--xlr-reading-scale)) !important;
+}
+.block h4, .reading-card h5, .gua-card h5, .answer-card h5, .context-card h5,
+.settings-card h4, .rule-card h4 {
+  font-size: calc(1.06rem * var(--xlr-reading-scale)) !important;
+}
+input, textarea, select, .date-text-input, .select-control {
+  font-size: clamp(16px, 1.02rem + .15vw, 20px) !important;
+  line-height: 1.55 !important;
+}
+input::placeholder, textarea::placeholder {
+  font-size: clamp(15px, .98rem + .12vw, 18px) !important;
+}
+
+/* 快捷按钮统一尺寸：主页、重占、桌面与展开/折叠/置顶/到底一致 */
+.scroll-tools .scroll-tool-btn,
+.scroll-tools .scroll-tool-btn.wide,
+.scroll-tools .scroll-tool-btn.mini-wide {
+  width: 46px !important;
+  min-width: 46px !important;
+  max-width: 46px !important;
+  height: 46px !important;
+  padding: 0 !important;
+  font-size: .72rem !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  text-align: center !important;
+}
+@media (max-width: 760px) {
+  .scroll-tools .scroll-tool-btn,
+  .scroll-tools .scroll-tool-btn.wide,
+  .scroll-tools .scroll-tool-btn.mini-wide {
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    height: 42px !important;
+    font-size: .66rem !important;
+  }
+}
+
+/* 更接近电脑端的移动设备桌面模式：强制使用桌面画布宽度与桌面栅格。 */
+body.force-desktop-mode {
+  overflow-x: auto !important;
+  min-width: 1500px !important;
+}
+body.force-desktop-mode .shell {
+  width: 1500px !important;
+  max-width: none !important;
+  min-width: 1500px !important;
+  display: grid !important;
+  grid-template-columns: 330px minmax(0, 1fr) !important;
+  gap: 22px !important;
+  padding: 22px !important;
+  margin: 0 auto !important;
+}
+body.force-desktop-mode .sidebar {
+  display: block !important;
+  position: sticky !important;
+  top: 22px !important;
+  align-self: start !important;
+}
+body.force-desktop-mode .main { display: grid !important; gap: 18px !important; }
+body.force-desktop-mode .hero,
+body.force-desktop-mode .result-header {
+  grid-template-columns: 1fr auto !important;
+}
+body.force-desktop-mode .scene-grid { grid-template-columns: repeat(5, minmax(0,1fr)) !important; }
+body.force-desktop-mode .method-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .number-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .palace-cards,
+body.force-desktop-mode .summary-grid,
+body.force-desktop-mode .tri-reading,
+body.force-desktop-mode .insight-grid,
+body.force-desktop-mode .radar-metrics,
+body.force-desktop-mode .answer-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .top-results { grid-template-columns: 1fr 1.15fr !important; }
+body.force-desktop-mode .history-search-row,
+body.force-desktop-mode .context-controls { grid-template-columns: 1.4fr .8fr !important; }
+body.force-desktop-mode .art.theme-illustration { height: 240px !important; }
+
+/* 结果页中启用桌面模式时仍保持“只看结果”，但使用桌面宽度。 */
+body.result-page.force-desktop-mode .shell {
+  display: block !important;
+  width: 1180px !important;
+  min-width: 1180px !important;
+}
+body.result-page.force-desktop-mode .sidebar { display: none !important; }
+
+/* v9.9.15 更新记录补丁 */
+
 </style>
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.14 多端布局与结果页优化版';
+  const VERSION = 'v9.9.15 显示与桌面模式优化版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -5257,6 +5475,110 @@ ${nextStep}`;
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+
+
+<script id="v9915-display-controls-script">
+(function(){
+  'use strict';
+  const SIZE_KEY = 'xiaoliuren_reading_text_size_v9915';
+  const MODE_KEY = 'xiaoliuren_client_mode_v9914';
+  function $(id){ return document.getElementById(id); }
+  function applyReadingSize(size){
+    size = size || localStorage.getItem(SIZE_KEY) || 'normal';
+    document.body.classList.remove('reading-size-small','reading-size-normal','reading-size-large','reading-size-xlarge');
+    document.body.classList.add('reading-size-' + size);
+    const sel = $('settingReadingTextSize');
+    if(sel) sel.value = size;
+  }
+  function saveReadingSize(){
+    const sel = $('settingReadingTextSize');
+    const size = sel ? sel.value : 'normal';
+    try { localStorage.setItem(SIZE_KEY, size); } catch(e) {}
+    applyReadingSize(size);
+  }
+  function ensureReadingSizeSetting(){
+    if($('settingReadingTextSize')) return;
+    const defaultView = $('settingDefaultView');
+    if(!defaultView) return;
+    const row = document.createElement('div');
+    row.className = 'settings-row';
+    row.innerHTML = '<span>阅读文字大小<small>只调整解读正文、卡片说明和结果文字；输入框文字保持较大，方便填写。</small></span><select id="settingReadingTextSize"><option value="small">偏小</option><option value="normal">标准</option><option value="large">偏大</option><option value="xlarge">更大</option></select>';
+    const parentRow = defaultView.closest('.settings-row');
+    if(parentRow && parentRow.parentNode) parentRow.insertAdjacentElement('afterend', row);
+    const sel = $('settingReadingTextSize');
+    if(sel){
+      sel.addEventListener('change', saveReadingSize);
+      applyReadingSize();
+    }
+  }
+  function patchSettings(){
+    ensureReadingSizeSetting();
+    const saveBtn = $('saveSettingsBtn');
+    if(saveBtn && !saveBtn.dataset.v9915ReadSize){
+      saveBtn.dataset.v9915ReadSize = '1';
+      saveBtn.addEventListener('click', function(){ setTimeout(saveReadingSize, 0); }, true);
+    }
+    const resetBtn = $('resetSettingsBtn');
+    if(resetBtn && !resetBtn.dataset.v9915ReadSize){
+      resetBtn.dataset.v9915ReadSize = '1';
+      resetBtn.addEventListener('click', function(){
+        try { localStorage.removeItem(SIZE_KEY); } catch(e) {}
+        setTimeout(function(){ applyReadingSize('normal'); }, 30);
+      }, true);
+    }
+  }
+  function makeQuickButtonsSameSize(){
+    document.querySelectorAll('.scroll-tools .scroll-tool-btn').forEach(btn=>{
+      btn.classList.remove('wide');
+      btn.classList.remove('mini-wide');
+      btn.classList.add('v9915-equal');
+    });
+  }
+  function patchModeButton(){
+    document.querySelectorAll('[data-v9914-mode]').forEach(btn=>{
+      const on = document.body.classList.contains('force-desktop-mode');
+      btn.textContent = on ? '自适' : '电脑';
+      btn.title = on ? '切回自适应模式' : '切换为电脑端布局宽度';
+    });
+  }
+  const oldToggle = window.toggleClientModeV9914;
+  window.toggleClientModeV9914 = function(){
+    if(typeof oldToggle === 'function') oldToggle.apply(this, arguments);
+    const on = document.body.classList.contains('force-desktop-mode');
+    try { localStorage.setItem(MODE_KEY, on ? 'desktop' : 'auto'); } catch(e) {}
+    patchModeButton();
+    if(on){ setTimeout(function(){ window.scrollTo({left:0, top:window.scrollY, behavior:'smooth'}); }, 60); }
+  };
+  function patchVersionLog(){
+    if(typeof window.buildVersionUpdatesHTML !== 'function' || window.buildVersionUpdatesHTML.__v9915Patched) return;
+    const old = window.buildVersionUpdatesHTML;
+    window.buildVersionUpdatesHTML = function(){
+      let html = old.call(this);
+      if(html.indexOf('v9.9.15 显示与桌面模式优化版') < 0){
+        html += '<details><summary>v9.9.15 显示与桌面模式优化版</summary><ul><li>正文阅读字号恢复为更克制的默认大小，同时保留输入框较大的文字体验。</li><li>阅读设置新增“阅读文字大小”，用户可调节结果和说明文字大小。</li><li>右侧快捷按钮统一尺寸，让“主页、重占、电脑”与展开、折叠、置顶、到底大小一致。</li><li>优化移动端电脑布局模式，切换后使用更接近电脑端的宽页面和桌面栅格布局。</li></ul></details>';
+      }
+      return html;
+    };
+    window.buildVersionUpdatesHTML.__v9915Patched = true;
+  }
+  function boot(){
+    patchSettings();
+    applyReadingSize();
+    makeQuickButtonsSameSize();
+    patchModeButton();
+    patchVersionLog();
+    if(localStorage.getItem(MODE_KEY) === 'desktop') document.body.classList.add('force-desktop-mode');
+    setTimeout(function(){
+      makeQuickButtonsSameSize();
+      patchModeButton();
+      if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks();
+    }, 150);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+  window.addEventListener('load', boot);
 })();
 </script>
 
