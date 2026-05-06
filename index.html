@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.27 结果页分离修正版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.27：修复占卜后结果页未与主页输入区分离的问题，并保留历史兼容修复。" />
+  <title>小六壬占卜 · v9.9.28 排盘与命盘显示增强版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.28：修复六宫排盘显示不完整，并新增命运场景的命盘图式展示。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -929,7 +929,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
 
-    /* v9.9.27 结果页分离修正版 */
+    /* v9.9.28 排盘与命盘显示增强版 */
     body.result-page #homeInfoBlocks { display: none !important; }
     body.destiny-scene #numberPanel,
     body.destiny-scene #singlePanel,
@@ -941,6 +941,77 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
 
   </style>
+
+<style id="v9928-paipan-destiny-board-style">
+  /* v9.9.28 排盘与命盘显示增强：用稳定网格替代小屏易裁切的绝对定位排盘 */
+  .paipan-wrap { min-height: auto !important; overflow: visible !important; }
+  .hex-board.paipan-board-grid {
+    width: 100% !important;
+    max-width: 640px;
+    height: auto !important;
+    transform: none !important;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    position: relative;
+    padding: 0;
+  }
+  .hex-board.paipan-board-grid::before,
+  .hex-board.paipan-board-grid .hex-center { display: none !important; }
+  .paipan-cell {
+    border: 1px solid rgba(124,112,178,.16);
+    border-radius: 18px;
+    padding: 14px 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,245,252,.78));
+    box-shadow: 0 10px 22px rgba(54,45,80,.05);
+    min-height: 128px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .paipan-cell.active {
+    background: linear-gradient(180deg, rgba(255,250,245,.98), rgba(247,243,255,.88));
+    border-color: rgba(103,83,165,.30);
+    box-shadow: 0 16px 28px rgba(103,83,165,.10);
+  }
+  .paipan-cell-top { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .paipan-cell-title { color: var(--primary); font-weight: 850; font-size: 1.12rem; }
+  .paipan-cell-meta { color: var(--muted); font-size: .88rem; line-height:1.55; }
+  .paipan-cell-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; }
+  .paipan-cell-tag { border-radius:999px; padding:4px 8px; background:rgba(103,83,165,.10); color:var(--primary); font-size:.78rem; font-weight:700; }
+  .paipan-cell-tag.empty { opacity:.62; background:rgba(146,137,166,.10); color:var(--muted); }
+
+  .destiny-visual-board {
+    margin: 16px 0 6px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .destiny-visual-cell {
+    border: 1px solid rgba(124,112,178,.18);
+    border-radius: 20px;
+    padding: 14px;
+    min-height: 136px;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(249,246,255,.76));
+    box-shadow: 0 12px 26px rgba(54,45,80,.05);
+  }
+  .destiny-visual-cell h5 { margin:0 0 8px; display:flex; justify-content:space-between; align-items:center; gap:8px; color:var(--primary); font-size:1.05rem; }
+  .destiny-visual-cell .branch { color:#b8614f; font-weight:850; font-size:1.08rem; }
+  .destiny-visual-cell p { margin: 4px 0; color:var(--muted); line-height:1.62; font-size:.92rem; }
+  .destiny-visual-cell strong { color:var(--text); }
+  .destiny-visual-note { margin-top:10px; padding:12px 14px; border-radius:16px; background:rgba(229,196,138,.12); border:1px solid rgba(188,133,65,.16); color:var(--muted); line-height:1.7; }
+
+  @media (max-width: 760px) {
+    .hex-board.paipan-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .paipan-cell { min-height: 118px; padding: 12px 10px; }
+    .destiny-visual-board { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .destiny-visual-cell { min-height: 128px; padding: 12px; }
+  }
+  @media (max-width: 420px) {
+    .hex-board.paipan-board-grid, .destiny-visual-board { grid-template-columns: 1fr; }
+  }
+</style>
+
 </head>
 <body>
   <div class="page-progress" aria-hidden="true"><div id="pageProgressBar"></div></div>
@@ -979,7 +1050,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.27 结果页分离修正版</h2>
+          <h2>个人占卜台 · v9.9.28 排盘与命盘显示增强版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -5687,7 +5758,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.27 结果页分离修正版';
+  const VERSION = 'v9.9.28 排盘与命盘显示增强版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6499,7 +6570,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.27 结果页分离修正版';
+  const VERSION = 'v9.9.28 排盘与命盘显示增强版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6692,7 +6763,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
         ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
         ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']],
-        ['v9.9.27 结果页分离修正版', ['修复占卜完成后结果页没有与主页输入区分离的问题。','占卜结果和查看历史结果时，隐藏选择场景、占问事项、起课方式、快捷数字与开始占卜等主页内容。','点击返回主页或重新占卜时再回到输入主页。','保留 v9.9.26 的旧历史兼容修复能力。']]
+        ['v9.9.28 排盘与命盘显示增强版', ['修复占卜完成后结果页没有与主页输入区分离的问题。','占卜结果和查看历史结果时，隐藏选择场景、占问事项、起课方式、快捷数字与开始占卜等主页内容。','点击返回主页或重新占卜时再回到输入主页。','保留 v9.9.26 的旧历史兼容修复能力。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
@@ -6706,7 +6777,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9925-history-view-confirm-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.27 结果页分离修正版';
+  const PATCH_VERSION = 'v9.9.28 排盘与命盘显示增强版';
 
   function $(id){ return document.getElementById(id); }
   function hasValue(ids){ return ids.some(id => { const el=$(id); return el && String(el.value || '').trim(); }); }
@@ -6862,7 +6933,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9926-history-compat-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.27 结果页分离修正版';
+  const PATCH_VERSION = 'v9.9.28 排盘与命盘显示增强版';
   function $(id){ return document.getElementById(id); }
   function sceneFromAny(item){
     const key = item && item.sceneKey;
@@ -7017,8 +7088,8 @@ body.hide-progress-bar .page-progress { display:none !important; }
   const oldVersion = window.buildVersionUpdatesHTML;
   window.buildVersionUpdatesHTML = function(){
     let html = typeof oldVersion === 'function' ? oldVersion() : '';
-    if(!html.includes('v9.9.27 结果页分离修正版')){
-      html += '<details><summary>v9.9.27 结果页分离修正版</summary><ul><li>修复旧版本历史记录因字段缺失而无法“查看”的问题。</li><li>查看历史时会根据场景、取数、落宫和占问事项自动补齐新版结果页需要的字段。</li><li>新增“修复旧历史”按钮，可批量补齐旧历史记录，便于继续复盘和查看。</li><li>即使部分旧记录无法完整还原，也会显示基础历史结果页，不再直接中断。</li></ul></details>';
+    if(!html.includes('v9.9.28 排盘与命盘显示增强版')){
+      html += '<details><summary>v9.9.28 排盘与命盘显示增强版</summary><ul><li>修复六宫排盘在手机端只显示中心图、不完整显示六宫的问题。</li><li>新增命运场景的命盘图式展示，让命盘也能像排盘一样一眼看到六亲、地支与落宫。</li><li>保留结果页分离、旧历史兼容、命运/运势等功能。</li></ul></details>';
     }
     return html;
   };
@@ -7066,7 +7137,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.27 结果页分离修正版';
+  const VERSION = 'v9.9.28 排盘与命盘显示增强版';
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -7183,6 +7254,104 @@ body.hide-progress-bar .page-progress { display:none !important; }
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', boot);
+})();
+</script>
+
+
+<script id="v9928-paipan-destiny-board-fix">
+(function(){
+  const PATCH_VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  try {
+    if (typeof VERSION !== 'undefined') { /* 只读兼容，不强改常量 */ }
+  } catch(e) {}
+
+  function safePalaceData(name){ return (typeof PALACE_DATA !== 'undefined' && PALACE_DATA[name]) ? PALACE_DATA[name] : {element:'', direction:'', summary:''}; }
+  function buildPalaceTags(result, name){
+    const tags=[];
+    (result && result.details ? result.details : []).forEach(d=>{ if(d && d.palaceName===name) tags.push(d.positionName || '落宫'); });
+    return tags;
+  }
+
+  // 覆盖六宫排盘渲染：改为稳定网格，确保手机、平板、电脑都完整显示六宫。
+  if (typeof renderBoard === 'function') {
+    renderBoard = function(result) {
+      const board=document.getElementById('hexBoard');
+      if(!board || !result) return;
+      board.className = 'hex-board paipan-board-grid';
+      const order = (typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
+      board.innerHTML = order.map(name=>{
+        const data=safePalaceData(name);
+        const tags=buildPalaceTags(result,name);
+        const dir=(data.direction||'').split(' / ')[0] || '方位参考';
+        return `<div class="paipan-cell ${tags.length?'active':''}">
+          <div class="paipan-cell-top"><span class="paipan-cell-title">${name}</span><span class="tag">${data.element||'五行'}</span></div>
+          <div class="paipan-cell-meta">方位：${dir}</div>
+          <div class="paipan-cell-meta">象意：${data.summary || '用于观察本象、中象、末象在六宫中的分布。'}</div>
+          <div class="paipan-cell-tags">${tags.length ? tags.map(t=>`<span class="paipan-cell-tag">${t}</span>`).join('') : '<span class="paipan-cell-tag empty">未落</span>'}</div>
+        </div>`;
+      }).join('');
+      const dist=document.getElementById('distributionText');
+      if(dist && typeof buildPaipanExplanation === 'function') dist.innerHTML=buildPaipanExplanation(result);
+      const tag=document.getElementById('distributionTag');
+      if(tag && result.metrics) tag.textContent=result.metrics.goodCount >= 2 ? '吉宫偏多' : result.metrics.heavyCount >= 2 ? '阻滞偏多' : '三象分散';
+    };
+  }
+
+  // 给命运场景增加“命盘图式”，放在命运六亲参考盘说明下方。
+  if (typeof renderDestinyBoard === 'function') {
+    const oldRenderDestinyBoard = renderDestinyBoard;
+    renderDestinyBoard = function(result){
+      oldRenderDestinyBoard(result);
+      try {
+        if(!result || result.sceneKey !== 'destiny') return;
+        const intro=document.getElementById('destinyBoardIntro');
+        if(!intro) return;
+        let visual=document.getElementById('destinyVisualBoard');
+        if(!visual){
+          visual=document.createElement('div');
+          visual.id='destinyVisualBoard';
+          visual.className='destiny-visual-board';
+          intro.insertAdjacentElement('afterend', visual);
+        }
+        const nums=result.numbers || [1,1,1];
+        const order=(typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
+        const base=(Math.abs(nums[0]||1)+Math.abs(nums[1]||1)+Math.abs(nums[2]||1))%12;
+        const palace=(idx)=> result.palaces && result.palaces[idx] ? result.palaces[idx] : order[idx%6];
+        const relations=[
+          ['自身', palace(0), nums[0], '先看自身，代表个人底色、起势和自我状态。'],
+          ['子孙', palace(2), nums[2], '看表达、兴趣、成果、后续发展和轻松感。'],
+          ['兄弟', order[(order.indexOf(palace(0))+1+6)%6], (nums[0]||0)+1, '看同辈、人际竞争、朋友协作与消耗。'],
+          ['妻财', order[(order.indexOf(palace(1))+1+6)%6], (nums[1]||0)+1, '看现实资源、财务习惯和经营能力。'],
+          ['父母', palace(1), nums[1], '看长辈、规则、学习、文书与保护。'],
+          ['官鬼', palace(2), nums[2], '看压力、责任、事业规则和要面对的课题。']
+        ];
+        visual.innerHTML = relations.map((r,i)=>{
+          const z = (typeof branchFromNumber === 'function') ? branchFromNumber(base+i+1) : '';
+          const data=safePalaceData(r[1]);
+          const branchText = (typeof branchGroupText === 'function') ? branchGroupText(z) : '';
+          return `<div class="destiny-visual-cell">
+            <h5><span>${r[0]}</span><span class="branch">${z}</span></h5>
+            <p><strong>落宫：</strong>${r[1]}</p>
+            <p><strong>五行：</strong>${data.element || '参考'}</p>
+            <p><strong>用途：</strong>${r[3]}</p>
+            <p>${branchText}</p>
+          </div>`;
+        }).join('') + `<div class="destiny-visual-note" style="grid-column:1/-1">命盘图式的读法：先看“自身”作为个人底色，再看父母、兄弟、子孙、妻财、官鬼各自落宫。落在大安、小吉、速喜，多为可用之处；落在留连、赤口、空亡，多为需要复盘、修正或谨慎处理的主题。</div>`;
+      } catch(err){ console.warn('destiny visual board patch failed', err); }
+    };
+  }
+
+  // 版本记录补充 v9.9.28，保持后续版本更新可见。
+  if (typeof buildVersionUpdatesHTML === 'function') {
+    const oldBuildVersionUpdatesHTML = buildVersionUpdatesHTML;
+    buildVersionUpdatesHTML = function(){
+      let html = oldBuildVersionUpdatesHTML();
+      if(!html.includes('v9.9.28 排盘与命盘显示增强版')){
+        html += '<details><summary>v9.9.28 排盘与命盘显示增强版</summary><ul><li>修复六宫排盘在手机端显示不完整的问题，改为稳定的六宫网格排盘。</li><li>命运场景新增命盘图式展示，六亲、地支、落宫和用途更直观。</li><li>保留原有命盘详细解读、结果页分离和旧历史兼容能力。</li></ul></details>';
+      }
+      return html;
+    };
+  }
 })();
 </script>
 
