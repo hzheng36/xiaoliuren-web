@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.17 PWA离线缓存与白话可读性增强版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.17：新增 PWA 离线缓存，并增强答案摘要的白话可读性。" />
+  <title>小六壬占卜 · v9.9.18 白话答案增强版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.18：保留 PWA 离线缓存，并进一步增强占卜结果的通俗答案表达。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -923,7 +923,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.17 PWA离线缓存与白话可读性增强版</h2>
+          <h2>个人占卜台 · v9.9.18 白话答案增强版</h2>
           <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
@@ -5968,6 +5968,211 @@ body.hide-progress-bar .page-progress { display:none !important; }
   }
   function boot9917(){ patchVersionLog(); registerSW(); if(typeof window.renderHomeInfoBlocks === 'function') setTimeout(window.renderHomeInfoBlocks, 30); }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot9917); else boot9917();
+})();
+</script>
+
+
+<script>
+(function(){
+  const VERSION_9918 = 'v9.9.18 白话答案增强版';
+  function esc(s){
+    if (typeof escapeHTML === 'function') return escapeHTML(String(s || ''));
+    return String(s || '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function safe(fn, fallback){ try { return fn(); } catch(e){ return fallback; } }
+  function ctxOf(result){ return result.context || (typeof analyzeQuestionContext === 'function' ? analyzeQuestionContext(result.question, result.sceneKey) : null) || {}; }
+  function qText(result){ return result.question ? `你问「${esc(result.question)}」` : `你问的是「${esc(result.sceneName || '这件事')}」`; }
+  function palacePlain(p){
+    const map = {
+      '大安':'事情比较稳，变化不会太猛，但推进也不会特别快',
+      '留连':'事情容易拖着、绕着走，常常需要反复确认',
+      '速喜':'很快会有动静、消息或明显变化，但来得快也要看能不能稳住',
+      '赤口':'后面容易有争执、反复、临时变化，或者卡在沟通和细节上',
+      '小吉':'有小机会、小进展，适合先从小处推进，不宜一口气期待太大',
+      '空亡':'目前还不够实，可能有影子、有想法、有消息，但还没真正落地'
+    };
+    return map[p] || '需要结合前后变化来看';
+  }
+  function simpleTrend(p){
+    const map = {'大安':'先稳住','留连':'有拖延','速喜':'很快有动','赤口':'后面反复','小吉':'小有进展','空亡':'仍要核实'};
+    return map[p] || p || '变化';
+  }
+  function biasByEnd(end){
+    const map = {
+      '大安':'偏稳，适合慢慢落实',
+      '留连':'偏拖，需要耐心确认',
+      '速喜':'偏有动静，短期会有变化',
+      '赤口':'有机会但不太顺，后段容易反复',
+      '小吉':'小有机会，先看小进展',
+      '空亡':'结果还虚，需要再观察'
+    };
+    return map[end] || '好坏参半，重点看后续落实';
+  }
+  function buildBias(result){
+    const ps = result.palaces || [];
+    const end = ps[2] || '';
+    const good = ps.filter(p=>['大安','速喜','小吉'].includes(p)).length;
+    const heavy = ps.filter(p=>['留连','赤口','空亡'].includes(p)).length;
+    let base = biasByEnd(end);
+    if(good >= 2 && !['赤口','空亡','留连'].includes(end)) base += '，整体顺意略多';
+    if(heavy >= 2) base += '，阻力和不确定性也要重视';
+    return base;
+  }
+  function rhythmText(result){
+    const d = result.details || [];
+    const ps = d.length >= 3 ? d.map(x=>x.palaceName) : (result.palaces || []);
+    if(ps.length < 3) return '需要看后续变化';
+    return `${simpleTrend(ps[0])} → ${simpleTrend(ps[1])} → ${simpleTrend(ps[2])}`;
+  }
+  function questionTypeLabel(result){
+    const ctx = ctxOf(result);
+    return ctx.label || ctx.name || ctx.focus || result.sceneName || '这件事';
+  }
+  function directByContext(result){
+    const ctx = ctxOf(result), key = ctx.key || result.sceneKey;
+    const p = result.palaces || [];
+    const start = p[0] || '', mid = p[1] || '', end = p[2] || '';
+    const q = qText(result);
+    const rhythm = `${start || '前象'} → ${mid || '中象'} → ${end || '末象'}`;
+    const ending = {
+      '大安':'最后更偏稳定和保守，事情不一定很快，但比较适合按原计划慢慢落地。',
+      '留连':'最后容易拖住或反复，短期不宜急着下定论。',
+      '速喜':'最后仍有动静和消息，短期会比较快看到变化。',
+      '赤口':'最后容易有反复、冲突或临时变化，需要特别注意沟通和细节。',
+      '小吉':'最后有小进展、小机会，适合先拿到阶段性结果。',
+      '空亡':'最后还不够实，容易有落空或延后，必须等真实结果出现再判断。'
+    }[end] || '最后要看结果是否真正落实。';
+    if(key === 'weather'){
+      if(end === '赤口') return `${q}，不是完全没雨象，更像短时阵雨、小雨、忽停忽下，或者伴随风势变化；不太像一整天稳定大雨。`;
+      if(end === '空亡') return `${q}，雨象偏虚，可能看起来有云、有预报、有雨意，但真正落下来的雨不明显，或最后落空。`;
+      if(end === '速喜') return `${q}，天气变化会比较快，短时间内容易出现云雨动静；若要出门，建议按“可能突然变化”来准备。`;
+      if(end === '小吉') return `${q}，有小范围、小雨量的可能，影响有限，但带伞或留意临近预报更稳。`;
+      if(end === '大安') return `${q}，整体偏稳定，即使有雨也不太像猛烈失控，更像影响可控。`;
+      return `${q}，天气容易阴着、闷着、拖着变化，有雨意但不够干脆。`;
+    }
+    if(key === 'market' || key === 'money'){
+      if(end === '赤口') return `${q}，短线确实容易有波动，但不是一路顺着一个方向走，更像忽上忽下、先动后反复；不要只看一时涨跌。`;
+      if(end === '空亡') return `${q}，当前信号不够实，传闻、预期或短暂变化都不能当成确定趋势。`;
+      if(end === '速喜') return `${q}，短期容易很快有价格变化或消息刺激，但来得快也可能回得快。`;
+      if(end === '大安') return `${q}，走势更偏稳定，变化幅度可能有限，不像突然大起大落。`;
+      if(end === '小吉') return `${q}，有小幅有利变化的可能，但幅度不宜期待过大。`;
+      return `${q}，短期方向不够干脆，容易拖住、震荡或反复。`;
+    }
+    if(key === 'love'){
+      if(end === '赤口') return `${q}，重点不是有没有感觉，而是沟通容易出问题；越急着说清楚，越可能起误会或争执。`;
+      if(end === '空亡') return `${q}，现在实际行动不足，想象和期待多于落实，不适合只靠猜来判断关系。`;
+      if(end === '留连') return `${q}，牵扯和反复较多，短期容易暧昧不明、拖着不表态。`;
+      if(end === '速喜') return `${q}，还有互动或消息机会，短期可能有动静，但后续是否稳定仍要继续看。`;
+      if(end === '小吉') return `${q}，有缓和和小进展的机会，适合温和试探，不宜逼太紧。`;
+      return `${q}，关系偏稳但推进慢，适合观察对方长期行动。`;
+    }
+    if(key === 'lost'){
+      if(end === '空亡') return `${q}，现在的寻找方向可能不对，建议先停一下，重新回想最后一次见到它的位置。`;
+      if(end === '留连') return `${q}，更像被夹住、压住、混在旧物或收纳里，不是完全没希望，但需要耐心细找。`;
+      if(end === '赤口') return `${q}，重点找金属物、门口、边角、票据卡片、小工具或容易磕碰的地方。`;
+      if(end === '速喜') return `${q}，容易很快出现线索，可能突然想起或有人提醒。`;
+      return `${q}，仍有找回希望，先从最后出现的位置往周边小范围找。`;
+    }
+    if(key === 'job'){
+      if(end === '空亡') return `${q}，目前还不能只看口头反馈，要等正式通知、书面确认或明确流程。`;
+      if(end === '赤口') return `${q}，关键卡在表达、沟通、条件或规则上，细节说清楚比着急推进更重要。`;
+      if(end === '速喜') return `${q}，短期会有消息或推进，但仍要看后面是否真正落地。`;
+      if(end === '大安') return `${q}，整体偏稳，流程可能慢一些，但按部就班更有利。`;
+    }
+    if(key === 'choice'){
+      if(end === '空亡') return `${q}，现在不适合马上定，条件还不够实，先查清楚再选。`;
+      if(end === '赤口') return `${q}，选择后容易有争议或反复，关键是先把规则、代价和后果说清楚。`;
+      if(end === '小吉') return `${q}，可以先小步试，不必一下子押太大。`;
+      if(end === '速喜') return `${q}，适合抓住短期机会，但别因为一时冲动忽略后续风险。`;
+    }
+    return `${q}，三象是「${rhythm}」。简单说：前面看动静，中间看过程，最后看结果；${ending}`;
+  }
+  function buildPlainExplanation(result){
+    const d = result.details || [];
+    if(d.length < 3) return '这课不要只看单个宫位，要把开头、中间、最后连起来看。前面代表事情怎么起，中间代表过程怎么走，最后代表结果落在哪里。';
+    const qtype = questionTypeLabel(result);
+    return `这课要按顺序看：${d[0].palaceName}是开头，表示${palacePlain(d[0].palaceName)}；${d[1].palaceName}是过程，表示${palacePlain(d[1].palaceName)}；${d[2].palaceName}是最后落点，最影响结果，表示${palacePlain(d[2].palaceName)}。所以问「${esc(qtype)}」时，不是单纯看吉凶，而是看这件事从开始到最后会怎么变化。`;
+  }
+  function focusPoint(result){
+    const ps = result.palaces || [], end = ps[2] || '';
+    const map = {
+      '大安':'重点是稳住节奏。慢一点不是坏事，真正重要的是事情能不能按计划持续推进。',
+      '留连':'重点是处理拖延和反复。不要只等结果，要找出到底卡在哪一步。',
+      '速喜':'重点是短期动静。很快有变化是好事，但还要继续看后面能不能稳住。',
+      '赤口':'重点是防反复和沟通问题。话不要说太满，决定不要做太急，细节要确认。',
+      '小吉':'重点是先拿小结果。小进展也是进展，别一开始就期待一步到位。',
+      '空亡':'重点是核实真假和落实程度。有消息、有想法、有机会，不等于已经成了。'
+    };
+    return map[end] || '重点看末象，因为末象更像这件事最后的落点。';
+  }
+  function readableActions(result){
+    const ctx = ctxOf(result), key = ctx.key || result.sceneKey;
+    const end = (result.palaces || [])[2] || '';
+    const common = [];
+    if(end === '空亡') common.push('先确认真实信息，不要只凭感觉、传闻或口头承诺判断。');
+    if(end === '赤口') common.push('先把话说清楚、条件写清楚，避免因为着急造成反复或争执。');
+    if(end === '留连') common.push('把卡住的地方列出来，一项一项确认，不要一直原地等待。');
+    if(end === '速喜') common.push('短期关注消息和变化，但不要一有动静就当成最终结果。');
+    if(end === '大安') common.push('按原计划稳住推进，不需要频繁改方向。');
+    if(end === '小吉') common.push('先争取小进展，小步验证比一次做大更稳。');
+    const typed = [];
+    if(key === 'weather') typed.push('出门前再看一次临近天气；如果结果有赤口、速喜、小吉，建议带伞更稳。');
+    if(key === 'market' || key === 'money') typed.push('不要因为一天的涨跌就下长期结论；涉及金钱决策时，先把风险放在前面。');
+    if(key === 'love') typed.push('看对方有没有持续行动，不要只看一句话、一条消息或一时情绪。');
+    if(key === 'lost') typed.push('按“最后出现处 → 周边小范围 → 收纳夹层 → 旧物杂物”的顺序找，不要乱翻。');
+    if(key === 'job') typed.push('继续准备备选方案，同时等正式通知或明确流程，不要只听口头说法。');
+    if(key === 'choice') typed.push('如果信息还不够，就先小步试探；能先试一小步，就不要一下子押太大。');
+    const old = (typeof window.buildAnswerActions === 'function' && window.buildAnswerActions.__v9918 !== true) ? safe(()=>window.buildAnswerActions(result), []) : [];
+    return Array.from(new Set([...typed, ...common, ...(Array.isArray(old)?old:[])])).slice(0,5);
+  }
+  function warningText(result){
+    const end = (result.palaces || [])[2] || '';
+    const map = {
+      '大安':'不要因为进展慢就以为没有希望；这类象更重视稳定和持续。',
+      '留连':'不要反复想却不行动。拖延本身就是这课最大的提醒。',
+      '速喜':'不要把“很快有动静”直接等同于“最终一定成”。',
+      '赤口':'不要硬碰硬，也不要只凭一时情绪做决定。',
+      '小吉':'不要把小机会看成大结果，先稳稳拿到阶段性进展。',
+      '空亡':'不要把没有落实的消息当结果，尤其要防期待落空。'
+    };
+    return map[end] || focusPoint(result);
+  }
+  window.buildAnswerActions = readableActions;
+  window.buildAnswerActions.__v9918 = true;
+  window.answerDirectByContext = directByContext;
+  window.answerDirectByContext.__v9918 = true;
+  window.buildAnswerSummaryHTML = function(result){
+    const direct = directByContext(result);
+    const bias = buildBias(result);
+    const rhythm = rhythmText(result);
+    const plain = buildPlainExplanation(result);
+    const actions = readableActions(result);
+    return `<div class="answer-card answer-one-line"><h5>一句话直断</h5><p>${direct}</p></div>
+      <div class="answer-readable-grid">
+        <div class="answer-card"><h5>偏向判断</h5><span class="answer-bias-pill">${esc(bias)}</span><p>可以先把它当作这件事的“当前倾向”，不是绝对定论。真正结果还要看后续是否落实。</p></div>
+        <div class="answer-card"><h5>结果节奏</h5><p>这件事大致是：</p><div class="answer-rhythm">${rhythm.split('→').map(x=>`<span>${esc(x.trim())}</span>`).join('')}</div><p>看结果时，尤其要看最后一象，因为它更像最终落点。</p></div>
+      </div>
+      <div class="answer-card"><h5>通俗解释</h5><p>${plain}</p><p><strong>本课重点：</strong>${focusPoint(result)}</p></div>
+      <div class="answer-readable-grid">
+        <div class="answer-card"><h5>你现在该怎么做</h5><ul class="answer-list">${actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div>
+        <div class="answer-card"><h5>需要注意</h5><p>${warningText(result)}</p></div>
+      </div>`;
+  };
+  window.buildAnswerSummaryHTML.__v9918 = true;
+  function patchVersionLog(){
+    if(typeof window.buildVersionUpdatesHTML === 'function' && !window.buildVersionUpdatesHTML.__v9918Patched){
+      const old = window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML = function(){
+        let html = old.call(this);
+        if(html.indexOf(VERSION_9918) < 0){
+          html += '<details><summary>v9.9.18 白话答案增强版</summary><ul><li>进一步增强占卜结果中的通俗答案表达。</li><li>“一句话直断”“偏向判断”“结果节奏”“通俗解释”“你现在该怎么做”内容更具体、更贴近用户填写的占问事项。</li><li>保持详细版的术语和规则解释不变，方便继续研究三象、单宫、双宫和象意补充。</li></ul></details>';
+        }
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v9918Patched = true;
+    }
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', patchVersionLog); else patchVersionLog();
 })();
 </script>
 

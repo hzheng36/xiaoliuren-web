@@ -1,5 +1,5 @@
 {
-  "name": "小六壬个人占卜台",
+  "name": "小六壬占卜",
   "short_name": "小六壬",
   "description": "小六壬个人占卜台，纯前端、本地保存、支持 PWA 离线缓存。",
   "start_url": "./index.html",
