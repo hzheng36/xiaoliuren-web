@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.24 命盘深化与断法重心增强版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.24：深化命运命盘解读，并为各场景增加判断重心说明。" />
+  <title>小六壬占卜 · v9.9.25 历史查看与删除确认修正版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.25：深化命运命盘解读，并为各场景增加判断重心说明。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -929,7 +929,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
 
-    /* v9.9.24 命盘深化与断法重心增强版 */
+    /* v9.9.25 历史查看与删除确认修正版 */
     body.result-page #homeInfoBlocks { display: none !important; }
     body.destiny-scene #numberPanel,
     body.destiny-scene #singlePanel,
@@ -979,7 +979,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.24 命盘深化与断法重心增强版</h2>
+          <h2>个人占卜台 · v9.9.25 历史查看与删除确认修正版</h2>
           <p>本版深化命盘阅读层次，新增场景判断重心，让占卜结果更贴题、更容易抓重点。</p>
         </div>
         <div class="actions">
@@ -5687,7 +5687,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.24 命盘深化与断法重心增强版';
+  const VERSION = 'v9.9.25 历史查看与删除确认修正版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6499,7 +6499,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.24 命盘深化与断法重心增强版';
+  const VERSION = 'v9.9.25 历史查看与删除确认修正版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6692,13 +6692,169 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
         ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
         ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']],
-        ['v9.9.24 命盘深化与断法重心增强版', ['命盘板块继续增强，新增命盘总览、助力来源、阻力来源和更清晰的命盘阅读顺序。','六宫排盘说明增强，补充顺阻判断与复盘建议。','占卜结果新增“本场景判断重心”，帮助用户先抓重点，再看详细解释。','运势、命运、寻人、贵人等新场景同步加入判断重心说明。']]
+        ['v9.9.25 历史查看与删除确认修正版', ['命盘板块继续增强，新增命盘总览、助力来源、阻力来源和更清晰的命盘阅读顺序。','六宫排盘说明增强，补充顺阻判断与复盘建议。','占卜结果新增“本场景判断重心”，帮助用户先抓重点，再看详细解释。','运势、命运、寻人、贵人等新场景同步加入判断重心说明。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
     try { if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); } catch(e){}
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', installVersionLog); else installVersionLog();
+})();
+</script>
+
+
+<script id="v9925-history-view-confirm-fix">
+(function(){
+  'use strict';
+  const PATCH_VERSION = 'v9.9.25 历史查看与删除确认修正版';
+
+  function $(id){ return document.getElementById(id); }
+  function hasValue(ids){ return ids.some(id => { const el=$(id); return el && String(el.value || '').trim(); }); }
+  function ask(msg){ return window.confirm(msg); }
+  function closeDialogById(id){ const d=$(id); if(!d) return; try{ if(typeof d.close==='function') d.close(); else d.removeAttribute('open'); }catch(e){ d.removeAttribute('open'); } }
+
+  function normalizeHistoryResult(item){
+    if(!item) return null;
+    const result = Object.assign({}, item);
+    result.sceneKey = result.sceneKey || 'other';
+    result.sceneName = result.sceneName || '其他';
+    result.sceneIcon = result.sceneIcon || '🧭';
+    result.numbers = Array.isArray(result.numbers) && result.numbers.length ? result.numbers.map(n=>parseInt(n,10)||1) : [1,1,1];
+    if(!Array.isArray(result.palaces) || !result.palaces.length){
+      try{ result.palaces = (typeof calculateSequentialPalaces === 'function') ? calculateSequentialPalaces(result.numbers) : ['大安','大安','大安']; }
+      catch(e){ result.palaces = ['大安','大安','大安']; }
+    }
+    result.palaces = result.palaces.slice(0,3);
+    const sceneStub = { key: result.sceneKey, name: result.sceneName, icon: result.sceneIcon, positions: ['起因状态','过程变化','最终趋势'] };
+    const needsDetailRebuild = !Array.isArray(result.details) || result.details.length < 3 || result.details.some(d => !d || !d.palaceName || !d.direction || !d.element || !d.color);
+    if(needsDetailRebuild){
+      try{
+        result.details = result.palaces.map(function(name, idx){ return buildPositionDetail(sceneStub, idx, name, result.numbers[idx] || 1); });
+      }catch(e){
+        const fallback = {
+          '大安': {direction:'东方', element:'木', color:'青色 / 绿色', keywords:['安稳','守成'], summary:'事情偏稳，宜守不宜急。', object:'文书、木物、桌柜', place:'家中、办公室、固定位置', timing:'较慢但稳'},
+          '留连': {direction:'中央', element:'土', color:'黄色 / 棕色', keywords:['拖延','反复'], summary:'事情容易拖住、反复。', object:'旧物、杂物、收纳', place:'中间、转角、堆放处', timing:'拖延'},
+          '速喜': {direction:'南方', element:'火', color:'红色 / 紫色', keywords:['快速','消息'], summary:'事情有动象，来得较快。', object:'电子讯息、灯火、证件', place:'明亮处、门口、热闹处', timing:'较快'},
+          '赤口': {direction:'西方', element:'金', color:'白色 / 金色', keywords:['口舌','争执'], summary:'易有沟通、规则或争执问题。', object:'金属、票据、钥匙', place:'门外、窗口、金属旁', timing:'快但有波折'},
+          '小吉': {direction:'北方', element:'水', color:'黑色 / 蓝色', keywords:['小成','贵人'], summary:'有小机会、小帮助。', object:'水杯、包袋、小物', place:'水边、流动处、包袋', timing:'短期小动'},
+          '空亡': {direction:'西北 / 空处', element:'土', color:'灰色 / 米白', keywords:['落空','不实'], summary:'结果未定，防落空或延后。', object:'空盒、遗漏物、高处', place:'角落、空处、不常用处', timing:'不定'}
+        };
+        result.details = result.palaces.map(function(name, idx){ return Object.assign({positionName:['本象','中象','末象'][idx]||'', role:sceneStub.positions[idx], number:result.numbers[idx]||1, palaceName:name}, fallback[name]||fallback['大安']); });
+      }
+    }
+    if(!result.rule) result.rule = { name:'三数连续顺推法', description:'第一数从大安起，第二数从第一数落宫继续起，第三数从第二数落宫继续起。' };
+    if(!result.methodNote) result.methodNote = result.method || '历史记录';
+    try{ if(!result.metrics && typeof calcMetricsByScene === 'function') result.metrics = calcMetricsByScene(result.sceneKey, result.palaces); }catch(e){}
+    try{ if(!result.metrics && typeof calcMetrics === 'function') result.metrics = calcMetrics(result.palaces); }catch(e){}
+    try{ if(!result.distribution && typeof describeDistribution === 'function') result.distribution = describeDistribution(result.palaces, result.metrics || {}); }catch(e){}
+    if(!result.distribution) result.distribution = { text:'三象依次落宫，按本象、中象、末象递进判断。', counter:{} };
+    return result;
+  }
+
+  window.viewHistoryItem = function(id){
+    try{
+      const list = (typeof getHistory === 'function') ? getHistory() : [];
+      const raw = list.find(x => String(x.id) === String(id));
+      if(!raw){ alert('没有找到这条历史记录。'); return; }
+      const result = normalizeHistoryResult(raw);
+      window.currentResult = result;
+      if(typeof renderResult === 'function') renderResult(result);
+      closeDialogById('historyDialog');
+      if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon();
+    }catch(err){
+      console.error('[v9.9.25] 查看历史失败：', err);
+      alert('这条历史记录无法打开，可能是旧版本数据缺少字段。建议先导出备份 JSON，再把这条记录复盘或重新起课。');
+    }
+  };
+
+  window.deleteHistoryItem = function(id){
+    if(!ask('确定删除这条历史记录吗？此操作只删除当前浏览器本地记录。')) return;
+    const list = (typeof getHistory === 'function') ? getHistory().filter(x => String(x.id) !== String(id)) : [];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    if(typeof renderHistory === 'function') renderHistory();
+    if(typeof renderAnalytics === 'function') renderAnalytics();
+  };
+
+  window.clearHistory = function(){
+    if(!ask('确定清空所有历史记录吗？此操作会删除当前浏览器本地保存的历史、收藏和复盘记录。建议先导出完整备份 JSON。')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    if(typeof renderHistory === 'function') renderHistory();
+    if(typeof renderAnalytics === 'function') renderAnalytics();
+  };
+
+  window.clearReviewForm = function(){
+    if(!window.currentReviewId) return;
+    if(!ask('确定清空这条记录的全部复盘时间线吗？')) return;
+    const list = (typeof getHistory === 'function') ? getHistory() : [];
+    const item = list.find(x => String(x.id) === String(window.currentReviewId));
+    if(item){ delete item.review; delete item.reviews; }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    const acc=$('reviewAccuracy'), actual=$('reviewActual'), note=$('reviewNote');
+    if(acc) acc.value='pending'; if(actual) actual.value=''; if(note) note.value='';
+    try{ if(item && typeof renderReviewTimeline === 'function') renderReviewTimeline(item); }catch(e){}
+    if(typeof renderHistory === 'function') renderHistory();
+    if(typeof renderAnalytics === 'function') renderAnalytics();
+    alert('复盘已清空。');
+  };
+
+  const oldClearNumbers = window.clearNumbers;
+  window.clearNumbers = function(){
+    if(hasValue(['num1','num2','num3']) && !ask('确定清空三个数字吗？')) return;
+    if(typeof oldClearNumbers === 'function') oldClearNumbers();
+    else ['num1','num2','num3'].forEach(id=>{ const el=$(id); if(el) el.value=''; });
+  };
+  const oldClearSingle = window.clearSingleNumber;
+  window.clearSingleNumber = function(){
+    if(hasValue(['singleNum']) && !ask('确定清空单数吗？')) return;
+    if(typeof oldClearSingle === 'function') oldClearSingle(); else { const el=$('singleNum'); if(el) el.value=''; }
+  };
+
+  // 捕获旧版本内联 onclick，确保“查看 / 删除”都使用修正版逻辑。
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest && e.target.closest('.history-actions button');
+    if(btn){
+      const code = btn.getAttribute('onclick') || '';
+      const viewMatch = code.match(/viewHistoryItem\('([^']+)'\)/);
+      const delMatch = code.match(/deleteHistoryItem\('([^']+)'\)/);
+      if(viewMatch){ e.preventDefault(); e.stopImmediatePropagation(); window.viewHistoryItem(viewMatch[1]); return; }
+      if(delMatch){ e.preventDefault(); e.stopImmediatePropagation(); window.deleteHistoryItem(delMatch[1]); return; }
+    }
+    const clearQuestion = e.target.closest && e.target.closest('#clearQuestionBtn');
+    if(clearQuestion){
+      const q=$('questionInput');
+      if(q && q.value.trim()){
+        e.preventDefault(); e.stopImmediatePropagation();
+        if(ask('确定清空占问事项吗？')){ q.value=''; try{ updateQuestionCount(); updateContextTypeAuto(); }catch(_e){} q.focus(); }
+      }
+      return;
+    }
+    const clearEvent = e.target.closest && e.target.closest('#clearEventBtn');
+    if(clearEvent){
+      const t=$('eventText');
+      if(t && t.value.trim()){
+        e.preventDefault(); e.stopImmediatePropagation();
+        if(ask('确定清空事件文字吗？')){ t.value=''; try{ updateEventCount(); }catch(_e){} const note=$('eventNote'); if(note) note.textContent='事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。'; }
+      }
+    }
+  }, true);
+
+  // 若有模板删除函数，保持确认；若旧版本缺失确认，也补上。
+  if(typeof window.deleteCustomTemplate === 'function' && !window.deleteCustomTemplate.__v9925Patched){
+    const oldDeleteCustomTemplate = window.deleteCustomTemplate;
+    window.deleteCustomTemplate = function(id){
+      if(!ask('确定删除这个自定义模板吗？')) return;
+      // 旧函数内部若也 confirm，会重复；因此直接复制轻量删除逻辑。
+      try{
+        const list = JSON.parse(localStorage.getItem(CUSTOM_TPL_KEY) || '[]').filter(x => String(x.id) !== String(id));
+        localStorage.setItem(CUSTOM_TPL_KEY, JSON.stringify(list));
+        if(typeof renderQuestionTemplates === 'function') renderQuestionTemplates();
+      }catch(e){ oldDeleteCustomTemplate(id); }
+    };
+    window.deleteCustomTemplate.__v9925Patched = true;
+  }
+
+  // 标记版本，方便排查缓存。
+  window.__XLR_PATCH_VERSION__ = PATCH_VERSION;
 })();
 </script>
 
