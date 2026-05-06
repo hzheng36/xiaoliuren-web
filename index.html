@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.25 历史查看与删除确认修正版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.25：深化命运命盘解读，并为各场景增加判断重心说明。" />
+  <title>小六壬占卜 · v9.9.26 历史兼容修复版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.26：修复旧版本历史记录查看兼容问题，并增强旧历史自动补齐。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -929,7 +929,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
 
-    /* v9.9.25 历史查看与删除确认修正版 */
+    /* v9.9.26 历史兼容修复版 */
     body.result-page #homeInfoBlocks { display: none !important; }
     body.destiny-scene #numberPanel,
     body.destiny-scene #singlePanel,
@@ -979,7 +979,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.25 历史查看与删除确认修正版</h2>
+          <h2>个人占卜台 · v9.9.26 历史兼容修复版</h2>
           <p>本版深化命盘阅读层次，新增场景判断重心，让占卜结果更贴题、更容易抓重点。</p>
         </div>
         <div class="actions">
@@ -5687,7 +5687,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.25 历史查看与删除确认修正版';
+  const VERSION = 'v9.9.26 历史兼容修复版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6499,7 +6499,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.25 历史查看与删除确认修正版';
+  const VERSION = 'v9.9.26 历史兼容修复版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6692,7 +6692,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
         ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
         ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']],
-        ['v9.9.25 历史查看与删除确认修正版', ['命盘板块继续增强，新增命盘总览、助力来源、阻力来源和更清晰的命盘阅读顺序。','六宫排盘说明增强，补充顺阻判断与复盘建议。','占卜结果新增“本场景判断重心”，帮助用户先抓重点，再看详细解释。','运势、命运、寻人、贵人等新场景同步加入判断重心说明。']]
+        ['v9.9.26 历史兼容修复版', ['命盘板块继续增强，新增命盘总览、助力来源、阻力来源和更清晰的命盘阅读顺序。','六宫排盘说明增强，补充顺阻判断与复盘建议。','占卜结果新增“本场景判断重心”，帮助用户先抓重点，再看详细解释。','运势、命运、寻人、贵人等新场景同步加入判断重心说明。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
@@ -6706,7 +6706,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9925-history-view-confirm-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.25 历史查看与删除确认修正版';
+  const PATCH_VERSION = 'v9.9.26 历史兼容修复版';
 
   function $(id){ return document.getElementById(id); }
   function hasValue(ids){ return ids.some(id => { const el=$(id); return el && String(el.value || '').trim(); }); }
@@ -6854,6 +6854,174 @@ body.hide-progress-bar .page-progress { display:none !important; }
   }
 
   // 标记版本，方便排查缓存。
+  window.__XLR_PATCH_VERSION__ = PATCH_VERSION;
+})();
+</script>
+
+
+<script id="v9926-history-compat-fix">
+(function(){
+  'use strict';
+  const PATCH_VERSION = 'v9.9.26 历史兼容修复版';
+  function $(id){ return document.getElementById(id); }
+  function sceneFromAny(item){
+    const key = item && item.sceneKey;
+    const name = item && item.sceneName;
+    let scene = null;
+    try { scene = (typeof SCENES !== 'undefined' && Array.isArray(SCENES)) ? SCENES.find(s => s.key === key || s.name === name) : null; } catch(e){}
+    const map = {'感情':'love','事业':'career','财运':'wealth','考试':'exam','失物':'lost','健康':'health','出行':'travel','合作':'cooperation','消息等待':'message','天气':'weather','求职':'job','家宅':'home','选择':'choice','寻人':'people','贵人':'noble','运势':'fortune','命运':'destiny','其他':'other'};
+    if(!scene && name && map[name]){
+      try { scene = SCENES.find(s => s.key === map[name]); } catch(e){}
+    }
+    if(!scene && key){
+      const names = {love:'感情',career:'事业',wealth:'财运',exam:'考试',lost:'失物',health:'健康',travel:'出行',cooperation:'合作',message:'消息等待',weather:'天气',job:'求职',home:'家宅',choice:'选择',people:'寻人',noble:'贵人',fortune:'运势',destiny:'命运',other:'其他'};
+      const icons = {love:'💗',career:'💼',wealth:'💰',exam:'📘',lost:'🔎',health:'🩺',travel:'✈️',cooperation:'🤝',message:'💬',weather:'🌦️',job:'🧑‍💼',home:'🏠',choice:'🧩',people:'🧭',noble:'🤲',fortune:'🌟',destiny:'🪷',other:'✨'};
+      scene = { key, name:names[key]||name||'其他', icon:icons[key]||'✨', positions:['起因状态','过程变化','最终趋势'] };
+    }
+    if(!scene) scene = { key:'other', name:name||'其他', icon:'✨', positions:['起因状态','过程变化','最终趋势'] };
+    if(!Array.isArray(scene.positions) || scene.positions.length < 3) scene.positions = ['起因状态','过程变化','最终趋势'];
+    return scene;
+  }
+  function safePalaceData(name){
+    const fallback = {
+      direction:'待补充', element:'待补充', color:'待补充', keywords:['参考'],
+      summary:'此象用于旧历史兼容显示，建议结合原取数和落宫复盘。',
+      object:'可按原象意参考', place:'可按原方位参考', timing:'以实际复盘为准'
+    };
+    try { return Object.assign({}, fallback, (typeof PALACE_DATA !== 'undefined' ? PALACE_DATA[name] : null) || {}); } catch(e){ return fallback; }
+  }
+  function normalizeDetails(result, scene){
+    const names = ['本象','中象','末象'];
+    const palaces = Array.isArray(result.palaces) ? result.palaces.slice(0,3) : [];
+    while(palaces.length < 3) palaces.push(palaces[palaces.length-1] || '大安');
+    result.palaces = palaces;
+    const nums = Array.isArray(result.numbers) ? result.numbers.slice(0,3).map(n => parseInt(n,10) || 1) : [1,1,1];
+    while(nums.length < 3) nums.push(1);
+    result.numbers = nums;
+    const old = Array.isArray(result.details) ? result.details : [];
+    result.details = palaces.map(function(palace, idx){
+      let base = {};
+      try { if(typeof buildPositionDetail === 'function') base = buildPositionDetail(scene, idx, palace, nums[idx]); } catch(e) {}
+      const pdata = safePalaceData(palace);
+      const existing = old[idx] || {};
+      const merged = Object.assign({}, pdata, base, existing);
+      merged.positionName = merged.positionName || names[idx] || '';
+      merged.role = merged.role || (scene.positions && scene.positions[idx]) || names[idx] || '';
+      merged.number = merged.number || nums[idx];
+      merged.palaceName = merged.palaceName || palace;
+      merged.direction = merged.direction || pdata.direction;
+      merged.element = merged.element || pdata.element;
+      merged.color = merged.color || pdata.color;
+      merged.keywords = Array.isArray(merged.keywords) && merged.keywords.length ? merged.keywords : (Array.isArray(pdata.keywords) ? pdata.keywords : ['参考']);
+      merged.summary = merged.summary || pdata.summary;
+      merged.object = merged.object || pdata.object;
+      merged.place = merged.place || pdata.place;
+      merged.timing = merged.timing || pdata.timing;
+      return merged;
+    });
+    return result.details;
+  }
+  function normalizeHistoryResultV9926(item){
+    if(!item) return null;
+    const result = Object.assign({}, item);
+    const scene = sceneFromAny(result);
+    result.sceneKey = scene.key;
+    result.sceneName = scene.name;
+    result.sceneIcon = result.sceneIcon || scene.icon || '✨';
+    result.createdAt = result.createdAt || new Date().toISOString();
+    result.favorite = !!result.favorite;
+    result.question = result.question || '';
+    result.method = result.method || guessMethod(result);
+    result.methodNote = result.methodNote || methodLabel(result.method) + '：' + ((result.numbers||[]).join(' / ') || '旧历史记录');
+    result.extraInfo = result.extraInfo || '';
+    result.rule = result.rule || Object.assign({}, (typeof DIVINATION_RULE !== 'undefined' ? DIVINATION_RULE : {name:'三数连续顺推法', description:'第一数从大安起，第二数从第一数落宫继续起，第三数从第二数落宫继续起。'}));
+    if(!Array.isArray(result.numbers) || !result.numbers.length){
+      const found = String(result.methodNote || '').match(/(\d+)\s*[\/／,， ]\s*(\d+)\s*[\/／,， ]\s*(\d+)/);
+      result.numbers = found ? [parseInt(found[1],10), parseInt(found[2],10), parseInt(found[3],10)] : [1,1,1];
+    }
+    if(!Array.isArray(result.palaces) || !result.palaces.length){
+      try { result.palaces = calculateSequentialPalaces(result.numbers); } catch(e) { result.palaces = ['大安','大安','大安']; }
+    }
+    normalizeDetails(result, scene);
+    try { result.metrics = calcMetricsByScene(result.sceneKey, result.palaces); } catch(e) { try { result.metrics = calcMetrics(result.palaces); } catch(_e){ result.metrics = {success:50,luckText:'中平',speedText:'中等',resistText:'需复核',mainElement:'参考',elementText:'以复盘为准'}; } }
+    try { result.distribution = describeDistribution(result.palaces, result.metrics); } catch(e) { result.distribution = {text:'旧历史记录已按现有取数和落宫重新补齐排盘信息。', counter:{}}; }
+    if(!result.context && result.question){ try { result.context = analyzeQuestionContext(result.question, result.sceneKey); } catch(e){} }
+    try { result.overallText = buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution); } catch(e) { result.overallText = `这是一条旧版本历史记录，已根据现有取数 ${result.numbers.join(' / ')} 和落宫 ${result.palaces.join(' / ')} 补齐基础解读。`; }
+    try { result.advice = buildAdviceByScene(result.sceneKey, result.details, result.metrics); } catch(e) { result.advice = ['此记录由旧版本数据补齐，建议结合原占问事项和复盘结果一起参考。']; }
+    try { result.supplement = buildSupplementByScene(result.sceneKey, result.details, result.metrics); } catch(e) { result.supplement = [{label:'兼容说明', value:'旧历史记录已尽量补齐字段。'}]; }
+    result.__compatRebuilt = true;
+    return result;
+  }
+  function guessMethod(result){
+    const note = String(result.methodNote || '');
+    if(note.includes('单数')) return 'single';
+    if(note.includes('时辰') || note.includes('命运')) return 'time';
+    if(note.includes('事件')) return 'event';
+    return result.method || 'number';
+  }
+  function methodLabel(method){
+    return {number:'数字起课', single:'单数起课', time:'时辰起课', event:'事件起课'}[method] || '历史记录';
+  }
+  function fallbackRenderHistoryResult(result, err){
+    console.error('[v9.9.26] renderResult 失败，启用基础历史结果页：', err);
+    const card = $('resultCard');
+    if(card) card.classList.remove('hidden');
+    const set = (id, html) => { const el=$(id); if(el) el.innerHTML = html; };
+    const text = s => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    set('resultScene', `${text(result.sceneIcon)} ${text(result.sceneName)}`);
+    set('resultTitle', `${text(result.sceneName)} · 历史结果`);
+    set('resultMethod', `${text(result.methodNote)}<br><span class="rule-badge">起课规则：${text((result.rule&&result.rule.name)||'三数连续顺推法')}</span>`);
+    set('palaceCards', result.details.map(d=>`<div class="palace-card"><div class="mini">${text(d.positionName)} · ${text(d.role)}</div><h5>${text(d.palaceName)}</h5><div class="palace-meta"><span>取数：${text(d.number)}</span><span>方位：${text(d.direction)}</span><span>五行：${text(d.element)}</span></div></div>`).join(''));
+    set('overallText', text(result.overallText || '旧历史记录已按基础字段恢复显示。'));
+    set('adviceList', (result.advice||[]).map(a=>`<li>${text(a)}</li>`).join(''));
+    try { closeHistoryDialog(); } catch(e){}
+    setTimeout(()=>{ try{ card && card.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){} }, 50);
+  }
+  window.viewHistoryItem = function(id){
+    const list = (typeof getHistory === 'function') ? getHistory() : [];
+    const raw = list.find(x => String(x.id) === String(id));
+    if(!raw){ alert('没有找到这条历史记录。'); return; }
+    const result = normalizeHistoryResultV9926(raw);
+    try {
+      if(typeof renderResult !== 'function') throw new Error('renderResult 不存在');
+      renderResult(result);
+      try { closeHistoryDialog(); } catch(e){}
+      try { if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon(); } catch(e){}
+    } catch(err){
+      fallbackRenderHistoryResult(result, err);
+    }
+  };
+  window.repairOldHistoryRecords = function(){
+    if(!confirm('确定修复旧历史记录吗？系统会根据现有取数、落宫、场景补齐缺失字段。建议先导出完整备份 JSON。')) return;
+    const list = (typeof getHistory === 'function') ? getHistory() : [];
+    const repaired = list.map(normalizeHistoryResultV9926);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(repaired)); } catch(e) { alert('保存失败：' + e.message); return; }
+    if(typeof renderHistory === 'function') renderHistory();
+    if(typeof renderAnalytics === 'function') renderAnalytics();
+    alert('已修复 ' + repaired.length + ' 条历史记录。');
+  };
+  function injectRepairButton(){
+    const tools = document.querySelector('#historyDialog .history-tools');
+    if(!tools || $('repairHistoryBtn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'ghost-btn'; btn.type='button'; btn.id='repairHistoryBtn'; btn.textContent='修复旧历史';
+    btn.addEventListener('click', window.repairOldHistoryRecords);
+    tools.appendChild(btn);
+  }
+  const oldOpen = window.openHistoryDialog;
+  window.openHistoryDialog = function(){
+    if(typeof oldOpen === 'function') oldOpen();
+    setTimeout(injectRepairButton, 30);
+  };
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectRepairButton); else injectRepairButton();
+  const oldVersion = window.buildVersionUpdatesHTML;
+  window.buildVersionUpdatesHTML = function(){
+    let html = typeof oldVersion === 'function' ? oldVersion() : '';
+    if(!html.includes('v9.9.26 历史兼容修复版')){
+      html += '<details><summary>v9.9.26 历史兼容修复版</summary><ul><li>修复旧版本历史记录因字段缺失而无法“查看”的问题。</li><li>查看历史时会根据场景、取数、落宫和占问事项自动补齐新版结果页需要的字段。</li><li>新增“修复旧历史”按钮，可批量补齐旧历史记录，便于继续复盘和查看。</li><li>即使部分旧记录无法完整还原，也会显示基础历史结果页，不再直接中断。</li></ul></details>';
+    }
+    return html;
+  };
   window.__XLR_PATCH_VERSION__ = PATCH_VERSION;
 })();
 </script>
