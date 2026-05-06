@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.28 排盘与命盘显示增强版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.28：修复六宫排盘显示不完整，并新增命运场景的命盘图式展示。" />
+  <title>小六壬占卜 · v9.9.29 命盘显示条件修正版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.28：修复命盘只在命运场景显示，非命运场景只保留六宫排盘。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -929,7 +929,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
 
-    /* v9.9.28 排盘与命盘显示增强版 */
+    /* v9.9.29 命盘显示条件修正版 */
     body.result-page #homeInfoBlocks { display: none !important; }
     body.destiny-scene #numberPanel,
     body.destiny-scene #singlePanel,
@@ -1050,7 +1050,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.28 排盘与命盘显示增强版</h2>
+          <h2>个人占卜台 · v9.9.29 命盘显示条件修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -5758,7 +5758,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  const VERSION = 'v9.9.29 命盘显示条件修正版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6570,7 +6570,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  const VERSION = 'v9.9.29 命盘显示条件修正版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6763,7 +6763,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
         ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
         ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']],
-        ['v9.9.28 排盘与命盘显示增强版', ['修复占卜完成后结果页没有与主页输入区分离的问题。','占卜结果和查看历史结果时，隐藏选择场景、占问事项、起课方式、快捷数字与开始占卜等主页内容。','点击返回主页或重新占卜时再回到输入主页。','保留 v9.9.26 的旧历史兼容修复能力。']]
+        ['v9.9.29 命盘显示条件修正版', ['修复占卜完成后结果页没有与主页输入区分离的问题。','占卜结果和查看历史结果时，隐藏选择场景、占问事项、起课方式、快捷数字与开始占卜等主页内容。','点击返回主页或重新占卜时再回到输入主页。','保留 v9.9.26 的旧历史兼容修复能力。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
@@ -6777,7 +6777,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9925-history-view-confirm-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  const PATCH_VERSION = 'v9.9.29 命盘显示条件修正版';
 
   function $(id){ return document.getElementById(id); }
   function hasValue(ids){ return ids.some(id => { const el=$(id); return el && String(el.value || '').trim(); }); }
@@ -6933,7 +6933,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9926-history-compat-fix">
 (function(){
   'use strict';
-  const PATCH_VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  const PATCH_VERSION = 'v9.9.29 命盘显示条件修正版';
   function $(id){ return document.getElementById(id); }
   function sceneFromAny(item){
     const key = item && item.sceneKey;
@@ -7088,8 +7088,8 @@ body.hide-progress-bar .page-progress { display:none !important; }
   const oldVersion = window.buildVersionUpdatesHTML;
   window.buildVersionUpdatesHTML = function(){
     let html = typeof oldVersion === 'function' ? oldVersion() : '';
-    if(!html.includes('v9.9.28 排盘与命盘显示增强版')){
-      html += '<details><summary>v9.9.28 排盘与命盘显示增强版</summary><ul><li>修复六宫排盘在手机端只显示中心图、不完整显示六宫的问题。</li><li>新增命运场景的命盘图式展示，让命盘也能像排盘一样一眼看到六亲、地支与落宫。</li><li>保留结果页分离、旧历史兼容、命运/运势等功能。</li></ul></details>';
+    if(!html.includes('v9.9.29 命盘显示条件修正版')){
+      html += '<details><summary>v9.9.29 命盘显示条件修正版</summary><ul><li>修复六宫排盘在手机端只显示中心图、不完整显示六宫的问题。</li><li>新增命运场景的命盘图式展示，让命盘也能像排盘一样一眼看到六亲、地支与落宫。</li><li>保留结果页分离、旧历史兼容、命运/运势等功能。</li></ul></details>';
     }
     return html;
   };
@@ -7137,7 +7137,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  const VERSION = 'v9.9.29 命盘显示条件修正版';
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -7260,7 +7260,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 
 <script id="v9928-paipan-destiny-board-fix">
 (function(){
-  const PATCH_VERSION = 'v9.9.28 排盘与命盘显示增强版';
+  const PATCH_VERSION = 'v9.9.29 命盘显示条件修正版';
   try {
     if (typeof VERSION !== 'undefined') { /* 只读兼容，不强改常量 */ }
   } catch(e) {}
@@ -7346,13 +7346,69 @@ body.hide-progress-bar .page-progress { display:none !important; }
     const oldBuildVersionUpdatesHTML = buildVersionUpdatesHTML;
     buildVersionUpdatesHTML = function(){
       let html = oldBuildVersionUpdatesHTML();
-      if(!html.includes('v9.9.28 排盘与命盘显示增强版')){
-        html += '<details><summary>v9.9.28 排盘与命盘显示增强版</summary><ul><li>修复六宫排盘在手机端显示不完整的问题，改为稳定的六宫网格排盘。</li><li>命运场景新增命盘图式展示，六亲、地支、落宫和用途更直观。</li><li>保留原有命盘详细解读、结果页分离和旧历史兼容能力。</li></ul></details>';
+      if(!html.includes('v9.9.29 命盘显示条件修正版')){
+        html += '<details><summary>v9.9.29 命盘显示条件修正版</summary><ul><li>修复六宫排盘在手机端显示不完整的问题，改为稳定的六宫网格排盘。</li><li>命运场景新增命盘图式展示，六亲、地支、落宫和用途更直观。</li><li>保留原有命盘详细解读、结果页分离和旧历史兼容能力。</li></ul></details>';
       }
       return html;
     };
   }
 })();
+
+/* v9.9.29 命盘显示条件修正版：命盘只在“命运”场景显示 */
+(function(){
+  function isDestinyResult(result){
+    return !!(result && (result.sceneKey === 'destiny' || result.scene === '命运'));
+  }
+  function enforceDestinyVisibility(result){
+    const isDestiny = isDestinyResult(result);
+    const block = document.getElementById('destinyBoardBlock');
+    const visual = document.getElementById('destinyVisualBoard');
+    if(block){
+      block.classList.toggle('hidden', !isDestiny);
+      block.setAttribute('aria-hidden', isDestiny ? 'false' : 'true');
+      if(!isDestiny){
+        block.classList.remove('is-collapsed');
+      }
+    }
+    if(visual){
+      visual.classList.toggle('hidden', !isDestiny);
+      visual.setAttribute('aria-hidden', isDestiny ? 'false' : 'true');
+      if(!isDestiny) visual.innerHTML = '';
+    }
+  }
+  if(typeof renderDestinyBoard === 'function'){
+    const previousRenderDestinyBoard = renderDestinyBoard;
+    renderDestinyBoard = function(result){
+      if(!isDestinyResult(result)){
+        enforceDestinyVisibility(result);
+        return;
+      }
+      previousRenderDestinyBoard(result);
+      enforceDestinyVisibility(result);
+    };
+  }
+  if(typeof sectionIsJumpVisible === 'function'){
+    const previousSectionIsJumpVisible = sectionIsJumpVisible;
+    sectionIsJumpVisible = function(el){
+      if(el && el.id === 'destinyBoardBlock'){
+        const current = (typeof currentResult !== 'undefined') ? currentResult : null;
+        if(!isDestinyResult(current)) return false;
+      }
+      return previousSectionIsJumpVisible(el);
+    };
+  }
+  if(typeof buildVersionUpdatesHTML === 'function'){
+    const previousBuildVersionUpdatesHTML = buildVersionUpdatesHTML;
+    buildVersionUpdatesHTML = function(){
+      let html = previousBuildVersionUpdatesHTML();
+      if(!html.includes('v9.9.29 命盘显示条件修正版')){
+        html += '<details><summary>v9.9.29 命盘显示条件修正版</summary><ul><li>修复命盘模块在出行、财运、感情等非命运场景中误显示的问题。</li><li>命盘图式、命运六亲参考盘和命运专属解读现在只在“命运”场景结果页显示。</li><li>非命运场景继续保留六宫排盘，不显示命盘导航卡点。</li></ul></details>';
+      }
+      return html;
+    };
+  }
+})();
+
 </script>
 
 </body>
