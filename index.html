@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.23 运势与命运修正版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.23：新增运势场景，修复命运场景起课显示，进一步增强命运排盘解读。" />
+  <title>小六壬占卜 · v9.9.24 命盘深化与断法重心增强版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.24：深化命运命盘解读，并为各场景增加判断重心说明。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -929,7 +929,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     @media (min-width: 760px){ .destiny-deep { grid-template-columns: repeat(2, minmax(0, 1fr)); } .destiny-deep-card.full { grid-column: 1 / -1; } }
 
 
-    /* v9.9.23 运势与命运修正版 */
+    /* v9.9.24 命盘深化与断法重心增强版 */
     body.result-page #homeInfoBlocks { display: none !important; }
     body.destiny-scene #numberPanel,
     body.destiny-scene #singlePanel,
@@ -979,8 +979,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.23 运势与命运修正版</h2>
-          <p>本版新增运势场景，修复命运场景只保留时辰起盘，并继续增强六宫排盘与命运六亲参考盘说明。</p>
+          <h2>个人占卜台 · v9.9.24 命盘深化与断法重心增强版</h2>
+          <p>本版深化命盘阅读层次，新增场景判断重心，让占卜结果更贴题、更容易抓重点。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1132,6 +1132,10 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
         <article class="block" id="answerSummaryBlock">
           <h4>答案摘要</h4>
           <div class="answer-summary" id="answerSummaryContent"></div>
+        </article>
+        <article class="block" id="sceneFocusBlock">
+          <h4>本场景判断重心</h4>
+          <div class="focus-grid" id="sceneFocusContent"></div>
         </article>
         <article class="block hidden" id="abChoiceResultBlock">
           <h4>A/B 选择对比</h4>
@@ -2056,6 +2060,40 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
         return `<div class="gua-card"><h5>${title}</h5><p><strong>用途：</strong>${scope}</p><p><strong>组合：</strong>${move}${hint}</p><p><strong>提醒：</strong>${advice}</p></div>`;
       }).join('');
     }
+
+    function buildSceneFocusHTML(result){
+      const key = result.sceneKey || 'other';
+      const q = result.question ? `你问的是“${escapeHtml(result.question)}”。` : '你没有填写具体占问事项，本课会按所选场景作通用判断。';
+      const end = (result.palaces || [])[2] || '空亡';
+      const mid = (result.palaces || [])[1] || '留连';
+      const map = {
+        love:{title:'感情关系', focus:['先看对方是否有真实行动，而不是只看一句话。','再看中象是否拖延或争执，判断关系过程是否反复。','最后看末象能否落地，决定关系是否真正稳定。'], tip:'感情问题最怕把想象当成事实。末象若空亡或赤口，要先稳住情绪，等对方有明确行动。'},
+        career:{title:'事业工作', focus:['先看事情能不能推进，而不是只看前期有没有机会。','中象看流程、沟通、审批和资源是否卡住。','末象看承诺是否真正落地。'], tip:'事业类问题适合把大目标拆成可执行步骤，先推进能确认的部分。'},
+        wealth:{title:'财运钱财', focus:['先看钱或机会是否真实，不要只看消息热不热。','中象看资金、合同、价格或规则是否反复。','末象看能不能到账、兑现或真正产生收益。'], tip:'财运类尤其要防口头承诺和短线冲动，涉及投资和大额钱财请以现实资料和专业意见为准。'},
+        exam:{title:'考试学习', focus:['先看基础是否稳，不能只看临场运气。','中象看旧错题、拖延、审题和表达。','末象看结果稳定度和是否需要补救。'], tip:'考试学习类更适合用来找薄弱点，而不是替代复习。'},
+        lost:{title:'失物寻找', focus:['先看是否还有线索，东西像不像在原范围内。','中象看被夹住、压住、混入旧物或寻找过程是否反复。','末象看最终能否找回，以及该不该换方向。'], tip:'失物类要把宫位转成现实位置：最后一次使用处、收纳处、包袋夹层、旧物堆、门口桌边等。'},
+        health:{title:'健康状态', focus:['先看当前状态是否稳定。','中象看是否拖延、反复或突然加重。','末象看是否需要复查、休息或专业帮助。'], tip:'健康类只作自我提醒，不替代医生诊断。身体不适请以医学检查为准。'},
+        travel:{title:'出行行程', focus:['先看能不能顺利出发。','中象看交通、天气、证件、路线是否拖延。','末象看最终能否安稳到达或是否临时变更。'], tip:'出行类现实准备很重要，证件、时间、路线和天气要提前确认。'},
+        cooperation:{title:'合作合同', focus:['先看双方是否有真实合作意愿。','中象看条款、责任、利益分配和沟通是否反复。','末象看合同或承诺是否真正落实。'], tip:'合作类不要只看气氛好不好，关键看规则、边界和白纸黑字。'},
+        message:{title:'消息等待', focus:['先看有没有动静。','中象看是否拖延、反复确认或带情绪。','末象看这个消息是否算数、能不能落实。'], tip:'消息类见速喜可能来得快，但末象不稳时仍要二次确认。'},
+        weather:{title:'天气变化', focus:['先看天气是否有动象。','中象看雨势或变化是否持续。','末象看最后是否真的落雨、转晴或落空。'], tip:'天气类要结合现实预报，本课更适合看短时变化和是否反复。'},
+        job:{title:'求职面试', focus:['先看机会是否真实。','中象看面试表达、内部流程、薪资沟通和审批。','末象看正式通知或 offer 是否落地。'], tip:'求职类不要只看口头反馈，最终以正式通知为准。'},
+        home:{title:'家宅居住', focus:['先看家宅是否稳定。','中象看旧问题、维修、邻里、合同是否反复。','末象看最终能否安顿或解决。'], tip:'家宅类要结合现实检查，漏水、维修、合同和安全隐患不要只靠卦象判断。'},
+        choice:{title:'选择决策', focus:['先看当前信息是否足够。','中象看选择过程是否有反复或争议。','末象看哪种结果更容易落地。'], tip:'选择类适合先小步试行，条件不清时不要急着一次定死。'},
+        people:{title:'寻人找人', focus:['先看有没有线索或消息。','中象看联系过程是否拖延、误会或反复。','末象看是否能出现、联系上或得到可靠信息。'], tip:'寻人类要结合现实方式，必要时及时联系家人、朋友或相关机构。'},
+        noble:{title:'贵人与助力', focus:['先看是否有人愿意帮。','中象看帮助是否稳定、是否需要主动开口。','末象看助力能不能真正落到行动上。'], tip:'贵人不一定主动出现，很多时候需要你明确提出请求、准备好资料。'},
+        fortune:{title:'阶段运势', focus:['先看当前阶段整体气势。','中象看近期起伏、机会和阻力。','末象看这一阶段最后更偏稳、动、拖、冲、小成还是落空。'], tip:'运势课适合看阶段提醒，具体事情仍建议用对应场景另起一课。'},
+        destiny:{title:'命运命盘', focus:['先看自身宫与三象主线，了解个人起势和处事节奏。','再看六亲分布，判断助力、压力、资源和人际主题。','最后看空亡、赤口、留连等薄弱点，把它当作长期自我观察提醒。'], tip:'命运场景只作出生时间象意参考，不作人生定论。重点是了解自己的惯性，再用现实行动调整。'},
+        other:{title:'一般事项', focus:['先把问题说清楚。','再看本象、中象、末象如何递进。','最后看结果是否真实落地。'], tip:'通用事项不要只看吉凶，最好结合现实证据和后续复盘。'}
+      };
+      const info = map[key] || map.other;
+      const endTip = end === '空亡' ? '本课末象为空亡，最重要是复核证据和条件，防止期待落空。' : end === '赤口' ? '本课末象为赤口，最后阶段要特别注意沟通、规则、口舌和临门争议。' : end === '留连' ? '本课末象为留连，最后容易拖延反复，要预留时间。' : end === '速喜' ? '本课末象为速喜，后续容易有快速消息或变化，但仍要看是否持续。' : end === '小吉' ? '本课末象为小吉，适合先取小结果、小进展。' : '本课末象为大安，最后重在稳定落实，不宜急躁变动。';
+      return `<div class="focus-card"><h5>这次主要看什么</h5><p>${q}<br>此类问题属于“${info.title}”，重点不是单看吉凶，而是看它能不能推进、哪里会卡、最后是否落地。</p></div>
+      <div class="focus-card"><h5>判断顺序</h5><ul>${info.focus.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="focus-card"><h5>本课特别提醒</h5><p>${endTip}</p></div>
+      <div class="focus-card"><h5>现实用法</h5><p>${info.tip}</p></div>`;
+    }
+
     function renderResult(result) {
       document.getElementById('resultCard').classList.remove('hidden');
       document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
@@ -2092,6 +2130,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
         <div class="paipan-explain-card"><b>中象：</b>${b.positionName}落在 <b>${b.palaceName}</b>，表示过程中的变化。它说明事情不是静止的，中间会受到“${palaceTone(b.palaceName)}”的影响。</div>
         <div class="paipan-explain-card"><b>末象：</b>${c.positionName}落在 <b>${c.palaceName}</b>，这是结果落点，也是判断时最该重视的一宫。${finalFocus}</div>
         <div class="paipan-explain-card"><b>整体分布：</b>${repeat} 通俗看，就是“${a.palaceName}”先起作用，“${b.palaceName}”影响中段，“${c.palaceName}”决定最后更容易走向哪里。读盘时先看末象，再回头看本象和中象怎样把事情推到这个结果。</div>
+        <div class="paipan-explain-card"><b>顺阻判断：</b>大安、小吉、速喜多为可用之处；留连、赤口、空亡多为需要处理的地方。若吉象在前而阻象在后，表示前面有机会但结果要核实；若阻象在前而吉象在后，则表示前面卡住，后面仍有转机。</div>
+        <div class="paipan-explain-card"><b>复盘建议：</b>看完结果后，最好把后续实际发展记录到复盘里。若同一类问题多次出现同样末象，就能慢慢看出自己在该场景中最常遇到的卡点。</div>
       </div>`;
     }
     function branchFromNumber(n){ const b=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']; return b[(Math.abs(Number(n)||1)-1)%12]; }
@@ -2137,8 +2177,11 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <div class="destiny-deep-card"><h5>💼 事业方向参考</h5><p>事业方向不宜直接断职业好坏，而应看适合的做事方式。大安重稳定积累；速喜重信息、机会和行动；小吉重服务、协助和细水长流；留连适合处理长期事务但要防拖延；赤口适合规则、表达和边界清楚的事；空亡提醒目标要落地，别只停在想法。</p></div>
           <div class="destiny-deep-card"><h5>💰 财务习惯参考</h5><p>财务象意主要看现实资源与钱财处理方式。若财象偏稳，适合长期规划；若见速喜，容易有短线机会也容易冲动；若见留连，钱财容易被拖住；若见赤口，要防合同、口头承诺和争议；若见空亡，不宜把未到账的钱当成已经到手。</p></div>
           <div class="destiny-deep-card"><h5>🌙 情绪与自我观察</h5><p>这部分用于自我提醒，不作心理诊断。留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p><p><strong>日常建议：</strong>若盘中动象多，适合用记录和复盘稳定节奏；若阻象多，适合先减少干扰，把眼前最确定的一步做好。</p></div>
-          <div class="destiny-deep-card full"><h5>🧩 命盘阅读顺序</h5><p><strong>第一步：</strong>先看三象主线，也就是 ${p0} → ${p1} → ${p2}。它代表从个人起势、过程变化到长期提醒的基本节奏。</p><p><strong>第二步：</strong>再看六亲格子。自身看自己，父母看规则与保护，官鬼看压力责任，兄弟看同辈竞争，妻财看现实资源，子孙看表达成果。哪个格子落到留连、赤口、空亡，就说明那个主题更需要慢慢处理。</p><p><strong>第三步：</strong>最后看地支六神。青龙偏生发，朱雀偏表达，勾陈偏现实牵绊，腾蛇偏虚实变化，白虎偏规则压力，玄武偏隐情与流动。六神不是绝对吉凶，而是补充“这件事的气质”。</p></div>
+          <div class="destiny-deep-card full"><h5>🧩 命盘阅读顺序</h5><p>命盘不建议一上来就问“好不好”，而是按顺序看结构：</p><ol class="destiny-read-order"><li><strong>先看自身宫：</strong>它像个人底色，代表做事起势、情绪反应和自我状态。</li><li><strong>再看三象主线：</strong>${p0} → ${p1} → ${p2}，代表从起势、过程到长期提醒的节奏。</li><li><strong>再看六亲格子：</strong>父母看规则与保护，官鬼看压力责任，兄弟看同辈竞争，妻财看资源经营，子孙看表达成果。</li><li><strong>最后看地支六神：</strong>青龙、朱雀、勾陈、腾蛇、白虎、玄武用来补充每一格的气质，不作绝对吉凶。</li></ol></div>
           <div class="destiny-deep-card"><h5>🧱 稳定点与薄弱点</h5><p><strong>稳定点：</strong>盘中见大安、小吉，多为可长期积累、有人相助或小步可成之处。适合把这些地方作为人生规划中的基础。</p><p><strong>薄弱点：</strong>盘中见留连、赤口、空亡，多提示拖延、沟通冲突或目标未实。不是说不好，而是提醒这些主题要靠现实行动、复盘和规则来修正。</p></div>
+          <div class="destiny-deep-card full"><h5>🔎 命盘总览</h5><p>这张盘更适合回答：我平时做事的惯性是什么？我容易在哪类关系或事务上获得助力？又容易在哪些地方拖延、急躁或落空？它不是给人生贴标签，而是帮助你把长期习惯看清楚。</p><p>如果三象里吉象多，说明可用资源和顺势点较多；如果阻象多，说明人生规划中更需要靠制度、复盘和现实行动来补足。</p></div>
+          <div class="destiny-deep-card"><h5>🧲 助力来源</h5><p>看命盘里的大安、小吉、速喜落在哪些六亲位置。落在父母，多从规则、长辈、学习、文书得到帮助；落在兄弟，多从同辈、人脉、朋友协作得到帮助；落在子孙，多从表达、作品、兴趣、输出中得机会。</p></div>
+          <div class="destiny-deep-card"><h5>⚠️ 阻力来源</h5><p>看留连、赤口、空亡落在哪些六亲位置。留连多为拖延和旧问题；赤口多为沟通、规则、冲突；空亡多为虚、未定、承诺不实。它不是说那个位置一定不好，而是提醒这个主题要多核实、多复盘。</p></div>
           <div class="destiny-deep-card"><h5>🧭 阶段行动建议</h5><p>命运盘不建议用来断“能不能成功一辈子”，更适合看自己做事的惯性。若起势强，就要学会稳住；若起势慢，就要学会持续；若末象虚，就要多核实承诺；若末象稳，就适合长期积累。</p><p><strong>最实用的用法：</strong>把它当作个人提醒卡，遇到重大选择时回头看：我是不是又陷入拖延、急躁、空想或过度保守？</p></div>
         `;
       }
@@ -2774,6 +2817,40 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       const supplement = buildSupplementByScene(scene.key, details, metrics);
       return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, rule:Object.assign({}, DIVINATION_RULE), sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, question, context, numbers, palaces, details, metrics, distribution, overallText, advice, supplement };
     }
+
+    function buildSceneFocusHTML(result){
+      const key = result.sceneKey || 'other';
+      const q = result.question ? `你问的是“${escapeHtml(result.question)}”。` : '你没有填写具体占问事项，本课会按所选场景作通用判断。';
+      const end = (result.palaces || [])[2] || '空亡';
+      const mid = (result.palaces || [])[1] || '留连';
+      const map = {
+        love:{title:'感情关系', focus:['先看对方是否有真实行动，而不是只看一句话。','再看中象是否拖延或争执，判断关系过程是否反复。','最后看末象能否落地，决定关系是否真正稳定。'], tip:'感情问题最怕把想象当成事实。末象若空亡或赤口，要先稳住情绪，等对方有明确行动。'},
+        career:{title:'事业工作', focus:['先看事情能不能推进，而不是只看前期有没有机会。','中象看流程、沟通、审批和资源是否卡住。','末象看承诺是否真正落地。'], tip:'事业类问题适合把大目标拆成可执行步骤，先推进能确认的部分。'},
+        wealth:{title:'财运钱财', focus:['先看钱或机会是否真实，不要只看消息热不热。','中象看资金、合同、价格或规则是否反复。','末象看能不能到账、兑现或真正产生收益。'], tip:'财运类尤其要防口头承诺和短线冲动，涉及投资和大额钱财请以现实资料和专业意见为准。'},
+        exam:{title:'考试学习', focus:['先看基础是否稳，不能只看临场运气。','中象看旧错题、拖延、审题和表达。','末象看结果稳定度和是否需要补救。'], tip:'考试学习类更适合用来找薄弱点，而不是替代复习。'},
+        lost:{title:'失物寻找', focus:['先看是否还有线索，东西像不像在原范围内。','中象看被夹住、压住、混入旧物或寻找过程是否反复。','末象看最终能否找回，以及该不该换方向。'], tip:'失物类要把宫位转成现实位置：最后一次使用处、收纳处、包袋夹层、旧物堆、门口桌边等。'},
+        health:{title:'健康状态', focus:['先看当前状态是否稳定。','中象看是否拖延、反复或突然加重。','末象看是否需要复查、休息或专业帮助。'], tip:'健康类只作自我提醒，不替代医生诊断。身体不适请以医学检查为准。'},
+        travel:{title:'出行行程', focus:['先看能不能顺利出发。','中象看交通、天气、证件、路线是否拖延。','末象看最终能否安稳到达或是否临时变更。'], tip:'出行类现实准备很重要，证件、时间、路线和天气要提前确认。'},
+        cooperation:{title:'合作合同', focus:['先看双方是否有真实合作意愿。','中象看条款、责任、利益分配和沟通是否反复。','末象看合同或承诺是否真正落实。'], tip:'合作类不要只看气氛好不好，关键看规则、边界和白纸黑字。'},
+        message:{title:'消息等待', focus:['先看有没有动静。','中象看是否拖延、反复确认或带情绪。','末象看这个消息是否算数、能不能落实。'], tip:'消息类见速喜可能来得快，但末象不稳时仍要二次确认。'},
+        weather:{title:'天气变化', focus:['先看天气是否有动象。','中象看雨势或变化是否持续。','末象看最后是否真的落雨、转晴或落空。'], tip:'天气类要结合现实预报，本课更适合看短时变化和是否反复。'},
+        job:{title:'求职面试', focus:['先看机会是否真实。','中象看面试表达、内部流程、薪资沟通和审批。','末象看正式通知或 offer 是否落地。'], tip:'求职类不要只看口头反馈，最终以正式通知为准。'},
+        home:{title:'家宅居住', focus:['先看家宅是否稳定。','中象看旧问题、维修、邻里、合同是否反复。','末象看最终能否安顿或解决。'], tip:'家宅类要结合现实检查，漏水、维修、合同和安全隐患不要只靠卦象判断。'},
+        choice:{title:'选择决策', focus:['先看当前信息是否足够。','中象看选择过程是否有反复或争议。','末象看哪种结果更容易落地。'], tip:'选择类适合先小步试行，条件不清时不要急着一次定死。'},
+        people:{title:'寻人找人', focus:['先看有没有线索或消息。','中象看联系过程是否拖延、误会或反复。','末象看是否能出现、联系上或得到可靠信息。'], tip:'寻人类要结合现实方式，必要时及时联系家人、朋友或相关机构。'},
+        noble:{title:'贵人与助力', focus:['先看是否有人愿意帮。','中象看帮助是否稳定、是否需要主动开口。','末象看助力能不能真正落到行动上。'], tip:'贵人不一定主动出现，很多时候需要你明确提出请求、准备好资料。'},
+        fortune:{title:'阶段运势', focus:['先看当前阶段整体气势。','中象看近期起伏、机会和阻力。','末象看这一阶段最后更偏稳、动、拖、冲、小成还是落空。'], tip:'运势课适合看阶段提醒，具体事情仍建议用对应场景另起一课。'},
+        destiny:{title:'命运命盘', focus:['先看自身宫与三象主线，了解个人起势和处事节奏。','再看六亲分布，判断助力、压力、资源和人际主题。','最后看空亡、赤口、留连等薄弱点，把它当作长期自我观察提醒。'], tip:'命运场景只作出生时间象意参考，不作人生定论。重点是了解自己的惯性，再用现实行动调整。'},
+        other:{title:'一般事项', focus:['先把问题说清楚。','再看本象、中象、末象如何递进。','最后看结果是否真实落地。'], tip:'通用事项不要只看吉凶，最好结合现实证据和后续复盘。'}
+      };
+      const info = map[key] || map.other;
+      const endTip = end === '空亡' ? '本课末象为空亡，最重要是复核证据和条件，防止期待落空。' : end === '赤口' ? '本课末象为赤口，最后阶段要特别注意沟通、规则、口舌和临门争议。' : end === '留连' ? '本课末象为留连，最后容易拖延反复，要预留时间。' : end === '速喜' ? '本课末象为速喜，后续容易有快速消息或变化，但仍要看是否持续。' : end === '小吉' ? '本课末象为小吉，适合先取小结果、小进展。' : '本课末象为大安，最后重在稳定落实，不宜急躁变动。';
+      return `<div class="focus-card"><h5>这次主要看什么</h5><p>${q}<br>此类问题属于“${info.title}”，重点不是单看吉凶，而是看它能不能推进、哪里会卡、最后是否落地。</p></div>
+      <div class="focus-card"><h5>判断顺序</h5><ul>${info.focus.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="focus-card"><h5>本课特别提醒</h5><p>${endTip}</p></div>
+      <div class="focus-card"><h5>现实用法</h5><p>${info.tip}</p></div>`;
+    }
+
     function renderResult(result) {
       document.getElementById('resultCard').classList.remove('hidden');
       document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
@@ -3556,6 +3633,40 @@ ${nextStep}`;
       <div class="answer-card"><h5>你现在该怎么做</h5><ul class="answer-list">${actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
     }
 
+
+    function buildSceneFocusHTML(result){
+      const key = result.sceneKey || 'other';
+      const q = result.question ? `你问的是“${escapeHtml(result.question)}”。` : '你没有填写具体占问事项，本课会按所选场景作通用判断。';
+      const end = (result.palaces || [])[2] || '空亡';
+      const mid = (result.palaces || [])[1] || '留连';
+      const map = {
+        love:{title:'感情关系', focus:['先看对方是否有真实行动，而不是只看一句话。','再看中象是否拖延或争执，判断关系过程是否反复。','最后看末象能否落地，决定关系是否真正稳定。'], tip:'感情问题最怕把想象当成事实。末象若空亡或赤口，要先稳住情绪，等对方有明确行动。'},
+        career:{title:'事业工作', focus:['先看事情能不能推进，而不是只看前期有没有机会。','中象看流程、沟通、审批和资源是否卡住。','末象看承诺是否真正落地。'], tip:'事业类问题适合把大目标拆成可执行步骤，先推进能确认的部分。'},
+        wealth:{title:'财运钱财', focus:['先看钱或机会是否真实，不要只看消息热不热。','中象看资金、合同、价格或规则是否反复。','末象看能不能到账、兑现或真正产生收益。'], tip:'财运类尤其要防口头承诺和短线冲动，涉及投资和大额钱财请以现实资料和专业意见为准。'},
+        exam:{title:'考试学习', focus:['先看基础是否稳，不能只看临场运气。','中象看旧错题、拖延、审题和表达。','末象看结果稳定度和是否需要补救。'], tip:'考试学习类更适合用来找薄弱点，而不是替代复习。'},
+        lost:{title:'失物寻找', focus:['先看是否还有线索，东西像不像在原范围内。','中象看被夹住、压住、混入旧物或寻找过程是否反复。','末象看最终能否找回，以及该不该换方向。'], tip:'失物类要把宫位转成现实位置：最后一次使用处、收纳处、包袋夹层、旧物堆、门口桌边等。'},
+        health:{title:'健康状态', focus:['先看当前状态是否稳定。','中象看是否拖延、反复或突然加重。','末象看是否需要复查、休息或专业帮助。'], tip:'健康类只作自我提醒，不替代医生诊断。身体不适请以医学检查为准。'},
+        travel:{title:'出行行程', focus:['先看能不能顺利出发。','中象看交通、天气、证件、路线是否拖延。','末象看最终能否安稳到达或是否临时变更。'], tip:'出行类现实准备很重要，证件、时间、路线和天气要提前确认。'},
+        cooperation:{title:'合作合同', focus:['先看双方是否有真实合作意愿。','中象看条款、责任、利益分配和沟通是否反复。','末象看合同或承诺是否真正落实。'], tip:'合作类不要只看气氛好不好，关键看规则、边界和白纸黑字。'},
+        message:{title:'消息等待', focus:['先看有没有动静。','中象看是否拖延、反复确认或带情绪。','末象看这个消息是否算数、能不能落实。'], tip:'消息类见速喜可能来得快，但末象不稳时仍要二次确认。'},
+        weather:{title:'天气变化', focus:['先看天气是否有动象。','中象看雨势或变化是否持续。','末象看最后是否真的落雨、转晴或落空。'], tip:'天气类要结合现实预报，本课更适合看短时变化和是否反复。'},
+        job:{title:'求职面试', focus:['先看机会是否真实。','中象看面试表达、内部流程、薪资沟通和审批。','末象看正式通知或 offer 是否落地。'], tip:'求职类不要只看口头反馈，最终以正式通知为准。'},
+        home:{title:'家宅居住', focus:['先看家宅是否稳定。','中象看旧问题、维修、邻里、合同是否反复。','末象看最终能否安顿或解决。'], tip:'家宅类要结合现实检查，漏水、维修、合同和安全隐患不要只靠卦象判断。'},
+        choice:{title:'选择决策', focus:['先看当前信息是否足够。','中象看选择过程是否有反复或争议。','末象看哪种结果更容易落地。'], tip:'选择类适合先小步试行，条件不清时不要急着一次定死。'},
+        people:{title:'寻人找人', focus:['先看有没有线索或消息。','中象看联系过程是否拖延、误会或反复。','末象看是否能出现、联系上或得到可靠信息。'], tip:'寻人类要结合现实方式，必要时及时联系家人、朋友或相关机构。'},
+        noble:{title:'贵人与助力', focus:['先看是否有人愿意帮。','中象看帮助是否稳定、是否需要主动开口。','末象看助力能不能真正落到行动上。'], tip:'贵人不一定主动出现，很多时候需要你明确提出请求、准备好资料。'},
+        fortune:{title:'阶段运势', focus:['先看当前阶段整体气势。','中象看近期起伏、机会和阻力。','末象看这一阶段最后更偏稳、动、拖、冲、小成还是落空。'], tip:'运势课适合看阶段提醒，具体事情仍建议用对应场景另起一课。'},
+        destiny:{title:'命运命盘', focus:['先看自身宫与三象主线，了解个人起势和处事节奏。','再看六亲分布，判断助力、压力、资源和人际主题。','最后看空亡、赤口、留连等薄弱点，把它当作长期自我观察提醒。'], tip:'命运场景只作出生时间象意参考，不作人生定论。重点是了解自己的惯性，再用现实行动调整。'},
+        other:{title:'一般事项', focus:['先把问题说清楚。','再看本象、中象、末象如何递进。','最后看结果是否真实落地。'], tip:'通用事项不要只看吉凶，最好结合现实证据和后续复盘。'}
+      };
+      const info = map[key] || map.other;
+      const endTip = end === '空亡' ? '本课末象为空亡，最重要是复核证据和条件，防止期待落空。' : end === '赤口' ? '本课末象为赤口，最后阶段要特别注意沟通、规则、口舌和临门争议。' : end === '留连' ? '本课末象为留连，最后容易拖延反复，要预留时间。' : end === '速喜' ? '本课末象为速喜，后续容易有快速消息或变化，但仍要看是否持续。' : end === '小吉' ? '本课末象为小吉，适合先取小结果、小进展。' : '本课末象为大安，最后重在稳定落实，不宜急躁变动。';
+      return `<div class="focus-card"><h5>这次主要看什么</h5><p>${q}<br>此类问题属于“${info.title}”，重点不是单看吉凶，而是看它能不能推进、哪里会卡、最后是否落地。</p></div>
+      <div class="focus-card"><h5>判断顺序</h5><ul>${info.focus.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="focus-card"><h5>本课特别提醒</h5><p>${endTip}</p></div>
+      <div class="focus-card"><h5>现实用法</h5><p>${info.tip}</p></div>`;
+    }
+
     function renderResult(result) {
       document.getElementById('resultCard').classList.remove('hidden');
       document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
@@ -3575,6 +3686,7 @@ ${nextStep}`;
       document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
       document.getElementById('overallText').innerText=result.overallText;
       const answerSummary=document.getElementById('answerSummaryContent'); if(answerSummary) answerSummary.innerHTML=buildAnswerSummaryHTML(result);
+      const focusContent=document.getElementById('sceneFocusContent'); if(focusContent) focusContent.innerHTML=buildSceneFocusHTML(result);
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
@@ -5242,6 +5354,7 @@ ${nextStep}`;
         { id:'homeTopSection', label:'顶部' },
         { id:'resultCard', label:'结果' },
         { id:'answerSummaryBlock', label:'答案' },
+        { id:'sceneFocusBlock', label:'重心' },
         { id:'abChoiceResultBlock', label:'A/B' },
         { id:'paipanBlock', label:'排盘' },
         { id:'destinyBoardBlock', label:'命盘' },
@@ -5574,7 +5687,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.23 运势与命运修正版';
+  const VERSION = 'v9.9.24 命盘深化与断法重心增强版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6386,7 +6499,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.23 运势与命运修正版';
+  const VERSION = 'v9.9.24 命盘深化与断法重心增强版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6578,7 +6691,8 @@ body.hide-progress-bar .page-progress { display:none !important; }
         ['v9.9.20 起课说明与单数起课版', ['补充起课注意事项：问题清晰具体、一事不二占、一时不起二课、心念专一。','补充月上起日、日上起时的时辰起课步骤与示例。','新增单数起课作为快捷判断方式。']],
         ['v9.9.21 场景扩展与命运排盘版', ['新增“寻人”“贵人”“命运”三个场景。','命运场景只保留时辰起课，并提示填写出生年月日与出生时辰。','增强六宫排盘说明，并在章节导航中新增“排盘”。','命运结果新增“命运六亲参考盘”，用于出生时间参考、六亲象意参考与自我观察。']],
         ['v9.9.22 命运解读增强版', ['将命运场景的“出生时间参考盘、六亲象意参考、性格倾向、处事节奏、人际与助力、事业方向、财务习惯、情绪与自我观察”扩展为更详细的结果模块。','增强六宫排盘解释，说明本象、中象、末象在排盘中的阅读顺序和判断重点。','版本内容更新只在主页显示，结果页不再出现“版本”导航卡点。']],
-        ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']]
+        ['v9.9.23 运势与命运修正版', ['新增“运势”场景，用于近期趋势、阶段状态与整体气象参考。','修复命运场景下仍显示数字输入、单数输入和快捷数字的问题，命运场景只保留时辰起盘。','进一步拓展命运六亲参考盘，增加命盘阅读顺序、稳定点与薄弱点、阶段行动建议等说明。','修复版本内容更新在占卜结果页出现的问题，版本记录只在主页显示。']],
+        ['v9.9.24 命盘深化与断法重心增强版', ['命盘板块继续增强，新增命盘总览、助力来源、阻力来源和更清晰的命盘阅读顺序。','六宫排盘说明增强，补充顺阻判断与复盘建议。','占卜结果新增“本场景判断重心”，帮助用户先抓重点，再看详细解释。','运势、命运、寻人、贵人等新场景同步加入判断重心说明。']]
       ];
       return '<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>' + versions.map(([v,items])=>`<details><summary>${v}</summary><ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul></details>`).join('');
     };
