@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v9.9.19 快捷按钮自定义版</title>
-  <meta name="description" content="小六壬个人网页版 v9.9.19：保留 PWA 离线缓存与白话可读性增强，并新增浮动快捷按钮自定义。" />
+  <title>小六壬占卜 · v9.9.20 起课说明与单数起课版</title>
+  <meta name="description" content="小六壬个人网页版 v9.9.20：补充起课注意事项、月日时起课说明，并新增单数起课。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -136,7 +136,7 @@
     .scene-btn:hover, .method-tab:hover, .ghost-btn:hover, .pad-btn:hover { transform: translateY(-1px); }
     .scene-btn.active { background: linear-gradient(180deg, rgba(103,83,165,.10), rgba(255,255,255,.98)); border-color: rgba(103,83,165,.28); box-shadow: 0 16px 24px rgba(103,83,165,.11); }
     .scene-btn .emoji { font-size:1.18rem; }
-    .method-tabs { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:12px; margin-bottom: 18px; }
+    .method-tabs { display:grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap:12px; margin-bottom: 18px; }
     .method-tab {
       text-align:left; padding:18px 18px; border-radius:22px; background: rgba(255,255,255,.94); border:1px solid var(--line);
       box-shadow: 0 10px 18px rgba(91,69,146,.04); color: var(--muted); transition:.2s ease;
@@ -849,7 +849,7 @@ body.force-desktop-mode .result-header {
   grid-template-columns: 1fr auto !important;
 }
 body.force-desktop-mode .scene-grid { grid-template-columns: repeat(5, minmax(0,1fr)) !important; }
-body.force-desktop-mode .method-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .method-tabs { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
 body.force-desktop-mode .number-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
 body.force-desktop-mode .palace-cards,
 body.force-desktop-mode .summary-grid,
@@ -940,7 +940,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v9.9.19 快捷按钮自定义版</h2>
+          <h2>个人占卜台 · v9.9.20 起课说明与单数起课版</h2>
           <p>本版优化阅读字号设置、快捷按钮尺寸与移动端桌面模式，并继续生成 README 仓库说明。</p>
         </div>
         <div class="actions">
@@ -1021,11 +1021,12 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <div class="step">3</div>
           <div>
             <h3>选择起课方式</h3>
-            <p>数字起课适合直接报数；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
+            <p>数字起课适合直接报数；单数起课适合快速判断；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
           </div>
         </div>
         <div class="method-tabs" id="methodTabs">
           <button class="method-tab active" data-method="number"><b>数字起课</b><small>输入三个数字</small></button>
+          <button class="method-tab" data-method="single"><b>单数起课</b><small>一个数字速断</small></button>
           <button class="method-tab" data-method="time"><b>时辰起课</b><small>按时间取三象</small></button>
           <button class="method-tab" data-method="event"><b>事件起课</b><small>以事件文字取数</small></button>
         </div>
@@ -1043,6 +1044,20 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
             </div>
           </div>
           <div class="quick-pad" id="quickPad"></div>
+        </div>
+        <div class="method-panel hidden" id="singlePanel">
+          <div class="number-row single-number-row">
+            <label><span>单数</span><input id="singleNum" type="number" min="1" max="100" inputmode="numeric" placeholder="例如：9"></label>
+          </div>
+          <div class="number-tools">
+            <span class="number-range-note">单数起课：只报一个数字，从大安起数，适合快速判断吉凶。</span>
+            <div class="number-tool-actions">
+              <button class="ghost-btn" id="randomSingleBtn" type="button" onclick="randomSingleNumber()">随机单数</button>
+              <button class="ghost-btn" id="clearSingleBtn" type="button" onclick="clearSingleNumber()">清空单数</button>
+            </div>
+          </div>
+          <div class="quick-pad" id="singleQuickPad"></div>
+          <div class="method-note" id="singleNote">单数起课为传统快捷法：从大安起数，落到一个主宫。本工具会以该主宫贯穿三象显示，便于统一阅读和复盘。</div>
         </div>
         <div class="method-panel hidden" id="timePanel">
           <div class="time-grid">
@@ -1740,11 +1755,17 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     let historyFilter = 'all';
     function init() { restoreSavedChoices(); renderScenes(); renderQuickPad(); bindEvents(); applyMethodPanel(currentMethod); setNow(); updateEventCount(); updateQuestionCount(); updateDateControl('historyDateInput','historyDatePicker'); updateDateControl('analyticsDateInput','analyticsDatePicker'); applyUserSettingsToPage(); clearStartupResult(); }
     function renderScenes() { sceneGrid.innerHTML = SCENES.map(scene => `<button type="button" class="scene-btn ${scene.key === currentScene ? 'active' : ''}" data-scene="${scene.key}"><span class="emoji">${scene.icon}</span><span>${scene.name}</span></button>`).join(''); }
-    function renderQuickPad() { document.getElementById('quickPad').innerHTML = Array.from({length:12}, (_,i)=>i+1).map(n=>`<button type="button" class="pad-btn" data-pad="${n}">${n}</button>`).join(''); }
+    function renderQuickPad() {
+      const padHTML = Array.from({length:12}, (_,i)=>i+1).map(n=>`<button type="button" class="pad-btn" data-pad="${n}">${n}</button>`).join('');
+      const quickPad=document.getElementById('quickPad'); if(quickPad) quickPad.innerHTML = padHTML;
+      const singleQuickPad=document.getElementById('singleQuickPad'); if(singleQuickPad) singleQuickPad.innerHTML = padHTML;
+    }
     function bindEvents() {
       sceneGrid.addEventListener('click', e => { const btn=e.target.closest('[data-scene]'); if(!btn) return; currentScene=btn.dataset.scene; renderScenes(); persistChoiceIfNeeded('scene', currentScene); });
       document.getElementById('methodTabs').addEventListener('click', e => { const tab=e.target.closest('[data-method]'); if(!tab) return; currentMethod=tab.dataset.method; applyMethodPanel(currentMethod); persistChoiceIfNeeded('method', currentMethod); });
       document.getElementById('quickPad').addEventListener('click', e => { const btn=e.target.closest('[data-pad]'); if(!btn) return; const inputs=['num1','num2','num3'].map(id=>document.getElementById(id)); const empty=inputs.find(i=>!i.value); (empty || inputs[2]).value=btn.dataset.pad; });
+      const singleQuickPad = document.getElementById('singleQuickPad');
+      if(singleQuickPad) singleQuickPad.addEventListener('click', e => { const btn=e.target.closest('[data-pad]'); if(!btn) return; document.getElementById('singleNum').value = btn.dataset.pad; });
       document.getElementById('divineBtn').addEventListener('click', handleDivine);
       document.getElementById('resetBtn').addEventListener('click', resetForm);
       document.getElementById('historyBtn').addEventListener('click', openHistoryDialog);
@@ -1837,6 +1858,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     function handleDivine() {
       const scene = SCENES.find(s=>s.key===currentScene); let numbers=[], methodNote='', extraInfo='';
       if(currentMethod==='number'){ numbers=['num1','num2','num3'].map(id=>Number(document.getElementById(id).value)).filter(Boolean); if(numbers.length!==3) return alert('请先输入三个数字。'); methodNote=`数字起课：${numbers.join(' / ')}`; }
+      if(currentMethod==='single'){ const n=Number(document.getElementById('singleNum').value); if(!n) return alert('请先输入一个数字。'); const palace=numberToPalace(n); numbers=[n,1,1]; methodNote=`单数起课：${n}（主宫：${palace}）`; extraInfo='单数起课为快捷单宫判断；为统一显示，本工具以主宫贯穿三象阅读。'; }
       if(currentMethod==='time'){ const val=document.getElementById('timeInput').value; if(!val) return alert('请先选择时间。'); const dt=new Date(val); const info=getTimeDerived(dt); numbers=info.numbers; methodNote=`时辰起课：${numbers.join(' / ')}`; extraInfo=`公历 ${formatDateTimeCN(dt)}；农历 ${formatLunarFull(info.lunar, dt)}；时辰 ${info.shichen}`; }
       if(currentMethod==='event'){ const text=document.getElementById('eventText').value.trim(); if(!text) return alert('请先输入事件描述。'); numbers=textToNumbers(text); methodNote=`事件起课：${numbers.join(' / ')}`; extraInfo=`事件：${text}`; }
       currentResult = divine(scene, numbers, currentMethod, methodNote, extraInfo); renderResult(currentResult); saveLastView(currentResult);
@@ -2387,6 +2409,14 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       document.getElementById('num1').value = '';
       document.getElementById('num2').value = '';
       document.getElementById('num3').value = '';
+    }
+    function randomSingleNumber(){
+      const el=document.getElementById('singleNum');
+      if(el) el.value = Math.floor(Math.random() * 12) + 1;
+    }
+    function clearSingleNumber(){
+      const el=document.getElementById('singleNum');
+      if(el) el.value = '';
     }
 
 
@@ -3897,8 +3927,10 @@ ${nextStep}`;
     }
 
     function buildAboutRulesHTML(){
-      return `<details open><summary>本版本说明</summary><p>本工具为“小六壬六宫连续顺推场景解读版”。它保留传统六宫术语，同时加入现代场景化白话解释，方便普通用户理解。当前版本将“三数连续顺推法”作为唯一正式起课规则，不提供三数直取等对照算法，避免复盘时混用规则。</p><p>本地问事分析不联网、不接 API，只根据你填写的文字、所选场景和本地规则库进行辅助判断。历史记录保存在当前浏览器本地；TXT 用于阅读，JSON 用于备份恢复。</p></details>
-      <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>本工具唯一正式规则：三数连续顺推法。</li><li>第一数：从大安起数，落到第一宫。</li><li>第二数：从第一数落宫继续顺推，落到第二宫。</li><li>第三数：从第二数落宫继续顺推，落到第三宫。</li><li>时辰起课：取农历月、农历日、时辰序数，再按连续顺推落宫。</li><li>事件起课：按事件文字生成三数，再按连续顺推落宫。</li></ul></details>
+      return `<details open><summary>本版本说明</summary><p>本工具为“小六壬六宫连续顺推场景解读版”。它保留传统六宫术语，同时加入现代场景化白话解释，方便普通用户理解。当前版本将“三数连续顺推法”作为三数、时辰、事件起课的正式主规则，并新增“单数起课”作为传统快捷速断方式。</p><p>本地问事分析不联网、不接 API，只根据你填写的文字、所选场景和本地规则库进行辅助判断。历史记录保存在当前浏览器本地；TXT 用于阅读，JSON 用于备份恢复。</p></details>
+      <details><summary>起课注意事项</summary><ul><li>问题要清晰、具体，越具体越容易得到可读的判断。</li><li>一事不二占，一时不起二课，避免同一问题短时间内反复起课。</li><li>问事时心念专一，不疑不妄，把注意力放在当前真正想问的问题上。</li></ul></details>
+      <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>三数起课、时辰起课、事件起课采用：三数连续顺推法。</li><li>第一数：从大安起数，落到第一宫。</li><li>第二数：从第一数落宫继续顺推，落到第二宫。</li><li>第三数：从第二数落宫继续顺推，落到第三宫。</li><li>时辰起课：取农历月、农历日、时辰序数，再按连续顺推落宫。</li><li>单数起课：只用一个数字，从大安起数得到主宫，适合快速判断吉凶。</li><li>时辰起课以用户设备显示的当地时间为准；数字起课与事件起课不依赖地理位置。</li></ul></details>
+      <details><summary>月日时起课步骤示例</summary><ul><li>口诀：月上起日，日上起时。</li><li>例：农历一月初九，午时。</li><li>第一步起月：从“大安”起一月，一月落大安。</li><li>第二步起日：从大安起初一，顺数至初九，落速喜。</li><li>第三步起时：从速喜起子时，顺数至午时（第7位），仍落速喜。</li><li>最终落位：速喜。用于时辰起课时，本工具会自动换算农历月、农历日与时辰序数。</li></ul></details>
       <details><summary>如何看结果</summary><ul><li>先看综合判断和问事专项解读，抓白话结论。</li><li>再看三象：本象看起因或当前，中象看过程，末象看最终落点。</li><li>单宫、双宫、象意补充属于详细学习内容，适合复盘时查看。</li></ul></details>`;
     }
 
@@ -3925,7 +3957,9 @@ ${nextStep}`;
         { v:'v9.9.7 导入导出管理版', items:['整理导入导出按钮为历史记录、完整备份、模板工具等子目录。','新增历史记录 JSON 导出 / 导入，与完整备份 JSON 做出区分。','明确 TXT 用于阅读，JSON 用于恢复和迁移。'] },
         { v:'v9.9.8–v9.9.9 弹窗滚动修复', items:['问题模板弹窗增加搜索、我的模板、模板工具、批量管理、模板列表等分组折叠。','手机端默认不再一次性铺开所有内容，便于查看和操作。','v9.9.9 对历史记录、历史分析、问题模板、场景规则、阅读设置、复盘记录等弹窗做全局滚动修复。'] },
         { v:'v9.9.10 日期筛选修正版', items:['修复历史记录与历史分析日期按钮无法唤起选择器的问题。','支持输入 20260504、2026/5/4、2026.5.4、2026年5月4日 等格式，并自动规范为 YYYY-MM-DD。','修复输入日期后不显示当天记录的问题。'] },
-        { v:'v9.9.13 按钮修复版', items:['保持“版本内容更新”板块继续默认关闭，只在设置里手动开启后显示。','章节卡点导航新增“版本”入口，开启版本更新板块后可快速跳转到版本记录。','同步更新网页标题和版本更新记录，便于后续持续维护。'] }
+        { v:'v9.9.13 按钮修复版', items:['保持“版本内容更新”板块继续默认关闭，只在设置里手动开启后显示。','章节卡点导航新增“版本”入口，开启版本更新板块后可快速跳转到版本记录。','同步更新网页标题和版本更新记录，便于后续持续维护。'] },
+        { v:'v9.9.19 快捷按钮自定义版', items:['设置中新增快捷按钮设置，可选择浮动快捷区显示哪些按钮。','支持用 ↑ ↓ 调整主页、重占、电脑、展开、折叠、置顶、到底、历史、分析、规则、模板、设置、复制等快捷按钮顺序。'] },
+        { v:'v9.9.20 起课说明与单数起课版', items:['补充起课注意事项：问题要清晰具体、一事不二占、一时不起二课、心念专一。','补充月日时起课步骤：月上起日，日上起时，并加入农历一月初九、午时示例。','将时辰起课说明更新为：以用户设备显示的当地时间为准；数字起课与事件起课不依赖地理位置。','保留数字、时辰、事件等原有起课方式，新增“单数起课”用于一个数字快速判断。'] }
       ];
       return `<div class="version-log-note">这里记录本工具历代主要更新。该板块默认关闭，可在「设置」中开启或隐藏；内容用于回顾版本演进，不影响起课和解读。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
@@ -4013,13 +4047,14 @@ ${nextStep}`;
       const settings=getUserSettings();
       const saved=getSavedChoices();
       if(settings.rememberScene && saved.scene && SCENES.some(s=>s.key===saved.scene)) currentScene=saved.scene;
-      if(settings.rememberMethod && saved.method && ['number','time','event'].includes(saved.method)) currentMethod=saved.method;
+      if(settings.rememberMethod && saved.method && ['number','single','time','event'].includes(saved.method)) currentMethod=saved.method;
     }
     function applyMethodPanel(method){
       currentMethod = method || 'number';
       document.querySelectorAll('.method-tab').forEach(el=>el.classList.toggle('active', el.dataset.method===currentMethod));
-      const numberPanel=document.getElementById('numberPanel'), timePanel=document.getElementById('timePanel'), eventPanel=document.getElementById('eventPanel');
+      const numberPanel=document.getElementById('numberPanel'), singlePanel=document.getElementById('singlePanel'), timePanel=document.getElementById('timePanel'), eventPanel=document.getElementById('eventPanel');
       if(numberPanel) numberPanel.classList.toggle('hidden', currentMethod!=='number');
+      if(singlePanel) singlePanel.classList.toggle('hidden', currentMethod!=='single');
       if(timePanel) timePanel.classList.toggle('hidden', currentMethod!=='time');
       if(eventPanel) eventPanel.classList.toggle('hidden', currentMethod!=='event');
     }
@@ -4109,10 +4144,12 @@ ${nextStep}`;
     }
     function methodLabel(item){
       if (item.method === 'number') return '数字起课';
+      if (item.method === 'single') return '单数起课';
       if (item.method === 'time') return '时辰起课';
       if (item.method === 'event') return '事件起课';
       const note = item.methodNote || '';
       if (note.indexOf('数字') >= 0) return '数字起课';
+      if (note.indexOf('单数') >= 0) return '单数起课';
       if (note.indexOf('时辰') >= 0) return '时辰起课';
       if (note.indexOf('事件') >= 0) return '事件起课';
       return '未记录';
@@ -5229,7 +5266,7 @@ ${nextStep}`;
   }
   body.force-desktop-mode .scene-grid { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
   body.force-desktop-mode .number-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
-  body.force-desktop-mode .method-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  body.force-desktop-mode .method-tabs { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
   body.force-desktop-mode .summary-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
 
   @media (max-width: 760px) {
@@ -5323,7 +5360,7 @@ body.force-desktop-mode .result-header {
   grid-template-columns: 1fr auto !important;
 }
 body.force-desktop-mode .scene-grid { grid-template-columns: repeat(5, minmax(0,1fr)) !important; }
-body.force-desktop-mode .method-tabs { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+body.force-desktop-mode .method-tabs { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
 body.force-desktop-mode .number-row { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
 body.force-desktop-mode .palace-cards,
 body.force-desktop-mode .summary-grid,
@@ -5385,7 +5422,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.17 PWA离线缓存与白话可读性增强版';
+  const VERSION = 'v9.9.20 起课说明与单数起课版';
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6197,7 +6234,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION = 'v9.9.19 快捷按钮自定义版';
+  const VERSION = 'v9.9.20 起课说明与单数起课版';
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -6347,6 +6384,9 @@ body.hide-progress-bar .page-progress { display:none !important; }
     let html = typeof oldBuild === 'function' ? oldBuild() : '';
     if(!html.includes('v9.9.19 快捷按钮自定义版')){
       html += '<details><summary>v9.9.19 快捷按钮自定义版</summary><ul><li>设置中新增“快捷按钮设置”，可选择浮动快捷区显示哪些按钮。</li><li>支持用 ↑ ↓ 调整“主页、重占、电脑、展开、折叠、置顶、到底、历史、分析、规则、模板、设置、复制”等快捷按钮顺序。</li><li>快捷按钮配置保存在当前浏览器本地，便于手机、平板、电脑端按自己的习惯使用。</li></ul></details>';
+    }
+    if(!html.includes('v9.9.20 起课说明与单数起课版')){
+      html += '<details><summary>v9.9.20 起课说明与单数起课版</summary><ul><li>补充起课注意事项：问题要清晰具体、一事不二占、一时不起二课、心念专一。</li><li>补充月日时起课步骤：月上起日，日上起时，并加入农历一月初九、午时示例。</li><li>替换时辰说明为：时辰起课以用户设备显示的当地时间为准；数字起课与事件起课不依赖地理位置。</li><li>保留原本起课方式，新增单数起课，用一个数字快速判断主宫。</li></ul></details>';
     }
     return html;
   };
