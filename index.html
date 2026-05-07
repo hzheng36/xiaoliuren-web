@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.7 电脑端设置询问修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1.7 电脑端设置询问修正版：手机/平板关闭设置不再弹出未保存询问，电脑端保留关闭前保存询问，并更新版本记录。" />
+  <title>小六壬占卜 · v10.1.8 设置保存与自适应修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1.8 设置保存与自适应修正版：修复保存设置不生效、手机/平板关闭设置不再询问、电脑端保留未保存询问，并优化自适应字体与历史记录宽度。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.7 电脑端设置询问修正版</h2>
-          <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
+          <h2>个人占卜台 · v10.1.8 设置保存与自适应修正版</h2>
+          <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -8155,9 +8155,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1011-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.7 电脑端设置询问修正版';
+    document.title='小六壬占卜 · v10.1.8 设置保存与自适应修正版';
     var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.7 电脑端设置询问修正版'; });
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.8 设置保存与自适应修正版'; });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
@@ -8244,9 +8244,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1012-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.7 电脑端设置询问修正版';
+    document.title='小六壬占卜 · v10.1.8 设置保存与自适应修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.7 电脑端设置询问修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.8 设置保存与自适应修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8337,9 +8337,9 @@ dialog{z-index:1000;}
 <script id="v1013-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.7 电脑端设置询问修正版';
+    document.title='小六壬占卜 · v10.1.8 设置保存与自适应修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.7 电脑端设置询问修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.8 设置保存与自适应修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8777,199 +8777,200 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 </script>
 
 
-<!-- v10.1.7 final settings close policy override: desktop asks, mobile/tablet closes without prompt -->
-<style id="v1017-settings-desktop-only-style">
-  @media (hover:hover) and (pointer:fine) {
-    .unsaved-settings-mask.v1017-desktop-only { z-index: 2147483647; }
+<!-- v10.1.8 final patch: settings save / desktop-only prompt / adaptive font / history width -->
+<style id="v1018-settings-save-adaptive-style">
+  /* 自适应模式强制回到移动端宽度，避免从电脑模式切回后残留宽度和字号比例 */
+  body:not(.force-desktop-mode){min-width:0!important;overflow-x:hidden!important;--xlr-reading-scale:1;}
+  body:not(.force-desktop-mode).reading-size-small{--xlr-reading-scale:.94!important;}
+  body:not(.force-desktop-mode).reading-size-normal{--xlr-reading-scale:1!important;}
+  body:not(.force-desktop-mode).reading-size-large{--xlr-reading-scale:1.08!important;}
+  body:not(.force-desktop-mode).reading-size-xlarge{--xlr-reading-scale:1.16!important;}
+  body:not(.force-desktop-mode) .shell{width:auto!important;min-width:0!important;max-width:1180px!important;}
+  @media (max-width:900px){
+    body:not(.force-desktop-mode) .shell{max-width:none!important;width:auto!important;padding-left:14px!important;padding-right:14px!important;}
+    body:not(.force-desktop-mode) #historyDialog{width:calc(100vw - 12px)!important;max-width:none!important;}
+    body:not(.force-desktop-mode) #historyDialog .history-list{padding-left:18px!important;padding-right:8px!important;}
+    body:not(.force-desktop-mode) #historyDialog .history-item{padding-left:15px!important;padding-right:12px!important;}
   }
 </style>
-<script id="v1017-settings-desktop-only-close-policy">
+<script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION = 'v10.1.7 电脑端设置询问修正版';
-  const WATCH_KEYS = [
-    'xlr_user_settings_v9_1',
-    'xiaoliuren_ui_settings_v9916',
-    'xiaoliuren_reading_text_size_v9915',
-    'xiaoliuren_client_mode_v9914',
-    'xiaoliuren_quick_button_settings_v9919',
-    'xiaoliuren_destiny_relation_method_v10'
-  ];
-  let baseline = null;
-  let allowRawClose = false;
-  let patchedCloseButton = false;
-
-  function $(id){ return document.getElementById(id); }
-  function readLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-  function writeLS(k,v){ try{ if(v === null || v === undefined) localStorage.removeItem(k); else localStorage.setItem(k, String(v)); }catch(e){} }
-  function lsSnapshot(){ const o={}; WATCH_KEYS.forEach(function(k){ o[k]=readLS(k); }); return o; }
-  function formSnapshot(){
-    const dlg = $('settingsDialog');
-    const o = {};
-    if(!dlg) return o;
-    Array.prototype.forEach.call(dlg.querySelectorAll('input, select, textarea'), function(el, i){
-      const key = el.id || el.name || ('field_'+i);
-      if(el.type === 'checkbox' || el.type === 'radio') o[key] = !!el.checked;
-      else o[key] = el.value;
-    });
-    return o;
+  const VERSION='v10.1.8 设置保存与自适应修正版';
+  const SETTINGS_KEY='xlr_user_settings_v9_1';
+  const UI_KEY='xiaoliuren_ui_settings_v9916';
+  const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
+  const MODE_KEY='xiaoliuren_client_mode_v9914';
+  const MODE_SIZE_SNAPSHOT_KEY='xiaoliuren_mode_size_snapshot_v1018';
+  const DEFAULT_SETTINGS={defaultView:'detail',collapseDetails:false,showRadar:true,showAbout:false,showVersionUpdates:false,rememberScene:false,rememberMethod:false};
+  const DEFAULT_UI={showQuickButtons:true,showSectionNav:true,showProgressBar:true,defaultClientMode:'auto'};
+  const $=id=>document.getElementById(id);
+  function readJSON(k, fallback){try{return Object.assign({}, fallback, JSON.parse(localStorage.getItem(k)||'{}'));}catch(e){return Object.assign({}, fallback);}}
+  function writeJSON(k, v){try{localStorage.setItem(k, JSON.stringify(v));}catch(e){}}
+  function readLS(k, fallback){try{return localStorage.getItem(k)||fallback||'';}catch(e){return fallback||'';}}
+  function writeLS(k, v){try{ if(v===null||v===undefined||v==='') localStorage.removeItem(k); else localStorage.setItem(k,String(v)); }catch(e){}}
+  function isTouchDevice(){return (navigator.maxTouchPoints&&navigator.maxTouchPoints>0) || matchMedia('(pointer: coarse)').matches || /iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent||'');}
+  function shouldAskBeforeClose(){return !isTouchDevice() && matchMedia('(hover: hover) and (pointer: fine)').matches && window.innerWidth>=900;}
+  function ensureRows(){try{ if(typeof window.ensureSettingRows==='function') window.ensureSettingRows(); }catch(e){} }
+  function readBaseFromForm(){
+    return {
+      defaultView: $('settingDefaultView')?.value || 'detail',
+      collapseDetails: !!$('settingCollapseDetails')?.checked,
+      showRadar: !!$('settingShowRadar')?.checked,
+      showAbout: !!$('settingShowAbout')?.checked,
+      showVersionUpdates: !!$('settingShowVersionUpdates')?.checked,
+      rememberScene: !!$('settingRememberScene')?.checked,
+      rememberMethod: !!$('settingRememberMethod')?.checked
+    };
   }
-  function snap(){ return { form: formSnapshot(), ls: lsSnapshot() }; }
-  function same(a,b){ try{ return JSON.stringify(a) === JSON.stringify(b); }catch(e){ return false; } }
-  function isDirty(){ return !!baseline && !same(baseline, snap()); }
-  function rawClose(){
-    const dlg = $('settingsDialog');
-    if(!dlg) return;
-    try{ if(typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
-    catch(e){ try{ dlg.removeAttribute('open'); }catch(_e){} }
+  function readUIFromForm(){
+    const cur=readJSON(UI_KEY, DEFAULT_UI);
+    return {
+      showQuickButtons: $('settingUiShowQuickButtons') ? !!$('settingUiShowQuickButtons').checked : cur.showQuickButtons,
+      showSectionNav: $('settingUiShowSectionNav') ? !!$('settingUiShowSectionNav').checked : cur.showSectionNav,
+      showProgressBar: $('settingUiShowProgress') ? !!$('settingUiShowProgress').checked : cur.showProgressBar,
+      defaultClientMode: $('settingUiDefaultClientMode') ? $('settingUiDefaultClientMode').value : (cur.defaultClientMode||'auto')
+    };
   }
-  function restoreBaseline(){
-    if(!baseline) return;
-    Object.keys(baseline.ls || {}).forEach(function(k){ writeLS(k, baseline.ls[k]); });
-    const dlg = $('settingsDialog');
-    if(dlg){
-      const vals = baseline.form || {};
-      Array.prototype.forEach.call(dlg.querySelectorAll('input, select, textarea'), function(el, i){
-        const key = el.id || el.name || ('field_'+i);
-        if(!(key in vals)) return;
-        if(el.type === 'checkbox' || el.type === 'radio') el.checked = !!vals[key];
-        else el.value = vals[key];
-      });
+  function readFormSnapshot(){
+    const dlg=$('settingsDialog'); const data={};
+    if(dlg) Array.prototype.forEach.call(dlg.querySelectorAll('input,select,textarea'), function(el, i){ const k=el.id||el.name||('field_'+i); data[k]=(el.type==='checkbox'||el.type==='radio')?!!el.checked:el.value; });
+    return JSON.stringify(data);
+  }
+  let baseline='';
+  let suppress=false;
+  function takeBaseline(){setTimeout(function(){ensureRows(); baseline=readFormSnapshot(); const dlg=$('settingsDialog'); if(dlg) dlg.dataset.v1018Dirty='0';},80);}
+  function markDirty(){const dlg=$('settingsDialog'); if(dlg&&dlg.open) dlg.dataset.v1018Dirty=(baseline && baseline!==readFormSnapshot())?'1':'0';}
+  function rawClose(){const dlg=$('settingsDialog'); if(!dlg) return; suppress=true; try{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); }catch(e){dlg.removeAttribute('open');} setTimeout(function(){suppress=false; baseline='';},80);}
+  function fillFromSaved(){try{ if(typeof window.fillSettingsDialog==='function') window.fillSettingsDialog(); }catch(e){} try{ if(typeof window.applyUISettings==='function') window.applyUISettings(); }catch(e){} try{ if(typeof window.applyReadingSize==='function') window.applyReadingSize(readLS(SIZE_KEY,'normal')); }catch(e){ applyReadingSizeFinal(readLS(SIZE_KEY,'normal')); } }
+  function applyReadingSizeFinal(size){
+    size=size||readLS(SIZE_KEY,'normal')||'normal';
+    document.body.classList.remove('reading-size-small','reading-size-normal','reading-size-large','reading-size-xlarge');
+    document.body.classList.add('reading-size-'+size);
+    const sel=$('settingReadingTextSize'); if(sel) sel.value=size;
+  }
+  function applyAfterSave(base, ui, size){
+    try{ if(typeof window.applyUserSettingsToPage==='function') window.applyUserSettingsToPage(); }catch(e){}
+    applyReadingSizeFinal(size);
+    document.body.classList.toggle('hide-quick-buttons', !ui.showQuickButtons);
+    document.body.classList.toggle('hide-section-nav', !ui.showSectionNav);
+    document.body.classList.toggle('hide-progress-bar', !ui.showProgressBar);
+    if(ui.defaultClientMode==='desktop'){
+      document.body.classList.add('force-desktop-mode'); writeLS(MODE_KEY,'desktop');
+    }else{
+      document.body.classList.remove('force-desktop-mode'); writeLS(MODE_KEY,'auto');
     }
-    try{ if(typeof fillSettingsDialog === 'function') fillSettingsDialog(); }catch(e){}
-    try{ if(typeof applyUserSettingsToPage === 'function') applyUserSettingsToPage(); }catch(e){}
-    try{ if(typeof applyUISettings === 'function') applyUISettings(); }catch(e){}
-    try{ if(typeof renderQuickSettingsList === 'function') renderQuickSettingsList(); }catch(e){}
-    try{ if(typeof renderQuickTools === 'function') renderQuickTools(); }catch(e){}
+    try{ if(typeof window.renderQuickTools==='function') window.renderQuickTools(); }catch(e){}
+    try{ if(typeof window.refreshSectionJumpNavSoon==='function') window.refreshSectionJumpNavSoon(); }catch(e){}
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
   }
-  function takeBaseline(delay){
-    setTimeout(function(){ baseline = snap(); }, delay || 120);
+  function robustSave(closeAfter){
+    ensureRows();
+    const base=Object.assign({}, DEFAULT_SETTINGS, readBaseFromForm());
+    const ui=Object.assign({}, DEFAULT_UI, readUIFromForm());
+    const size=$('settingReadingTextSize') ? $('settingReadingTextSize').value : readLS(SIZE_KEY,'normal');
+    writeJSON(SETTINGS_KEY, base);
+    writeJSON(UI_KEY, ui);
+    writeLS(SIZE_KEY, size||'normal');
+    if(base.rememberScene && typeof currentScene!=='undefined'){try{ const saved=JSON.parse(localStorage.getItem('xlr_saved_choice_v9_1')||'{}'); saved.scene=currentScene; localStorage.setItem('xlr_saved_choice_v9_1',JSON.stringify(saved)); }catch(e){}}
+    if(base.rememberMethod && typeof currentMethod!=='undefined'){try{ const saved=JSON.parse(localStorage.getItem('xlr_saved_choice_v9_1')||'{}'); saved.method=currentMethod; localStorage.setItem('xlr_saved_choice_v9_1',JSON.stringify(saved)); }catch(e){}}
+    applyAfterSave(base, ui, size||'normal');
+    baseline=readFormSnapshot();
+    const dlg=$('settingsDialog'); if(dlg) dlg.dataset.v1018Dirty='0';
+    if(closeAfter) rawClose();
+    setTimeout(function(){alert('设置已保存。');}, closeAfter?80:0);
   }
-  function isMobileOrTablet(){
-    const ua = navigator.userAgent || '';
-    const touch = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || navigator.maxTouchPoints > 1;
-    const small = Math.min(window.innerWidth || 9999, window.innerHeight || 9999) < 900;
-    const mobileUA = /iPhone|iPad|iPod|Android|Mobile|Tablet|Silk|Kindle/i.test(ua);
-    return mobileUA || (touch && small);
-  }
-  function closeAfterDiscard(){
-    restoreBaseline();
-    allowRawClose = true;
-    rawClose();
-    setTimeout(function(){ allowRawClose = false; baseline = null; }, 80);
-  }
-  function saveThenClose(){
-    allowRawClose = true;
-    try{
-      if(typeof window.saveSettingsFromDialog === 'function') window.saveSettingsFromDialog();
-      else rawClose();
-    }catch(e){ rawClose(); }
-    setTimeout(function(){ allowRawClose = false; baseline = null; }, 180);
-  }
-  function desktopPromptClose(){
-    const save = window.confirm('阅读设置有未保存的修改。\n\n点“确定”保存并关闭。\n点“取消”继续选择。');
-    if(save){ saveThenClose(); return; }
-    const discard = window.confirm('不保存本次修改，直接关闭设置吗？\n\n点“确定”不保存关闭。\n点“取消”继续编辑。');
-    if(discard) closeAfterDiscard();
-  }
+  function discardAndClose(){ fillFromSaved(); rawClose(); }
   function requestClose(e){
-    if(e){
-      if(e.preventDefault) e.preventDefault();
-      if(e.stopPropagation) e.stopPropagation();
-      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-    }
-    if(allowRawClose){ rawClose(); return false; }
-    if(!isDirty()){
-      allowRawClose = true;
-      rawClose();
-      setTimeout(function(){ allowRawClose = false; baseline = null; }, 80);
-      return false;
-    }
-    if(isMobileOrTablet()) closeAfterDiscard();
-    else desktopPromptClose();
+    if(e){e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();}
+    ensureRows(); markDirty();
+    const changed=baseline && baseline!==readFormSnapshot();
+    if(!changed){ rawClose(); return false; }
+    if(!shouldAskBeforeClose()){ discardAndClose(); return false; }
+    if(confirm('设置尚未保存。\n\n点“确定”保存并关闭。\n点“取消”继续选择。')){ robustSave(true); return false; }
+    if(confirm('不保存本次修改，直接关闭设置吗？\n\n点“确定”不保存关闭。\n点“取消”继续编辑。')) discardAndClose();
     return false;
   }
   function patchOpenClose(){
-    const previousOpen = window.openSettingsDialog;
-    if(typeof previousOpen === 'function' && !previousOpen.__v1017DesktopOnly){
-      window.openSettingsDialog = function(){
-        const ret = previousOpen.apply(this, arguments);
-        setTimeout(function(){ patchCloseButton(true); takeBaseline(60); }, 80);
-        return ret;
-      };
-      window.openSettingsDialog.__v1017DesktopOnly = true;
-    }
-
-    window.closeSettingsDialog = requestClose;
-    window.closeSettingsDialog.__v1017DesktopOnly = true;
-
-    const previousSave = window.saveSettingsFromDialog;
-    if(typeof previousSave === 'function' && !previousSave.__v1017DesktopOnly){
-      window.saveSettingsFromDialog = function(){
-        allowRawClose = true;
-        let ret;
-        try{ ret = previousSave.apply(this, arguments); }
-        finally{
-          setTimeout(function(){ allowRawClose = false; baseline = null; }, 180);
-        }
-        return ret;
-      };
-      window.saveSettingsFromDialog.__v1017DesktopOnly = true;
-    }
+    const oldOpen=window.openSettingsDialog;
+    window.openSettingsDialog=function(){
+      ensureRows();
+      if(typeof oldOpen==='function'){ try{ oldOpen.apply(this, arguments); }catch(e){} }
+      else { const dlg=$('settingsDialog'); if(dlg&&typeof dlg.showModal==='function') dlg.showModal(); else if(dlg) dlg.setAttribute('open','open'); }
+      ensureRows(); fillFromSaved(); takeBaseline(); return false;
+    };
+    window.closeSettingsDialog=function(){ if(suppress) return rawClose(); return requestClose(); };
+    window.saveSettingsFromDialog=function(){ robustSave(true); };
   }
-  function patchCloseButton(force){
-    const oldBtn = $('closeSettingsBtn');
-    if(!oldBtn) return;
-    if(patchedCloseButton && !force && oldBtn.dataset.v1017DesktopOnly === '1') return;
-    const btn = oldBtn.cloneNode(true);
-    btn.dataset.v1017DesktopOnly = '1';
-    oldBtn.parentNode.replaceChild(btn, oldBtn);
-    btn.addEventListener('click', requestClose, true);
-    btn.onclick = requestClose;
-    patchedCloseButton = true;
+  function patchModeToggle(){
+    const old=window.toggleClientModeV9914;
+    window.toggleClientModeV9914=function(){
+      const goingDesktop=!document.body.classList.contains('force-desktop-mode');
+      const beforeSize=readLS(SIZE_KEY,'normal')||'normal';
+      if(goingDesktop) writeLS(MODE_SIZE_SNAPSHOT_KEY,beforeSize);
+      if(typeof old==='function'){ try{ old.apply(this, arguments); }catch(e){ document.body.classList.toggle('force-desktop-mode'); } }
+      else document.body.classList.toggle('force-desktop-mode');
+      const nowDesktop=document.body.classList.contains('force-desktop-mode');
+      writeLS(MODE_KEY, nowDesktop?'desktop':'auto');
+      if(!nowDesktop){
+        const restoreSize=readLS(MODE_SIZE_SNAPSHOT_KEY,beforeSize)||beforeSize;
+        writeLS(SIZE_KEY, restoreSize);
+        applyReadingSizeFinal(restoreSize);
+        document.body.style.removeProperty('font-size'); document.documentElement.style.removeProperty('font-size');
+        document.body.style.removeProperty('min-width'); document.documentElement.style.removeProperty('min-width');
+        setTimeout(function(){applyReadingSizeFinal(restoreSize); try{ if(typeof window.refreshSectionJumpNavSoon==='function') window.refreshSectionJumpNavSoon(); }catch(e){}},60);
+      }
+      try{ if(typeof window.renderQuickTools==='function') window.renderQuickTools(); }catch(e){}
+      return false;
+    };
   }
-  function patchDialogCancel(){
-    const dlg = $('settingsDialog');
-    if(!dlg || dlg.dataset.v1017CancelGuard === '1') return;
-    dlg.dataset.v1017CancelGuard = '1';
-    dlg.addEventListener('cancel', requestClose, true);
-    dlg.addEventListener('change', function(){ if(!baseline) takeBaseline(0); }, true);
-    dlg.addEventListener('input', function(){ if(!baseline) takeBaseline(0); }, true);
+  function bind(){
+    patchOpenClose(); patchModeToggle(); ensureRows();
+    document.addEventListener('click', function(e){
+      const save=e.target&&e.target.closest&&e.target.closest('#saveSettingsBtn');
+      if(save){ e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation)e.stopImmediatePropagation(); robustSave(true); return false; }
+      const close=e.target&&e.target.closest&&e.target.closest('#closeSettingsBtn');
+      if(close){ return requestClose(e); }
+    }, true);
+    document.addEventListener('change', function(e){
+      const dlg=$('settingsDialog');
+      if(dlg&&dlg.open&&e.target&&dlg.contains(e.target)&&!e.target.closest('#saveSettingsBtn,#resetSettingsBtn')){
+        e.stopPropagation(); if(e.stopImmediatePropagation)e.stopImmediatePropagation(); setTimeout(markDirty,0);
+      }
+    }, true);
+    document.addEventListener('input', function(e){
+      const dlg=$('settingsDialog');
+      if(dlg&&dlg.open&&e.target&&dlg.contains(e.target)&&!e.target.closest('#saveSettingsBtn,#resetSettingsBtn')){
+        e.stopPropagation(); if(e.stopImmediatePropagation)e.stopImmediatePropagation(); setTimeout(markDirty,0);
+      }
+    }, true);
+    const dlg=$('settingsDialog');
+    if(dlg&&!dlg.dataset.v1018Final){
+      dlg.dataset.v1018Final='1';
+      dlg.addEventListener('cancel', function(e){ if(!suppress) requestClose(e); }, true);
+      dlg.addEventListener('close', function(){ baseline=''; });
+    }
+    document.addEventListener('click', function(e){ if(e.target&&e.target.closest&&e.target.closest('#settingsBtn,[data-quick-id="settings"],[data-v9919-quick="settings"]')) setTimeout(takeBaseline,260); }, true);
   }
   function patchVersion(){
-    document.title = '小六壬占卜 · ' + VERSION;
-    const meta = document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content', '小六壬个人网页版 ' + VERSION + '：基于 v10.1.6 调整设置关闭策略，手机和平板端关闭不再弹出未保存询问，电脑端保留保存/放弃询问，并更新版本记录。');
-    document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent = '个人占卜台 · ' + VERSION;
-    });
-    if(typeof window.buildVersionUpdatesHTML === 'function' && !window.buildVersionUpdatesHTML.__v1017DesktopOnly){
-      const old = window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML = function(){
-        let html = old.call(this);
-        const row = '<details open><summary>' + VERSION + '</summary><ul>' +
-          '<li>基于 v10.1.6 重新调整阅读设置关闭逻辑：手机端和平板端放弃未保存询问，点击关闭直接关闭并丢弃未保存改动，避免 Safari 原生弹窗层级导致按钮不可点。</li>' +
-          '<li>电脑端继续保留关闭前询问：可选择保存并关闭、不保存关闭或继续编辑。</li>' +
-          '<li>重新接管设置右上角关闭按钮与 ESC 关闭，减少旧版监听残留造成的卡住问题。</li>' +
-          '<li>同步更新页面标题、版本说明、README、manifest 与 Service Worker 缓存版本。</li>' +
-        '</ul></details>';
-        if(html.indexOf(VERSION) < 0) html = row + html;
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复保存设置不生效、手机/平板端关闭设置不再询问、电脑端保留未保存提醒，并优化自适应字体和历史记录宽度。');
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1018){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const row='<details><summary>'+VERSION+'</summary><ul><li>基于 v10.1.6 重新修复阅读设置保存流程，点击“保存设置”后会同步保存阅读设置、界面开关、快捷按钮、阅读字号和默认客户端模式。</li><li>手机端和平板端关闭阅读设置时不再弹出未保存询问，直接关闭并放弃本次未保存修改；电脑端继续保留关闭前询问。</li><li>修复从电脑模式切回自适应模式后部分文字变大的问题，切回时恢复切换前的阅读字号。</li><li>优化历史记录弹窗在手机端的右侧空间，历史内容卡片向右扩展一点，减少与右侧快捷按钮之间的空白。</li><li>同步更新 README、页面标题、manifest 与 PWA 缓存版本。</li></ul></details>';
+        if(html.indexOf(VERSION)<0) html+=row;
         return html;
       };
-      window.buildVersionUpdatesHTML.__v1017DesktopOnly = true;
-      try{ if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); }catch(e){}
+      window.buildVersionUpdatesHTML.__v1018=true;
     }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
   }
-  function boot(){
-    patchOpenClose();
-    patchCloseButton(false);
-    patchDialogCancel();
-    patchVersion();
-    const dlg = $('settingsDialog');
-    if(dlg && dlg.open) takeBaseline(60);
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
-  setTimeout(boot, 250);
-  setTimeout(boot, 900);
+  function boot(){ bind(); patchVersion(); applyReadingSizeFinal(readLS(SIZE_KEY,'normal')); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function(){setTimeout(boot,120);});
 })();
 </script>
