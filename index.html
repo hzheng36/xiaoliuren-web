@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1 命盘分析深化修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1：深化命盘分析逻辑，按六亲、掌诀、地支、六神、五星综合解读，并修复命运六亲排法界面与PWA缓存说明。" />
+  <title>小六壬占卜 · v10.1.1 手机端排版与导航修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1.1：修复手机端命盘排版、表格横向滚动、底部导航遮挡、字体不一致和命盘序号拥挤问题。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1 命盘分析深化修正版</h2>
+          <h2>个人占卜台 · v10.1.1 手机端排版与导航修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -7438,7 +7438,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 /* v10.0 命盘排法校正版：命运盘从时宫排地支、按地支装六神、日宫起五星、六亲排法二选一 */
 (function(){
   const V10_VERSION = 'v10.0 命盘排法校正版';
-  const V10_CACHE = 'xiaoliuren-v10-1-deep-fix';
+  const V10_CACHE = 'xiaoliuren-v10-1-1-mobile-layout-nav-fix';
   const KINSHIP_KEY = 'xlr_destiny_kinship_mode_v10';
   const ORDER = (typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
   const VISUAL_ORDER = ['留连','速喜','赤口','大安','空亡','小吉'];
@@ -7885,7 +7885,7 @@ body.result-destiny #adviceBlock{display:none!important;}
 /* v10.1 命盘分析深化修正版：以六亲+掌诀+地支+六神+五星综合断语 */
 (function(){
   'use strict';
-  const VERSION_LABEL='v10.1 命盘分析深化修正版';
+  const VERSION_LABEL='v10.1.1 手机端排版与导航修正版';
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   const ORDER=(typeof PALACE_ORDER!=='undefined'&&Array.isArray(PALACE_ORDER))?PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -8063,6 +8063,114 @@ html{scroll-padding-bottom:140px;}
   .v101d-rule-table th:first-child,.v101d-rule-table td:first-child{min-width:68px;}
 }
 </style>
+
+
+
+<style id="v1011-mobile-layout-navigation-fix">
+/* v10.1.1 手机端排版与导航修正版 */
+:root{--mobile-reading-font:16px;}
+@media (max-width: 900px){
+  html, body{max-width:100vw!important;overflow-x:hidden!important;}
+  body.force-desktop-mode.result-page{min-width:0!important;overflow-x:hidden!important;}
+  body.force-desktop-mode.result-page .shell,
+  body.result-page.force-desktop-mode .shell{
+    width:100%!important;min-width:0!important;max-width:100vw!important;margin:0!important;padding-left:12px!important;padding-right:12px!important;
+  }
+  body.result-page .shell{max-width:100vw!important;width:100%!important;padding-left:12px!important;padding-right:12px!important;}
+  body.result-page .main{max-width:100%!important;width:100%!important;overflow-x:hidden!important;}
+  body.result-page #resultCard,
+  .result-section{width:100%!important;max-width:100%!important;overflow-x:hidden!important;padding:16px 64px 170px 14px!important;}
+  .result-section *{box-sizing:border-box;}
+  .result-section p,.result-section li,.result-section td,.result-section th,
+  .v101d-analysis-card p,.destiny-deep-card p,.v101d-lines,.v101d-paipan-meta,
+  .destiny-lines,.destiny-analysis{font-size:var(--mobile-reading-font)!important;line-height:1.82!important;letter-spacing:0!important;}
+  .result-section h3{font-size:1.22rem!important;line-height:1.45!important;}
+  .result-section h4,.block-title,.v101d-analysis-card h5,.destiny-deep-card h5{font-size:1.06rem!important;line-height:1.55!important;}
+  .result-section strong{font-weight:850;}
+
+  /* 所有命盘/规则表统一改成横向滑动，避免内容被压缩、裁切或字体忽大忽小 */
+  .result-section table,
+  .v101d-rule-table table,
+  .destiny-deep-card table{
+    width:max-content!important;min-width:680px!important;max-width:none!important;table-layout:auto!important;border-collapse:collapse!important;
+  }
+  .v101d-rule-table,
+  .destiny-deep-card:has(table),
+  .result-section .table-wrap,
+  .result-section .scroll-table,
+  .result-section .responsive-table{
+    display:block!important;width:100%!important;max-width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  }
+  .result-section table th,.result-section table td,
+  .v101d-rule-table th,.v101d-rule-table td{
+    min-width:120px!important;max-width:260px!important;white-space:normal!important;word-break:normal!important;overflow-wrap:break-word!important;padding:10px 12px!important;vertical-align:top!important;
+  }
+  .result-section table th:first-child,.result-section table td:first-child,
+  .v101d-rule-table th:first-child,.v101d-rule-table td:first-child{min-width:74px!important;max-width:96px!important;}
+  .v101d-rule-table::after{content:'可左右滑动查看完整表格';display:block;padding:7px 10px;color:var(--muted);font-size:.78rem!important;background:rgba(255,255,255,.72);}
+
+  /* 六宫排盘与命盘卡片：单列、自然高度、统一字号 */
+  .hex-board.v101d-paipan-grid,.v101-paipan-grid,.hex-board.paipan-board-grid,
+  .destiny-board-grid.v101d-destiny-grid,.destiny-board-grid.v101-destiny-grid,.destiny-visual-board{
+    display:grid!important;grid-template-columns:1fr!important;gap:12px!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important;
+  }
+  .v101d-paipan-cell,.v101-paipan-cell,.paipan-cell,
+  .v101d-destiny-cell,.v101-destiny-cell,.destiny-visual-cell,
+  .v101d-analysis-card,.destiny-deep-card{
+    width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important;padding:15px!important;word-break:normal!important;overflow-wrap:break-word!important;
+  }
+  .v101d-destiny-cell{padding-top:18px!important;padding-right:54px!important;position:relative!important;}
+  .v101d-destiny-cell h5{display:block!important;padding-right:8px!important;margin-right:0!important;font-size:1.05rem!important;line-height:1.55!important;}
+  .v101d-destiny-cell .branch{position:absolute!important;right:16px!important;top:16px!important;font-size:1.04rem!important;line-height:1!important;}
+  .v101d-cell-no,.corner-index{position:absolute!important;right:14px!important;top:42px!important;min-width:26px!important;height:26px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;border-radius:999px!important;background:rgba(114,87,174,.12)!important;color:var(--primary)!important;font-size:.78rem!important;font-weight:850!important;z-index:2!important;}
+  .v101d-mark-row,.mark-row{display:flex!important;flex-wrap:wrap!important;gap:6px!important;margin-top:8px!important;}
+
+  /* 逐宫分析不要被右侧快捷按钮或底部章节导航压住 */
+  .v101d-analysis-list{display:grid!important;grid-template-columns:1fr!important;gap:14px!important;width:100%!important;max-width:100%!important;}
+  .v101d-analysis-card{padding-right:18px!important;}
+  .v101d-analysis-card p{margin:8px 0!important;}
+  .destiny-deep{display:grid!important;grid-template-columns:1fr!important;gap:14px!important;width:100%!important;max-width:100%!important;}
+  .destiny-deep-card.full{grid-column:auto!important;}
+
+  /* 底部章节卡点导航下移并降低遮挡感 */
+  .section-jump-nav{
+    bottom:max(10px, calc(env(safe-area-inset-bottom) + 8px))!important;
+    left:50%!important;transform:translateX(-50%)!important;
+    max-width:calc(100vw - 26px)!important;width:auto!important;padding:7px!important;gap:6px!important;z-index:45!important;opacity:.94!important;
+  }
+  .jump-chip{font-size:.74rem!important;line-height:1!important;padding:8px 10px!important;white-space:nowrap!important;}
+  .scroll-tools{right:6px!important;bottom:calc(env(safe-area-inset-bottom) + 94px)!important;gap:7px!important;z-index:44!important;opacity:.92!important;}
+  .scroll-tool-btn{width:40px!important;height:40px!important;min-width:40px!important;font-size:.86rem!important;box-shadow:0 8px 22px rgba(43,35,69,.12)!important;}
+  .scroll-tool-btn.wide,.scroll-tool-btn.mini-wide{width:42px!important;min-width:42px!important;font-size:.66rem!important;padding-left:0!important;padding-right:0!important;}
+}
+@media (max-width: 430px){
+  :root{--mobile-reading-font:15.5px;}
+  body.result-page #resultCard,.result-section{padding:14px 58px 170px 12px!important;}
+  .result-section table,.v101d-rule-table table,.destiny-deep-card table{min-width:620px!important;}
+  .result-section table th,.result-section table td,.v101d-rule-table th,.v101d-rule-table td{min-width:108px!important;max-width:230px!important;padding:9px 10px!important;}
+  .result-section table th:first-child,.result-section table td:first-child,.v101d-rule-table th:first-child,.v101d-rule-table td:first-child{min-width:64px!important;max-width:80px!important;}
+  .section-jump-nav{max-width:calc(100vw - 20px)!important;}
+}
+</style>
+<script id="v1011-version-update-patch">
+(function(){
+  try{
+    document.title='小六壬占卜 · v10.1.1 手机端排版与导航修正版';
+    var h=document.querySelector('.result-header h2, .hero h2');
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.1 手机端排版与导航修正版'; });
+    if(typeof buildVersionUpdatesHTML==='function'){
+      const old=buildVersionUpdatesHTML;
+      buildVersionUpdatesHTML=function(){
+        let html=old();
+        if(!html.includes('v10.1.1 手机端排版与导航修正版')){
+          html += '<details><summary>v10.1.1 手机端排版与导航修正版</summary><ul><li>修复命盘与六宫排盘在手机端字体忽大忽小、文字重叠和内容裁切的问题。</li><li>大表格统一改为横向滑动显示，避免强行压缩到一屏导致无法阅读。</li><li>调整命运六亲参考盘的序号与时辰/地支显示距离，避免贴得过近。</li><li>下移底部章节导航，并增加结果页底部留白，减少遮挡正文。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
+        }
+        return html;
+      };
+    }
+  }catch(e){console.warn('v10.1.1 patch skipped', e);}
+})();
+</script>
 
 </body>
 </html>
