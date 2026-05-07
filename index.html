@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.6 设置未保存提醒修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1.5：修复自适应/电脑模式切换后的阅读字号残留问题，新增设置未保存关闭提醒，并补齐版本更新记录。" />
+  <title>小六壬占卜 · v10.1.7 电脑端设置询问修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1.7 电脑端设置询问修正版：手机/平板关闭设置不再弹出未保存询问，电脑端保留关闭前保存询问，并更新版本记录。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.6 设置未保存提醒修正版</h2>
+          <h2>个人占卜台 · v10.1.7 电脑端设置询问修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -8155,9 +8155,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1011-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.6 设置未保存提醒修正版';
+    document.title='小六壬占卜 · v10.1.7 电脑端设置询问修正版';
     var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.6 设置未保存提醒修正版'; });
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.7 电脑端设置询问修正版'; });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
@@ -8244,9 +8244,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1012-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.6 设置未保存提醒修正版';
+    document.title='小六壬占卜 · v10.1.7 电脑端设置询问修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.6 设置未保存提醒修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.7 电脑端设置询问修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8337,9 +8337,9 @@ dialog{z-index:1000;}
 <script id="v1013-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.6 设置未保存提醒修正版';
+    document.title='小六壬占卜 · v10.1.7 电脑端设置询问修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.6 设置未保存提醒修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.7 电脑端设置询问修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8773,5 +8773,203 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', apply); else apply();
   setTimeout(apply,100);
+})();
+</script>
+
+
+<!-- v10.1.7 final settings close policy override: desktop asks, mobile/tablet closes without prompt -->
+<style id="v1017-settings-desktop-only-style">
+  @media (hover:hover) and (pointer:fine) {
+    .unsaved-settings-mask.v1017-desktop-only { z-index: 2147483647; }
+  }
+</style>
+<script id="v1017-settings-desktop-only-close-policy">
+(function(){
+  'use strict';
+  const VERSION = 'v10.1.7 电脑端设置询问修正版';
+  const WATCH_KEYS = [
+    'xlr_user_settings_v9_1',
+    'xiaoliuren_ui_settings_v9916',
+    'xiaoliuren_reading_text_size_v9915',
+    'xiaoliuren_client_mode_v9914',
+    'xiaoliuren_quick_button_settings_v9919',
+    'xiaoliuren_destiny_relation_method_v10'
+  ];
+  let baseline = null;
+  let allowRawClose = false;
+  let patchedCloseButton = false;
+
+  function $(id){ return document.getElementById(id); }
+  function readLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function writeLS(k,v){ try{ if(v === null || v === undefined) localStorage.removeItem(k); else localStorage.setItem(k, String(v)); }catch(e){} }
+  function lsSnapshot(){ const o={}; WATCH_KEYS.forEach(function(k){ o[k]=readLS(k); }); return o; }
+  function formSnapshot(){
+    const dlg = $('settingsDialog');
+    const o = {};
+    if(!dlg) return o;
+    Array.prototype.forEach.call(dlg.querySelectorAll('input, select, textarea'), function(el, i){
+      const key = el.id || el.name || ('field_'+i);
+      if(el.type === 'checkbox' || el.type === 'radio') o[key] = !!el.checked;
+      else o[key] = el.value;
+    });
+    return o;
+  }
+  function snap(){ return { form: formSnapshot(), ls: lsSnapshot() }; }
+  function same(a,b){ try{ return JSON.stringify(a) === JSON.stringify(b); }catch(e){ return false; } }
+  function isDirty(){ return !!baseline && !same(baseline, snap()); }
+  function rawClose(){
+    const dlg = $('settingsDialog');
+    if(!dlg) return;
+    try{ if(typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+    catch(e){ try{ dlg.removeAttribute('open'); }catch(_e){} }
+  }
+  function restoreBaseline(){
+    if(!baseline) return;
+    Object.keys(baseline.ls || {}).forEach(function(k){ writeLS(k, baseline.ls[k]); });
+    const dlg = $('settingsDialog');
+    if(dlg){
+      const vals = baseline.form || {};
+      Array.prototype.forEach.call(dlg.querySelectorAll('input, select, textarea'), function(el, i){
+        const key = el.id || el.name || ('field_'+i);
+        if(!(key in vals)) return;
+        if(el.type === 'checkbox' || el.type === 'radio') el.checked = !!vals[key];
+        else el.value = vals[key];
+      });
+    }
+    try{ if(typeof fillSettingsDialog === 'function') fillSettingsDialog(); }catch(e){}
+    try{ if(typeof applyUserSettingsToPage === 'function') applyUserSettingsToPage(); }catch(e){}
+    try{ if(typeof applyUISettings === 'function') applyUISettings(); }catch(e){}
+    try{ if(typeof renderQuickSettingsList === 'function') renderQuickSettingsList(); }catch(e){}
+    try{ if(typeof renderQuickTools === 'function') renderQuickTools(); }catch(e){}
+  }
+  function takeBaseline(delay){
+    setTimeout(function(){ baseline = snap(); }, delay || 120);
+  }
+  function isMobileOrTablet(){
+    const ua = navigator.userAgent || '';
+    const touch = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || navigator.maxTouchPoints > 1;
+    const small = Math.min(window.innerWidth || 9999, window.innerHeight || 9999) < 900;
+    const mobileUA = /iPhone|iPad|iPod|Android|Mobile|Tablet|Silk|Kindle/i.test(ua);
+    return mobileUA || (touch && small);
+  }
+  function closeAfterDiscard(){
+    restoreBaseline();
+    allowRawClose = true;
+    rawClose();
+    setTimeout(function(){ allowRawClose = false; baseline = null; }, 80);
+  }
+  function saveThenClose(){
+    allowRawClose = true;
+    try{
+      if(typeof window.saveSettingsFromDialog === 'function') window.saveSettingsFromDialog();
+      else rawClose();
+    }catch(e){ rawClose(); }
+    setTimeout(function(){ allowRawClose = false; baseline = null; }, 180);
+  }
+  function desktopPromptClose(){
+    const save = window.confirm('阅读设置有未保存的修改。\n\n点“确定”保存并关闭。\n点“取消”继续选择。');
+    if(save){ saveThenClose(); return; }
+    const discard = window.confirm('不保存本次修改，直接关闭设置吗？\n\n点“确定”不保存关闭。\n点“取消”继续编辑。');
+    if(discard) closeAfterDiscard();
+  }
+  function requestClose(e){
+    if(e){
+      if(e.preventDefault) e.preventDefault();
+      if(e.stopPropagation) e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+    }
+    if(allowRawClose){ rawClose(); return false; }
+    if(!isDirty()){
+      allowRawClose = true;
+      rawClose();
+      setTimeout(function(){ allowRawClose = false; baseline = null; }, 80);
+      return false;
+    }
+    if(isMobileOrTablet()) closeAfterDiscard();
+    else desktopPromptClose();
+    return false;
+  }
+  function patchOpenClose(){
+    const previousOpen = window.openSettingsDialog;
+    if(typeof previousOpen === 'function' && !previousOpen.__v1017DesktopOnly){
+      window.openSettingsDialog = function(){
+        const ret = previousOpen.apply(this, arguments);
+        setTimeout(function(){ patchCloseButton(true); takeBaseline(60); }, 80);
+        return ret;
+      };
+      window.openSettingsDialog.__v1017DesktopOnly = true;
+    }
+
+    window.closeSettingsDialog = requestClose;
+    window.closeSettingsDialog.__v1017DesktopOnly = true;
+
+    const previousSave = window.saveSettingsFromDialog;
+    if(typeof previousSave === 'function' && !previousSave.__v1017DesktopOnly){
+      window.saveSettingsFromDialog = function(){
+        allowRawClose = true;
+        let ret;
+        try{ ret = previousSave.apply(this, arguments); }
+        finally{
+          setTimeout(function(){ allowRawClose = false; baseline = null; }, 180);
+        }
+        return ret;
+      };
+      window.saveSettingsFromDialog.__v1017DesktopOnly = true;
+    }
+  }
+  function patchCloseButton(force){
+    const oldBtn = $('closeSettingsBtn');
+    if(!oldBtn) return;
+    if(patchedCloseButton && !force && oldBtn.dataset.v1017DesktopOnly === '1') return;
+    const btn = oldBtn.cloneNode(true);
+    btn.dataset.v1017DesktopOnly = '1';
+    oldBtn.parentNode.replaceChild(btn, oldBtn);
+    btn.addEventListener('click', requestClose, true);
+    btn.onclick = requestClose;
+    patchedCloseButton = true;
+  }
+  function patchDialogCancel(){
+    const dlg = $('settingsDialog');
+    if(!dlg || dlg.dataset.v1017CancelGuard === '1') return;
+    dlg.dataset.v1017CancelGuard = '1';
+    dlg.addEventListener('cancel', requestClose, true);
+    dlg.addEventListener('change', function(){ if(!baseline) takeBaseline(0); }, true);
+    dlg.addEventListener('input', function(){ if(!baseline) takeBaseline(0); }, true);
+  }
+  function patchVersion(){
+    document.title = '小六壬占卜 · ' + VERSION;
+    const meta = document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content', '小六壬个人网页版 ' + VERSION + '：基于 v10.1.6 调整设置关闭策略，手机和平板端关闭不再弹出未保存询问，电脑端保留保存/放弃询问，并更新版本记录。');
+    document.querySelectorAll('h2').forEach(function(el){
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent = '个人占卜台 · ' + VERSION;
+    });
+    if(typeof window.buildVersionUpdatesHTML === 'function' && !window.buildVersionUpdatesHTML.__v1017DesktopOnly){
+      const old = window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML = function(){
+        let html = old.call(this);
+        const row = '<details open><summary>' + VERSION + '</summary><ul>' +
+          '<li>基于 v10.1.6 重新调整阅读设置关闭逻辑：手机端和平板端放弃未保存询问，点击关闭直接关闭并丢弃未保存改动，避免 Safari 原生弹窗层级导致按钮不可点。</li>' +
+          '<li>电脑端继续保留关闭前询问：可选择保存并关闭、不保存关闭或继续编辑。</li>' +
+          '<li>重新接管设置右上角关闭按钮与 ESC 关闭，减少旧版监听残留造成的卡住问题。</li>' +
+          '<li>同步更新页面标题、版本说明、README、manifest 与 Service Worker 缓存版本。</li>' +
+        '</ul></details>';
+        if(html.indexOf(VERSION) < 0) html = row + html;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1017DesktopOnly = true;
+      try{ if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); }catch(e){}
+    }
+  }
+  function boot(){
+    patchOpenClose();
+    patchCloseButton(false);
+    patchDialogCancel();
+    patchVersion();
+    const dlg = $('settingsDialog');
+    if(dlg && dlg.open) takeBaseline(60);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  setTimeout(boot, 250);
+  setTimeout(boot, 900);
 })();
 </script>
