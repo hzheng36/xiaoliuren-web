@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.1.4 PWA缓存更新修正版 */
-const CACHE_NAME = 'xiaoliuren-v10-1-4-pwa-cache-update-fix';
+/* 小六壬占卜 · v10.1.5 模式切换与设置保护版 */
+const CACHE_NAME = 'xiaoliuren-v10-1-5-mode-settings-protect';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
