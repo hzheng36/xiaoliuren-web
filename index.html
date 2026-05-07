@@ -9346,3 +9346,211 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }catch(e){}
 })();
 </script>
+
+<style id="v10110-settings-close-prompt-above-style">
+  #unsavedSettingsPromptV10110{
+    position:fixed!important;
+    inset:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:22px!important;
+    background:rgba(38,30,60,.38)!important;
+    backdrop-filter:blur(2px)!important;
+    -webkit-backdrop-filter:blur(2px)!important;
+    z-index:2147483647!important;
+    pointer-events:auto!important;
+  }
+  #unsavedSettingsPromptV10110 .settings-front-box{
+    width:min(460px,calc(100vw - 36px));
+    border:1px solid rgba(103,83,165,.22);
+    border-radius:24px;
+    padding:20px;
+    background:rgba(255,255,255,.995);
+    color:var(--text,#27223a);
+    box-shadow:0 28px 80px rgba(47,34,80,.34);
+  }
+  #unsavedSettingsPromptV10110 h4{margin:0 0 8px;color:var(--primary,#6b55b6);font-size:1.08rem;}
+  #unsavedSettingsPromptV10110 p{margin:0 0 16px;color:var(--muted,#7d7896);line-height:1.7;font-size:.96rem;}
+  #unsavedSettingsPromptV10110 .settings-front-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+  #unsavedSettingsPromptV10110 button{width:auto!important;margin:0!important;padding:10px 14px!important;border-radius:14px!important;touch-action:manipulation;}
+  #unsavedSettingsPromptV10110 .primary-btn{background:var(--primary,#6b55b6);color:#fff;border:0;}
+  #unsavedSettingsPromptV10110 .ghost-btn{background:rgba(255,255,255,.85);border:1px solid rgba(103,83,165,.18);color:var(--text,#27223a);}
+</style>
+<script id="v10110-settings-close-front-prompt-script">
+(function(){
+  const VERSION='v10.1.10 设置关闭前置询问修正版';
+  const CACHE_KEEP='xiaoliuren-v10-1-10-settings-front-prompt';
+  const IDS=[
+    'settingDefaultView','settingReadingSize','settingCollapseDetails','settingShowRadar',
+    'settingShowAbout','settingShowVersionUpdates','settingRememberScene','settingRememberMethod'
+  ];
+  let baseline=null;
+  let suppress=false;
+  let lastOpen=false;
+  function $(id){return document.getElementById(id);}
+  function readForm(){
+    const data={};
+    IDS.forEach(function(id){
+      const el=$(id); if(!el) return;
+      data[id]=(el.type==='checkbox'||el.type==='radio')?!!el.checked:el.value;
+    });
+    return data;
+  }
+  function same(a,b){return JSON.stringify(a||{})===JSON.stringify(b||{});}
+  function takeBaseline(){baseline=readForm();}
+  function dirty(){return !!baseline && !same(baseline,readForm());}
+  function rawCloseSettings(){
+    const dlg=$('settingsDialog');
+    if(!dlg) return;
+    try{ if(typeof dlg.close==='function' && dlg.open) dlg.close(); else dlg.removeAttribute('open'); }
+    catch(e){ dlg.removeAttribute('open'); }
+  }
+  function rawReopenSettings(){
+    const dlg=$('settingsDialog');
+    if(!dlg) return;
+    try{ if(typeof dlg.showModal==='function' && !dlg.open) dlg.showModal(); else dlg.setAttribute('open',''); }
+    catch(e){ dlg.setAttribute('open',''); }
+    setTimeout(function(){ patchCloseButton(); patchDialog(); },60);
+  }
+  function removeAllPrompts(){
+    ['unsavedSettingsPromptV10110','unsavedSettingsTopDialogV1019','unsavedSettingsPromptV1018','unsavedSettingsPromptV1017','unsavedSettingsPromptV1016','unsavedSettingsPromptV1015'].forEach(function(id){
+      const el=$(id); if(!el) return;
+      try{ if(el.tagName==='DIALOG' && el.open) el.close(); }catch(e){}
+      el.remove();
+    });
+  }
+  function restoreBaseline(){
+    const vals=baseline||{};
+    Object.keys(vals).forEach(function(id){
+      const el=$(id); if(!el) return;
+      if(el.type==='checkbox'||el.type==='radio') el.checked=!!vals[id]; else el.value=vals[id];
+    });
+    try{ if(typeof window.applyUserSettingsToPage==='function') window.applyUserSettingsToPage(); }catch(e){}
+  }
+  function closeClean(){
+    suppress=true;
+    removeAllPrompts();
+    rawCloseSettings();
+    setTimeout(function(){suppress=false; baseline=null; lastOpen=false;},180);
+  }
+  function saveClean(){
+    suppress=true;
+    try{ if(typeof window.saveSettingsFromDialog==='function') window.saveSettingsFromDialog(); }
+    catch(e){ try{ if(typeof saveSettingsFromDialog==='function') saveSettingsFromDialog(); }catch(err){} }
+    try{ if(typeof window.saveEnhancedSettings==='function') window.saveEnhancedSettings(); }catch(e){}
+    baseline=readForm();
+    removeAllPrompts();
+    rawCloseSettings();
+    setTimeout(function(){suppress=false; baseline=null; lastOpen=false;},240);
+  }
+  function showFrontPrompt(){
+    removeAllPrompts();
+    const mask=document.createElement('div');
+    mask.id='unsavedSettingsPromptV10110';
+    mask.setAttribute('role','dialog');
+    mask.setAttribute('aria-modal','true');
+    mask.innerHTML='<div class="settings-front-box"><h4>设置尚未保存</h4><p>你已经修改了阅读设置。关闭前要保存这些更改吗？</p><div class="settings-front-actions"><button class="ghost-btn" type="button" data-v10110-act="cancel">继续编辑</button><button class="ghost-btn" type="button" data-v10110-act="discard">不保存关闭</button><button class="primary-btn" type="button" data-v10110-act="save">保存并关闭</button></div></div>';
+    document.body.appendChild(mask);
+    mask.addEventListener('click',function(e){
+      const btn=e.target && e.target.closest && e.target.closest('[data-v10110-act]');
+      if(!btn) return;
+      e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      const act=btn.getAttribute('data-v10110-act');
+      if(act==='cancel'){
+        removeAllPrompts();
+        rawReopenSettings();
+        return;
+      }
+      if(act==='discard'){
+        restoreBaseline();
+        closeClean();
+        return;
+      }
+      if(act==='save'){
+        saveClean();
+        return;
+      }
+    },true);
+    setTimeout(function(){ const b=mask.querySelector('[data-v10110-act="cancel"]'); if(b) try{b.focus({preventScroll:true});}catch(e){} },30);
+  }
+  function guardedClose(e){
+    if(e){ e.preventDefault&&e.preventDefault(); e.stopPropagation&&e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation(); }
+    if(suppress || !dirty()){ closeClean(); return false; }
+    suppress=true;
+    rawCloseSettings();
+    /* 先关闭阅读设置弹窗，退出 Safari 的原生 top layer；再显示自定义询问层。 */
+    setTimeout(function(){ suppress=false; showFrontPrompt(); },80);
+    return false;
+  }
+  function patchCloseButton(){
+    const btn=$('closeSettingsBtn');
+    if(!btn || btn.dataset.v10110FrontGuard) return;
+    const clone=btn.cloneNode(true);
+    clone.dataset.v10110FrontGuard='1';
+    clone.onclick=guardedClose;
+    btn.parentNode.replaceChild(clone,btn);
+    ['click','touchend','pointerup'].forEach(function(evt){ clone.addEventListener(evt,guardedClose,true); });
+  }
+  function patchSaveButton(){
+    const save=$('saveSettingsBtn');
+    if(!save || save.dataset.v10110SaveGuard) return;
+    save.dataset.v10110SaveGuard='1';
+    save.addEventListener('click',function(){
+      suppress=true;
+      removeAllPrompts();
+      setTimeout(function(){takeBaseline(); suppress=false;},500);
+    },true);
+  }
+  function patchDialog(){
+    const dlg=$('settingsDialog');
+    if(!dlg) return;
+    if(!dlg.dataset.v10110FrontGuard){
+      dlg.dataset.v10110FrontGuard='1';
+      dlg.addEventListener('cancel',function(e){ if(!suppress) guardedClose(e); },true);
+      dlg.addEventListener('input',function(){ if(!baseline) takeBaseline(); },true);
+      dlg.addEventListener('change',function(){ if(!baseline) takeBaseline(); },true);
+    }
+    const opened=!!dlg.open;
+    if(opened && !lastOpen){ setTimeout(takeBaseline,120); }
+    lastOpen=opened;
+  }
+  function patchGlobals(){
+    window.closeSettingsDialog=guardedClose;
+    window.closeSettingsDialog.__v10110=true;
+    const oldOpen=window.openSettingsDialog;
+    if(typeof oldOpen==='function' && !oldOpen.__v10110){
+      window.openSettingsDialog=function(){ const r=oldOpen.apply(this,arguments); setTimeout(function(){takeBaseline(); patchCloseButton(); patchDialog();},180); return r; };
+      window.openSettingsDialog.__v10110=true;
+    }
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：关闭设置时先退出阅读设置弹窗，再以前置遮罩显示未保存询问，修复 Safari 中询问层无法点击的问题。');
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v10110){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const row='<details><summary>v10.1.10 设置关闭前置询问修正版</summary><ul><li>修复 iPhone Safari 中“设置尚未保存”提示仍被阅读设置弹窗压住、按钮无法点击的问题。</li><li>关闭设置时先暂时关闭阅读设置弹窗，再显示未保存询问层；选择“继续编辑”会恢复原设置弹窗并保留当前改动。</li><li>“不保存关闭”会还原本次未保存改动；“保存并关闭”会保存当前设置后退出。</li><li>更新 PWA 缓存名，减少 GitHub Pages / 主屏幕图标继续读取旧版的问题。</li></ul></details>';
+        if(html.indexOf('v10.1.10 设置关闭前置询问修正版')<0) html+=row;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v10110=true;
+    }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+  }
+  function clearOldCaches(){
+    if(!('caches' in window)) return;
+    caches.keys().then(function(keys){return Promise.all(keys.map(function(k){ if(k.indexOf('xiaoliuren')>=0 && k!==CACHE_KEEP) return caches.delete(k); }));}).catch(function(){});
+  }
+  function boot(){ patchGlobals(); patchCloseButton(); patchSaveButton(); patchDialog(); patchVersion(); clearOldCaches(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+  setTimeout(boot,250); setTimeout(boot,900); setTimeout(boot,1800);
+  try{
+    const mo=new MutationObserver(function(){ patchCloseButton(); patchSaveButton(); patchDialog(); });
+    if(document.documentElement) mo.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['open']});
+  }catch(e){}
+})();
+</script>
