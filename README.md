@@ -1,8 +1,15 @@
-# 小六壬占卜 · v10.1.3 自适应弹窗修正版
+# 小六壬占卜 · v10.1.4 PWA缓存更新修正版
 
 这是一个纯前端的小六壬个人占卜台，可直接部署到 GitHub Pages 使用。数据保存在当前浏览器本地，不上传服务器。
 
 ## 当前版本重点
+
+v10.1.4 重点修复 GitHub Pages / PWA 缓存导致上传新版后仍显示旧版本的问题：
+
+- 重新随 ZIP 提供 `service-worker.js`，避免仓库保留旧 Service Worker 后继续缓存旧页面。
+- 新 Service Worker 会清理旧的 xiaoliuren 缓存，HTML 使用网络优先策略。
+- 前端主动触发 Service Worker 更新，减少 Safari / 主屏幕 PWA 长时间停留旧版本的情况。
+- 如果仍显示旧版，请在 Safari 打开页面后刷新两次，或清理 Safari 对该站点的网站数据后重新打开。
 
 v10.1.2 重点修复手机端结果内容与右侧快捷按钮的距离一致性：
 
@@ -125,3 +132,27 @@ v10.0 重点校正「命运」场景的命盘排法：
 - 平板和电脑端弹窗自动变宽，内容阅读更接近当前客户端模式。
 - 弹窗中的宽表继续支持横向滑动，避免内容被压缩或裁切。
 - 同步更新页面标题、版本内容更新和 PWA 缓存版本。
+
+
+## v10.1.4 PWA缓存更新修正版
+
+本版修复 GitHub Pages 上传新版后仍显示 v10.1.2 / 旧版的问题。原因通常是旧的 `service-worker.js` 还留在仓库根目录并缓存了旧 `index.html`。
+
+本版处理：
+
+- ZIP 内重新包含 `service-worker.js`。
+- 新 Service Worker 安装后会清理旧缓存，并采用 HTML 网络优先策略。
+- `index.html` 会主动触发 Service Worker 更新。
+
+上传时请把 ZIP 解压后的所有文件都上传到 GitHub Pages 仓库根目录，尤其不能漏掉：
+
+- `index.html`
+- `README.md`
+- `service-worker.js`
+
+如果上传后仍显示旧版：
+
+1. 用 Safari 打开 GitHub Pages 地址。
+2. 连续刷新两次。
+3. 若仍旧，进入 iPhone 设置 → Safari → 高级 → 网站数据，删除该 GitHub Pages 站点数据。
+4. 删除旧的主屏幕图标，重新添加到主屏幕。

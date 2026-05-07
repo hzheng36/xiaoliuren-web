@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.3 自适应弹窗修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1.3：优化历史记录、历史分析、场景规则、设置等弹窗的自适应布局，手机端切换电脑模式后弹窗同步变宽。" />
+  <title>小六壬占卜 · v10.1.4 PWA缓存更新修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1.4：修复 GitHub Pages / PWA 缓存导致上传新版后仍显示旧版本的问题，并保留自适应弹窗优化。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.3 自适应弹窗修正版</h2>
+          <h2>个人占卜台 · v10.1.4 PWA缓存更新修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -7438,7 +7438,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 /* v10.0 命盘排法校正版：命运盘从时宫排地支、按地支装六神、日宫起五星、六亲排法二选一 */
 (function(){
   const V10_VERSION = 'v10.0 命盘排法校正版';
-  const V10_CACHE = 'xiaoliuren-v10-1-3-adaptive-dialog-fix';
+  const V10_CACHE = 'xiaoliuren-v10-1-4-pwa-cache-update-fix';
   const KINSHIP_KEY = 'xlr_destiny_kinship_mode_v10';
   const ORDER = (typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
   const VISUAL_ORDER = ['留连','速喜','赤口','大安','空亡','小吉'];
@@ -8155,9 +8155,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1011-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.3 自适应弹窗修正版';
+    document.title='小六壬占卜 · v10.1.4 PWA缓存更新修正版';
     var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.3 自适应弹窗修正版'; });
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.4 PWA缓存更新修正版'; });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
@@ -8244,9 +8244,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1012-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.3 自适应弹窗修正版';
+    document.title='小六壬占卜 · v10.1.4 PWA缓存更新修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.3 自适应弹窗修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.4 PWA缓存更新修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8264,7 +8264,7 @@ html{scroll-padding-bottom:140px;}
 
 
 <style id="v1013-adaptive-dialog-fix">
-/* v10.1.3 自适应弹窗修正版：弹窗随手机/平板/电脑模式自适应 */
+/* v10.1.4 PWA缓存更新修正版：弹窗随手机/平板/电脑模式自适应 */
 :root{--xlr-dialog-max:980px;--xlr-dialog-wide:1080px;--xlr-dialog-medium:920px;}
 
 /* 常规桌面/平板端：弹窗不再固定成窄手机宽度 */
@@ -8337,16 +8337,16 @@ dialog{z-index:1000;}
 <script id="v1013-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.3 自适应弹窗修正版';
+    document.title='小六壬占卜 · v10.1.4 PWA缓存更新修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.3 自适应弹窗修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.4 PWA缓存更新修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
         let html=old();
-        if(!html.includes('v10.1.3 自适应弹窗修正版')){
-          html += '<details><summary>v10.1.3 自适应弹窗修正版</summary><ul><li>优化历史记录、历史分析、场景规则、问题模板、设置、复盘记录等弹窗的自适应宽度。</li><li>手机端切换“电脑”模式后，弹窗同步使用桌面式宽度和内部栅格，不再保持窄手机弹窗。</li><li>平板和电脑端弹窗自动变宽，列表、统计、规则和设置内容更容易阅读。</li><li>弹窗中的宽表继续支持横向滑动，避免内容被压缩或裁切。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
+        if(!html.includes('v10.1.4 PWA缓存更新修正版')){
+          html += '<details><summary>v10.1.4 PWA缓存更新修正版</summary><ul><li>优化历史记录、历史分析、场景规则、问题模板、设置、复盘记录等弹窗的自适应宽度。</li><li>手机端切换“电脑”模式后，弹窗同步使用桌面式宽度和内部栅格，不再保持窄手机弹窗。</li><li>平板和电脑端弹窗自动变宽，列表、统计、规则和设置内容更容易阅读。</li><li>弹窗中的宽表继续支持横向滑动，避免内容被压缩或裁切。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
         }
         return html;
       };
@@ -8357,3 +8357,60 @@ dialog{z-index:1000;}
 
 </body>
 </html>
+
+<!-- v10.1.4 PWA缓存更新修正版：强制刷新旧 Service Worker / Cache -->
+<script id="v1014-pwa-cache-update-fix">
+(function(){
+  const VERSION='v10.1.4 PWA缓存更新修正版';
+  try{
+    document.title='小六壬占卜 · '+VERSION;
+    document.querySelectorAll('h2').forEach(function(el){
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
+    });
+    if(typeof buildVersionUpdatesHTML==='function' && !buildVersionUpdatesHTML.__v1014Patched){
+      const old=buildVersionUpdatesHTML;
+      buildVersionUpdatesHTML=function(){
+        let html=old();
+        if(!html.includes(VERSION)){
+          html += '<details><summary>'+VERSION+'</summary><ul><li>修复 GitHub Pages 上传新版后仍显示旧版本的问题：重新加入 service-worker.js，并更新缓存策略。</li><li>新版 Service Worker 会清理旧缓存，HTML 页面改为网络优先，避免旧 index.html 长时间停留。</li><li>增加前端缓存刷新逻辑，加载新版后会主动触发 Service Worker 更新。</li><li>README 增加 GitHub Pages / PWA 缓存排查步骤：上传 service-worker.js、刷新两次或清理 Safari 网站数据。</li></ul></details>';
+        }
+        return html;
+      };
+      buildVersionUpdatesHTML.__v1014Patched=true;
+    }
+    async function clearOldCaches(){
+      if(!('caches' in window)) return;
+      const keep='xiaoliuren-v10-1-4-pwa-cache-update-fix';
+      const keys=await caches.keys();
+      await Promise.all(keys.filter(k=>k.indexOf('xiaoliuren')>=0 && k!==keep).map(k=>caches.delete(k)));
+    }
+    function toast(msg){
+      var el=document.getElementById('pwaStatusToast');
+      if(!el){ el=document.createElement('div'); el.id='pwaStatusToast'; el.className='pwa-status'; document.body.appendChild(el); }
+      el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2600);
+    }
+    if('serviceWorker' in navigator){
+      window.addEventListener('load', function(){
+        clearOldCaches().catch(function(){});
+        navigator.serviceWorker.register('./service-worker.js', {updateViaCache:'none'}).then(function(reg){
+          reg.update && reg.update();
+          if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
+          reg.addEventListener('updatefound', function(){
+            var nw=reg.installing; if(!nw) return;
+            nw.addEventListener('statechange', function(){
+              if(nw.state==='installed' && navigator.serviceWorker.controller){
+                toast('新版缓存已更新，刷新后生效');
+              }
+            });
+          });
+        }).catch(function(){ /* 静默失败 */ });
+      });
+      var reloaded=false;
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        if(reloaded) return; reloaded=true;
+        try{ sessionStorage.setItem('xiaoliuren-sw-updated','1'); }catch(e){}
+      });
+    }
+  }catch(e){ console.warn('v10.1.4 patch skipped', e); }
+})();
+</script>
