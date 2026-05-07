@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.2 间距一致修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1.2：统一手机端结果内容与右侧快捷按钮之间的距离，优化命盘、排盘和横向表格的显示边距。" />
+  <title>小六壬占卜 · v10.1.3 自适应弹窗修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1.3：优化历史记录、历史分析、场景规则、设置等弹窗的自适应布局，手机端切换电脑模式后弹窗同步变宽。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.2 间距一致修正版</h2>
+          <h2>个人占卜台 · v10.1.3 自适应弹窗修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -7438,7 +7438,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 /* v10.0 命盘排法校正版：命运盘从时宫排地支、按地支装六神、日宫起五星、六亲排法二选一 */
 (function(){
   const V10_VERSION = 'v10.0 命盘排法校正版';
-  const V10_CACHE = 'xiaoliuren-v10-1-2-spacing-consistency-fix';
+  const V10_CACHE = 'xiaoliuren-v10-1-3-adaptive-dialog-fix';
   const KINSHIP_KEY = 'xlr_destiny_kinship_mode_v10';
   const ORDER = (typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
   const VISUAL_ORDER = ['留连','速喜','赤口','大安','空亡','小吉'];
@@ -8155,9 +8155,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1011-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.2 间距一致修正版';
+    document.title='小六壬占卜 · v10.1.3 自适应弹窗修正版';
     var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.2 间距一致修正版'; });
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.3 自适应弹窗修正版'; });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
@@ -8244,9 +8244,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1012-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.2 间距一致修正版';
+    document.title='小六壬占卜 · v10.1.3 自适应弹窗修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.2 间距一致修正版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.3 自适应弹窗修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8259,6 +8259,99 @@ html{scroll-padding-bottom:140px;}
       };
     }
   }catch(e){console.warn('v10.1.2 patch skipped', e);}
+})();
+</script>
+
+
+<style id="v1013-adaptive-dialog-fix">
+/* v10.1.3 自适应弹窗修正版：弹窗随手机/平板/电脑模式自适应 */
+:root{--xlr-dialog-max:980px;--xlr-dialog-wide:1080px;--xlr-dialog-medium:920px;}
+
+/* 常规桌面/平板端：弹窗不再固定成窄手机宽度 */
+@media (min-width: 761px){
+  dialog{width:min(var(--xlr-dialog-max), calc(100vw - 72px))!important;max-width:none!important;}
+  #rulesDialog,#templateDialog{width:min(var(--xlr-dialog-wide), calc(100vw - 72px))!important;}
+  #historyDialog,#analyticsDialog,#settingsDialog,#reviewDialog{width:min(var(--xlr-dialog-medium), calc(100vw - 72px))!important;}
+  .analysis-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .rules-toolbar{grid-template-columns:minmax(0,1fr) 220px!important;}
+  .template-toolbar{grid-template-columns:minmax(0,1fr) 160px 160px!important;}
+  .template-grid,.template-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .history-search-row{grid-template-columns:minmax(0,1fr) 220px!important;}
+  .history-date-row,.analytics-date-row{align-items:end!important;}
+  .history-date-row label,.analytics-date-row label{flex:0 1 260px!important;}
+  .history-date-row input,.analytics-date-row input{width:auto!important;min-width:220px!important;}
+}
+
+/* 手机真实模式：保持手机弹窗；内容足够滚动 */
+@media (max-width: 760px){
+  body:not(.force-desktop-mode) dialog{width:calc(100vw - 28px)!important;max-width:none!important;min-width:0!important;}
+}
+
+/* 手机/平板切换“电脑”模式后：所有弹窗也使用桌面式宽度和桌面式内部布局 */
+body.force-desktop-mode dialog{
+  width:980px!important;
+  max-width:none!important;
+  min-width:760px!important;
+  max-height:calc(100dvh - 64px)!important;
+  margin:auto!important;
+}
+body.force-desktop-mode #rulesDialog,
+body.force-desktop-mode #templateDialog{width:1080px!important;min-width:880px!important;}
+body.force-desktop-mode #historyDialog,
+body.force-desktop-mode #analyticsDialog,
+body.force-desktop-mode #settingsDialog,
+body.force-desktop-mode #reviewDialog{width:920px!important;min-width:760px!important;}
+
+body.force-desktop-mode .dialog-head{padding:22px 24px!important;}
+body.force-desktop-mode .settings-form{padding:18px 24px 28px!important;}
+body.force-desktop-mode #analyticsContent{padding-bottom:36px!important;}
+body.force-desktop-mode .analysis-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:18px 24px 0!important;}
+body.force-desktop-mode .analysis-section{padding:18px 24px 0!important;}
+body.force-desktop-mode .analytics-date-row{padding:14px 24px 0!important;align-items:end!important;}
+body.force-desktop-mode .rules-toolbar{grid-template-columns:minmax(0,1fr) 220px!important;padding:16px 24px 0!important;}
+body.force-desktop-mode .rules-content{padding:18px 24px 32px!important;}
+body.force-desktop-mode .template-toolbar{grid-template-columns:minmax(0,1fr) 160px 160px!important;padding:16px 24px 0!important;}
+body.force-desktop-mode .template-content{padding:18px 24px 32px!important;}
+body.force-desktop-mode .template-grid,
+body.force-desktop-mode .template-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+body.force-desktop-mode .history-search-row{grid-template-columns:minmax(0,1fr) 220px!important;padding:16px 24px 0!important;}
+body.force-desktop-mode .history-date-row{padding:12px 24px 0!important;align-items:end!important;}
+body.force-desktop-mode .history-date-row label,
+body.force-desktop-mode .analytics-date-row label{flex:0 1 280px!important;}
+body.force-desktop-mode .history-date-row input,
+body.force-desktop-mode .analytics-date-row input{width:auto!important;min-width:220px!important;}
+body.force-desktop-mode .history-tools{padding:16px 24px 0!important;}
+body.force-desktop-mode .tool-folder-row{padding:14px 24px 0!important;}
+body.force-desktop-mode .history-list{padding:20px 24px 30px!important;}
+
+/* 弹窗里的宽表统一可横向滑动，避免在任意模式下被压扁 */
+dialog .analysis-table-wrap,
+dialog .xlr-table-scroll,
+dialog .wide-table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch;}
+dialog table{max-width:none;}
+body.force-desktop-mode dialog table{min-width:640px;}
+
+/* 右侧快捷按钮不影响弹窗阅读 */
+dialog{z-index:1000;}
+</style>
+<script id="v1013-version-update-patch">
+(function(){
+  try{
+    document.title='小六壬占卜 · v10.1.3 自适应弹窗修正版';
+    document.querySelectorAll('h2').forEach(function(el){
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.3 自适应弹窗修正版';
+    });
+    if(typeof buildVersionUpdatesHTML==='function'){
+      const old=buildVersionUpdatesHTML;
+      buildVersionUpdatesHTML=function(){
+        let html=old();
+        if(!html.includes('v10.1.3 自适应弹窗修正版')){
+          html += '<details><summary>v10.1.3 自适应弹窗修正版</summary><ul><li>优化历史记录、历史分析、场景规则、问题模板、设置、复盘记录等弹窗的自适应宽度。</li><li>手机端切换“电脑”模式后，弹窗同步使用桌面式宽度和内部栅格，不再保持窄手机弹窗。</li><li>平板和电脑端弹窗自动变宽，列表、统计、规则和设置内容更容易阅读。</li><li>弹窗中的宽表继续支持横向滑动，避免内容被压缩或裁切。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
+        }
+        return html;
+      };
+    }
+  }catch(e){console.warn('v10.1.3 patch skipped', e);}
 })();
 </script>
 
