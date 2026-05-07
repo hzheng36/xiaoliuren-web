@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.1.6 模式切换与设置保护版 */
-const CACHE_NAME = 'xiaoliuren-v10.1.6-mode-settings-protect';
+/* 小六壬占卜 · v10.1.7 设置关闭强拦截修正版 */
+const CACHE_NAME = 'xiaoliuren-v10.1.7-settings-close-guard';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
