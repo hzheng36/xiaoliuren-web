@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-1-1-mobile-layout-navigation-fix';
+const CACHE_NAME = 'xiaoliuren-v10-1-2-spacing-consistency-fix';
 const ASSETS = ['./','./index.html','./README.md'];
 self.addEventListener('install', event => { self.skipWaiting(); event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS).catch(()=>{}))); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME && k.startsWith('xiaoliuren-')).map(k => caches.delete(k))))); self.clients.claim(); });

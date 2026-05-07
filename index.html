@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.1 手机端排版与导航修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1.1：修复手机端命盘排版、表格横向滚动、底部导航遮挡、字体不一致和命盘序号拥挤问题。" />
+  <title>小六壬占卜 · v10.1.2 间距一致修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1.2：统一手机端结果内容与右侧快捷按钮之间的距离，优化命盘、排盘和横向表格的显示边距。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.1 手机端排版与导航修正版</h2>
+          <h2>个人占卜台 · v10.1.2 间距一致修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -7438,7 +7438,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 /* v10.0 命盘排法校正版：命运盘从时宫排地支、按地支装六神、日宫起五星、六亲排法二选一 */
 (function(){
   const V10_VERSION = 'v10.0 命盘排法校正版';
-  const V10_CACHE = 'xiaoliuren-v10-1-1-mobile-layout-nav-fix';
+  const V10_CACHE = 'xiaoliuren-v10-1-2-spacing-consistency-fix';
   const KINSHIP_KEY = 'xlr_destiny_kinship_mode_v10';
   const ORDER = (typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
   const VISUAL_ORDER = ['留连','速喜','赤口','大安','空亡','小吉'];
@@ -8155,9 +8155,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1011-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.1 手机端排版与导航修正版';
+    document.title='小六壬占卜 · v10.1.2 间距一致修正版';
     var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.1 手机端排版与导航修正版'; });
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.2 间距一致修正版'; });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
@@ -8169,6 +8169,96 @@ html{scroll-padding-bottom:140px;}
       };
     }
   }catch(e){console.warn('v10.1.1 patch skipped', e);}
+})();
+</script>
+
+
+<style id="v1012-spacing-consistency-fix">
+/* v10.1.2 间距一致修正版：统一手机端正文与右侧快捷按钮距离 */
+@media (max-width: 900px){
+  :root{--floating-tools-width:46px;--floating-tools-gap:18px;--result-right-safe:calc(var(--floating-tools-width) + var(--floating-tools-gap) + env(safe-area-inset-right));}
+  body.result-page .shell{padding-left:12px!important;padding-right:12px!important;}
+  body.result-page #resultCard,
+  body.result-page .result-section{
+    padding-left:14px!important;
+    padding-right:calc(var(--result-right-safe) + 10px)!important;
+    padding-bottom:180px!important;
+  }
+  body.result-page .result-section > .block,
+  body.result-page .result-section .destiny-deep-card,
+  body.result-page .result-section .v101d-analysis-card,
+  body.result-page .result-section .v101d-formula-box,
+  body.result-page .result-section .v101d-principle,
+  body.result-page .result-section .fortune-note,
+  body.result-page .result-section .question-linked{
+    width:100%!important;
+    max-width:100%!important;
+    margin-right:0!important;
+  }
+  body.result-page .result-section .block{padding-right:16px!important;}
+  .scroll-tools{
+    right:max(8px, env(safe-area-inset-right))!important;
+    bottom:calc(env(safe-area-inset-bottom) + 102px)!important;
+    z-index:44!important;
+  }
+  .scroll-tool-btn{width:42px!important;height:42px!important;min-width:42px!important;}
+  .scroll-tool-btn.wide,.scroll-tool-btn.mini-wide{width:44px!important;min-width:44px!important;}
+  .section-jump-nav{
+    bottom:max(12px, calc(env(safe-area-inset-bottom) + 10px))!important;
+    max-width:calc(100vw - 34px)!important;
+    z-index:45!important;
+  }
+  body.result-page .v101d-rule-table,
+  body.result-page .destiny-deep-card:has(table),
+  body.result-page .result-section .table-wrap,
+  body.result-page .result-section .scroll-table,
+  body.result-page .result-section .responsive-table{
+    max-width:100%!important;
+    margin-right:0!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  body.result-page .v101d-rule-table table,
+  body.result-page .destiny-deep-card table,
+  body.result-page .result-section table{
+    min-width:660px!important;
+    width:max-content!important;
+  }
+}
+@media (max-width: 430px){
+  :root{--floating-tools-width:44px;--floating-tools-gap:16px;}
+  body.result-page #resultCard,
+  body.result-page .result-section{
+    padding-left:12px!important;
+    padding-right:calc(var(--result-right-safe) + 8px)!important;
+    padding-bottom:184px!important;
+  }
+  body.result-page .result-section .block{padding-left:14px!important;padding-right:14px!important;}
+  .scroll-tool-btn{width:40px!important;height:40px!important;min-width:40px!important;}
+  .scroll-tool-btn.wide,.scroll-tool-btn.mini-wide{width:42px!important;min-width:42px!important;}
+  body.result-page .v101d-rule-table table,
+  body.result-page .destiny-deep-card table,
+  body.result-page .result-section table{min-width:620px!important;}
+}
+</style>
+<script id="v1012-version-update-patch">
+(function(){
+  try{
+    document.title='小六壬占卜 · v10.1.2 间距一致修正版';
+    document.querySelectorAll('h2').forEach(function(el){
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.2 间距一致修正版';
+    });
+    if(typeof buildVersionUpdatesHTML==='function'){
+      const old=buildVersionUpdatesHTML;
+      buildVersionUpdatesHTML=function(){
+        let html=old();
+        if(!html.includes('v10.1.2 间距一致修正版')){
+          html += '<details><summary>v10.1.2 间距一致修正版</summary><ul><li>统一手机端结果内容与右侧快捷按钮之间的安全距离，让排盘、命盘和综合解读的右边距更一致。</li><li>调整右侧浮动快捷按钮与底部章节导航的位置，减少遮挡正文和卡片内容。</li><li>继续保持大表格横向滑动显示，避免内容被压缩或裁切。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
+        }
+        return html;
+      };
+    }
+  }catch(e){console.warn('v10.1.2 patch skipped', e);}
 })();
 </script>
 
