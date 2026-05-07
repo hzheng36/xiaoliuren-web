@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.5 模式切换与设置保护版</title>
+  <title>小六壬占卜 · v10.1.6 设置未保存提醒修正版</title>
   <meta name="description" content="小六壬个人网页版 v10.1.5：修复自适应/电脑模式切换后的阅读字号残留问题，新增设置未保存关闭提醒，并补齐版本更新记录。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.5 模式切换与设置保护版</h2>
+          <h2>个人占卜台 · v10.1.6 设置未保存提醒修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -8155,9 +8155,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1011-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.5 模式切换与设置保护版';
+    document.title='小六壬占卜 · v10.1.6 设置未保存提醒修正版';
     var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.5 模式切换与设置保护版'; });
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.6 设置未保存提醒修正版'; });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
       buildVersionUpdatesHTML=function(){
@@ -8244,9 +8244,9 @@ html{scroll-padding-bottom:140px;}
 <script id="v1012-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.5 模式切换与设置保护版';
+    document.title='小六壬占卜 · v10.1.6 设置未保存提醒修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.5 模式切换与设置保护版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.6 设置未保存提醒修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8337,9 +8337,9 @@ dialog{z-index:1000;}
 <script id="v1013-version-update-patch">
 (function(){
   try{
-    document.title='小六壬占卜 · v10.1.5 模式切换与设置保护版';
+    document.title='小六壬占卜 · v10.1.6 设置未保存提醒修正版';
     document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.5 模式切换与设置保护版';
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.6 设置未保存提醒修正版';
     });
     if(typeof buildVersionUpdatesHTML==='function'){
       const old=buildVersionUpdatesHTML;
@@ -8357,7 +8357,7 @@ dialog{z-index:1000;}
 
 
 <style id="v1015-mode-settings-protect-style">
-/* v10.1.5 模式切换与设置保护版 */
+/* v10.1.6 设置未保存提醒修正版 */
 /* 保证自适应模式回到稳定字号，电脑模式关闭后不残留桌面阅读比例。 */
 body:not(.force-desktop-mode) {
   min-width: 0 !important;
@@ -8387,7 +8387,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1015-mode-settings-protect-script">
 (function(){
   'use strict';
-  const VERSION_LABEL='v10.1.5 模式切换与设置保护版';
+  const VERSION_LABEL='v10.1.6 设置未保存提醒修正版';
   const MODE_KEY='xiaoliuren_client_mode_v9914';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
   const SETTINGS_KEY='xlr_user_settings_v9_1';
@@ -8500,7 +8500,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }
   function patchVersion(){
     document.title='小六壬占卜 · '+VERSION_LABEL;
-    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION_LABEL+'：修复电脑/自适应模式切换后的字体恢复问题，新增设置未保存关闭提醒，并补齐版本更新记录。');
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION_LABEL+'：修复设置页改动后直接关闭不会提示保存的问题，并继续保留模式切换字体恢复与版本记录补齐。');
     document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION_LABEL; });
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1015Patched){
       const old=window.buildVersionUpdatesHTML;
@@ -8516,7 +8516,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
         ['v10.1.2 间距一致修正版',['统一手机端正文与右侧快捷按钮的安全距离。','优化排盘、命盘和综合解读卡片的右边距。']],
         ['v10.1.3 自适应弹窗修正版',['历史记录、历史分析、场景规则、问题模板、设置和复盘弹窗随客户端模式自适应宽度。']],
         ['v10.1.4 PWA缓存更新修正版',['ZIP 重新包含 service-worker.js，HTML 网络优先并清理旧缓存。','减少 GitHub Pages 上传新版后仍显示旧版的问题。']],
-        ['v10.1.5 模式切换与设置保护版',['修复从电脑模式切回自适应模式后阅读字号残留变大的问题。','设置页有改动但未保存时，关闭前询问是否保存或放弃。','补齐 v9.9.24 之后的版本内容更新记录。','继续保持完整 7 文件部署包。']]
+        ['v10.1.6 设置未保存提醒修正版',['修复从电脑模式切回自适应模式后阅读字号残留变大的问题。','设置页有改动但未保存时，关闭前询问是否保存或放弃。','补齐 v9.9.24 之后的版本内容更新记录。','继续保持完整 7 文件部署包。']]
       ];
       window.buildVersionUpdatesHTML=function(){
         let html=old.call(this);
@@ -8536,6 +8536,166 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     const saved=currentReadingSize(); if(saved) forceReadingSize(saved);
     try{ if(localStorage.getItem(MODE_KEY)!=='desktop') document.body.classList.remove('force-desktop-mode'); }catch(e){}
   }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+
+
+<style id="v1016-unsaved-settings-fix-style">
+  .unsaved-settings-mask{position:fixed;inset:0;z-index:999999;background:rgba(38,30,60,.30);display:grid;place-items:center;padding:18px;}
+  .unsaved-settings-box{width:min(440px,calc(100vw - 36px));background:rgba(255,255,255,.985);border:1px solid rgba(103,83,165,.18);border-radius:24px;box-shadow:0 26px 70px rgba(47,34,80,.24);padding:20px;color:var(--text);}
+  .unsaved-settings-box h4{margin:0 0 8px;color:var(--primary);font-size:1.08rem;}
+  .unsaved-settings-box p{margin:0 0 16px;color:var(--muted);line-height:1.7;font-size:.96rem;}
+  .unsaved-settings-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+  .unsaved-settings-actions button{width:auto!important;margin:0!important;padding:10px 14px!important;border-radius:14px!important;}
+</style>
+<script id="v1016-unsaved-settings-fix-script">
+(function(){
+  'use strict';
+  const VERSION='v10.1.6 设置未保存提醒修正版';
+  const WATCH_KEYS=[
+    'xlr_user_settings_v9_1',
+    'xiaoliuren_ui_settings_v9916',
+    'xiaoliuren_reading_text_size_v9915',
+    'xiaoliuren_client_mode_v9914',
+    'xiaoliuren_quick_button_settings_v9919',
+    'xiaoliuren_destiny_relation_method_v10'
+  ];
+  let baseline=null;
+  let suppressClose=false;
+  function $(id){return document.getElementById(id);}
+  function readLS(k){try{return localStorage.getItem(k)||'';}catch(e){return '';}}
+  function writeLS(k,v){try{ if(v===null || v===undefined || v==='') localStorage.removeItem(k); else localStorage.setItem(k,String(v)); }catch(e){}}
+  function lsSnapshot(){const o={}; WATCH_KEYS.forEach(k=>o[k]=readLS(k)); return o;}
+  function formSnapshot(){
+    const dlg=$('settingsDialog');
+    const o={};
+    if(!dlg) return o;
+    Array.prototype.forEach.call(dlg.querySelectorAll('input, select, textarea'), function(el, i){
+      const key=el.id || el.name || ('field_'+i);
+      if(el.type==='checkbox' || el.type==='radio') o[key]=!!el.checked;
+      else o[key]=el.value;
+    });
+    return o;
+  }
+  function snap(){return {form:formSnapshot(), ls:lsSnapshot()};}
+  function same(a,b){try{return JSON.stringify(a)===JSON.stringify(b);}catch(e){return false;}}
+  function dirty(){return !!baseline && !same(baseline, snap());}
+  function restoreSnap(s){
+    if(!s) return;
+    Object.keys(s.ls||{}).forEach(k=>writeLS(k,s.ls[k]));
+    const dlg=$('settingsDialog');
+    if(dlg){
+      const vals=s.form||{};
+      Array.prototype.forEach.call(dlg.querySelectorAll('input, select, textarea'), function(el, i){
+        const key=el.id || el.name || ('field_'+i);
+        if(!(key in vals)) return;
+        if(el.type==='checkbox' || el.type==='radio') el.checked=!!vals[key];
+        else el.value=vals[key];
+      });
+    }
+    try{ if(typeof fillSettingsDialog==='function') fillSettingsDialog(); }catch(e){}
+    try{ if(typeof applyUserSettingsToPage==='function') applyUserSettingsToPage(); }catch(e){}
+    try{ if(typeof applyUISettings==='function') applyUISettings(); }catch(e){}
+    try{ if(typeof renderQuickSettingsList==='function') renderQuickSettingsList(); }catch(e){}
+    try{ if(typeof renderQuickTools==='function') renderQuickTools(); }catch(e){}
+  }
+  function takeBaseline(delay){
+    setTimeout(function(){ baseline=snap(); const dlg=$('settingsDialog'); if(dlg) dlg.dataset.v1016Dirty='0'; }, delay||150);
+  }
+  function mark(){ const dlg=$('settingsDialog'); if(dlg && dlg.open) dlg.dataset.v1016Dirty=dirty()?'1':'0'; }
+  function trulyClose(){
+    const dlg=$('settingsDialog'); if(!dlg) return;
+    suppressClose=true;
+    try{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); }catch(e){ dlg.removeAttribute('open'); }
+    setTimeout(function(){ suppressClose=false; baseline=null; if(dlg) dlg.dataset.v1016Dirty='0'; },80);
+  }
+  function promptUnsaved(){
+    const old=$('unsavedSettingsPromptV1016') || $('unsavedSettingsPromptV1015'); if(old) old.remove();
+    const mask=document.createElement('div');
+    mask.id='unsavedSettingsPromptV1016';
+    mask.className='unsaved-settings-mask';
+    mask.innerHTML='<div class="unsaved-settings-box" role="dialog" aria-modal="true"><h4>设置尚未保存</h4><p>你已经修改了设置。关闭前要保存这些更改吗？</p><div class="unsaved-settings-actions"><button class="ghost-btn" type="button" data-v1016-act="cancel">继续编辑</button><button class="ghost-btn" type="button" data-v1016-act="discard">不保存关闭</button><button class="primary-btn" type="button" data-v1016-act="save">保存并关闭</button></div></div>';
+    document.body.appendChild(mask);
+    mask.addEventListener('click', function(e){
+      const act=e.target && e.target.getAttribute && e.target.getAttribute('data-v1016-act');
+      if(!act) return;
+      if(act==='cancel'){ mask.remove(); return; }
+      if(act==='discard'){ restoreSnap(baseline); mask.remove(); trulyClose(); return; }
+      if(act==='save'){
+        try{ if(typeof saveSettingsFromDialog==='function') saveSettingsFromDialog(); }catch(err){}
+        try{ if(typeof saveEnhancedSettings==='function') saveEnhancedSettings(); }catch(err){}
+        baseline=snap();
+        mask.remove();
+        trulyClose();
+      }
+    });
+  }
+  function requestClose(e){
+    if(e){ e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation(); }
+    mark();
+    if(dirty()) promptUnsaved(); else trulyClose();
+    return false;
+  }
+  function patchOpenClose(){
+    const oldOpen=window.openSettingsDialog;
+    if(typeof oldOpen==='function' && !oldOpen.__v1016){
+      window.openSettingsDialog=function(){ const r=oldOpen.apply(this, arguments); takeBaseline(220); return r; };
+      window.openSettingsDialog.__v1016=true;
+    }
+    const oldClose=window.closeSettingsDialog;
+    if(typeof oldClose==='function' && !oldClose.__v1016){
+      window.closeSettingsDialog=function(){ if(suppressClose) return oldClose.apply(this, arguments); return requestClose(); };
+      window.closeSettingsDialog.__v1016=true;
+    }
+    const oldSave=window.saveSettingsFromDialog;
+    if(typeof oldSave==='function' && !oldSave.__v1016){
+      window.saveSettingsFromDialog=function(){ suppressClose=true; const r=oldSave.apply(this, arguments); baseline=snap(); setTimeout(function(){suppressClose=false;},120); return r; };
+      window.saveSettingsFromDialog.__v1016=true;
+    }
+  }
+  function bind(){
+    patchOpenClose();
+    const dlg=$('settingsDialog');
+    const closeBtn=$('closeSettingsBtn');
+    if(closeBtn && !closeBtn.dataset.v1016Unsaved){
+      closeBtn.dataset.v1016Unsaved='1';
+      closeBtn.addEventListener('click', requestClose, true);
+    }
+    if(dlg && !dlg.dataset.v1016Unsaved){
+      dlg.dataset.v1016Unsaved='1';
+      dlg.addEventListener('cancel', function(e){ if(!suppressClose) requestClose(e); }, true);
+      dlg.addEventListener('input', function(){ setTimeout(mark,0); }, true);
+      dlg.addEventListener('change', function(){ setTimeout(mark,0); }, true);
+      dlg.addEventListener('click', function(e){
+        const t=e.target;
+        if(!t) return;
+        if(t.id==='saveSettingsBtn') { suppressClose=true; setTimeout(function(){ baseline=snap(); suppressClose=false; },200); }
+      }, true);
+    }
+    document.addEventListener('click', function(e){
+      const t=e.target && e.target.closest && e.target.closest('#settingsBtn,[data-quick-id="settings"],[data-v9919-quick="settings"]');
+      if(t) takeBaseline(260);
+    }, true);
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复设置页改动后关闭不会提示保存的问题，完整拦截关闭按钮、ESC 和内部关闭操作。');
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1016){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const row='<details><summary>v10.1.6 设置未保存提醒修正版</summary><ul><li>修复设置页面改动后点击关闭没有弹出保存提醒的问题。</li><li>关闭按钮、ESC 关闭以及设置页内跳转关闭都会先检查是否有未保存变动。</li><li>可选择“保存并关闭”“不保存关闭”或“继续编辑”。</li><li>继续保持完整 7 文件部署包，并更新 PWA 缓存版本。</li></ul></details>';
+        if(html.indexOf('v10.1.6 设置未保存提醒修正版')<0) html += row;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1016=true;
+      try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+    }
+  }
+  function boot(){ bind(); patchVersion(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
@@ -8603,11 +8763,11 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <!-- v10.1.5 final version override: must run after older cache/version patches -->
 <script id="v1015-final-version-override">
 (function(){
-  const VERSION='v10.1.5 模式切换与设置保护版';
+  const VERSION='v10.1.6 设置未保存提醒修正版';
   function apply(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复电脑/自适应模式切换后的字体恢复问题，新增设置未保存关闭提醒，并补齐版本更新记录。');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复设置页改动后直接关闭不会提示保存的问题，并继续保留模式切换字体恢复与版本记录补齐。');
     document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
     try{ if(typeof renderHomeInfoBlocks==='function') renderHomeInfoBlocks(); }catch(e){}
   }
