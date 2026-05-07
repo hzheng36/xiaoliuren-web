@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.1.8 设置关闭可见询问修正版 */
-const CACHE_NAME = 'xiaoliuren-v10.1.8-settings-visible-prompt';
+/* 小六壬占卜 · v10.1.9 设置关闭顶层询问修正版 */
+const CACHE_NAME = 'xiaoliuren-v10.1.9-settings-top-layer-prompt';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
