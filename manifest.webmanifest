@@ -1,7 +1,7 @@
 {
   "name": "小六壬占卜",
   "short_name": "小六壬",
-  "description": "小六壬个人占卜台 v10.1.9 结果页右侧留白修正版",
+  "description": "小六壬个人占卜台 v10.2.0 占例复盘日志基础版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

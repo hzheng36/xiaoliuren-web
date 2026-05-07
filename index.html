@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>小六壬占卜 · v10.1.8 设置保存与自适应修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1.8 设置保存与自适应修正版：修复保存设置不生效、手机/平板关闭设置不再询问、电脑端保留未保存询问，并优化自适应字体与历史记录宽度。" />
+  <meta name="description" content="小六壬个人网页版 v10.2.0 占例复盘日志基础版：历史记录新增占例日志、复盘状态、复盘日期、下次复盘、重点案例、日志筛选、日志导出与版本记录。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -8697,6 +8697,315 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }
   function boot(){ bind(); patchVersion(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+
+
+
+<!-- v10.2.0 patch: 占例复盘日志基础版 -->
+<style id="v1020-case-log-style">
+  .log-filter-row{padding:12px 24px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .log-filter-row .ghost-btn{padding:9px 12px;font-size:.92rem;}
+  .log-filter-row .ghost-btn.active{background:rgba(103,83,165,.13);border-color:rgba(103,83,165,.36);color:var(--primary);font-weight:800;}
+  .log-stats-line{padding:8px 24px 0;color:var(--muted);font-size:.92rem;line-height:1.55;}
+  .log-badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
+  .log-badge{display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(103,83,165,.22);background:rgba(103,83,165,.07);color:var(--primary);border-radius:999px;padding:4px 8px;font-size:.82rem;font-weight:750;}
+  .log-badge.pending{background:rgba(250,204,21,.14);border-color:rgba(180,126,0,.18);color:#7a5b00;}
+  .log-badge.accurate{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.24);color:#1f7a3a;}
+  .log-badge.partial{background:rgba(59,130,246,.10);border-color:rgba(59,130,246,.22);color:#345a9a;}
+  .log-badge.miss{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.22);color:#9a3030;}
+  .log-badge.void{background:rgba(100,116,139,.10);border-color:rgba(100,116,139,.22);color:#536075;}
+  .log-badge.important{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.28);color:#6b3ab5;}
+  .v1020-log-extra{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+  .v1020-log-extra label{margin:0;}
+  .v1020-log-extra .full{grid-column:1/-1;}
+  .v1020-check{display:flex!important;align-items:center;gap:10px;flex-direction:row!important;color:var(--text)!important;font-weight:750;}
+  .v1020-check input{width:auto!important;min-width:0!important;}
+  .review-entry-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;}
+  .review-entry-foot button{padding:6px 10px;border-radius:10px;font-size:.84rem;}
+  @media(max-width:900px){
+    .log-filter-row{padding:12px 18px 0;}
+    .log-stats-line{padding:8px 18px 0;}
+    .v1020-log-extra{grid-template-columns:1fr;}
+  }
+</style>
+<script id="v1020-case-log-script">
+(function(){
+  'use strict';
+  const VERSION='v10.2.0 占例复盘日志基础版';
+  const LOG_FILTERS=[
+    ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
+  ];
+  window.xlrLogFilter = window.xlrLogFilter || 'all';
+  function $(id){return document.getElementById(id);}
+  function esc(s){ if(typeof escapeHTML==='function') return escapeHTML(s==null?'':String(s)); return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function fmt(v){ try{ if(typeof formatISO==='function') return formatISO(v); }catch(e){} return v?String(v).slice(0,16).replace('T',' '):''; }
+  function todayKey(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function statusLabel(v){ const map={pending:'待观察',accurate:'已应验',partial:'部分应验',miss:'未应验',inaccurate:'未应验',void:'已作废'}; return map[v] || '未写日志'; }
+  function statusClass(v){ if(v==='inaccurate') return 'miss'; return v || 'none'; }
+  function entries(item){
+    if(!item) return [];
+    if(Array.isArray(item.reviews)) return item.reviews.filter(Boolean);
+    if(item.review) return [Object.assign({}, item.review)];
+    return [];
+  }
+  function normalizeItem(item){
+    if(!item) return item;
+    if(!Array.isArray(item.reviews) && item.review) item.reviews=[Object.assign({}, item.review)];
+    if(!Array.isArray(item.reviews)) item.reviews=[];
+    item.reviews.forEach(function(r){
+      if(r && !r.logDate){
+        const src=r.reviewedAt || r.updatedAt || r.createdAt || '';
+        r.logDate = String(src).slice(0,10) || todayKey();
+      }
+      if(r && r.accuracy==='inaccurate') r.accuracy='miss';
+    });
+    if(item.reviews.length) item.review=item.reviews[item.reviews.length-1]; else delete item.review;
+    item.logImportant = !!(item.logImportant || item.importantCase || item.reviews.some(function(r){return r && r.important;}));
+    return item;
+  }
+  function latest(item){ const list=entries(item); return list.length?list[list.length-1]:null; }
+  function isImportant(item){ return !!(item && (item.logImportant || item.importantCase || entries(item).some(function(r){return r && r.important;}))); }
+  function matchesLogFilter(item){
+    const f=window.xlrLogFilter || 'all';
+    if(f==='all') return true;
+    if(f==='important') return isImportant(item);
+    const r=latest(item);
+    if(!r) return f==='none';
+    const a=r.accuracy==='inaccurate'?'miss':r.accuracy;
+    return a===f;
+  }
+  function badgeHTML(item){
+    const list=entries(item);
+    const r=latest(item);
+    let out=[];
+    if(r) out.push('<span class="log-badge '+statusClass(r.accuracy)+'">'+statusLabel(r.accuracy)+'</span>');
+    if(list.length) out.push('<span class="log-badge">日志 '+list.length+' 条</span>');
+    if(isImportant(item)) out.push('<span class="log-badge important">★ 重点案例</span>');
+    if(r && r.nextDate) out.push('<span class="log-badge pending">下次 '+esc(r.nextDate)+'</span>');
+    return out.length?'<div class="log-badge-row">'+out.join('')+'</div>':'';
+  }
+  function timelineSummary(item){
+    const list=entries(item); if(!list.length) return '';
+    const r=list[list.length-1] || {};
+    const actualText=r.actual?'｜结果：'+esc(r.actual).slice(0,72):'';
+    const timeText=r.logDate || r.reviewedAt || r.updatedAt ? '｜'+esc(r.logDate || fmt(r.reviewedAt || r.updatedAt)) : '';
+    const nextText=r.nextDate?'｜下次复盘：'+esc(r.nextDate):'';
+    return '<div class="review-summary"><strong>日志：</strong>'+list.length+' 条｜最近：'+statusLabel(r.accuracy)+timeText+actualText+nextText+'</div>';
+  }
+  function ensureFilterUI(){
+    const tools=document.querySelector('#historyDialog .history-tools');
+    if(tools){
+      const oldExport=$('exportReviewHistoryBtn'); if(oldExport) oldExport.textContent='导出日志 TXT';
+      if(!document.getElementById('logFilterRow')){
+        const row=document.createElement('div'); row.id='logFilterRow'; row.className='log-filter-row';
+        row.innerHTML=LOG_FILTERS.map(function(pair){return '<button class="ghost-btn" type="button" data-log-filter="'+pair[0]+'">'+pair[1]+'</button>';}).join('');
+        tools.insertAdjacentElement('afterend', row);
+        row.addEventListener('click', function(e){
+          const btn=e.target.closest('[data-log-filter]'); if(!btn) return;
+          window.xlrLogFilter=btn.getAttribute('data-log-filter') || 'all';
+          if(typeof renderHistory==='function') renderHistory();
+        });
+      }
+      if(!document.getElementById('logStatsLine')){
+        const stats=document.createElement('div'); stats.id='logStatsLine'; stats.className='log-stats-line';
+        document.getElementById('logFilterRow').insertAdjacentElement('afterend', stats);
+      }
+    }
+  }
+  function setActiveFilter(){
+    document.querySelectorAll('[data-log-filter]').forEach(function(btn){btn.classList.toggle('active', btn.getAttribute('data-log-filter')===(window.xlrLogFilter||'all'));});
+  }
+  function statsLine(list){
+    const all=list||[];
+    const logged=all.filter(function(x){return entries(x).length;}).length;
+    const important=all.filter(isImportant).length;
+    const pending=all.filter(function(x){const r=latest(x); return r && r.accuracy==='pending';}).length;
+    const done=all.filter(function(x){const r=latest(x); return r && (r.accuracy==='accurate'||r.accuracy==='partial'||r.accuracy==='miss'||r.accuracy==='inaccurate');}).length;
+    return '占例日志：已写 '+logged+' / '+all.length+' 条｜待观察 '+pending+'｜已出结果 '+done+'｜重点案例 '+important;
+  }
+  window.reviewAccuracyLabel=statusLabel;
+  window.getReviewEntries=entries;
+  window.ensureReviewTimeline=function(item){ return normalizeItem(item).reviews; };
+  window.reviewTimelineSummary=timelineSummary;
+
+  const oldRenderHistory=window.renderHistory;
+  window.renderHistory=function(){
+    ensureFilterUI();
+    var list = (typeof getHistory==='function') ? getHistory().map(normalizeItem) : [];
+    var qEl = $('historySearchInput');
+    var sceneEl = $('historySceneFilter');
+    var dateEl = $('historyDateInput');
+    var keyword = qEl ? String(qEl.value || '').trim() : '';
+    var sceneFilter = sceneEl ? sceneEl.value : 'all';
+    var dateFilter = dateEl && typeof isValidDateString==='function' && isValidDateString(dateEl.value) ? dateEl.value : '';
+    var base=list;
+    try{ if(typeof filterHistoryByDate==='function') base=filterHistoryByDate(base,dateFilter); }catch(e){}
+    var filtered = base.filter(function(item){
+      try{ if (typeof historyFilter !== 'undefined' && historyFilter === 'fav' && !item.favorite) return false; }catch(e){}
+      if (sceneFilter !== 'all' && item.sceneKey !== sceneFilter) return false;
+      if(!matchesLogFilter(item)) return false;
+      if (keyword) {
+        var logText=entries(item).map(function(r){return [r.actual,r.note,r.nextDate,statusLabel(r.accuracy)].join(' ');}).join(' ');
+        var hay = [item.sceneName, item.question, item.methodNote, (item.palaces||[]).join(' / '), item.overallText, logText].join(' ');
+        if (hay.indexOf(keyword) === -1) return false;
+      }
+      return true;
+    });
+    var stats=$('logStatsLine'); if(stats) stats.textContent=statsLine(list);
+    setActiveFilter();
+    var container = $('historyList');
+    if(!container) return oldRenderHistory ? oldRenderHistory() : undefined;
+    if(!filtered.length){ container.innerHTML = '<div class="history-empty">暂无记录' + (dateFilter ? '：' + dateFilter : '') + '</div>'; return; }
+    container.innerHTML = filtered.map(function(item){
+      var q = item.question ? '<div style="margin-top:6px;color:var(--muted);">问：' + esc(item.question).slice(0,80) + '</div>' : '';
+      var review = timelineSummary(item);
+      return '<div class="history-item"><div class="history-row"><strong>' + esc((item.sceneIcon || '') + ' ' + (item.sceneName || '')) + '</strong><span style="color:var(--muted);font-size:.93rem;">' + esc(fmt(item.createdAt)) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div>' + q + '<div class="history-meta"><span>' + esc(item.methodNote || '') + '</span><span>规则：' + esc(((item.rule && item.rule.name) || (window.DIVINATION_RULE&&DIVINATION_RULE.name) || '三数连续顺推法')) + '</span><span>' + esc((item.palaces||[]).join(' / ')) + '</span></div>' + badgeHTML(item) + review + '<div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + esc(item.id) + '\')">查看</button><button class="ghost-btn" type="button" onclick="openReviewDialog(\'' + esc(item.id) + '\')">写日志</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + esc(item.id) + '\')">删除</button></div></div>';
+    }).join('');
+  };
+  const oldAll=window.showAllHistory;
+  window.showAllHistory=function(){ window.xlrLogFilter='all'; try{historyFilter='all';}catch(e){}; if(typeof renderHistory==='function') renderHistory(); else if(oldAll) oldAll(); };
+  const oldFav=window.showFavHistory;
+  window.showFavHistory=function(){ window.xlrLogFilter='all'; try{historyFilter='fav';}catch(e){}; if(typeof renderHistory==='function') renderHistory(); else if(oldFav) oldFav(); };
+
+  function patchReviewDialog(){
+    const dlg=$('reviewDialog'); if(!dlg) return;
+    const title=dlg.querySelector('.dialog-head h3'); if(title) title.textContent='占例复盘日志';
+    const p=dlg.querySelector('.dialog-head p'); if(p) p.textContent='记录实际结果、复盘状态、重点案例和下次观察时间，方便长期回看。';
+    const btn=dlg.querySelector('.review-actions .primary-btn'); if(btn) btn.textContent='添加日志';
+    const clear=dlg.querySelector('.review-actions .ghost-btn'); if(clear) clear.textContent='清空本例日志';
+    const acc=$('reviewAccuracy');
+    if(acc){
+      acc.innerHTML='<option value="pending">待观察</option><option value="accurate">已应验</option><option value="partial">部分应验</option><option value="miss">未应验</option><option value="void">已作废</option>';
+      const lab=acc.closest('label');
+      if(lab && lab.firstChild && lab.firstChild.nodeType===3) lab.firstChild.nodeValue='复盘状态 ';
+    }
+    if(!$('reviewDate')){
+      const actualLabel=$('reviewActual') && $('reviewActual').closest('label');
+      const wrap=document.createElement('div');
+      wrap.className='v1020-log-extra';
+      wrap.innerHTML='<label>复盘日期<input id="reviewDate" type="date"></label><label>下次复盘日期<input id="reviewNextDate" type="date"></label><label class="v1020-check full"><input id="reviewImportant" type="checkbox"> 设为重点案例</label>';
+      if(actualLabel) actualLabel.insertAdjacentElement('beforebegin', wrap);
+    }
+  }
+  window.renderReviewTimeline=function(item){
+    item=normalizeItem(item);
+    const list=entries(item);
+    const countEl=$('reviewTimelineCount'); const box=$('reviewTimelineList');
+    if(countEl) countEl.textContent=list.length+' 条';
+    if(!box) return;
+    if(!list.length){ box.innerHTML='<div class="review-empty">暂无日志。可以在下方添加第一条复盘日志。</div>'; return; }
+    box.innerHTML=list.map(function(r,idx){
+      const time=esc(r.logDate || fmt(r.reviewedAt || r.updatedAt || r.createdAt || ''));
+      const next=r.nextDate ? '<div><b>下次复盘：</b>'+esc(r.nextDate)+'</div>' : '';
+      const actual=r.actual ? '<div><b>实际结果：</b>'+esc(r.actual)+'</div>' : '<div><b>实际结果：</b>未填写</div>';
+      const note=r.note ? '<div><b>判断总结：</b>'+esc(r.note)+'</div>' : '';
+      const imp=(r.important || item.logImportant) ? '<span class="log-badge important">★ 重点案例</span>' : '';
+      return '<div class="review-entry"><div class="review-entry-head"><span>#'+(idx+1)+' '+statusLabel(r.accuracy)+' '+imp+'</span><span>'+time+'</span></div><div class="review-entry-body">'+actual+note+next+'</div><div class="review-entry-foot"><button class="danger-btn" type="button" onclick="deleteReviewEntry('+idx+')">删除这条</button></div></div>';
+    }).join('');
+  };
+  window.openReviewDialog=function(id){
+    patchReviewDialog();
+    const list=(typeof getHistory==='function')?getHistory():[];
+    const item=list.find(function(x){return x.id===id;});
+    if(!item) return alert('没有找到这条历史记录。');
+    window.currentReviewId=id;
+    try{ currentReviewId=id; }catch(e){}
+    normalizeItem(item);
+    const target=$('reviewTargetText');
+    if(target) target.innerHTML='<strong>'+esc(item.sceneName || '')+'</strong>｜'+esc(fmt(item.createdAt))+'<br>取数：'+esc((item.numbers||[]).join(' / '))+' ｜ 落宫：'+esc((item.palaces||[]).join(' / '))+(item.question?'<br>问：'+esc(item.question):'');
+    window.renderReviewTimeline(item);
+    if($('reviewAccuracy')) $('reviewAccuracy').value='pending';
+    if($('reviewDate')) $('reviewDate').value=todayKey();
+    if($('reviewNextDate')) $('reviewNextDate').value='';
+    if($('reviewImportant')) $('reviewImportant').checked=isImportant(item);
+    if($('reviewActual')) $('reviewActual').value='';
+    if($('reviewNote')) $('reviewNote').value='';
+    const dialog=$('reviewDialog');
+    if(dialog && typeof dialog.showModal==='function') dialog.showModal(); else if(dialog) dialog.setAttribute('open','open');
+  };
+  window.saveReview=function(){
+    const id = (typeof currentReviewId !== 'undefined' && currentReviewId) ? currentReviewId : window.currentReviewId;
+    if(!id) return;
+    const list=(typeof getHistory==='function')?getHistory():[];
+    const item=list.find(function(x){return x.id===id;});
+    if(!item) return alert('没有找到这条历史记录。');
+    normalizeItem(item);
+    const entry={
+      accuracy: ($('reviewAccuracy')&&$('reviewAccuracy').value) || 'pending',
+      logDate: ($('reviewDate')&&$('reviewDate').value) || todayKey(),
+      nextDate: ($('reviewNextDate')&&$('reviewNextDate').value) || '',
+      actual: ($('reviewActual')&&$('reviewActual').value.trim()) || '',
+      note: ($('reviewNote')&&$('reviewNote').value.trim()) || '',
+      important: !!($('reviewImportant')&&$('reviewImportant').checked),
+      reviewedAt: new Date().toISOString()
+    };
+    item.reviews.push(entry); item.review=entry; item.logImportant=!!($('reviewImportant')&&$('reviewImportant').checked);
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }catch(e){ return alert('保存失败：'+(e&&e.message?e.message:e)); }
+    if($('reviewAccuracy')) $('reviewAccuracy').value='pending';
+    if($('reviewDate')) $('reviewDate').value=todayKey();
+    if($('reviewNextDate')) $('reviewNextDate').value='';
+    if($('reviewActual')) $('reviewActual').value='';
+    if($('reviewNote')) $('reviewNote').value='';
+    window.renderReviewTimeline(item);
+    if(typeof renderHistory==='function') renderHistory();
+    if(typeof renderAnalytics==='function') try{renderAnalytics();}catch(e){}
+    alert('已添加一条占例日志。');
+  };
+  window.deleteReviewEntry=function(idx){
+    const id = (typeof currentReviewId !== 'undefined' && currentReviewId) ? currentReviewId : window.currentReviewId;
+    if(!id) return;
+    if(!confirm('确定删除这条日志吗？')) return;
+    const list=(typeof getHistory==='function')?getHistory():[];
+    const item=list.find(function(x){return x.id===id;}); if(!item) return;
+    normalizeItem(item); item.reviews.splice(idx,1); normalizeItem(item);
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }catch(e){}
+    window.renderReviewTimeline(item); if(typeof renderHistory==='function') renderHistory(); if(typeof renderAnalytics==='function') try{renderAnalytics();}catch(e){}
+  };
+  window.clearReviewForm=function(){
+    const id = (typeof currentReviewId !== 'undefined' && currentReviewId) ? currentReviewId : window.currentReviewId;
+    if(!id) return;
+    if(!confirm('确定清空这条记录的全部日志吗？')) return;
+    const list=(typeof getHistory==='function')?getHistory():[];
+    const item=list.find(function(x){return x.id===id;});
+    if(item){ item.reviews=[]; delete item.review; item.logImportant=false; }
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }catch(e){}
+    if($('reviewAccuracy')) $('reviewAccuracy').value='pending'; if($('reviewDate')) $('reviewDate').value=todayKey(); if($('reviewNextDate')) $('reviewNextDate').value=''; if($('reviewImportant')) $('reviewImportant').checked=false; if($('reviewActual')) $('reviewActual').value=''; if($('reviewNote')) $('reviewNote').value='';
+    if(item) window.renderReviewTimeline(item); if(typeof renderHistory==='function') renderHistory(); if(typeof renderAnalytics==='function') try{renderAnalytics();}catch(e){}
+    alert('本例日志已清空。');
+  };
+  window.exportReviews=function(){
+    const list=(typeof getHistory==='function'?getHistory():[]).map(normalizeItem).filter(function(item){return entries(item).length || isImportant(item);});
+    if(!list.length) return alert('暂无占例日志可导出。');
+    const lines=[]; lines.push('小六壬占例复盘日志导出'); lines.push('导出时间：'+(typeof formatDateTimeCN==='function'?formatDateTimeCN(new Date()):new Date().toLocaleString())); lines.push('说明：本文件导出历史记录中的占例日志、复盘状态、重点案例与下次复盘日期。'); lines.push('');
+    list.forEach(function(item,i){
+      lines.push('='.repeat(36)); lines.push('#'+(i+1)+' '+(item.sceneName||'')+' '+fmt(item.createdAt));
+      if(isImportant(item)) lines.push('重点案例：是');
+      if(item.question) lines.push('占问事项：'+item.question);
+      if(item.issueLabel || item.detectedIssueLabel) lines.push('识别类型：'+(item.issueLabel || item.detectedIssueLabel));
+      lines.push('起课方式：'+(item.methodNote||'')); lines.push('起课规则：'+((item.rule&&item.rule.name)||(window.DIVINATION_RULE&&DIVINATION_RULE.name)||'')); lines.push('取数：'+((item.numbers||[]).join(' / '))); lines.push('落宫：'+((item.palaces||[]).join(' / ')));
+      if(item.overallText) lines.push('原综合判断：'+item.overallText);
+      lines.push(''); lines.push('【占例日志】');
+      entries(item).forEach(function(r,idx){ lines.push((idx+1)+'. '+statusLabel(r.accuracy)+'｜复盘日期：'+(r.logDate || fmt(r.reviewedAt || r.updatedAt || ''))+(r.important?'｜重点案例':'')); if(r.nextDate) lines.push('下次复盘：'+r.nextDate); lines.push('实际结果：'+(r.actual || '未填写')); lines.push('判断总结：'+(r.note || '未填写')); });
+      lines.push('');
+    });
+    const all=list.flatMap(entries); lines.push('='.repeat(36)); lines.push('日志汇总'); lines.push('有日志记录：'+list.length); lines.push('日志条目：'+all.length); ['pending','accurate','partial','miss','void'].forEach(function(k){lines.push(statusLabel(k)+'：'+all.filter(function(r){return (r.accuracy==='inaccurate'?'miss':r.accuracy)===k;}).length);}); lines.push('重点案例：'+list.filter(isImportant).length);
+    const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='xiaoliuren_case_logs_'+new Date().toISOString().slice(0,10)+'.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){URL.revokeObjectURL(url);},1000);
+  };
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：历史记录新增占例日志、复盘状态、复盘日期、下次复盘、重点案例、日志筛选和日志导出。');
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1020){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){ let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>新增占例复盘日志系统：历史记录中“复盘”升级为“写日志”，可记录待观察、已应验、部分应验、未应验和已作废。</li><li>日志新增复盘日期、下次复盘日期、实际结果、判断总结和重点案例标记。</li><li>历史记录增加日志筛选：全部日志、待观察、已应验、部分应验、未应验、已作废、重点案例，并显示日志概览。</li><li>历史记录卡片显示日志状态、日志数量、重点案例和下次复盘日期标签。</li><li>导出复盘 TXT 升级为导出占例日志 TXT；历史 JSON 和完整备份 JSON 会继续携带日志字段，便于换设备迁移。</li><li>同步更新 README、页面标题、版本更新内容、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html; };
+      window.buildVersionUpdatesHTML.__v1020=true;
+    }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+  }
+  function boot(){ patchReviewDialog(); ensureFilterUI(); patchVersion(); if(typeof renderHistory==='function' && $('historyDialog') && $('historyDialog').open) renderHistory(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function(){setTimeout(boot,150);});
 })();
 </script>
 
