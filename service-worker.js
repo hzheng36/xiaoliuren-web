@@ -1,4 +1,4 @@
-const CACHE_NAME = "xiaoliuren-v10-1-deep-fix-20260507";
+const CACHE_NAME = "xiaoliuren-v10-1-mobile-layout-fix-20260507b";
 const FILES_TO_CACHE = ["./", "./index.html", "./README.md", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 self.addEventListener("install", event => { self.skipWaiting(); event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE).catch(()=>{}))); });
 self.addEventListener("activate", event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
