@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.1.7 设置关闭强拦截修正版 */
-const CACHE_NAME = 'xiaoliuren-v10.1.7-settings-close-guard';
+/* 小六壬占卜 · v10.1.8 设置关闭可见询问修正版 */
+const CACHE_NAME = 'xiaoliuren-v10.1.8-settings-visible-prompt';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
