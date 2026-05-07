@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1 命盘解读修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.1：修复命运六亲排法界面，恢复详细六宫排盘，强化命盘逐条解读，并隐藏命运场景中的普通问事模块。" />
+  <title>小六壬占卜 · v10.1 命盘分析深化修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.1：深化命盘分析逻辑，按六亲、掌诀、地支、六神、五星综合解读，并修复命运六亲排法界面与PWA缓存说明。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1 命盘解读修正版</h2>
+          <h2>个人占卜台 · v10.1 命盘分析深化修正版</h2>
           <p>本版修复结果页分离逻辑，确保占卜后和查看历史时只显示占卜结果，不再混入主页输入区。</p>
         </div>
         <div class="actions">
@@ -7438,7 +7438,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 /* v10.0 命盘排法校正版：命运盘从时宫排地支、按地支装六神、日宫起五星、六亲排法二选一 */
 (function(){
   const V10_VERSION = 'v10.0 命盘排法校正版';
-  const V10_CACHE = 'xiaoliuren-v10-0';
+  const V10_CACHE = 'xiaoliuren-v10-1-deep-fix';
   const KINSHIP_KEY = 'xlr_destiny_kinship_mode_v10';
   const ORDER = (typeof PALACE_ORDER !== 'undefined') ? PALACE_ORDER : ['大安','留连','速喜','赤口','小吉','空亡'];
   const VISUAL_ORDER = ['留连','速喜','赤口','大安','空亡','小吉'];
@@ -7824,6 +7824,191 @@ body.result-destiny #adviceBlock{display:none!important;}
     const old=buildVersionUpdatesHTML;
     buildVersionUpdatesHTML=function(){ let html=old(); if(!html.includes('v10.1 命盘解读修正版')) html += '<details><summary>v10.1 命盘解读修正版</summary><ul><li>修复“命运六亲排法”选项在手机端显示异常的问题。</li><li>恢复详细六宫排盘网格，并为六宫加入序号，方便查看顺序。</li><li>命运六亲参考盘改为从自身宫开始排列。</li><li>命盘解读改为逐条说明自身、父母、官鬼、子孙、妻财、兄弟等主题，按掌诀、六亲、六神、五星综合分析。</li><li>命运场景隐藏三象解读、单宫断事、双宫断事、象意补充和行动建议等普通问事模块。</li></ul></details>'; return html; };
   }
+})();
+</script>
+
+
+
+<style id="v101-deep-destiny-fix-style">
+  /* v10.1 命盘分析深化修正版：修复六亲选择卡片、恢复详细排盘、优化命盘逐宫分析 */
+  .destiny-kinship-selector{margin:14px 0 18px;padding:14px;border:1px solid rgba(124,112,178,.20);border-radius:18px;background:rgba(255,255,255,.86);box-shadow:0 8px 20px rgba(51,43,71,.05);display:block;}
+  .destiny-kinship-selector.hidden{display:none!important;}
+  .destiny-kinship-selector h4{margin:0 0 10px;color:var(--primary);font-size:1rem;}
+  .destiny-kinship-options{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch;}
+  .destiny-kinship-options label{min-height:0!important;height:auto!important;border:1px solid rgba(124,112,178,.16);border-radius:16px;background:#fff;padding:12px!important;display:grid!important;grid-template-columns:22px 1fr;gap:9px;align-items:start;line-height:1.5;cursor:pointer;overflow:visible!important;}
+  .destiny-kinship-options input[type="radio"]{appearance:auto!important;-webkit-appearance:radio!important;width:18px!important;height:18px!important;min-width:18px!important;min-height:18px!important;max-width:18px!important;max-height:18px!important;margin:3px 0 0!important;padding:0!important;transform:none!important;accent-color:var(--primary);}
+  .destiny-kinship-options b{display:block;color:var(--text);font-size:.95rem;line-height:1.35;}
+  .destiny-kinship-options small{display:block;color:var(--muted);font-size:.82rem;line-height:1.55;margin-top:3px;}
+  .destiny-formula,.v101d-formula-box{border-left:4px solid rgba(114,87,174,.35);background:rgba(255,255,255,.72);padding:10px 12px;border-radius:12px;color:var(--muted);line-height:1.75;margin-top:10px;}
+  .destiny-formula strong,.v101d-formula-box strong{color:var(--primary);}
+  @media(max-width:760px){.destiny-kinship-options{grid-template-columns:1fr!important}.destiny-kinship-options label{padding:11px 12px!important}}
+
+  .hex-board.v101d-paipan-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px!important;min-height:auto!important;place-items:stretch!important;padding:0!important;background:transparent!important;border:0!important;}
+  .v101d-paipan-cell{position:relative;border:1px solid rgba(124,112,178,.15);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.72));box-shadow:0 10px 22px rgba(51,43,71,.05);padding:14px;min-height:132px;}
+  .v101d-paipan-cell.active{border-color:rgba(114,87,174,.35);box-shadow:0 14px 26px rgba(91,72,141,.10);}
+  .v101d-paipan-no{position:absolute;right:10px;top:10px;border-radius:999px;background:rgba(114,87,174,.10);color:var(--primary);font-size:.78rem;font-weight:800;padding:2px 8px;}
+  .v101d-paipan-title{font-size:1.12rem;font-weight:850;color:var(--primary);margin-bottom:6px;}
+  .v101d-paipan-meta{font-size:.88rem;line-height:1.6;color:var(--muted);}
+  .v101d-paipan-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .v101d-paipan-tag{font-size:.78rem;border-radius:999px;padding:2px 8px;background:rgba(114,87,174,.10);color:var(--primary);font-weight:700;}
+  .v101d-paipan-tag.empty{background:rgba(152,145,170,.08);color:var(--muted);}
+  @media(max-width:760px){.hex-board.v101d-paipan-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.v101d-paipan-cell{min-height:128px;padding:12px}.v101d-paipan-title{font-size:1.02rem}}
+
+  .destiny-board-grid.v101d-destiny-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px;}
+  .v101d-destiny-cell{position:relative;border:1px solid rgba(124,112,178,.16);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.74));box-shadow:0 10px 22px rgba(51,43,71,.05);padding:15px;overflow:hidden;}
+  .v101d-destiny-cell.self{border-color:rgba(201,164,92,.40);background:linear-gradient(180deg,rgba(255,250,239,.98),rgba(250,247,255,.70));}
+  .v101d-cell-no{position:absolute;right:10px;top:8px;background:rgba(114,87,174,.11);color:var(--primary);border-radius:999px;padding:2px 8px;font-size:.78rem;font-weight:800;}
+  .v101d-destiny-cell h5{margin:0 0 8px;display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--primary);font-size:1.08rem;}
+  .v101d-destiny-cell .branch{color:#b8614f;font-weight:850;font-size:1.08rem;}
+  .v101d-mark-row{display:flex;flex-wrap:wrap;gap:6px;margin:5px 0 8px;}
+  .v101d-mark{font-size:.76rem;border-radius:999px;padding:2px 8px;background:rgba(226,192,122,.16);color:#8a6632;border:1px solid rgba(226,192,122,.35);font-weight:700;}
+  .v101d-lines{display:grid;gap:4px;color:var(--muted);font-size:.92rem;line-height:1.55;}
+  .v101d-lines strong{color:var(--text);}
+  @media(max-width:760px){.destiny-board-grid.v101d-destiny-grid{grid-template-columns:1fr}.v101d-destiny-cell{padding:14px}}
+
+  .v101d-principle{margin:14px 0;padding:14px 16px;border-radius:18px;background:rgba(255,248,236,.82);border:1px solid rgba(201,164,92,.22);line-height:1.85;color:var(--muted);}
+  .v101d-analysis-list{display:grid;gap:14px;grid-column:1/-1;width:100%;}
+  .v101d-analysis-card{border:1px solid rgba(124,112,178,.16);border-radius:18px;padding:16px;background:rgba(255,255,255,.92);box-shadow:0 8px 20px rgba(51,43,71,.05);}
+  .v101d-analysis-card h5{margin:0 0 10px;color:var(--primary);font-size:1.03rem;}
+  .v101d-analysis-card p{margin:7px 0;line-height:1.85;color:var(--muted);}
+  .v101d-analysis-card strong{color:var(--text);}
+  .v101d-analysis-card .summary{padding-top:8px;border-top:1px dashed rgba(124,112,178,.18);color:var(--text);}
+  .v101d-rule-table{overflow:auto;border:1px solid rgba(124,112,178,.14);border-radius:16px;margin:10px 0;background:#fff;}
+  .v101d-rule-table table{width:100%;border-collapse:collapse;min-width:520px;}
+  .v101d-rule-table th,.v101d-rule-table td{border-bottom:1px solid rgba(124,112,178,.12);border-right:1px solid rgba(124,112,178,.12);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.65;}
+  .v101d-rule-table th{background:rgba(124,112,178,.06);color:var(--primary);font-weight:850;}
+  .v101d-rule-table tr:last-child td{border-bottom:0}.v101d-rule-table td:last-child,.v101d-rule-table th:last-child{border-right:0}
+  body.result-destiny #threeReadingBlock,body.result-destiny #singlePalaceBlock,body.result-destiny #doublePalaceBlock,body.result-destiny #symbolBlock,body.result-destiny #adviceBlock{display:none!important;}
+</style>
+
+<script id="v101-deep-destiny-fix-script">
+/* v10.1 命盘分析深化修正版：以六亲+掌诀+地支+六神+五星综合断语 */
+(function(){
+  'use strict';
+  const VERSION_LABEL='v10.1 命盘分析深化修正版';
+  const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
+  const ORDER=(typeof PALACE_ORDER!=='undefined'&&Array.isArray(PALACE_ORDER))?PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
+  const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
+  const BRANCH_YANG=['子','寅','辰','午','申','戌'];
+  const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const BRANCH_ELEMENT={子:'水',亥:'水',寅:'木',卯:'木',巳:'火',午:'火',申:'金',酉:'金',辰:'土',戌:'土',丑:'土',未:'土'};
+  const GENERATES={木:'火',火:'土',土:'金',金:'水',水:'木'};
+  const CONTROLS={木:'土',土:'水',水:'火',火:'金',金:'木'};
+  const SIX_SPIRIT={寅:'青龙',卯:'青龙',巳:'朱雀',午:'朱雀',丑:'勾陈',辰:'勾陈',未:'腾蛇',戌:'腾蛇',申:'白虎',酉:'白虎',亥:'玄武',子:'玄武'};
+  const STARS=['木星','火星','土星','金星','水星','天空'];
+  const STAR_ELEMENT={木星:'木',火星:'火',土星:'土',金星:'金',水星:'水'};
+  const FIXED_KINSHIP={留连:'自身',速喜:'子孙',赤口:'兄弟',小吉:'官鬼',空亡:'父母',大安:'妻财'};
+  const CN_NUM=['一','二','三','四','五','六'];
+  const PALACE_TONE={
+    大安:{kw:'平稳、安定、少波折',plain:'大安主安稳，表示这一项的底色较稳，适合长期积累，但速度通常不会很快。'},
+    留连:{kw:'拖延、牵连、反复',plain:'留连主拖延，表示事情容易被旧事、人情、情绪或杂事牵住，进展慢。'},
+    速喜:{kw:'喜事、快速、消息',plain:'速喜主喜事和快动，表示这一项反应快、有消息、有表现机会，但也容易来得急。'},
+    赤口:{kw:'口舌、争执、官非',plain:'赤口主口舌与冲突，表示这一项容易有争吵、急躁、规则压力或意外摩擦。'},
+    小吉:{kw:'奔波、自由、流动',plain:'小吉主奔波和自由，表示这一项不太固定，适合灵活处理，也可能常有变动。'},
+    空亡:{kw:'空虚、落空、未实',plain:'空亡主空无，表示这一项容易虚、弱、未落实，需要看现实是否能支撑。'}
+  };
+  const SPIRIT_TEXT={
+    青龙:'青龙主正直、仁义、贵气与助力，说明这个主题容易带有正派、体面、愿意帮人的色彩。',
+    朱雀:'朱雀主口才、表达、消息、文书与口舌，说明这个主题常通过说话、沟通、传播来表现。',
+    勾陈:'勾陈主迟缓、现实、土地、财产、纠缠与拖住，说明这个主题容易慢、有现实负担或财物牵连。',
+    腾蛇:'腾蛇主虚惊、缠绕、曲折、怪异与反复，说明这个主题容易多想、多变、绕弯或出现复杂人事。',
+    白虎:'白虎主凶暴、压力、血光、官司、规则与冲突，说明这个主题要防急躁、硬碰硬和突发问题。',
+    玄武:'玄武主隐秘、低调、暗事、小人、流动与不明朗，说明这个主题常有隐藏信息或不易明说的部分。'
+  };
+  const STAR_TEXT={
+    木星:'木星主生发、文气、成长、开端。',
+    火星:'火星主热度、名声、急动、外显。',
+    土星:'土星主沉重、稳定、现实、阻滞。',
+    金星:'金星主约束、规则、压力、克制。',
+    水星:'水星主流动、智慧、变化、口才。',
+    天空:'天空主虚、空、徒劳、不定。'
+  };
+  function $(id){return document.getElementById(id)}
+  function palaceData(p){return (typeof PALACE_DATA!=='undefined'&&PALACE_DATA[p])?PALACE_DATA[p]:{element:'',direction:'',summary:'',color:''};}
+  function idx(p){const i=ORDER.indexOf(p);return i<0?0:i;}
+  function seqFromPalace(p){const i=idx(p);return ORDER.slice(i).concat(ORDER.slice(0,i));}
+  function rotate(arr,v){const i=arr.indexOf(v);return i<0?arr.slice():arr.slice(i).concat(arr.slice(0,i));}
+  function isDestinyResult(r){return !!(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'));}
+  function parseTimeBranch(result){
+    if(result&&result.destinyMeta&&result.destinyMeta.timeBranch)return result.destinyMeta.timeBranch;
+    const s=[result&&result.extraInfo,result&&result.methodNote].filter(Boolean).join(' ');
+    const m=s.match(/([子丑寅卯辰巳午未申酉戌亥])时/); if(m)return m[1];
+    const n=result&&result.numbers&&result.numbers[2]; return BRANCH_ALL[((Number(n)||1)-1+12)%12];
+  }
+  function branchSeq(z){return rotate(BRANCH_YIN.includes(z)?BRANCH_YIN:BRANCH_YANG,z);}
+  function meta(result){
+    const ps=(result&&Array.isArray(result.palaces)&&result.palaces.length>=3)?result.palaces:['大安','大安','大安'];
+    const monthPalace=ps[0], dayPalace=ps[1], timePalace=ps[2];
+    const timeBranch=parseTimeBranch(result);
+    const bseq=branchSeq(timeBranch);
+    const branchByPalace={}; seqFromPalace(timePalace).forEach((p,i)=>branchByPalace[p]=bseq[i]);
+    const starByPalace={}; seqFromPalace(dayPalace).forEach((p,i)=>starByPalace[p]=STARS[i]);
+    return {monthPalace,dayPalace,timePalace,timeBranch,branchByPalace,starByPalace};
+  }
+  function getMode(result){return (result&&result.destinyKinshipMode)||(result&&result.destinyMeta&&result.destinyMeta.kinshipMode)||localStorage.getItem(KINSHIP_KEY)||'wuxing';}
+  function setMode(v){try{localStorage.setItem(KINSHIP_KEY,v||'wuxing')}catch(e){}}
+  function kinByWuxing(p,m){
+    if(p===m.timePalace)return '自身';
+    const selfEl=BRANCH_ELEMENT[m.branchByPalace[m.timePalace]]||'木';
+    const otherEl=BRANCH_ELEMENT[m.branchByPalace[p]]||selfEl;
+    if(otherEl===selfEl)return '兄弟';
+    if(GENERATES[otherEl]===selfEl)return '父母';
+    if(CONTROLS[otherEl]===selfEl)return '官鬼';
+    if(GENERATES[selfEl]===otherEl)return '子孙';
+    if(CONTROLS[selfEl]===otherEl)return '妻财';
+    return '兄弟';
+  }
+  function kinFor(p,m,mode){return mode==='fixed'?(FIXED_KINSHIP[p]||'—'):kinByWuxing(p,m);}
+  function kinMeaning(k){return {自身:'自己、性格底色、身体状态与主观反应',父母:'父母长辈、规则、文书、保护、学习和依靠',官鬼:'压力、责任、事业规则、约束、问题和需要面对的课题',子孙:'子女、表达、成果、兴趣、放松感和输出',妻财:'钱财、现实资源、经营、伴侣财务和掌控能力',兄弟:'兄弟姐妹、朋友同辈、竞争、协作和消耗'}[k]||'关系主题';}
+  function relationText(star,branch){
+    const se=STAR_ELEMENT[star], be=BRANCH_ELEMENT[branch];
+    if(!se)return {type:'天空',text:'天空星特殊，主虚、空、徒劳、不定；此处要看现实是否能落实，不宜只凭想象判断。'};
+    if(se===be)return {type:'比和',text:`${star}属${se}，${branch}也属${be}，五星与地支同气，主题稳定但也容易被放大。`};
+    if(GENERATES[se]===be)return {type:'星生地',text:`${star}${se}生${branch}${be}，属于外力相助，事情较容易得到推动。`};
+    if(GENERATES[be]===se)return {type:'地生星',text:`${branch}${be}生${star}${se}，有承接和生助，但也代表自身需要付出、耗力。`};
+    if(CONTROLS[se]===be)return {type:'星克地',text:`${star}${se}克${branch}${be}，属于外部压制，较不利，容易有压力、损耗或阻碍。`};
+    if(CONTROLS[be]===se)return {type:'地克星',text:`${branch}${be}克${star}${se}，属于内部抗拒，费力但问题通常比“星克地”轻。`};
+    return {type:'中平',text:'五星与地支关系不明显，需要结合掌诀和六神同看。'};
+  }
+  function marks(p,m){const a=[];if(p===m.monthPalace)a.push('月宫');if(p===m.dayPalace)a.push('日宫');if(p===m.timePalace)a.push('时宫/自身');return a;}
+  function selfPalaceFor(m,mode){if(mode==='fixed'){const p=ORDER.find(x=>FIXED_KINSHIP[x]==='自身');return p||m.timePalace;}return m.timePalace;}
+  function cells(m,mode){const start=selfPalaceFor(m,mode);return seqFromPalace(start).map((p)=>{const branch=m.branchByPalace[p], spirit=SIX_SPIRIT[branch], star=m.starByPalace[p], kin=kinFor(p,m,mode);return {palace:p,branch,branchEl:BRANCH_ELEMENT[branch]||'',spirit,star,kin,marks:marks(p,m),rel:relationText(star,branch)};});}
+  function formulaForMode(mode){return mode==='fixed'?'固定宫位法：留连自身速喜子，赤口兄弟小吉官，空亡父母大安财。':'五行生克法：生我者为父母，克我者为官鬼，我生者为子孙，我克者为妻财，同我者为兄弟。';}
+  function makeSelector(){
+    const timePanel=$('timePanel'); if(!timePanel)return;
+    let box=$('destinyKinshipSelector');
+    if(!box){box=document.createElement('div');box.id='destinyKinshipSelector';box.className='destiny-kinship-selector hidden';const note=$('timeNote');if(note)note.insertAdjacentElement('beforebegin',box);else timePanel.appendChild(box);}
+    box.innerHTML=`<h4>命运六亲排法</h4><div class="destiny-kinship-options"><label><input type="radio" name="destinyKinshipMode" value="wuxing"><span><b>五行生克法（默认）</b><small>生我父母，克我官鬼，我生子孙，我克妻财，同我兄弟。</small></span></label><label><input type="radio" name="destinyKinshipMode" value="fixed"><span><b>固定宫位法</b><small>留连自身速喜子，赤口兄弟小吉官，空亡父母大安财。</small></span></label></div><div class="destiny-formula"><strong>提示：</strong>两种排法只能二选一，不能同时使用；默认使用五行生克法。</div>`;
+    const mode=localStorage.getItem(KINSHIP_KEY)||'wuxing';
+    box.querySelectorAll('input[name="destinyKinshipMode"]').forEach(i=>{i.checked=i.value===mode;i.onchange=function(){setMode(this.value); if(typeof currentResult!=='undefined'&&isDestinyResult(currentResult)){currentResult.destinyKinshipMode=this.value; if(currentResult.destinyMeta)currentResult.destinyMeta.kinshipMode=this.value; renderDestinyBoard(currentResult);}}});
+    const show=(typeof currentScene!=='undefined'&&currentScene==='destiny'); box.classList.toggle('hidden',!show);
+  }
+  const oldUpdateSceneMode=(typeof updateSceneMode==='function')?updateSceneMode:null; if(oldUpdateSceneMode){updateSceneMode=function(){oldUpdateSceneMode();makeSelector();};}
+  const oldApplyMethodPanel=(typeof applyMethodPanel==='function')?applyMethodPanel:null; if(oldApplyMethodPanel){applyMethodPanel=function(method){oldApplyMethodPanel(method);makeSelector();};}
+  setTimeout(makeSelector,0);
+  if(typeof divine==='function'){
+    const oldDivine=divine; divine=function(scene,numbers,method,methodNote,extraInfo){const result=oldDivine(scene,numbers,method,methodNote,extraInfo); if(isDestinyResult(result)){const mode=localStorage.getItem(KINSHIP_KEY)||'wuxing'; result.destinyKinshipMode=mode; result.destinyMeta=Object.assign({},result.destinyMeta||{},{timeBranch:parseTimeBranch(result),kinshipMode:mode});} return result;};
+  }
+  window.renderBoard=function(result){
+    const board=$('hexBoard'); if(!board||!result)return; board.className='hex-board v101d-paipan-grid'; const details=result.details||[];
+    board.innerHTML=ORDER.map((p,i)=>{const d=palaceData(p); const tags=[]; details.forEach((x,xi)=>{if(x&&x.palaceName===p)tags.push(x.positionName||['本象','中象','末象'][xi]||'落宫')}); const dir=(d.direction||'').split(' / ')[0]||'方位参考'; return `<div class="v101d-paipan-cell ${tags.length?'active':''}"><span class="v101d-paipan-no">${i+1}</span><div class="v101d-paipan-title">${p}</div><div class="v101d-paipan-meta">五行：${d.element||'参考'}｜方位：${dir}</div><div class="v101d-paipan-meta">象意：${d.summary||'观察本象、中象、末象落点。'}</div><div class="v101d-paipan-tags">${tags.length?tags.map(t=>`<span class="v101d-paipan-tag">${t}</span>`).join(''):'<span class="v101d-paipan-tag empty">未落</span>'}</div></div>`}).join('');
+    const dist=$('distributionText'); if(dist&&typeof buildPaipanExplanation==='function')dist.innerHTML=buildPaipanExplanation(result); const tag=$('distributionTag'); if(tag&&result.metrics)tag.textContent=result.metrics.goodCount>=2?'吉宫偏多':result.metrics.heavyCount>=2?'阻滞偏多':'三象分散';
+  };
+  function analysisCard(c,i){
+    const tone=PALACE_TONE[c.palace]||{kw:'象意',plain:'此宫提供基础象意。'}; const sp=SPIRIT_TEXT[c.spirit]||''; const st=STAR_TEXT[c.star]||''; const role=kinMeaning(c.kin);
+    return `<div class="v101d-analysis-card"><h5>（${CN_NUM[i]}）关于${c.kin}（${c.palace}宫）</h5><p><strong>${c.kin}临${c.palace}：</strong>${tone.plain} 放在“${c.kin}”这个主题上，重点看${role}。</p><p><strong>地支 ${c.branch}${c.branchEl}：</strong>地支是这一宫的内在本质、体质和根基；${c.branch}属${c.branchEl}，会与五星形成生克关系。</p><p><strong>${c.spirit}临${c.kin}：</strong>${sp}</p><p><strong>${c.star}临${c.kin}：</strong>${st} ${c.rel.text}</p><p class="summary"><strong>综合：</strong>这一宫不能只看“${c.kin}”标签，而要合看掌诀“${c.palace}”、地支“${c.branch}${c.branchEl}”、六神“${c.spirit}”、五星“${c.star}”。本宫总体提示：${tone.kw}；六神给出表现形态，五星与地支的关系决定顺逆轻重。</p></div>`;
+  }
+  window.renderDestinyBoard=function(result){
+    const block=$('destinyBoardBlock'); if(!block)return; const isD=isDestinyResult(result); block.classList.toggle('hidden',!isD); block.setAttribute('aria-hidden',isD?'false':'true'); if(!isD)return;
+    const m=meta(result), mode=getMode(result), modeName=mode==='fixed'?'固定宫位法':'五行生克法'; const cs=cells(m,mode); const selfPal=selfPalaceFor(m,mode); const selfBranch=m.branchByPalace[selfPal]; const selfEl=BRANCH_ELEMENT[selfBranch]||'';
+    const intro=$('destinyBoardIntro'); if(intro){intro.innerHTML=`<div class="v101d-formula-box"><strong>起盘口诀：</strong>大安起月，月上起日，日上起时。<br><strong>排地支：</strong>时宫起支，隔位顺排。阴时排阴支，阳时排阳支。<br><strong>装六神：</strong>寅卯青龙，巳午朱雀，丑辰勾陈，未戌腾蛇，申酉白虎，亥子玄武。<br><strong>起五星：</strong>日落宫起，顺行五星：木、火、土、金、水、天空。<br><strong>定六亲：</strong>${formulaForMode(mode)}</div><p><strong>月宫：</strong>${m.monthPalace} ｜ <strong>日宫：</strong>${m.dayPalace} ｜ <strong>时宫：</strong>${m.timePalace}（${m.timeBranch}时）</p><p><strong>本次六亲排法：</strong>${modeName}。${mode==='fixed'?'固定法按口诀定“留连”为自身，用于对照部分民间案例。':'五行生克法以时宫为自身；本盘自身宫为“'+m.timePalace+'”，自身地支为 '+m.branchByPalace[m.timePalace]+'，五行为 '+(BRANCH_ELEMENT[m.branchByPalace[m.timePalace]]||'')+'。'}</p><div class="v101d-principle"><strong>读盘原则：</strong>六亲只是说明“看哪一类人事”，真正影响细节的是同一宫里的掌诀、地支、六神、五星。简单公式：六亲 + 掌诀 + 地支 + 六神 + 五星 = 完整断语。</div>`;}
+    const grid=$('destinyBoardGrid'); if(grid){grid.className='destiny-board-grid v101d-destiny-grid'; grid.innerHTML=cs.map((c,i)=>`<div class="v101d-destiny-cell ${c.palace===selfPal?'self':''}"><span class="v101d-cell-no">${i+1}</span><h5><span>${c.kin} · ${c.palace}</span><span class="branch">${c.branch}</span></h5><div class="v101d-mark-row">${c.marks.length?c.marks.map(x=>`<span class="v101d-mark">${x}</span>`).join(''):'<span class="v101d-mark">命盘位</span>'}<span class="v101d-mark">${c.rel.type}</span></div><div class="v101d-lines"><div><strong>地支五行：</strong>${c.branch} · ${c.branchEl}</div><div><strong>六神：</strong>${c.spirit}</div><div><strong>五星：</strong>${c.star}</div><div><strong>掌诀：</strong>${(PALACE_TONE[c.palace]&&PALACE_TONE[c.palace].kw)||'象意'}</div></div></div>`).join('');}
+    const deep=$('destinyDeepContent'); if(deep){const bSeq=branchSeq(m.timeBranch).join(' → '); deep.className='destiny-deep'; deep.innerHTML=`<div class="destiny-deep-card full"><h5>命盘排法总览</h5><p><strong>地支顺序：</strong>${bSeq}。从时宫 <strong>${m.timePalace}</strong> 起，隔位顺排六个地支。</p><p><strong>五星起点：</strong>日宫 <strong>${m.dayPalace}</strong> 起木星，顺行木、火、土、金、水、天空。</p><p><strong>本次六亲：</strong>${modeName}。${formulaForMode(mode)}</p></div><div class="destiny-deep-card full"><h5>三层信息如何共同作用</h5><div class="v101d-rule-table"><table><thead><tr><th>层次</th><th>作用</th><th>判断重点</th></tr></thead><tbody><tr><td>六亲</td><td>指向哪类人事</td><td>自身、父母、官鬼、子孙、妻财、兄弟</td></tr><tr><td>掌诀</td><td>底色与大趋势</td><td>留连拖延、速喜快动、赤口口舌、小吉流动、空亡落空、大安稳定</td></tr><tr><td>地支</td><td>内在本质与五行根基</td><td>与五星生克定顺逆轻重</td></tr><tr><td>六神</td><td>形态、性格、人际表现</td><td>青龙正直、朱雀表达、勾陈迟缓、腾蛇曲折、白虎冲突、玄武隐秘</td></tr><tr><td>五星</td><td>外部力量与时运</td><td>星生地顺，星克地逆；天空主虚</td></tr></tbody></table></div></div><div class="v101d-analysis-list">${cs.map((c,i)=>analysisCard(c,i)).join('')}</div><div class="destiny-deep-card full"><h5>总结：三层信息的作用权重</h5><p><strong>掌诀</strong>决定底色，<strong>六神</strong>描述形态，<strong>五星+地支</strong>判断顺逆轻重，<strong>六亲</strong>告诉你这一切落在哪类人事主题上。</p><p>命运场景用于传统象意、自我观察和人生规划参考，不作为人生定论。看到顺处可用来建立优势，看到阻处可用来提醒自己复盘和修正。</p></div>`;}
+    const note=$('destinyBoardNote'); if(note)note.innerHTML='说明：命运场景只显示命盘相关内容；普通问事模块如三象解读、单宫、双宫、象意补充和行动建议已隐藏。';
+  };
+  const oldRender=(typeof renderResult==='function')?renderResult:null; if(oldRender){renderResult=function(result){oldRender(result); document.body.classList.toggle('result-destiny',isDestinyResult(result)); if(isDestinyResult(result)){['threeReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','adviceBlock'].forEach(id=>{const el=$(id); if(el){el.classList.add('hidden');el.setAttribute('aria-hidden','true');}}); setTimeout(()=>window.renderDestinyBoard(result),0);} };}
+  if(typeof sectionIsJumpVisible==='function'){const old=sectionIsJumpVisible; sectionIsJumpVisible=function(el){if(document.body.classList.contains('result-destiny')&&el&&['threeReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','adviceBlock'].includes(el.id))return false; return old(el);};}
+  if(typeof buildVersionUpdatesHTML==='function'){const old=buildVersionUpdatesHTML; buildVersionUpdatesHTML=function(){let html=old(); if(!html.includes('v10.1 命盘分析深化修正版')) html += '<details><summary>v10.1 命盘分析深化修正版</summary><ul><li>保持 v10.1 版本号，重做命盘分析逻辑。</li><li>修复命运六亲排法选择界面在手机端显示异常的问题。</li><li>命盘逐宫分析按“六亲 + 掌诀 + 地支 + 六神 + 五星”综合解读。</li><li>加入地支、六神、五星与星支生克的说明，并强调六亲只是指向人事主题。</li><li>恢复详细六宫排盘并增加序号；命运场景继续隐藏普通问事模块。</li><li>README 增加 GitHub Pages / PWA 缓存清理说明。</li></ul></details>'; return html;};}
 })();
 </script>
 
