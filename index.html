@@ -8974,3 +8974,82 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   window.addEventListener('load', function(){setTimeout(boot,120);});
 })();
 </script>
+
+<!-- v10.1.9 patch: only adjust result-page right safe area; restore history dialog width -->
+<style id="v1019-result-page-right-space-fix-style">
+  /* 恢复历史记录等弹窗的手机端宽度：本版不再改动历史记录页面 */
+  @media (max-width:900px){
+    body:not(.force-desktop-mode) #historyDialog{
+      width:calc(100vw - 28px)!important;
+      max-width:720px!important;
+    }
+    body:not(.force-desktop-mode) #historyDialog .history-list{
+      padding:14px 18px 30px!important;
+    }
+    body:not(.force-desktop-mode) #historyDialog .history-item{
+      padding:15px 16px!important;
+    }
+  }
+
+  /* 只在占卜结果页缩短右侧快捷按钮安全留白，让正文卡片向右扩展一点 */
+  @media (max-width:900px){
+    body.result-page:not(.force-desktop-mode){
+      --floating-tools-width:42px!important;
+      --floating-tools-gap:8px!important;
+      --result-right-safe:calc(var(--floating-tools-width) + var(--floating-tools-gap) + env(safe-area-inset-right))!important;
+    }
+    body.result-page:not(.force-desktop-mode) .shell{
+      padding-left:12px!important;
+      padding-right:6px!important;
+    }
+    body.result-page:not(.force-desktop-mode) #resultCard,
+    body.result-page:not(.force-desktop-mode) .result-section{
+      padding-left:12px!important;
+      padding-right:54px!important;
+    }
+    body.result-page:not(.force-desktop-mode) #resultCard.result-section{
+      padding-bottom:170px!important;
+    }
+    body.result-page:not(.force-desktop-mode) .result-section > .block,
+    body.result-page:not(.force-desktop-mode) .result-section .destiny-deep-card,
+    body.result-page:not(.force-desktop-mode) .result-section .v101d-analysis-card,
+    body.result-page:not(.force-desktop-mode) .result-section .v101d-formula-box,
+    body.result-page:not(.force-desktop-mode) .result-section .v101d-principle,
+    body.result-page:not(.force-desktop-mode) .result-section .fortune-note,
+    body.result-page:not(.force-desktop-mode) .result-section .question-linked{
+      width:100%!important;
+      max-width:none!important;
+      margin-right:0!important;
+    }
+    body.result-page:not(.force-desktop-mode) .scroll-tools{
+      right:max(6px, env(safe-area-inset-right))!important;
+    }
+  }
+</style>
+<script id="v1019-version-result-page-right-space-script">
+(function(){
+  'use strict';
+  const VERSION='v10.1.9 结果页右侧留白修正版';
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：保留 v10.1.8 的设置保存与自适应修复，撤回历史记录宽度改动，只在占卜结果页缩短右侧快捷按钮留白。');
+    document.querySelectorAll('h2').forEach(function(el){
+      if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
+    });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1019){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const row='<details><summary>'+VERSION+'</summary><ul><li>基于 v10.1.8 调整手机端显示：撤回“历史记录内容框右扩”的改动，历史记录等其它页面恢复上一版布局。</li><li>只在占卜结果页缩短右侧快捷按钮安全留白，让正文内容卡片向右扩展一点，减少截图中黄色区域的宽度。</li><li>继续保留 v10.1.8 的设置保存修复、手机/平板端关闭设置不询问、电脑端未保存询问和自适应字号恢复。</li><li>同步更新 README、页面标题、版本更新内容、manifest 与 service-worker 缓存名。</li></ul></details>';
+        if(html.indexOf(VERSION)<0) html+=row;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1019=true;
+    }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', patchVersion); else patchVersion();
+  window.addEventListener('load', function(){setTimeout(patchVersion,120);});
+})();
+</script>

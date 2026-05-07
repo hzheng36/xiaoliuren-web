@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.1.8 设置保存与自适应修正版 */
-const CACHE_NAME = 'xiaoliuren-v10.1.8-settings-save-adaptive';
+/* 小六壬占卜 · v10.1.9 结果页右侧留白修正版 */
+const CACHE_NAME = 'xiaoliuren-v10.1.9-result-right-space';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
