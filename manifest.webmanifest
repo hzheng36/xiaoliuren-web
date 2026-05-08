@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.3.9",
-  "short_name": "小六壬 v10.3.9",
-  "description": "v10.3.9 设置自动保存与恢复默认版",
+  "name": "小六壬占卜 · v10.4.0",
+  "short_name": "小六壬 v10.4.0",
+  "description": "v10.4.0 命盘婚姻参考模块版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.3.9"
+  "version": "10.4.0"
 }

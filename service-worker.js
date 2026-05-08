@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.3.9-auto-save-settings';
+const CACHE_NAME = 'xiaoliuren-v10.4.0-destiny-marriage';
 const APP_SHELL = [
   './',
   './index.html',
