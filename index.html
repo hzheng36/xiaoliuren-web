@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>小六壬占卜 · v10.1.8 设置保存与自适应修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.0 占例复盘日志基础版：历史记录新增占例日志、复盘状态、复盘日期、下次复盘、重点案例、日志筛选、日志导出与版本记录。" />
+  <meta name="description" content="小六壬个人网页版 v10.2.1 命盘五行校正版：修正六宫固定五行，留连属水、小吉属木，并保留占例复盘日志系统。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1845,10 +1845,10 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     const POSITION_NAMES = ['本象', '中象', '末象'];
     const PALACE_DATA = {
       '大安': { luckScore: 82, speedScore: 42, resistScore: 26, nobleScore: 74, resultScore: 79, riskScore: 72, element: '木', direction: '东方', color: '青色 / 绿色', object: '文书、植物、木器、桌椅', place: '安静之地、办公室、书房、家中东侧', timing: '三日、五日、七日或较慢渐成', keywords: ['安稳','守成','不动','缓成','平顺','稳定','宜守','家宅','文书','木气','慢慢来','先稳住'], summary: '主安稳、守成、平和，事情基础较正，适合稳步推进。' },
-      '留连': { luckScore: 38, speedScore: 24, resistScore: 72, nobleScore: 42, resultScore: 44, riskScore: 38, element: '土', direction: '中央 / 东南', color: '黄色 / 棕色', object: '旧物、绳线、杂物、包裹', place: '中间位置、转角、堆放处、库房', timing: '拖延反复，宜多等几日', keywords: ['拖延','纠缠','反复','停滞','旧事','未决','被压住','走不动','回头找','等一等','杂物','牵扯'], summary: '主拖延、停滞、反复，事情多有牵扯与未决之处。' },
+      '留连': { luckScore: 38, speedScore: 24, resistScore: 72, nobleScore: 42, resultScore: 44, riskScore: 38, element: '水', direction: '中央 / 东南', color: '黑色 / 蓝色', object: '旧物、绳线、杂物、包裹', place: '中间位置、转角、堆放处、库房', timing: '拖延反复，宜多等几日', keywords: ['拖延','纠缠','反复','停滞','旧事','未决','被压住','走不动','回头找','等一等','杂物','牵扯'], summary: '主拖延、停滞、反复，事情多有牵扯与未决之处。' },
       '速喜': { luckScore: 78, speedScore: 86, resistScore: 34, nobleScore: 66, resultScore: 76, riskScore: 60, element: '火', direction: '南方', color: '红色 / 紫色', object: '电子讯息、灯火、喜庆物、证件', place: '明亮处、南侧、门口、热闹场所', timing: '一日、三日内，多主消息速来', keywords: ['喜讯','消息','快速','主动','推进','回应','机会','热闹','见面','启动','南方','火气'], summary: '主喜讯、消息、机会来得快，往往有突然推进之象。' },
       '赤口': { luckScore: 28, speedScore: 72, resistScore: 84, nobleScore: 34, resultScore: 36, riskScore: 26, element: '金', direction: '西方', color: '白色 / 金色', object: '刀剪、金属、合同、口舌文书', place: '门外、西侧、嘈杂场所、办事窗口', timing: '应得快，但多起争执', keywords: ['口舌','争执','冲突','误会','规则','合同','金属','边缘','急躁','说错话','刀剪','白虎'], summary: '主口舌、争执、误会与冲撞，推进虽快但容易带来阻碍。' },
-      '小吉': { luckScore: 68, speedScore: 63, resistScore: 38, nobleScore: 72, resultScore: 70, riskScore: 68, element: '水', direction: '北方 / 东南', color: '黑色 / 蓝色 / 青色', object: '饮品、小礼物、票据、流动物品', place: '流动场所、水边、交通动线、北方位', timing: '三至五日，多主小成渐进', keywords: ['小吉','小成','贵人','和合','微利','顺手','缓和','有人帮','流动','小消息','水象','先小后大'], summary: '主小成、小利、贵人和顺，虽非大旺，但往往有实用结果。' },
+      '小吉': { luckScore: 68, speedScore: 63, resistScore: 38, nobleScore: 72, resultScore: 70, riskScore: 68, element: '木', direction: '北方 / 东南', color: '青色 / 绿色', object: '饮品、小礼物、票据、流动物品', place: '流动场所、水边、交通动线、北方位', timing: '三至五日，多主小成渐进', keywords: ['小吉','小成','贵人','和合','微利','顺手','缓和','有人帮','流动','小消息','水象','先小后大'], summary: '主小成、小利、贵人和顺，虽非大旺，但往往有实用结果。' },
       '空亡': { luckScore: 22, speedScore: 36, resistScore: 66, nobleScore: 30, resultScore: 24, riskScore: 22, element: '土', direction: '西北 / 空处', color: '灰色 / 米白', object: '空盒、旧包、断线物、未完成品', place: '空位、高处、角落、无人处', timing: '落空延迟，或有期而无实', keywords: ['空亡','落空','虚耗','延后','不实','没落实','信息少','空处','高处','缺证据','要复核','别押重注'], summary: '主虚耗、落空、不实与悬而未决，宜谨慎观察。' },
     };
     const SINGLE_PALACE_GUIDE = {
@@ -6826,10 +6826,10 @@ body.hide-progress-bar .page-progress { display:none !important; }
       }catch(e){
         const fallback = {
           '大安': {direction:'东方', element:'木', color:'青色 / 绿色', keywords:['安稳','守成'], summary:'事情偏稳，宜守不宜急。', object:'文书、木物、桌柜', place:'家中、办公室、固定位置', timing:'较慢但稳'},
-          '留连': {direction:'中央', element:'土', color:'黄色 / 棕色', keywords:['拖延','反复'], summary:'事情容易拖住、反复。', object:'旧物、杂物、收纳', place:'中间、转角、堆放处', timing:'拖延'},
+          '留连': {direction:'中央', element:'水', color:'黑色 / 蓝色', keywords:['拖延','反复'], summary:'事情容易拖住、反复。', object:'旧物、杂物、收纳', place:'中间、转角、堆放处', timing:'拖延'},
           '速喜': {direction:'南方', element:'火', color:'红色 / 紫色', keywords:['快速','消息'], summary:'事情有动象，来得较快。', object:'电子讯息、灯火、证件', place:'明亮处、门口、热闹处', timing:'较快'},
           '赤口': {direction:'西方', element:'金', color:'白色 / 金色', keywords:['口舌','争执'], summary:'易有沟通、规则或争执问题。', object:'金属、票据、钥匙', place:'门外、窗口、金属旁', timing:'快但有波折'},
-          '小吉': {direction:'北方', element:'水', color:'黑色 / 蓝色', keywords:['小成','贵人'], summary:'有小机会、小帮助。', object:'水杯、包袋、小物', place:'水边、流动处、包袋', timing:'短期小动'},
+          '小吉': {direction:'北方', element:'木', color:'青色 / 绿色', keywords:['小成','贵人'], summary:'有小机会、小帮助。', object:'水杯、包袋、小物', place:'水边、流动处、包袋', timing:'短期小动'},
           '空亡': {direction:'西北 / 空处', element:'土', color:'灰色 / 米白', keywords:['落空','不实'], summary:'结果未定，防落空或延后。', object:'空盒、遗漏物、高处', place:'角落、空处、不常用处', timing:'不定'}
         };
         result.details = result.palaces.map(function(name, idx){ return Object.assign({positionName:['本象','中象','末象'][idx]||'', role:sceneStub.positions[idx], number:result.numbers[idx]||1, palaceName:name}, fallback[name]||fallback['大安']); });
@@ -9360,5 +9360,49 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', patchVersion); else patchVersion();
   window.addEventListener('load', function(){setTimeout(patchVersion,120);});
+})();
+</script>
+
+
+<!-- v10.2.1 patch: 命盘六宫固定五行校正 -->
+<script id="v1021-palace-elements-fix">
+(function(){
+  'use strict';
+  const VERSION='v10.2.1 命盘五行校正版';
+  function fixPalaceElements(){
+    try{
+      if(typeof PALACE_DATA!=='undefined'){
+        if(PALACE_DATA['大安']) PALACE_DATA['大安'].element='木';
+        if(PALACE_DATA['留连']) { PALACE_DATA['留连'].element='水'; PALACE_DATA['留连'].color='黑色 / 蓝色'; }
+        if(PALACE_DATA['速喜']) PALACE_DATA['速喜'].element='火';
+        if(PALACE_DATA['赤口']) PALACE_DATA['赤口'].element='金';
+        if(PALACE_DATA['小吉']) { PALACE_DATA['小吉'].element='木'; PALACE_DATA['小吉'].color='青色 / 绿色'; }
+        if(PALACE_DATA['空亡']) PALACE_DATA['空亡'].element='土';
+      }
+    }catch(e){}
+  }
+  function patchVersion(){
+    fixPalaceElements();
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修正命盘与结果页六宫固定五行，明确大安木、留连水、速喜火、赤口金、小吉木、空亡土，并保留 v10.2.0 占例复盘日志系统。');
+    document.querySelectorAll('h2').forEach(function(el){
+      if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
+    });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1021){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const row='<details><summary>'+VERSION+'</summary><ul><li>修正六宫固定五行：大安属木、留连属水、速喜属火、赤口属金、小吉属木、空亡属土。</li><li>同步修正命盘、三象卡片、综合五行气象、五行结构和历史结果中引用的宫位五行。</li><li>保留 v10.2.0 占例复盘日志系统、v10.1.9 结果页右侧留白修复和设置保存相关修复。</li><li>同步更新 README、页面标题、版本更新内容、manifest 与 service-worker 缓存名。</li></ul></details>';
+        if(html.indexOf(VERSION)<0) html+=row;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1021=true;
+    }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+    try{ if(typeof window.currentResult!=='undefined' && window.currentResult && typeof window.renderResult==='function') window.renderResult(window.currentResult); }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', patchVersion); else patchVersion();
+  window.addEventListener('load', function(){ setTimeout(patchVersion,150); });
 })();
 </script>

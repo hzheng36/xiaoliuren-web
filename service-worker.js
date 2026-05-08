@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.2.0 占例复盘日志基础版 */
-const CACHE_NAME = 'xiaoliuren-v10.2.0-case-log';
+/* 小六壬占卜 · v10.2.1 命盘五行校正版 */
+const CACHE_NAME = 'xiaoliuren-v10.2.1-palace-elements-fix';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
