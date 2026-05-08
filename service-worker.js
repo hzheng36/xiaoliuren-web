@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.5-nav-highlight-landscape';
+const CACHE_NAME = 'xiaoliuren-v10.4.6-nav-highlight-stable';
 const APP_SHELL = [
   './',
   './index.html',
