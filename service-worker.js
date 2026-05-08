@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.2.3 版本显示与缓存修正版 */
-const CACHE_NAME = 'xiaoliuren-v10.2.3-version-cache-lock';
+/* 小六壬占卜 · v10.2.4 命盘电脑版排版与固定法提示修正版 */
+const CACHE_NAME = 'xiaoliuren-v10.2.4-destiny-layout-fixed-warning';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {

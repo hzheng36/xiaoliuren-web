@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.2.3 版本显示与缓存修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.3 版本显示与缓存修正版：修正 v10.2.2 中版本显示被后置补丁覆盖的问题，并加强 PWA 缓存清理，避免 GitHub Pages 刷新时旧版与新版来回显示。" />
+  <title>小六壬占卜 · v10.2.4 命盘电脑版排版与固定法提示修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.2.4 命盘电脑版排版与固定法提示修正版：优化电脑端六宫排盘尺寸、修复命运六亲参考盘时辰与序号重叠，并为固定宫位法增加适用条件检测与提示。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.2.3 版本显示与缓存修正版</h2>
+          <h2>个人占卜台 · v10.2.4 命盘电脑版排版与固定法提示修正版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9216,8 +9216,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1023-version-cache-lock">
 (function(){
   'use strict';
-  const VERSION='v10.2.3 版本显示与缓存修正版';
-  const META='小六壬个人网页版 '+VERSION+'：修正 v10.2.2 中版本显示被后置补丁覆盖的问题，并加强 PWA 缓存清理，避免 GitHub Pages 刷新时旧版与新版来回显示。';
+  const VERSION='v10.2.4 命盘电脑版排版与固定法提示修正版';
+  const META='小六壬个人网页版 v10.2.4 命盘电脑版排版与固定法提示修正版：优化电脑端六宫排盘尺寸、修复命运六亲参考盘时辰与序号重叠，并为固定宫位法增加适用条件检测与提示。';
   let applying=false;
   function applyVersionLock(){
     if(applying) return;
@@ -9235,7 +9235,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
         const old=window.buildVersionUpdatesHTML;
         window.buildVersionUpdatesHTML=function(){
           let html=old.call(this);
-          const row='<details><summary>'+VERSION+'</summary><ul><li>修正 v10.2.2 中页面标题仍被后置的 v10.2.1 补丁覆盖的问题，确保首页始终显示最新版本。</li><li>增加版本显示锁定逻辑，刷新过程中若旧补丁重新渲染标题，会自动恢复为当前版本。</li><li>加强 PWA / GitHub Pages 缓存清理，主动更新 service worker 并清除旧 xiaoliuren 缓存，减少旧版与新版来回显示。</li><li>保留 v10.2.2 命运排盘输入优化、v10.2.1 命盘五行校正、v10.2.0 占例复盘日志系统。</li></ul></details>';
+          const row='<details><summary>'+VERSION+'</summary><ul><li>优化电脑端六宫排盘尺寸，修复排盘卡片继承旧版 330px 小盘导致整体过小的问题。</li><li>修复命运六亲参考盘中地支/时辰与右上角序号重叠的问题，提升电脑端和移动端观感。</li><li>命运六亲排法增加固定宫位法适用提示：固定宫位法仅当时宫/自身为留连时更自洽，若自身宫不是留连会提示逻辑冲突并建议切换五行生克法。</li><li>继续保留 v10.2.3 版本显示与缓存修复、v10.2.2 命运排盘输入优化、v10.2.1 命盘五行校正和 v10.2.0 占例复盘日志系统。</li></ul></details>';
           if(html.indexOf(VERSION)<0) html+=row;
           return html;
         };
@@ -9251,7 +9251,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
       if('caches' in window){
         caches.keys().then(function(keys){
           return Promise.all(keys.map(function(k){
-            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.3-version-cache-lock') return caches.delete(k);
+            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.4-destiny-layout-fixed-warning') return caches.delete(k);
             return Promise.resolve();
           }));
         }).catch(function(){});
@@ -9279,6 +9279,106 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', function(){ setTimeout(boot, 80); });
+})();
+</script>
+
+
+
+<!-- v10.2.4 patch: 命盘电脑版排版与固定法提示修正 -->
+<style id="v1024-destiny-desktop-layout-and-fixed-warning-style">
+  @media (min-width: 901px){
+    body.result-page .hex-board.v101d-paipan-grid,
+    body.force-desktop-mode .hex-board.v101d-paipan-grid,
+    body.result-page .hex-board.paipan-board-grid,
+    body.force-desktop-mode .hex-board.paipan-board-grid{
+      width:100%!important; max-width:none!important; height:auto!important; transform:none!important;
+      display:grid!important; grid-template-columns:repeat(3,minmax(240px,1fr))!important; gap:16px!important;
+      padding:0!important; margin:10px 0 0!important; position:relative!important;
+    }
+    body.result-page .v101d-paipan-cell,
+    body.force-desktop-mode .v101d-paipan-cell,
+    body.result-page .paipan-cell,
+    body.force-desktop-mode .paipan-cell{
+      min-height:170px!important; padding:18px 18px 16px!important; border-radius:22px!important;
+    }
+    body.result-page .v101d-paipan-title,
+    body.force-desktop-mode .v101d-paipan-title,
+    body.result-page .paipan-cell-title,
+    body.force-desktop-mode .paipan-cell-title{font-size:1.18rem!important; line-height:1.35!important;}
+    body.result-page .v101d-paipan-meta,
+    body.force-desktop-mode .v101d-paipan-meta,
+    body.result-page .paipan-cell-meta,
+    body.force-desktop-mode .paipan-cell-meta{font-size:.96rem!important; line-height:1.72!important;}
+  }
+  .v101d-destiny-cell,.v101-destiny-cell,.destiny-cell.v10-cell{position:relative!important;overflow:visible!important;}
+  .v101d-destiny-cell h5{padding-right:76px!important;line-height:1.45!important;min-height:34px!important;}
+  .v101d-destiny-cell .branch{position:absolute!important;right:46px!important;top:18px!important;line-height:1!important;z-index:2!important;color:#b8614f!important;}
+  .v101d-cell-no{right:12px!important;top:12px!important;z-index:3!important;}
+  @media (max-width:900px){.v101d-destiny-cell h5{padding-right:70px!important}.v101d-destiny-cell .branch{right:44px!important;top:18px!important}.v101d-cell-no{right:12px!important;top:12px!important}}
+  .v1024-fixed-warning{margin:12px 0 0;padding:12px 14px;border-radius:16px;border:1px solid rgba(196,126,74,.28);background:rgba(255,246,231,.86);color:var(--text);line-height:1.72;font-size:.94rem;}
+  .v1024-fixed-warning strong{color:#9b5d28}.v1024-fixed-warning ul{margin:6px 0 0 1.2em;padding:0}.v1024-fixed-warning li{margin:3px 0}
+  .v1024-selector-note{margin-top:10px;padding:11px 13px;border-radius:14px;border:1px solid rgba(114,87,174,.16);background:rgba(250,247,255,.84);color:var(--muted);line-height:1.7;font-size:.92rem;}
+  .v1024-selector-note strong{color:var(--primary)}
+</style>
+<script id="v1024-destiny-layout-fixed-warning-script">
+(function(){
+  'use strict';
+  const VERSION='v10.2.4 命盘电脑版排版与固定法提示修正版';
+  const META='小六壬个人网页版 v10.2.4 命盘电脑版排版与固定法提示修正版：优化电脑端六宫排盘尺寸、修复命运六亲参考盘时辰与序号重叠，并为固定宫位法增加适用条件检测与提示。';
+  function $(id){return document.getElementById(id);}
+  function isDestinyResult(result){return !!(result && (result.sceneKey==='destiny' || result.scene==='命运' || result.sceneName==='命运'));}
+  function getKinshipMode(result){
+    return (result && (result.destinyKinshipMode || (result.destinyMeta && result.destinyMeta.kinshipMode))) || ((document.querySelector('input[name="destinyKinshipMode"]:checked')||{}).value) || (function(){try{return localStorage.getItem('xlr_destiny_kinship_mode_v10')||'wuxing';}catch(e){return 'wuxing';}})();
+  }
+  function getTimePalace(result){
+    if(result && result.destinyMeta && result.destinyMeta.timePalace) return result.destinyMeta.timePalace;
+    if(result && result.palaces && result.palaces[2]) return result.palaces[2];
+    const intro=$('destinyBoardIntro');
+    if(intro){const m=String(intro.textContent||'').match(/时宫\/?自身[:：]\s*([^｜\s（]+)/); if(m) return m[1];}
+    return '';
+  }
+  function ensureSelectorNote(){
+    const box=$('destinyKinshipSelector'); if(!box) return;
+    let note=$('v1024DestinyKinshipSelectorNote');
+    if(!note){note=document.createElement('div'); note.id='v1024DestinyKinshipSelectorNote'; note.className='v1024-selector-note'; box.appendChild(note);}
+    note.innerHTML='<strong>排法提示：</strong>命运场景可用固定宫位法对照民间案例，但固定宫位法定六亲仅当“时宫/自身”为留连时更自洽；若自身宫不是留连，固定口诀会出现逻辑冲突，建议切换为五行生克法。普通问事场景默认使用五行生克法。';
+  }
+  function applyFixedWarning(result){
+    if(!isDestinyResult(result)) return;
+    const mode=getKinshipMode(result), timePalace=getTimePalace(result), intro=$('destinyBoardIntro'); if(!intro) return;
+    let warn=$('v1024FixedModeWarning'); if(warn) warn.remove();
+    if(mode==='fixed' && timePalace && timePalace!=='留连'){
+      warn=document.createElement('div'); warn.id='v1024FixedModeWarning'; warn.className='v1024-fixed-warning';
+      warn.innerHTML='<strong>固定宫位法适用性提示：</strong>固定口诀预设“留连”为自身，但本盘实际自身宫为 <strong>'+timePalace+'</strong>，因此固定法会出现宫位身份冲突，例如某宫可能同时被看作自身与妻财。<ul><li>建议切换为“五行生克法”，按自身地支五行定六亲。</li><li>如仅用于对照民间案例，可继续保留固定宫位法，但解读时需注明其前提不完全适用。</li></ul>';
+      intro.insertAdjacentElement('afterend', warn);
+    } else if(mode==='fixed'){
+      warn=document.createElement('div'); warn.id='v1024FixedModeWarning'; warn.className='v1024-fixed-warning';
+      warn.innerHTML='<strong>固定宫位法提示：</strong>本盘自身宫为留连，固定口诀“留连自身、速喜子、赤口兄弟、小吉官、空亡父母、大安财”在本盘中较为自洽，可用于对照民间案例。';
+      intro.insertAdjacentElement('afterend', warn);
+    }
+  }
+  function patchRenderDestinyBoard(){
+    if(typeof window.renderDestinyBoard==='function' && !window.renderDestinyBoard.__v1024){
+      const old=window.renderDestinyBoard;
+      window.renderDestinyBoard=function(result){const ret=old.apply(this, arguments); setTimeout(function(){applyFixedWarning(result);},0); return ret;};
+      window.renderDestinyBoard.__v1024=true;
+    }
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content', META);
+    document.querySelectorAll('h2').forEach(function(el){if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;});
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1024){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>优化电脑端六宫排盘尺寸，修复排盘卡片继承旧版 330px 小盘导致整体过小的问题。</li><li>修复命运六亲参考盘中地支/时辰与右上角序号重叠的问题，提升电脑端和移动端观感。</li><li>命运六亲排法增加固定宫位法适用提示：固定宫位法仅当时宫/自身为留连时更自洽，若自身宫不是留连会提示逻辑冲突并建议切换五行生克法。</li><li>继续保留 v10.2.3 版本显示与缓存修复、v10.2.2 命运排盘输入优化、v10.2.1 命盘五行校正和 v10.2.0 占例复盘日志系统。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
+      window.buildVersionUpdatesHTML.__v1024=true;
+    }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+  }
+  function boot(){ensureSelectorNote(); patchRenderDestinyBoard(); patchVersion(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult && typeof window.renderDestinyBoard==='function'){ window.renderDestinyBoard(window.currentResult); applyFixedWarning(window.currentResult); } }catch(e){} }
+  document.addEventListener('change', function(e){if(e.target && e.target.name==='destinyKinshipMode'){setTimeout(function(){ensureSelectorNote(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult) applyFixedWarning(window.currentResult); }catch(err){}},50);}}, true);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function(){setTimeout(boot,180); setTimeout(boot,650);});
 })();
 </script>
 
