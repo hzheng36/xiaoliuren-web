@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.3.6",
-  "short_name": "小六壬 v10.3.6",
-  "description": "v10.3.6 阅读模式保存修正版",
+  "name": "小六壬占卜 · v10.3.7",
+  "short_name": "小六壬 v10.3.7",
+  "description": "v10.3.7 自定义夜间时间版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.3.6"
+  "version": "10.3.7"
 }

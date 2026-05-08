@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.3.6-reading-mode-save-fix';
+const CACHE_NAME = 'xiaoliuren-v10.3.7-custom-night-time';
 const APP_SHELL = [
   './',
   './index.html',
