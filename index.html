@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.2.8 命盘五行定义与加载修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.8 命盘五行定义与加载修正版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。" />
+  <title>小六壬占卜 · v10.2.9 补丁清理与版本显示稳定版</title>
+  <meta name="description" content="小六壬个人网页版 v10.2.9 补丁清理与版本显示稳定版：清理旧版版本锁定与缓存补丁，统一版本显示入口，保留命盘五行定义、性别侧重点、固定宫位法提示和加载修复。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.2.8 命盘五行定义与加载修正版</h2>
+          <h2>个人占卜台 · v10.2.9 补丁清理与版本显示稳定版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -8152,27 +8152,6 @@ html{scroll-padding-bottom:140px;}
   .section-jump-nav{max-width:calc(100vw - 20px)!important;}
 }
 </style>
-<script id="v1011-version-update-patch">
-(function(){
-  try{
-    document.title='小六壬占卜 · v10.1.8 设置保存与自适应修正版';
-    var h=document.querySelector('.result-header h2, .hero h2');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.8 设置保存与自适应修正版'; });
-    if(typeof buildVersionUpdatesHTML==='function'){
-      const old=buildVersionUpdatesHTML;
-      buildVersionUpdatesHTML=function(){
-        let html=old();
-        if(!html.includes('v10.1.1 手机端排版与导航修正版')){
-          html += '<details><summary>v10.1.1 手机端排版与导航修正版</summary><ul><li>修复命盘与六宫排盘在手机端字体忽大忽小、文字重叠和内容裁切的问题。</li><li>大表格统一改为横向滑动显示，避免强行压缩到一屏导致无法阅读。</li><li>调整命运六亲参考盘的序号与时辰/地支显示距离，避免贴得过近。</li><li>下移底部章节导航，并增加结果页底部留白，减少遮挡正文。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
-        }
-        return html;
-      };
-    }
-  }catch(e){console.warn('v10.1.1 patch skipped', e);}
-})();
-</script>
-
-
 <style id="v1012-spacing-consistency-fix">
 /* v10.1.2 间距一致修正版：统一手机端正文与右侧快捷按钮距离 */
 @media (max-width: 900px){
@@ -8241,28 +8220,6 @@ html{scroll-padding-bottom:140px;}
   body.result-page .result-section table{min-width:620px!important;}
 }
 </style>
-<script id="v1012-version-update-patch">
-(function(){
-  try{
-    document.title='小六壬占卜 · v10.1.8 设置保存与自适应修正版';
-    document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.8 设置保存与自适应修正版';
-    });
-    if(typeof buildVersionUpdatesHTML==='function'){
-      const old=buildVersionUpdatesHTML;
-      buildVersionUpdatesHTML=function(){
-        let html=old();
-        if(!html.includes('v10.1.2 间距一致修正版')){
-          html += '<details><summary>v10.1.2 间距一致修正版</summary><ul><li>统一手机端结果内容与右侧快捷按钮之间的安全距离，让排盘、命盘和综合解读的右边距更一致。</li><li>调整右侧浮动快捷按钮与底部章节导航的位置，减少遮挡正文和卡片内容。</li><li>继续保持大表格横向滑动显示，避免内容被压缩或裁切。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
-        }
-        return html;
-      };
-    }
-  }catch(e){console.warn('v10.1.2 patch skipped', e);}
-})();
-</script>
-
-
 <style id="v1013-adaptive-dialog-fix">
 /* v10.1.4 PWA缓存更新修正版：弹窗随手机/平板/电脑模式自适应 */
 :root{--xlr-dialog-max:980px;--xlr-dialog-wide:1080px;--xlr-dialog-medium:920px;}
@@ -8334,28 +8291,6 @@ body.force-desktop-mode dialog table{min-width:640px;}
 /* 右侧快捷按钮不影响弹窗阅读 */
 dialog{z-index:1000;}
 </style>
-<script id="v1013-version-update-patch">
-(function(){
-  try{
-    document.title='小六壬占卜 · v10.1.8 设置保存与自适应修正版';
-    document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · v10.1.8 设置保存与自适应修正版';
-    });
-    if(typeof buildVersionUpdatesHTML==='function'){
-      const old=buildVersionUpdatesHTML;
-      buildVersionUpdatesHTML=function(){
-        let html=old();
-        if(!html.includes('v10.1.4 PWA缓存更新修正版')){
-          html += '<details><summary>v10.1.4 PWA缓存更新修正版</summary><ul><li>优化历史记录、历史分析、场景规则、问题模板、设置、复盘记录等弹窗的自适应宽度。</li><li>手机端切换“电脑”模式后，弹窗同步使用桌面式宽度和内部栅格，不再保持窄手机弹窗。</li><li>平板和电脑端弹窗自动变宽，列表、统计、规则和设置内容更容易阅读。</li><li>弹窗中的宽表继续支持横向滑动，避免内容被压缩或裁切。</li><li>同步更新 README、页面标题与 PWA 缓存版本。</li></ul></details>';
-        }
-        return html;
-      };
-    }
-  }catch(e){console.warn('v10.1.3 patch skipped', e);}
-})();
-</script>
-
-
 <style id="v1015-mode-settings-protect-style">
 /* v10.1.6 设置未保存提醒修正版 */
 /* 保证自适应模式回到稳定字号，电脑模式关闭后不残留桌面阅读比例。 */
@@ -8499,9 +8434,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     }
   }
   function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION_LABEL;
-    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION_LABEL+'：修复设置页改动后直接关闭不会提示保存的问题，并继续保留模式切换字体恢复与版本记录补齐。');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION_LABEL; });
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1015Patched){
       const old=window.buildVersionUpdatesHTML;
       const additions=[
@@ -8679,10 +8611,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     }, true);
   }
   function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复设置页改动后关闭不会提示保存的问题，完整拦截关闭按钮、ESC 和内部关闭操作。');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1016){
       const old=window.buildVersionUpdatesHTML;
       window.buildVersionUpdatesHTML=function(){
@@ -8993,9 +8921,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='xiaoliuren_case_logs_'+new Date().toISOString().slice(0,10)+'.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){URL.revokeObjectURL(url);},1000);
   };
   function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：历史记录新增占例日志、复盘状态、复盘日期、下次复盘、重点案例、日志筛选和日志导出。');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1020){
       const old=window.buildVersionUpdatesHTML;
       window.buildVersionUpdatesHTML=function(){ let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>新增占例复盘日志系统：历史记录中“复盘”升级为“写日志”，可记录待观察、已应验、部分应验、未应验和已作废。</li><li>日志新增复盘日期、下次复盘日期、实际结果、判断总结和重点案例标记。</li><li>历史记录增加日志筛选：全部日志、待观察、已应验、部分应验、未应验、已作废、重点案例，并显示日志概览。</li><li>历史记录卡片显示日志状态、日志数量、重点案例和下次复盘日期标签。</li><li>导出复盘 TXT 升级为导出占例日志 TXT；历史 JSON 和完整备份 JSON 会继续携带日志字段，便于换设备迁移。</li><li>同步更新 README、页面标题、版本更新内容、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html; };
@@ -9180,10 +9105,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     }catch(err){ alert(err && err.message ? err.message : '命运排盘输入不完整。'); }
   }
   function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：命运场景隐藏占问事项，新增公历/农历、24小时制/十二时辰输入，并继续保留日志系统与命盘五行校正。');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1022){
       const old=window.buildVersionUpdatesHTML;
       window.buildVersionUpdatesHTML=function(){
@@ -9199,7 +9120,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function boot(){
     ensureDestinyPanel();
     updateDestinyPanel();
-    patchVersion();
+    // version update handled by final v10.2.9 patch only
     const grid=$('sceneGrid'); if(grid && !grid.dataset.v1022Destiny){ grid.dataset.v1022Destiny='1'; grid.addEventListener('click', function(){ setTimeout(updateDestinyPanel,0); }, true); grid.addEventListener('click', function(){ setTimeout(updateDestinyPanel,30); }, false); }
     const tabs=$('methodTabs'); if(tabs && !tabs.dataset.v1022Destiny){ tabs.dataset.v1022Destiny='1'; tabs.addEventListener('click', function(){ setTimeout(updateDestinyPanel,0); }, true); tabs.addEventListener('click', function(){ setTimeout(updateDestinyPanel,30); }, false); }
     const time=$('timeInput'); if(time && !time.dataset.v1022Destiny){ time.dataset.v1022Destiny='1'; time.addEventListener('change', function(){syncDestinyDefaults(); updateDestinyPanel();}); time.addEventListener('input', function(){syncDestinyDefaults(); updateDestinyPanel();}); }
@@ -9209,81 +9130,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   window.addEventListener('load', function(){ setTimeout(boot,100); setTimeout(updateDestinyPanel,250); });
 })();
 </script>
-
-
-
-<!-- v10.2.3 patch: 版本显示与缓存最终锁定 -->
-<script id="v1023-version-cache-lock">
-(function(){
-  'use strict';
-  const VERSION='v10.2.4 命盘电脑版排版与固定法提示修正版';
-  const META='小六壬个人网页版 v10.2.4 命盘电脑版排版与固定法提示修正版：优化电脑端六宫排盘尺寸、修复命运六亲参考盘时辰与序号重叠，并为固定宫位法增加适用条件检测与提示。';
-  let applying=false;
-  function applyVersionLock(){
-    if(applying) return;
-    applying=true;
-    try{
-      document.title='小六壬占卜 · '+VERSION;
-      const meta=document.querySelector('meta[name="description"]');
-      if(meta) meta.setAttribute('content', META);
-      document.querySelectorAll('h2').forEach(function(el){
-        if(el.textContent && el.textContent.indexOf('个人占卜台')>=0 && el.textContent.indexOf(VERSION)<0){
-          el.textContent='个人占卜台 · '+VERSION;
-        }
-      });
-      if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1023){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.call(this);
-          const row='<details><summary>'+VERSION+'</summary><ul><li>优化电脑端六宫排盘尺寸，修复排盘卡片继承旧版 330px 小盘导致整体过小的问题。</li><li>修复命运六亲参考盘中地支/时辰与右上角序号重叠的问题，提升电脑端和移动端观感。</li><li>命运六亲排法增加固定宫位法适用提示：固定宫位法仅当时宫/自身为留连时更自洽，若自身宫不是留连会提示逻辑冲突并建议切换五行生克法。</li><li>继续保留 v10.2.3 版本显示与缓存修复、v10.2.2 命运排盘输入优化、v10.2.1 命盘五行校正和 v10.2.0 占例复盘日志系统。</li></ul></details>';
-          if(html.indexOf(VERSION)<0) html+=row;
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v1023=true;
-      }
-      try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
-    }finally{
-      applying=false;
-    }
-  }
-  function clearOldCaches(){
-    try{
-      if('caches' in window){
-        caches.keys().then(function(keys){
-          return Promise.all(keys.map(function(k){
-            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.4-destiny-layout-fixed-warning') return caches.delete(k);
-            return Promise.resolve();
-          }));
-        }).catch(function(){});
-      }
-      if('serviceWorker' in navigator){
-        navigator.serviceWorker.getRegistrations().then(function(regs){
-          regs.forEach(function(reg){
-            try{ reg.update(); }catch(e){}
-            try{ if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'}); }catch(e){}
-          });
-        }).catch(function(){});
-      }
-    }catch(e){}
-  }
-  function boot(){
-    applyVersionLock();
-    clearOldCaches();
-    [60,180,420,900,1600,2600].forEach(function(ms){ setTimeout(applyVersionLock, ms); });
-    try{
-      const target=document.querySelector('h2')||document.body;
-      const mo=new MutationObserver(function(){ applyVersionLock(); });
-      mo.observe(target, {childList:true, subtree:true, characterData:true});
-      setTimeout(function(){ try{mo.disconnect();}catch(e){} }, 5000);
-    }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
-  window.addEventListener('load', function(){ setTimeout(boot, 80); });
-})();
-</script>
-
-
-
 <!-- v10.2.4 patch: 命盘电脑版排版与固定法提示修正 -->
 <style id="v1024-destiny-desktop-layout-and-fixed-warning-style">
   @media (min-width: 901px){
@@ -9323,8 +9169,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1024-destiny-layout-fixed-warning-script">
 (function(){
   'use strict';
-  const VERSION='v10.2.4 命盘电脑版排版与固定法提示修正版';
-  const META='小六壬个人网页版 v10.2.4 命盘电脑版排版与固定法提示修正版：优化电脑端六宫排盘尺寸、修复命运六亲参考盘时辰与序号重叠，并为固定宫位法增加适用条件检测与提示。';
   function $(id){return document.getElementById(id);}
   function isDestinyResult(result){return !!(result && (result.sceneKey==='destiny' || result.scene==='命运' || result.sceneName==='命运'));}
   function getKinshipMode(result){
@@ -9364,101 +9208,12 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
       window.renderDestinyBoard.__v1024=true;
     }
   }
-  function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content', META);
-    document.querySelectorAll('h2').forEach(function(el){if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;});
-    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1024){
-      const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>优化电脑端六宫排盘尺寸，修复排盘卡片继承旧版 330px 小盘导致整体过小的问题。</li><li>修复命运六亲参考盘中地支/时辰与右上角序号重叠的问题，提升电脑端和移动端观感。</li><li>命运六亲排法增加固定宫位法适用提示：固定宫位法仅当时宫/自身为留连时更自洽，若自身宫不是留连会提示逻辑冲突并建议切换五行生克法。</li><li>继续保留 v10.2.3 版本显示与缓存修复、v10.2.2 命运排盘输入优化、v10.2.1 命盘五行校正和 v10.2.0 占例复盘日志系统。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
-      window.buildVersionUpdatesHTML.__v1024=true;
-    }
-    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
-  }
-  function boot(){ensureSelectorNote(); patchRenderDestinyBoard(); patchVersion(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult && typeof window.renderDestinyBoard==='function'){ window.renderDestinyBoard(window.currentResult); applyFixedWarning(window.currentResult); } }catch(e){} }
+  function boot(){ensureSelectorNote(); patchRenderDestinyBoard(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult && typeof window.renderDestinyBoard==='function'){ window.renderDestinyBoard(window.currentResult); applyFixedWarning(window.currentResult); } }catch(e){} }
   document.addEventListener('change', function(e){if(e.target && e.target.name==='destinyKinshipMode'){setTimeout(function(){ensureSelectorNote(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult) applyFixedWarning(window.currentResult); }catch(err){}},50);}}, true);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', function(){setTimeout(boot,180); setTimeout(boot,650);});
 })();
 </script>
-
-</body>
-</html>
-
-<!-- v10.1.4 PWA缓存更新修正版：强制刷新旧 Service Worker / Cache -->
-<script id="v1014-pwa-cache-update-fix">
-(function(){
-  const VERSION='v10.1.4 PWA缓存更新修正版';
-  try{
-    document.title='小六壬占卜 · '+VERSION;
-    document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
-    });
-    if(typeof buildVersionUpdatesHTML==='function' && !buildVersionUpdatesHTML.__v1014Patched){
-      const old=buildVersionUpdatesHTML;
-      buildVersionUpdatesHTML=function(){
-        let html=old();
-        if(!html.includes(VERSION)){
-          html += '<details><summary>'+VERSION+'</summary><ul><li>修复 GitHub Pages 上传新版后仍显示旧版本的问题：重新加入 service-worker.js，并更新缓存策略。</li><li>新版 Service Worker 会清理旧缓存，HTML 页面改为网络优先，避免旧 index.html 长时间停留。</li><li>增加前端缓存刷新逻辑，加载新版后会主动触发 Service Worker 更新。</li><li>README 增加 GitHub Pages / PWA 缓存排查步骤：上传 service-worker.js、刷新两次或清理 Safari 网站数据。</li></ul></details>';
-        }
-        return html;
-      };
-      buildVersionUpdatesHTML.__v1014Patched=true;
-    }
-    async function clearOldCaches(){
-      if(!('caches' in window)) return;
-      const keep='xiaoliuren-v10-1-5-mode-settings-protect';
-      const keys=await caches.keys();
-      await Promise.all(keys.filter(k=>k.indexOf('xiaoliuren')>=0 && k!==keep).map(k=>caches.delete(k)));
-    }
-    function toast(msg){
-      var el=document.getElementById('pwaStatusToast');
-      if(!el){ el=document.createElement('div'); el.id='pwaStatusToast'; el.className='pwa-status'; document.body.appendChild(el); }
-      el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2600);
-    }
-    if('serviceWorker' in navigator){
-      window.addEventListener('load', function(){
-        clearOldCaches().catch(function(){});
-        navigator.serviceWorker.register('./service-worker.js', {updateViaCache:'none'}).then(function(reg){
-          reg.update && reg.update();
-          if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
-          reg.addEventListener('updatefound', function(){
-            var nw=reg.installing; if(!nw) return;
-            nw.addEventListener('statechange', function(){
-              if(nw.state==='installed' && navigator.serviceWorker.controller){
-                toast('新版缓存已更新，刷新后生效');
-              }
-            });
-          });
-        }).catch(function(){ /* 静默失败 */ });
-      });
-      var reloaded=false;
-      navigator.serviceWorker.addEventListener('controllerchange', function(){
-        if(reloaded) return; reloaded=true;
-        try{ sessionStorage.setItem('xiaoliuren-sw-updated','1'); }catch(e){}
-      });
-    }
-  }catch(e){ console.warn('v10.1.4 patch skipped', e); }
-})();
-</script>
-
-<!-- v10.1.5 final version override: must run after older cache/version patches -->
-<script id="v1015-final-version-override">
-(function(){
-  const VERSION='v10.1.6 设置未保存提醒修正版';
-  function apply(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复设置页改动后直接关闭不会提示保存的问题，并继续保留模式切换字体恢复与版本记录补齐。');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
-    try{ if(typeof renderHomeInfoBlocks==='function') renderHomeInfoBlocks(); }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', apply); else apply();
-  setTimeout(apply,100);
-})();
-</script>
-
-
 <!-- v10.1.8 final patch: settings save / desktop-only prompt / adaptive font / history width -->
 <style id="v1018-settings-save-adaptive-style">
   /* 自适应模式强制回到移动端宽度，避免从电脑模式切回后残留宽度和字号比例 */
@@ -9635,10 +9390,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     document.addEventListener('click', function(e){ if(e.target&&e.target.closest&&e.target.closest('#settingsBtn,[data-quick-id="settings"],[data-v9919-quick="settings"]')) setTimeout(takeBaseline,260); }, true);
   }
   function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修复保存设置不生效、手机/平板端关闭设置不再询问、电脑端保留未保存提醒，并优化自适应字体和历史记录宽度。');
-    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1018){
       const old=window.buildVersionUpdatesHTML;
       window.buildVersionUpdatesHTML=function(){
@@ -9651,7 +9402,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     }
     try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
   }
-  function boot(){ bind(); patchVersion(); applyReadingSizeFinal(readLS(SIZE_KEY,'normal')); }
+  function boot(){ bind(); applyReadingSizeFinal(readLS(SIZE_KEY,'normal')); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', function(){setTimeout(boot,120);});
 })();
@@ -9708,35 +9459,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     }
   }
 </style>
-<script id="v1019-version-result-page-right-space-script">
-(function(){
-  'use strict';
-  const VERSION='v10.1.9 结果页右侧留白修正版';
-  function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：保留 v10.1.8 的设置保存与自适应修复，撤回历史记录宽度改动，只在占卜结果页缩短右侧快捷按钮留白。');
-    document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
-    });
-    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1019){
-      const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){
-        let html=old.call(this);
-        const row='<details><summary>'+VERSION+'</summary><ul><li>基于 v10.1.8 调整手机端显示：撤回“历史记录内容框右扩”的改动，历史记录等其它页面恢复上一版布局。</li><li>只在占卜结果页缩短右侧快捷按钮安全留白，让正文内容卡片向右扩展一点，减少截图中黄色区域的宽度。</li><li>继续保留 v10.1.8 的设置保存修复、手机/平板端关闭设置不询问、电脑端未保存询问和自适应字号恢复。</li><li>同步更新 README、页面标题、版本更新内容、manifest 与 service-worker 缓存名。</li></ul></details>';
-        if(html.indexOf(VERSION)<0) html+=row;
-        return html;
-      };
-      window.buildVersionUpdatesHTML.__v1019=true;
-    }
-    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', patchVersion); else patchVersion();
-  window.addEventListener('load', function(){setTimeout(patchVersion,120);});
-})();
-</script>
-
-
 <!-- v10.2.1 patch: 命盘六宫固定五行校正 -->
 <script id="v1021-palace-elements-fix">
 (function(){
@@ -9754,29 +9476,9 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
       }
     }catch(e){}
   }
-  function patchVersion(){
-    fixPalaceElements();
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：修正命盘与结果页六宫固定五行，明确大安木、留连水、速喜火、赤口金、小吉木、空亡土，并保留 v10.2.0 占例复盘日志系统。');
-    document.querySelectorAll('h2').forEach(function(el){
-      if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
-    });
-    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1021){
-      const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){
-        let html=old.call(this);
-        const row='<details><summary>'+VERSION+'</summary><ul><li>修正六宫固定五行：大安属木、留连属水、速喜属火、赤口属金、小吉属木、空亡属土。</li><li>同步修正命盘、三象卡片、综合五行气象、五行结构和历史结果中引用的宫位五行。</li><li>保留 v10.2.0 占例复盘日志系统、v10.1.9 结果页右侧留白修复和设置保存相关修复。</li><li>同步更新 README、页面标题、版本更新内容、manifest 与 service-worker 缓存名。</li></ul></details>';
-        if(html.indexOf(VERSION)<0) html+=row;
-        return html;
-      };
-      window.buildVersionUpdatesHTML.__v1021=true;
-    }
-    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
-    try{ if(typeof window.currentResult!=='undefined' && window.currentResult && typeof window.renderResult==='function') window.renderResult(window.currentResult); }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', patchVersion); else patchVersion();
-  window.addEventListener('load', function(){ setTimeout(patchVersion,150); });
+  function patchPalaceElementsOnly(){ fixPalaceElements(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', patchPalaceElementsOnly); else patchPalaceElementsOnly();
+  window.addEventListener('load', function(){ setTimeout(patchPalaceElementsOnly,150); });
 })();
 </script>
 
@@ -9809,8 +9511,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION='v10.2.8 命盘五行定义与加载修正版';
-  const META='小六壬个人网页版 v10.2.8 命盘五行定义与加载修正版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。';
+  const VERSION='v10.2.9 补丁清理与版本显示稳定版';
+  const META='小六壬个人网页版 v10.2.9 补丁清理与版本显示稳定版：清理旧版版本锁定与缓存补丁，统一版本显示入口，保留命盘五行定义、性别侧重点、固定宫位法提示和加载修复。';
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9935,7 +9637,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;});
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1025){
       const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>修复 v10.2.6/v10.2.7 上传后页面一直加载的问题：移除高频版本锁定与重复渲染逻辑，改为稳定补丁。</li><li>保留命运排盘性别选项：未指定、男命、女命，并在命盘结果中提示男命/女命对官鬼、妻财的不同侧重点。</li><li>命运六亲参考盘补充四套五行定义：掌诀五行、地支五行、六神五行、五星五行。</li><li>明确六亲定法主要看地支五行；掌诀五行用于气象底色，避免混用规则。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>彻底移除 v10.2.3 的版本显示与缓存锁定补丁，以及 v10.2.4 等旧补丁中的版本覆盖逻辑，避免首页版本在旧版与新版之间跳动。</li><li>修正 HTML 结构，清理早期补丁遗留在 &lt;/html&gt; 后面的脚本，统一为页面末尾一次性关闭。</li><li>版本号、标题、版本记录改由最终稳定补丁统一写入，不再使用 MutationObserver、setInterval 或多次延迟抢占标题。</li><li>保留 v10.2.8 的加载修复、命盘四套五行定义、男命/女命断语侧重点，以及 v10.2.4 的命盘电脑版排版与固定宫位法适用提示。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
       window.buildVersionUpdatesHTML.__v1025=true;
     }
     try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
@@ -9944,11 +9646,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   document.addEventListener('change',function(e){if(e.target && e.target.id==='destinyGender'){try{localStorage.setItem(GENDER_KEY,e.target.value||'unspecified');}catch(err){} updateGenderNote(); try{if(typeof window.currentResult!=='undefined' && window.currentResult){window.currentResult.destinyInput=Object.assign({},window.currentResult.destinyInput||{},selectedGenderMeta()); renderGenderResultNote(window.currentResult); renderKinshipGuide(window.currentResult); applyGenderFocusToCards(window.currentResult);}}catch(err){}}},true);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
   window.addEventListener('load',function(){setTimeout(boot,100);setTimeout(boot,500);setTimeout(boot,1200);});
-  // final version lock: older patches may update title asynchronously, so lock once more.
-  setInterval(function(){
-    const h2=[].find.call(document.querySelectorAll('h2'),function(el){return el.textContent&&el.textContent.includes('个人占卜台');});
-    if(document.title.indexOf(VERSION)<0 || (h2 && h2.textContent.indexOf(VERSION)<0)) patchVersion();
-    if(isDestiny()) ensureGenderField();
-  },1200);
 })();
 </script>
+</body>
+</html>

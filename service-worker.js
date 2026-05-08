@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.2.8-destiny-element-loading-fix';
+const CACHE_NAME = 'xiaoliuren-v10.2.9-patch-clean-stable';
 const APP_SHELL = [
   './',
   './index.html',
