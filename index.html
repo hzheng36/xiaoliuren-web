@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.2.9 补丁清理与版本显示稳定版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.9 补丁清理与版本显示稳定版：清理旧版版本锁定与缓存补丁，统一版本显示入口，保留命盘五行定义、性别侧重点、固定宫位法提示和加载修复。" />
+  <title>小六壬占卜 · v10.3.0 命盘体质与健康参考版</title>
+  <meta name="description" content="小六壬个人网页版 v10.3.0 命盘体质与健康参考版：在命运结果页新增体质与健康参考折叠模块，结合自身宫、官鬼宫、地支五行、六神与五星生克提示长期体质倾向；不替代医学诊断。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -9648,5 +9648,140 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   window.addEventListener('load',function(){setTimeout(boot,100);setTimeout(boot,500);setTimeout(boot,1200);});
 })();
 </script>
+
+
+<style id="v1030-destiny-health-style">
+  .v1030-health{margin:18px 0 0;padding:18px;border:1px solid rgba(90,126,96,.18);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(246,252,247,.88));box-shadow:0 14px 34px rgba(35,74,48,.06);}
+  .v1030-health summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:900;color:var(--text);font-size:1.06rem;}
+  .v1030-health summary::-webkit-details-marker{display:none;}
+  .v1030-health summary::after{content:'折叠';font-size:.82rem;color:var(--primary);border:1px solid rgba(103,83,165,.16);border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.7);}
+  .v1030-health:not([open]) summary::after{content:'展开';}
+  .v1030-health-body{margin-top:14px;display:grid;gap:12px;}
+  .v1030-health-note{padding:12px 14px;border-radius:16px;border:1px solid rgba(196,126,74,.22);background:rgba(255,248,236,.86);color:#6b5c76;line-height:1.7;font-size:.93rem;}
+  .v1030-health-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .v1030-health-card{padding:14px;border-radius:18px;border:1px solid rgba(90,126,96,.16);background:rgba(255,255,255,.86);line-height:1.72;color:var(--text);}
+  .v1030-health-card h5{margin:0 0 8px;color:var(--primary);font-size:1rem;display:flex;align-items:center;gap:6px;}
+  .v1030-health-card p{margin:6px 0;}
+  .v1030-health-muted{color:var(--muted);font-size:.92rem;}
+  .v1030-health-pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .v1030-health-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 9px;background:rgba(90,126,96,.12);color:#4d704f;font-weight:800;font-size:.82rem;}
+  .v1030-health-table{overflow-x:auto;border:1px solid rgba(90,126,96,.14);border-radius:18px;background:#fff;}
+  .v1030-health-table table{width:100%;min-width:720px;border-collapse:collapse;font-size:.92rem;}
+  .v1030-health-table th,.v1030-health-table td{padding:10px 12px;border-bottom:1px solid rgba(90,126,96,.12);text-align:left;vertical-align:top;line-height:1.55;}
+  .v1030-health-table th{background:rgba(90,126,96,.08);font-weight:900;color:var(--text);}
+  .v1030-health-table tr:last-child td{border-bottom:0;}
+  @media(max-width:760px){.v1030-health{padding:14px}.v1030-health-grid{grid-template-columns:1fr}.v1030-health-table table{font-size:.88rem;min-width:660px}.v1030-health summary{font-size:1rem}}
+</style>
+<script id="v1030-destiny-health-script">
+(function(){
+  'use strict';
+  const VERSION='v10.3.0 命盘体质与健康参考版';
+  const META='小六壬个人网页版 v10.3.0 命盘体质与健康参考版：在命运结果页新增体质与健康参考折叠模块，结合自身宫、官鬼宫、地支五行、六神与五星生克提示长期体质倾向；不替代医学诊断。';
+  const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
+  const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
+  const BRANCH_YANG=['子','寅','辰','午','申','戌'];
+  const BRANCH_ELEMENT={子:'水',亥:'水',寅:'木',卯:'木',巳:'火',午:'火',申:'金',酉:'金',辰:'土',戌:'土',丑:'土',未:'土'};
+  const GENERATES={木:'火',火:'土',土:'金',金:'水',水:'木'};
+  const CONTROLS={木:'土',土:'水',水:'火',火:'金',金:'木'};
+  const SIX_SPIRIT={寅:'青龙',卯:'青龙',巳:'朱雀',午:'朱雀',丑:'勾陈',辰:'勾陈',未:'腾蛇',戌:'腾蛇',申:'白虎',酉:'白虎',亥:'玄武',子:'玄武'};
+  const STARS=['木星','火星','土星','金星','水星','天空'];
+  const FIXED_KINSHIP={留连:'自身',速喜:'子孙',赤口:'兄弟',小吉:'官鬼',空亡:'父母',大安:'妻财'};
+  const ORGAN={
+    木:{zang:'肝',fu:'胆',parts:'眼睛、筋、爪甲、情绪疏泄',risk:'肝火旺、眼睛干涩、筋膜紧张、情绪郁结',care:'少熬夜，保持拉伸和舒缓情绪，避免长期压抑。'},
+    火:{zang:'心',fu:'小肠',parts:'舌头、血脉、面部、睡眠神志',risk:'心悸、失眠、口腔溃疡、烦躁、循环偏弱',care:'注意睡眠，减少过度兴奋和上火，保持规律作息。'},
+    土:{zang:'脾',fu:'胃',parts:'肌肉、口唇、消化吸收、湿气',risk:'消化不良、腹胀、湿气重、疲乏、肌肉无力',care:'饮食规律，少生冷，注意脾胃负担和湿气。'},
+    金:{zang:'肺',fu:'大肠',parts:'皮肤、鼻、毛发、呼吸道',risk:'咳嗽、气喘、便秘、鼻部不适、皮肤敏感',care:'注意呼吸道、皮肤和鼻部，保持空气湿润和排便规律。'},
+    水:{zang:'肾',fu:'膀胱',parts:'耳朵、骨骼、腰腿、头发、泌尿',risk:'腰膝酸软、耳鸣、尿频、精力不足、脱发',care:'注意保暖和恢复精力，避免长期透支与熬夜。'}
+  };
+  const PALACE_HEALTH={
+    大安:'小病易安，整体偏稳，但也容易把问题拖着不处理，适合稳步调理。',
+    留连:'容易慢性、反复、拖延，恢复过程不宜急，需防旧问题反复。',
+    速喜:'变化较快，可能突然发作也可能较快缓解，急性表现要留意。',
+    赤口:'偏疼痛、炎症、外伤、手术、急性刺激，若身体已有不适要谨慎。',
+    小吉:'多与奔波、劳损、活动、筋骨或生活节奏有关，动中求调。',
+    空亡:'偏虚、空、查不清、症状不稳定，容易有“感觉明显但不易定位”的象。'
+  };
+  const SPIRIT_HEALTH={
+    青龙:'偏肝气、情绪、筋、眼睛，也代表正气和修复力。',
+    朱雀:'偏心火、炎症、发热、口舌、睡眠与表达紧张。',
+    勾陈:'偏脾胃、湿气、慢性、黏滞、恢复慢。',
+    腾蛇:'偏神经、缠绕、焦虑、莫名不适、反复不清。',
+    白虎:'偏急痛、外伤、磕碰、手术、强烈疼痛感。',
+    玄武:'偏肾水、隐疾、泌尿、生殖、湿寒与暗耗。'
+  };
+  function $(id){return document.getElementById(id);} 
+  function isDestinyResult(r){return !!(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'));}
+  function pIndex(p){const i=ORDER.indexOf(p);return i<0?0:i;}
+  function rotate(arr,val){const i=arr.indexOf(val);return i<0?arr.slice():arr.slice(i).concat(arr.slice(0,i));}
+  function palSeqFrom(start){const i=pIndex(start);return ORDER.slice(i).concat(ORDER.slice(0,i));}
+  function parseBranch(result){
+    const dm=result&&result.destinyMeta;if(dm&&dm.timeBranch)return dm.timeBranch;
+    const s=[result&&result.extraInfo,result&&result.methodNote].filter(Boolean).join(' ');const m=s.match(/([子丑寅卯辰巳午未申酉戌亥])时/);if(m)return m[1];
+    const n=result&&result.numbers&&result.numbers[2];return BRANCH_ALL[((Number(n)||1)-1+12)%12];
+  }
+  function branchSeq(z){return rotate(BRANCH_YIN.includes(z)?BRANCH_YIN:BRANCH_YANG,z);}
+  function meta(result){
+    const ps=(result&&result.palaces&&result.palaces.length>=3)?result.palaces:['大安','大安','大安'];
+    const monthPalace=ps[0],dayPalace=ps[1],timePalace=ps[2],timeBranch=parseBranch(result);
+    const bseq=branchSeq(timeBranch),branchByPalace={};palSeqFrom(timePalace).forEach((p,i)=>branchByPalace[p]=bseq[i]);
+    const starByPalace={};palSeqFrom(dayPalace).forEach((p,i)=>starByPalace[p]=STARS[i]);
+    return {monthPalace,dayPalace,timePalace,timeBranch,branchByPalace,starByPalace};
+  }
+  function currentKinshipMode(result){return (result&&result.destinyKinshipMode)||(result&&result.destinyMeta&&result.destinyMeta.kinshipMode)||((document.querySelector('input[name="destinyKinshipMode"]:checked')||{}).value)||(function(){try{return localStorage.getItem('xlr_destiny_kinship_mode_v10')||'wuxing';}catch(e){return 'wuxing';}})();}
+  function kinWuxing(p,m){if(p===m.timePalace)return '自身';const selfEl=BRANCH_ELEMENT[m.branchByPalace[m.timePalace]]||'木';const otherEl=BRANCH_ELEMENT[m.branchByPalace[p]]||selfEl;if(otherEl===selfEl)return '兄弟';if(GENERATES[otherEl]===selfEl)return '父母';if(CONTROLS[otherEl]===selfEl)return '官鬼';if(GENERATES[selfEl]===otherEl)return '子孙';if(CONTROLS[selfEl]===otherEl)return '妻财';return '兄弟';}
+  function kinFor(p,m,mode){return mode==='fixed'?(FIXED_KINSHIP[p]||'—'):kinWuxing(p,m);}
+  function starElement(star){return {木星:'木',火星:'火',土星:'土',金星:'金',水星:'水'}[star]||'';}
+  function relation(star,branch){const se=starElement(star),be=BRANCH_ELEMENT[branch];if(!se)return {type:'天空',text:'天空主虚、空、落空，健康上偏虚象、症状不稳定或不易定位。'};if(se===be)return {type:'比和',text:`${star}${se}与${branch}${be}同气，表示这个系统信息明显，稳定但也可能偏重。`};if(CONTROLS[se]===be)return {type:'星克地',text:`${star}${se}克${branch}${be}，为外部压力克制该系统，需防受压、受制或不顺。`};if(CONTROLS[be]===se)return {type:'地克星',text:`${branch}${be}克${star}${se}，为内在抗拒或消耗，容易出现内耗、牵制。`};if(GENERATES[se]===be)return {type:'星生地',text:`${star}${se}生${branch}${be}，有滋养和推动，恢复或调理相对有助。`};if(GENERATES[be]===se)return {type:'地生星',text:`${branch}${be}生${star}${se}，内在根基能承接外部力量，整体较有资源。`};return {type:'中平',text:'关系中平，需要合看掌诀、六神与现实情况。'};}
+  function cell(p,m,mode){const branch=m.branchByPalace[p],el=BRANCH_ELEMENT[branch]||'',star=m.starByPalace[p],sp=SIX_SPIRIT[branch]||'';return {palace:p,branch,el,star,sp,kin:kinFor(p,m,mode),rel:relation(star,branch)};}
+  function organLine(el){const o=ORGAN[el]||ORGAN.土;return `${el}主${o.zang}/${o.fu}，关联${o.parts}；常见倾向：${o.risk}。`;}
+  function adviceFor(elements){const seen=[];elements.forEach(e=>{if(e&&!seen.includes(e))seen.push(e)});return seen.map(e=>`<li><strong>${e}：</strong>${(ORGAN[e]||{}).care||''}</li>`).join('');}
+  function buildHealthHTML(result){
+    const m=meta(result), mode=currentKinshipMode(result), cs=ORDER.map(p=>cell(p,m,mode));
+    const self=cs.find(c=>c.palace===m.timePalace)||cs[0];
+    const ghosts=cs.filter(c=>c.kin==='官鬼');
+    const ghost=ghosts[0]||cs.find(c=>c.palace==='小吉')||cs[0];
+    const selfOrg=ORGAN[self.el]||ORGAN.土, ghostOrg=ORGAN[ghost.el]||ORGAN.土;
+    const keyEls=[self.el,ghost.el];
+    const ghostList=ghosts.length?ghosts.map(g=>`<span class="v1030-health-pill">官鬼·${g.palace}｜${g.branch}${g.el}｜${g.sp}｜${g.star}｜${g.rel.type}</span>`).join(''):`<span class="v1030-health-pill">未见官鬼主位，按小吉/压力位辅助观察</span>`;
+    return `<details id="v1030DestinyHealth" class="v1030-health" open><summary>⚕️ 体质与健康参考</summary><div class="v1030-health-body">
+      <div class="v1030-health-note"><strong>说明：</strong>这里看的是“命里的健康”——长期体质倾向、容易反复的薄弱系统和生活注意点，不是对当前疾病的医学诊断。若有持续疼痛、麻木、胸闷、呼吸困难、出血、长期失眠、体重异常变化等情况，请及时就医。</div>
+      <div class="v1030-health-table"><table><thead><tr><th>五行</th><th>五脏</th><th>六腑</th><th>身体部位</th><th>常见倾向</th></tr></thead><tbody>
+        <tr><td>木</td><td>肝</td><td>胆</td><td>眼睛、筋、爪甲</td><td>肝火旺、眼睛干涩、筋痛、情绪抑郁</td></tr>
+        <tr><td>火</td><td>心</td><td>小肠</td><td>舌头、血脉、面部</td><td>心悸、失眠、口腔溃疡、循环偏弱</td></tr>
+        <tr><td>土</td><td>脾</td><td>胃</td><td>肌肉、口唇、消化</td><td>消化不良、腹胀、湿气重、肌肉无力</td></tr>
+        <tr><td>金</td><td>肺</td><td>大肠</td><td>皮肤、鼻、毛发</td><td>咳嗽、气喘、便秘、皮肤敏感</td></tr>
+        <tr><td>水</td><td>肾</td><td>膀胱</td><td>耳朵、骨骼、头发、腰腿</td><td>腰膝酸软、耳鸣、尿频、精力不足</td></tr>
+      </tbody></table></div>
+      <div class="v1030-health-grid">
+        <div class="v1030-health-card"><h5>① 自身体质倾向</h5><div class="v1030-health-pills"><span class="v1030-health-pill">自身·${self.palace}</span><span class="v1030-health-pill">${self.branch}${self.el}</span><span class="v1030-health-pill">${self.sp}</span><span class="v1030-health-pill">${self.star}｜${self.rel.type}</span></div><p>${organLine(self.el)}</p><p><strong>掌诀：</strong>${self.palace}主${PALACE_HEALTH[self.palace]||'基础状态'} </p><p><strong>五星：</strong>${self.rel.text}</p></div>
+        <div class="v1030-health-card"><h5>② 官鬼健康隐患</h5><div class="v1030-health-pills">${ghostList}</div><p>官鬼在健康里可看病气、压力、疼痛、隐患和需要特别留意的症结。</p><p>${organLine(ghost.el)}</p><p><strong>官鬼掌诀：</strong>${ghost.palace}主${PALACE_HEALTH[ghost.palace]||'病气表现'} </p></div>
+        <div class="v1030-health-card"><h5>③ 六神与表现形态</h5><p><strong>自身六神 ${self.sp}：</strong>${SPIRIT_HEALTH[self.sp]||'看身体表现形态。'}</p><p><strong>官鬼六神 ${ghost.sp}：</strong>${SPIRIT_HEALTH[ghost.sp]||'看隐患表现形态。'}</p><p class="v1030-health-muted">青龙偏肝气筋眼；朱雀偏心火炎症；勾陈偏脾胃湿慢；腾蛇偏神经缠绕；白虎偏急痛外伤；玄武偏肾水隐疾。</p></div>
+        <div class="v1030-health-card"><h5>④ 生活调养提醒</h5><ul>${adviceFor(keyEls)}</ul><p class="v1030-health-muted">调养建议只做生活方式提醒，不涉及用药和治疗。现实身体不适，以医生检查和专业意见为准。</p></div>
+      </div>
+    </div></details>`;
+  }
+  function renderDestinyHealth(result){
+    if(!isDestinyResult(result)){const old=$('v1030DestinyHealth');if(old)old.remove();return;}
+    const anchor=$('v1025KinshipGuide')||$('destinyBoardBlock')||$('destinyDeepContent')||$('resultContent');if(!anchor)return;
+    const old=$('v1030DestinyHealth');if(old)old.remove();
+    anchor.insertAdjacentHTML(anchor.id==='v1025KinshipGuide'?'afterend':'afterend', buildHealthHTML(result));
+  }
+  function patchRender(){
+    if(typeof window.renderResult==='function'&&!window.renderResult.__v1030Health){const old=window.renderResult;window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(function(){renderDestinyHealth(result);},0);return ret;};window.renderResult.__v1030Health=true;}
+    if(typeof window.renderDestinyBoard==='function'&&!window.renderDestinyBoard.__v1030Health){const old=window.renderDestinyBoard;window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments);setTimeout(function(){renderDestinyHealth(result);},0);return ret;};window.renderDestinyBoard.__v1030Health=true;}
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);
+    document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1030){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const row='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“体质与健康参考”折叠模块，定位为“命里的健康”，用于观察长期体质倾向，不替代医学诊断。</li><li>新增五行与五脏六腑对应表：木肝胆、火心小肠、土脾胃、金肺大肠、水肾膀胱，并补充身体部位与常见倾向。</li><li>根据自身宫地支五行、掌诀、六神和五星生克生成“自身体质倾向”。</li><li>根据官鬼宫生成“健康隐患提醒”，结合掌诀、地支五行、六神和五星关系提示可能需要关注的系统。</li><li>加入生活调养提醒和醒目的医学免责声明；本版先完成命盘健康，后续再升级现有“健康”问事场景。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>';if(html.indexOf(VERSION)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1030=true;}
+    try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}
+  }
+  function boot(){patchRender();patchVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderDestinyHealth(window.currentResult);}catch(e){}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+  window.addEventListener('load',function(){setTimeout(boot,120);});
+})();
+</script>
+
 </body>
 </html>

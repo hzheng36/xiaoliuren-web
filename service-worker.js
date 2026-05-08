@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.2.9-patch-clean-stable';
+const CACHE_NAME = 'xiaoliuren-v10.3.0 命盘体质与健康参考版
 const APP_SHELL = [
   './',
   './index.html',
