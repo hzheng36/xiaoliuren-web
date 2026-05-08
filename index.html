@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.3.5 阅读模式稳定与自动夜间版</title>
-  <meta name="description" content="小六壬个人网页版 v10.3.5 阅读模式稳定与自动夜间版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。" />
+  <title>小六壬占卜 · v10.3.6 阅读模式保存修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.3.5 阅读模式稳定与自动夜间版</h2>
+          <h2>个人占卜台 · v10.3.6 阅读模式保存修正版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9511,8 +9511,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.5 阅读模式稳定与自动夜间版';
-  const META='小六壬个人网页版 v10.3.5 阅读模式稳定与自动夜间版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
+  const VERSION='v10.3.6 阅读模式保存修正版';
+  const META='小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9675,8 +9675,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.5 阅读模式稳定与自动夜间版';
-  const META='小六壬个人网页版 v10.3.5 阅读模式稳定与自动夜间版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
+  const VERSION='v10.3.6 阅读模式保存修正版';
+  const META='小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9798,8 +9798,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.5 阅读模式稳定与自动夜间版';
-  const META='小六壬个人网页版 v10.3.5 阅读模式稳定与自动夜间版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
+  const VERSION='v10.3.6 阅读模式保存修正版';
+  const META='小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9950,8 +9950,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.5 阅读模式稳定与自动夜间版';
-  const META='小六壬个人网页版 v10.3.5 阅读模式稳定与自动夜间版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
+  const VERSION='v10.3.6 阅读模式保存修正版';
+  const META='小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10173,8 +10173,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.5 阅读模式稳定与自动夜间版';
-  const META='小六壬个人网页版 v10.3.5 阅读模式稳定与自动夜间版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
+  const VERSION='v10.3.6 阅读模式保存修正版';
+  const META='小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式保存后恢复旧值和版本新旧跳动问题；新增护眼色、跟随系统深色模式与夜间自动切换。';
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10244,6 +10244,69 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function boot(){ensureRows();patchSettings();patchQuickTools();bind();addToggleButton();apply(read());patchVersionLog();setVersionOnce();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(function(){setVersionOnce();apply(read());},900);});
+})();
+</script>
+
+
+
+<script id="v1036-reading-mode-save-fix">
+(function(){
+  'use strict';
+  const VERSION='v10.3.6 阅读模式保存修正版';
+  const META='小六壬个人网页版 v10.3.6 阅读模式保存修正版：修复阅读模式被旧设置保存补丁拦截导致夜间模式保存后恢复白天的问题；保留护眼色、跟随系统深色模式与夜间自动切换。';
+  const KEY='xiaoliuren_reading_mode_v1035';
+  const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
+  const MODES=['day','night','system','auto'];
+  const BGS=['default','eye','cream','lavender','green','gray','custom'];
+  const $=id=>document.getElementById(id);
+  function validHex(v){return /^#[0-9a-fA-F]{6}$/.test(String(v||''));}
+  function normalize(s){s=Object.assign({},DEFAULT,s||{}); if(MODES.indexOf(s.mode)<0)s.mode='day'; if(BGS.indexOf(s.bg)<0)s.bg='default'; if(!validHex(s.custom))s.custom=DEFAULT.custom; return s;}
+  function read(){try{return normalize(JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){return normalize({});}}
+  function save(s){try{localStorage.setItem(KEY,JSON.stringify(normalize(s)));}catch(e){}}
+  function isNightAuto(){const h=new Date().getHours();return h>=19||h<7;}
+  function isNightSystem(){try{return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;}catch(e){return false;}}
+  function theme(s){s=normalize(s||read()); if(s.mode==='night')return 'night'; if(s.mode==='system')return isNightSystem()?'night':'day'; if(s.mode==='auto')return isNightAuto()?'night':'day'; return 'day';}
+  function syncForm(s){s=normalize(s||read()); const m=$('settingReadingMode'), b=$('settingReadingBg'), c=$('settingReadingCustomBg'); if(m&&m.value!==s.mode)m.value=s.mode; if(b&&b.value!==s.bg)b.value=s.bg; if(c&&c.value!==s.custom)c.value=s.custom;}
+  function syncToggle(s,t){s=normalize(s||read()); t=t||theme(s); document.querySelectorAll('[data-v1035-reading-toggle],[data-v1036-reading-toggle]').forEach(btn=>{btn.textContent=t==='night'?'白天':'夜间'; btn.title=t==='night'?'切换为白天模式':'切换为暗夜模式'; btn.setAttribute('aria-label',btn.title);});}
+  function apply(s){
+    s=normalize(s||read()); const b=document.body, root=document.documentElement; if(!b)return; const t=theme(s);
+    b.classList.remove('reading-theme-day','reading-theme-night','reading-bg-default','reading-bg-eye','reading-bg-cream','reading-bg-lavender','reading-bg-green','reading-bg-gray','reading-bg-custom');
+    b.classList.add('reading-theme-'+t,'reading-bg-'+s.bg);
+    root.style.setProperty('--xlr-custom-reading-bg',s.custom);
+    const metaTheme=document.querySelector('meta[name="theme-color"]'); if(metaTheme)metaTheme.setAttribute('content',t==='night'?'#11121a':'#6753a5');
+    syncForm(s); syncToggle(s,t);
+  }
+  function ensureRows(){
+    const form=document.querySelector('#settingsDialog .settings-form'); if(!form || $('settingReadingMode')) return;
+    const card=document.createElement('div'); card.className='settings-card'; card.id='v1036ReadingModeCard';
+    card.innerHTML='<h4>阅读模式</h4><div class="v1035-reading-grid"><div class="settings-row"><span>阅读模式<small>白天、暗夜、跟随系统，或按时间自动切换。设置会保存到本浏览器。</small></span><select id="settingReadingMode"><option value="day">白天模式</option><option value="night">暗夜模式</option><option value="system">跟随系统深色模式</option><option value="auto">夜间自动切换（19:00-07:00）</option></select></div><div class="settings-row"><span>背景颜色<small>护眼色适合长时间阅读；自定义颜色在白天模式下最明显。</small></span><select id="settingReadingBg"><option value="default">默认白</option><option value="eye">护眼色</option><option value="cream">米黄色</option><option value="lavender">淡紫色</option><option value="green">淡绿色</option><option value="gray">浅灰色</option><option value="custom">自定义颜色</option></select></div><div class="settings-row"><span>自定义背景色<small>选择“自定义颜色”后生效。</small></span><input id="settingReadingCustomBg" class="v1035-color-input" type="color" value="#f7f3ee"></div></div>';
+    const cards=form.querySelectorAll('.settings-card'); if(cards.length>0&&cards[0].nextSibling)form.insertBefore(card,cards[0].nextSibling); else form.insertBefore(card,form.firstChild); syncForm(read());
+  }
+  function formState(){const s=read(); const m=$('settingReadingMode'), b=$('settingReadingBg'), c=$('settingReadingCustomBg'); if(m)s.mode=m.value; if(b)s.bg=b.value; if(c&&validHex(c.value))s.custom=c.value; return normalize(s);}
+  function commitFromForm(){ensureRows(); const s=formState(); save(s); apply(s); return s;}
+  function setVersion(){document.title='小六壬占卜 · '+VERSION; const meta=document.querySelector('meta[name="description"]'); if(meta)meta.setAttribute('content',META); document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});}
+  function patchVersionLog(){
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1036){const old=window.buildVersionUpdatesHTML; window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>修复阅读模式保存问题：旧设置保存补丁会在 document 捕获阶段拦截“保存设置”和 change 事件，导致夜间模式选择未真正写入本地存储；本版改为在 window 捕获阶段优先保存。</li><li>保留白天模式、暗夜模式、跟随系统深色模式、夜间自动切换（19:00-07:00）、护眼色与自定义背景色。</li><li>统一当前版本显示并检查旧版本跳动问题，避免旧补丁再次覆盖首页标题。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0)html+=row; return html;}; window.buildVersionUpdatesHTML.__v1036=true;}
+  }
+  function bindEarlyCapture(){
+    if(window.__v1036ReadingEarlyCapture)return; window.__v1036ReadingEarlyCapture=true;
+    window.addEventListener('change',function(e){const id=e.target&&e.target.id; if(['settingReadingMode','settingReadingBg','settingReadingCustomBg'].includes(id)){commitFromForm();}},true);
+    window.addEventListener('input',function(e){if(e.target&&e.target.id==='settingReadingCustomBg'){const s=formState(); s.bg='custom'; save(s); apply(s);}},true);
+    window.addEventListener('click',function(e){const t=e.target&&e.target.closest&&e.target.closest('#saveSettingsBtn'); if(t){commitFromForm(); setTimeout(function(){apply(read()); syncForm(read()); setVersion();},160);}},true);
+    window.addEventListener('click',function(e){const t=e.target&&e.target.closest&&e.target.closest('[data-v1035-reading-toggle],[data-v1036-reading-toggle]'); if(t){const s=read(); s.mode=theme(s)==='night'?'day':'night'; save(s); apply(s);}},true);
+    try{const mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)'); if(mq){const cb=()=>{const s=read(); if(s.mode==='system')apply(s);}; if(mq.addEventListener)mq.addEventListener('change',cb); else if(mq.addListener)mq.addListener(cb);}}catch(e){}
+    setInterval(function(){const s=read(); if(s.mode==='auto')apply(s);},5*60*1000);
+  }
+  function patchOpen(){
+    if(typeof window.openSettingsDialog==='function'&&!window.openSettingsDialog.__v1036Reading){const old=window.openSettingsDialog; window.openSettingsDialog=function(){ensureRows(); const r=old.apply(this,arguments); setTimeout(function(){ensureRows(); syncForm(read());},100); return r;}; window.openSettingsDialog.__v1036Reading=true;}
+    if(typeof window.fillSettingsDialog==='function'&&!window.fillSettingsDialog.__v1036Reading){const old=window.fillSettingsDialog; window.fillSettingsDialog=function(){const r=old.apply(this,arguments); ensureRows(); syncForm(read()); return r;}; window.fillSettingsDialog.__v1036Reading=true;}
+  }
+  function addToggleButton(){
+    const tools=document.querySelector('.scroll-tools'); if(!tools)return; let btn=tools.querySelector('[data-v1035-reading-toggle],[data-v1036-reading-toggle]'); if(!btn){btn=document.createElement('button'); btn.className='scroll-tool-btn wide reading-mode-toggle'; btn.type='button'; btn.setAttribute('data-v1036-reading-toggle','1'); const settingsBtn=[...tools.querySelectorAll('button')].find(b=>(b.textContent||'').trim()==='设置'); if(settingsBtn)tools.insertBefore(btn,settingsBtn); else tools.insertBefore(btn,tools.firstChild);} syncToggle(read());
+  }
+  function boot(){ensureRows(); bindEarlyCapture(); patchOpen(); addToggleButton(); apply(read()); patchVersionLog(); setVersion(); try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){} }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot); else boot();
+  window.addEventListener('load',function(){setTimeout(boot,80); setTimeout(function(){apply(read()); setVersion();},1100);});
 })();
 </script>
 
