@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.4.5 版本锁与子导航修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.4.5 版本锁与子导航修正版：清理 v10.4.3 旧版本锁定补丁，修复首页回跳旧版本，并让排盘子导航进入排盘区后保持显示。" />
+  <title>小六壬占卜 · v10.4.6 排盘子导航范围修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.4.6 排盘子导航范围修正版：修复排盘子导航显示范围错误，只在排盘相关区域显示，并保留版本跳动修复、婚姻模块与阅读模式。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.4.5 版本锁与子导航修正版</h2>
-          <p>本版清理会把首页标题抢回旧版的 v10.4.3 版本锁定补丁，并修复排盘子导航在继续向下滚动后隐藏的问题；进入排盘区域后，子导航会持续显示，方便跳转六宫、命盘、健康、婚姻、术语等子模块。</p>
+          <h2>个人占卜台 · v10.4.6 排盘子导航范围修正版</h2>
+          <p>本版修复排盘子导航的显示范围：子导航只在六宫排盘、命盘、健康、婚姻等排盘相关区域显示；滚到综合、三象、雷达、术语等其它模块时会自动收起。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -10998,27 +10998,29 @@ body.reading-theme-night .v1042-subchip.active{color:#fff!important;background:l
 </script>
 
 
-<style id="v1045-version-subnav-fix-style">
-/* v10.4.5 版本锁与子导航修正版 */
-.v1042-subnav.v1045-force-show{display:flex!important;}
+
+<style id="v1046-paipan-subnav-range-style">
+/* v10.4.6 排盘子导航范围修正版 */
+.v1042-subnav.v1046-show{display:flex!important;}
+.v1042-subnav:not(.v1046-show){display:none!important;}
 @media(max-width:1240px){
-  .v1042-subnav.v1045-force-show{bottom:max(62px,calc(env(safe-area-inset-bottom) + 62px))!important;}
+  .v1042-subnav.v1046-show{bottom:max(62px,calc(env(safe-area-inset-bottom) + 62px))!important;}
 }
 </style>
-<script id="v1045-version-subnav-fix-script">
+<script id="v1046-paipan-subnav-range-script">
 (function(){
   'use strict';
-  const VERSION="v10.4.5 版本锁与子导航修正版";
-  const META="小六壬个人网页版 v10.4.5 版本锁与子导航修正版：清理 v10.4.3 旧版本锁定补丁，修复首页回跳旧版本，并让排盘子导航进入排盘区后保持显示。";
-  const HERO="本版清理会把首页标题抢回旧版的 v10.4.3 版本锁定补丁，并修复排盘子导航在继续向下滚动后隐藏的问题；进入排盘区域后，子导航会持续显示，方便跳转六宫、命盘、健康、婚姻、术语等子模块。";
-  const TARGETS=[
+  const VERSION="v10.4.6 排盘子导航范围修正版";
+  const META="小六壬个人网页版 v10.4.6 排盘子导航范围修正版：修复排盘子导航显示范围错误，只在排盘相关区域显示，并保留版本跳动修复、婚姻模块与阅读模式。";
+  const HERO="本版修复排盘子导航的显示范围：子导航只在六宫排盘、命盘、健康、婚姻等排盘相关区域显示；滚到综合、三象、雷达、术语等其它模块时会自动收起。";
+  const SUB_TARGETS=[
     {id:'paipanBlock',label:'六宫'},
     {id:'destinyBoardBlock',label:'命盘'},
     {id:'v1030DestinyHealth',label:'健康'},
-    {id:'v1040MarriageBlock',label:'婚姻'},
-    {id:'v1033Glossary',label:'术语'}
+    {id:'v1040MarriageBlock',label:'婚姻'}
   ];
-  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>清理 v10.4.3 版本锁定旧补丁，修复首页标题/说明被抢回旧版本的问题。</li><li>排盘子导航改为由本版统一控制：进入排盘区域后保持显示，不再因滚过母导航或子导航区域而隐藏。</li><li>子导航继续支持六宫、命盘、健康、婚姻、术语等子模块跳转，并自动高亮当前模块。</li><li>继续保留 v10.4.2 的排盘子导航入口、v10.4.1 的婚姻模块排版修复，以及阅读模式与设置自动保存。</li><li>按固定 3 个必做检查执行：先检查错误、再检查旧补丁/版本跳动、最后同步更新版本记录与缓存文件。</li></ul></details>';
+  const EXIT_BLOCKS=['overallBlock','contextAnalysisBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v1033Glossary'];
+  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>修复排盘子导航显示范围错误：子导航只在六宫、命盘、健康、婚姻等排盘相关区域显示。</li><li>滚到综合判断、三象解读、雷达分析图、术语解释等其它母导航区域时，排盘子导航会自动收起。</li><li>进入排盘区域后，子导航仍会保持显示并自动高亮当前子模块。</li><li>保留 v10.4.5 的旧版本锁清理逻辑，防止首页标题回跳旧版本。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el) return false;
@@ -11031,28 +11033,24 @@ body.reading-theme-night .v1042-subchip.active{color:#fff!important;background:l
   function lockVersion(){
     try{
       document.title='小六壬占卜 · '+VERSION;
-      const meta=document.querySelector('meta[name="description"]');
-      if(meta) meta.setAttribute('content',META);
+      const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
       document.querySelectorAll('h2').forEach(el=>{
-        if(el.textContent&&el.textContent.includes('个人占卜台')){
-          el.textContent='个人占卜台 · '+VERSION;
-          el.setAttribute('data-version-locked','true');
-        }
+        if(el.textContent&&el.textContent.includes('个人占卜台')){el.textContent='个人占卜台 · '+VERSION;el.setAttribute('data-version-locked','true');}
       });
       const lead=document.querySelector('header .hero p, .hero p');
       if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;
     }catch(e){}
   }
   function patchVersionUpdates(){
-    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1045Final){
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1046SubnavRange){
       const old=window.buildVersionUpdatesHTML;
       window.buildVersionUpdatesHTML=function(){
         let html=old.call(this);
-        try{html=html.replace(/<details><summary>v10\.4\.[345][^<]*<\/summary>[\s\S]*?<\/details>/g,'');}catch(e){}
+        try{html=html.replace(/<details><summary>v10\.4\.[456][^<]*<\/summary>[\s\S]*?<\/details>/g,'');}catch(e){}
         if(html.indexOf(VERSION)<0) html+=UPDATE_ROW;
         return html;
       };
-      window.buildVersionUpdatesHTML.__v1045Final=true;
+      window.buildVersionUpdatesHTML.__v1046SubnavRange=true;
     }
   }
   function ensureNav(){
@@ -11066,40 +11064,52 @@ body.reading-theme-night .v1042-subchip.active{color:#fff!important;background:l
     }
     return nav;
   }
-  function itemList(){
-    return TARGETS.map(t=>Object.assign({},t,{el:$(t.id)})).filter(t=>visible(t.el));
+  function items(){return SUB_TARGETS.map(t=>Object.assign({},t,{el:$(t.id)})).filter(t=>visible(t.el));}
+  function firstExitTop(){
+    let top=Infinity;
+    EXIT_BLOCKS.forEach(id=>{
+      const el=$(id);
+      if(visible(el)){
+        const t=el.getBoundingClientRect().top+scrollY;
+        if(t>0&&t<top) top=t;
+      }
+    });
+    return top;
+  }
+  function inRange(list){
+    const result=$('resultCard'), startEl=$('paipanBlock');
+    if(!visible(result)||!visible(startEl)||!list.length) return false;
+    const y=scrollY;
+    const start=startEl.getBoundingClientRect().top+scrollY-220;
+    let end=firstExitTop();
+    const resultEnd=result.getBoundingClientRect().top+scrollY+result.offsetHeight+160;
+    if(!isFinite(end)) end=resultEnd;
+    end=Math.min(end-80,resultEnd);
+    return y>=start && y<end;
   }
   function renderNav(){
     const nav=ensureNav();
-    const list=itemList();
-    nav.innerHTML=list.map(t=>'<button type="button" class="v1042-subchip" data-v1045-target="'+t.id+'">'+t.label+'</button>').join('');
-    nav.querySelectorAll('[data-v1045-target]').forEach(btn=>{
+    const list=items();
+    nav.innerHTML=list.map(t=>'<button type="button" class="v1042-subchip" data-v1046-target="'+t.id+'">'+t.label+'</button>').join('');
+    nav.querySelectorAll('[data-v1046-target]').forEach(btn=>{
       btn.addEventListener('click',()=>{
-        const el=$(btn.getAttribute('data-v1045-target'));
+        const el=$(btn.getAttribute('data-v1046-target'));
         if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
       });
     });
     updateNav();
   }
-  function inPaipanZone(list){
-    const result=$('resultCard');
-    const first=$('paipanBlock')||(list[0]&&list[0].el);
-    if(!visible(result)||!visible(first)||!list.length) return false;
-    const start=first.getBoundingClientRect().top+scrollY-220;
-    const end=result.getBoundingClientRect().top+scrollY+result.offsetHeight+320;
-    return scrollY>=start && scrollY<=end;
-  }
   function updateNav(){
     const nav=ensureNav();
-    const list=itemList();
-    const keep=inPaipanZone(list);
-    nav.classList.toggle('v1045-force-show',keep);
-    nav.classList.toggle('show',keep);
-    if(!keep) return;
+    const list=items();
+    const show=inRange(list);
+    nav.classList.toggle('v1046-show',show);
+    nav.classList.toggle('show',show);
+    if(!show) return;
     let active=list[0]&&list[0].id;
     const marker=(innerHeight||700)*0.34;
     list.forEach(t=>{if(t.el.getBoundingClientRect().top<=marker) active=t.id;});
-    nav.querySelectorAll('[data-v1045-target]').forEach(btn=>btn.classList.toggle('active',btn.getAttribute('data-v1045-target')===active));
+    nav.querySelectorAll('[data-v1046-target]').forEach(btn=>btn.classList.toggle('active',btn.getAttribute('data-v1046-target')===active));
   }
   let scheduled=false;
   function schedule(){
@@ -11115,11 +11125,11 @@ body.reading-theme-night .v1042-subchip.active{color:#fff!important;background:l
     lockVersion();
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
-  window.addEventListener('load',()=>{boot();setTimeout(boot,200);setTimeout(boot,1000);setTimeout(boot,2500);});
+  window.addEventListener('load',()=>{boot();setTimeout(boot,180);setTimeout(boot,900);setTimeout(boot,2200);});
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',()=>setTimeout(renderNav,80));
   try{new MutationObserver(()=>setTimeout(boot,120)).observe(document.body,{subtree:true,childList:true,attributes:true,characterData:true});}catch(e){}
-  setInterval(()=>{lockVersion();updateNav();},1000);
+  setInterval(()=>{lockVersion();updateNav();},1200);
 })();
 </script>
 
