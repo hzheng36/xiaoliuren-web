@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.2.4 命盘电脑版排版与固定法提示修正版 */
-const CACHE_NAME = 'xiaoliuren-v10.2.4-destiny-layout-fixed-warning';
+/* 小六壬占卜 · v10.2.5-destiny-gender-kinship
+const CACHE_NAME = 'xiaoliuren-v10.2.5-destiny-gender-kinship';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {

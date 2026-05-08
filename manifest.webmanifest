@@ -1,7 +1,7 @@
 {
   "name": "小六壬占卜",
   "short_name": "小六壬",
-  "description": "小六壬个人占卜台 v10.2.4 命盘电脑版排版与固定法提示修正版",
+  "description": "小六壬个人网页版 v10.2.5 命盘六亲说明与性别选项版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -25,5 +25,6 @@
       "sizes": "180x180",
       "type": "image/png"
     }
-  ]
+  ],
+  "version": "10.2.5"
 }
