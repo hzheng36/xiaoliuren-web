@@ -1,7 +1,7 @@
 {
   "name": "小六壬占卜",
   "short_name": "小六壬",
-  "description": "小六壬个人占卜台 v10.2.2 命运排盘输入优化版",
+  "description": "小六壬个人占卜台 v10.2.3 版本显示与缓存修正版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.2.2 命运排盘输入优化版 */
-const CACHE_NAME = 'xiaoliuren-v10.2.2-destiny-input-upgrade';
+/* 小六壬占卜 · v10.2.3 版本显示与缓存修正版 */
+const CACHE_NAME = 'xiaoliuren-v10.2.3-version-cache-lock';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
@@ -35,10 +35,9 @@ self.addEventListener('fetch', (event) => {
   const isHTML = req.mode === 'navigate' || accept.includes('text/html');
 
   if (isHTML) {
-    // HTML 页面网络优先，避免 GitHub Pages 更新后仍被旧缓存卡住。
     event.respondWith((async () => {
       try {
-        const fresh = await fetch(req, { cache: 'no-store' });
+        const fresh = await fetch(req, { cache: 'reload' });
         const cache = await caches.open(CACHE_NAME);
         cache.put(req, fresh.clone()).catch(() => undefined);
         cache.put('./index.html', fresh.clone()).catch(() => undefined);
@@ -52,10 +51,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 其它静态资源也采用网络优先，失败时回退缓存。
   event.respondWith((async () => {
     try {
-      const fresh = await fetch(req);
+      const fresh = await fetch(req, { cache: 'reload' });
       const cache = await caches.open(CACHE_NAME);
       cache.put(req, fresh.clone()).catch(() => undefined);
       return fresh;

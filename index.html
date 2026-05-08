@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.1.8 设置保存与自适应修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.1 命盘五行校正版：修正六宫固定五行，留连属水、小吉属木，并保留占例复盘日志系统。" />
+  <title>小六壬占卜 · v10.2.3 版本显示与缓存修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.2.3 版本显示与缓存修正版：修正 v10.2.2 中版本显示被后置补丁覆盖的问题，并加强 PWA 缓存清理，避免 GitHub Pages 刷新时旧版与新版来回显示。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.1.8 设置保存与自适应修正版</h2>
+          <h2>个人占卜台 · v10.2.3 版本显示与缓存修正版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9207,6 +9207,78 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', function(){ setTimeout(boot,100); setTimeout(updateDestinyPanel,250); });
+})();
+</script>
+
+
+
+<!-- v10.2.3 patch: 版本显示与缓存最终锁定 -->
+<script id="v1023-version-cache-lock">
+(function(){
+  'use strict';
+  const VERSION='v10.2.3 版本显示与缓存修正版';
+  const META='小六壬个人网页版 '+VERSION+'：修正 v10.2.2 中版本显示被后置补丁覆盖的问题，并加强 PWA 缓存清理，避免 GitHub Pages 刷新时旧版与新版来回显示。';
+  let applying=false;
+  function applyVersionLock(){
+    if(applying) return;
+    applying=true;
+    try{
+      document.title='小六壬占卜 · '+VERSION;
+      const meta=document.querySelector('meta[name="description"]');
+      if(meta) meta.setAttribute('content', META);
+      document.querySelectorAll('h2').forEach(function(el){
+        if(el.textContent && el.textContent.indexOf('个人占卜台')>=0 && el.textContent.indexOf(VERSION)<0){
+          el.textContent='个人占卜台 · '+VERSION;
+        }
+      });
+      if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1023){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.call(this);
+          const row='<details><summary>'+VERSION+'</summary><ul><li>修正 v10.2.2 中页面标题仍被后置的 v10.2.1 补丁覆盖的问题，确保首页始终显示最新版本。</li><li>增加版本显示锁定逻辑，刷新过程中若旧补丁重新渲染标题，会自动恢复为当前版本。</li><li>加强 PWA / GitHub Pages 缓存清理，主动更新 service worker 并清除旧 xiaoliuren 缓存，减少旧版与新版来回显示。</li><li>保留 v10.2.2 命运排盘输入优化、v10.2.1 命盘五行校正、v10.2.0 占例复盘日志系统。</li></ul></details>';
+          if(html.indexOf(VERSION)<0) html+=row;
+          return html;
+        };
+        window.buildVersionUpdatesHTML.__v1023=true;
+      }
+      try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+    }finally{
+      applying=false;
+    }
+  }
+  function clearOldCaches(){
+    try{
+      if('caches' in window){
+        caches.keys().then(function(keys){
+          return Promise.all(keys.map(function(k){
+            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.3-version-cache-lock') return caches.delete(k);
+            return Promise.resolve();
+          }));
+        }).catch(function(){});
+      }
+      if('serviceWorker' in navigator){
+        navigator.serviceWorker.getRegistrations().then(function(regs){
+          regs.forEach(function(reg){
+            try{ reg.update(); }catch(e){}
+            try{ if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'}); }catch(e){}
+          });
+        }).catch(function(){});
+      }
+    }catch(e){}
+  }
+  function boot(){
+    applyVersionLock();
+    clearOldCaches();
+    [60,180,420,900,1600,2600].forEach(function(ms){ setTimeout(applyVersionLock, ms); });
+    try{
+      const target=document.querySelector('h2')||document.body;
+      const mo=new MutationObserver(function(){ applyVersionLock(); });
+      mo.observe(target, {childList:true, subtree:true, characterData:true});
+      setTimeout(function(){ try{mo.disconnect();}catch(e){} }, 5000);
+    }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function(){ setTimeout(boot, 80); });
 })();
 </script>
 
