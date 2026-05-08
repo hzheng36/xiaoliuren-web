@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.2-unified-nav-rollback';
+const CACHE_NAME = 'xiaoliuren-v10.4.3-nav-order-scroll-fix';
 const APP_SHELL = [
   './',
   './index.html',
