@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.3.0 命盘体质与健康参考版</title>
-  <meta name="description" content="小六壬个人网页版 v10.3.0 命盘体质与健康参考版：在命运结果页新增体质与健康参考折叠模块，结合自身宫、官鬼宫、地支五行、六神与五星生克提示长期体质倾向；不替代医学诊断。" />
+  <title>小六壬占卜 · v10.3.1 健康场景问事增强版</title>
+  <meta name="description" content="小六壬个人网页版 v10.3.1 健康场景问事增强版：修复版本新旧跳动，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.2.9 补丁清理与版本显示稳定版</h2>
+          <h2>个人占卜台 · v10.3.1 健康场景问事增强版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9511,8 +9511,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION='v10.2.9 补丁清理与版本显示稳定版';
-  const META='小六壬个人网页版 v10.2.9 补丁清理与版本显示稳定版：清理旧版版本锁定与缓存补丁，统一版本显示入口，保留命盘五行定义、性别侧重点、固定宫位法提示和加载修复。';
+  const VERSION='v10.3.1 健康场景问事增强版';
+  const META='小六壬个人网页版 v10.3.1 健康场景问事增强版：统一版本显示，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。';
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9637,7 +9637,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;});
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1025){
       const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>彻底移除 v10.2.3 的版本显示与缓存锁定补丁，以及 v10.2.4 等旧补丁中的版本覆盖逻辑，避免首页版本在旧版与新版之间跳动。</li><li>修正 HTML 结构，清理早期补丁遗留在 &lt;/html&gt; 后面的脚本，统一为页面末尾一次性关闭。</li><li>版本号、标题、版本记录改由最终稳定补丁统一写入，不再使用 MutationObserver、setInterval 或多次延迟抢占标题。</li><li>保留 v10.2.8 的加载修复、命盘四套五行定义、男命/女命断语侧重点，以及 v10.2.4 的命盘电脑版排版与固定宫位法适用提示。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>统一当前版本显示，避免旧补丁把首页标题改回旧版本。</li><li>保留命盘四套五行定义、男命/女命断语侧重点、固定宫位法提示和命盘健康模块。</li><li>新增健康场景近期问事解读：本象看当前状态，中象看发展过程，末象看恢复趋势。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
       window.buildVersionUpdatesHTML.__v1025=true;
     }
     try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
@@ -9675,8 +9675,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.0 命盘体质与健康参考版';
-  const META='小六壬个人网页版 v10.3.0 命盘体质与健康参考版：在命运结果页新增体质与健康参考折叠模块，结合自身宫、官鬼宫、地支五行、六神与五星生克提示长期体质倾向；不替代医学诊断。';
+  const VERSION='v10.3.1 健康场景问事增强版';
+  const META='小六壬个人网页版 v10.3.1 健康场景问事增强版：修复版本新旧跳动，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。';
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9774,12 +9774,100 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function patchVersion(){
     document.title='小六壬占卜 · '+VERSION;const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);
     document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});
-    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1030){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const row='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“体质与健康参考”折叠模块，定位为“命里的健康”，用于观察长期体质倾向，不替代医学诊断。</li><li>新增五行与五脏六腑对应表：木肝胆、火心小肠、土脾胃、金肺大肠、水肾膀胱，并补充身体部位与常见倾向。</li><li>根据自身宫地支五行、掌诀、六神和五星生克生成“自身体质倾向”。</li><li>根据官鬼宫生成“健康隐患提醒”，结合掌诀、地支五行、六神和五星关系提示可能需要关注的系统。</li><li>加入生活调养提醒和醒目的医学免责声明；本版先完成命盘健康，后续再升级现有“健康”问事场景。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>';if(html.indexOf(VERSION)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1030=true;}
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1030){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const row='<details><summary>'+VERSION+'</summary><ul><li>统一当前版本显示，避免旧补丁把首页标题改回旧版本。</li><li>保留命盘四套五行定义、男命/女命断语侧重点、固定宫位法提示和命盘健康模块。</li><li>新增健康场景近期问事解读：本象看当前状态，中象看发展过程，末象看恢复趋势。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>';if(html.indexOf(VERSION)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1030=true;}
     try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}
   }
   function boot(){patchRender();patchVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderDestinyHealth(window.currentResult);}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',function(){setTimeout(boot,120);});
+})();
+</script>
+
+
+
+<style id="v1031-health-scene-style">
+  .v1031-health-scene{margin:18px 0 0;padding:18px;border:1px solid rgba(90,126,96,.18);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(246,252,247,.9));box-shadow:0 14px 34px rgba(35,74,48,.06)}
+  .v1031-health-scene summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:900;color:var(--text);font-size:1.06rem}
+  .v1031-health-scene summary::-webkit-details-marker{display:none}.v1031-health-scene summary::after{content:'折叠';font-size:.82rem;color:var(--primary);border:1px solid rgba(103,83,165,.16);border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.7)}.v1031-health-scene:not([open]) summary::after{content:'展开'}
+  .v1031-health-body{margin-top:14px;display:grid;gap:12px}.v1031-health-note{padding:12px 14px;border-radius:16px;border:1px solid rgba(196,126,74,.22);background:rgba(255,248,236,.86);color:#6b5c76;line-height:1.7;font-size:.93rem}
+  .v1031-health-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.v1031-health-card{padding:14px;border-radius:18px;border:1px solid rgba(90,126,96,.16);background:rgba(255,255,255,.88);line-height:1.72;color:var(--text)}
+  .v1031-health-card h5{margin:0 0 8px;color:var(--primary);font-size:1rem}.v1031-health-card p{margin:6px 0}.v1031-health-muted{color:var(--muted);font-size:.92rem}.v1031-health-pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.v1031-health-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 9px;background:rgba(90,126,96,.12);color:#4d704f;font-weight:800;font-size:.82rem}
+  .v1031-health-table{overflow-x:auto;border:1px solid rgba(90,126,96,.14);border-radius:18px;background:#fff}.v1031-health-table table{width:100%;min-width:700px;border-collapse:collapse;font-size:.92rem}.v1031-health-table th,.v1031-health-table td{padding:10px 12px;border-bottom:1px solid rgba(90,126,96,.12);text-align:left;vertical-align:top;line-height:1.55}.v1031-health-table th{background:rgba(90,126,96,.08);font-weight:900;color:var(--text)}.v1031-health-table tr:last-child td{border-bottom:0}
+  @media(max-width:980px){.v1031-health-grid{grid-template-columns:1fr}}@media(max-width:760px){.v1031-health-scene{padding:14px}.v1031-health-table table{font-size:.88rem;min-width:660px}.v1031-health-scene summary{font-size:1rem}}
+</style>
+<script id="v1031-health-scene-script">
+(function(){
+  'use strict';
+  const VERSION='v10.3.1 健康场景问事增强版';
+  const META='小六壬个人网页版 v10.3.1 健康场景问事增强版：修复版本新旧跳动，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。';
+  const ORGAN={
+    木:{zang:'肝',fu:'胆',parts:'眼睛、筋、爪甲、情绪疏泄',risk:'肝火、眼干、筋膜紧张、情绪郁结',care:'少熬夜，适度拉伸，保持情绪疏泄。'},
+    火:{zang:'心',fu:'小肠',parts:'舌头、血脉、面部、睡眠神志',risk:'心悸、失眠、口腔溃疡、烦躁、循环偏弱',care:'注意睡眠，减少过度兴奋和上火。'},
+    土:{zang:'脾',fu:'胃',parts:'肌肉、口唇、消化吸收、湿气',risk:'消化不良、腹胀、湿气重、疲乏、肌肉无力',care:'饮食规律，少生冷，注意脾胃负担。'},
+    金:{zang:'肺',fu:'大肠',parts:'皮肤、鼻、毛发、呼吸道',risk:'咳嗽、气喘、便秘、鼻部不适、皮肤敏感',care:'注意呼吸道、皮肤、鼻部与排便规律。'},
+    水:{zang:'肾',fu:'膀胱',parts:'耳朵、骨骼、腰腿、头发、泌尿',risk:'腰膝酸软、耳鸣、尿频、精力不足、脱发',care:'注意保暖、休息和精力恢复，避免长期透支。'}
+  };
+  const PALACE={
+    大安:{type:'稳定、缓慢、守成',health:'状态偏稳，恢复宜循序渐进；也可能因为不急而拖着不处理。'},
+    留连:{type:'拖延、反复、慢性',health:'容易反复、拖延、旧症牵连，恢复过程不宜急。'},
+    速喜:{type:'快速、突发、消息',health:'变化快，可能突然发作，也可能很快缓解；急性变化要留意。'},
+    赤口:{type:'疼痛、炎症、冲突',health:'偏疼痛、炎症、外伤、急性刺激，若症状明显要重视。'},
+    小吉:{type:'活动、劳损、小成',health:'多与奔波、劳损、筋骨活动或生活节奏有关，动中求调。'},
+    空亡:{type:'虚、空、难定位',health:'偏虚、查不清、症状飘忽或无力感，宜复核和观察。'}
+  };
+  const ELEMENT_BY_PALACE={大安:'木',留连:'水',速喜:'火',赤口:'金',小吉:'木',空亡:'土'};
+  function $(id){return document.getElementById(id)}
+  function isHealthResult(r){return !!(r&&(r.sceneKey==='health'||r.sceneName==='健康'||r.scene==='健康'))}
+  function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+  function cellHTML(label,d,extra){
+    const palace=d&&d.palaceName||'空亡'; const el=(d&&d.element)||ELEMENT_BY_PALACE[palace]||'土'; const org=ORGAN[el]||ORGAN.土; const p=PALACE[palace]||PALACE.空亡;
+    return '<div class="v1031-health-card"><h5>'+esc(label)+' · '+esc(palace)+'</h5>'+
+      '<div class="v1031-health-pills"><span class="v1031-health-pill">掌诀：'+esc(p.type)+'</span><span class="v1031-health-pill">五行：'+esc(el)+'</span><span class="v1031-health-pill">'+esc(org.zang)+' / '+esc(org.fu)+'</span></div>'+
+      '<p><strong>健康象意：</strong>'+esc(p.health)+'</p><p><strong>对应部位：</strong>'+esc(org.parts)+'。</p><p><strong>常见倾向：</strong>'+esc(org.risk)+'。</p>'+(extra?'<p><strong>本位解读：</strong>'+esc(extra)+'</p>':'')+'</div>';
+  }
+  function buildHTML(result){
+    const ds=result.details||[]; const a=ds[0]||{}, b=ds[1]||{}, c=ds[2]||{};
+    const end=c.palaceName||'空亡';
+    const overall=end==='赤口'?'末象见赤口，恢复阶段要防疼痛、炎症、冲突性加重或急性刺激。':end==='留连'?'末象见留连，说明恢复容易拖延或反复，适合耐心调理和复查。':end==='空亡'?'末象见空亡，说明症状可能偏虚、难定位或结果不明，需要现实检查确认。':end==='速喜'?'末象见速喜，说明变化较快，可能较快缓解，也可能突然变化，需观察节奏。':end==='小吉'?'末象见小吉，说明有小幅好转或可通过调整获得改善。':'末象见大安，说明整体趋稳，适合按计划调养与落实检查。';
+    return '<details id="v1031HealthScene" class="v1031-health-scene" open><summary>🩺 健康问事参考</summary><div class="v1031-health-body">'
+      +'<div class="v1031-health-note"><strong>说明：</strong>这里看的是“健康场景”的近期身体状态、发展过程与恢复趋势，和命运里的长期体质不同。以下只作传统术数象意参考，不代表医学诊断；如有持续疼痛、麻木、胸闷、呼吸困难、出血、高热、长期失眠或症状加重，请及时就医。</div>'
+      +'<div class="v1031-health-grid">'
+      +cellHTML('本象：当前状态',a,'看现在症状、身体感受、起病状态和最明显的不适方向。')
+      +cellHTML('中象：发展过程',b,'看接下来是否拖延、反复、突然变化，或调理过程中会遇到什么阻力。')
+      +cellHTML('末象：恢复趋势',c,'看最后是趋稳、转好、拖延、落空，还是需要进一步检查与重视。')
+      +'</div>'
+      +'<div class="v1031-health-card"><h5>综合判断</h5><p>'+esc(overall)+'</p><p class="v1031-health-muted">健康问事建议先看本象了解当前，再看中象判断变化，最后以末象作为恢复趋势。若三象中多见留连、赤口、空亡，通常表示反复、疼痛、虚弱或不明朗的因素较多；若见大安、小吉，则更利于稳定和改善。</p></div>'
+      +'<div class="v1031-health-table"><table><thead><tr><th>五行</th><th>五脏</th><th>六腑</th><th>身体部位</th><th>常见倾向</th></tr></thead><tbody>'
+      +Object.keys(ORGAN).map(k=>'<tr><td><strong>'+k+'</strong></td><td>'+ORGAN[k].zang+'</td><td>'+ORGAN[k].fu+'</td><td>'+ORGAN[k].parts+'</td><td>'+ORGAN[k].risk+'</td></tr>').join('')
+      +'</tbody></table></div>'
+      +'<div class="v1031-health-card"><h5>生活提醒</h5><p>木重注意情绪和筋膜；火重注意睡眠和上火；土重注意脾胃湿气；金重注意呼吸道、鼻部、皮肤与大肠；水重注意腰肾、泌尿、保暖与精力恢复。此处不提供用药建议，现实症状请以医生检查为准。</p></div>'
+      +'</div></details>';
+  }
+  function renderHealthScene(result){
+    if(!isHealthResult(result)) return;
+    const old=$('v1031HealthScene'); if(old) old.remove();
+    const anchor=$('sceneFocusBlock')||$('boardBlock')||$('resultCard'); if(!anchor) return;
+    anchor.insertAdjacentHTML('afterend', buildHTML(result));
+  }
+  function patchRender(){
+    if(typeof window.renderResult==='function'&&!window.renderResult.__v1031Health){
+      const old=window.renderResult;
+      window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(function(){renderHealthScene(result);patchVersion();},0);return ret;};
+      window.renderResult.__v1031Health=true;
+    }
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
+    document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1031){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>修复 v10.3.0 中旧补丁反复执行导致首页版本号在新旧版本之间跳动的问题；统一当前补丁的版本显示。</li><li>保留命运场景的“体质与健康参考”，继续作为命里的长期健康倾向模块。</li><li>升级现有“健康”场景，新增“健康问事参考”：本象看当前状态，中象看发展过程，末象看恢复趋势。</li><li>健康场景加入五行与五脏六腑对应表、三象健康解释、综合判断和生活提醒。</li><li>加入医学免责声明：内容仅为传统象意参考，不替代医学诊断或治疗。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;}; window.buildVersionUpdatesHTML.__v1031=true;
+    }
+  }
+  function boot(){patchRender();patchVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderHealthScene(window.currentResult)}catch(e){}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,600);});
 })();
 </script>
 
