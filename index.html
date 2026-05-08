@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.3.1 健康场景问事增强版</title>
-  <meta name="description" content="小六壬个人网页版 v10.3.1 健康场景问事增强版：修复版本新旧跳动，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。" />
+  <title>小六壬占卜 · v10.3.2 健康口诀知识库融合版</title>
+  <meta name="description" content="小六壬个人网页版 v10.3.2 健康口诀知识库融合版：在健康场景问事增强版基础上融合健康口诀知识库，补充掌诀古诀、现代白话、身体部位、六神健康辅助与民俗附注；不替代医学诊断。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.3.1 健康场景问事增强版</h2>
+          <h2>个人占卜台 · v10.3.2 健康口诀知识库融合版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9511,8 +9511,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.1 健康场景问事增强版';
-  const META='小六壬个人网页版 v10.3.1 健康场景问事增强版：统一版本显示，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。';
+  const VERSION='v10.3.2 健康口诀知识库融合版';
+  const META='小六壬个人网页版 v10.3.2 健康口诀知识库融合版：融合健康口诀知识库，补充掌诀古诀、现代白话、身体部位、六神辅助与民俗附注；不替代医学诊断。';
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9675,8 +9675,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.1 健康场景问事增强版';
-  const META='小六壬个人网页版 v10.3.1 健康场景问事增强版：修复版本新旧跳动，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。';
+  const VERSION='v10.3.2 健康口诀知识库融合版';
+  const META='小六壬个人网页版 v10.3.2 健康口诀知识库融合版：在健康场景问事增强版基础上融合健康口诀知识库，补充掌诀古诀、现代白话、身体部位、六神健康辅助与民俗附注；不替代医学诊断。';
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9795,52 +9795,94 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   .v1031-health-table{overflow-x:auto;border:1px solid rgba(90,126,96,.14);border-radius:18px;background:#fff}.v1031-health-table table{width:100%;min-width:700px;border-collapse:collapse;font-size:.92rem}.v1031-health-table th,.v1031-health-table td{padding:10px 12px;border-bottom:1px solid rgba(90,126,96,.12);text-align:left;vertical-align:top;line-height:1.55}.v1031-health-table th{background:rgba(90,126,96,.08);font-weight:900;color:var(--text)}.v1031-health-table tr:last-child td{border-bottom:0}
   @media(max-width:980px){.v1031-health-grid{grid-template-columns:1fr}}@media(max-width:760px){.v1031-health-scene{padding:14px}.v1031-health-table table{font-size:.88rem;min-width:660px}.v1031-health-scene summary{font-size:1rem}}
 </style>
-<script id="v1031-health-scene-script">
+<script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION='v10.3.1 健康场景问事增强版';
-  const META='小六壬个人网页版 v10.3.1 健康场景问事增强版：修复版本新旧跳动，保留命盘健康模块，并升级健康场景的近期身体状态、发展过程与恢复趋势解读；不替代医学诊断。';
-  const ORGAN={
-    木:{zang:'肝',fu:'胆',parts:'眼睛、筋、爪甲、情绪疏泄',risk:'肝火、眼干、筋膜紧张、情绪郁结',care:'少熬夜，适度拉伸，保持情绪疏泄。'},
-    火:{zang:'心',fu:'小肠',parts:'舌头、血脉、面部、睡眠神志',risk:'心悸、失眠、口腔溃疡、烦躁、循环偏弱',care:'注意睡眠，减少过度兴奋和上火。'},
-    土:{zang:'脾',fu:'胃',parts:'肌肉、口唇、消化吸收、湿气',risk:'消化不良、腹胀、湿气重、疲乏、肌肉无力',care:'饮食规律，少生冷，注意脾胃负担。'},
-    金:{zang:'肺',fu:'大肠',parts:'皮肤、鼻、毛发、呼吸道',risk:'咳嗽、气喘、便秘、鼻部不适、皮肤敏感',care:'注意呼吸道、皮肤、鼻部与排便规律。'},
-    水:{zang:'肾',fu:'膀胱',parts:'耳朵、骨骼、腰腿、头发、泌尿',risk:'腰膝酸软、耳鸣、尿频、精力不足、脱发',care:'注意保暖、休息和精力恢复，避免长期透支。'}
+  const VERSION='v10.3.2 健康口诀知识库融合版';
+  const META='小六壬个人网页版 v10.3.2 健康口诀知识库融合版：在健康场景问事增强版基础上融合健康口诀知识库，补充掌诀古诀、现代白话、身体部位、六神健康辅助与民俗附注；不替代医学诊断。';
+  const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
+  const DATA=HEALTH_KB.data||{};
+  const PALMS=DATA.palms||[];
+  const PALM_BY_NAME={}; PALMS.forEach(p=>PALM_BY_NAME[p.name]=p);
+  const SPIRITS=DATA.six_spirits_health||[];
+  const SPIRIT_BY_NAME={}; SPIRITS.forEach(s=>SPIRIT_BY_NAME[s.spirit]=s);
+  const ORGAN=DATA.five_elements_organs||{};
+  const COMBOS=DATA.combination_reminders||[];
+  const SHOCK=DATA.shock_verses||{};
+  const PALACE_FALLBACK={
+    大安:{type:'稳定、缓慢、守成',modern_interpretation:'状态偏稳，恢复宜循序渐进；也可能因为不急而拖着不处理。',element:'木',organ_yin:'肝',organ_yang:'胆',body_parts:['四肢','筋','眼睛'],common_symptoms:['恢复偏慢','状态偏稳'],reminder:'不要因为无妨就拖延，该检查仍要检查。'},
+    留连:{type:'拖延、反复、慢性',modern_interpretation:'容易反复、拖延、旧症牵连，恢复过程不宜急。',element:'水',organ_yin:'肾',organ_yang:'膀胱',body_parts:['腰腿','耳朵','泌尿'],common_symptoms:['慢性反复','寒湿虚弱'],reminder:'需要长期调理，不要指望速效。'},
+    速喜:{type:'快速、突发、消息',modern_interpretation:'变化快，可能突然发作，也可能很快缓解；急性变化要留意。',element:'火',organ_yin:'心',organ_yang:'小肠',body_parts:['舌头','血脉','面部'],common_symptoms:['急性变化','炎症上火'],reminder:'出现急性症状不要拖，尽快处理。'},
+    赤口:{type:'疼痛、炎症、冲突',modern_interpretation:'偏疼痛、炎症、外伤、急性刺激，若症状明显要重视。',element:'金',organ_yin:'肺',organ_yang:'大肠',body_parts:['皮肤','鼻','牙齿'],common_symptoms:['疼痛炎症','外伤'],reminder:'若有持续疼痛或炎症，建议及时就医检查。'},
+    小吉:{type:'活动、劳损、小成',modern_interpretation:'无大碍，能自愈；长期问题也会逐步好转，但要配合作息调整。',element:'水',organ_yin:'肾',organ_yang:'膀胱',body_parts:['右腿','耳朵','泌尿'],common_symptoms:['劳损','精力不足'],reminder:'保持良好作息，恢复会更快。'},
+    空亡:{type:'虚、空、难定位',modern_interpretation:'偏虚、查不清、症状飘忽或无力感，宜复核和观察。',element:'土',organ_yin:'脾',organ_yang:'胃',body_parts:['肌肉','免疫系统','消化系统'],common_symptoms:['消化不良','疑难杂症','功能衰退'],reminder:'长期查不出原因时，现实医疗检查仍要优先。'}
   };
-  const PALACE={
-    大安:{type:'稳定、缓慢、守成',health:'状态偏稳，恢复宜循序渐进；也可能因为不急而拖着不处理。'},
-    留连:{type:'拖延、反复、慢性',health:'容易反复、拖延、旧症牵连，恢复过程不宜急。'},
-    速喜:{type:'快速、突发、消息',health:'变化快，可能突然发作，也可能很快缓解；急性变化要留意。'},
-    赤口:{type:'疼痛、炎症、冲突',health:'偏疼痛、炎症、外伤、急性刺激，若症状明显要重视。'},
-    小吉:{type:'活动、劳损、小成',health:'多与奔波、劳损、筋骨活动或生活节奏有关，动中求调。'},
-    空亡:{type:'虚、空、难定位',health:'偏虚、查不清、症状飘忽或无力感，宜复核和观察。'}
-  };
-  const ELEMENT_BY_PALACE={大安:'木',留连:'水',速喜:'火',赤口:'金',小吉:'木',空亡:'土'};
   function $(id){return document.getElementById(id)}
   function isHealthResult(r){return !!(r&&(r.sceneKey==='health'||r.sceneName==='健康'||r.scene==='健康'))}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-  function cellHTML(label,d,extra){
-    const palace=d&&d.palaceName||'空亡'; const el=(d&&d.element)||ELEMENT_BY_PALACE[palace]||'土'; const org=ORGAN[el]||ORGAN.土; const p=PALACE[palace]||PALACE.空亡;
+  function arr(v){return Array.isArray(v)?v.join('、'):(v||'')}
+  function palmData(name){return Object.assign({},PALACE_FALLBACK[name]||PALACE_FALLBACK.空亡,PALM_BY_NAME[name]||{})}
+  function getPalace(d){return (d&&(d.palaceName||d.palace||d.name))||'空亡'}
+  function getSpirit(d){return (d&&(d.spirit||d.sixSpirit||d.god||d.deity||d.shen||d.liuShen))||''}
+  function getBranch(d){return (d&&(d.branch||d.earthlyBranch||d.zhi))||''}
+  function getStar(d){return (d&&(d.star||d.fiveStar||d.planet))||''}
+  function titleExtra(label){return label==='本象：当前状态'?'看现在症状、身体感受、起病状态和最明显的不适方向。':label==='中象：发展过程'?'看接下来是否拖延、反复、突然变化，或调理过程中会遇到什么阻力。':'看最后趋稳、转好、拖延、落空，还是需要进一步检查与重视。'}
+  function cellHTML(label,d){
+    const palace=getPalace(d); const p=palmData(palace); const spirit=getSpirit(d); const branch=getBranch(d); const star=getStar(d);
+    const sp=spirit&&SPIRIT_BY_NAME[spirit]?SPIRIT_BY_NAME[spirit].health_meaning:'';
     return '<div class="v1031-health-card"><h5>'+esc(label)+' · '+esc(palace)+'</h5>'+
-      '<div class="v1031-health-pills"><span class="v1031-health-pill">掌诀：'+esc(p.type)+'</span><span class="v1031-health-pill">五行：'+esc(el)+'</span><span class="v1031-health-pill">'+esc(org.zang)+' / '+esc(org.fu)+'</span></div>'+
-      '<p><strong>健康象意：</strong>'+esc(p.health)+'</p><p><strong>对应部位：</strong>'+esc(org.parts)+'。</p><p><strong>常见倾向：</strong>'+esc(org.risk)+'。</p>'+(extra?'<p><strong>本位解读：</strong>'+esc(extra)+'</p>':'')+'</div>';
+      '<div class="v1031-health-pills"><span class="v1031-health-pill">健康口诀五行：'+esc(p.element)+'</span><span class="v1031-health-pill">'+esc(p.organ_yin)+' / '+esc(p.organ_yang)+'</span>'+(branch?'<span class="v1031-health-pill">地支：'+esc(branch)+'</span>':'')+(star?'<span class="v1031-health-pill">五星：'+esc(star)+'</span>':'')+'</div>'+
+      '<p><strong>本位解读：</strong>'+esc(titleExtra(label))+'</p>'+
+      '<p><strong>古诀：</strong>'+esc(p.ancient_verse||'')+'</p>'+
+      '<p><strong>现代白话：</strong>'+esc(p.modern_interpretation||'')+'</p>'+
+      '<p><strong>身体对应：</strong>'+esc(arr(p.body_parts))+'；常见倾向：'+esc(arr(p.common_symptoms))+'。</p>'+
+      (p.mnemonic?'<p><strong>记忆口诀：</strong>'+esc(p.mnemonic)+'</p>':'')+
+      (sp?'<p><strong>六神辅助：</strong>'+esc(sp)+'</p>':'')+
+      '<p class="v1031-health-muted"><strong>提醒：</strong>'+esc(p.reminder||'现实身体不适，以医生检查为准。')+'</p></div>';
+  }
+  function overallText(a,b,c){
+    const names=[getPalace(a),getPalace(b),getPalace(c)]; const end=names[2]; const p=palmData(end);
+    const riskCount=names.filter(x=>['留连','赤口','空亡'].includes(x)).length;
+    const goodCount=names.filter(x=>['大安','小吉'].includes(x)).length;
+    let text='末象落'+end+'，按健康口诀主“'+(p.modern_interpretation||'观察恢复趋势')+'”。';
+    if(riskCount>=2) text+=' 三象中留连、赤口、空亡偏多，代表反复、疼痛、虚弱或不明朗因素较重，现实中更应重视复查和观察。';
+    else if(goodCount>=2) text+=' 三象中大安、小吉偏多，整体较利于稳定和改善，但仍不代表可以忽视现实症状。';
+    else text+=' 三象吉凶参半，建议结合具体症状、持续时间和医学检查一起判断。';
+    return text;
+  }
+  function buildPalmTable(){
+    return '<div class="v1031-health-table"><table><thead><tr><th>掌诀</th><th>健康口诀五行</th><th>脏腑/部位</th><th>古诀摘要</th><th>现代白话</th></tr></thead><tbody>'+PALMS.map(p=>'<tr><td><strong>'+esc(p.name)+'</strong></td><td>'+esc(p.element)+'</td><td>'+esc(p.organ_yin)+' / '+esc(p.organ_yang)+'<br>'+esc(arr(p.body_parts))+'</td><td>'+esc(p.ancient_verse)+'</td><td>'+esc(p.modern_interpretation)+'</td></tr>').join('')+'</tbody></table></div>';
+  }
+  function buildOrganTable(){
+    return '<div class="v1031-health-table"><table><thead><tr><th>五行</th><th>五脏</th><th>六腑</th><th>身体部位</th><th>常见倾向</th></tr></thead><tbody>'+Object.keys(ORGAN).map(k=>'<tr><td><strong>'+esc(k)+'</strong></td><td>'+esc(ORGAN[k].organ_yin)+'</td><td>'+esc(ORGAN[k].organ_yang)+'</td><td>'+esc(arr(ORGAN[k].body_parts))+'</td><td>'+esc(ORGAN[k].tendency)+'</td></tr>').join('')+'</tbody></table></div>';
+  }
+  function buildSpiritTable(ds){
+    const seen=new Set(ds.map(getSpirit).filter(Boolean));
+    const list=SPIRITS.filter(s=>seen.has(s.spirit));
+    if(!list.length) return '';
+    return '<div class="v1031-health-card"><h5>六神健康辅助</h5>'+list.map(s=>'<p><strong>'+esc(s.spirit)+'（'+esc(s.element)+'）：</strong>'+esc(s.health_meaning)+'</p>').join('')+'<p class="v1031-health-muted">六神只看表现形态：例如白虎偏急痛外伤，玄武偏隐性寒湿，腾蛇偏缠绕难明。</p></div>';
+  }
+  function buildComboNote(ds){
+    const names=ds.map(getPalace).filter(Boolean);
+    const hits=COMBOS.filter(c=>(c.combination||[]).every(x=>names.includes(x)));
+    const shock=names.map(n=>SHOCK[n]?n+' → '+SHOCK[n]:'').filter(Boolean);
+    if(!hits.length&&!shock.length) return '';
+    return '<details class="v1031-health-scene" style="margin-top:0"><summary>民俗附注：癔病/惊吓口决参考</summary><div class="v1031-health-body"><div class="v1031-health-note"><strong>注意：</strong>这一栏属于民间口决和信俗象意，只适合进阶参考，不作为医学依据。长期不适仍应结合现实检查。</div>'+
+      (hits.length?'<div class="v1031-health-card"><h5>组合提醒</h5>'+hits.map(h=>'<p><strong>'+esc((h.combination||[]).join(' + '))+'：</strong>'+esc(h.meaning)+'</p>').join('')+'</div>':'')+
+      (shock.length?'<div class="v1031-health-card"><h5>惊吓口决</h5><p>'+esc(shock.join('；'))+'</p></div>':'')+
+      '</div></details>';
   }
   function buildHTML(result){
     const ds=result.details||[]; const a=ds[0]||{}, b=ds[1]||{}, c=ds[2]||{};
-    const end=c.palaceName||'空亡';
-    const overall=end==='赤口'?'末象见赤口，恢复阶段要防疼痛、炎症、冲突性加重或急性刺激。':end==='留连'?'末象见留连，说明恢复容易拖延或反复，适合耐心调理和复查。':end==='空亡'?'末象见空亡，说明症状可能偏虚、难定位或结果不明，需要现实检查确认。':end==='速喜'?'末象见速喜，说明变化较快，可能较快缓解，也可能突然变化，需观察节奏。':end==='小吉'?'末象见小吉，说明有小幅好转或可通过调整获得改善。':'末象见大安，说明整体趋稳，适合按计划调养与落实检查。';
     return '<details id="v1031HealthScene" class="v1031-health-scene" open><summary>🩺 健康问事参考</summary><div class="v1031-health-body">'
-      +'<div class="v1031-health-note"><strong>说明：</strong>这里看的是“健康场景”的近期身体状态、发展过程与恢复趋势，和命运里的长期体质不同。以下只作传统术数象意参考，不代表医学诊断；如有持续疼痛、麻木、胸闷、呼吸困难、出血、高热、长期失眠或症状加重，请及时就医。</div>'
-      +'<div class="v1031-health-grid">'
-      +cellHTML('本象：当前状态',a,'看现在症状、身体感受、起病状态和最明显的不适方向。')
-      +cellHTML('中象：发展过程',b,'看接下来是否拖延、反复、突然变化，或调理过程中会遇到什么阻力。')
-      +cellHTML('末象：恢复趋势',c,'看最后是趋稳、转好、拖延、落空，还是需要进一步检查与重视。')
-      +'</div>'
-      +'<div class="v1031-health-card"><h5>综合判断</h5><p>'+esc(overall)+'</p><p class="v1031-health-muted">健康问事建议先看本象了解当前，再看中象判断变化，最后以末象作为恢复趋势。若三象中多见留连、赤口、空亡，通常表示反复、疼痛、虚弱或不明朗的因素较多；若见大安、小吉，则更利于稳定和改善。</p></div>'
-      +'<div class="v1031-health-table"><table><thead><tr><th>五行</th><th>五脏</th><th>六腑</th><th>身体部位</th><th>常见倾向</th></tr></thead><tbody>'
-      +Object.keys(ORGAN).map(k=>'<tr><td><strong>'+k+'</strong></td><td>'+ORGAN[k].zang+'</td><td>'+ORGAN[k].fu+'</td><td>'+ORGAN[k].parts+'</td><td>'+ORGAN[k].risk+'</td></tr>').join('')
-      +'</tbody></table></div>'
-      +'<div class="v1031-health-card"><h5>生活提醒</h5><p>木重注意情绪和筋膜；火重注意睡眠和上火；土重注意脾胃湿气；金重注意呼吸道、鼻部、皮肤与大肠；水重注意腰肾、泌尿、保暖与精力恢复。此处不提供用药建议，现实症状请以医生检查为准。</p></div>'
+      +'<div class="v1031-health-note"><strong>说明：</strong>这里看的是“健康场景”的近期身体状态、发展过程与恢复趋势，和命运里的长期体质不同。本模块已融合健康口诀知识库：掌诀古诀、现代白话、身体部位、五行脏腑与六神辅助。以下只作传统术数象意参考，不代表医学诊断；如有持续疼痛、麻木、胸闷、呼吸困难、出血、高热、长期失眠或症状加重，请及时就医。</div>'
+      +'<div class="v1031-health-grid">'+cellHTML('本象：当前状态',a)+cellHTML('中象：发展过程',b)+cellHTML('末象：恢复趋势',c)+'</div>'
+      +'<div class="v1031-health-card"><h5>综合判断</h5><p>'+esc(overallText(a,b,c))+'</p><p class="v1031-health-muted">健康问事建议先看本象，再看中象，最后以末象作为恢复趋势。掌诀口诀看结论倾向，地支五行和脏腑表看可能对应的身体系统，六神看表现形态。</p></div>'
+      +buildSpiritTable(ds)
+      +'<details class="v1031-health-scene" style="margin-top:0" open><summary>掌诀健康口诀知识库</summary><div class="v1031-health-body">'+buildPalmTable()+'</div></details>'
+      +'<details class="v1031-health-scene" style="margin-top:0"><summary>五行与五脏六腑对应表</summary><div class="v1031-health-body">'+buildOrganTable()+'</div></details>'
+      +buildComboNote(ds)
+      +'<div class="v1031-health-card"><h5>生活提醒</h5><p>木重注意情绪、肝胆与筋膜；火重注意睡眠、上火、炎症与心血；土重注意脾胃、湿气和消化；金重注意呼吸道、鼻部、皮肤与大肠；水重注意腰肾、泌尿、保暖与精力恢复。此处不提供用药建议，现实症状请以医生检查为准。</p></div>'
       +'</div></details>';
   }
   function renderHealthScene(result){
@@ -9850,19 +9892,19 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     anchor.insertAdjacentHTML('afterend', buildHTML(result));
   }
   function patchRender(){
-    if(typeof window.renderResult==='function'&&!window.renderResult.__v1031Health){
+    if(typeof window.renderResult==='function'&&!window.renderResult.__v1032Health){
       const old=window.renderResult;
       window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(function(){renderHealthScene(result);patchVersion();},0);return ret;};
-      window.renderResult.__v1031Health=true;
+      window.renderResult.__v1032Health=true;
     }
   }
   function patchVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
     document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});
-    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1031){
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1032){
       const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>修复 v10.3.0 中旧补丁反复执行导致首页版本号在新旧版本之间跳动的问题；统一当前补丁的版本显示。</li><li>保留命运场景的“体质与健康参考”，继续作为命里的长期健康倾向模块。</li><li>升级现有“健康”场景，新增“健康问事参考”：本象看当前状态，中象看发展过程，末象看恢复趋势。</li><li>健康场景加入五行与五脏六腑对应表、三象健康解释、综合判断和生活提醒。</li><li>加入医学免责声明：内容仅为传统象意参考，不替代医学诊断或治疗。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;}; window.buildVersionUpdatesHTML.__v1031=true;
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>在 v10.3.1 健康场景问事增强版基础上，融合“健康口诀知识库”JSON 数据。</li><li>健康场景新增掌诀健康古诀、现代白话、记忆口诀、身体部位、常见倾向和现实提醒。</li><li>补充六神健康辅助、五行与五脏六腑对应表，以及民俗附注/惊吓口决的折叠参考区。</li><li>明确区分“健康口诀五行”和网站核心掌诀五行，健康模块仅作健康象意映射，不改动命盘基础五行规则。</li><li>继续保留医学免责声明：传统象意参考不替代医学诊断、检查或治疗。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;}; window.buildVersionUpdatesHTML.__v1032=true;
     }
   }
   function boot(){patchRender();patchVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderHealthScene(window.currentResult)}catch(e){}}
