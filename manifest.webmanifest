@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.4.8",
-  "short_name": "小六壬 v10.4.8",
-  "description": "v10.4.8 子导航遮挡修正版",
+  "name": "小六壬占卜 · v10.4.2",
+  "short_name": "小六壬 v10.4.2",
+  "description": "v10.4.2 导航整合回溯版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.4.8"
+  "version": "10.4.2"
 }
