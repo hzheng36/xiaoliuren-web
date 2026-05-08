@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜",
-  "short_name": "小六壬",
-  "description": "小六壬个人网页版 v10.2.6 版本锁定与男女命断语修正版：修复旧补丁异步覆盖导致首页版本号跳动的问题，并让男命/女命选择真正进入命盘结果页断语重点。",
+  "name": "小六壬占卜 v10.2.7",
+  "short_name": "小六壬v10.2.7",
+  "description": "小六壬个人网页版 v10.2.7 命盘五行定义补充版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.2.6 版本锁定与男女命断语修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.6 版本锁定与男女命断语修正版：修复旧补丁异步覆盖导致首页版本号跳动的问题，并让男命/女命选择真正进入命盘结果页断语重点。" />
+  <title>小六壬占卜 · v10.2.7 命盘五行定义补充版</title>
+  <meta name="description" content="小六壬个人网页版 v10.2.7 命盘五行定义补充版：在命运六亲参考盘中补充掌诀五行、地支五行、六神五行和五星五行定义，并继续锁定最新版本显示。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.2.6 版本锁定与男女命断语修正版</h2>
+          <h2>个人占卜台 · v10.2.7 命盘五行定义补充版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9395,7 +9395,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 (function(){
   'use strict';
   const VERSION='v10.2.6 版本锁定与男女命断语修正版';
-  const META='小六壬个人网页版 v10.2.6 版本锁定与男女命断语修正版：修复旧补丁异步覆盖导致首页版本号跳动的问题，并让男命/女命选择真正进入命盘结果页断语重点。';
+  const META='小六壬个人网页版 v10.2.7 命盘五行定义补充版：在命运六亲参考盘中补充掌诀五行、地支五行、六神五行和五星五行定义，并继续锁定最新版本显示。';
   const CACHE='xiaoliuren-v10.2.6-version-gender-result-fix';
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);}
@@ -9504,6 +9504,91 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
   window.addEventListener('load',function(){setTimeout(boot,50);setTimeout(boot,500);setTimeout(boot,1500);});
   setInterval(boot,250);
+})();
+</script>
+
+
+
+<!-- v10.2.7 patch: 命盘五行定义补充与版本最终锁定 -->
+<style id="v1027-element-definition-style">
+  .v1027-element-definitions{margin:14px 0 0;padding:16px 18px;border:1px solid rgba(126,103,176,.18);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(250,247,255,.88));box-shadow:0 10px 28px rgba(64,44,104,.05)}
+  .v1027-element-definitions h5{margin:0 0 10px;font-size:1rem;color:#6f56b3;font-weight:900;letter-spacing:.02em}
+  .v1027-element-definitions .v1027-def-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .v1027-def-card{padding:12px 12px;border-radius:15px;background:rgba(255,255,255,.78);border:1px solid rgba(126,103,176,.12)}
+  .v1027-def-card strong{display:block;margin-bottom:6px;color:#2d2946;font-size:.94rem}
+  .v1027-def-card p{margin:0;color:#7d7894;line-height:1.7;font-size:.9rem}
+  .v1027-def-note{margin:10px 0 0;color:#7d7894;font-size:.9rem;line-height:1.7}
+  @media(max-width:980px){.v1027-element-definitions .v1027-def-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:560px){.v1027-element-definitions{padding:14px}.v1027-element-definitions .v1027-def-grid{grid-template-columns:1fr}.v1027-def-card p{font-size:.88rem}}
+</style>
+<script id="v1027-element-definitions-script">
+(function(){
+  'use strict';
+  const VERSION='v10.2.7 命盘五行定义补充版';
+  const META='小六壬个人网页版 v10.2.7 命盘五行定义补充版：在命运六亲参考盘中补充掌诀五行、地支五行、六神五行和五星五行定义，并继续锁定最新版本显示。';
+  const CACHE='xiaoliuren-v10.2.7-destiny-element-definitions';
+  function $(id){return document.getElementById(id);} 
+  function qsa(sel){return Array.from(document.querySelectorAll(sel));}
+  function isDestinyResult(r){return !!(r && (r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'||(typeof currentScene!=='undefined'&&currentScene==='destiny')));} 
+  function defHTML(){
+    return '<section id="v1027ElementDefinitions" class="v1027-element-definitions">'
+      +'<h5>四套五行定义</h5>'
+      +'<div class="v1027-def-grid">'
+      +'<div class="v1027-def-card"><strong>掌诀五行</strong><p>大安木，留连水，速喜火，赤口金，小吉木，空亡土。用于看宫位气象底色、方位与象意，不直接定六亲。</p></div>'
+      +'<div class="v1027-def-card"><strong>地支五行</strong><p>寅卯木，巳午火，申酉金，亥子水，辰戌丑未土。五行生克法定六亲时，以自身宫地支五行为“我”。</p></div>'
+      +'<div class="v1027-def-card"><strong>六神五行</strong><p>青龙木，朱雀火，勾陈土，腾蛇土，白虎金，玄武水。用于看表现形态，如青龙正、朱雀口、腾蛇曲、白虎冲。</p></div>'
+      +'<div class="v1027-def-card"><strong>五星五行</strong><p>木星木，火星火，土星土，金星金，水星水；天空主虚、空、落空，不按常规五行生克硬套。</p></div>'
+      +'</div>'
+      +'<p class="v1027-def-note"><strong>读盘提醒：</strong>定六亲主要看地支五行；掌诀、六神、五星负责补充状态、形态与顺逆。不要把“掌诀五行”和“地支五行”混成同一套规则。</p>'
+      +'</section>';
+  }
+  function renderDefinitions(){
+    const intro=$('destinyBoardIntro'); if(!intro) return;
+    const old=$('v1027ElementDefinitions'); if(old) old.remove();
+    const gender=$('v1025GenderResultNote');
+    if(gender && gender.parentNode){ gender.insertAdjacentHTML('beforebegin', defHTML()); }
+    else { intro.insertAdjacentHTML('afterend', defHTML()); }
+  }
+  function patchRenderers(){
+    if(typeof window.renderResult==='function' && !window.renderResult.__v1027Def){
+      const old=window.renderResult;
+      window.renderResult=function(result){const ret=old.apply(this,arguments); if(isDestinyResult(result)) setTimeout(renderDefinitions,0); return ret;};
+      window.renderResult.__v1027Def=true;
+    }
+    if(typeof window.renderDestinyBoard==='function' && !window.renderDestinyBoard.__v1027Def){
+      const old=window.renderDestinyBoard;
+      window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments); setTimeout(renderDefinitions,0); return ret;};
+      window.renderDestinyBoard.__v1027Def=true;
+    }
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
+    qsa('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')!==-1) el.textContent='个人占卜台 · '+VERSION;});
+    const about=document.querySelector('#appSubtitle, .app-subtitle, .hero-subtitle');
+    if(about && about.textContent && about.textContent.indexOf('本版基于')!==-1){ about.textContent='本版补充命盘四套五行定义，并保留命运输入优化、男女命断语、日志系统与设置保存修复。'; }
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1027){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details open><summary>'+VERSION+'</summary><ul><li>命运六亲参考盘新增“四套五行定义”：掌诀五行、地支五行、六神五行、五星五行。</li><li>明确六亲定法主要使用地支五行，掌诀五行用于气象底色，避免混用规则。</li><li>补充六神五行：青龙木、朱雀火、勾陈土、腾蛇土、白虎金、玄武水。</li><li>补充五星五行：木星、火星、土星、金星、水星及天空的空虚象。</li><li>继续保留 v10.2.6 版本锁定与男女命断语修正。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
+      window.buildVersionUpdatesHTML.__v1027=true;
+    }
+    try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
+    try{
+      if('serviceWorker' in navigator){
+        navigator.serviceWorker.getRegistrations && navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){if(r.update) r.update();});});
+        if(window.caches){caches.keys().then(function(keys){keys.forEach(function(k){if(k.indexOf('xiaoliuren')!==-1 && k!==CACHE) caches.delete(k);});});}
+      }
+    }catch(e){}
+  }
+  function boot(){patchRenderers(); patchVersion(); renderDefinitions();}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,400);setTimeout(boot,1200);});
+  setInterval(function(){
+    if(document.title.indexOf(VERSION)<0) patchVersion();
+    const h2=qsa('h2').find(function(el){return el.textContent&&el.textContent.indexOf('个人占卜台')!==-1;});
+    if(h2 && h2.textContent.indexOf(VERSION)<0) patchVersion();
+    if($('destinyBoardIntro')) renderDefinitions();
+  },700);
 })();
 </script>
 
