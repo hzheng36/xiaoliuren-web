@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.3.8-reading-shortcut-time-display';
+const CACHE_NAME = 'xiaoliuren-v10.3.9-auto-save-settings';
 const APP_SHELL = [
   './',
   './index.html',
