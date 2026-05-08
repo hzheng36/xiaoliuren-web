@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.4.3 版本跳动修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.4.3 版本跳动修正版：重点修复首页版本标题与版本说明来回跳动的问题，并保留排盘子导航、婚姻模块与阅读模式等功能。" />
+  <title>小六壬占卜 · v10.4.4 排盘子导航保持显示修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.4.4 排盘子导航保持显示修正版：修复排盘子导航在滚动超过排盘区域后自动隐藏的问题，并保留版本跳动修复、婚姻模块与阅读模式。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.4.3 版本跳动修正版</h2>
+          <h2>个人占卜台 · v10.4.4 排盘子导航保持显示修正版</h2>
           <p>本版新增“排盘子导航”：进入排盘区域后可快速跳转六宫、命盘、健康、婚姻、术语等子模块；继续保留婚姻模块排版修复、设置自动保存与阅读模式。</p>
         </div>
         <div class="actions">
@@ -11068,6 +11068,98 @@ body.reading-theme-night .v1042-subchip.active{color:#fff!important;background:l
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true}); else boot();
   window.addEventListener('load', ()=>{ boot(); setTimeout(boot,120); setTimeout(boot,800); setTimeout(boot,2000); setTimeout(boot,4000); });
   setInterval(lockVersionDisplay, 1500);
+})();
+</script>
+
+
+<style id="v1044-paipan-subnav-sticky-style">
+/* v10.4.4 排盘子导航保持显示修正版 */
+.v1042-subnav.v1044-sticky-show{display:flex!important;}
+@media(max-width:1240px){
+  .v1042-subnav.v1044-sticky-show{bottom:max(62px,calc(env(safe-area-inset-bottom) + 62px))!important;}
+}
+</style>
+<script id="v1044-paipan-subnav-sticky-script">
+(function(){
+  'use strict';
+  const VERSION='v10.4.4 排盘子导航保持显示修正版';
+  const META='小六壬个人网页版 v10.4.4 排盘子导航保持显示修正版：修复排盘子导航在滚动超过排盘区域后自动隐藏的问题，并保留版本跳动修复、婚姻模块与阅读模式。';
+  const HERO_TEXT='本版修复排盘子导航在滚动超过“排盘”母导航或子导航区域后自动隐藏的问题；进入排盘区域后，子导航会保持显示，方便继续跳转六宫、命盘、健康、婚姻、术语等子模块。';
+  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>修复排盘子导航在滚动超过“排盘”母导航或子导航区域后自动隐藏的问题。</li><li>进入排盘区域后，子导航会保持显示，方便继续跳转六宫、命盘、健康、婚姻、术语等子模块。</li><li>只有返回到排盘区域上方、离开结果页或结果页隐藏时，子导航才会自动隐藏。</li><li>继续保留 v10.4.3 的版本跳动修复、v10.4.2 的排盘子导航、v10.4.1 的婚姻模块排版修复，以及阅读模式与设置自动保存。</li><li>按固定 3 个必做检查执行：先检查错误、再检查旧补丁/版本跳动、最后同步更新版本记录与缓存文件。</li></ul></details>';
+  const TARGETS=['paipanBlock','destinyBoardBlock','v1030DestinyHealth','v1040MarriageBlock','v1033Glossary'];
+  let scheduled=false;
+  function $(id){return document.getElementById(id);}
+  function isVisible(el){
+    if(!el) return false;
+    if(el.classList && el.classList.contains('hidden')) return false;
+    if(el.closest && el.closest('.hidden')) return false;
+    const st=getComputedStyle(el);
+    if(st.display==='none'||st.visibility==='hidden') return false;
+    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+  }
+  function lockVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
+    document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台')){el.textContent='个人占卜台 · '+VERSION;el.setAttribute('data-version-locked','true');}});
+    const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO_TEXT;
+  }
+  function patchVersionUpdates(){
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1044SubnavSticky){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        html=html.replace(/<details><summary>v10\.4\.4[^<]*<\/summary>[\s\S]*?<\/details>/g,'');
+        if(html.indexOf(VERSION)<0) html+=UPDATE_ROW;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1044SubnavSticky=true;
+    }
+  }
+  function getNav(){return $('v1042SubJumpNav');}
+  function targetList(){return TARGETS.map(id=>({id,el:$(id)})).filter(t=>isVisible(t.el));}
+  function shouldKeepSubnav(list){
+    const result=$('resultCard');
+    const paipan=$('paipanBlock') || (list[0]&&list[0].el);
+    if(!isVisible(result)||!isVisible(paipan)||!list.length) return false;
+    const start=paipan.getBoundingClientRect().top + scrollY - 220;
+    const resultEnd=result.getBoundingClientRect().top + scrollY + result.offsetHeight + 260;
+    const y=scrollY;
+    return y>=start && y<=resultEnd;
+  }
+  function updateActive(nav,list){
+    let active=list[0]&&list[0].id;
+    const marker=(innerHeight||700)*0.34;
+    list.forEach(t=>{if(t.el.getBoundingClientRect().top<=marker) active=t.id;});
+    nav.querySelectorAll('[data-v1042-target]').forEach(btn=>btn.classList.toggle('active',btn.getAttribute('data-v1042-target')===active));
+  }
+  function stickyUpdate(){
+    const nav=getNav();
+    if(!nav) return;
+    const list=targetList();
+    const keep=shouldKeepSubnav(list);
+    nav.classList.toggle('v1044-sticky-show', keep);
+    nav.classList.toggle('show', keep || nav.classList.contains('show'));
+    if(!keep) nav.classList.remove('v1044-sticky-show');
+    if(keep) updateActive(nav,list);
+  }
+  function schedule(){
+    if(scheduled) return;
+    scheduled=true;
+    requestAnimationFrame(()=>{scheduled=false; lockVersion(); stickyUpdate();});
+  }
+  function boot(){
+    lockVersion();
+    patchVersionUpdates();
+    try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
+    setTimeout(stickyUpdate,80);
+    setTimeout(stickyUpdate,260);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',()=>{boot();setTimeout(boot,800);setTimeout(boot,2200);});
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule);
+  try{new MutationObserver(schedule).observe(document.body,{subtree:true,childList:true,attributes:true,characterData:true});}catch(e){}
+  setInterval(()=>{lockVersion();stickyUpdate();},1600);
 })();
 </script>
 

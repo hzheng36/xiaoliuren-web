@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.3-version-lock';
+const CACHE_NAME = 'xiaoliuren-v10.4.4-paipan-subnav-sticky';
 const APP_SHELL = [
   './',
   './index.html',
