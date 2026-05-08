@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.0-destiny-marriage';
+const CACHE_NAME = 'xiaoliuren-v10.4.1-marriage-layout-fix';
 const APP_SHELL = [
   './',
   './index.html',

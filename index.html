@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.4.0 命盘婚姻参考模块版</title>
-  <meta name="description" content="小六壬个人网页版 v10.4.0 命盘婚姻参考模块版：命运场景新增婚姻与伴侣参考模块，按性别侧重官鬼/妻财，结合六神、地支、五行生克、掌诀与生活提醒解读婚姻倾向。" />
+  <title>小六壬占卜 · v10.4.1 婚姻模块排版修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.4.1 婚姻模块排版修正版：修复命运场景婚姻模块手机端字体偏大问题，并继续缩短结果页右侧留白，让正文内容显示更完整。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.4.0 命盘婚姻参考模块版</h2>
-          <p>本版在命运场景下新增“婚姻与伴侣参考”模块，结合男命/女命侧重点、配偶宫、六神、地支、掌诀和五行生克，作为感情婚姻长期倾向参考；继续保留设置自动保存与阅读模式。</p>
+          <h2>个人占卜台 · v10.4.1 婚姻模块排版修正版</h2>
+          <p>本版修复命运场景“婚姻与伴侣参考”模块手机端字体偏大的问题，并继续微调结果页右侧安全留白，让正文与逐宫分析显示更完整；继续保留阅读模式、自动保存设置与婚姻参考模块。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -10750,6 +10750,93 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function boot(){patchRender();setVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderMarriage(window.currentResult);}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',()=>{setTimeout(boot,160);setTimeout(()=>{setVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderMarriage(window.currentResult);}catch(e){}},1600);setTimeout(setVersion,3200);});
+})();
+</script>
+
+<style id="v1041-marriage-mobile-layout-fix">
+/* v10.4.1 婚姻模块排版修正版 */
+.v1040-marriage,
+.v1040-marriage *{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  box-sizing:border-box;
+}
+.v1040-marriage{font-size:16px;max-width:100%;overflow:hidden;}
+.v1040-marriage-note,
+.v1040-marriage-card,
+.v1040-marriage-card p,
+.v1040-marriage-card li,
+.v1040-marriage-table th,
+.v1040-marriage-table td{
+  font-size:.95rem;
+  line-height:1.76;
+}
+.v1040-marriage-note{font-size:.93rem;line-height:1.74;}
+.v1040-marriage-card h5{font-size:1rem;line-height:1.5;}
+.v1040-marriage-muted{font-size:.91rem;line-height:1.72;}
+@media (max-width:900px){
+  body.result-page{--floating-tools-gap:14px;--result-right-safe:calc(var(--floating-tools-width) + var(--floating-tools-gap) + env(safe-area-inset-right));}
+  body.result-page #resultCard,
+  body.result-page .result-section{padding-right:calc(var(--result-right-safe) + 4px)!important;}
+  body.result-page .v101d-analysis-card,
+  body.result-page .destiny-deep-card{padding-right:14px!important;}
+  .v1040-marriage{padding:14px 13px 14px 14px!important;}
+  .v1040-marriage summary{font-size:1rem!important;line-height:1.42!important;}
+  .v1040-marriage-note{font-size:.91rem!important;line-height:1.72!important;padding:11px 12px!important;}
+  .v1040-marriage-card{padding:13px!important;}
+  .v1040-marriage-card h5{font-size:.99rem!important;line-height:1.48!important;margin-bottom:7px!important;}
+  .v1040-marriage-card p,
+  .v1040-marriage-card li,
+  .v1040-marriage-muted{font-size:.94rem!important;line-height:1.74!important;}
+  .v1040-marriage-pill{font-size:.8rem!important;}
+  .v1040-marriage-table table{min-width:650px!important;font-size:.88rem!important;}
+}
+@media (max-width:430px){
+  body.result-page #resultCard,
+  body.result-page .result-section{padding-right:calc(var(--result-right-safe) + 2px)!important;}
+  body.result-page .v101d-analysis-card,
+  body.result-page .destiny-deep-card{padding-right:12px!important;}
+  .v1040-marriage{padding:13px 11px 13px 13px!important;}
+  .v1040-marriage-note{font-size:.9rem!important;}
+  .v1040-marriage-card p,
+  .v1040-marriage-card li,
+  .v1040-marriage-muted{font-size:.93rem!important;}
+  .v1040-marriage-table table{min-width:620px!important;font-size:.86rem!important;}
+}
+</style>
+<script id="v1041-marriage-layout-fix-script">
+(function(){
+  'use strict';
+  const VERSION='v10.4.1 婚姻模块排版修正版';
+  const META='小六壬个人网页版 v10.4.1 婚姻模块排版修正版：修复命运场景婚姻模块手机端字体偏大问题，并继续缩短结果页右侧留白，让正文内容显示更完整。';
+  function applyVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content', META);
+    document.querySelectorAll('h2').forEach(el=>{
+      if(el.textContent && el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;
+    });
+    const lead=document.querySelector('header .hero p, .hero p');
+    if(lead && lead.textContent && lead.textContent.includes('本版')){
+      lead.textContent='本版修复命运场景“婚姻与伴侣参考”模块手机端字体偏大的问题，并继续微调结果页右侧安全留白，让正文与逐宫分析显示更完整；继续保留阅读模式、自动保存设置与婚姻参考模块。';
+    }
+  }
+  function patchVersionUpdates(){
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1041MarriageFix){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const marker='婚姻模块排版修正版';
+        const row='<details><summary>'+VERSION+'</summary><ul><li>修复婚姻与伴侣参考模块在手机端说明框、正文与表格局部字号偏大的问题。</li><li>补强婚姻模块移动端字号约束，减少 iPhone Safari 自动放大造成的显示不一致。</li><li>继续缩短结果页右侧安全留白，让正文卡片和逐宫分析内容向右多展开一点。</li><li>按固定 3 个必做检查执行：先检查错误、再检查补丁/版本跳动、最后同步更新版本内容记录与缓存文件。</li></ul></details>';
+        if(html.indexOf(marker) < 0) html += row;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1041MarriageFix = true;
+    }
+  }
+  function boot(){ applyVersion(); patchVersionUpdates(); try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', ()=>{ setTimeout(boot,120); setTimeout(boot,1200); setTimeout(boot,2800); });
 })();
 </script>
 
