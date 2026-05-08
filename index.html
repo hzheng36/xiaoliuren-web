@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.2.5 命盘六亲说明与性别选项版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.5 命盘六亲说明与性别选项版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。" />
+  <title>小六壬占卜 · v10.2.6 版本锁定与男女命断语修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.2.6 版本锁定与男女命断语修正版：修复旧补丁异步覆盖导致首页版本号跳动的问题，并让男命/女命选择真正进入命盘结果页断语重点。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.2.5 命盘六亲说明与性别选项版</h2>
+          <h2>个人占卜台 · v10.2.6 版本锁定与男女命断语修正版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9251,7 +9251,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
       if('caches' in window){
         caches.keys().then(function(keys){
           return Promise.all(keys.map(function(k){
-            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.4-destiny-layout-fixed-warning') return caches.delete(k);
+            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.6-version-gender-result-fix') return caches.delete(k);
             return Promise.resolve();
           }));
         }).catch(function(){});
@@ -9379,6 +9379,131 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   document.addEventListener('change', function(e){if(e.target && e.target.name==='destinyKinshipMode'){setTimeout(function(){ensureSelectorNote(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult) applyFixedWarning(window.currentResult); }catch(err){}},50);}}, true);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', function(){setTimeout(boot,180); setTimeout(boot,650);});
+})();
+</script>
+
+
+
+<!-- v10.2.6 patch: 版本锁定与男女命断语修正 -->
+<style id="v1026-version-gender-result-style">
+  .v1026-gender-inline{margin:10px 0 0;padding:10px 12px;border-radius:14px;border:1px solid rgba(103,83,165,.18);background:rgba(250,247,255,.9);line-height:1.72;color:var(--muted);font-size:.92rem;}
+  .v1026-gender-inline strong{color:var(--text)}
+  .v1026-gender-card-note{margin-top:10px;padding:9px 10px;border-radius:12px;background:rgba(255,247,234,.9);border:1px solid rgba(196,126,74,.18);color:#6b5c76;line-height:1.65;font-size:.9rem;}
+  .v1026-gender-chip{display:inline-flex;align-items:center;gap:5px;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(103,83,165,.10);color:var(--primary);font-size:.78rem;font-weight:800;vertical-align:middle;}
+</style>
+<script id="v1026-version-gender-result-script">
+(function(){
+  'use strict';
+  const VERSION='v10.2.6 版本锁定与男女命断语修正版';
+  const META='小六壬个人网页版 v10.2.6 版本锁定与男女命断语修正版：修复旧补丁异步覆盖导致首页版本号跳动的问题，并让男命/女命选择真正进入命盘结果页断语重点。';
+  const CACHE='xiaoliuren-v10.2.6-version-gender-result-fix';
+  const GENDER_KEY='xlr_destiny_gender_v1025';
+  function $(id){return document.getElementById(id);}
+  function qsa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel));}
+  function isDestinyResult(r){return !!(r && (r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'));}
+  function getGender(){
+    const el=$('destinyGender');
+    let v=(el&&el.value)||'';
+    if(!v){try{v=localStorage.getItem(GENDER_KEY)||'';}catch(e){}}
+    return v||'unspecified';
+  }
+  function genderLabel(v){return v==='male'?'男命':v==='female'?'女命':'未指定';}
+  function genderBrief(v){
+    if(v==='male') return '男命：妻财为伴侣与财务主位，可优先看妻子、女友、钱财、资产和资源；官鬼仍重点看事业压力、上司、规则、疾病灾祸。';
+    if(v==='female') return '女命：官鬼为伴侣与压力主位，可优先看丈夫、男友、事业规则、上司和压力；妻财主要看钱财、资产、资源与物质享受，不直接代表丈夫。';
+    return '未指定性别：六亲仍按排法正常推导；官鬼、妻财使用通用解释，可按实际性别自行侧重。';
+  }
+  function focusForKin(kin,g){
+    if(kin==='官鬼'){
+      if(g==='female') return '女命重点：此宫可优先看丈夫、男友、亲密关系中的压力，也同时看事业规则、上司、疾病灾祸。';
+      if(g==='male') return '男命重点：此宫主要看事业压力、上司、小人、规则约束、疾病灾祸，不作为伴侣主位。';
+      return '通用重点：官鬼主压力、规则、事业、疾病灾祸；女命可兼看丈夫、男友。';
+    }
+    if(kin==='妻财'){
+      if(g==='male') return '男命重点：此宫可优先看妻子、女友，也看钱财、资产、收入、投资和现实资源。';
+      if(g==='female') return '女命重点：此宫主要看钱财、资产、收入、投资和现实资源，不直接代表丈夫。';
+      return '通用重点：妻财主钱财、资产、资源、收入与物质享受；男命可兼看妻子、女友。';
+    }
+    return '';
+  }
+  function attachGenderToResult(r){
+    if(!isDestinyResult(r)) return r;
+    const g=getGender();
+    r.destinyInput=Object.assign({}, r.destinyInput||{}, {gender:g, genderLabel:genderLabel(g), genderExplain:genderBrief(g)});
+    r.destinyGender=g;
+    if(r.extraInfo && r.extraInfo.indexOf('性别：')<0) r.extraInfo += '；性别：'+genderLabel(g);
+    return r;
+  }
+  function ensureVersionText(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
+    qsa('h2').forEach(function(el){if(el.textContent && el.textContent.indexOf('个人占卜台')!==-1) el.textContent='个人占卜台 · '+VERSION;});
+    const homeVer=$('homeVersionUpdatesBlock');
+    if(homeVer && homeVer.innerHTML.indexOf(VERSION)===-1){
+      const row='<details open><summary>'+VERSION+'</summary><ul><li>修复首页版本标题在 v10.2.5 与旧版之间跳动的问题，最终版本显示由 v10.2.6 统一锁定。</li><li>修正 service-worker 缓存脚本，避免旧 PWA 缓存继续抢占页面。</li><li>男命/女命选择会进入命盘结果页：男命重点提示妻财，女命重点提示官鬼。</li><li>在官鬼、妻财相关卡片中加入男女命不同断语侧重点，避免只显示通用说明。</li></ul></details>';
+      homeVer.insertAdjacentHTML('afterbegin',row);
+    }
+  }
+  function applyGenderToDestinyResult(result){
+    const r=attachGenderToResult(result||window.currentResult||null);
+    if(!isDestinyResult(r)) return;
+    const g=(r.destinyInput&&r.destinyInput.gender)||getGender();
+    const intro=$('destinyBoardIntro');
+    if(intro){
+      let note=$('v1026GenderResultApplied');
+      if(!note){note=document.createElement('div');note.id='v1026GenderResultApplied';note.className='v1026-gender-inline';intro.insertAdjacentElement('afterend',note);}
+      note.innerHTML='<strong>本盘性别侧重：</strong>'+genderBrief(g);
+    }
+    qsa('.v101d-destiny-cell').forEach(function(cell){
+      const h=cell.querySelector('h5'); if(!h) return;
+      const txt=h.textContent||'';
+      const kin=txt.indexOf('官鬼')!==-1?'官鬼':(txt.indexOf('妻财')!==-1?'妻财':'');
+      const focus=focusForKin(kin,g); if(!focus) return;
+      if(!h.querySelector('.v1026-gender-chip')) h.insertAdjacentHTML('beforeend','<span class="v1026-gender-chip">'+genderLabel(g)+'重点</span>');
+      let note=cell.querySelector('.v1026-gender-card-note');
+      if(!note){note=document.createElement('div');note.className='v1026-gender-card-note';cell.appendChild(note);}
+      note.textContent=focus;
+    });
+    qsa('.v101d-analysis-card').forEach(function(card){
+      const h=card.querySelector('h5'); if(!h) return;
+      const txt=h.textContent||'';
+      const kin=txt.indexOf('关于官鬼')!==-1?'官鬼':(txt.indexOf('关于妻财')!==-1?'妻财':'');
+      const focus=focusForKin(kin,g); if(!focus) return;
+      if(!h.querySelector('.v1026-gender-chip')) h.insertAdjacentHTML('beforeend','<span class="v1026-gender-chip">'+genderLabel(g)+'重点</span>');
+      let note=card.querySelector('.v1026-gender-card-note');
+      if(!note){note=document.createElement('div');note.className='v1026-gender-card-note';card.appendChild(note);}
+      note.textContent=focus;
+    });
+  }
+  if(typeof window.divine==='function' && !window.divine.__v1026Gender){
+    const old=window.divine;
+    window.divine=function(){const r=old.apply(this,arguments); return attachGenderToResult(r);};
+    window.divine.__v1026Gender=true;
+  }
+  if(typeof window.renderResult==='function' && !window.renderResult.__v1026Gender){
+    const old=window.renderResult;
+    window.renderResult=function(result){attachGenderToResult(result); const ret=old.apply(this,arguments); setTimeout(function(){applyGenderToDestinyResult(result);ensureVersionText();},0); setTimeout(function(){applyGenderToDestinyResult(result);ensureVersionText();},300); return ret;};
+    window.renderResult.__v1026Gender=true;
+  }
+  if(typeof window.renderDestinyBoard==='function' && !window.renderDestinyBoard.__v1026Gender){
+    const old=window.renderDestinyBoard;
+    window.renderDestinyBoard=function(result){attachGenderToResult(result); const ret=old.apply(this,arguments); setTimeout(function(){applyGenderToDestinyResult(result);ensureVersionText();},0); return ret;};
+    window.renderDestinyBoard.__v1026Gender=true;
+  }
+  document.addEventListener('change',function(e){
+    if(e.target && e.target.id==='destinyGender'){
+      try{localStorage.setItem(GENDER_KEY,e.target.value||'unspecified');}catch(err){}
+      try{if(window.currentResult){attachGenderToResult(window.currentResult); if(isDestinyResult(window.currentResult) && typeof window.renderDestinyBoard==='function') window.renderDestinyBoard(window.currentResult);}}catch(err){}
+      setTimeout(function(){applyGenderToDestinyResult(window.currentResult);ensureVersionText();},80);
+    }
+  },true);
+  // Strong final version lock: older async patches may still rewrite the title; observe and correct immediately.
+  const mo=new MutationObserver(function(){ensureVersionText();});
+  if(document.documentElement) mo.observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:false});
+  function boot(){ensureVersionText(); try{applyGenderToDestinyResult(window.currentResult);}catch(e){} try{if('caches' in window) caches.keys().then(keys=>Promise.all(keys.map(k=>(k.indexOf('xiaoliuren')!==-1 && k!==CACHE)?caches.delete(k):Promise.resolve())));}catch(e){} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+  window.addEventListener('load',function(){setTimeout(boot,50);setTimeout(boot,500);setTimeout(boot,1500);});
+  setInterval(boot,250);
 })();
 </script>
 

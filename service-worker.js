@@ -1,6 +1,6 @@
-/* 小六壬占卜 · v10.2.5-destiny-gender-kinship
-const CACHE_NAME = 'xiaoliuren-v10.2.5-destiny-gender-kinship';
-const APP_SHELL = ['./', './index.html'];
+/* 小六壬占卜 · v10.2.6-version-gender-result-fix */
+const CACHE_NAME = 'xiaoliuren-v10.2.6-version-gender-result-fix';
+const APP_SHELL = ['./', './index.html', './manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -41,6 +41,7 @@ self.addEventListener('fetch', (event) => {
         const cache = await caches.open(CACHE_NAME);
         cache.put(req, fresh.clone()).catch(() => undefined);
         cache.put('./index.html', fresh.clone()).catch(() => undefined);
+        cache.put('./', fresh.clone()).catch(() => undefined);
         return fresh;
       } catch (err) {
         const cached = await caches.match(req) || await caches.match('./index.html') || await caches.match('./');
