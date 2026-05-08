@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.3.3 快速导读与术语解释版</title>
-  <meta name="description" content="小六壬个人网页版 v10.3.3 快速导读与术语解释版：新增快速导读、术语解释、命运六亲排法顶部提示与健康简易结论；保留健康口诀知识库融合。" />
+  <title>小六壬占卜 · v10.3.4 阅读模式与夜间模式版</title>
+  <meta name="description" content="小六壬个人网页版 v10.3.4 阅读模式与夜间模式版：新增白天/暗夜切换、护眼背景预设和自定义背景色；保留快速导读、术语解释与健康口诀知识库融合。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.3.3 快速导读与术语解释版</h2>
+          <h2>个人占卜台 · v10.3.4 阅读模式与夜间模式版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -10085,6 +10085,185 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function boot(){patchRender();patchVersion();installTermClick();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)enhance(window.currentResult);}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,600);});
+})();
+</script>
+
+
+
+<!-- v10.3.4 patch: reading mode / day night / background color -->
+<style id="v1034-reading-mode-style">
+  body.reading-bg-default{--xlr-reading-bg:#f7f3ee;}
+  body.reading-bg-cream{--xlr-reading-bg:#fbf2df;}
+  body.reading-bg-lavender{--xlr-reading-bg:#f4efff;}
+  body.reading-bg-green{--xlr-reading-bg:#f0f7ec;}
+  body.reading-bg-gray{--xlr-reading-bg:#f1f1f4;}
+  body.reading-bg-custom{--xlr-reading-bg:var(--xlr-custom-reading-bg,#f7f3ee);}
+  body.reading-theme-day{background:var(--xlr-reading-bg,#f7f3ee)!important;}
+  body.reading-theme-day .hero,
+  body.reading-theme-day .card,
+  body.reading-theme-day .section,
+  body.reading-theme-day .block,
+  body.reading-theme-day .result-section,
+  body.reading-theme-day #resultCard,
+  body.reading-theme-day dialog,
+  body.reading-theme-day .settings-card{background:rgba(255,255,255,.88);}
+  body.reading-theme-night{
+    --bg:#11121a;--card:#1b1b28;--text:#eee9fb;--muted:#b9b0cf;--border:rgba(194,176,230,.22);
+    background:#11121a!important;color:var(--text)!important;
+  }
+  body.reading-theme-night::before{background:radial-gradient(circle at 10% 10%, rgba(104,80,170,.20), transparent 32%), radial-gradient(circle at 90% 0%, rgba(78,106,180,.18), transparent 28%)!important;}
+  body.reading-theme-night .shell,body.reading-theme-night .main{color:var(--text)!important;}
+  body.reading-theme-night .hero,
+  body.reading-theme-night .card,
+  body.reading-theme-night .section,
+  body.reading-theme-night .block,
+  body.reading-theme-night .result-section,
+  body.reading-theme-night #resultCard,
+  body.reading-theme-night .result-header,
+  body.reading-theme-night .settings-card,
+  body.reading-theme-night dialog,
+  body.reading-theme-night .history-item,
+  body.reading-theme-night .template-item,
+  body.reading-theme-night .v1033-guide,
+  body.reading-theme-night .v1033-glossary,
+  body.reading-theme-night .v1030-health-body,
+  body.reading-theme-night .v1031-health-body,
+  body.reading-theme-night .destiny-board,
+  body.reading-theme-night .destiny-kinship-ref{background:rgba(27,27,40,.92)!important;border-color:var(--border)!important;color:var(--text)!important;box-shadow:0 14px 38px rgba(0,0,0,.28)!important;}
+  body.reading-theme-night h1,body.reading-theme-night h2,body.reading-theme-night h3,body.reading-theme-night h4,body.reading-theme-night h5,
+  body.reading-theme-night strong,body.reading-theme-night .palace-name,body.reading-theme-night .section-title,body.reading-theme-night .label,
+  body.reading-theme-night .v1033-term-name{color:#f3edff!important;}
+  body.reading-theme-night p,body.reading-theme-night li,body.reading-theme-night .muted,body.reading-theme-night small,
+  body.reading-theme-night .subtle,body.reading-theme-night .desc,body.reading-theme-night .note,body.reading-theme-night .rule-note,
+  body.reading-theme-night .v1033-term-desc{color:var(--muted)!important;}
+  body.reading-theme-night input,body.reading-theme-night textarea,body.reading-theme-night select{background:#161622!important;color:var(--text)!important;border-color:rgba(194,176,230,.28)!important;}
+  body.reading-theme-night button,
+  body.reading-theme-night .ghost-btn,
+  body.reading-theme-night .scroll-tool-btn,
+  body.reading-theme-night .mode-btn,
+  body.reading-theme-night .scene-card,
+  body.reading-theme-night .method-btn,
+  body.reading-theme-night .pill,
+  body.reading-theme-night .rule-badge,
+  body.reading-theme-night .bottom-jump a,
+  body.reading-theme-night .result-tab{background:#202033!important;color:#eee9fb!important;border-color:rgba(194,176,230,.28)!important;}
+  body.reading-theme-night .primary-btn,
+  body.reading-theme-night button.primary,
+  body.reading-theme-night .selected,
+  body.reading-theme-night .active{background:#745ac5!important;color:#fff!important;border-color:#8b74d9!important;}
+  body.reading-theme-night table,body.reading-theme-night th,body.reading-theme-night td{border-color:rgba(194,176,230,.18)!important;color:var(--text)!important;}
+  body.reading-theme-night .version-log-note,
+  body.reading-theme-night .guide-note,
+  body.reading-theme-night .v1033-guide-note,
+  body.reading-theme-night .v1033-health-simple,
+  body.reading-theme-night .destiny-note,
+  body.reading-theme-night .alert,
+  body.reading-theme-night .disclaimer{background:rgba(132,104,205,.14)!important;border-color:rgba(194,176,230,.25)!important;color:#d7cff0!important;}
+  body.reading-theme-night .section-jump-nav,
+  body.reading-theme-night .bottom-tabs{background:rgba(22,22,33,.82)!important;border-color:rgba(194,176,230,.25)!important;backdrop-filter:blur(14px);}
+  body.reading-theme-night .reading-mode-toggle{background:#745ac5!important;color:#fff!important;border-color:#8b74d9!important;}
+  .reading-mode-inline{display:grid;gap:12px;}
+  .reading-color-input{min-height:44px;width:100%;padding:4px!important;}
+  .reading-mode-toggle{font-weight:800;}
+</style>
+<script id="v1034-reading-mode-script">
+(function(){
+  'use strict';
+  const VERSION='v10.3.4 阅读模式与夜间模式版';
+  const META='小六壬个人网页版 v10.3.4 阅读模式与夜间模式版：新增白天/暗夜切换、护眼背景预设和自定义背景色；保留快速导读、术语解释与健康口诀知识库融合。';
+  const KEY='xiaoliuren_reading_mode_v1034';
+  const DEFAULT={theme:'day',bg:'default',custom:'#f7f3ee'};
+  const $=id=>document.getElementById(id);
+  function read(){try{return Object.assign({},DEFAULT,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){return Object.assign({},DEFAULT);}}
+  function save(s){try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},DEFAULT,s||{})));}catch(e){}}
+  function validHex(v){return /^#[0-9a-fA-F]{6}$/.test(String(v||''));}
+  function apply(s){
+    s=Object.assign({},DEFAULT,s||read()); if(!validHex(s.custom))s.custom=DEFAULT.custom;
+    const b=document.body, root=document.documentElement;
+    b.classList.remove('reading-theme-day','reading-theme-night','reading-bg-default','reading-bg-cream','reading-bg-lavender','reading-bg-green','reading-bg-gray','reading-bg-custom');
+    b.classList.add('reading-theme-'+(s.theme==='night'?'night':'day'));
+    b.classList.add('reading-bg-'+(s.bg||'default'));
+    root.style.setProperty('--xlr-custom-reading-bg',s.custom);
+    const meta=document.querySelector('meta[name="theme-color"]'); if(meta) meta.setAttribute('content', s.theme==='night'?'#11121a':'#6753a5');
+    syncForm(s); syncToggle(s);
+  }
+  function syncForm(s){
+    s=s||read();
+    const theme=$('settingReadingTheme'), bg=$('settingReadingBg'), custom=$('settingReadingCustomBg');
+    if(theme) theme.value=s.theme||'day';
+    if(bg) bg.value=s.bg||'default';
+    if(custom) custom.value=validHex(s.custom)?s.custom:DEFAULT.custom;
+  }
+  function syncToggle(s){
+    s=s||read();
+    document.querySelectorAll('[data-v1034-reading-toggle]').forEach(btn=>{
+      btn.textContent=s.theme==='night'?'白天':'夜间';
+      btn.title=s.theme==='night'?'切换到白天模式':'切换到暗夜模式';
+      btn.setAttribute('aria-label',btn.title);
+    });
+  }
+  function ensureRows(){
+    const form=document.querySelector('#settingsDialog .settings-form'); if(!form || $('settingReadingTheme')) return;
+    const card=document.createElement('div'); card.className='settings-card'; card.id='v1034ReadingModeCard';
+    card.innerHTML='<h4>阅读模式</h4><div class="reading-mode-inline"><div class="settings-row"><span>白天 / 暗夜模式<small>暗夜模式降低夜间阅读亮度；修改后会立即预览并自动保存。</small></span><select id="settingReadingTheme"><option value="day">白天模式</option><option value="night">暗夜模式</option></select></div><div class="settings-row"><span>背景颜色<small>可选择护眼背景；自定义颜色用于白天模式。</small></span><select id="settingReadingBg"><option value="default">默认白</option><option value="cream">米黄色护眼</option><option value="lavender">淡紫色</option><option value="green">淡绿色</option><option value="gray">浅灰色</option><option value="custom">自定义颜色</option></select></div><div class="settings-row"><span>自定义背景色<small>选择“自定义颜色”后生效。</small></span><input id="settingReadingCustomBg" class="reading-color-input" type="color" value="#f7f3ee"></div></div>';
+    const first=form.querySelector('.settings-card');
+    if(first&&first.nextSibling) form.insertBefore(card, first.nextSibling); else form.insertBefore(card, form.firstChild);
+    syncForm(read());
+  }
+  function saveFromForm(){
+    const s=read();
+    const theme=$('settingReadingTheme'), bg=$('settingReadingBg'), custom=$('settingReadingCustomBg');
+    if(theme) s.theme=theme.value==='night'?'night':'day';
+    if(bg) s.bg=bg.value||'default';
+    if(custom && validHex(custom.value)) s.custom=custom.value;
+    save(s); apply(s);
+  }
+  function addToggleButton(){
+    const tools=document.querySelector('.scroll-tools'); if(!tools || tools.querySelector('[data-v1034-reading-toggle]')) return;
+    const btn=document.createElement('button'); btn.className='scroll-tool-btn wide reading-mode-toggle'; btn.type='button'; btn.setAttribute('data-v1034-reading-toggle','1');
+    btn.onclick=function(){const s=read(); s.theme=s.theme==='night'?'day':'night'; save(s); apply(s); return false;};
+    const settingsBtn=[...tools.querySelectorAll('button')].find(b=>(b.textContent||'').trim()==='设置');
+    if(settingsBtn) tools.insertBefore(btn, settingsBtn); else tools.insertBefore(btn, tools.firstChild);
+    syncToggle(read());
+  }
+  function patchQuickTools(){
+    if(typeof window.renderQuickTools==='function' && !window.renderQuickTools.__v1034Reading){
+      const old=window.renderQuickTools;
+      window.renderQuickTools=function(){const r=old.apply(this,arguments); setTimeout(addToggleButton,0); return r;};
+      window.renderQuickTools.__v1034Reading=true;
+    }
+  }
+  function patchSettings(){
+    if(window.openSettingsDialog && !window.openSettingsDialog.__v1034Reading){
+      const old=window.openSettingsDialog;
+      window.openSettingsDialog=function(){ensureRows(); const r=old.apply(this,arguments); setTimeout(()=>{ensureRows();syncForm(read());},120); return r;};
+      window.openSettingsDialog.__v1034Reading=true;
+    }
+    const oldFill=window.fillSettingsDialog;
+    if(typeof oldFill==='function' && !oldFill.__v1034Reading){
+      window.fillSettingsDialog=function(){const r=oldFill.apply(this,arguments); ensureRows(); syncForm(read()); return r;};
+      window.fillSettingsDialog.__v1034Reading=true;
+    }
+  }
+  function bind(){
+    if(document.__v1034ReadingBind) return; document.__v1034ReadingBind=true;
+    document.addEventListener('change',function(e){if(e.target&&['settingReadingTheme','settingReadingBg','settingReadingCustomBg'].includes(e.target.id)){saveFromForm();}},true);
+    document.addEventListener('input',function(e){if(e.target&&e.target.id==='settingReadingCustomBg'){const s=read(); s.bg='custom'; s.custom=e.target.value; save(s); apply(s);}},true);
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
+    document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1034){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>新增阅读模式设置，支持白天模式与暗夜模式切换，方便夜间阅读。</li><li>新增护眼背景预设：默认白、米黄色、淡紫色、淡绿色、浅灰色，以及自定义背景色。</li><li>右侧快捷按钮新增“夜间/白天”切换按钮，可不进入设置快速切换阅读模式。</li><li>阅读模式会保存在当前浏览器本地，下次打开自动沿用。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
+      window.buildVersionUpdatesHTML.__v1034=true;
+    }
+    try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
+  }
+  function boot(){ensureRows();patchSettings();patchQuickTools();bind();addToggleButton();apply(read());patchVersion();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+  window.addEventListener('load',function(){setTimeout(boot,90);setTimeout(boot,700);});
 })();
 </script>
 
