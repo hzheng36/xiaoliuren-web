@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.6-paipan-subnav-range';
+const CACHE_NAME = 'xiaoliuren-v10.4.7-nav-version-stable';
 const APP_SHELL = [
   './',
   './index.html',
