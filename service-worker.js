@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.1-marriage-layout-fix';
+const CACHE_NAME = 'xiaoliuren-v10.4.2-paipan-subnav';
 const APP_SHELL = [
   './',
   './index.html',
