@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 v10.2.7",
-  "short_name": "小六壬v10.2.7",
-  "description": "小六壬个人网页版 v10.2.7 命盘五行定义补充版",
+  "name": "小六壬占卜 v10.2.8",
+  "short_name": "小六壬v10.2.8",
+  "description": "小六壬个人网页版 v10.2.8 命盘五行定义与加载修正版：修复 v10.2.6/v10.2.7 页面持续加载问题，补充四套五行定义，并保留男命/女命断语侧重点。",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.2.6"
+  "version": "10.2.8"
 }

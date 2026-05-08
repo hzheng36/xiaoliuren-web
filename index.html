@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.2.7 命盘五行定义补充版</title>
-  <meta name="description" content="小六壬个人网页版 v10.2.7 命盘五行定义补充版：在命运六亲参考盘中补充掌诀五行、地支五行、六神五行和五星五行定义，并继续锁定最新版本显示。" />
+  <title>小六壬占卜 · v10.2.8 命盘五行定义与加载修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.2.8 命盘五行定义与加载修正版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.2.7 命盘五行定义补充版</h2>
+          <h2>个人占卜台 · v10.2.8 命盘五行定义与加载修正版</h2>
           <p>本版基于 v10.1.6 修复阅读设置保存、模式切换字体恢复和历史记录显示宽度；手机/平板端关闭设置不再询问，电脑端保留未保存提醒。</p>
         </div>
         <div class="actions">
@@ -9251,7 +9251,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
       if('caches' in window){
         caches.keys().then(function(keys){
           return Promise.all(keys.map(function(k){
-            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.6-version-gender-result-fix') return caches.delete(k);
+            if(k.indexOf('xiaoliuren')!==-1 && k!=='xiaoliuren-v10.2.4-destiny-layout-fixed-warning') return caches.delete(k);
             return Promise.resolve();
           }));
         }).catch(function(){});
@@ -9379,216 +9379,6 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   document.addEventListener('change', function(e){if(e.target && e.target.name==='destinyKinshipMode'){setTimeout(function(){ensureSelectorNote(); try{ if(typeof window.currentResult!=='undefined' && window.currentResult) applyFixedWarning(window.currentResult); }catch(err){}},50);}}, true);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
   window.addEventListener('load', function(){setTimeout(boot,180); setTimeout(boot,650);});
-})();
-</script>
-
-
-
-<!-- v10.2.6 patch: 版本锁定与男女命断语修正 -->
-<style id="v1026-version-gender-result-style">
-  .v1026-gender-inline{margin:10px 0 0;padding:10px 12px;border-radius:14px;border:1px solid rgba(103,83,165,.18);background:rgba(250,247,255,.9);line-height:1.72;color:var(--muted);font-size:.92rem;}
-  .v1026-gender-inline strong{color:var(--text)}
-  .v1026-gender-card-note{margin-top:10px;padding:9px 10px;border-radius:12px;background:rgba(255,247,234,.9);border:1px solid rgba(196,126,74,.18);color:#6b5c76;line-height:1.65;font-size:.9rem;}
-  .v1026-gender-chip{display:inline-flex;align-items:center;gap:5px;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(103,83,165,.10);color:var(--primary);font-size:.78rem;font-weight:800;vertical-align:middle;}
-</style>
-<script id="v1026-version-gender-result-script">
-(function(){
-  'use strict';
-  const VERSION='v10.2.6 版本锁定与男女命断语修正版';
-  const META='小六壬个人网页版 v10.2.7 命盘五行定义补充版：在命运六亲参考盘中补充掌诀五行、地支五行、六神五行和五星五行定义，并继续锁定最新版本显示。';
-  const CACHE='xiaoliuren-v10.2.6-version-gender-result-fix';
-  const GENDER_KEY='xlr_destiny_gender_v1025';
-  function $(id){return document.getElementById(id);}
-  function qsa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel));}
-  function isDestinyResult(r){return !!(r && (r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'));}
-  function getGender(){
-    const el=$('destinyGender');
-    let v=(el&&el.value)||'';
-    if(!v){try{v=localStorage.getItem(GENDER_KEY)||'';}catch(e){}}
-    return v||'unspecified';
-  }
-  function genderLabel(v){return v==='male'?'男命':v==='female'?'女命':'未指定';}
-  function genderBrief(v){
-    if(v==='male') return '男命：妻财为伴侣与财务主位，可优先看妻子、女友、钱财、资产和资源；官鬼仍重点看事业压力、上司、规则、疾病灾祸。';
-    if(v==='female') return '女命：官鬼为伴侣与压力主位，可优先看丈夫、男友、事业规则、上司和压力；妻财主要看钱财、资产、资源与物质享受，不直接代表丈夫。';
-    return '未指定性别：六亲仍按排法正常推导；官鬼、妻财使用通用解释，可按实际性别自行侧重。';
-  }
-  function focusForKin(kin,g){
-    if(kin==='官鬼'){
-      if(g==='female') return '女命重点：此宫可优先看丈夫、男友、亲密关系中的压力，也同时看事业规则、上司、疾病灾祸。';
-      if(g==='male') return '男命重点：此宫主要看事业压力、上司、小人、规则约束、疾病灾祸，不作为伴侣主位。';
-      return '通用重点：官鬼主压力、规则、事业、疾病灾祸；女命可兼看丈夫、男友。';
-    }
-    if(kin==='妻财'){
-      if(g==='male') return '男命重点：此宫可优先看妻子、女友，也看钱财、资产、收入、投资和现实资源。';
-      if(g==='female') return '女命重点：此宫主要看钱财、资产、收入、投资和现实资源，不直接代表丈夫。';
-      return '通用重点：妻财主钱财、资产、资源、收入与物质享受；男命可兼看妻子、女友。';
-    }
-    return '';
-  }
-  function attachGenderToResult(r){
-    if(!isDestinyResult(r)) return r;
-    const g=getGender();
-    r.destinyInput=Object.assign({}, r.destinyInput||{}, {gender:g, genderLabel:genderLabel(g), genderExplain:genderBrief(g)});
-    r.destinyGender=g;
-    if(r.extraInfo && r.extraInfo.indexOf('性别：')<0) r.extraInfo += '；性别：'+genderLabel(g);
-    return r;
-  }
-  function ensureVersionText(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
-    qsa('h2').forEach(function(el){if(el.textContent && el.textContent.indexOf('个人占卜台')!==-1) el.textContent='个人占卜台 · '+VERSION;});
-    const homeVer=$('homeVersionUpdatesBlock');
-    if(homeVer && homeVer.innerHTML.indexOf(VERSION)===-1){
-      const row='<details open><summary>'+VERSION+'</summary><ul><li>修复首页版本标题在 v10.2.5 与旧版之间跳动的问题，最终版本显示由 v10.2.6 统一锁定。</li><li>修正 service-worker 缓存脚本，避免旧 PWA 缓存继续抢占页面。</li><li>男命/女命选择会进入命盘结果页：男命重点提示妻财，女命重点提示官鬼。</li><li>在官鬼、妻财相关卡片中加入男女命不同断语侧重点，避免只显示通用说明。</li></ul></details>';
-      homeVer.insertAdjacentHTML('afterbegin',row);
-    }
-  }
-  function applyGenderToDestinyResult(result){
-    const r=attachGenderToResult(result||window.currentResult||null);
-    if(!isDestinyResult(r)) return;
-    const g=(r.destinyInput&&r.destinyInput.gender)||getGender();
-    const intro=$('destinyBoardIntro');
-    if(intro){
-      let note=$('v1026GenderResultApplied');
-      if(!note){note=document.createElement('div');note.id='v1026GenderResultApplied';note.className='v1026-gender-inline';intro.insertAdjacentElement('afterend',note);}
-      note.innerHTML='<strong>本盘性别侧重：</strong>'+genderBrief(g);
-    }
-    qsa('.v101d-destiny-cell').forEach(function(cell){
-      const h=cell.querySelector('h5'); if(!h) return;
-      const txt=h.textContent||'';
-      const kin=txt.indexOf('官鬼')!==-1?'官鬼':(txt.indexOf('妻财')!==-1?'妻财':'');
-      const focus=focusForKin(kin,g); if(!focus) return;
-      if(!h.querySelector('.v1026-gender-chip')) h.insertAdjacentHTML('beforeend','<span class="v1026-gender-chip">'+genderLabel(g)+'重点</span>');
-      let note=cell.querySelector('.v1026-gender-card-note');
-      if(!note){note=document.createElement('div');note.className='v1026-gender-card-note';cell.appendChild(note);}
-      note.textContent=focus;
-    });
-    qsa('.v101d-analysis-card').forEach(function(card){
-      const h=card.querySelector('h5'); if(!h) return;
-      const txt=h.textContent||'';
-      const kin=txt.indexOf('关于官鬼')!==-1?'官鬼':(txt.indexOf('关于妻财')!==-1?'妻财':'');
-      const focus=focusForKin(kin,g); if(!focus) return;
-      if(!h.querySelector('.v1026-gender-chip')) h.insertAdjacentHTML('beforeend','<span class="v1026-gender-chip">'+genderLabel(g)+'重点</span>');
-      let note=card.querySelector('.v1026-gender-card-note');
-      if(!note){note=document.createElement('div');note.className='v1026-gender-card-note';card.appendChild(note);}
-      note.textContent=focus;
-    });
-  }
-  if(typeof window.divine==='function' && !window.divine.__v1026Gender){
-    const old=window.divine;
-    window.divine=function(){const r=old.apply(this,arguments); return attachGenderToResult(r);};
-    window.divine.__v1026Gender=true;
-  }
-  if(typeof window.renderResult==='function' && !window.renderResult.__v1026Gender){
-    const old=window.renderResult;
-    window.renderResult=function(result){attachGenderToResult(result); const ret=old.apply(this,arguments); setTimeout(function(){applyGenderToDestinyResult(result);ensureVersionText();},0); setTimeout(function(){applyGenderToDestinyResult(result);ensureVersionText();},300); return ret;};
-    window.renderResult.__v1026Gender=true;
-  }
-  if(typeof window.renderDestinyBoard==='function' && !window.renderDestinyBoard.__v1026Gender){
-    const old=window.renderDestinyBoard;
-    window.renderDestinyBoard=function(result){attachGenderToResult(result); const ret=old.apply(this,arguments); setTimeout(function(){applyGenderToDestinyResult(result);ensureVersionText();},0); return ret;};
-    window.renderDestinyBoard.__v1026Gender=true;
-  }
-  document.addEventListener('change',function(e){
-    if(e.target && e.target.id==='destinyGender'){
-      try{localStorage.setItem(GENDER_KEY,e.target.value||'unspecified');}catch(err){}
-      try{if(window.currentResult){attachGenderToResult(window.currentResult); if(isDestinyResult(window.currentResult) && typeof window.renderDestinyBoard==='function') window.renderDestinyBoard(window.currentResult);}}catch(err){}
-      setTimeout(function(){applyGenderToDestinyResult(window.currentResult);ensureVersionText();},80);
-    }
-  },true);
-  // Strong final version lock: older async patches may still rewrite the title; observe and correct immediately.
-  const mo=new MutationObserver(function(){ensureVersionText();});
-  if(document.documentElement) mo.observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:false});
-  function boot(){ensureVersionText(); try{applyGenderToDestinyResult(window.currentResult);}catch(e){} try{if('caches' in window) caches.keys().then(keys=>Promise.all(keys.map(k=>(k.indexOf('xiaoliuren')!==-1 && k!==CACHE)?caches.delete(k):Promise.resolve())));}catch(e){} }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
-  window.addEventListener('load',function(){setTimeout(boot,50);setTimeout(boot,500);setTimeout(boot,1500);});
-  setInterval(boot,250);
-})();
-</script>
-
-
-
-<!-- v10.2.7 patch: 命盘五行定义补充与版本最终锁定 -->
-<style id="v1027-element-definition-style">
-  .v1027-element-definitions{margin:14px 0 0;padding:16px 18px;border:1px solid rgba(126,103,176,.18);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(250,247,255,.88));box-shadow:0 10px 28px rgba(64,44,104,.05)}
-  .v1027-element-definitions h5{margin:0 0 10px;font-size:1rem;color:#6f56b3;font-weight:900;letter-spacing:.02em}
-  .v1027-element-definitions .v1027-def-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-  .v1027-def-card{padding:12px 12px;border-radius:15px;background:rgba(255,255,255,.78);border:1px solid rgba(126,103,176,.12)}
-  .v1027-def-card strong{display:block;margin-bottom:6px;color:#2d2946;font-size:.94rem}
-  .v1027-def-card p{margin:0;color:#7d7894;line-height:1.7;font-size:.9rem}
-  .v1027-def-note{margin:10px 0 0;color:#7d7894;font-size:.9rem;line-height:1.7}
-  @media(max-width:980px){.v1027-element-definitions .v1027-def-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-  @media(max-width:560px){.v1027-element-definitions{padding:14px}.v1027-element-definitions .v1027-def-grid{grid-template-columns:1fr}.v1027-def-card p{font-size:.88rem}}
-</style>
-<script id="v1027-element-definitions-script">
-(function(){
-  'use strict';
-  const VERSION='v10.2.7 命盘五行定义补充版';
-  const META='小六壬个人网页版 v10.2.7 命盘五行定义补充版：在命运六亲参考盘中补充掌诀五行、地支五行、六神五行和五星五行定义，并继续锁定最新版本显示。';
-  const CACHE='xiaoliuren-v10.2.7-destiny-element-definitions';
-  function $(id){return document.getElementById(id);} 
-  function qsa(sel){return Array.from(document.querySelectorAll(sel));}
-  function isDestinyResult(r){return !!(r && (r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'||(typeof currentScene!=='undefined'&&currentScene==='destiny')));} 
-  function defHTML(){
-    return '<section id="v1027ElementDefinitions" class="v1027-element-definitions">'
-      +'<h5>四套五行定义</h5>'
-      +'<div class="v1027-def-grid">'
-      +'<div class="v1027-def-card"><strong>掌诀五行</strong><p>大安木，留连水，速喜火，赤口金，小吉木，空亡土。用于看宫位气象底色、方位与象意，不直接定六亲。</p></div>'
-      +'<div class="v1027-def-card"><strong>地支五行</strong><p>寅卯木，巳午火，申酉金，亥子水，辰戌丑未土。五行生克法定六亲时，以自身宫地支五行为“我”。</p></div>'
-      +'<div class="v1027-def-card"><strong>六神五行</strong><p>青龙木，朱雀火，勾陈土，腾蛇土，白虎金，玄武水。用于看表现形态，如青龙正、朱雀口、腾蛇曲、白虎冲。</p></div>'
-      +'<div class="v1027-def-card"><strong>五星五行</strong><p>木星木，火星火，土星土，金星金，水星水；天空主虚、空、落空，不按常规五行生克硬套。</p></div>'
-      +'</div>'
-      +'<p class="v1027-def-note"><strong>读盘提醒：</strong>定六亲主要看地支五行；掌诀、六神、五星负责补充状态、形态与顺逆。不要把“掌诀五行”和“地支五行”混成同一套规则。</p>'
-      +'</section>';
-  }
-  function renderDefinitions(){
-    const intro=$('destinyBoardIntro'); if(!intro) return;
-    const old=$('v1027ElementDefinitions'); if(old) old.remove();
-    const gender=$('v1025GenderResultNote');
-    if(gender && gender.parentNode){ gender.insertAdjacentHTML('beforebegin', defHTML()); }
-    else { intro.insertAdjacentHTML('afterend', defHTML()); }
-  }
-  function patchRenderers(){
-    if(typeof window.renderResult==='function' && !window.renderResult.__v1027Def){
-      const old=window.renderResult;
-      window.renderResult=function(result){const ret=old.apply(this,arguments); if(isDestinyResult(result)) setTimeout(renderDefinitions,0); return ret;};
-      window.renderResult.__v1027Def=true;
-    }
-    if(typeof window.renderDestinyBoard==='function' && !window.renderDestinyBoard.__v1027Def){
-      const old=window.renderDestinyBoard;
-      window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments); setTimeout(renderDefinitions,0); return ret;};
-      window.renderDestinyBoard.__v1027Def=true;
-    }
-  }
-  function patchVersion(){
-    document.title='小六壬占卜 · '+VERSION;
-    const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
-    qsa('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')!==-1) el.textContent='个人占卜台 · '+VERSION;});
-    const about=document.querySelector('#appSubtitle, .app-subtitle, .hero-subtitle');
-    if(about && about.textContent && about.textContent.indexOf('本版基于')!==-1){ about.textContent='本版补充命盘四套五行定义，并保留命运输入优化、男女命断语、日志系统与设置保存修复。'; }
-    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1027){
-      const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details open><summary>'+VERSION+'</summary><ul><li>命运六亲参考盘新增“四套五行定义”：掌诀五行、地支五行、六神五行、五星五行。</li><li>明确六亲定法主要使用地支五行，掌诀五行用于气象底色，避免混用规则。</li><li>补充六神五行：青龙木、朱雀火、勾陈土、腾蛇土、白虎金、玄武水。</li><li>补充五星五行：木星、火星、土星、金星、水星及天空的空虚象。</li><li>继续保留 v10.2.6 版本锁定与男女命断语修正。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
-      window.buildVersionUpdatesHTML.__v1027=true;
-    }
-    try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
-    try{
-      if('serviceWorker' in navigator){
-        navigator.serviceWorker.getRegistrations && navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){if(r.update) r.update();});});
-        if(window.caches){caches.keys().then(function(keys){keys.forEach(function(k){if(k.indexOf('xiaoliuren')!==-1 && k!==CACHE) caches.delete(k);});});}
-      }
-    }catch(e){}
-  }
-  function boot(){patchRenderers(); patchVersion(); renderDefinitions();}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
-  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,400);setTimeout(boot,1200);});
-  setInterval(function(){
-    if(document.title.indexOf(VERSION)<0) patchVersion();
-    const h2=qsa('h2').find(function(el){return el.textContent&&el.textContent.indexOf('个人占卜台')!==-1;});
-    if(h2 && h2.textContent.indexOf(VERSION)<0) patchVersion();
-    if($('destinyBoardIntro')) renderDefinitions();
-  },700);
 })();
 </script>
 
@@ -10012,13 +9802,15 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   .v1025-pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;margin:0 4px 4px 0;background:rgba(103,83,165,.1);color:var(--primary);font-weight:800;font-size:.82rem;}
   .v1025-gender-result-note{margin:10px 0 0;padding:10px 12px;border-radius:14px;border:1px solid rgba(196,126,74,.22);background:rgba(255,247,234,.85);line-height:1.72;color:var(--muted);font-size:.92rem;}
   .v1025-gender-result-note strong{color:var(--text)}
+  .v1028-gender-focus-note{margin-top:10px;padding:9px 10px;border-radius:12px;background:rgba(255,247,234,.92);border:1px solid rgba(196,126,74,.20);color:#6b5c76;line-height:1.65;font-size:.9rem;}
+  .v1028-gender-focus-chip{display:inline-flex;align-items:center;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(103,83,165,.10);color:var(--primary);font-size:.78rem;font-weight:800;vertical-align:middle;}
   @media(max-width:760px){.v1025-guide-grid{grid-template-columns:1fr}.v1025-kinship-guide{padding:14px}.v1025-table-wrap table{font-size:.88rem;min-width:660px}}
 </style>
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION='v10.2.5 命盘六亲说明与性别选项版';
-  const META='小六壬个人网页版 v10.2.5 命盘六亲说明与性别选项版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。';
+  const VERSION='v10.2.8 命盘五行定义与加载修正版';
+  const META='小六壬个人网页版 v10.2.8 命盘五行定义与加载修正版：命运排盘输入增加性别选项，结果页补充六亲含义、男女命侧重点，以及六亲与掌诀、地支、六神、五星的综合读法。';
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -10062,7 +9854,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
           if(result.extraInfo && result.extraInfo.indexOf('性别：')<0) result.extraInfo += '；性别：'+g.genderLabel;
         }
         const ret=old.apply(this, arguments);
-        setTimeout(function(){renderKinshipGuide(result); renderGenderResultNote(result);},0);
+        setTimeout(function(){renderKinshipGuide(result); renderGenderResultNote(result); applyGenderFocusToCards(result);},0);
         return ret;
       };
       window.renderResult.__v1025Gender=true;
@@ -10071,7 +9863,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function patchRenderDestinyBoard(){
     if(typeof window.renderDestinyBoard==='function' && !window.renderDestinyBoard.__v1025Guide){
       const old=window.renderDestinyBoard;
-      window.renderDestinyBoard=function(result){const ret=old.apply(this, arguments); setTimeout(function(){renderKinshipGuide(result); renderGenderResultNote(result);},0); return ret;};
+      window.renderDestinyBoard=function(result){const ret=old.apply(this, arguments); setTimeout(function(){renderKinshipGuide(result); renderGenderResultNote(result); applyGenderFocusToCards(result);},0); return ret;};
       window.renderDestinyBoard.__v1025Guide=true;
     }
   }
@@ -10081,6 +9873,33 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     let note=$('v1025GenderResultNote'); if(!note){note=document.createElement('div'); note.id='v1025GenderResultNote'; note.className='v1025-gender-result-note'; intro.insertAdjacentElement('afterend',note);}
     const g=(result.destinyInput&&result.destinyInput.gender)||getGender();
     note.innerHTML='<strong>性别侧重：</strong>'+genderExplain(g);
+  }
+  function v1028GenderFocusText(kin,g){
+    if(kin==='官鬼'){
+      if(g==='female') return '女命重点：官鬼可优先看丈夫、男友、亲密关系中的压力，也同时看事业规则、上司、疾病灾祸。';
+      if(g==='male') return '男命重点：官鬼主要看事业压力、上司、小人、规则约束、疾病灾祸，不作为伴侣主位。';
+      return '通用重点：官鬼主压力、规则、事业、疾病灾祸；女命可兼看丈夫、男友。';
+    }
+    if(kin==='妻财'){
+      if(g==='male') return '男命重点：妻财可优先看妻子、女友，也看钱财、资产、收入、投资和现实资源。';
+      if(g==='female') return '女命重点：妻财主要看钱财、资产、收入、投资和现实资源，不直接代表丈夫。';
+      return '通用重点：妻财主钱财、资产、资源、收入与物质享受；男命可兼看妻子、女友。';
+    }
+    return '';
+  }
+  function applyGenderFocusToCards(result){
+    if(!isDestinyResult(result)) return;
+    const g=(result.destinyInput&&result.destinyInput.gender)||getGender();
+    document.querySelectorAll('.v101d-destiny-cell,.v101d-analysis-card,.destiny-cell.v10-cell,.destiny-deep-card').forEach(function(card){
+      const h=card.querySelector('h5,h4'); if(!h) return;
+      const txt=h.textContent||'';
+      const kin=txt.indexOf('官鬼')!==-1?'官鬼':(txt.indexOf('妻财')!==-1?'妻财':'');
+      const focus=v1028GenderFocusText(kin,g); if(!focus) return;
+      if(!h.querySelector('.v1028-gender-focus-chip')) h.insertAdjacentHTML('beforeend','<span class="v1028-gender-focus-chip">'+genderLabel(g)+'重点</span>');
+      let note=card.querySelector('.v1028-gender-focus-note');
+      if(!note){note=document.createElement('div');note.className='v1028-gender-focus-note';card.appendChild(note);}
+      note.textContent=focus;
+    });
   }
   function guideHTML(result){
     const g=(result&&result.destinyInput&&result.destinyInput.gender)||getGender();
@@ -10100,6 +9919,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
       +'<div class="v1025-guide-card"><h5>男女命侧重点</h5><p><span class="v1025-pill">当前：'+gl+'</span></p><ul><li>性别不改变六亲的推导：仍按五行生克法或固定口诀定标签。</li><li>女命看官鬼时，可优先解释为丈夫、男友，同时也看上司、规则和压力。</li><li>男命看妻财时，可优先解释为妻子、女友，同时也看钱财、资产和资源。</li><li>未指定性别时，按通用人事含义解释。</li></ul></div>'
       +'<div class="v1025-guide-card"><h5>四层信息怎么合看</h5><ul><li><strong>六亲</strong>：告诉你看哪类人事。</li><li><strong>掌诀</strong>：看底色，例如大安稳、留连拖、速喜快、赤口争、小吉动、空亡虚。</li><li><strong>地支</strong>：看内在五行根基，也是五行生克法定六亲的依据。</li><li><strong>六神</strong>：看表现形态，例如青龙正、朱雀口、勾陈缓、腾蛇曲、白虎冲、玄武隐。</li><li><strong>五星</strong>：看外部力量与顺逆，星生地较顺，星克地较压，天空主虚。</li></ul></div>'
       +'</div>'
+      +'<div class="v1025-guide-card" style="margin-top:12px"><h5>四套五行定义</h5><ul><li><strong>掌诀五行：</strong>大安木，留连水，速喜火，赤口金，小吉木，空亡土。用于看宫位气象底色、方位与象意，不直接定六亲。</li><li><strong>地支五行：</strong>寅卯木，巳午火，申酉金，亥子水，辰戌丑未土。五行生克法定六亲时，以自身宫地支五行为“我”。</li><li><strong>六神五行：</strong>青龙木，朱雀火，勾陈土，腾蛇土，白虎金，玄武水。用于看表现形态。</li><li><strong>五星五行：</strong>木星木，火星火，土星土，金星金，水星水；天空主虚、空、落空。</li></ul><p class="v1025-guide-muted"><strong>提醒：</strong>定六亲主要看地支五行；掌诀、六神、五星负责补充状态、形态与顺逆，不能把掌诀五行和地支五行混成同一套规则。</p></div>'
       +'<div class="v1025-guide-card" style="margin-top:12px"><h5>例子：同样是“妻财”，组合不同，断语不同</h5><ul><li><strong>妻财 + 大安 + 勾陈 + 土星：</strong>稳定积累，但进财慢。</li><li><strong>妻财 + 速喜 + 朱雀 + 水星：</strong>偏财消息快，但口舌、沟通和承诺要核实。</li><li><strong>妻财 + 空亡 + 玄武 + 火星：</strong>财来财去，容易被骗或落空。</li></ul><p class="v1025-guide-muted">所以网站显示“自身、父母、官鬼、兄弟、妻财、子孙”只是第一步；真正解读要看同一宫的掌诀、地支、六神和五星。</p></div>'
       +'</section>';
   }
@@ -10115,13 +9935,13 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;});
     if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1025){
       const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>命运排盘输入增加“性别”选项：未指定、男命、女命。</li><li>结果页新增“六亲读盘补充说明”，解释自身、父母、官鬼、兄弟、妻财、子孙的通用含义。</li><li>补充男女命侧重点：女命官鬼可优先看丈夫/男友，男命妻财可优先看妻子/女友；性别不改变六亲推导规则。</li><li>补充“六亲 + 掌诀 + 地支 + 六神 + 五星”的合看方法，并加入妻财组合示例，帮助用户理解同一六亲在不同组合下断语不同。</li><li>继续保留 v10.2.4 命盘电脑版排版与固定法提示修正、v10.2.0 占例复盘日志系统。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
+      window.buildVersionUpdatesHTML=function(){let html=old.call(this); const row='<details><summary>'+VERSION+'</summary><ul><li>修复 v10.2.6/v10.2.7 上传后页面一直加载的问题：移除高频版本锁定与重复渲染逻辑，改为稳定补丁。</li><li>保留命运排盘性别选项：未指定、男命、女命，并在命盘结果中提示男命/女命对官鬼、妻财的不同侧重点。</li><li>命运六亲参考盘补充四套五行定义：掌诀五行、地支五行、六神五行、五星五行。</li><li>明确六亲定法主要看地支五行；掌诀五行用于气象底色，避免混用规则。</li><li>同步更新 README、页面版本记录、manifest 与 service-worker 缓存名。</li></ul></details>'; if(html.indexOf(VERSION)<0) html+=row; return html;};
       window.buildVersionUpdatesHTML.__v1025=true;
     }
     try{if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks();}catch(e){}
   }
-  function boot(){ensureGenderField(); patchRenderResult(); patchRenderDestinyBoard(); patchVersion(); try{if(typeof window.currentResult!=='undefined' && window.currentResult){renderKinshipGuide(window.currentResult); renderGenderResultNote(window.currentResult);}}catch(e){} }
-  document.addEventListener('change',function(e){if(e.target && e.target.id==='destinyGender'){try{localStorage.setItem(GENDER_KEY,e.target.value||'unspecified');}catch(err){} updateGenderNote(); try{if(typeof window.currentResult!=='undefined' && window.currentResult){window.currentResult.destinyInput=Object.assign({},window.currentResult.destinyInput||{},selectedGenderMeta()); renderGenderResultNote(window.currentResult); renderKinshipGuide(window.currentResult);}}catch(err){}}},true);
+  function boot(){ensureGenderField(); patchRenderResult(); patchRenderDestinyBoard(); patchVersion(); try{if(typeof window.currentResult!=='undefined' && window.currentResult){renderKinshipGuide(window.currentResult); renderGenderResultNote(window.currentResult); applyGenderFocusToCards(window.currentResult);}}catch(e){} }
+  document.addEventListener('change',function(e){if(e.target && e.target.id==='destinyGender'){try{localStorage.setItem(GENDER_KEY,e.target.value||'unspecified');}catch(err){} updateGenderNote(); try{if(typeof window.currentResult!=='undefined' && window.currentResult){window.currentResult.destinyInput=Object.assign({},window.currentResult.destinyInput||{},selectedGenderMeta()); renderGenderResultNote(window.currentResult); renderKinshipGuide(window.currentResult); applyGenderFocusToCards(window.currentResult);}}catch(err){}}},true);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
   window.addEventListener('load',function(){setTimeout(boot,100);setTimeout(boot,500);setTimeout(boot,1200);});
   // final version lock: older patches may update title asynchronously, so lock once more.
