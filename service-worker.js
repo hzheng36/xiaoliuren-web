@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.7-nav-function-fix';
+const CACHE_NAME = 'xiaoliuren-v10.4.8-nav-parent-highlight';
 const APP_SHELL = [
   './',
   './index.html',
