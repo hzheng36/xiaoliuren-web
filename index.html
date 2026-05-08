@@ -9009,6 +9009,207 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 })();
 </script>
 
+
+
+<!-- v10.2.2 patch: 命运场景排盘输入优化 -->
+<style id="v1022-destiny-input-style">
+  .destiny-input-options{display:none;margin:14px 0 12px;padding:14px;border:1px solid rgba(103,83,165,.16);border-radius:16px;background:linear-gradient(180deg,rgba(103,83,165,.07),rgba(255,255,255,.92));}
+  .destiny-input-options.show{display:block;}
+  .destiny-input-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+  .destiny-input-head h4{margin:0;color:var(--primary);font-size:1rem;}
+  .destiny-input-head p{margin:4px 0 0;color:var(--muted);font-size:.88rem;line-height:1.55;}
+  .destiny-input-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .destiny-input-grid label{display:grid;gap:6px;font-size:.9rem;color:var(--muted);}
+  .destiny-input-grid select,.destiny-input-grid input{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px 12px;color:var(--text);font-size:.95rem;}
+  .destiny-field.hidden{display:none!important;}
+  .destiny-input-note{margin-top:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.78);color:var(--muted);line-height:1.6;font-size:.88rem;}
+  body.destiny-scene #questionSection{display:none!important;}
+  body.destiny-scene .method-tab[data-method="number"],
+  body.destiny-scene .method-tab[data-method="single"],
+  body.destiny-scene .method-tab[data-method="event"]{display:none!important;}
+  @media(max-width:720px){.destiny-input-grid{grid-template-columns:1fr}.destiny-input-head{display:block}}
+</style>
+<script id="v1022-destiny-input-upgrade">
+(function(){
+  'use strict';
+  const VERSION='v10.2.2 命运排盘输入优化版';
+  const SHICHEN=[
+    {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
+    {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
+    {idx:3,name:'寅时',range:'03:00-04:59',mid:'03:30'},
+    {idx:4,name:'卯时',range:'05:00-06:59',mid:'05:30'},
+    {idx:5,name:'辰时',range:'07:00-08:59',mid:'07:30'},
+    {idx:6,name:'巳时',range:'09:00-10:59',mid:'09:30'},
+    {idx:7,name:'午时',range:'11:00-12:59',mid:'11:30'},
+    {idx:8,name:'未时',range:'13:00-14:59',mid:'13:30'},
+    {idx:9,name:'申时',range:'15:00-16:59',mid:'15:30'},
+    {idx:10,name:'酉时',range:'17:00-18:59',mid:'17:30'},
+    {idx:11,name:'戌时',range:'19:00-20:59',mid:'19:30'},
+    {idx:12,name:'亥时',range:'21:00-22:59',mid:'21:30'}
+  ];
+  function $(id){return document.getElementById(id);}
+  function two(n){return String(n).padStart(2,'0');}
+  function datePart(dt){return dt.getFullYear()+'-'+two(dt.getMonth()+1)+'-'+two(dt.getDate());}
+  function hourToShichen(h){
+    h=parseInt(h,10); if(isNaN(h)) h=0;
+    return SHICHEN.find(s=>{ const start=parseInt(s.range.slice(0,2),10), end=parseInt(s.range.slice(6,8),10)+1; return start>end ? (h>=start || h<end) : (h>=start && h<end); }) || SHICHEN[0];
+  }
+  function getSel(id, fallback){ const el=$(id); return el && el.value ? el.value : fallback; }
+  function currentDateFromTime(){
+    const v=$('timeInput') && $('timeInput').value;
+    if(v){ const d=new Date(v); if(!isNaN(d.getTime())) return d; }
+    return new Date();
+  }
+  function ensureDestinyPanel(){
+    if($('destinyInputOptions')) return;
+    const timePanel=$('timePanel'); if(!timePanel) return;
+    const monthOpts=Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1}月</option>`).join('');
+    const dayOpts=Array.from({length:30},(_,i)=>`<option value="${i+1}">${i+1}日</option>`).join('');
+    const shichenOpts=SHICHEN.map(s=>`<option value="${s.idx}">${s.name}（${s.range}）</option>`).join('');
+    const panel=document.createElement('div');
+    panel.id='destinyInputOptions';
+    panel.className='destiny-input-options';
+    panel.innerHTML=`<div class="destiny-input-head"><div><h4>命运排盘输入</h4><p>命运场景以出生日期与出生时辰起盘。可选择公历/农历，也可使用 24 小时制或直接选择十二时辰。</p></div></div>
+      <div class="destiny-input-grid">
+        <label><span>历法类型</span><select id="destinyCalendarType"><option value="solar">公历日期</option><option value="lunar">农历日期</option></select></label>
+        <label><span>时间输入</span><select id="destinyTimeMode"><option value="24">24 小时制</option><option value="shichen">十二时辰</option></select></label>
+        <label class="destiny-field destiny-solar-date"><span>公历日期</span><input id="destinySolarDate" type="date"></label>
+        <label class="destiny-field destiny-lunar-month"><span>农历月</span><select id="destinyLunarMonth">${monthOpts}</select></label>
+        <label class="destiny-field destiny-lunar-day"><span>农历日</span><select id="destinyLunarDay">${dayOpts}</select></label>
+        <label class="destiny-field destiny-clock"><span>出生时间</span><input id="destinyClockTime" type="time" value="05:30"></label>
+        <label class="destiny-field destiny-shichen"><span>出生时辰</span><select id="destinyShichenSelect">${shichenOpts}</select></label>
+      </div>
+      <div class="destiny-input-note" id="destinyInputNote">命运场景会自动隐藏“占问事项”。若选公历日期，系统会按现有农历换算取农历月日；若选农历日期，则直接按你输入的农历月日取数。</div>`;
+    const timeGrid=timePanel.querySelector('.time-grid');
+    if(timeGrid && timeGrid.nextSibling) timePanel.insertBefore(panel, timeGrid.nextSibling); else timePanel.insertBefore(panel, timePanel.firstChild);
+    ['destinyCalendarType','destinyTimeMode','destinySolarDate','destinyLunarMonth','destinyLunarDay','destinyClockTime','destinyShichenSelect'].forEach(id=>{
+      const el=$(id); if(el) el.addEventListener('change', updateDestinyPanel);
+      if(el) el.addEventListener('input', updateDestinyPanel);
+    });
+    syncDestinyDefaults();
+  }
+  function syncDestinyDefaults(){
+    const dt=currentDateFromTime();
+    const solar=$('destinySolarDate'); if(solar && !solar.value) solar.value=datePart(dt);
+    const clock=$('destinyClockTime'); if(clock && !clock.value) clock.value=two(dt.getHours())+':'+two(dt.getMinutes());
+    try{
+      const info=(typeof getTimeDerived==='function') ? getTimeDerived(dt) : null;
+      if(info){
+        if($('destinyLunarMonth')) $('destinyLunarMonth').value=String(info.lunarMonth || (info.numbers&&info.numbers[0]) || 1);
+        if($('destinyLunarDay')) $('destinyLunarDay').value=String(info.lunarDay || (info.numbers&&info.numbers[1]) || 1);
+        if($('destinyShichenSelect')) $('destinyShichenSelect').value=String(info.shichenIndex || 1);
+      }
+    }catch(e){}
+  }
+  function updateDestinyPanel(){
+    ensureDestinyPanel();
+    const isDestiny = (typeof currentScene!=='undefined' && currentScene==='destiny');
+    document.body.classList.toggle('destiny-scene', !!isDestiny);
+    const panel=$('destinyInputOptions'); if(panel) panel.classList.toggle('show', !!isDestiny);
+    const cal=getSel('destinyCalendarType','solar');
+    const mode=getSel('destinyTimeMode','24');
+    const timeGrid=document.querySelector('#timePanel .time-grid');
+    if(timeGrid) timeGrid.style.display=(isDestiny && cal==='solar' && mode==='24') ? '' : (isDestiny ? 'none' : '');
+    document.querySelectorAll('.destiny-solar-date').forEach(x=>x.classList.toggle('hidden', !(isDestiny && cal==='solar' && mode==='shichen')));
+    document.querySelectorAll('.destiny-lunar-month,.destiny-lunar-day').forEach(x=>x.classList.toggle('hidden', !(isDestiny && cal==='lunar')));
+    document.querySelectorAll('.destiny-clock').forEach(x=>x.classList.toggle('hidden', !(isDestiny && cal==='lunar' && mode==='24')));
+    document.querySelectorAll('.destiny-shichen').forEach(x=>x.classList.toggle('hidden', !(isDestiny && mode==='shichen')));
+    const desc=$('methodDescription');
+    if(desc && isDestiny) desc.textContent='命运场景以出生年月日和出生时辰起盘；可选择公历/农历、24 小时制/十二时辰。占问事项在此场景中会自动隐藏。';
+    const note=$('destinyInputNote');
+    if(note && isDestiny){
+      const bits=[];
+      bits.push(cal==='solar' ? '当前按公历日期输入，系统会换算农历月日取数。' : '当前按农历月日直接取数，适合你已知道农历生日的情况。');
+      bits.push(mode==='24' ? '时间按 24 小时制自动换算十二时辰。' : '时间直接按十二时辰取数。');
+      bits.push('命运盘仅作传统象意、自我观察与复盘参考。');
+      note.textContent=bits.join('');
+    }
+  }
+  function deriveDestinyNumbers(){
+    const cal=getSel('destinyCalendarType','solar');
+    const mode=getSel('destinyTimeMode','24');
+    let month=1, day=1, shichen=1, shichenName='子时', shichenRange='23:00-00:59', extra='', methodNote='命运时辰起盘';
+    if(cal==='solar' && mode==='24'){
+      const val=$('timeInput') && $('timeInput').value;
+      if(!val) throw new Error('请先选择出生年月日与出生时间。');
+      const dt=new Date(val); if(isNaN(dt.getTime())) throw new Error('出生时间格式不正确。');
+      const info=getTimeDerived(dt);
+      month=info.numbers[0]; day=info.numbers[1]; shichen=info.numbers[2]; shichenName=info.shichen; shichenRange=info.shichenRange;
+      methodNote=`命运时辰起盘（公历 · 24小时制）：${month} / ${day} / ${shichen}`;
+      extra=`出生时间：公历 ${formatDateTimeCN(dt)}；农历 ${formatLunarFull(info.lunar, dt)}；时辰 ${shichenName}`;
+    } else if(cal==='solar' && mode==='shichen'){
+      const date=$('destinySolarDate') && $('destinySolarDate').value;
+      if(!date) throw new Error('请先选择公历出生日期。');
+      const s=SHICHEN.find(x=>String(x.idx)===getSel('destinyShichenSelect','1')) || SHICHEN[0];
+      const dt=new Date(date+'T12:00'); if(isNaN(dt.getTime())) throw new Error('公历日期格式不正确。');
+      const info=getTimeDerived(dt);
+      month=info.numbers[0]; day=info.numbers[1]; shichen=s.idx; shichenName=s.name; shichenRange=s.range;
+      methodNote=`命运时辰起盘（公历 · 十二时辰）：${month} / ${day} / ${shichen}`;
+      extra=`出生日期：公历 ${formatDateTimeCN(dt).replace(/\s*\d{1,2}:\d{2}/,'')}；农历 ${formatLunarFull(info.lunar, dt)}；时辰 ${shichenName}（${shichenRange}）`;
+    } else if(cal==='lunar'){
+      month=parseInt(getSel('destinyLunarMonth','1'),10)||1;
+      day=parseInt(getSel('destinyLunarDay','1'),10)||1;
+      if(mode==='24'){
+        const hm=getSel('destinyClockTime','00:00');
+        const h=parseInt(String(hm).split(':')[0],10)||0;
+        const s=hourToShichen(h); shichen=s.idx; shichenName=s.name; shichenRange=s.range;
+        methodNote=`命运时辰起盘（农历 · 24小时制）：${month} / ${day} / ${shichen}`;
+        extra=`出生时间：农历 ${month}月${day}日 ${hm}；时辰 ${shichenName}（${shichenRange}）。说明：农历模式直接按输入的农历月日取数。`;
+      } else {
+        const s=SHICHEN.find(x=>String(x.idx)===getSel('destinyShichenSelect','1')) || SHICHEN[0];
+        shichen=s.idx; shichenName=s.name; shichenRange=s.range;
+        methodNote=`命运时辰起盘（农历 · 十二时辰）：${month} / ${day} / ${shichen}`;
+        extra=`出生时间：农历 ${month}月${day}日；时辰 ${shichenName}（${shichenRange}）。说明：农历模式直接按输入的农历月日取数。`;
+      }
+    }
+    return {numbers:[month,day,shichen], methodNote, extraInfo:extra, meta:{calendarType:cal,timeMode:mode,shichenName,shichenRange}};
+  }
+  function runDestinyDivine(e){
+    if(!(typeof currentScene!=='undefined' && currentScene==='destiny')) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    try{
+      const scene=(typeof SCENES!=='undefined' ? SCENES.find(s=>s.key==='destiny') : null) || {key:'destiny',name:'命运',icon:'🪷',positions:['自身气象','关系与助力','整体走向']};
+      const d=deriveDestinyNumbers();
+      currentMethod='time';
+      currentResult=divine(scene, d.numbers, 'time', d.methodNote, d.extraInfo);
+      currentResult.destinyInput=d.meta;
+      currentResult.question='';
+      currentResult.context=null;
+      renderResult(currentResult);
+      saveLastView(currentResult);
+    }catch(err){ alert(err && err.message ? err.message : '命运排盘输入不完整。'); }
+  }
+  function patchVersion(){
+    document.title='小六壬占卜 · '+VERSION;
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：命运场景隐藏占问事项，新增公历/农历、24小时制/十二时辰输入，并继续保留日志系统与命盘五行校正。');
+    document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION; });
+    if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v1022){
+      const old=window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML=function(){
+        let html=old.call(this);
+        const row='<details><summary>'+VERSION+'</summary><ul><li>命运场景隐藏“填写占问事项”，使其更符合出生信息排盘而非具体问事。</li><li>命运起盘新增历法类型：公历日期 / 农历日期。</li><li>命运起盘新增时间输入：24 小时制 / 十二时辰；24 小时制会自动换算时辰。</li><li>公历模式继续使用现有农历换算取月日，农历模式直接按用户输入的农历月日取数。</li><li>保留 v10.2.1 六宫固定五行校正与 v10.2.0 占例复盘日志系统，并同步更新 README、manifest 与 service-worker 缓存名。</li></ul></details>';
+        if(html.indexOf(VERSION)<0) html+=row;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1022=true;
+    }
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+  }
+  function boot(){
+    ensureDestinyPanel();
+    updateDestinyPanel();
+    patchVersion();
+    const grid=$('sceneGrid'); if(grid && !grid.dataset.v1022Destiny){ grid.dataset.v1022Destiny='1'; grid.addEventListener('click', function(){ setTimeout(updateDestinyPanel,0); }, true); grid.addEventListener('click', function(){ setTimeout(updateDestinyPanel,30); }, false); }
+    const tabs=$('methodTabs'); if(tabs && !tabs.dataset.v1022Destiny){ tabs.dataset.v1022Destiny='1'; tabs.addEventListener('click', function(){ setTimeout(updateDestinyPanel,0); }, true); tabs.addEventListener('click', function(){ setTimeout(updateDestinyPanel,30); }, false); }
+    const time=$('timeInput'); if(time && !time.dataset.v1022Destiny){ time.dataset.v1022Destiny='1'; time.addEventListener('change', function(){syncDestinyDefaults(); updateDestinyPanel();}); time.addEventListener('input', function(){syncDestinyDefaults(); updateDestinyPanel();}); }
+    const btn=$('divineBtn'); if(btn && !btn.dataset.v1022Destiny){ btn.dataset.v1022Destiny='1'; btn.addEventListener('click', runDestinyDivine, true); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  window.addEventListener('load', function(){ setTimeout(boot,100); setTimeout(updateDestinyPanel,250); });
+})();
+</script>
+
 </body>
 </html>
 

@@ -1,5 +1,5 @@
-/* 小六壬占卜 · v10.2.1 命盘五行校正版 */
-const CACHE_NAME = 'xiaoliuren-v10.2.1-palace-elements-fix';
+/* 小六壬占卜 · v10.2.2 命运排盘输入优化版 */
+const CACHE_NAME = 'xiaoliuren-v10.2.2-destiny-input-upgrade';
 const APP_SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
