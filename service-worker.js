@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.7-nav-version-stable';
+const CACHE_NAME = 'xiaoliuren-v10.4.8-subnav-overlap-fix';
 const APP_SHELL = [
   './',
   './index.html',
