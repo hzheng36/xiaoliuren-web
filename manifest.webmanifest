@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.3.2",
-  "short_name": "小六壬 v10.3.2",
-  "description": "v10.3.2 健康口诀知识库融合版",
+  "name": "小六壬占卜 · v10.3.3",
+  "short_name": "小六壬 v10.3.3",
+  "description": "v10.3.3 快速导读与术语解释版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -12,5 +12,5 @@
     {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"},
     {"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png"}
   ],
-  "version": "10.3.2"
+  "version": "10.3.3"
 }

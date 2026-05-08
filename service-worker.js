@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.3.2-health-kb';
+const CACHE_NAME = 'xiaoliuren-v10.3.3-guide-glossary';
 const APP_SHELL = [
   './',
   './index.html',
