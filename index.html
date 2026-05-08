@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.4.2 排盘子导航增强版</title>
-  <meta name="description" content="小六壬个人网页版 v10.4.2 排盘子导航增强版：结果页新增排盘子导航，进入排盘区域后可快速跳到六宫、命盘、健康、婚姻与术语模块。" />
+  <title>小六壬占卜 · v10.4.3 版本跳动修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.4.3 版本跳动修正版：重点修复首页版本标题与版本说明来回跳动的问题，并保留排盘子导航、婚姻模块与阅读模式等功能。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.4.2 排盘子导航增强版</h2>
+          <h2>个人占卜台 · v10.4.3 版本跳动修正版</h2>
           <p>本版新增“排盘子导航”：进入排盘区域后可快速跳转六宫、命盘、健康、婚姻、术语等子模块；继续保留婚姻模块排版修复、设置自动保存与阅读模式。</p>
         </div>
         <div class="actions">
@@ -10746,7 +10746,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function buildHTML(result){const data=cells(result),m=data.m,arr=data.arr,md=data.md,g=gender(result),self=arr.find(c=>c.palace===m.timePalace)||arr[0],selfEl=self.el||'木',targets=targetCells(result,arr),factors=otherFactors(arr,targets,selfEl);const targetNames=targets.map(c=>`${c.kin}·${c.palace}`).join('、');return `<details id="v1040MarriageBlock" class="v1040-marriage" open><summary>💍 婚姻与伴侣参考</summary><div class="v1040-marriage-body"><div class="v1040-marriage-note"><strong>说明：</strong>这里看的是命局中的感情、婚姻与伴侣长期倾向，包括相处模式、配偶特征、可能的优势与挑战；不作为绝对定论。现实感情仍以双方沟通、尊重和理解为准。</div><div class="v1040-marriage-grid"><div class="v1040-marriage-card full"><h5>① 怎么看婚姻模块</h5><p><strong>当前性别侧重：</strong>${esc(targetLabel(g))}</p><p><strong>本次重点宫位：</strong>${esc(targetNames)}。${md==='fixed'?'本盘当前使用固定宫位法，适合对照部分民间命盘口诀。':'本盘当前使用五行生克法，按自身宫地支五行为“我”推六亲。'}</p><p class="v1040-marriage-muted">婚姻模块与健康模块一样，放在“命运”结果页内，属于命盘深度解读子模块；不是单独问“现在这段关系会怎样”。未来可再做独立“婚姻”场景，用于近期婚姻/关系问事。</p></div>${targets.map((c,i)=>buildTargetCard(c,selfEl,g,i)).join('')}<div class="v1040-marriage-card"><h5>② 婚姻中的其它因素</h5><ul>${factors.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="v1040-marriage-card"><h5>③ 生活提醒</h5><ul>${KB.life_reminders.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><p class="v1040-marriage-muted">若关系中存在暴力、长期控制、严重痛苦或安全风险，应优先寻求现实帮助与专业支持。</p></div><div class="v1040-marriage-card full"><h5>④ 婚姻口诀知识库</h5><div class="v1040-marriage-table"><table><thead><tr><th>掌诀</th><th>婚姻倾向</th><th>优势</th><th>挑战</th></tr></thead><tbody>${ORDER.map(p=>`<tr><td>${esc(p)}</td><td>${esc(KB.marriage_tendency_by_palm[p])}</td><td>${esc(KB.marriage_advantage[p])}</td><td>${esc(KB.marriage_challenge[p])}</td></tr>`).join('')}</tbody></table></div></div></div></div></details>`;}
   function renderMarriage(result){const old=$('v1040MarriageBlock');if(old)old.remove();if(!isDestinyResult(result))return;const anchor=$('v1030DestinyHealth')||$('v1025KinshipGuide')||$('destinyBoardBlock')||$('destinyDeepContent');if(!anchor)return;anchor.insertAdjacentHTML('afterend',buildHTML(result));}
   function patchRender(){if(typeof window.renderResult==='function'&&!window.renderResult.__v1040Marriage){const old=window.renderResult;window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(()=>renderMarriage(result),0);setTimeout(()=>renderMarriage(result),300);return ret;};window.renderResult.__v1040Marriage=true;}if(typeof window.renderDestinyBoard==='function'&&!window.renderDestinyBoard.__v1040Marriage){const old=window.renderDestinyBoard;window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments);setTimeout(()=>renderMarriage(result),80);setTimeout(()=>renderMarriage(result),360);return ret;};window.renderDestinyBoard.__v1040Marriage=true;}}
-  function setVersion(){document.title='小六壬占卜 · '+VERSION;const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});const lead=document.querySelector('header .hero p, .hero p');if(lead&&lead.textContent&&lead.textContent.includes('本版'))lead.textContent='本版在命运场景下新增“婚姻与伴侣参考”模块，结合男命/女命侧重点、配偶宫、六神、地支、掌诀和五行生克，作为感情婚姻长期倾向参考；继续保留设置自动保存与阅读模式。';if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1040Marriage){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const marker='命盘婚姻参考模块';const row='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“婚姻与伴侣参考”折叠模块。</li><li>男命重点取妻财宫，女命重点取官鬼宫，未指定性别时同时参考官鬼与妻财。</li><li>婚姻模块结合六神性格、地支性格、五行关系、掌诀婚姻倾向、优势挑战和生活提醒。</li><li>当前婚姻模块作为命运命盘子模块，不新增独立婚姻场景；后续可按健康模块架构扩展独立“婚姻”问事场景。</li><li>按固定检查项完成：脚本错误检查、旧补丁/版本跳动检查、页面版本记录/README/manifest/service-worker 更新。</li></ul></details>';if(html.indexOf(marker)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1040Marriage=true;}try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}}
+  function setVersion(){document.title='小六壬占卜 · '+VERSION;const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});const lead=document.querySelector('header .hero p, .hero p');if(lead&&lead.textContent&&lead.textContent.includes('本版'))lead.textContent='本版重点修复首页版本标题和版本说明在旧补丁之间来回跳动的问题，统一锁定当前版本显示；继续保留排盘子导航、婚姻模块、健康模块、阅读模式与设置自动保存。';if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1040Marriage){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const marker='命盘婚姻参考模块';const row='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“婚姻与伴侣参考”折叠模块。</li><li>男命重点取妻财宫，女命重点取官鬼宫，未指定性别时同时参考官鬼与妻财。</li><li>婚姻模块结合六神性格、地支性格、五行关系、掌诀婚姻倾向、优势挑战和生活提醒。</li><li>当前婚姻模块作为命运命盘子模块，不新增独立婚姻场景；后续可按健康模块架构扩展独立“婚姻”问事场景。</li><li>按固定检查项完成：脚本错误检查、旧补丁/版本跳动检查、页面版本记录/README/manifest/service-worker 更新。</li></ul></details>';if(html.indexOf(marker)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1040Marriage=true;}try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}}
   function boot(){patchRender();setVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderMarriage(window.currentResult);}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',()=>{setTimeout(boot,160);setTimeout(()=>{setVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderMarriage(window.currentResult);}catch(e){}},1600);setTimeout(setVersion,3200);});
@@ -10994,6 +10994,80 @@ body.reading-theme-night .v1042-subchip.active{color:#fff!important;background:l
   addEventListener('load',()=>{setTimeout(boot,120);setTimeout(boot,800);setTimeout(boot,1800);});
   const mo=new MutationObserver(refreshSoon);
   try{mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
+})();
+</script>
+
+<style id="v1043-version-lock-style">
+/* v10.4.3 版本跳动修正版 */
+.hero h2[data-version-locked="true"]{word-break:break-word;}
+</style>
+<script id="v1043-version-lock-script">
+(function(){
+  'use strict';
+  const VERSION = 'v10.4.3 版本跳动修正版';
+  const META = '小六壬个人网页版 v10.4.3 版本跳动修正版：重点修复首页版本标题与版本说明来回跳动的问题，并保留排盘子导航、婚姻模块与阅读模式等功能。';
+  const HERO_TEXT = '本版重点修复首页版本标题和版本说明在旧补丁之间来回跳动的问题，统一锁定当前版本显示；继续保留排盘子导航、婚姻模块、健康模块、阅读模式与设置自动保存。';
+  const UPDATE_ROW = '<details><summary>'+VERSION+'</summary><ul><li>重点修复首页顶部版本标题、版本简介与版本更新区域被旧补丁反复覆盖，导致新旧版本来回跳动的问题。</li><li>新增“版本显示守护”逻辑：在首页渲染、结果渲染、补丁重绘、DOM 变动和页面加载后的多个时机，都会再次校正当前版本信息。</li><li>统一当前版本显示为 v10.4.3，避免再次回退显示 v10.4.0 / v10.4.1 / v10.4.2。</li><li>继续保留 v10.4.2 的排盘子导航、v10.4.1 的婚姻模块排版修复，以及命运场景下的健康 / 婚姻子模块。</li><li>按固定 3 个必做检查执行：先检查错误、再检查旧补丁/版本跳动、最后同步更新版本记录与缓存文件。</li></ul></details>';
+  let scheduled = false;
+  function lockVersionDisplay(){
+    try{
+      document.title = '小六壬占卜 · ' + VERSION;
+      const meta = document.querySelector('meta[name="description"]');
+      if(meta) meta.setAttribute('content', META);
+      document.querySelectorAll('h2').forEach(el=>{
+        if(el.textContent && el.textContent.includes('个人占卜台')){
+          el.textContent = '个人占卜台 · ' + VERSION;
+          el.setAttribute('data-version-locked','true');
+        }
+      });
+      const lead = document.querySelector('header .hero p, .hero p');
+      if(lead && /^本版/.test((lead.textContent||'').trim())) lead.textContent = HERO_TEXT;
+    }catch(e){}
+  }
+  function patchVersionUpdates(){
+    if(typeof window.buildVersionUpdatesHTML === 'function' && !window.buildVersionUpdatesHTML.__v1043VersionLock){
+      const old = window.buildVersionUpdatesHTML;
+      window.buildVersionUpdatesHTML = function(){
+        let html = old.call(this);
+        html = html.replace(/<details><summary>v10\.4\.3[^<]*<\/summary>[\s\S]*?<\/details>/g, '');
+        if(html.indexOf(VERSION) < 0) html += UPDATE_ROW;
+        return html;
+      };
+      window.buildVersionUpdatesHTML.__v1043VersionLock = true;
+    }
+  }
+  function rerenderVersionArea(){
+    patchVersionUpdates();
+    try{ if(typeof window.renderHomeInfoBlocks === 'function') window.renderHomeInfoBlocks(); }catch(e){}
+    lockVersionDisplay();
+  }
+  function scheduleRefresh(){
+    if(scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(()=>{
+      scheduled = false;
+      rerenderVersionArea();
+    });
+  }
+  function installObserver(){
+    const target = document.body || document.documentElement;
+    if(!target || target.__v1043Observed) return;
+    const observer = new MutationObserver((mutations)=>{
+      for(const m of mutations){
+        if(m.type === 'childList' || m.type === 'characterData'){ scheduleRefresh(); break; }
+      }
+    });
+    observer.observe(target, {subtree:true, childList:true, characterData:true});
+    target.__v1043Observed = true;
+  }
+  function boot(){
+    lockVersionDisplay();
+    rerenderVersionArea();
+    installObserver();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true}); else boot();
+  window.addEventListener('load', ()=>{ boot(); setTimeout(boot,120); setTimeout(boot,800); setTimeout(boot,2000); setTimeout(boot,4000); });
+  setInterval(lockVersionDisplay, 1500);
 })();
 </script>
 
