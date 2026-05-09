@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.20-nav-destiny-formula-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.21-mobile-stability-fix';
 const APP_SHELL = [
   './',
   './index.html',
