@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.0 夜间模式与快捷按钮修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。" />
+  <title>小六壬占卜 · v10.5.1 暗夜模式深度修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.0 夜间模式与快捷按钮修正版</h2>
-          <p>本版修复术语解释未进入导航、暗夜模式局部过亮、横屏右侧快捷按钮显示不全的问题；母导航仍保持 v10.4.1 稳定逻辑，命盘子模块只在命盘内部显示。</p>
+          <h2>个人占卜台 · v10.5.1 暗夜模式深度修正版</h2>
+          <p>本版继续修复暗夜模式：重点处理六宫排盘、三数落宫、A/B 起课、术语表等残留亮白或紫色过重的问题；导航与横屏快捷按钮逻辑保持 v10.5.0。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5781,7 +5781,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6593,7 +6593,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7160,7 +7160,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8485,7 +8485,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8661,7 +8661,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -8958,7 +8958,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9234,7 +9234,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9464,7 +9464,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9512,8 +9512,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9676,8 +9676,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9799,8 +9799,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9951,8 +9951,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10174,8 +10174,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10253,8 +10253,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10323,8 +10323,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10462,8 +10462,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10627,8 +10627,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10699,8 +10699,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10808,8 +10808,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -10843,11 +10843,12 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 
 
 
-<style id="v1050-night-nav-quick-style">
-/* v10.5.0：术语导航、暗夜模式、横屏快捷按钮修复 */
 
-/* 只保留命盘内部子模块导航，不重写 v10.4.1 母导航 */
-#v1050DestinySubNav{
+<style id="v1051-night-deep-fix-style">
+/* v10.5.1 暗夜模式深度修正版 */
+
+/* 命盘内部子模块导航：保持 v10.5.0 逻辑 */
+#v1051DestinySubNav{
   position:fixed;
   z-index:59;
   left:50%;
@@ -10870,52 +10871,93 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   -webkit-backdrop-filter:blur(12px);
   scrollbar-width:none;
 }
-#v1050DestinySubNav::-webkit-scrollbar{display:none!important;}
-#v1050DestinySubNav.show{display:flex!important;}
-#v1050DestinySubNav .jump-chip{
+#v1051DestinySubNav::-webkit-scrollbar{display:none!important;}
+#v1051DestinySubNav.show{display:flex!important;}
+#v1051DestinySubNav .jump-chip{
   flex:0 0 auto!important;
   white-space:nowrap!important;
   font-size:.72rem!important;
   padding:7px 9px!important;
 }
-#v1050DestinySubNav .jump-chip.active{
+#v1051DestinySubNav .jump-chip.active{
   color:#fff!important;
   border-color:rgba(103,83,165,.34)!important;
   background:linear-gradient(135deg,var(--primary),var(--primary-2))!important;
   box-shadow:0 10px 22px rgba(66,49,109,.16)!important;
 }
 
-/* 暗夜模式：统一把残留亮白卡片压暗 */
+/* 暗夜模式基础色 */
 body.reading-theme-night{
   background:
-    radial-gradient(circle at 8% 0%, rgba(104,80,170,.18), transparent 24%),
-    radial-gradient(circle at 100% 100%, rgba(80,70,120,.18), transparent 25%),
-    linear-gradient(180deg,#11121a 0%,#171625 100%)!important;
-  --panel:rgba(27,27,40,.92)!important;
-  --panel-2:rgba(34,32,48,.94)!important;
+    radial-gradient(circle at 8% 0%, rgba(104,80,170,.16), transparent 24%),
+    radial-gradient(circle at 100% 100%, rgba(80,70,120,.16), transparent 25%),
+    linear-gradient(180deg,#101119 0%,#171625 100%)!important;
+  --panel:rgba(25,25,38,.94)!important;
+  --panel-2:rgba(32,30,47,.95)!important;
   --line:rgba(209,197,255,.16)!important;
   --border:rgba(209,197,255,.18)!important;
   --text:#f3edff!important;
-  --muted:#c8bedb!important;
+  --muted:#c9c0dc!important;
 }
+body.reading-theme-night .card::after,
+body.reading-theme-night .block::after,
+body.reading-theme-night .result-section::after{
+  background:transparent!important;
+  opacity:0!important;
+}
+
+/* 高亮按钮可以紫色；内容卡片不允许被通用 .active 变成整块亮紫 */
+body.reading-theme-night .primary-btn,
+body.reading-theme-night button.primary,
+body.reading-theme-night .jump-chip.active,
+body.reading-theme-night .scroll-tool-btn.reading-mode-toggle{
+  background:linear-gradient(135deg,#765bd0,#8a74da)!important;
+  color:#fff!important;
+  border-color:rgba(209,197,255,.28)!important;
+}
+
+/* 所有主要内容卡片统一暗色 */
+body.reading-theme-night .hero,
+body.reading-theme-night .card,
+body.reading-theme-night .section,
+body.reading-theme-night .block,
+body.reading-theme-night #resultCard,
+body.reading-theme-night .result-header,
+body.reading-theme-night .settings-card,
+body.reading-theme-night dialog,
+body.reading-theme-night .history-item,
+body.reading-theme-night .template-item,
 body.reading-theme-night .answer-card,
 body.reading-theme-night .answer-direct,
-body.reading-theme-night .answer-readable-grid .answer-card,
 body.reading-theme-night .context-card,
 body.reading-theme-night .summary-item,
 body.reading-theme-night .gua-card,
 body.reading-theme-night .reading-card,
 body.reading-theme-night .palace-card,
+body.reading-theme-night .hex-node,
+body.reading-theme-night .hex-node.active,
 body.reading-theme-night .paipan-cell,
+body.reading-theme-night .paipan-cell.active,
+body.reading-theme-night .v101-paipan-cell,
+body.reading-theme-night .v101-paipan-cell.active,
+body.reading-theme-night .v101d-paipan-cell,
+body.reading-theme-night .v101d-paipan-cell.active,
 body.reading-theme-night .destiny-card,
+body.reading-theme-night .destiny-cell,
+body.reading-theme-night .destiny-cell.v10-cell,
+body.reading-theme-night .v101-destiny-cell,
+body.reading-theme-night .v101d-destiny-cell,
 body.reading-theme-night .destiny-visual-cell,
 body.reading-theme-night .v1030-health-card,
+body.reading-theme-night .v1030-health-body,
+body.reading-theme-night .v1031-health-body,
+body.reading-theme-night .v1032-health-kb,
 body.reading-theme-night .v1040-marriage-card,
 body.reading-theme-night .v1040-marriage-body,
 body.reading-theme-night .v1040-marriage-intro,
-body.reading-theme-night .v1030-health-body,
-body.reading-theme-night .v1033-term-card,
+body.reading-theme-night .v1033-guide,
 body.reading-theme-night .v1033-glossary,
+body.reading-theme-night .v1033-term-card,
 body.reading-theme-night .version-log details,
 body.reading-theme-night .version-log-note,
 body.reading-theme-night .question-linked,
@@ -10923,52 +10965,114 @@ body.reading-theme-night .rule-note,
 body.reading-theme-night .tool-folder,
 body.reading-theme-night .tool-folder-body,
 body.reading-theme-night .ab-card,
+body.reading-theme-night .ab-choice-result,
 body.reading-theme-night .ab-mini,
 body.reading-theme-night .ab-warn,
-body.reading-theme-night details,
-body.reading-theme-night .settings-row,
-body.reading-theme-night .history-item{
-  background:rgba(31,29,45,.94)!important;
+body.reading-theme-night .method-card,
+body.reading-theme-night .method-tab,
+body.reading-theme-night .scene-card,
+body.reading-theme-night .number-card,
+body.reading-theme-night .quick-pad,
+body.reading-theme-night details{
+  background:rgba(28,27,42,.96)!important;
   background-image:none!important;
-  border-color:rgba(209,197,255,.16)!important;
+  border-color:rgba(209,197,255,.17)!important;
   color:#f3edff!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.25)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.26)!important;
 }
+
+/* 二级浅色容器、输入区和按钮内层 */
+body.reading-theme-night .ab-card .primary-btn,
+body.reading-theme-night .ab-card .ghost-btn,
+body.reading-theme-night .inline-action,
+body.reading-theme-night .ghost-btn,
+body.reading-theme-night input,
+body.reading-theme-night textarea,
+body.reading-theme-night select,
+body.reading-theme-night .date-text-input,
+body.reading-theme-night .select-control{
+  background:rgba(22,22,34,.96)!important;
+  background-image:none!important;
+  color:#f3edff!important;
+  border-color:rgba(209,197,255,.20)!important;
+}
+
+/* 文本对比度 */
+body.reading-theme-night p,
+body.reading-theme-night li,
+body.reading-theme-night small,
+body.reading-theme-night .muted,
+body.reading-theme-night .subtle,
+body.reading-theme-night .desc,
+body.reading-theme-night .note,
+body.reading-theme-night .rule-note,
 body.reading-theme-night .answer-card p,
 body.reading-theme-night .answer-card li,
 body.reading-theme-night .answer-card span,
 body.reading-theme-night .summary-item,
 body.reading-theme-night .gua-card,
-body.reading-theme-night .paipan-cell,
-body.reading-theme-night .destiny-card,
-body.reading-theme-night .destiny-visual-cell,
+body.reading-theme-night .palace-meta,
+body.reading-theme-night .paipan-cell-meta,
+body.reading-theme-night .v101-paipan-meta,
+body.reading-theme-night .v101d-paipan-meta,
+body.reading-theme-night .destiny-lines,
+body.reading-theme-night .destiny-visual-cell p,
 body.reading-theme-night .v1033-term-desc,
-body.reading-theme-night .version-log li,
-body.reading-theme-night .question-linked,
-body.reading-theme-night .rule-note{
-  color:#cfc5e4!important;
+body.reading-theme-night .version-log li{
+  color:#cfc6e5!important;
 }
+body.reading-theme-night h1,
+body.reading-theme-night h2,
+body.reading-theme-night h3,
+body.reading-theme-night h4,
+body.reading-theme-night h5,
+body.reading-theme-night strong,
+body.reading-theme-night .palace-name,
+body.reading-theme-night .section-title,
+body.reading-theme-night .label,
 body.reading-theme-night .answer-card h5,
 body.reading-theme-night .answer-card strong,
-body.reading-theme-night .paipan-cell strong,
+body.reading-theme-night .hex-node b,
+body.reading-theme-night .paipan-cell-title,
+body.reading-theme-night .v101-paipan-title,
+body.reading-theme-night .v101d-paipan-title,
 body.reading-theme-night .destiny-card strong,
 body.reading-theme-night .v1033-term-name{
-  color:#f6f0ff!important;
+  color:#f7f1ff!important;
 }
+
+/* 标签不要太亮，也不要白底 */
 body.reading-theme-night .pill,
 body.reading-theme-night .tag,
 body.reading-theme-night .keyword-chip,
-body.reading-theme-night .radar-metric-pill{
+body.reading-theme-night .radar-metric-pill,
+body.reading-theme-night .node-tag,
+body.reading-theme-night .paipan-cell-tag,
+body.reading-theme-night .v101-paipan-tag,
+body.reading-theme-night .v101d-paipan-tag,
+body.reading-theme-night .v101d-cell-no,
+body.reading-theme-night .v101-palace-no,
+body.reading-theme-night .palace-index{
   background:rgba(118,91,207,.22)!important;
+  background-image:none!important;
   border-color:rgba(209,197,255,.18)!important;
   color:#efe8ff!important;
 }
-body.reading-theme-night #v1050DestinySubNav{
+
+/* 暗夜下六宫连线/中心不要泛白 */
+body.reading-theme-night .hex-board::before{
+  border-color:rgba(209,197,255,.14)!important;
+}
+body.reading-theme-night .hex-center{
+  background:radial-gradient(circle at center, rgba(27,27,40,.94) 0 38%, transparent 39%), conic-gradient(from 0deg, rgba(118,91,207,.18) 0 50%, rgba(229,196,138,.16) 50% 100%)!important;
+  border-color:rgba(209,197,255,.15)!important;
+}
+body.reading-theme-night #v1051DestinySubNav{
   background:rgba(38,33,54,.86)!important;
   border-color:rgba(209,197,255,.16)!important;
 }
 
-/* 横屏或矮屏：右侧快捷按钮自适应并允许上下滚动 */
+/* 横屏或矮屏：右侧快捷按钮可上下滚动 */
 @media(max-height:620px), (orientation:landscape){
   .scroll-tools{
     top:max(86px,env(safe-area-inset-top))!important;
@@ -10986,12 +11090,10 @@ body.reading-theme-night #v1050DestinySubNav{
   .scroll-tools::-webkit-scrollbar{display:none!important;}
   .scroll-tools .scroll-tool-btn,
   .scroll-tools .scroll-tool-btn.wide,
-  .scroll-tools .scroll-tool-btn.mini-wide{
-    flex:0 0 auto!important;
-  }
+  .scroll-tools .scroll-tool-btn.mini-wide{flex:0 0 auto!important;}
 }
 
-/* 横屏优化保留 */
+/* 横屏字号/顶部留白优化保留 */
 @media(max-height:520px) and (orientation:landscape){
   body.result-page #resultCard{font-size:15px!important;}
   body.result-page #resultCard .block,
@@ -11026,28 +11128,25 @@ body.reading-theme-night #v1050DestinySubNav{
     padding:8px 10px!important;
     font-size:.9rem!important;
   }
-  body.result-page #resultCard .view-toggle{
-    display:inline-flex!important;
-    gap:8px!important;
-  }
+  body.result-page #resultCard .view-toggle{display:inline-flex!important;gap:8px!important;}
   body.result-page .result-nav-actions{
     max-width:calc(100% - var(--result-right-safe, 84px))!important;
     justify-content:flex-start!important;
   }
 }
 </style>
-<script id="v1050-night-nav-quick-script">
+<script id="v1051-night-deep-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.0 夜间模式与快捷按钮修正版";
-  const META="小六壬个人网页版 v10.5.0 夜间模式与快捷按钮修正版：修复术语解释导航入口、暗夜模式局部过亮问题，并让横屏右侧快捷按钮可上下滚动。";
-  const HERO="本版修复术语解释未进入导航、暗夜模式局部过亮、横屏右侧快捷按钮显示不全的问题；母导航仍保持 v10.4.1 稳定逻辑，命盘子模块只在命盘内部显示。";
+  const VERSION="v10.5.1 暗夜模式深度修正版";
+  const META="小六壬个人网页版 v10.5.1 暗夜模式深度修正版：继续修复暗夜模式下六宫排盘、A/B 卡片、按钮和旧排盘类名的局部过亮与紫色过重问题。";
+  const HERO="本版继续修复暗夜模式：重点处理六宫排盘、三数落宫、A/B 起课、术语表等残留亮白或紫色过重的问题；导航与横屏快捷按钮逻辑保持 v10.5.0。";
   const DESTINY_SUB_TARGETS=[
     {id:'destinyBoardBlock', label:'命盘'},
     {id:'v1030DestinyHealth', label:'健康'},
     {id:'v1040MarriageBlock', label:'婚姻'}
   ];
-  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>修复“术语解释”未出现在结果页底部导航的问题。</li><li>修复暗夜模式下局部卡片仍然过亮的问题，统一答案摘要、排盘、术语、健康、婚姻等模块的暗色背景与文字颜色。</li><li>横屏或矮屏时，右侧快捷按钮区域可以上下滚动，避免按钮显示不全。</li><li>继续保持 v10.4.1 稳定母导航逻辑，只在命盘内部显示命盘、健康、婚姻子模块导航。</li><li>已检查脚本语法、部署路径、版本显示和 7 个部署文件完整性。</li></ul></details>';
+  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>继续修复暗夜模式：覆盖旧排盘类名 v101 / v101d，避免六宫排盘出现白色卡片或整块亮紫。</li><li>修复 A/B 起课、三数落宫、术语表、按钮和标签在暗夜模式下局部过亮的问题。</li><li>保留 v10.5.0 已修复的术语导航入口、横屏快捷按钮可上下滚动、命盘内部子模块导航。</li><li>母导航继续保持 v10.4.1 稳定逻辑，只在命盘内部显示命盘、健康、婚姻子模块导航。</li><li>已检查脚本语法、部署路径、版本显示和 7 个部署文件完整性。</li></ul></details>';
   function $(id){return document.getElementById(id);}
   function hidden(el){return !!(el&&(el.classList&&el.classList.contains('hidden')||el.closest&&el.closest('.hidden')));}
   function exists(el){return !!el&&!hidden(el);}
@@ -11073,7 +11172,7 @@ body.reading-theme-night #v1050DestinySubNav{
     }catch(e){}
   }
   function patchVersionUpdates(){
-    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1050NightNavQuick){
+    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1051NightDeepFix){
       const old=window.buildVersionUpdatesHTML;
       window.buildVersionUpdatesHTML=function(){
         let html=old.call(this);
@@ -11081,7 +11180,7 @@ body.reading-theme-night #v1050DestinySubNav{
         if(html.indexOf(VERSION)<0) html+=UPDATE_ROW;
         return html;
       };
-      window.buildVersionUpdatesHTML.__v1050NightNavQuick=true;
+      window.buildVersionUpdatesHTML.__v1051NightDeepFix=true;
     }
   }
   function patchSectionTargets(){
@@ -11098,10 +11197,10 @@ body.reading-theme-night #v1050DestinySubNav{
     }catch(e){}
   }
   function ensureSubNav(){
-    let nav=$('v1050DestinySubNav');
+    let nav=$('v1051DestinySubNav');
     if(!nav){
       nav=document.createElement('nav');
-      nav.id='v1050DestinySubNav';
+      nav.id='v1051DestinySubNav';
       nav.setAttribute('aria-label','命盘子模块导航');
       document.body.appendChild(nav);
     }
@@ -11128,7 +11227,7 @@ body.reading-theme-night #v1050DestinySubNav{
     return active;
   }
   function centerActive(nav,id){
-    if(!nav||nav.__v1050Touching||!id) return;
+    if(!nav||nav.__v1051Touching||!id) return;
     const btn=nav.querySelector('[data-destiny-sub-target="'+id+'"]');
     if(btn&&typeof btn.scrollIntoView==='function'){
       try{btn.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}
@@ -11136,15 +11235,15 @@ body.reading-theme-night #v1050DestinySubNav{
     }
   }
   function bindTouchPause(nav){
-    if(!nav||nav.__v1050TouchBound) return;
-    const on=()=>{nav.__v1050Touching=true; clearTimeout(nav.__v1050TouchTimer);};
-    const off=()=>{clearTimeout(nav.__v1050TouchTimer); nav.__v1050TouchTimer=setTimeout(()=>{nav.__v1050Touching=false;},700);};
+    if(!nav||nav.__v1051TouchBound) return;
+    const on=()=>{nav.__v1051Touching=true; clearTimeout(nav.__v1051TouchTimer);};
+    const off=()=>{clearTimeout(nav.__v1051TouchTimer); nav.__v1051TouchTimer=setTimeout(()=>{nav.__v1051Touching=false;},700);};
     nav.addEventListener('pointerdown',on,{passive:true});
     nav.addEventListener('pointerup',off,{passive:true});
     nav.addEventListener('pointercancel',off,{passive:true});
     nav.addEventListener('touchstart',on,{passive:true});
     nav.addEventListener('touchend',off,{passive:true});
-    nav.__v1050TouchBound=true;
+    nav.__v1051TouchBound=true;
   }
   function updateDestinySubNav(){
     const nav=ensureSubNav();
@@ -11153,8 +11252,8 @@ body.reading-theme-night #v1050DestinySubNav{
     const show=inDestinySubRange(items);
     if(!show){ nav.classList.remove('show'); return; }
     const keys=items.map(t=>t.id).join(',');
-    if(nav.getAttribute('data-v1050-keys')!==keys){
-      nav.setAttribute('data-v1050-keys',keys);
+    if(nav.getAttribute('data-v1051-keys')!==keys){
+      nav.setAttribute('data-v1051-keys',keys);
       nav.innerHTML=items.map(t=>'<button class="jump-chip" type="button" data-destiny-sub-target="'+t.id+'" title="跳转到'+t.label+'">'+t.label+'</button>').join('');
       nav.querySelectorAll('[data-destiny-sub-target]').forEach(btn=>{
         btn.addEventListener('click',()=>{
@@ -11165,21 +11264,21 @@ body.reading-theme-night #v1050DestinySubNav{
     }
     nav.classList.add('show');
     const active=activeSubId(items);
-    const old=nav.getAttribute('data-v1050-active')||'';
-    nav.setAttribute('data-v1050-active',active||'');
+    const old=nav.getAttribute('data-v1051-active')||'';
+    nav.setAttribute('data-v1051-active',active||'');
     nav.querySelectorAll('[data-destiny-sub-target]').forEach(btn=>btn.classList.toggle('active',btn.getAttribute('data-destiny-sub-target')===active));
     if(active!==old) centerActive(nav,active);
   }
   function makeScrollToolsWheelFriendly(){
     const tools=document.querySelector('.scroll-tools');
-    if(!tools||tools.__v1050WheelBound) return;
+    if(!tools||tools.__v1051WheelBound) return;
     tools.addEventListener('wheel',function(e){
       if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
         tools.scrollTop += e.deltaY;
         e.preventDefault();
       }
     },{passive:false});
-    tools.__v1050WheelBound=true;
+    tools.__v1051WheelBound=true;
   }
   let scheduled=false;
   function updateAll(){

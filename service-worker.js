@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.0-night-nav-quick';
+const CACHE_NAME = 'xiaoliuren-v10.5.1-night-deep-fix';
 const APP_SHELL = [
   './',
   './index.html',
