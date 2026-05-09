@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.6.2",
-  "short_name": "小六壬 v10.6.2",
-  "description": "v10.6.2 普通问事去排盘修正版",
+  "name": "小六壬占卜 · v10.6.3",
+  "short_name": "小六壬 v10.6.3",
+  "description": "v10.6.3 普通问事导读术语显示修正版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.6.2"
+  "version": "10.6.3"
 }

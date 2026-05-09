@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.6.2-normal-no-paipan';
+const CACHE_NAME = 'xiaoliuren-v10.6.3-normal-guide-terms';
 const APP_SHELL = [
   './',
   './index.html',
