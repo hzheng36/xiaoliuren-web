@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.31",
-  "short_name": "小六壬 v10.5.31",
-  "description": "v10.5.31 命运二级导航范围修复版",
+  "name": "小六壬占卜 · v10.5.32",
+  "short_name": "小六壬 v10.5.32",
+  "description": "v10.5.32 命运二级导航主从同步修复版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.31"
+  "version": "10.5.32"
 }
