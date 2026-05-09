@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.15-settings-autosave-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.16-debug-left-nav-center';
 const APP_SHELL = [
   './',
   './index.html',
