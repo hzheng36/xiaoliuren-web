@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.18-formula-beta';
+const CACHE_NAME = 'xiaoliuren-v10.5.19-destiny-formula-debug-save';
 const APP_SHELL = [
   './',
   './index.html',

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.18 口诀知识库 Beta 版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.18 口诀知识库 Beta 版：在稳定的 Debug 左下角、设置即时保存、当前导航居中版本基础上，普通问事结果页新增“本课用到的口诀”模块。" />
+  <title>小六壬占卜 · v10.5.19 口诀命运与Debug保存版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.18 口诀知识库 Beta 版</h2>
-          <p>本版修复底部章节导航的居中逻辑：不是只让整排导航居中，而是当阅读到导读、答案、重心、三象、建议、术语等部分时，当前章节按钮会自动滚到导航正中央。</p>
+          <h2>个人占卜台 · v10.5.19 口诀命运与Debug保存版</h2>
+          <p>本版继续扩展口诀知识库 Beta：普通问事和命运结果页都显示“本课用到的口诀”；Debug 诊断页面新增“保存日志”按钮，方便下载日志文件做多版本测试。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5800,7 +5800,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6612,7 +6612,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7179,7 +7179,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8504,7 +8504,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8680,7 +8680,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -8977,7 +8977,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9253,7 +9253,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9483,7 +9483,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9531,8 +9531,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9695,8 +9695,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9818,8 +9818,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9970,8 +9970,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10193,8 +10193,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10272,8 +10272,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10342,8 +10342,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10481,8 +10481,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10646,8 +10646,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10718,8 +10718,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10827,8 +10827,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11281,8 +11281,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const HERO = "本版在暗夜主题基础上增加白块兜底规则：不再只依赖具体类名，而是覆盖常见容器、内联背景、卡片、按钮和标签，修复暗夜模式残留白块。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11514,7 +11514,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11770,7 +11770,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -11938,7 +11938,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12157,7 +12157,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12496,7 +12496,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION = "v10.5.17 当前导航居中跟随版";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12813,7 +12813,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION = 'v10.5.17 当前导航居中跟随版';
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 80;
   const logs = [];
@@ -12985,7 +12985,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.17 当前导航居中跟随版';
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13209,8 +13209,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.17 当前导航居中跟随版';
-  const META='小六壬个人网页版 v10.5.17 当前导航居中跟随版：Debug 浮动按钮移到左下角，底部章节导航居中显示，并保留设置即时保存与结果模板隔离修复。';
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13271,8 +13271,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10517-active-chip-center-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.17 当前导航居中跟随版";
-  const META="小六壬个人网页版 v10.5.17 当前导航居中跟随版：保留 Debug 左下角与设置即时保存修复，并让底部章节导航始终把当前阅读章节自动滚到屏幕中间。";
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   let lastActiveId='';
   let rafId=0;
   let lastManualTouch=0;
@@ -13445,8 +13445,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.18 口诀知识库 Beta 版';
-  const META='小六壬个人网页版 v10.5.18 口诀知识库 Beta 版：在普通问事结果页新增“本课用到的口诀”模块，婚姻/健康优先读取对应知识库，其它场景暂用基础六宫口诀。';
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13625,6 +13625,210 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
   window.addEventListener('load',function(){setTimeout(boot,80); setTimeout(boot,900);},{once:true});
   document.addEventListener('click',function(){setTimeout(function(){renderFormula(null,'click');},120);},true);
   try{new MutationObserver(function(){clearTimeout(window.__v10518FormulaTimer); window.__v10518FormulaTimer=setTimeout(function(){patchJumpTargets(); renderFormula(null,'mutation');},180);}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']});}catch(e){}
+})();
+</script>
+
+
+<style id="v10519-destiny-formula-debug-save-style">
+#v10514DebugSaveBtn {
+  border: 1px solid rgba(124,112,178,.22);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(124,87,198,.08);
+  color: #6d51bd;
+  font-weight: 700;
+}
+#v10518FormulaBlock.v10519-destiny-formula {
+  display:block !important;
+  visibility:visible !important;
+}
+.v10519-destiny-note {
+  border:1px solid rgba(124,112,178,.16);
+  border-radius:16px;
+  padding:12px 14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.72));
+  line-height:1.75;
+  margin-bottom:12px;
+}
+.v10519-destiny-list {
+  display:grid;
+  gap:10px;
+  margin-top:10px;
+}
+.v10519-destiny-list .v10518-formula-card {
+  min-height:0;
+}
+body.reading-theme-night .v10519-destiny-note,
+html[data-theme="dark"] .v10519-destiny-note {
+  background:rgba(38,34,58,.94);
+  border-color:rgba(180,160,255,.22);
+}
+</style>
+
+<script id="v10519-destiny-formula-debug-save-script">
+(function(){
+  'use strict';
+  const VERSION="v10.5.19 口诀命运与Debug保存版";
+  const META="小六壬个人网页版 v10.5.19 口诀命运与Debug保存版：在命运结果页也增加“本课用到的口诀”，并为 Debug 诊断页面增加保存日志按钮。";
+  const BASE={
+    '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
+    '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
+    '速喜':{formula:'速喜人便至，主消息、快速、喜动。',plain:'命运中多看行动力、机缘来得快、消息或变化较明显。'},
+    '赤口':{formula:'赤口主口舌，主争执、规则、冲突。',plain:'命运中多看言语冲突、是非、规则压力和外部对抗。'},
+    '小吉':{formula:'小吉最吉昌，主小成、小利、贵人。',plain:'命运中多看贵人、小机会、阶段性成果和可经营的助力。'},
+    '空亡':{formula:'空亡事不详，主虚、空、未实、落空。',plain:'命运中多看虚耗、落空、不稳定、承诺不实或需要重新核定。'}
+  };
+  function $(id){return document.getElementById(id);}
+  function esc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function clean(s){return String(s==null?'':s).replace(/\s+/g,' ').trim();}
+  function current(){try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){} try{return window.currentResult||null;}catch(e){return null;}}
+  function isDestiny(r){
+    if(r && (r.sceneKey==='destiny' || r.sceneName==='命运')) return true;
+    const scene=$('resultScene');
+    const title=$('resultTitle');
+    return /命运/.test(clean(scene&&scene.textContent)+clean(title&&title.textContent)+document.body.className);
+  }
+  function details(r){return (r&&Array.isArray(r.details))?r.details:[];}
+  function ensureBlock(){
+    let block=$('v10518FormulaBlock');
+    if(!block){
+      block=document.createElement('article');
+      block.className='block detail-only collapsible-block';
+      block.id='v10518FormulaBlock';
+      block.setAttribute('data-collapse-key','formula');
+      block.innerHTML='<h4>本课用到的口诀</h4><div id="v10518FormulaContent"></div>';
+    }
+    const anchor=$('destinyBoardBlock') || $('triReadingBlock') || $('sceneFocusBlock') || $('answerSummaryBlock');
+    if(anchor && anchor.parentNode && block.parentNode!==anchor.parentNode) anchor.insertAdjacentElement('afterend', block);
+    else if(anchor && anchor.nextElementSibling!==block) anchor.insertAdjacentElement('afterend', block);
+    else if(!block.parentNode) { const card=$('resultCard'); if(card) card.appendChild(block); }
+    try{ if(typeof enhanceCollapsibleBlocks==='function') enhanceCollapsibleBlocks(); }catch(e){}
+    return block;
+  }
+  function destinyBuild(r){
+    const arr=details(r);
+    const intro='<div class="v10519-destiny-note"><strong>命运口诀说明：</strong>命运场景不套普通问事模板，这里只解释命运起盘和本课三宫所用口诀。命运更偏长期倾向参考，不宜按一次问事直接断绝对吉凶。</div>';
+    const method='<div class="v10519-destiny-note"><strong>起盘口诀：</strong><br>大安起月，月上起日，日上起时。<br>排地支：时宫起支，隔位顺排。<br>装六神：寅卯青龙，巳午朱雀，丑辰勾陈，未戌腾蛇，申酉白虎，亥子玄武。<br><strong>白话：</strong>命运盘先定月、日、时三步，再看六亲、六神、地支与三宫长期倾向。</div>';
+    let cards='';
+    if(arr.length){
+      cards=arr.map(function(d,i){
+        const palace=d&&d.palaceName || '';
+        const f=BASE[palace] || {formula:'按六宫基础口诀判断。',plain:'结合命运盘三宫、六亲、六神和现实长期状态参考。'};
+        const pos=d&&d.positionName || ['本宫','中宫','末宫'][i] || '三宫';
+        const role=i===0?'自身/根基':i===1?'过程/牵动':'长期落点';
+        return '<div class="v10518-formula-card"><h5>'+esc(pos)+' · '+esc(palace)+'</h5>'+
+          '<span class="v10518-mini-tag">'+esc(role)+'</span><span class="v10518-mini-tag">'+esc((d&&d.element)||'')+'</span>'+
+          '<p><strong>口诀：</strong>'+esc(f.formula)+'</p>'+
+          '<p><strong>命运用法：</strong>'+esc(f.plain)+'</p>'+
+          '</div>';
+      }).join('');
+    } else {
+      cards='<div class="v10518-formula-card"><h5>命运口诀</h5><p><strong>口诀：</strong>大安起月，月上起日，日上起时。</p><p><strong>白话：</strong>暂无三宫明细时，先看命运起盘法和命盘综合说明。</p></div>';
+    }
+    const tail='<div class="v10519-destiny-note"><strong>本课怎么用：</strong>先看三宫落点，再结合命运六亲参考盘、健康/婚姻子模块与现实经历。口诀用于解释判断来源，不替代现实选择。</div>';
+    return intro+method+'<div class="v10518-formula-grid v10519-destiny-list">'+cards+'</div>'+tail;
+  }
+  function renderDestinyFormula(reason){
+    const r=current();
+    if(!isDestiny(r)) return;
+    const block=ensureBlock();
+    block.classList.remove('hidden');
+    block.classList.add('v10519-destiny-formula');
+    block.style.display='';
+    block.style.visibility='visible';
+    const content=$('v10518FormulaContent');
+    if(content) content.innerHTML=destinyBuild(r);
+    try{ if(typeof enhanceCollapsibleBlocks==='function') enhanceCollapsibleBlocks(); }catch(e){}
+    try{ if(typeof refreshSectionJumpNavSoon==='function') refreshSectionJumpNavSoon(); else if(typeof renderSectionJumpNav==='function') renderSectionJumpNav(); }catch(e){}
+  }
+  function patchRender(){
+    try{
+      if(typeof renderResult==='function' && !renderResult.__v10519DestinyFormula){
+        const old=renderResult;
+        renderResult=function(result){
+          const ret=old.apply(this,arguments);
+          setTimeout(function(){renderDestinyFormula('render');},40);
+          setTimeout(function(){renderDestinyFormula('render-260');},260);
+          setTimeout(function(){renderDestinyFormula('render-900');},900);
+          return ret;
+        };
+        renderResult.__v10519DestinyFormula=true;
+      }
+    }catch(e){}
+  }
+  function patchJumpTargets(){
+    try{
+      if(typeof currentJumpTargets==='function' && !currentJumpTargets.__v10519DestinyFormula){
+        const old=currentJumpTargets;
+        currentJumpTargets=function(){
+          let items=old.apply(this,arguments)||[];
+          const block=$('v10518FormulaBlock');
+          if(block && !block.classList.contains('hidden') && getComputedStyle(block).display!=='none'){
+            const extra={id:'v10518FormulaBlock',label:'口诀',el:block};
+            if(!items.some(function(t){return t&&t.id===extra.id;})){
+              let idx=items.findIndex(function(t){return t&&t.id==='destinyBoardBlock';});
+              if(idx<0) idx=items.findIndex(function(t){return t&&t.id==='triReadingBlock';});
+              if(idx>=0) items.splice(idx+1,0,extra); else items.push(extra);
+            }
+          }
+          const seen={};
+          return items.filter(function(t){ if(!t||seen[t.id]) return false; seen[t.id]=1; return true; });
+        };
+        currentJumpTargets.__v10519DestinyFormula=true;
+      }
+    }catch(e){}
+  }
+  function payload(){
+    const api=window.XLR_DEBUG_V10514 || {};
+    let latest=null;
+    try{ latest=api.snapshot ? api.snapshot('save-log') : null; }catch(e){ latest=null; }
+    return {version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:latest,logs:api.logs||[]};
+  }
+  function saveDebugLog(){
+    const text=JSON.stringify(payload(),null,2);
+    const name='xiaoliuren-debug-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';
+    try{
+      const blob=new Blob([text],{type:'application/json;charset=utf-8'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click();
+      setTimeout(function(){URL.revokeObjectURL(url); a.remove();},1200);
+    }catch(e){
+      const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); alert('当前浏览器未能直接保存，日志已复制。');}catch(_e){alert('保存失败，请使用复制日志。');} ta.remove();
+    }
+  }
+  function injectSaveButton(){
+    const actions=document.querySelector('#v10514DebugDialog .v10514-debug-actions');
+    if(!actions || $('v10514DebugSaveBtn')) return;
+    const btn=document.createElement('button');
+    btn.type='button'; btn.id='v10514DebugSaveBtn'; btn.textContent='保存日志';
+    const copy=$('v10514DebugCopyBtn');
+    actions.insertBefore(btn, copy ? copy.nextSibling : actions.firstChild);
+    btn.addEventListener('click',saveDebugLog);
+  }
+  function setVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
+  }
+  function patchVersionLog(){
+    try{
+      if(typeof buildVersionUpdatesHTML==='function' && !buildVersionUpdatesHTML.__v10519DestinyFormula){
+        const old=buildVersionUpdatesHTML;
+        buildVersionUpdatesHTML=function(){
+          let html=old.apply(this,arguments)||'';
+          html=html.replace(/<details><summary>v10\.5\.19 口诀命运与Debug保存版<\/summary>[\s\S]*?<\/details>/g,'');
+          html += '<details><summary>v10.5.19 口诀命运与Debug保存版</summary><ul><li>命运结果页也新增“本课用到的口诀”，使用命运独立口诀，不套普通问事模板。</li><li>命运口诀包含“大安起月，月上起日，日上起时”、地支/六神提示和本课三宫口诀解释。</li><li>Debug 诊断页面新增“保存日志”按钮，可将当前日志保存为 JSON 文件。</li><li>保留 v10.5.18 的普通问事口诀 Beta、Debug 开关、设置即时保存、当前导航自动居中和模板隔离修复。</li></ul></details>';
+          return html;
+        };
+        buildVersionUpdatesHTML.__v10519DestinyFormula=true;
+      }
+    }catch(e){}
+  }
+  function boot(){setVersion(); patchRender(); patchJumpTargets(); injectSaveButton(); renderDestinyFormula('boot'); patchVersionLog(); setTimeout(function(){setVersion(); injectSaveButton(); renderDestinyFormula('t300');},300); setTimeout(function(){injectSaveButton(); renderDestinyFormula('t1200');},1200);}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',function(){setTimeout(boot,100); setTimeout(boot,900);},{once:true});
+  document.addEventListener('click',function(){setTimeout(function(){injectSaveButton(); renderDestinyFormula('click');},160);},true);
+  try{new MutationObserver(function(){clearTimeout(window.__v10519DestinyFormulaTimer); window.__v10519DestinyFormulaTimer=setTimeout(function(){injectSaveButton(); patchJumpTargets(); renderDestinyFormula('mutation');},220);}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
 })();
 </script>
 

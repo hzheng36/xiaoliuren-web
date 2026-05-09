@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.18",
-  "short_name": "小六壬 v10.5.18",
-  "description": "v10.5.18 口诀知识库 Beta 版",
+  "name": "小六壬占卜 · v10.5.19",
+  "short_name": "小六壬 v10.5.19",
+  "description": "v10.5.19 口诀命运与Debug保存版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.18"
+  "version": "10.5.19"
 }
