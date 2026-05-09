@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.30-stable-nav-dedupe';
+const CACHE_NAME = 'xiaoliuren-v10.5.31-destiny-subnav-range';
 const APP_SHELL = [
   './',
   './index.html',
