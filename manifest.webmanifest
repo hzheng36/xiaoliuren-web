@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.6.4",
-  "short_name": "小六壬 v10.6.4",
-  "description": "v10.6.4 历史切换模板隔离修正版",
+  "name": "小六壬占卜 · v10.5.4",
+  "short_name": "小六壬 v10.5.4",
+  "description": "v10.5.4 暗夜白块兜底修正版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.6.4"
+  "version": "10.5.4"
 }
