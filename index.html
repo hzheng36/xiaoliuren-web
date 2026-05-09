@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.22 快捷按钮内置修复版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。" />
+  <title>小六壬占卜 · v10.5.23 事业模块 Beta 版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.22 快捷按钮内置修复版</h2>
+          <h2>个人占卜台 · v10.5.23 事业模块 Beta 版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -5804,7 +5804,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6616,7 +6616,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7203,7 +7203,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8528,7 +8528,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8704,7 +8704,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -9001,7 +9001,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9277,7 +9277,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9507,7 +9507,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9555,8 +9555,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9719,8 +9719,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9842,8 +9842,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9994,8 +9994,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10217,8 +10217,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10296,8 +10296,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10366,8 +10366,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10505,8 +10505,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10670,8 +10670,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10742,8 +10742,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10851,8 +10851,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11305,8 +11305,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const HERO = "本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11538,7 +11538,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11794,7 +11794,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -11962,7 +11962,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12181,7 +12181,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12520,7 +12520,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12837,7 +12837,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 80;
   const logs = [];
@@ -13012,7 +13012,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
+  const VERSION="v10.5.23 事业模块 Beta 版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13236,8 +13236,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13298,8 +13298,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10517-active-chip-center-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   let lastActiveId='';
   let rafId=0;
   let lastManualTouch=0;
@@ -13472,8 +13472,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13695,8 +13695,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10519-destiny-formula-debug-save-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.22 快捷按钮内置修复版";
-  const META="小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
+  const VERSION="v10.5.23 事业模块 Beta 版";
+  const META="小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。";
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
@@ -13844,7 +13844,7 @@ html[data-theme="dark"] .v10519-destiny-note {
         buildVersionUpdatesHTML=function(){
           let html=old.apply(this,arguments)||'';
           html=html.replace(/<details><summary>v10\.5\.19 口诀命运与Debug保存版<\/summary>[\s\S]*?<\/details>/g,'');
-          html += '<details><summary>v10.5.22 快捷按钮内置修复版</summary><ul><li>命运结果页也新增“本课用到的口诀”，使用命运独立口诀，不套普通问事模板。</li><li>命运口诀包含“大安起月，月上起日，日上起时”、地支/六神提示和本课三宫口诀解释。</li><li>Debug 诊断页面新增“保存日志”按钮，可将当前日志保存为 JSON 文件。</li><li>保留 v10.5.18 的普通问事口诀 Beta、Debug 开关、设置即时保存、当前导航自动居中和模板隔离修复。</li></ul></details>';
+          html += '<details><summary>v10.5.23 事业模块 Beta 版</summary><ul><li>命运结果页也新增“本课用到的口诀”，使用命运独立口诀，不套普通问事模板。</li><li>命运口诀包含“大安起月，月上起日，日上起时”、地支/六神提示和本课三宫口诀解释。</li><li>Debug 诊断页面新增“保存日志”按钮，可将当前日志保存为 JSON 文件。</li><li>保留 v10.5.18 的普通问事口诀 Beta、Debug 开关、设置即时保存、当前导航自动居中和模板隔离修复。</li></ul></details>';
           return html;
         };
         buildVersionUpdatesHTML.__v10519DestinyFormula=true;
@@ -13867,8 +13867,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10520-nav-formula-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.22 快捷按钮内置修复版';
-  const META='小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。';
+  const VERSION='v10.5.23 事业模块 Beta 版';
+  const META='小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。';
   const BASE={
     '大安':{formula:'大安事事昌，主安稳、守成、慢成。',plain:'命运中多看根基稳定、节奏偏慢，适合长期经营。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠，容易被过程拖住。'},
@@ -14021,7 +14021,7 @@ html[data-theme="dark"] .v10519-destiny-note {
         buildVersionUpdatesHTML=function(){
           let html=old.apply(this,arguments)||'';
           html=html.replace(/<details><summary>v10\.5\.20 导航与命运口诀修复版<\/summary>[\s\S]*?<\/details>/g,'');
-          html += '<details><summary>v10.5.22 快捷按钮内置修复版</summary><ul><li>修复历史结果页导航偶尔混入“顶部 / 场景 / 问事 / 起课”的问题，结果页导航现在每次都会按当前结果完整重建。</li><li>命运结果页强制保留并显示“本课用到的口诀”，导航中同步出现“口诀”。</li><li>打开历史结果后会重新同步 result-page / result-destiny 状态，避免普通模板和命运模板互相污染。</li><li>Debug 日志增加 overall、formula、formulaContent 监测项，方便判断口诀模块是否存在、显示和有内容。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查旧补丁抢回旧版本问题。</li></ul></details>';
+          html += '<details><summary>v10.5.23 事业模块 Beta 版</summary><ul><li>修复历史结果页导航偶尔混入“顶部 / 场景 / 问事 / 起课”的问题，结果页导航现在每次都会按当前结果完整重建。</li><li>命运结果页强制保留并显示“本课用到的口诀”，导航中同步出现“口诀”。</li><li>打开历史结果后会重新同步 result-page / result-destiny 状态，避免普通模板和命运模板互相污染。</li><li>Debug 日志增加 overall、formula、formulaContent 监测项，方便判断口诀模块是否存在、显示和有内容。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查旧补丁抢回旧版本问题。</li></ul></details>';
           return html;
         };
         buildVersionUpdatesHTML.__v10520Final=true;
@@ -14105,8 +14105,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10521-mobile-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.22 快捷按钮内置修复版';
-  const META='小六壬个人网页版 v10.5.22 快捷按钮内置修复版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。';
+  const VERSION='v10.5.23 事业模块 Beta 版';
+  const META='小六壬个人网页版 v10.5.23 事业模块 Beta 版：白天/夜间按钮正式并入统一快捷按钮系统，减少刷新后右侧按钮再插入造成的跳动。';
   const HERO='本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。';
   function setStableVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14149,6 +14149,136 @@ html[data-theme="dark"] .v10519-destiny-note {
       window.buildVersionUpdatesHTML.__v10522=true;
     }
   }catch(e){}
+})();
+</script>
+
+
+
+<!-- v10.5.23 patch: 命运事业模块 Beta 版 -->
+<style id="v10523-career-beta-style">
+  .v10523-career,
+  .v10523-career *{box-sizing:border-box;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  .v10523-career{margin-top:16px;padding:16px;border-radius:22px;border:1px solid rgba(103,83,165,.18);background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(250,247,255,.74));box-shadow:0 12px 28px rgba(51,43,71,.05);max-width:100%;overflow:hidden;}
+  .v10523-career summary{list-style:none;cursor:pointer;font-weight:900;color:var(--deep);font-size:1.08rem;display:flex;align-items:center;justify-content:space-between;gap:12px;line-height:1.45;}
+  .v10523-career summary::-webkit-details-marker{display:none;}
+  .v10523-career summary::after{content:'折叠';font-size:.82rem;color:var(--primary);border:1px solid rgba(103,83,165,.16);border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.76);white-space:nowrap;}
+  .v10523-career:not([open]) summary::after{content:'展开';}
+  .v10523-career-body{margin-top:14px;display:grid;gap:12px;}
+  .v10523-career-note{padding:12px 14px;border-radius:16px;border:1px solid rgba(176,139,72,.22);background:rgba(255,248,236,.86);color:#6b5c76;line-height:1.74;font-size:.93rem;}
+  .v10523-career-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:100%;}
+  .v10523-career-card{padding:14px;border-radius:18px;border:1px solid rgba(103,83,165,.15);background:rgba(255,255,255,.86);line-height:1.75;color:var(--text);min-width:0;max-width:100%;overflow:visible;}
+  .v10523-career-card.full{grid-column:1 / -1;}
+  .v10523-career-card h5{margin:0 0 8px;color:var(--primary);font-size:1rem;line-height:1.48;}
+  .v10523-career-card p{margin:6px 0;line-height:1.78;}
+  .v10523-career-card ul{margin:6px 0 0 1.15em;padding:0;}
+  .v10523-career-card li{margin:4px 0;line-height:1.75;}
+  .v10523-career-muted{color:var(--muted);font-size:.92rem;line-height:1.75;}
+  .v10523-career-pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;max-width:100%;}
+  .v10523-career-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 9px;background:rgba(103,83,165,.10);color:var(--primary);font-weight:850;font-size:.82rem;line-height:1.4;max-width:100%;white-space:normal;word-break:break-word;overflow-wrap:anywhere;}
+  .v10523-career-table{overflow-x:auto;border:1px solid rgba(103,83,165,.14);border-radius:18px;background:#fff;max-width:100%;-webkit-overflow-scrolling:touch;}
+  .v10523-career-table table{width:100%;min-width:680px;border-collapse:collapse;font-size:.9rem;}
+  .v10523-career-table th,.v10523-career-table td{padding:10px 12px;border-bottom:1px solid rgba(103,83,165,.12);text-align:left;vertical-align:top;line-height:1.58;}
+  .v10523-career-table th{background:rgba(103,83,165,.08);font-weight:900;color:var(--text);}
+  .v10523-career-table tr:last-child td{border-bottom:0;}
+  body.reading-theme-night .v10523-career{background:linear-gradient(180deg,rgba(40,34,56,.94),rgba(30,26,43,.88))!important;border-color:rgba(214,197,255,.22)!important;}
+  body.reading-theme-night .v10523-career-card,body.reading-theme-night .v10523-career-note,body.reading-theme-night .v10523-career-table{background:rgba(36,31,48,.86)!important;border-color:rgba(214,197,255,.18)!important;color:var(--text)!important;}
+  body.reading-theme-night .v10523-career-table th{background:rgba(214,197,255,.08)!important;}
+  @media(max-width:900px){
+    body.result-page:not(.force-desktop-mode) #v10523CareerBlock,
+    body.result-page:not(.force-desktop-mode) .v10523-career{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important;padding:14px!important;overflow:hidden!important;}
+    body.result-page:not(.force-desktop-mode) .v10523-career-grid{grid-template-columns:minmax(0,1fr)!important;width:100%!important;max-width:100%!important;}
+    body.result-page:not(.force-desktop-mode) .v10523-career-card,
+    body.result-page:not(.force-desktop-mode) .v10523-career-note{width:100%!important;max-width:100%!important;min-width:0!important;word-break:break-word!important;overflow-wrap:anywhere!important;line-break:anywhere;}
+    body.result-page:not(.force-desktop-mode) .v10523-career-card p,
+    body.result-page:not(.force-desktop-mode) .v10523-career-card li,
+    body.result-page:not(.force-desktop-mode) .v10523-career-card h5,
+    body.result-page:not(.force-desktop-mode) .v10523-career-note,
+    body.result-page:not(.force-desktop-mode) .v10523-career-muted{white-space:normal!important;word-break:break-word!important;overflow-wrap:anywhere!important;line-height:1.82!important;}
+    body.result-page:not(.force-desktop-mode) .v10523-career-table table{min-width:620px!important;font-size:.86rem!important;}
+  }
+</style>
+<script id="v10523-career-beta-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.23 事业模块 Beta 版';
+  const META='小六壬个人网页版 v10.5.23 事业模块 Beta 版：命运场景新增事业子模块，基于已有命盘六亲、掌诀、地支、六神、五星和生克关系提供事业、财富与行业参考。';
+  const HERO='本版在命运场景新增“事业”子模块 Beta：沿用健康、婚姻子模块经验，不改排盘逻辑，基于已有命盘分析事业趋势、财富倾向、适合行业、工作方式、优势挑战与行动建议。';
+  const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
+  const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
+  const BRANCH_YANG=['子','寅','辰','午','申','戌'];
+  const BRANCH_ELEMENT={子:'水',亥:'水',寅:'木',卯:'木',巳:'火',午:'火',申:'金',酉:'金',辰:'土',戌:'土',丑:'土',未:'土'};
+  const GENERATES={木:'火',火:'土',土:'金',金:'水',水:'木'};
+  const CONTROLS={木:'土',土:'水',水:'火',火:'金',金:'木'};
+  const SIX_SPIRIT={寅:'青龙',卯:'青龙',巳:'朱雀',午:'朱雀',丑:'勾陈',辰:'勾陈',未:'腾蛇',戌:'腾蛇',申:'白虎',酉:'白虎',亥:'玄武',子:'玄武'};
+  const STARS=['木星','火星','土星','金星','水星','天空'];
+  const FIXED_KINSHIP={留连:'自身',速喜:'子孙',赤口:'兄弟',小吉:'官鬼',空亡:'父母',大安:'妻财'};
+  const KB={
+    career_trend_by_palm:{大安:'工作稳定，适合固定职业，升迁慢但安稳，宜长期积累',留连:'事业拖延，晋升反复，易被旧单位牵制，适合积累人脉和经验',速喜:'快速变动，有突然机会，适合新行业、创业、短期项目',赤口:'职场争斗，口舌是非，压力大，谨防官司或小人，适合法务、竞争性岗位',小吉:'奔波、自由职业、外勤、多行业体验，小成，适合出差型工作',空亡:'事业空虚，无发展，或公司不景气，建议骑驴找马，提升技能'},
+    wealth_trend_by_palm:{大安:'正财稳定，储蓄型，不宜投机，适合固定薪资',留连:'财来财去，回款慢，投资易被套，宜保守理财',速喜:'偏财、意外财，快钱，但波动大，需防见好不收',赤口:'因财惹是非，合同纠纷，求财辛苦，宜兼职开源',小吉:'小财不断，多劳多得，适合副业或提成型收入',空亡:'财虚，投资易亏，收入不稳定，需多储备'},
+    industry_by_dizhi_element:{木:'教育、文化、设计、林业、出版、培训',火:'互联网、餐饮、能源、传媒、娱乐、直播',土:'房地产、建筑、农业、仓储、行政、物业',金:'金融、法律、机械、精密加工、审计、数据',水:'物流、贸易、旅游、咨询、水利、航运'},
+    work_character_by_spirit:{青龙:'正直、领导力、适合管理、教育、公务员',朱雀:'口才、市场、公关、销售、主持人',勾陈:'稳重、耐心、适合后勤、财务、档案',腾蛇:'灵活、善变、适合策划、咨询、设计',白虎:'果断、强势、适合执法、竞争、外科',玄武:'观察力强、适合调查、情报、后台、会计'},
+    advantage_by_palm:{大安:'有稳定平台，不会轻易失业',留连:'人脉沉淀，经验丰富',速喜:'敢闯敢试，抓住风口',赤口:'抗压能力强，能处理危机',小吉:'资源广，能身兼数职',空亡:'无压力，清闲自由度'},
+    challenge_by_palm:{大安:'晋升慢，易安于现状',留连:'被旧事拖累，决策犹豫',速喜:'变动大，难扎根基',赤口:'口舌是非，易得罪人',小吉:'无晋升路径，不稳定',空亡:'发展受限，公司不景气'},
+    suggestions_by_combination:[{pattern:'大安+留连',advice:'稳守主业，避免高风险投资；存钱为宜'},{pattern:'速喜+速喜',advice:'抓住短期机遇，但别孤注一掷，见好就收'},{pattern:'赤口+空亡',advice:'小心职场官司和合同陷阱，跳槽前调查清楚'},{pattern:'小吉+大安',advice:'适合多份兼职，但主业务留作保底'},{pattern:'空亡+赤口',advice:'公司可能不稳定，提前更新简历'}],
+    general_reminders:['多积累行业人脉，关键时刻能助你','不要频繁跳槽，尤其赤口、空亡年份','提升不可替代的技能','注意合同细节，避免口头协议','劳逸结合，防止过劳']
+  };
+  function $(id){return document.getElementById(id);} 
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function isDestinyResult(r){return !!(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运'));}
+  function current(){try{return window.currentResult||null;}catch(e){return null;}}
+  function visible(el){if(!el)return false;const cs=getComputedStyle(el);return cs.display!=='none'&&cs.visibility!=='hidden'&&el.offsetParent!==null&&el.offsetHeight>0;}
+  function pIndex(p){const i=ORDER.indexOf(p);return i<0?0:i;}
+  function rotate(arr,val){const i=arr.indexOf(val);return i<0?arr.slice():arr.slice(i).concat(arr.slice(0,i));}
+  function palSeqFrom(start){const i=pIndex(start);return ORDER.slice(i).concat(ORDER.slice(0,i));}
+  function parseBranch(result){const dm=result&&result.destinyMeta;if(dm&&dm.timeBranch)return dm.timeBranch;const s=[result&&result.extraInfo,result&&result.methodNote].filter(Boolean).join(' ');const m=s.match(/([子丑寅卯辰巳午未申酉戌亥])时/);if(m)return m[1];const n=result&&result.numbers&&result.numbers[2];return BRANCH_ALL[((Number(n)||1)-1+12)%12];}
+  function branchSeq(z){return rotate(BRANCH_YIN.includes(z)?BRANCH_YIN:BRANCH_YANG,z);}
+  function meta(result){const ps=(result&&result.palaces&&result.palaces.length>=3)?result.palaces:['大安','大安','大安'];const monthPalace=ps[0],dayPalace=ps[1],timePalace=ps[2],timeBranch=parseBranch(result);const bseq=branchSeq(timeBranch),branchByPalace={};palSeqFrom(timePalace).forEach((p,i)=>branchByPalace[p]=bseq[i]);const starByPalace={};palSeqFrom(dayPalace).forEach((p,i)=>starByPalace[p]=STARS[i]);return {monthPalace,dayPalace,timePalace,timeBranch,branchByPalace,starByPalace};}
+  function mode(result){return (result&&result.destinyKinshipMode)||(result&&result.destinyMeta&&result.destinyMeta.kinshipMode)||((document.querySelector('input[name="destinyKinshipMode"]:checked')||{}).value)||(function(){try{return localStorage.getItem('xlr_destiny_kinship_mode_v10')||'wuxing';}catch(e){return 'wuxing';}})();}
+  function kinWuxing(p,m){if(p===m.timePalace)return '自身';const selfEl=BRANCH_ELEMENT[m.branchByPalace[m.timePalace]]||'木';const otherEl=BRANCH_ELEMENT[m.branchByPalace[p]]||selfEl;if(otherEl===selfEl)return '兄弟';if(GENERATES[otherEl]===selfEl)return '父母';if(CONTROLS[otherEl]===selfEl)return '官鬼';if(GENERATES[selfEl]===otherEl)return '子孙';if(CONTROLS[selfEl]===otherEl)return '妻财';return '兄弟';}
+  function kinFor(p,m,md){return md==='fixed'?(FIXED_KINSHIP[p]||'—'):kinWuxing(p,m);}
+  function starElement(star){return {木星:'木',火星:'火',土星:'土',金星:'金',水星:'水'}[star]||'';}
+  function starRel(star,branch){const se=starElement(star),be=BRANCH_ELEMENT[branch];if(!se)return '天空';if(se===be)return '比和';if(CONTROLS[se]===be)return '星克地';if(CONTROLS[be]===se)return '地克星';if(GENERATES[se]===be)return '星生地';if(GENERATES[be]===se)return '地生星';return '中平';}
+  function cell(p,m,md){const branch=m.branchByPalace[p],el=BRANCH_ELEMENT[branch]||'',star=m.starByPalace[p]||'',sp=SIX_SPIRIT[branch]||'';return {palace:p,branch,el,star,sp,kin:kinFor(p,m,md),starRel:starRel(star,branch)};}
+  function cells(result){const m=meta(result),md=mode(result);return {m,md,arr:ORDER.map(p=>cell(p,m,md))};}
+  function pick(arr,kin,fallbackPalace){return arr.find(c=>c.kin===kin)||arr.find(c=>c.palace===fallbackPalace)||arr[0];}
+  function comboAdvice(palaces){const pairs=[];for(let i=0;i<palaces.length-1;i++)pairs.push(palaces[i]+'+'+palaces[i+1]);const found=KB.suggestions_by_combination.filter(x=>pairs.includes(x.pattern));return found.length?found.map(x=>x.advice):['本盘暂无强组合提示，先按事业宫、财宫与自身宫分别观察，再用现实计划验证。'];}
+  function relText(selfEl,otherEl){if(otherEl===selfEl)return '同气比和：适合靠同类资源、人脉或熟悉领域累积。';if(GENERATES[otherEl]===selfEl)return '外部生我：容易得到规则、平台或他人支持。';if(GENERATES[selfEl]===otherEl)return '我去生事：需要投入精力培养项目，适合输出型工作。';if(CONTROLS[otherEl]===selfEl)return '外部克我：职场压力、制度或上级要求较明显。';if(CONTROLS[selfEl]===otherEl)return '我能克财/事：有掌控资源的机会，但要避免过度强势。';return '关系中平，需要合看掌诀和现实条件。';}
+  function cardPills(c){return '<div class="v10523-career-pills"><span class="v10523-career-pill">'+esc(c.kin+'·'+c.palace)+'</span><span class="v10523-career-pill">'+esc(c.branch+c.el)+'</span><span class="v10523-career-pill">'+esc(c.sp)+'</span><span class="v10523-career-pill">'+esc((c.star||'—')+'｜'+c.starRel)+'</span></div>';}
+  function buildHTML(result){
+    const data=cells(result), arr=data.arr, m=data.m, md=data.md;
+    const self=arr.find(c=>c.palace===m.timePalace)||arr[0];
+    const career=pick(arr,'官鬼','小吉');
+    const wealth=pick(arr,'妻财','大安');
+    const output=pick(arr,'子孙','速喜');
+    const selfEl=self.el||'木';
+    const palaces=(result&&Array.isArray(result.palaces))?result.palaces:arr.slice(0,3).map(c=>c.palace);
+    const industries=[career.el,self.el,wealth.el].filter(Boolean).filter((e,i,a)=>a.indexOf(e)===i).map(e=>'<li><strong>'+esc(e)+'：</strong>'+esc(KB.industry_by_dizhi_element[e]||'')+'</li>').join('');
+    const combo=comboAdvice(palaces);
+    return '<details id="v10523CareerBlock" class="v10523-career" open><summary>💼 事业与财富参考 Beta</summary><div class="v10523-career-body">'
+      +'<div class="v10523-career-note"><strong>说明：</strong>这里看的是命局中事业、工作的整体倾向，包括适合方向、职场压力、收入趋势和行动提醒；不作为绝对职业决策依据。现实职业选择仍要结合个人能力、行业环境、家庭责任和实际机会。</div>'
+      +'<div class="v10523-career-grid">'
+      +'<div class="v10523-career-card full"><h5>① 怎么看事业模块</h5><p><strong>事业核心：</strong>优先看官鬼宫，代表规则、职位、压力、上级、制度和事业责任。本盘事业重点为 <strong>'+esc(career.kin+'·'+career.palace)+'</strong>。</p><p><strong>财富核心：</strong>再看妻财宫，代表正财、收入、资源和经营能力。本盘财富重点为 <strong>'+esc(wealth.kin+'·'+wealth.palace)+'</strong>。</p><p class="v10523-career-muted">本盘当前使用'+(md==='fixed'?'固定宫位法':'五行生克法')+'。事业模块和健康、婚姻一样，只读取已排好的命盘，不改动起盘逻辑。</p></div>'
+      +'<div class="v10523-career-card"><h5>② 事业趋势：'+esc(career.palace)+'</h5>'+cardPills(career)+'<p><strong>趋势：</strong>'+esc(KB.career_trend_by_palm[career.palace]||'需结合掌诀看事业趋势。')+'</p><p><strong>职场压力：</strong>'+esc(relText(selfEl,career.el))+'</p><p><strong>工作方式：</strong>'+esc(KB.work_character_by_spirit[career.sp]||'需结合六神看工作表现。')+'</p></div>'
+      +'<div class="v10523-career-card"><h5>③ 财富趋势：'+esc(wealth.palace)+'</h5>'+cardPills(wealth)+'<p><strong>财务倾向：</strong>'+esc(KB.wealth_trend_by_palm[wealth.palace]||'需结合妻财宫看收入和资源。')+'</p><p><strong>资源关系：</strong>'+esc(relText(selfEl,wealth.el))+'</p><p class="v10523-career-muted">这里偏长期财富习惯，不等于短线投资判断。</p></div>'
+      +'<div class="v10523-career-card"><h5>④ 适合行业方向</h5><ul>'+industries+'</ul><p class="v10523-career-muted">优先看事业宫五行，其次看自身宫能承受什么节奏，再看财宫更容易从哪里变现。</p></div>'
+      +'<div class="v10523-career-card"><h5>⑤ 优势与挑战</h5><p><strong>优势：</strong>'+esc(KB.advantage_by_palm[career.palace]||'有可发挥之处。')+'</p><p><strong>挑战：</strong>'+esc(KB.challenge_by_palm[career.palace]||'需要结合现实环境观察。')+'</p><p><strong>成果输出：</strong>'+esc(output.kin+'·'+output.palace)+'，可看作品、绩效、表达、客户反馈和副业成果。</p></div>'
+      +'<div class="v10523-career-card"><h5>⑥ 组合建议</h5><ul>'+combo.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>'
+      +'<div class="v10523-career-card"><h5>⑦ 行动提醒</h5><ul>'+KB.general_reminders.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>'
+      +'<div class="v10523-career-card full"><h5>⑧ 事业知识库速览</h5><div class="v10523-career-table"><table><thead><tr><th>掌诀</th><th>事业趋势</th><th>财富趋势</th><th>优势</th><th>挑战</th></tr></thead><tbody>'+ORDER.map(p=>'<tr><td>'+esc(p)+'</td><td>'+esc(KB.career_trend_by_palm[p])+'</td><td>'+esc(KB.wealth_trend_by_palm[p])+'</td><td>'+esc(KB.advantage_by_palm[p])+'</td><td>'+esc(KB.challenge_by_palm[p])+'</td></tr>').join('')+'</tbody></table></div></div>'
+      +'</div></div></details>';
+  }
+  function renderCareer(result){try{const old=$('v10523CareerBlock');if(!isDestinyResult(result)){if(old)old.remove();return;}const key=(result&&result.id)||(result&&result.methodNote)||(result&&result.resultTitle)||JSON.stringify(result&&result.numbers||[]);if(old&&old.getAttribute('data-v10523-key')===String(key))return;if(old)old.remove();const anchor=$('v1040MarriageBlock')||$('v1030DestinyHealth')||$('destinyBoardBlock')||$('destinyDeepContent')||$('resultCard');if(!anchor)return;anchor.insertAdjacentHTML('afterend',buildHTML(result));const fresh=$('v10523CareerBlock');if(fresh)fresh.setAttribute('data-v10523-key',String(key));}catch(e){console.warn('v10523 career render failed',e);}}
+  function setVersion(){try{document.title='小六壬占卜 · '+VERSION;}catch(e){}try{const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);}catch(e){}try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}try{const lead=document.querySelector('header .hero p, .hero p');if(lead&&/^本版/.test((lead.textContent||'').trim()))lead.textContent=HERO;}catch(e){}}
+  function patchRender(){try{if(typeof window.renderResult==='function'&&!window.renderResult.__v10523Career){const old=window.renderResult;window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(function(){setVersion();renderCareer(result||current());refreshNav();},80);setTimeout(function(){renderCareer(result||current());refreshNav();},520);return ret;};window.renderResult.__v10523Career=true;}}catch(e){}try{if(typeof window.renderDestinyBoard==='function'&&!window.renderDestinyBoard.__v10523Career){const old=window.renderDestinyBoard;window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments);setTimeout(function(){renderCareer(result||current());refreshNav();},180);setTimeout(function(){renderCareer(result||current());refreshNav();},620);return ret;};window.renderDestinyBoard.__v10523Career=true;}}catch(e){}}
+  function patchNav(){try{if(typeof window.currentJumpTargets!=='function'||window.currentJumpTargets.__v10523Career)return;const old=window.currentJumpTargets;window.currentJumpTargets=function(){let items=old.apply(this,arguments)||[];const r=current(), el=$('v10523CareerBlock');if(isDestinyResult(r)&&visible(el)&&!items.some(x=>x&&x.id==='v10523CareerBlock')){let idx=items.findIndex(x=>x&&x.id==='v1040MarriageBlock');if(idx<0)idx=items.findIndex(x=>x&&x.id==='v1030DestinyHealth');const obj={id:'v10523CareerBlock',label:'事业',el:el};if(idx>=0)items=items.slice(0,idx+1).concat([obj],items.slice(idx+1));else items.push(obj);}return items;};window.currentJumpTargets.__v10523Career=true;}catch(e){}}
+  function refreshNav(){try{patchNav();if(typeof window.renderSectionJumpNav==='function')window.renderSectionJumpNav();if(typeof window.updateSectionJumpNav==='function')window.updateSectionJumpNav();}catch(e){}}
+  function patchVersionLog(){try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10523Career){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('事业与财富参考 Beta')<0){html+='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“事业与财富参考 Beta”子模块。</li><li>事业模块沿用健康和婚姻子模块经验，只读取已有命盘，不改动排盘逻辑。</li><li>模块综合六亲、掌诀、地支、五行、六神、五星与生克关系，输出事业趋势、财富趋势、行业方向、工作方式、优势挑战和行动提醒。</li><li>底部/浮动阅读导航新增“事业”入口，并加入移动端换行与宽度保护，避免文字被右侧快捷按钮裁切。</li><li>补齐页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';}return html;};window.buildVersionUpdatesHTML.__v10523Career=true;}}catch(e){}}
+  function boot(){setVersion();patchRender();patchVersionLog();renderCareer(current());patchNav();refreshNav();try{window.__v10523CareerBeta={version:VERSION,careerModule:true,nav:true};}catch(e){}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+  window.addEventListener('load',function(){setTimeout(boot,120);setTimeout(boot,900);setTimeout(boot,2200);});
+  document.addEventListener('click',function(){setTimeout(boot,220);},true);
+  setInterval(function(){setVersion();renderCareer(current());patchNav();},2200);
 })();
 </script>
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.22-quick-theme-integrated';
+const CACHE_NAME = 'xiaoliuren-v10.5.23-career-beta';
 const APP_SHELL = [
   './',
   './index.html',
