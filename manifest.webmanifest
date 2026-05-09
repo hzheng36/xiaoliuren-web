@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.6.0",
-  "short_name": "小六壬 v10.6.0",
-  "description": "v10.6.0 婚姻场景问事版",
+  "name": "小六壬占卜 · v10.6.1",
+  "short_name": "小六壬 v10.6.1",
+  "description": "v10.6.1 婚姻场景普通模板修正版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.6.0"
+  "version": "10.6.1"
 }
