@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.32-destiny-subnav-master-sync';
+const CACHE_NAME = 'xiaoliuren-v10.5.33-formula-overall-order';
 const APP_SHELL = [
   './',
   './index.html',
