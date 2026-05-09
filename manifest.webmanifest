@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.14",
-  "short_name": "小六壬 v10.5.14",
-  "description": "v10.5.14 Debug 开关保留版",
+  "name": "小六壬占卜 · v10.5.15",
+  "short_name": "小六壬 v10.5.15",
+  "description": "v10.5.15 设置即时保存修正版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -12,5 +12,5 @@
     {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"},
     {"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png"}
   ],
-  "version": "10.5.14"
+  "version": "10.5.15"
 }
