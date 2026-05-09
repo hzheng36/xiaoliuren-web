@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.21-mobile-stability-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.22-quick-theme-integrated';
 const APP_SHELL = [
   './',
   './index.html',
