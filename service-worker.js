@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.9-missing-content-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.10-guide-terms';
 const APP_SHELL = [
   './',
   './index.html',
