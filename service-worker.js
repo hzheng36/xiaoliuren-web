@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.8-normal-template-isolation';
+const CACHE_NAME = 'xiaoliuren-v10.5.9-source-direct-template';
 const APP_SHELL = [
   './',
   './index.html',
