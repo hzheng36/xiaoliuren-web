@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.12 结果模板 Debug 诊断版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。" />
+  <title>小六壬占卜 · v10.5.13 结果模板状态隔离修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.12 结果模板 Debug 诊断版</h2>
-          <p>本版是 Debug 诊断版：不再继续修功能，只记录当前结果、场景、历史切换、模块显示状态和底部导航状态，方便定位命运模板污染到非命运场景的根因。</p>
+          <h2>个人占卜台 · v10.5.13 结果模板状态隔离修正版</h2>
+          <p>本版根据 Debug 日志修复根因：命运/非命运历史切换时强制同步 currentResult、body 模板状态和模块显示状态，避免命运模板污染普通问事结果。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5800,7 +5800,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6612,7 +6612,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7179,7 +7179,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8504,7 +8504,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8680,7 +8680,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -8977,7 +8977,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9253,7 +9253,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9483,7 +9483,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9531,8 +9531,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9695,8 +9695,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9818,8 +9818,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9970,8 +9970,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10193,8 +10193,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10272,8 +10272,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10342,8 +10342,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10481,8 +10481,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10646,8 +10646,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10718,8 +10718,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10827,8 +10827,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11281,8 +11281,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
-  const META="小六壬个人网页版 v10.5.12 结果模板 Debug 诊断版：保留 v10.5.11 当前行为，新增调试面板和运行日志，用于追踪命运/非命运历史切换时模板污染、排盘残留和模块内容空白问题。";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
   const HERO = "本版在暗夜主题基础上增加白块兜底规则：不再只依赖具体类名，而是覆盖常见容器、内联背景、卡片、按钮和标签，修复暗夜模式残留白块。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11514,7 +11514,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11770,7 +11770,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -11938,7 +11938,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12157,7 +12157,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.12 结果模板 Debug 诊断版";
+  const VERSION="v10.5.13 结果模板状态隔离修正版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12439,307 +12439,283 @@ html[data-theme="dark"] .v10511-content-note {
 </script>
 
 
-<style id="v10512-debug-trace-style">
-#v10512DebugPanel {
-  position: fixed;
-  left: 12px;
-  bottom: 86px;
-  z-index: 999999;
-  width: min(520px, calc(100vw - 24px));
-  max-height: 52vh;
-  overflow: auto;
-  padding: 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(124,112,178,.28);
-  background: rgba(255,255,255,.96);
-  box-shadow: 0 18px 48px rgba(40,30,80,.18);
-  color: #2b2640;
-  font-size: 12px;
-  line-height: 1.45;
-  display: none;
+
+<style id="v10513-state-isolation-style">
+/* v10.5.13：根据 Debug 日志修复命运模板状态残留 */
+body.v10513-normal-result #paipanBlock,
+body.v10513-normal-result #destinyBoardBlock {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
-#v10512DebugPanel.is-open { display:block; }
-#v10512DebugPanel h4 {
-  margin: 0 0 8px;
-  font-size: 14px;
-  color: #6d51bd;
+body.v10513-normal-result #v10510QuickGuideBlock,
+body.v10513-normal-result #answerSummaryBlock,
+body.v10513-normal-result #sceneFocusBlock,
+body.v10513-normal-result #overallBlock,
+body.v10513-normal-result #triReadingBlock,
+body.v10513-normal-result #singlePalaceBlock,
+body.v10513-normal-result #doublePalaceBlock,
+body.v10513-normal-result #symbolBlock,
+body.v10513-normal-result #radarBlock,
+body.v10513-normal-result #adviceBlock,
+body.v10513-normal-result #v10510GlossaryBlock {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
 }
-#v10512DebugPanel .v10512-debug-actions {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:8px 0;
+body.v10513-normal-result #v10510QuickGuideContent,
+body.v10513-normal-result #sceneFocusContent,
+body.v10513-normal-result #symbolSupplement,
+body.v10513-normal-result #radarMetrics,
+body.v10513-normal-result #v10510GlossaryContent {
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 1px !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
-#v10512DebugPanel button {
-  border: 1px solid rgba(124,112,178,.22);
-  border-radius: 999px;
-  padding: 7px 10px;
-  background: rgba(124,87,198,.08);
-  color: #6d51bd;
-  font-weight: 700;
+body.v10513-destiny-result #v10510QuickGuideBlock,
+body.v10513-destiny-result #v10510GlossaryBlock {
+  display:none !important;
 }
-#v10512DebugCode {
-  white-space: pre-wrap;
-  word-break: break-word;
-  background: rgba(124,112,178,.08);
-  border-radius: 12px;
-  padding: 10px;
-  max-height: 34vh;
-  overflow: auto;
-}
-#v10512DebugToggle {
-  position: fixed;
-  left: 12px;
-  bottom: 28px;
-  z-index: 999999;
-  border: 1px solid rgba(124,112,178,.30);
-  border-radius: 999px;
-  padding: 10px 14px;
-  background: #7b5cd6;
-  color: white;
-  font-weight: 800;
-  box-shadow: 0 12px 32px rgba(60,40,120,.24);
-}
-body.reading-theme-night #v10512DebugPanel,
-html[data-theme="dark"] #v10512DebugPanel {
-  background: rgba(30,27,45,.96);
-  color: #f4efff;
-  border-color: rgba(180,160,255,.28);
-}
-body.reading-theme-night #v10512DebugCode,
-html[data-theme="dark"] #v10512DebugCode {
-  background: rgba(255,255,255,.08);
+body.v10513-normal-result .xlr-v10513-hide-nav {
+  display:none !important;
 }
 </style>
 
-<script id="v10512-debug-trace-script">
+<script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION = "v10.5.12 结果模板 Debug 诊断版";
-  const MAX_LOGS = 180;
-  const logs = [];
-  let lastSignature = '';
-
-  window.XLR_DEBUG_LOGS = logs;
-
+  const VERSION = "v10.5.13 结果模板状态隔离修正版";
+  let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
-  function now(){ return new Date().toLocaleTimeString(); }
-  function txt(el){ return el ? (el.textContent || '').trim().replace(/\s+/g,' ').slice(0,160) : ''; }
-  function displayState(id){
-    const el = $(id);
-    if(!el) return {exists:false};
-    const cs = getComputedStyle(el);
-    return {
-      exists:true,
-      className: el.className || '',
-      inlineDisplay: el.style.display || '',
-      display: cs.display,
-      visibility: cs.visibility,
-      height: Math.round(el.getBoundingClientRect().height),
-      offsetHeight: el.offsetHeight,
-      textLength: txt(el).length,
-      textStart: txt(el).slice(0,80)
-    };
-  }
-  function getCurrentResult(){
+  function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
+  function isDestinyResult(r){ return !!(r && (r.sceneKey === 'destiny' || r.sceneName === '命运' || r.scene === '命运')); }
+  function getCurrent(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
     try{ if(window.currentResult) return window.currentResult; }catch(e){}
     return null;
   }
-  function currentState(reason){
-    const r = getCurrentResult();
-    const details = r && Array.isArray(r.details) ? r.details : [];
-    const blocks = {
-      quickGuide: displayState('v10510QuickGuideBlock'),
-      quickGuideContent: displayState('v10510QuickGuideContent'),
-      answer: displayState('answerSummaryBlock'),
-      sceneFocus: displayState('sceneFocusBlock'),
-      sceneFocusContent: displayState('sceneFocusContent'),
-      paipan: displayState('paipanBlock'),
-      destinyBoard: displayState('destinyBoardBlock'),
-      destinyHealth: displayState('destinyHealthBlock'),
-      destinyMarriage: displayState('destinyMarriageBlock'),
-      context: displayState('contextAnalysisBlock'),
-      tri: displayState('triReadingBlock'),
-      radar: displayState('radarBlock'),
-      radarMetrics: displayState('radarMetrics'),
-      symbol: displayState('symbolBlock'),
-      symbolContent: displayState('symbolSupplement'),
-      advice: displayState('adviceBlock'),
-      adviceList: displayState('adviceList'),
-      glossary: displayState('v10510GlossaryBlock'),
-      glossaryContent: displayState('v10510GlossaryContent')
-    };
-    return {
-      time: now(),
-      reason,
-      version: VERSION,
-      title: document.title,
-      url: location.href,
-      scrollY: Math.round(window.scrollY || 0),
-      bodyClass: document.body ? document.body.className : '',
-      resultCardTop: $('resultCard') ? Math.round($('resultCard').getBoundingClientRect().top) : null,
-      resultSceneText: txt($('resultScene')),
-      resultTitleText: txt($('resultTitle')),
-      resultMethodText: txt($('resultMethod')),
-      currentResult: r ? {
-        id: r.id || null,
-        sceneKey: r.sceneKey,
-        sceneName: r.sceneName,
-        sceneIcon: r.sceneIcon,
-        question: r.question,
-        numbers: r.numbers,
-        favorite: r.favorite,
-        details: details.map(function(d){ return {positionName:d.positionName, palaceName:d.palaceName, number:d.number, direction:d.direction, element:d.element}; }),
-        hasMetrics: !!r.metrics,
-        hasAdvice: Array.isArray(r.advice) ? r.advice.length : null,
-        hasSupplement: Array.isArray(r.supplement) ? r.supplement.length : null
-      } : null,
-      isDestiny: !!(r && (r.sceneKey === 'destiny' || r.sceneName === '命运')),
-      blockStates: blocks,
-      hexNodeCount: document.querySelectorAll('#hexBoard .hex-node').length,
-      navLabels: Array.from(document.querySelectorAll('#sectionJumpNav button, .section-jump-nav button, .bottom-nav button, nav button'))
-        .map(function(b){ return {text:txt(b), display:getComputedStyle(b).display, className:b.className || '', target:b.getAttribute('data-target') || (b.dataset && b.dataset.target) || ''}; })
-        .filter(function(x){ return x.text; }).slice(0,40),
-      historyListCount: document.querySelectorAll('#historyList .history-item, .history-item, [data-history-id]').length,
-      functions: {
-        renderResult: typeof renderResult,
-        currentJumpTargets: typeof currentJumpTargets,
-        buildSceneFocusHTML: typeof buildSceneFocusHTML,
-        renderBoard: typeof renderBoard,
-        renderDestinyBoard: typeof renderDestinyBoard,
-        renderRadar: typeof renderRadar
+  function setCurrent(r){
+    if(!r) return;
+    try{ currentResult = r; }catch(e){}
+    try{ window.currentResult = r; }catch(e){}
+  }
+  function show(el){
+    if(!el) return;
+    el.hidden = false;
+    el.classList.remove('hidden');
+    el.setAttribute('aria-hidden','false');
+    ['display','visibility','height','min-height','max-height','margin','padding','overflow','pointer-events'].forEach(function(p){ el.style.removeProperty(p); });
+  }
+  function hide(el){
+    if(!el) return;
+    el.hidden = true;
+    el.classList.add('hidden');
+    el.setAttribute('aria-hidden','true');
+    el.style.setProperty('display','none','important');
+    el.style.setProperty('visibility','hidden','important');
+    el.style.setProperty('height','0','important');
+    el.style.setProperty('min-height','0','important');
+    el.style.setProperty('max-height','0','important');
+    el.style.setProperty('margin','0','important');
+    el.style.setProperty('padding','0','important');
+    el.style.setProperty('overflow','hidden','important');
+    el.style.setProperty('pointer-events','none','important');
+  }
+  function details(r){ return Array.isArray(r && r.details) ? r.details : []; }
+  function palaceChain(r){ return details(r).map(function(d){return d&&d.palaceName;}).filter(Boolean).join(' → '); }
+  function buildGuide(r){
+    const scene = safe((r && r.sceneName) || '本场景');
+    const chain = safe(palaceChain(r) || '本象 → 中象 → 末象');
+    return '<div class="v10510-guide-card"><b>1. 先看答案</b><span>先看“一句话直断”和偏向判断，快速知道这课大方向。</span></div>'
+      + '<div class="v10510-guide-card"><b>2. 再看重心</b><span>“本场景判断重心”会告诉你这类问题最该看哪里。</span></div>'
+      + '<div class="v10510-guide-card"><b>3. 看三象变化</b><span>本课三象是：'+chain+'。前面看当前，中间看过程，最后看结果。</span></div>'
+      + '<div class="v10510-guide-card"><b>4. 看专项与建议</b><span>'+scene+'会套用对应知识库，再结合行动建议落到现实处理。</span></div>';
+  }
+  function termCard(name,text,cls){ return '<div class="v10510-term-card '+(cls||'')+'"><b>'+safe(name)+'</b><span>'+safe(text)+'</span></div>'; }
+  function buildTerms(r){
+    const arr=[
+      ['本象','事情的起因或当前状态，通常看现在是什么气。'],
+      ['中象','事情的发展过程，常看中间会不会拖延、反复、变快或起冲突。'],
+      ['末象','事情的结果落点，普通问事里最要重视。'],
+      ['大安','安稳、守成、偏慢，适合稳步推进。'],
+      ['留连','拖延、纠缠、反复，事情容易卡在过程里。'],
+      ['速喜','消息快、变化快、有机会，但也要防冲动。'],
+      ['赤口','口舌、争执、规则、冲突，沟通要谨慎。'],
+      ['小吉','小成、小利、小机会，结果不大但有进展。'],
+      ['空亡','落空、虚、未落实，要防期待落空或信息不实。'],
+      ['问事专项','根据你选择的场景调用对应 JSON 知识库，把通用卦象转成主题判断。']
+    ];
+    if(r && r.sceneKey === 'marriage'){
+      arr.push(['婚姻专项','婚姻场景重点看关系是否稳定、相处过程哪里卡住、最后能否修复或落实。']);
+      arr.push(['关系落地','不要只看情绪和承诺，要看是否有现实行动、沟通和责任承担。']);
+    }
+    if(r && r.sceneKey === 'health') arr.push(['健康专项','健康场景只作生活状态提醒，现实不适仍以医生检查和专业意见为准。']);
+    return arr.map(function(t){return termCard(t[0],t[1],(t[0].indexOf('专项')>=0||t[0]==='关系落地')?'v10510-scene-term':'');}).join('');
+  }
+  function ensureGuideTerms(r){
+    const guide=$('v10510QuickGuideBlock'), guideContent=$('v10510QuickGuideContent');
+    const glossary=$('v10510GlossaryBlock'), glossaryContent=$('v10510GlossaryContent');
+    show(guide); show(glossary);
+    if(guideContent){ show(guideContent); guideContent.className='v10510-guide-grid'; guideContent.innerHTML=buildGuide(r); }
+    if(glossaryContent){ show(glossaryContent); glossaryContent.className='v10510-terms-grid'; glossaryContent.innerHTML=buildTerms(r); }
+  }
+  function ensureFocus(r){
+    const block=$('sceneFocusBlock'), content=$('sceneFocusContent');
+    show(block); show(content);
+    if(content && !(content.textContent||'').trim()){
+      let html='';
+      try{ if(typeof buildSceneFocusHTML === 'function') html = buildSceneFocusHTML(r); }catch(e){}
+      if(!html){
+        html='<div class="focus-item"><span>判断主题</span><b>'+safe((r&&r.sceneName)||'本场景')+'</b></div>'
+          + '<div class="focus-item"><span>本课重点</span><b>看当前、过程和结果是否落地</b></div>'
+          + '<div class="focus-item"><span>三象节奏</span><b>'+safe(palaceChain(r)||'本象 → 中象 → 末象')+'</b></div>'
+          + '<div class="focus-item"><span>阅读顺序</span><b>答案摘要 → 判断重心 → 三象 → 综合判断 → 建议</b></div>';
       }
-    };
-  }
-  function signature(s){
-    const r = s.currentResult || {};
-    return [
-      s.reason,
-      r.id, r.sceneKey, r.sceneName, r.question,
-      s.isDestiny,
-      s.blockStates.paipan && s.blockStates.paipan.display,
-      s.blockStates.paipan && s.blockStates.paipan.height,
-      s.blockStates.sceneFocusContent && s.blockStates.sceneFocusContent.textLength,
-      s.blockStates.quickGuideContent && s.blockStates.quickGuideContent.textLength,
-      s.blockStates.glossaryContent && s.blockStates.glossaryContent.textLength,
-      s.navLabels.map(function(x){return x.text+':'+x.display;}).join('|')
-    ].join('||');
-  }
-  function addLog(reason, force){
-    const state = currentState(reason);
-    const sig = signature(state);
-    if(!force && sig === lastSignature) return;
-    lastSignature = sig;
-    logs.push(state);
-    while(logs.length > MAX_LOGS) logs.shift();
-    try{ console.log('[XLR DEBUG]', reason, state); }catch(e){}
-    updatePanel();
-  }
-  function latestDump(){
-    return JSON.stringify({
-      version: VERSION,
-      userAgent: navigator.userAgent,
-      logCount: logs.length,
-      latest: logs[logs.length - 1] || null,
-      logs: logs.slice(-30)
-    }, null, 2);
-  }
-  window.xlrDebugDump = latestDump;
-  window.xlrDebugSnapshot = function(reason){ addLog(reason || 'manual', true); return latestDump(); };
-
-  function ensurePanel(){
-    if(!$('v10512DebugToggle')) {
-      const btn = document.createElement('button');
-      btn.id = 'v10512DebugToggle';
-      btn.type = 'button';
-      btn.textContent = 'DEBUG';
-      btn.onclick = function(){ $('v10512DebugPanel').classList.toggle('is-open'); addLog('toggle-debug', true); };
-      document.body.appendChild(btn);
-    }
-    if(!$('v10512DebugPanel')) {
-      const panel = document.createElement('div');
-      panel.id = 'v10512DebugPanel';
-      panel.innerHTML =
-        '<h4>🧪 结果模板 Debug 日志</h4>' +
-        '<div>请复现：先看命运历史 → 再看非命运历史，然后点“刷新日志/复制日志”。</div>' +
-        '<div class="v10512-debug-actions">' +
-        '<button type="button" id="v10512RefreshLog">刷新日志</button>' +
-        '<button type="button" id="v10512CopyLog">复制日志</button>' +
-        '<button type="button" id="v10512ClearLog">清空</button>' +
-        '</div><pre id="v10512DebugCode"></pre>';
-      document.body.appendChild(panel);
-      $('v10512RefreshLog').onclick = function(){ addLog('manual-refresh', true); };
-      $('v10512CopyLog').onclick = function(){
-        addLog('copy-log', true);
-        const text = latestDump();
-        if(navigator.clipboard) navigator.clipboard.writeText(text).catch(function(){});
-        const code = $('v10512DebugCode');
-        if(code) code.textContent = text;
-      };
-      $('v10512ClearLog').onclick = function(){ logs.length = 0; lastSignature = ''; updatePanel(); };
+      content.innerHTML = html;
     }
   }
-  function updatePanel(){
-    const code = $('v10512DebugCode');
-    if(code) code.textContent = latestDump();
+  function clearNormalForbiddenDom(){
+    hide($('paipanBlock'));
+    hide($('destinyBoardBlock'));
+    const hex=$('hexBoard'); if(hex) hex.querySelectorAll('.hex-node').forEach(function(n){ n.remove(); });
+    const dist=$('distributionText'); if(dist) dist.innerHTML='';
+    document.querySelectorAll('button,a').forEach(function(el){
+      const text=(el.textContent||'').trim();
+      const target=el.getAttribute('data-jump-target') || el.getAttribute('data-target') || (el.dataset && (el.dataset.jumpTarget || el.dataset.target)) || '';
+      if(text === '排盘' || text === '命盘' || target === 'paipanBlock' || target === 'destinyBoardBlock'){
+        el.classList.add('xlr-v10513-hide-nav');
+        el.style.setProperty('display','none','important');
+      }
+    });
   }
-  function patchVersionUpdates(){
-    try {
-      if(typeof buildVersionUpdatesHTML === 'function' && !buildVersionUpdatesHTML.__v10512DebugTrace){
-        const old = buildVersionUpdatesHTML;
-        buildVersionUpdatesHTML = function(){
-          let html = old.call(this);
-          const row = '<details><summary>'+VERSION+'</summary><ul><li>Debug 诊断版：记录命运/非命运历史切换时的 currentResult、模块显示状态和底部导航。</li><li>本版保留当前行为，不主动修复模板，只用于定位根因。</li><li>页面左下角 DEBUG 可复制最近日志。</li></ul></details>';
-          if(html.indexOf(VERSION) < 0) html += row;
-          return html;
+  function restoreDestinyDom(){
+    document.querySelectorAll('.xlr-v10513-hide-nav').forEach(function(el){ el.classList.remove('xlr-v10513-hide-nav'); el.style.removeProperty('display'); });
+    show($('destinyBoardBlock'));
+    hide($('v10510QuickGuideBlock'));
+    hide($('v10510GlossaryBlock'));
+  }
+  function syncBodyClasses(r){
+    const d=isDestinyResult(r);
+    document.body.classList.toggle('result-destiny', d);
+    document.body.classList.toggle('v1058-normal-result', !d);
+    document.body.classList.toggle('v1059-normal-result', !d);
+    document.body.classList.toggle('v10510-normal-result', !d);
+    document.body.classList.toggle('v10511-normal-result', !d);
+    document.body.classList.toggle('v10513-normal-result', !d);
+    document.body.classList.toggle('v10510-destiny-result', d);
+    document.body.classList.toggle('v10511-destiny-result', d);
+    document.body.classList.toggle('v10513-destiny-result', d);
+  }
+  function scrollResultTop(r){
+    const key=(r && (r.id || [r.sceneKey,r.sceneName,(r.numbers||[]).join('-'),r.question].join('|'))) || '';
+    if(!key || lastTopKey === key) return;
+    lastTopKey = key;
+    const card=$('resultCard'); if(!card) return;
+    const go=function(){ const y=Math.max(0, card.getBoundingClientRect().top + window.scrollY - 8); try{window.scrollTo({top:y, behavior:'auto'});}catch(e){window.scrollTo(0,y);} };
+    requestAnimationFrame(function(){ requestAnimationFrame(go); });
+    setTimeout(go,180);
+  }
+  function applyState(result, reason){
+    const r=result || getCurrent();
+    if(!r || !$('resultCard')) return;
+    setCurrent(r);
+    const destiny=isDestinyResult(r);
+    syncBodyClasses(r);
+    if(destiny){
+      restoreDestinyDom();
+      try{ if(typeof renderDestinyBoard === 'function') renderDestinyBoard(r); }catch(e){}
+    } else {
+      ['answerSummaryBlock','sceneFocusBlock','overallBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock'].forEach(function(id){ show($(id)); });
+      ensureGuideTerms(r);
+      ensureFocus(r);
+      clearNormalForbiddenDom();
+    }
+    try{ if(typeof refreshSectionJumpNavSoon === 'function') refreshSectionJumpNavSoon(); else if(typeof renderSectionJumpNav === 'function') renderSectionJumpNav(); }catch(e){}
+    setTimeout(function(){
+      setCurrent(r);
+      syncBodyClasses(r);
+      if(!isDestinyResult(r)) clearNormalForbiddenDom();
+    },80);
+    if(reason && String(reason).indexOf('render')>=0) scrollResultTop(r);
+  }
+  function patchJumpTargets(){
+    try{
+      if(typeof currentJumpTargets === 'function' && !currentJumpTargets.__v10513StateIsolation){
+        const old=currentJumpTargets;
+        currentJumpTargets=function(){
+          let items=old.call(this) || [];
+          const r=getCurrent();
+          if(r && !isDestinyResult(r)){
+            items=items.filter(function(t){ return t && t.id !== 'paipanBlock' && t.id !== 'destinyBoardBlock'; });
+          }
+          if(r && isDestinyResult(r)){
+            items=items.filter(function(t){ return t && t.id !== 'v10510QuickGuideBlock' && t.id !== 'v10510GlossaryBlock'; });
+          }
+          const seen={};
+          return items.filter(function(t){ if(!t || seen[t.id]) return false; seen[t.id]=1; return true; });
         };
-        buildVersionUpdatesHTML.__v10512DebugTrace = true;
+        currentJumpTargets.__v10513StateIsolation=true;
       }
-    } catch(e) {}
+    }catch(e){}
   }
-  function patchFunctions(){
-    try {
-      if(typeof renderResult === 'function' && !renderResult.__v10512DebugTrace){
-        const old = renderResult;
-        renderResult = function(result){
-          addLog('before-renderResult:' + (result && (result.sceneKey || result.sceneName || 'unknown')), true);
-          const ret = old.apply(this, arguments);
-          setTimeout(function(){ addLog('after-renderResult', true); }, 0);
-          setTimeout(function(){ addLog('after-renderResult-300', true); }, 300);
+  function patchRenderResult(){
+    try{
+      if(typeof renderResult === 'function' && !renderResult.__v10513StateIsolation){
+        const old=renderResult;
+        renderResult=function(result){
+          setCurrent(result);
+          syncBodyClasses(result);
+          const ret=old.apply(this, arguments);
+          setCurrent(result);
+          applyState(result, 'render-immediate');
+          setTimeout(function(){ applyState(result, 'render-120'); },120);
+          setTimeout(function(){ applyState(result, 'render-500'); },500);
           return ret;
         };
-        renderResult.__v10512DebugTrace = true;
+        renderResult.__v10513StateIsolation=true;
       }
-    } catch(e) {
-      addLog('patch-renderResult-error:' + e.message, true);
-    }
+    }catch(e){}
+  }
+  function patchVersionUpdates(){
+    try{
+      if(typeof buildVersionUpdatesHTML === 'function' && !buildVersionUpdatesHTML.__v10513StateIsolation){
+        const old=buildVersionUpdatesHTML;
+        buildVersionUpdatesHTML=function(){
+          let html=old.call(this);
+          const row='<details><summary>'+VERSION+'</summary><ul><li>根据 Debug 日志确认根因：查看命运历史时 DOM 已切到命运，但 currentResult 仍停在上一条非命运结果。</li><li>修复 renderResult 进入时没有同步 currentResult，导致后续补丁用旧场景判断模板。</li><li>非命运结果强制移除 result-destiny 状态，隐藏“六宫排盘 / 命运六亲参考盘”，并过滤底部“排盘 / 命盘”导航。</li><li>命运结果与普通问事结果在切换历史时重新隔离，避免互相套模板。</li></ul></details>';
+          if(html.indexOf(VERSION)<0) html+=row;
+          return html;
+        };
+        buildVersionUpdatesHTML.__v10513StateIsolation=true;
+      }
+    }catch(e){}
   }
   function boot(){
-    ensurePanel();
+    patchJumpTargets();
+    patchRenderResult();
     patchVersionUpdates();
-    patchFunctions();
-    addLog('boot', true);
-    setTimeout(function(){ addLog('t300', true); }, 300);
-    setTimeout(function(){ addLog('t1200', true); }, 1200);
+    applyState(null, 'boot');
+    setTimeout(function(){ patchJumpTargets(); patchRenderResult(); applyState(null,'t100'); },100);
+    setTimeout(function(){ applyState(null,'t500'); },500);
+    setTimeout(function(){ applyState(null,'t1200'); },1200);
   }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true});
-  else boot();
-  window.addEventListener('load', function(){ addLog('load', true); }, {once:true});
-  document.addEventListener('click', function(e){
-    const target = e.target && e.target.closest ? e.target.closest('button,a,.history-item,[data-history-id]') : null;
-    const label = target ? txt(target) : '';
-    setTimeout(function(){ addLog('click:' + label.slice(0,50), true); }, 80);
-    setTimeout(function(){ addLog('click-late:' + label.slice(0,50), true); }, 500);
-  }, true);
-  window.addEventListener('popstate', function(){ setTimeout(function(){ addLog('popstate', true); }, 80); });
-  window.addEventListener('hashchange', function(){ setTimeout(function(){ addLog('hashchange', true); }, 80); });
-  const obs = new MutationObserver(function(){
-    clearTimeout(window.__v10512DebugTraceTimer);
-    window.__v10512DebugTraceTimer = setTimeout(function(){ addLog('mutation', false); }, 160);
-  });
-  try{ obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class','style']}); }catch(e){}
-  setInterval(function(){ addLog('interval', false); }, 1200);
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true}); else boot();
+  window.addEventListener('load', boot, {once:true});
+  document.addEventListener('click', function(){ setTimeout(function(){ applyState(null,'click'); },80); setTimeout(function(){ applyState(null,'click-450'); },450); }, true);
+  const obs=new MutationObserver(function(){ clearTimeout(window.__v10513StateIsolationTimer); window.__v10513StateIsolationTimer=setTimeout(function(){ applyState(null,'mutation'); },140); });
+  try{ obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class','style','hidden']}); }catch(e){}
 })();
 </script>
 
