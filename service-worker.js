@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.3-dark-real-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.4-dark-whiteblock-sweep';
 const APP_SHELL = [
   './',
   './index.html',
