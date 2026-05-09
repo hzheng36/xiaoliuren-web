@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.1-night-deep-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.2-dark-theme-rebuild';
 const APP_SHELL = [
   './',
   './index.html',
