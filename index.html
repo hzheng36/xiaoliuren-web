@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.17 当前导航居中跟随版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.17 当前导航居中跟随版：保留 Debug 左下角与设置即时保存修复，并让底部章节导航始终把当前阅读章节自动滚到屏幕中间。" />
+  <title>小六壬占卜 · v10.5.18 口诀知识库 Beta 版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.18 口诀知识库 Beta 版：在稳定的 Debug 左下角、设置即时保存、当前导航居中版本基础上，普通问事结果页新增“本课用到的口诀”模块。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.17 当前导航居中跟随版</h2>
+          <h2>个人占卜台 · v10.5.18 口诀知识库 Beta 版</h2>
           <p>本版修复底部章节导航的居中逻辑：不是只让整排导航居中，而是当阅读到导读、答案、重心、三象、建议、术语等部分时，当前章节按钮会自动滚到导航正中央。</p>
         </div>
         <div class="actions">
@@ -13378,6 +13378,253 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
   window.addEventListener('load', function(){ setTimeout(boot,80); setTimeout(boot,900); });
   try{ new MutationObserver(function(){ clearTimeout(window.__v10517CenterTimer); window.__v10517CenterTimer=setTimeout(function(){ patchUpdateFunction(); scheduleCenter('mutation','auto'); },120); }).observe(document.body,{subtree:true, childList:true, attributes:true, attributeFilter:['class','style']}); }catch(e){}
+})();
+</script>
+
+
+<!-- v10.5.18 patch: 普通问事结果页新增“本课用到的口诀”Beta 模块 -->
+<style id="v10518-formula-beta-style">
+  #v10518FormulaBlock { position:relative; }
+  .v10518-formula-intro {
+    margin:0 0 12px;
+    padding:12px 14px;
+    border-radius:16px;
+    border:1px solid rgba(124,112,178,.16);
+    background:linear-gradient(180deg,rgba(250,247,255,.92),rgba(255,255,255,.86));
+    color:var(--muted);
+    line-height:1.72;
+    font-size:.94rem;
+  }
+  .v10518-formula-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .v10518-formula-card {
+    padding:14px;
+    border-radius:18px;
+    border:1px solid rgba(124,112,178,.16);
+    background:rgba(255,255,255,.9);
+    box-shadow:0 10px 24px rgba(60,46,110,.05);
+    line-height:1.7;
+  }
+  .v10518-formula-card h5 { margin:0 0 8px; color:var(--primary); font-size:1rem; }
+  .v10518-formula-card p { margin:6px 0; }
+  .v10518-formula-card .v10518-mini-tag {
+    display:inline-flex;
+    align-items:center;
+    border-radius:999px;
+    padding:3px 9px;
+    margin:0 6px 6px 0;
+    background:rgba(124,112,178,.10);
+    color:var(--primary);
+    font-weight:800;
+    font-size:.82rem;
+  }
+  .v10518-formula-scene {
+    margin-top:12px;
+    padding:13px 14px;
+    border-radius:18px;
+    border:1px solid rgba(214,176,83,.22);
+    background:rgba(255,250,239,.88);
+    line-height:1.72;
+    color:var(--text);
+  }
+  .v10518-formula-scene ul { margin:8px 0 0; padding-left:20px; }
+  .v10518-formula-scene li { margin:4px 0; }
+  @media(max-width:980px){ .v10518-formula-grid{grid-template-columns:1fr;} }
+  body.reading-theme-night #v10518FormulaBlock,
+  html[data-theme="dark"] #v10518FormulaBlock { color:var(--dark-text); }
+  body.reading-theme-night .v10518-formula-intro,
+  body.reading-theme-night .v10518-formula-card,
+  body.reading-theme-night .v10518-formula-scene,
+  html[data-theme="dark"] .v10518-formula-intro,
+  html[data-theme="dark"] .v10518-formula-card,
+  html[data-theme="dark"] .v10518-formula-scene {
+    background:rgba(38,34,58,.94) !important;
+    border-color:var(--dark-border) !important;
+    color:var(--dark-text) !important;
+  }
+</style>
+<script id="v10518-formula-beta-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.18 口诀知识库 Beta 版';
+  const META='小六壬个人网页版 v10.5.18 口诀知识库 Beta 版：在普通问事结果页新增“本课用到的口诀”模块，婚姻/健康优先读取对应知识库，其它场景暂用基础六宫口诀。';
+  const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
+  const BASE={
+    '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
+    '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'事情容易卡在过程里，旧问题、等待、犹豫会比较明显。'},
+    '速喜':{formula:'速喜人便至，主消息、快速、喜动。',plain:'容易有消息、变化或推进，但也要防来得快去得快。'},
+    '赤口':{formula:'赤口主口舌，主争执、规则、冲突。',plain:'重点看沟通、边界、合同、口头承诺和临门争议。'},
+    '小吉':{formula:'小吉最吉昌，主小成、小利、贵人。',plain:'有小机会、小进展，适合先拿阶段性结果。'},
+    '空亡':{formula:'空亡事不详，主虚、空、未实、落空。',plain:'信息或承诺不够实，需复核条件，防期待落空。'}
+  };
+  const HEALTH={
+    '大安':{formula:'病者主无妨，久病缓中强。',plain:'健康问事多看稳定与恢复慢慢转好，但不要因“无妨”拖延检查。'},
+    '留连':{formula:'此日患疾病，几天不复康。',plain:'多主拖延、反复、慢性或寒湿虚弱，适合持续调理和复查。'},
+    '速喜':{formula:'病者无大伤，虚火上炎。',plain:'变化较快，可能很快缓解，也可能急性发作；急症不要拖。'},
+    '赤口':{formula:'病者出西方，更须防瘟疫。',plain:'多看急痛、炎症、口鼻牙喉、皮肤或外伤象；持续不适应就医。'},
+    '小吉':{formula:'病者保安康，久病得安康。',plain:'多主小好转、能恢复，适合温和调理和规律作息。'},
+    '空亡':{formula:'病人逢暗鬼，久病添祸殃。',plain:'判断不明、症状虚实难分，建议复核检查，不要只凭感觉。'}
+  };
+  const SCENE_HINT={
+    weather:'天气场景用口诀看“雨势/天气是否成形、变化快慢、最后落不落到实处”。',
+    lost:'失物场景用口诀看“物品状态、寻找过程、最后能否找回”。',
+    love:'感情场景用口诀看“关系动静、互动过程、最后是否落实”。',
+    marriage:'婚姻场景优先读取婚姻 JSON 知识库，看关系稳定度、相处卡点与承诺是否落地。',
+    wealth:'财运场景用口诀看“财机是否真实、过程风险、钱能否到手”。',
+    money:'财运场景用口诀看“财机是否真实、过程风险、钱能否到手”。',
+    career:'事业场景用口诀看“项目能否推进、流程哪里卡、结果是否落地”。',
+    exam:'考试场景用口诀看“基础、发挥、通知或结果是否落实”。',
+    travel:'出行场景用口诀看“能否顺利出发、途中是否延误、最终是否安稳到达”。',
+    cooperation:'合作场景用口诀看“双方是否同心、规则是否清楚、合作能否落地”。',
+    message:'消息场景用口诀看“是否回应、回应快慢、消息是否算数”。',
+    health:'健康场景优先读取健康口诀知识库，看当前状态、发展过程与恢复趋势；现实不适仍以医生检查为准。',
+    job:'求职场景用口诀看“机会是否真实、面试/流程是否顺、offer 是否落地”。',
+    home:'家宅场景用口诀看“家宅是否稳定、旧问题是否反复、最终能否安顿”。',
+    choice:'选择场景用口诀看“信息是否足够、过程是否反复、哪类结果更能落地”。'
+  };
+  function $(id){return document.getElementById(id);}
+  function esc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function current(){try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){} try{return window.currentResult||null;}catch(e){return null;}}
+  function isDestiny(r){return !!(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'));}
+  function details(r){return (r&&Array.isArray(r.details))?r.details:[];}
+  function ensureBlock(){
+    let block=$('v10518FormulaBlock');
+    if(block) return block;
+    block=document.createElement('article');
+    block.className='block detail-only collapsible-block';
+    block.id='v10518FormulaBlock';
+    block.setAttribute('data-collapse-key','formula');
+    block.innerHTML='<h4>本课用到的口诀</h4><div id="v10518FormulaContent"></div>';
+    const anchor=$('triReadingBlock') || $('sceneFocusBlock') || $('answerSummaryBlock');
+    if(anchor && anchor.parentNode) anchor.insertAdjacentElement('afterend', block);
+    else { const card=$('resultCard'); if(card) card.appendChild(block); }
+    try{ if(typeof enhanceCollapsibleBlocks==='function') enhanceCollapsibleBlocks(); }catch(e){}
+    try{ if(typeof getUserSettings==='function' && getUserSettings().collapseDetails) block.classList.add('is-collapsed'); }catch(e){}
+    return block;
+  }
+  function hideBlock(){const b=$('v10518FormulaBlock'); if(b){b.classList.add('hidden'); b.style.display='none';}}
+  function showBlock(){const b=ensureBlock(); b.classList.remove('hidden'); b.style.display=''; b.style.visibility=''; return b;}
+  function marriageText(palace,type){
+    const kb=window.XLR_MARRIAGE_KB && window.XLR_MARRIAGE_KB.data;
+    if(!kb) return '';
+    const tendency=kb.marriage_tendency_by_palm&&kb.marriage_tendency_by_palm[palace];
+    const adv=kb.marriage_advantage&&kb.marriage_advantage[palace];
+    const ch=kb.marriage_challenge&&kb.marriage_challenge[palace];
+    if(type==='formula') return tendency || '';
+    return ['优势：'+(adv||'可经营'), '挑战：'+(ch||'需看现实沟通')].join('；');
+  }
+  function sceneFormula(r,palace){
+    const key=(r&&r.sceneKey)||'other';
+    if(key==='health') return HEALTH[palace] || BASE[palace];
+    if(key==='marriage'){
+      return {formula: marriageText(palace,'formula') || BASE[palace].formula, plain: marriageText(palace,'plain') || BASE[palace].plain};
+    }
+    return BASE[palace] || {formula:'按六宫基础口诀判断。',plain:'结合本象、中象、末象看事情从开始到结果的变化。'};
+  }
+  function sceneNote(r){
+    const key=(r&&r.sceneKey)||'other';
+    const name=(r&&r.sceneName)||'本场景';
+    const chain=details(r).map(function(d){return d&&d.palaceName;}).filter(Boolean).join(' → ');
+    let html='<div class="v10518-formula-scene"><strong>专项用法：</strong>'+esc(SCENE_HINT[key]||('“'+name+'”暂用基础六宫口诀，后续可接入专属 JSON 知识库。'));
+    if(key==='marriage' && window.XLR_MARRIAGE_KB && window.XLR_MARRIAGE_KB.data){
+      const tips=window.XLR_MARRIAGE_KB.data.life_reminders||[];
+      html+='<ul>'+tips.slice(0,4).map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';
+    } else if(key==='health'){
+      html+='<ul><li>本模块只作传统象意和生活状态提醒，不替代医学诊断。</li><li>若有持续疼痛、麻木、胸闷、呼吸困难、高热或症状加重，请及时就医。</li></ul>';
+    } else {
+      html+='<ul><li>本课三象：'+esc(chain||'本象 → 中象 → 末象')+'。</li><li>先看末象能不能落地，再回头看中象的过程卡点。</li></ul>';
+    }
+    html+='</div>';
+    return html;
+  }
+  function build(r){
+    const arr=details(r);
+    if(!arr.length) return '<div class="v10518-formula-intro">暂无三象数据，无法生成本课口诀。</div>';
+    const intro='<div class="v10518-formula-intro"><strong>Beta 说明：</strong>这里把本课实际落到的三宫口诀单独提出来，方便你知道本课到底用了哪些知识点。婚姻、健康优先读取对应知识库；其它普通场景先使用基础六宫口诀，后续可以逐步接入各自 JSON。</div>';
+    const cards=arr.map(function(d,i){
+      const palace=d&&d.palaceName || '';
+      const f=sceneFormula(r,palace);
+      const pos=d&&d.positionName || ['本象','中象','末象'][i] || '三象';
+      const role=d&&d.role ? d.role : (i===0?'当前':i===1?'过程':'结果');
+      return '<div class="v10518-formula-card"><h5>'+esc(pos)+' · '+esc(palace)+'</h5>'
+        +'<span class="v10518-mini-tag">'+esc(role)+'</span><span class="v10518-mini-tag">'+esc((d&&d.element)||'')+'</span>'
+        +'<p><strong>口诀：</strong>'+esc(f.formula||'按基础六宫口诀判断。')+'</p>'
+        +'<p><strong>白话：</strong>'+esc(f.plain||BASE[palace]?.plain||'结合本课问题看动静、过程和结果。')+'</p>'
+        +'</div>';
+    }).join('');
+    return intro+'<div class="v10518-formula-grid">'+cards+'</div>'+sceneNote(r);
+  }
+  function renderFormula(r,reason){
+    r=r||current();
+    if(!r || isDestiny(r)){ hideBlock(); return; }
+    const block=showBlock();
+    const content=$('v10518FormulaContent');
+    if(content) content.innerHTML=build(r);
+    try{ if(typeof enhanceCollapsibleBlocks==='function') enhanceCollapsibleBlocks(); }catch(e){}
+    try{ if(typeof refreshSectionJumpNavSoon==='function') refreshSectionJumpNavSoon(); else if(typeof renderSectionJumpNav==='function') renderSectionJumpNav(); }catch(e){}
+  }
+  function patchRender(){
+    try{
+      if(typeof renderResult==='function' && !renderResult.__v10518FormulaBeta){
+        const old=renderResult;
+        renderResult=function(result){
+          const ret=old.apply(this,arguments);
+          setTimeout(function(){renderFormula(result,'render');},0);
+          setTimeout(function(){renderFormula(result,'render-160');},160);
+          setTimeout(function(){renderFormula(result,'render-600');},600);
+          return ret;
+        };
+        renderResult.__v10518FormulaBeta=true;
+      }
+    }catch(e){}
+  }
+  function patchJumpTargets(){
+    try{
+      if(typeof currentJumpTargets==='function' && !currentJumpTargets.__v10518FormulaBeta){
+        const old=currentJumpTargets;
+        currentJumpTargets=function(){
+          let items=old.apply(this,arguments)||[];
+          const r=current();
+          if(r && !isDestiny(r) && $('v10518FormulaBlock') && !$('v10518FormulaBlock').classList.contains('hidden')){
+            const extra={id:'v10518FormulaBlock',label:'口诀',el:$('v10518FormulaBlock')};
+            if(!items.some(function(t){return t&&t.id===extra.id;})){
+              let idx=items.findIndex(function(t){return t&&t.id==='triReadingBlock';});
+              if(idx<0) idx=items.findIndex(function(t){return t&&t.id==='sceneFocusBlock';});
+              if(idx>=0) items.splice(idx+1,0,extra); else items.push(extra);
+            }
+          } else {
+            items=items.filter(function(t){return t&&t.id!=='v10518FormulaBlock';});
+          }
+          const seen={};
+          return items.filter(function(t){ if(!t||seen[t.id]) return false; seen[t.id]=1; return true; });
+        };
+        currentJumpTargets.__v10518FormulaBeta=true;
+      }
+    }catch(e){}
+  }
+  function setVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
+  }
+  function patchVersionLog(){
+    try{
+      if(typeof buildVersionUpdatesHTML==='function' && !buildVersionUpdatesHTML.__v10518FormulaBeta){
+        const old=buildVersionUpdatesHTML;
+        buildVersionUpdatesHTML=function(){
+          let html=old.apply(this,arguments)||'';
+          html=html.replace(/<details><summary>v10\.5\.18 口诀知识库 Beta 版<\/summary>[\s\S]*?<\/details>/g,'');
+          html += '<details><summary>v10.5.18 口诀知识库 Beta 版</summary><ul><li>普通问事结果页新增“本课用到的口诀”模块，放在“三象解读”之后，方便学习本课实际用到的三宫口诀。</li><li>婚姻场景优先读取婚姻 JSON 知识库，显示关系稳定度、优势和挑战。</li><li>健康场景优先读取健康口诀知识库，并保留“不替代医学诊断”的提醒。</li><li>其它普通场景先使用基础六宫口诀作为 Beta 版兜底，后续可逐步接入对应主题 JSON。</li><li>命运场景继续保持独立模板，不套用普通问事口诀模块，避免再次发生模板串场。</li><li>保留 Debug 左下角、设置即时保存、当前导航自动居中和命运/非命运模板隔离修复。</li></ul></details>';
+          return html;
+        };
+        buildVersionUpdatesHTML.__v10518FormulaBeta=true;
+      }
+    }catch(e){}
+  }
+  function boot(){ setVersion(); patchRender(); patchJumpTargets(); renderFormula(null,'boot'); patchVersionLog(); setTimeout(function(){setVersion(); patchRender(); patchJumpTargets(); renderFormula(null,'t300');},300); setTimeout(function(){setVersion(); renderFormula(null,'t1200');},1200); setTimeout(setVersion,2600); setTimeout(setVersion,5200); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',function(){setTimeout(boot,80); setTimeout(boot,900);},{once:true});
+  document.addEventListener('click',function(){setTimeout(function(){renderFormula(null,'click');},120);},true);
+  try{new MutationObserver(function(){clearTimeout(window.__v10518FormulaTimer); window.__v10518FormulaTimer=setTimeout(function(){patchJumpTargets(); renderFormula(null,'mutation');},180);}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']});}catch(e){}
 })();
 </script>
 

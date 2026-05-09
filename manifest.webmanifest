@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.17",
-  "short_name": "小六壬 v10.5.17",
-  "description": "v10.5.17 当前导航居中跟随版",
+  "name": "小六壬占卜 · v10.5.18",
+  "short_name": "小六壬 v10.5.18",
+  "description": "v10.5.18 口诀知识库 Beta 版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.17"
+  "version": "10.5.18"
 }
