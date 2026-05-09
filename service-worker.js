@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.5-marriage-scene';
+const CACHE_NAME = 'xiaoliuren-v10.5.6-loading-stability';
 const APP_SHELL = [
   './',
   './index.html',
