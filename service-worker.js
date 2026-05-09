@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.27-career-nav-dedupe';
+const CACHE_NAME = 'xiaoliuren-v10.5.28-version-career-nav-state';
 const APP_SHELL = [
   './',
   './index.html',
