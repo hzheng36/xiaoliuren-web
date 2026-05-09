@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.7-runtime-diagnostic';
+const CACHE_NAME = 'xiaoliuren-v10.5.8-runtime-state-fix';
 const APP_SHELL = [
   './',
   './index.html',
