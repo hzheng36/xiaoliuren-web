@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.4.9-nav-rollback-destiny-sub';
+const CACHE_NAME = 'xiaoliuren-v10.5.0-night-nav-quick';
 const APP_SHELL = [
   './',
   './index.html',
