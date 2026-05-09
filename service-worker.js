@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.10-guide-terms';
+const CACHE_NAME = 'xiaoliuren-v10.5.11-hard-result-repair';
 const APP_SHELL = [
   './',
   './index.html',

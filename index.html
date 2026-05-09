@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.10 普通问事导读术语版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.9，给非命运场景结果页新增快速导读与术语解释，并保留普通问事排盘移除和内容补全修复。" />
+  <title>小六壬占卜 · v10.5.11 普通问事导读术语实修版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.10 普通问事导读术语版</h2>
-          <p>本版基于 v10.5.9 普通问事内容补全修正版，在非命运场景结果页新增“快速导读”和“术语解释”；命运场景保持原有命盘体系不变。</p>
+          <h2>个人占卜台 · v10.5.11 普通问事导读术语实修版</h2>
+          <p>本版修复 v10.5.10 后出现的普通问事显示问题：非命运场景重新强制移除六宫排盘，并补全快速导读、术语解释、雷达分析图和行动建议内容。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5800,7 +5800,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6612,7 +6612,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7179,7 +7179,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8504,7 +8504,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8680,7 +8680,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -8977,7 +8977,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9253,7 +9253,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9483,7 +9483,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9531,8 +9531,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9695,8 +9695,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9818,8 +9818,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9970,8 +9970,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10193,8 +10193,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10272,8 +10272,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10342,8 +10342,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10481,8 +10481,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10646,8 +10646,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10718,8 +10718,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10827,8 +10827,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11281,8 +11281,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.10 普通问事导读术语版";
-  const META="小六壬个人网页版 v10.5.10 普通问事导读术语版：基于 v10.5.8，修复非命运场景雷达分析图、行动建议、象意补充等模块内容为空的问题。";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
+  const META="小六壬个人网页版 v10.5.11 普通问事导读术语实修版：修复新增导读术语后非命运场景六宫排盘回弹、导读/术语/雷达/建议等模块内容空白的问题。";
   const HERO = "本版在暗夜主题基础上增加白块兜底规则：不再只依赖具体类名，而是覆盖常见容器、内联背景、卡片、按钮和标签，修复暗夜模式残留白块。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11514,7 +11514,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11770,7 +11770,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION = "v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -11938,7 +11938,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION = "v10.5.10 普通问事导读术语版";
+  const VERSION="v10.5.11 普通问事导读术语实修版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12046,6 +12046,395 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
   document.addEventListener('click', function(){ setTimeout(function(){applyGuideTerms('click');},120); }, true);
   const obs=new MutationObserver(function(){ clearTimeout(window.__v10510GuideTermsTimer); window.__v10510GuideTermsTimer=setTimeout(function(){applyGuideTerms('mutation');},160); });
   try{ obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class','style']}); }catch(e){}
+})();
+</script>
+
+
+<style id="v10511-hard-result-repair-style">
+/* v10.5.11：最后兜底，非命运结果页不显示排盘 */
+body.v10511-normal-result #paipanBlock {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+body.v10511-normal-result #v10510QuickGuideBlock,
+body.v10511-normal-result #v10510GlossaryBlock,
+body.v10511-normal-result #sceneFocusBlock,
+body.v10511-normal-result #radarBlock,
+body.v10511-normal-result #adviceBlock,
+body.v10511-normal-result #symbolBlock {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+body.v10511-normal-result #v10510QuickGuideContent,
+body.v10511-normal-result #v10510GlossaryContent,
+body.v10511-normal-result #sceneFocusContent,
+body.v10511-normal-result #radarMetrics,
+body.v10511-normal-result #adviceList,
+body.v10511-normal-result #symbolSupplement {
+  display: grid !important;
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 1px !important;
+  overflow: visible !important;
+}
+body.v10511-normal-result #adviceList {
+  display: block !important;
+}
+body.v10511-normal-result .xlr-hide-normal-nav {
+  display: none !important;
+}
+.v10511-guide-grid,
+.v10511-terms-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.v10511-guide-card,
+.v10511-term-card,
+.v10511-content-note {
+  border:1px solid rgba(124,112,178,.16);
+  border-radius:16px;
+  padding:12px 14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.72));
+  line-height:1.7;
+}
+.v10511-guide-card b,
+.v10511-term-card b {
+  display:block;
+  color:var(--primary);
+  margin-bottom:4px;
+}
+.v10511-radar-fallback {
+  display:grid;
+  gap:9px;
+  margin-top:12px;
+}
+.v10511-radar-row {
+  display:grid;
+  grid-template-columns:88px 1fr 40px;
+  gap:8px;
+  align-items:center;
+}
+.v10511-radar-bar {
+  height:10px;
+  border-radius:999px;
+  background:rgba(124,112,178,.12);
+  overflow:hidden;
+}
+.v10511-radar-fill {
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(124,87,198,.55),rgba(229,196,138,.7));
+}
+@media(max-width:760px){
+  .v10511-guide-grid,
+  .v10511-terms-grid {
+    grid-template-columns:1fr;
+  }
+  .v10511-radar-row {
+    grid-template-columns:80px 1fr 34px;
+  }
+}
+body.reading-theme-night .v10511-guide-card,
+body.reading-theme-night .v10511-term-card,
+body.reading-theme-night .v10511-content-note,
+html[data-theme="dark"] .v10511-guide-card,
+html[data-theme="dark"] .v10511-term-card,
+html[data-theme="dark"] .v10511-content-note {
+  background:rgba(38,34,58,.94);
+  border-color:rgba(180,160,255,.22);
+}
+</style>
+
+<script id="v10511-hard-result-repair-script">
+(function(){
+  'use strict';
+  const VERSION = "v10.5.11 普通问事导读术语实修版";
+  let lastTopKey = '';
+
+  function $(id) { return document.getElementById(id); }
+  function safe(s) { return String(s == null ? '' : s).replace(/[&<>]/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]; }); }
+  function getCurrentResult() {
+    try { if (typeof currentResult !== 'undefined' && currentResult) return currentResult; } catch(e) {}
+    try { if (window.currentResult) return window.currentResult; } catch(e) {}
+    return null;
+  }
+  function isDestiny(r) {
+    return !!(r && (r.sceneKey === 'destiny' || r.sceneName === '命运'));
+  }
+  function resultKey(r) {
+    if(!r) return '';
+    const nums = Array.isArray(r.numbers) ? r.numbers.join('/') : '';
+    return [r.id || '', r.sceneKey || '', r.sceneName || '', r.question || '', nums].join('|');
+  }
+  function show(el) {
+    if(!el) return;
+    el.classList.remove('hidden');
+    el.style.display = '';
+    el.style.visibility = '';
+    el.style.height = '';
+    el.style.minHeight = '';
+    el.style.margin = '';
+    el.style.padding = '';
+    el.style.overflow = '';
+  }
+  function hide(el) {
+    if(!el) return;
+    el.classList.add('hidden');
+    el.style.display = 'none';
+    el.style.visibility = 'hidden';
+    el.style.height = '0';
+    el.style.minHeight = '0';
+    el.style.margin = '0';
+    el.style.padding = '0';
+    el.style.overflow = 'hidden';
+  }
+  function details(r) {
+    return (r && Array.isArray(r.details)) ? r.details : [];
+  }
+  function palaceChain(r) {
+    return details(r).slice(0,3).map(function(x){ return x && x.palaceName; }).filter(Boolean).join(' → ');
+  }
+  function metricPairs(r) {
+    const m = (r && r.metrics) || {};
+    function val(x) { x = Number(x); return Number.isFinite(x) ? Math.max(0, Math.min(100, Math.round(x))) : 50; }
+    return [
+      ['成事倾向', val(m.success)],
+      ['推进速度', val(m.speed)],
+      ['稳定性', val(m.stable || m.stability || (100 - (m.risk || 50)))],
+      ['贵人助力', val(m.noble)],
+      ['风险控制', val(100 - (m.risk || 50))],
+      ['结果强度', val(m.result)]
+    ];
+  }
+  function buildGuide(r) {
+    const scene = safe((r && r.sceneName) || '本场景');
+    const chain = safe(palaceChain(r) || '本象 → 中象 → 末象');
+    return '<div class="v10511-guide-grid">'
+      + '<div class="v10511-guide-card"><b>1. 先看答案摘要</b><span>先看一句话直断和偏向判断，快速抓住大方向。</span></div>'
+      + '<div class="v10511-guide-card"><b>2. 再看判断重心</b><span>这里会告诉你'+scene+'最该关注哪一层信息。</span></div>'
+      + '<div class="v10511-guide-card"><b>3. 看三象变化</b><span>本课三象是：'+chain+'。本象看当前，中象看过程，末象看结果。</span></div>'
+      + '<div class="v10511-guide-card"><b>4. 看专项与建议</b><span>最后看综合判断、专项解读和行动建议，把卦象落到现实处理。</span></div>'
+      + '</div>';
+  }
+  function termCard(name, text) {
+    return '<div class="v10511-term-card"><b>'+safe(name)+'</b><span>'+safe(text)+'</span></div>';
+  }
+  function buildTerms(r) {
+    const arr = [
+      ['本象','事情的起因或当前状态，通常看现在是什么气。'],
+      ['中象','事情的发展过程，常看中间会不会拖延、反复、变快或起冲突。'],
+      ['末象','事情的结果落点，普通问事里最要重视。'],
+      ['大安','安稳、守成、偏慢，适合稳步推进。'],
+      ['留连','拖延、纠缠、反复，事情容易卡在过程里。'],
+      ['速喜','消息快、变化快、有机会，但也要防冲动。'],
+      ['赤口','口舌、争执、规则、冲突，沟通要谨慎。'],
+      ['小吉','小成、小利、小机会，结果不大但有进展。'],
+      ['空亡','落空、虚、未落实，要防期待落空或信息不实。'],
+      ['问事专项','根据你选择的场景调用对应知识库，把通用卦象转成主题判断。']
+    ];
+    if(r && r.sceneKey === 'marriage') {
+      arr.push(['婚姻专项','婚姻场景重点看关系是否稳定、相处过程哪里卡住、最后能否修复或落实。']);
+      arr.push(['关系落地','不要只看情绪和承诺，要看是否有现实行动、沟通和责任承担。']);
+    }
+    if(r && r.sceneKey === 'health') {
+      arr.push(['健康专项','健康场景只作生活状态提醒，现实不适仍以医生检查和专业意见为准。']);
+    }
+    return '<div class="v10511-terms-grid">' + arr.map(function(t){ return termCard(t[0], t[1]); }).join('') + '</div>';
+  }
+  function buildFocus(r) {
+    let html = '';
+    try { if(typeof buildSceneFocusHTML === 'function') html = buildSceneFocusHTML(r); } catch(e) {}
+    if(html && String(html).trim()) return html;
+    const d = details(r);
+    const first = d[0] && d[0].palaceName || '';
+    const mid = d[1] && d[1].palaceName || '';
+    const last = d[2] && d[2].palaceName || '';
+    return '<div class="focus-grid">'
+      + '<div class="focus-item"><span>判断主题</span><b>'+safe((r && r.sceneName) || '本场景')+'</b></div>'
+      + '<div class="focus-item"><span>本课重点</span><b>看当前、过程和结果是否落地</b></div>'
+      + '<div class="focus-item"><span>三象节奏</span><b>'+safe([first,mid,last].filter(Boolean).join(' → ') || '本象 → 中象 → 末象')+'</b></div>'
+      + '<div class="focus-item"><span>阅读顺序</span><b>答案摘要 → 判断重心 → 三象 → 综合判断 → 建议</b></div>'
+      + '</div>';
+  }
+  function fillAdvice(r) {
+    const block = $('adviceBlock'), list = $('adviceList');
+    if(!block || !list) return;
+    show(block); show(list);
+    let advice = Array.isArray(r && r.advice) ? r.advice.filter(Boolean) : [];
+    if(!advice.length && typeof buildAdvice === 'function') {
+      try { advice = buildAdvice(details(r), (r && r.metrics) || {}) || []; } catch(e) {}
+    }
+    if(!advice.length) {
+      const d = details(r);
+      const end = d[2] || d[d.length-1];
+      if(end) advice.push('重点看末象“'+end.palaceName+'”，它更像最后落点。');
+      advice.push('先核实信息，再决定行动；不要只凭单一卦象下绝对结论。');
+      if(r && r.sceneKey === 'weather') advice.push('天气类问题建议结合临近天气预报复核，尤其注意“落空、变化、延迟”。');
+      if(r && r.sceneKey === 'marriage') advice.push('婚姻关系要结合现实沟通、边界和责任承担，不要只看情绪。');
+    }
+    list.innerHTML = advice.map(function(x){ return '<li>'+safe(x)+'</li>'; }).join('');
+  }
+  function fillRadar(r) {
+    const block = $('radarBlock');
+    if(!block) return;
+    show(block);
+    const canvas = $('radarCanvas');
+    if(canvas && typeof renderRadar === 'function') {
+      try { renderRadar((r && r.metrics) || {}); } catch(e) {}
+    }
+    const metrics = $('radarMetrics');
+    if(metrics) {
+      metrics.innerHTML = metricPairs(r).map(function(p){ return '<div class="radar-metric-pill"><span>'+safe(p[0])+'</span><strong>'+p[1]+'</strong></div>'; }).join('');
+    }
+    let fb = $('v10511RadarFallback');
+    if(!fb) {
+      fb = document.createElement('div');
+      fb.id = 'v10511RadarFallback';
+      fb.className = 'v10511-radar-fallback';
+      if(metrics && metrics.parentNode) metrics.parentNode.insertBefore(fb, metrics.nextSibling);
+      else block.appendChild(fb);
+    }
+    fb.innerHTML = metricPairs(r).map(function(p) {
+      return '<div class="v10511-radar-row"><span>'+safe(p[0])+'</span><div class="v10511-radar-bar"><div class="v10511-radar-fill" style="width:'+p[1]+'%"></div></div><strong>'+p[1]+'</strong></div>';
+    }).join('');
+  }
+  function fillSymbol(r) {
+    const block = $('symbolBlock'), box = $('symbolSupplement');
+    if(!block || !box) return;
+    show(block); show(box);
+    let sup = Array.isArray(r && r.supplement) ? r.supplement.filter(Boolean) : [];
+    if(!sup.length) {
+      sup = details(r).map(function(x){ return {label:(x.positionName || '三象') + ' · ' + (x.palaceName || ''), value:x.summary || '结合本宫象意与现实情况判断。'}; });
+    }
+    if(!sup.length) box.innerHTML = '<div class="v10511-content-note">暂无补充象意，可先看答案摘要、三象和行动建议。</div>';
+    else box.innerHTML = sup.map(function(it){ return '<div class="symbol-row"><div class="label">'+safe(it.label || '补充')+'</div><div>'+safe(it.value || '')+'</div></div>'; }).join('');
+  }
+  function hidePaipanAndNav() {
+    hide($('paipanBlock'));
+    const hex = $('hexBoard');
+    if(hex) hex.querySelectorAll('.hex-node').forEach(function(n){ n.remove(); });
+    const dist = $('distributionText');
+    if(dist) dist.innerHTML = '';
+    document.querySelectorAll('button, a').forEach(function(el){
+      const text = (el.textContent || '').trim();
+      const target = el.getAttribute('data-target') || (el.dataset && el.dataset.target) || '';
+      if(text === '排盘' || target === 'paipanBlock') {
+        const nav = el.closest('#sectionJumpNav, .section-jump-nav, .bottom-nav, .jump-nav, nav');
+        if(nav) {
+          el.classList.add('xlr-hide-normal-nav');
+          el.style.display = 'none';
+        }
+      }
+    });
+  }
+  function restorePaipanAndNav() {
+    show($('paipanBlock'));
+    document.querySelectorAll('.xlr-hide-normal-nav').forEach(function(el){ el.classList.remove('xlr-hide-normal-nav'); el.style.display = ''; });
+  }
+  function fillGuideTerms(r) {
+    const guide = $('v10510QuickGuideBlock'), guideContent = $('v10510QuickGuideContent');
+    const glossary = $('v10510GlossaryBlock'), glossaryContent = $('v10510GlossaryContent');
+    if(guide) show(guide);
+    if(glossary) show(glossary);
+    if(guideContent) { show(guideContent); guideContent.innerHTML = buildGuide(r); }
+    if(glossaryContent) { show(glossaryContent); glossaryContent.innerHTML = buildTerms(r); }
+  }
+  function fillFocus(r) {
+    const block = $('sceneFocusBlock'), content = $('sceneFocusContent');
+    if(block) show(block);
+    if(content) { show(content); content.innerHTML = buildFocus(r); }
+  }
+  function patchJumpTargets() {
+    try {
+      if(typeof currentJumpTargets === 'function' && !currentJumpTargets.__v10511HardRepair) {
+        const old = currentJumpTargets;
+        currentJumpTargets = function() {
+          let items = old.call(this) || [];
+          if(document.body.classList.contains('v10511-normal-result')) {
+            items = items.filter(function(t) { return t && t.id !== 'paipanBlock'; });
+          }
+          return items;
+        };
+        currentJumpTargets.__v10511HardRepair = true;
+      }
+    } catch(e) {}
+  }
+  function scrollTopOnce(r) {
+    const key = resultKey(r);
+    if(!key || key === lastTopKey) return;
+    lastTopKey = key;
+    const card = $('resultCard');
+    if(!card || card.classList.contains('hidden')) return;
+    const go = function(){
+      const y = Math.max(0, card.getBoundingClientRect().top + window.scrollY - 8);
+      try { window.scrollTo({top:y, behavior:'auto'}); } catch(e) { window.scrollTo(0, y); }
+    };
+    requestAnimationFrame(function(){ requestAnimationFrame(go); });
+    setTimeout(go, 180);
+    setTimeout(go, 520);
+  }
+  function repair(reason) {
+    const r = getCurrentResult();
+    if(!r) return;
+    const destiny = isDestiny(r);
+    document.body.classList.toggle('v10511-normal-result', !destiny);
+    document.body.classList.toggle('v10511-destiny-result', destiny);
+    patchJumpTargets();
+    if(destiny) {
+      restorePaipanAndNav();
+      hide($('v10510QuickGuideBlock'));
+      hide($('v10510GlossaryBlock'));
+      return;
+    }
+    hidePaipanAndNav();
+    fillGuideTerms(r);
+    fillFocus(r);
+    fillRadar(r);
+    fillSymbol(r);
+    fillAdvice(r);
+    if(typeof refreshSectionJumpNavSoon === 'function') { try { refreshSectionJumpNavSoon(); } catch(e) {} }
+    hidePaipanAndNav();
+    scrollTopOnce(r);
+  }
+  function patchVersionUpdates() {
+    try {
+      if(typeof buildVersionUpdatesHTML === 'function' && !buildVersionUpdatesHTML.__v10511HardRepair) {
+        const old = buildVersionUpdatesHTML;
+        buildVersionUpdatesHTML = function() {
+          let html = old.call(this);
+          const row = '<details><summary>'+VERSION+'</summary><ul><li>修复新增导读术语后，非命运场景“六宫排盘”回弹的问题。</li><li>修复快速导读、术语解释、雷达分析图、行动建议等模块只显示标题不显示内容的问题。</li><li>非命运场景继续过滤底部“排盘”导航，命运场景不受影响。</li></ul></details>';
+          if(html.indexOf(VERSION) < 0) html += row;
+          return html;
+        };
+        buildVersionUpdatesHTML.__v10511HardRepair = true;
+      }
+    } catch(e) {}
+  }
+  function boot() {
+    patchVersionUpdates();
+    repair('boot');
+    setTimeout(function(){ repair('t100'); }, 100);
+    setTimeout(function(){ repair('t500'); }, 500);
+    setTimeout(function(){ repair('t1200'); }, 1200);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true});
+  else boot();
+  window.addEventListener('load', boot, {once:true});
+  document.addEventListener('click', function(){ setTimeout(function(){ repair('click'); }, 100); }, true);
+  const obs = new MutationObserver(function() {
+    clearTimeout(window.__v10511HardRepairTimer);
+    window.__v10511HardRepairTimer = setTimeout(function(){ repair('mutation'); }, 100);
+  });
+  try { obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class','style']}); } catch(e) {}
 })();
 </script>
 
