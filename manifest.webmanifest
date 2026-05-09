@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.4.4",
-  "short_name": "小六壬 v10.4.4",
-  "description": "v10.4.4 导航子模块稳定版",
+  "name": "小六壬占卜 · v10.4.9",
+  "short_name": "小六壬 v10.4.9",
+  "description": "v10.4.9 导航回退与命盘子模块版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.4.4"
+  "version": "10.4.9"
 }
