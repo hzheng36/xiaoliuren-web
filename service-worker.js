@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.6.1-marriage-normal-template';
+const CACHE_NAME = 'xiaoliuren-v10.6.2-normal-no-paipan';
 const APP_SHELL = [
   './',
   './index.html',
