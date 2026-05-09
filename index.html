@@ -11311,7 +11311,8 @@ body.reading-theme-night .reading-card::after {
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
     {id:'v1030DestinyHealth', label:'健康'},
-    {id:'v1040MarriageBlock', label:'婚姻'}
+    {id:'v1040MarriageBlock', label:'婚姻'},
+    {id:'v10523CareerBlock', label:'事业'}
   ];
   const UPDATE_ROW = '<details><summary>'+VERSION+'</summary><ul><li>增加暗夜白块兜底规则：不再只依赖具体类名，统一覆盖 card / panel / result / answer / reading / gua / paipan / ab / tab / choice 等常见类名。</li><li>暗夜模式下先清空子元素背景，再给容器重新铺深色，修复实际页面中残留白块和浅灰块。</li><li>继续保留 data-theme=dark 与 body.reading-theme-night 双保险，不使用反色或滤镜。</li><li>保留术语导航、横屏快捷按钮滚动、命盘内部子模块导航。</li><li>已检查脚本语法、部署路径、版本显示和 7 个部署文件完整性。</li></ul></details>';
 
@@ -14154,7 +14155,7 @@ html[data-theme="dark"] .v10519-destiny-note {
 
 
 
-<!-- v10.5.23 patch: 命运事业模块 Beta 版 -->
+<!-- v10.5.23 patch: 命运事业模块 版 -->
 <style id="v10523-career-beta-style">
   .v10523-career,
   .v10523-career *{box-sizing:border-box;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
@@ -14202,7 +14203,7 @@ html[data-theme="dark"] .v10519-destiny-note {
   'use strict';
   const VERSION='v10.5.24 口诀表横向滑动版';
   const META='小六壬个人网页版 v10.5.24 口诀表横向滑动版：命运场景新增事业子模块，基于已有命盘六亲、掌诀、地支、六神、五星和生克关系提供事业、财富与行业参考。';
-  const HERO='本版在命运场景新增“事业”子模块 Beta：沿用健康、婚姻子模块经验，不改排盘逻辑，基于已有命盘分析事业趋势、财富倾向、适合行业、工作方式、优势挑战与行动建议。';
+  const HERO='本版在命运场景新增“事业”子模块：沿用健康、婚姻子模块经验，不改排盘逻辑，基于已有命盘分析事业趋势、财富倾向、适合行业、工作方式、优势挑战与行动建议。';
   const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -14255,7 +14256,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     const palaces=(result&&Array.isArray(result.palaces))?result.palaces:arr.slice(0,3).map(c=>c.palace);
     const industries=[career.el,self.el,wealth.el].filter(Boolean).filter((e,i,a)=>a.indexOf(e)===i).map(e=>'<li><strong>'+esc(e)+'：</strong>'+esc(KB.industry_by_dizhi_element[e]||'')+'</li>').join('');
     const combo=comboAdvice(palaces);
-    return '<details id="v10523CareerBlock" class="v10523-career" open><summary>💼 事业与财富参考 Beta</summary><div class="v10523-career-body">'
+    return '<details id="v10523CareerBlock" class="v10523-career" open><summary>💼 事业与财富参考</summary><div class="v10523-career-body">'
       +'<div class="v10523-career-note"><strong>说明：</strong>这里看的是命局中事业、工作的整体倾向，包括适合方向、职场压力、收入趋势和行动提醒；不作为绝对职业决策依据。现实职业选择仍要结合个人能力、行业环境、家庭责任和实际机会。</div>'
       +'<div class="v10523-career-grid">'
       +'<div class="v10523-career-card full"><h5>① 怎么看事业模块</h5><p><strong>事业核心：</strong>优先看官鬼宫，代表规则、职位、压力、上级、制度和事业责任。本盘事业重点为 <strong>'+esc(career.kin+'·'+career.palace)+'</strong>。</p><p><strong>财富核心：</strong>再看妻财宫，代表正财、收入、资源和经营能力。本盘财富重点为 <strong>'+esc(wealth.kin+'·'+wealth.palace)+'</strong>。</p><p class="v10523-career-muted">本盘当前使用'+(md==='fixed'?'固定宫位法':'五行生克法')+'。事业模块和健康、婚姻一样，只读取已排好的命盘，不改动起盘逻辑。</p></div>'
@@ -14273,7 +14274,7 @@ html[data-theme="dark"] .v10519-destiny-note {
   function patchRender(){try{if(typeof window.renderResult==='function'&&!window.renderResult.__v10523Career){const old=window.renderResult;window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(function(){setVersion();renderCareer(result||current());refreshNav();},80);setTimeout(function(){renderCareer(result||current());refreshNav();},520);return ret;};window.renderResult.__v10523Career=true;}}catch(e){}try{if(typeof window.renderDestinyBoard==='function'&&!window.renderDestinyBoard.__v10523Career){const old=window.renderDestinyBoard;window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments);setTimeout(function(){renderCareer(result||current());refreshNav();},180);setTimeout(function(){renderCareer(result||current());refreshNav();},620);return ret;};window.renderDestinyBoard.__v10523Career=true;}}catch(e){}}
   function patchNav(){try{if(typeof window.currentJumpTargets!=='function'||window.currentJumpTargets.__v10523Career)return;const old=window.currentJumpTargets;window.currentJumpTargets=function(){let items=old.apply(this,arguments)||[];const r=current(), el=$('v10523CareerBlock');if(isDestinyResult(r)&&visible(el)&&!items.some(x=>x&&x.id==='v10523CareerBlock')){let idx=items.findIndex(x=>x&&x.id==='v1040MarriageBlock');if(idx<0)idx=items.findIndex(x=>x&&x.id==='v1030DestinyHealth');const obj={id:'v10523CareerBlock',label:'事业',el:el};if(idx>=0)items=items.slice(0,idx+1).concat([obj],items.slice(idx+1));else items.push(obj);}return items;};window.currentJumpTargets.__v10523Career=true;}catch(e){}}
   function refreshNav(){try{patchNav();if(typeof window.renderSectionJumpNav==='function')window.renderSectionJumpNav();if(typeof window.updateSectionJumpNav==='function')window.updateSectionJumpNav();}catch(e){}}
-  function patchVersionLog(){try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10523Career){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('事业与财富参考 Beta')<0){html+='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“事业与财富参考 Beta”子模块。</li><li>事业模块沿用健康和婚姻子模块经验，只读取已有命盘，不改动排盘逻辑。</li><li>模块综合六亲、掌诀、地支、五行、六神、五星与生克关系，输出事业趋势、财富趋势、行业方向、工作方式、优势挑战和行动提醒。</li><li>底部/浮动阅读导航新增“事业”入口，并加入移动端换行与宽度保护，避免文字被右侧快捷按钮裁切。</li><li>补齐页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';}return html;};window.buildVersionUpdatesHTML.__v10523Career=true;}}catch(e){}}
+  function patchVersionLog(){try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10523Career){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('事业与财富参考')<0){html+='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“事业与财富参考”子模块。</li><li>事业模块沿用健康和婚姻子模块经验，只读取已有命盘，不改动排盘逻辑。</li><li>模块综合六亲、掌诀、地支、五行、六神、五星与生克关系，输出事业趋势、财富趋势、行业方向、工作方式、优势挑战和行动提醒。</li><li>底部/浮动阅读导航新增“事业”入口，并加入移动端换行与宽度保护，避免文字被右侧快捷按钮裁切。</li><li>补齐页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';}return html;};window.buildVersionUpdatesHTML.__v10523Career=true;}}catch(e){}}
   function boot(){setVersion();patchRender();patchVersionLog();renderCareer(current());patchNav();refreshNav();try{window.__v10523CareerBeta={version:VERSION,careerModule:true,nav:true};}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   window.addEventListener('load',function(){setTimeout(boot,120);setTimeout(boot,900);setTimeout(boot,2200);});
@@ -14454,7 +14455,7 @@ html[data-theme="dark"] .v10519-destiny-note {
         window.buildVersionUpdatesHTML=function(){
           let html=old.call(this);
           if(html.indexOf(VERSION)<0){
-            html+='<details><summary>'+VERSION+'</summary><ul><li>命运场景中的婚姻、健康、事业等口诀/知识库宽表统一改为横向滑动。</li><li>修复手机端表格列被压缩，导致文字竖排、内容难读的问题。</li><li>为宽表增加“可左右滑动查看更多内容”提示，交互参考“六亲读盘补充说明”。</li><li>继续保留 v10.5.23 事业模块 Beta、右侧快捷按钮稳定修复、Debug 保存日志和导航居中逻辑。</li></ul></details>';
+            html+='<details><summary>'+VERSION+'</summary><ul><li>命运场景中的婚姻、健康、事业等口诀/知识库宽表统一改为横向滑动。</li><li>修复手机端表格列被压缩，导致文字竖排、内容难读的问题。</li><li>为宽表增加“可左右滑动查看更多内容”提示，交互参考“六亲读盘补充说明”。</li><li>继续保留 v10.5.23 事业模块、右侧快捷按钮稳定修复、Debug 保存日志和导航居中逻辑。</li></ul></details>';
           }
           return html;
         };
@@ -14466,6 +14467,97 @@ html[data-theme="dark"] .v10519-destiny-note {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
   window.addEventListener('load',function(){boot(); setTimeout(boot,120); setTimeout(boot,600); setTimeout(boot,1500);});
   setInterval(function(){setVersion(); enhanceTables();},1800);
+})();
+</script>
+
+
+
+<!-- v10.5.25 patch: 事业正式子导航版 -->
+<style id="v10525-career-subnav-style">
+  #v1054DestinySubNav [data-destiny-sub-target="v10523CareerBlock"]{font-weight:850;}
+</style>
+<script id="v10525-career-subnav-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.25 事业子导航正式版';
+  const META='小六壬个人网页版 v10.5.25 事业子导航正式版：命运场景事业模块转为正式子模块，移除 Beta 标记，并纳入命运六亲参考盘二级导航，与健康、婚姻并排。';
+  const HERO='本版将命运场景“事业与财富参考”转为正式子模块，移除 Beta 标记，并加入命运六亲参考盘二级导航，与健康、婚姻并排显示，方便在命盘内部快速切换。';
+  function $(id){return document.getElementById(id);} 
+  function visible(el){
+    if(!el) return false;
+    if(el.classList && el.classList.contains('hidden')) return false;
+    if(el.closest && el.closest('.hidden')) return false;
+    const st=getComputedStyle(el);
+    if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
+    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+  }
+  function lockVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0){el.textContent='个人占卜台 · '+VERSION;el.setAttribute('data-version-locked','true');}});}catch(e){}
+    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
+  }
+  function removeBetaText(){
+    try{
+      document.querySelectorAll('#v10523CareerBlock summary, .v10523-career summary').forEach(function(el){
+        el.childNodes.forEach(function(n){ if(n.nodeType===3) n.nodeValue=n.nodeValue.replace(/\s*Beta\s*/g,''); });
+        el.innerHTML=el.innerHTML.replace(/\s*Beta\s*/g,'');
+      });
+    }catch(e){}
+  }
+  function ensureCareerSubNav(){
+    try{
+      const nav=$('v1054DestinySubNav'), career=$('v10523CareerBlock');
+      if(!nav||!visible(career)||!nav.classList.contains('show')) return;
+      let btn=nav.querySelector('[data-destiny-sub-target="v10523CareerBlock"]');
+      if(!btn){
+        btn=document.createElement('button');
+        btn.className='jump-chip';
+        btn.type='button';
+        btn.setAttribute('data-destiny-sub-target','v10523CareerBlock');
+        btn.title='跳转到事业';
+        btn.textContent='事业';
+        const marriage=nav.querySelector('[data-destiny-sub-target="v1040MarriageBlock"]');
+        if(marriage&&marriage.nextSibling) nav.insertBefore(btn,marriage.nextSibling); else if(marriage) nav.appendChild(btn); else nav.appendChild(btn);
+        btn.addEventListener('click',function(){career.scrollIntoView({behavior:'smooth',block:'start'});});
+      }
+      const items=[
+        {id:'destinyBoardBlock',el:$('destinyBoardBlock')},
+        {id:'v1030DestinyHealth',el:$('v1030DestinyHealth')},
+        {id:'v1040MarriageBlock',el:$('v1040MarriageBlock')},
+        {id:'v10523CareerBlock',el:career}
+      ].filter(function(x){return visible(x.el);});
+      let active=items[0]&&items[0].id;
+      const marker=(innerHeight||700)*0.34;
+      items.forEach(function(x){ if(x.el.getBoundingClientRect().top<=marker) active=x.id; });
+      nav.querySelectorAll('[data-destiny-sub-target]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-destiny-sub-target')===active);});
+      const activeBtn=nav.querySelector('[data-destiny-sub-target="'+active+'"]');
+      if(activeBtn&&!nav.__v1054Touching){try{activeBtn.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}catch(e){}}
+    }catch(e){}
+  }
+  function patchVersionHistory(){
+    try{
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10525){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.call(this)||'';
+          html=html.replace(/事业与财富参考\s*Beta/g,'事业与财富参考').replace(/事业模块\s*Beta/g,'事业模块');
+          if(html.indexOf(VERSION)<0){
+            html+='<details><summary>'+VERSION+'</summary><ul><li>命运场景“事业与财富参考”去掉 Beta 标记，作为正式命盘子模块保留。</li><li>事业模块纳入“命运六亲参考盘”二级导航，与“健康”“婚姻”并排显示。</li><li>二级导航会在命盘内部滚动范围内自动出现，并随当前阅读位置高亮“命盘 / 健康 / 婚姻 / 事业”。</li><li>保留 v10.5.24 宽表横向滑动修复、右侧快捷按钮稳定修复、Debug 保存日志与当前导航自动居中逻辑。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';
+          }
+          return html;
+        };
+        window.buildVersionUpdatesHTML.__v10525=true;
+      }
+    }catch(e){}
+  }
+  function boot(){lockVersion();removeBetaText();ensureCareerSubNav();patchVersionHistory();try{window.__v10525CareerSubNav={version:VERSION,careerOfficial:true,subnav:true};}catch(e){}}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',function(){boot();setTimeout(boot,150);setTimeout(boot,800);setTimeout(boot,2200);});
+  window.addEventListener('scroll',function(){setTimeout(ensureCareerSubNav,60);},{passive:true});
+  document.addEventListener('click',function(){setTimeout(boot,180);},true);
+  try{new MutationObserver(function(){setTimeout(boot,160);}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
+  setInterval(boot,900);
 })();
 </script>
 
