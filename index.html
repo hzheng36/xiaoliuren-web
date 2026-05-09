@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.26 性能与版本稳定修复版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.26 性能与版本稳定修复版：清理会抢回旧版本和造成卡顿的旧补丁轮询，稳定事业子导航、Debug 与版本显示，并补齐版本更新记录。" />
+  <title>小六壬占卜 · v10.5.27 事业导航去重修复版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.27 事业导航去重修复版：修复事业模块同时出现在底部主阅读导航和命运二级导航中的重复问题；事业只保留在命运子导航，继续保留性能稳定、Debug 保存日志、宽表横向滑动和版本锁定。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.26 性能与版本稳定修复版</h2>
+          <h2>个人占卜台 · v10.5.27 事业导航去重修复版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -11497,7 +11497,7 @@ body.reading-theme-night .reading-card::after {
   window.addEventListener('resize',()=>setTimeout(updateAll,80));
   try{ new MutationObserver(()=>setTimeout(updateAll,160)).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','open']}); }catch(e){}
   /* v10.5.26: 旧暗夜白块扫描从 1.2s 降低频率，避免持续重扫造成卡顿。 */
-  setInterval(()=>{ applyThemeAttribute(); lockVersion(); updateDestinySubNav(); markLikelyWhiteBlocks(); },5000);
+  setInterval(()=>{ applyThemeAttribute(); updateDestinySubNav(); markLikelyWhiteBlocks(); },5000);
 })();
 </script>
 <style id="v1054-dark-suspect-white-style">
@@ -14644,6 +14644,126 @@ html[data-theme="dark"] .v10519-destiny-note {
   window.addEventListener('load',function(){run(); setTimeout(run,120); setTimeout(run,700);},{once:true});
   window.addEventListener('scroll',function(){ clearTimeout(window.__v10526ScrollTimer); window.__v10526ScrollTimer=setTimeout(ensureCareerSubNav,80);},{passive:true});
   try{new MutationObserver(function(){ clearTimeout(window.__v10526MutTimer); window.__v10526MutTimer=setTimeout(function(){removeBetaText(); enhanceTablesOnce(); ensureCareerSubNav();},300); }).observe(document.body,{subtree:true,childList:true});}catch(e){}
+})();
+</script>
+
+
+<!-- v10.5.27 patch: 事业导航去重修复版 -->
+<style id="v10527-career-nav-dedupe-style">
+  /* 事业是命运六亲参考盘的内部子模块，只显示在命运二级导航，不再显示在底部主阅读导航。 */
+  #sectionJumpNav [data-jump-target="v10523CareerBlock"]{display:none!important;}
+</style>
+<script id="v10527-career-nav-dedupe-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.27 事业导航去重修复版';
+  const META='小六壬个人网页版 v10.5.27 事业导航去重修复版：修复事业模块同时出现在底部主阅读导航和命运二级导航中的重复问题；事业只保留在命运子导航，继续保留性能稳定、Debug 保存日志、宽表横向滑动和版本锁定。';
+  const HERO='本版修复事业导航重复：事业模块只保留在命运内部二级导航“命盘 / 健康 / 婚姻 / 事业”，底部主阅读导航不再重复出现“事业”，并继续保留性能稳定、Debug 保存日志和版本锁定。';
+  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>修复命运结果页“事业”同时出现在底部主阅读导航和命运二级导航的问题。</li><li>事业模块现在只保留在命运内部二级导航，与“命盘 / 健康 / 婚姻”并排；底部主阅读导航只负责“答案 / 重心 / 命盘 / 综合 / 三象 / 口诀 / 雷达”等主阅读段落。</li><li>增加最终导航去重兜底：即使旧补丁临时重建主导航，也会自动过滤 <code>v10523CareerBlock</code>，避免重复按钮再次出现。</li><li>保留 v10.5.26 的性能稳定处理、Debug 按需日志、宽表横向滑动、右侧快捷按钮稳定和命运二级导航。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查部署路径仍为相对路径。</li></ul></details>';
+  function $(id){return document.getElementById(id);} 
+  function setVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0){ el.textContent='个人占卜台 · '+VERSION; el.setAttribute('data-version-locked','true'); }});}catch(e){}
+    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
+  }
+  function isVisible(el){
+    if(!el) return false;
+    if(el.classList&&el.classList.contains('hidden')) return false;
+    if(el.closest&&el.closest('.hidden')) return false;
+    const st=getComputedStyle(el);
+    if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
+    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+  }
+  function removeCareerFromBottomNav(){
+    try{
+      const nav=$('sectionJumpNav');
+      if(!nav) return;
+      nav.querySelectorAll('[data-jump-target="v10523CareerBlock"]').forEach(function(btn){btn.remove();});
+    }catch(e){}
+  }
+  function patchCurrentJumpTargets(){
+    try{
+      if(typeof window.currentJumpTargets==='function' && !window.currentJumpTargets.__v10527CareerDedupe){
+        const old=window.currentJumpTargets;
+        const patched=function(){
+          const arr=(old.apply(this,arguments)||[]).filter(function(t){return t&&t.id!=='v10523CareerBlock';});
+          const seen={};
+          return arr.filter(function(t){const k=t.id||t.label; if(seen[k]) return false; seen[k]=1; return true;});
+        };
+        patched.__v10527CareerDedupe=true;
+        window.currentJumpTargets=patched;
+      }
+    }catch(e){}
+  }
+  function patchRenderSectionJumpNav(){
+    try{
+      if(typeof window.renderSectionJumpNav==='function' && !window.renderSectionJumpNav.__v10527CareerDedupe){
+        const old=window.renderSectionJumpNav;
+        window.renderSectionJumpNav=function(){
+          patchCurrentJumpTargets();
+          const ret=old.apply(this,arguments);
+          removeCareerFromBottomNav();
+          return ret;
+        };
+        window.renderSectionJumpNav.__v10527CareerDedupe=true;
+      }
+    }catch(e){}
+  }
+  function ensureDestinySubNavCareer(){
+    try{
+      const nav=$('v1054DestinySubNav'), career=$('v10523CareerBlock');
+      if(!nav||!isVisible(career)||!nav.classList.contains('show')) return;
+      if(!nav.querySelector('[data-destiny-sub-target="v10523CareerBlock"]')){
+        const btn=document.createElement('button');
+        btn.className='jump-chip'; btn.type='button'; btn.textContent='事业'; btn.title='跳转到事业';
+        btn.setAttribute('data-destiny-sub-target','v10523CareerBlock');
+        const marriage=nav.querySelector('[data-destiny-sub-target="v1040MarriageBlock"]');
+        if(marriage&&marriage.nextSibling) nav.insertBefore(btn,marriage.nextSibling); else if(marriage) nav.appendChild(btn); else nav.appendChild(btn);
+        btn.addEventListener('click',function(){career.scrollIntoView({behavior:'smooth',block:'start'});});
+      }
+    }catch(e){}
+  }
+  function patchVersionHistory(){
+    try{
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10527){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.call(this)||'';
+          html=html.replace(/<details><summary>v10\.5\.27 事业导航去重修复版<\/summary>[\s\S]*?<\/details>/g,'');
+          return UPDATE_ROW+html;
+        };
+        window.buildVersionUpdatesHTML.__v10527=true;
+      }
+    }catch(e){}
+  }
+  function exposeDebugState(){
+    try{
+      window.__v10527CareerNavDedupe={
+        version:VERSION,
+        bottomNavLabels:function(){return Array.from(document.querySelectorAll('#sectionJumpNav [data-jump-target]')).map(function(b){return {text:(b.textContent||'').trim(),target:b.getAttribute('data-jump-target'),display:getComputedStyle(b).display};});},
+        destinySubNavLabels:function(){return Array.from(document.querySelectorAll('#v1054DestinySubNav [data-destiny-sub-target]')).map(function(b){return {text:(b.textContent||'').trim(),target:b.getAttribute('data-destiny-sub-target'),display:getComputedStyle(b).display};});}
+      };
+    }catch(e){}
+  }
+  function run(){
+    setVersion();
+    patchCurrentJumpTargets();
+    patchRenderSectionJumpNav();
+    removeCareerFromBottomNav();
+    ensureDestinySubNavCareer();
+    patchVersionHistory();
+    try{ if(typeof window.renderHomeInfoBlocks==='function') window.renderHomeInfoBlocks(); }catch(e){}
+    exposeDebugState();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
+  window.addEventListener('load',function(){run(); setTimeout(run,120); setTimeout(run,700);},{once:true});
+  window.addEventListener('scroll',function(){ clearTimeout(window.__v10527NavTimer); window.__v10527NavTimer=setTimeout(run,90);},{passive:true});
+  try{new MutationObserver(function(muts){
+    let hit=false;
+    for(const m of muts){ if(m.target&&((m.target.id==='sectionJumpNav')||(m.target.id==='v1054DestinySubNav')||(m.target.closest&&m.target.closest('#sectionJumpNav,#v1054DestinySubNav')))){hit=true;break;} }
+    if(hit){ clearTimeout(window.__v10527MutTimer); window.__v10527MutTimer=setTimeout(run,80); }
+  }).observe(document.body,{subtree:true,childList:true});}catch(e){}
 })();
 </script>
 
