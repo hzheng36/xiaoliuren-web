@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.25-career-subnav-official';
+const CACHE_NAME = 'xiaoliuren-v10.5.26-performance-version-stability';
 const APP_SHELL = [
   './',
   './index.html',
