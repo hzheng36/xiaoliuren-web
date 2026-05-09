@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.13-state-isolation';
+const CACHE_NAME = 'xiaoliuren-v10.5.14-debug-toggle';
 const APP_SHELL = [
   './',
   './index.html',

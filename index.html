@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.13 结果模板状态隔离修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。" />
+  <title>小六壬占卜 · v10.5.14 Debug 开关保留版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.13 结果模板状态隔离修正版</h2>
+          <h2>个人占卜台 · v10.5.14 Debug 开关保留版</h2>
           <p>本版根据 Debug 日志修复根因：命运/非命运历史切换时强制同步 currentResult、body 模板状态和模块显示状态，避免命运模板污染普通问事结果。</p>
         </div>
         <div class="actions">
@@ -5800,7 +5800,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6612,7 +6612,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7179,7 +7179,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8504,7 +8504,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8680,7 +8680,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -8977,7 +8977,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9253,7 +9253,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9483,7 +9483,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9531,8 +9531,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9695,8 +9695,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9818,8 +9818,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9970,8 +9970,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10193,8 +10193,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10272,8 +10272,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10342,8 +10342,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10481,8 +10481,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10646,8 +10646,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10718,8 +10718,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10827,8 +10827,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11281,8 +11281,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
-  const META="小六壬个人网页版 v10.5.13 结果模板状态隔离修正版：修复查看命运历史后 currentResult 与 result-destiny 状态残留，导致非命运历史套用命运模板、命盘残留、导航污染的问题。";
+  const VERSION="v10.5.14 Debug 开关保留版";
+  const META="小六壬个人网页版 v10.5.14 Debug 开关保留版：在 v10.5.13 状态隔离修复基础上，保留结果模板 Debug 诊断功能，并在设置中新增 Debug 开关与诊断页面关闭按钮。";
   const HERO = "本版在暗夜主题基础上增加白块兜底规则：不再只依赖具体类名，而是覆盖常见容器、内联背景、卡片、按钮和标签，修复暗夜模式残留白块。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11514,7 +11514,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11770,7 +11770,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -11938,7 +11938,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12157,7 +12157,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.13 结果模板状态隔离修正版";
+  const VERSION="v10.5.14 Debug 开关保留版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12496,7 +12496,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION = "v10.5.13 结果模板状态隔离修正版";
+  const VERSION = "v10.5.14 Debug 开关保留版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12716,6 +12716,267 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
   document.addEventListener('click', function(){ setTimeout(function(){ applyState(null,'click'); },80); setTimeout(function(){ applyState(null,'click-450'); },450); }, true);
   const obs=new MutationObserver(function(){ clearTimeout(window.__v10513StateIsolationTimer); window.__v10513StateIsolationTimer=setTimeout(function(){ applyState(null,'mutation'); },140); });
   try{ obs.observe(document.body, {childList:true, subtree:true, attributes:true, attributeFilter:['class','style','hidden']}); }catch(e){}
+})();
+</script>
+
+
+
+<style id="v10514-debug-toggle-style">
+#v10514DebugFab {
+  position: fixed;
+  right: 18px;
+  bottom: max(92px, env(safe-area-inset-bottom) + 78px);
+  z-index: 9998;
+  display: none;
+  border: 1px solid rgba(124,112,178,.24);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,.92);
+  color: var(--primary);
+  font-weight: 800;
+  box-shadow: 0 10px 30px rgba(63,50,105,.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+body.v10514-debug-enabled #v10514DebugFab { display: inline-flex; align-items:center; gap:6px; }
+#v10514DebugDialog {
+  width: min(920px, calc(100vw - 24px));
+  max-height: min(86vh, 860px);
+  border: 1px solid rgba(124,112,178,.18);
+  border-radius: 24px;
+  padding: 0;
+  background: rgba(255,255,255,.96);
+  color: var(--text);
+  box-shadow: 0 24px 70px rgba(49,39,86,.22);
+  overflow: hidden;
+}
+#v10514DebugDialog::backdrop { background: rgba(25,20,42,.38); backdrop-filter: blur(5px); }
+.v10514-debug-head {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid rgba(124,112,178,.13);
+  background: linear-gradient(180deg, rgba(250,247,255,.96), rgba(255,255,255,.92));
+}
+.v10514-debug-head h3 { margin:0; color:var(--primary); font-size:1.08rem; }
+.v10514-debug-head p { margin:5px 0 0; color:var(--muted); line-height:1.55; font-size:.92rem; }
+.v10514-debug-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.v10514-debug-actions button,
+#v10514DebugCloseBtn {
+  border: 1px solid rgba(124,112,178,.18);
+  background: rgba(255,255,255,.86);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 750;
+}
+#v10514DebugCloseBtn { background: var(--primary); color:#fff; border-color: transparent; }
+.v10514-debug-body { padding: 16px 18px 20px; overflow:auto; max-height: calc(min(86vh, 860px) - 86px); -webkit-overflow-scrolling:touch; }
+#v10514DebugOutput {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(54,45,88,.06);
+  border: 1px solid rgba(124,112,178,.12);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .82rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+body.reading-theme-night #v10514DebugFab,
+html[data-theme="dark"] #v10514DebugFab {
+  background: rgba(37,34,52,.92);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+body.reading-theme-night #v10514DebugDialog,
+html[data-theme="dark"] #v10514DebugDialog {
+  background: rgba(31,29,43,.98);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+body.reading-theme-night .v10514-debug-head,
+html[data-theme="dark"] .v10514-debug-head { background: rgba(43,39,61,.95); border-color: var(--dark-border); }
+body.reading-theme-night #v10514DebugOutput,
+html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.12); color: var(--dark-text); }
+@media(max-width:760px){
+  #v10514DebugFab { right: 14px; bottom: max(90px, env(safe-area-inset-bottom) + 74px); padding:9px 12px; }
+  .v10514-debug-head { flex-direction:column; }
+  .v10514-debug-actions { justify-content:flex-start; }
+}
+</style>
+
+<script id="v10514-debug-toggle-script">
+(function(){
+  'use strict';
+  const VERSION = 'v10.5.14 Debug 开关保留版';
+  const DEBUG_KEY = 'xlr_debug_enabled_v10514';
+  const LOG_LIMIT = 80;
+  const logs = [];
+  let intervalId = null;
+  function $(id){ return document.getElementById(id); }
+  function enabled(){ try{return localStorage.getItem(DEBUG_KEY)==='1';}catch(e){return false;} }
+  function setEnabled(v){ try{ localStorage.setItem(DEBUG_KEY, v?'1':'0'); }catch(e){} document.body.classList.toggle('v10514-debug-enabled', !!v); startStop(); }
+  function cleanText(s){ return String(s==null?'':s).replace(/\s+/g,' ').trim(); }
+  function safeText(el, len){ const t=el ? cleanText(el.textContent||'') : ''; return len ? t.slice(0,len) : t; }
+  function current(){ try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){} try{ return window.currentResult || null; }catch(e){ return null; } }
+  function isDestinyResult(r){ return !!(r && (r.sceneKey==='destiny' || r.sceneName==='命运')); }
+  function stateFor(id){
+    const el=$(id);
+    if(!el) return {exists:false};
+    const cs=getComputedStyle(el);
+    return {
+      exists:true,
+      className:el.className || '',
+      inlineDisplay:el.style.display || '',
+      display:cs.display,
+      visibility:cs.visibility,
+      height:Math.round(el.getBoundingClientRect().height),
+      offsetHeight:el.offsetHeight || 0,
+      textLength:(el.textContent||'').trim().length,
+      textStart:safeText(el,160)
+    };
+  }
+  function compactResult(r){
+    if(!r) return null;
+    return {
+      id:r.id || '',
+      sceneKey:r.sceneKey || '',
+      sceneName:r.sceneName || '',
+      sceneIcon:r.sceneIcon || '',
+      question:r.question || '',
+      numbers:Array.isArray(r.numbers)?r.numbers:[],
+      favorite:!!r.favorite,
+      details:Array.isArray(r.details)?r.details.map(function(d){return {positionName:d.positionName||'', palaceName:d.palaceName||'', number:d.number, direction:d.direction||'', element:d.element||''};}):[],
+      hasMetrics:!!r.metrics,
+      hasAdvice:Array.isArray(r.advice)?r.advice.length:0,
+      hasSupplement:Array.isArray(r.supplement)?r.supplement.length:0
+    };
+  }
+  function snapshot(reason){
+    const r=current();
+    const card=$('resultCard');
+    return {
+      time:new Date().toLocaleTimeString(),
+      reason:reason || 'manual',
+      version:VERSION,
+      title:document.title,
+      url:location.href,
+      scrollY:Math.round(scrollY||0),
+      bodyClass:document.body.className,
+      resultCardTop:card?Math.round(card.getBoundingClientRect().top):null,
+      resultSceneText:safeText($('resultScene'),80),
+      resultTitleText:safeText($('resultTitle'),80),
+      resultMethodText:safeText($('resultMethod'),240),
+      currentResult:compactResult(r),
+      isDestiny:isDestinyResult(r),
+      blockStates:{
+        quickGuide:stateFor('v10510QuickGuideBlock'),
+        quickGuideContent:stateFor('v10510QuickGuideContent'),
+        answer:stateFor('answerSummaryBlock'),
+        sceneFocus:stateFor('sceneFocusBlock'),
+        sceneFocusContent:stateFor('sceneFocusContent'),
+        paipan:stateFor('paipanBlock'),
+        destinyBoard:stateFor('destinyBoardBlock'),
+        context:stateFor('contextAnalysisBlock'),
+        tri:stateFor('triReadingBlock'),
+        single:stateFor('singlePalaceBlock'),
+        double:stateFor('doublePalaceBlock'),
+        radar:stateFor('radarBlock'),
+        symbol:stateFor('symbolBlock'),
+        advice:stateFor('adviceBlock'),
+        glossary:stateFor('v10510GlossaryBlock'),
+        glossaryContent:stateFor('v10510GlossaryContent')
+      },
+      hexNodeCount:document.querySelectorAll('#hexBoard .hex-node').length,
+      navLabels:Array.from(document.querySelectorAll('.jump-chip')).map(function(b){return {text:safeText(b,30), display:getComputedStyle(b).display, className:b.className, target:b.getAttribute('data-jump-target')||b.getAttribute('data-target')||''};}),
+      historyListCount:document.querySelectorAll('.history-item,.history-card,[data-history-id]').length,
+      functions:{
+        renderResult:typeof renderResult,
+        currentJumpTargets:typeof currentJumpTargets,
+        buildSceneFocusHTML:typeof buildSceneFocusHTML,
+        renderBoard:typeof renderBoard,
+        renderDestinyBoard:typeof renderDestinyBoard,
+        renderRadar:typeof renderRadar
+      }
+    };
+  }
+  function push(reason){ if(!enabled()) return; try{ logs.push(snapshot(reason)); while(logs.length>LOG_LIMIT) logs.shift(); }catch(e){} }
+  function payload(reason){ const latest=snapshot(reason||'copy-log'); return {version:VERSION, userAgent:navigator.userAgent, logCount:logs.length, latest:latest, logs:logs.slice()}; }
+  function renderDialog(reason){ const out=$('v10514DebugOutput'); if(out) out.textContent=JSON.stringify(payload(reason||'open-debug'), null, 2); }
+  function copyLog(){
+    const text=JSON.stringify(payload('copy-log'), null, 2);
+    const done=function(){ alert('Debug 日志已复制。'); };
+    try{ navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); }); }
+    catch(e){ fallbackCopy(text); }
+    function fallbackCopy(t){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done(); }
+  }
+  function ensureUi(){
+    let fab=$('v10514DebugFab');
+    if(!fab){
+      fab=document.createElement('button'); fab.id='v10514DebugFab'; fab.type='button'; fab.textContent='🧪 DEBUG'; document.body.appendChild(fab);
+      fab.addEventListener('click',function(){ push('open-debug'); renderDialog('open-debug'); const dlg=$('v10514DebugDialog'); if(dlg){ try{dlg.showModal();}catch(e){dlg.setAttribute('open','');} } });
+    }
+    let dlg=$('v10514DebugDialog');
+    if(!dlg){
+      dlg=document.createElement('dialog'); dlg.id='v10514DebugDialog';
+      dlg.innerHTML='<div class="v10514-debug-head"><div><h3>🧪 Debug 诊断页面</h3><p>用于排查结果模板、历史切换、模块显示隐藏和导航状态。此页面只读取当前页面状态，不改变占卜逻辑。</p></div><div class="v10514-debug-actions"><button type="button" id="v10514DebugRefreshBtn">刷新日志</button><button type="button" id="v10514DebugCopyBtn">复制日志</button><button type="button" id="v10514DebugClearBtn">清空日志</button><button type="button" id="v10514DebugCloseBtn">关闭</button></div></div><div class="v10514-debug-body"><pre id="v10514DebugOutput">Debug 未开启。</pre></div>';
+      document.body.appendChild(dlg);
+      $('v10514DebugRefreshBtn').addEventListener('click',function(){ push('manual-refresh'); renderDialog('manual-refresh'); });
+      $('v10514DebugCopyBtn').addEventListener('click',copyLog);
+      $('v10514DebugClearBtn').addEventListener('click',function(){ logs.length=0; renderDialog('clear-log'); });
+      $('v10514DebugCloseBtn').addEventListener('click',function(){ try{dlg.close();}catch(e){dlg.removeAttribute('open');} });
+    }
+  }
+  function injectSetting(){
+    const form=document.querySelector('#settingsDialog .settings-form');
+    if(!form || $('settingV10514DebugEnabled')) return;
+    const card=document.createElement('div');
+    card.className='settings-card';
+    card.innerHTML='<h4>Debug 诊断</h4><label class="settings-row"><span>开启 Debug 诊断面板<small>打开后页面右下角显示 DEBUG 按钮，可复制运行日志；平时建议关闭，避免界面干扰。</small></span><input id="settingV10514DebugEnabled" type="checkbox"></label>';
+    const actions=form.querySelector('.settings-actions');
+    form.insertBefore(card, actions || null);
+    const ck=$('settingV10514DebugEnabled'); ck.checked=enabled();
+    ck.addEventListener('change',function(){ setEnabled(ck.checked); push('setting-debug-'+(ck.checked?'on':'off')); });
+    const save=$('saveSettingsBtn');
+    if(save && !save.__v10514DebugBound){ save.addEventListener('click',function(){ const c=$('settingV10514DebugEnabled'); if(c) setEnabled(c.checked); }); save.__v10514DebugBound=true; }
+    const reset=$('resetSettingsBtn');
+    if(reset && !reset.__v10514DebugBound){ reset.addEventListener('click',function(){ setTimeout(function(){ const c=$('settingV10514DebugEnabled'); if(c) c.checked=enabled(); },80); }); reset.__v10514DebugBound=true; }
+  }
+  function startStop(){
+    if(enabled()){
+      ensureUi();
+      if(!intervalId) intervalId=setInterval(function(){ push('interval'); },1500);
+    }else{
+      if(intervalId){ clearInterval(intervalId); intervalId=null; }
+      const dlg=$('v10514DebugDialog'); if(dlg){ try{dlg.close();}catch(e){dlg.removeAttribute('open');} }
+    }
+  }
+  function patchVersionUpdates(){
+    try{
+      if(typeof buildVersionUpdatesHTML === 'function' && !buildVersionUpdatesHTML.__v10514DebugToggle){
+        const old=buildVersionUpdatesHTML;
+        buildVersionUpdatesHTML=function(){
+          let html=old.call(this);
+          const row='<details><summary>'+VERSION+'</summary><ul><li>保留 v10.5.12 的结果模板 Debug 诊断能力，但默认关闭，避免日常使用干扰。</li><li>阅读设置中新增“开启 Debug 诊断面板”选项，开启后右下角显示 DEBUG 按钮。</li><li>Debug 诊断页面新增“关闭”按钮，可直接关闭诊断页；仍保留刷新日志、复制日志、清空日志。</li><li>继续保留 v10.5.13 的命运/非命运结果模板状态隔离修复。</li><li>同步更新 README、manifest、service-worker 缓存名，避免旧版本回跳。</li></ul></details>';
+          if(html.indexOf(VERSION)<0) html+=row;
+          return html;
+        };
+        buildVersionUpdatesHTML.__v10514DebugToggle=true;
+      }
+    }catch(e){}
+  }
+  function boot(){ ensureUi(); injectSetting(); setEnabled(enabled()); patchVersionUpdates(); push('boot'); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot, {once:true}); else boot();
+  window.addEventListener('load', function(){ boot(); setTimeout(injectSetting,300); }, {once:true});
+  document.addEventListener('click', function(e){ setTimeout(function(){ push('click:' + safeText(e.target,24)); },80); }, true);
+  document.addEventListener('change', function(e){ setTimeout(function(){ push('change:' + (e.target && (e.target.id || e.target.name || e.target.tagName) || '')); },80); }, true);
+  try{ new MutationObserver(function(){ clearTimeout(window.__v10514DebugMut); window.__v10514DebugMut=setTimeout(function(){ injectSetting(); push('mutation'); },300); }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','hidden']}); }catch(e){}
+  window.XLR_DEBUG_V10514 = {enable:function(){setEnabled(true);}, disable:function(){setEnabled(false);}, copy:copyLog, snapshot:snapshot, logs:logs};
 })();
 </script>
 
