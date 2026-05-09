@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.9-source-direct-template';
+const CACHE_NAME = 'xiaoliuren-v10.5.5-clean-marriage-kb';
 const APP_SHELL = [
   './',
   './index.html',

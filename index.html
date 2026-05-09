@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.9 普通问事源码隔离修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。" />
+  <title>小六壬占卜 · v10.5.5 婚姻场景知识库版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.9 普通问事源码隔离修正版</h2>
-          <p>本版从 v10.5.4 干净重做，并直接修改结果渲染源码：命运场景与普通问事独立运作；非命运场景不显示六宫排盘，新增婚姻场景、快速导读与术语解释。</p>
+          <h2>个人占卜台 · v10.5.5 婚姻场景知识库版</h2>
+          <p>本版基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增“婚姻”场景和婚姻 JSON 知识库；普通问事模板与命运模板保持原有独立逻辑，不再叠加之前的问题补丁。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1223,10 +1223,6 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
             <button class="ghost-btn" id="favBtn">收藏</button>
           </div>
         </div>
-        <article class="block" id="v1059QuickGuideBlock">
-          <h4>快速导读</h4>
-          <div class="v1059-guide-grid" id="v1059QuickGuideContent"></div>
-        </article>
         <article class="block" id="answerSummaryBlock">
           <h4>答案摘要</h4>
           <div class="answer-summary" id="answerSummaryContent"></div>
@@ -1289,10 +1285,6 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <article class="block collapsible-block" data-collapse-key="radar" id="radarBlock"><h4>雷达分析图</h4><div class="radar-wrap"><canvas id="radarCanvas" width="420" height="380"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
         </div>
         <article class="block" id="adviceBlock"><h4>行动建议</h4><ul id="adviceList"></ul></article>
-        <article class="block" id="v1059SimpleGlossaryBlock">
-          <h4>术语解释</h4>
-          <div class="v1059-terms-grid" id="v1059SimpleGlossaryContent"></div>
-        </article>
       </section>
       <!-- 底部说明区：由设置控制显示，默认关闭 -->
       <section class="home-info hide-about hide-version-updates" id="homeInfoBlocks">
@@ -2210,7 +2202,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       document.getElementById('overallText').textContent=result.overallText;
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      if(typeof normalizeResultForTemplateV1059==='function') result = normalizeResultForTemplateV1059(result); if(typeof prepareTemplateBeforeSpecialRenderV1059==='function') prepareTemplateBeforeSpecialRenderV1059(result); if(result.sceneKey === 'destiny'){ renderBoard(result); renderDestinyBoard(result); } else { if(typeof clearDestinyOnlyDomV1059==='function') clearDestinyOnlyDomV1059(); } renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); if(typeof applyTemplateAfterRenderV1059==='function') applyTemplateAfterRenderV1059(result); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; if(typeof scrollResultTopV1059==='function') scrollResultTopV1059(); else window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'auto' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
     function buildPaipanExplanation(result){
@@ -2565,13 +2557,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     function viewHistoryItem(id){
       var list = getHistory();
       var item = null;
-      for (var i = 0; i < list.length; i++) { if (String(list[i].id) === String(id)) { item = list[i]; break; } }
-      if (item) {
-        item = (typeof normalizeResultForTemplateV1059 === 'function') ? normalizeResultForTemplateV1059(item) : item;
-        currentResult = item;
-        renderResult(item);
-        if (typeof closeHistoryDialog === 'function') closeHistoryDialog();
-      }
+      for (var i = 0; i < list.length; i++) { if (list[i].id === id) { item = list[i]; break; } }
+      if (item) { currentResult = item; renderResult(item); closeHistoryDialog(); }
     }
     function deleteHistoryItem(id){
       if(!confirm('确定删除这条历史记录吗？')) return;
@@ -2975,7 +2962,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
       document.getElementById('overallText').textContent=result.overallText || buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      if(typeof normalizeResultForTemplateV1059==='function') result = normalizeResultForTemplateV1059(result); if(typeof prepareTemplateBeforeSpecialRenderV1059==='function') prepareTemplateBeforeSpecialRenderV1059(result); if(result.sceneKey === 'destiny'){ renderBoard(result); renderDestinyBoard(result); } else { if(typeof clearDestinyOnlyDomV1059==='function') clearDestinyOnlyDomV1059(); } renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); if(typeof applyTemplateAfterRenderV1059==='function') applyTemplateAfterRenderV1059(result); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; if(typeof scrollResultTopV1059==='function') scrollResultTopV1059(); else window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'auto' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -2987,6 +2974,13 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
         quickLabels: ['关系倾向','推进速度','主要卡点','结果落地','沟通助力','状态气象'],
         lead: '感情课不要只看吉凶，更要看对方是否有实际行动、关系是否能稳定落地。',
         advice: ['先看对方是否有实际回应，不要只凭一句话或一次互动下结论。','若见赤口，少争辩，多确认真实想法；若见留连，说明关系容易反复拖着。','末象若空亡，代表结果还虚，适合先观察，不宜急着定关系或定分合。']
+      },
+      marriage: {
+        focus: '婚姻关系',
+        plainGoal: '看婚姻或伴侣关系是否稳定、相处过程哪里卡住、最后能否修复或落实。',
+        quickLabels: ['婚姻稳定','相处节奏','主要矛盾','结果落实','沟通助力','关系气象'],
+        lead: '婚姻课重点不是单纯看吉凶，而是看关系是否稳定、沟通是否顺、矛盾能否被处理、最后是否能落到现实行动。',
+        advice: ['先看末象是否能落实，再看中象是否反复或争执。','见留连，多主旧问题拖着；见赤口，要注意口舌、冷战、规则和边界；见空亡，要防承诺不落地。','现实婚姻仍以双方沟通、尊重和实际行动为准。']
       },
       career: {
         focus: '事业工作',
@@ -3487,7 +3481,7 @@ ${nextStep}`;
     function analyzeQuestionContext(question, sceneKey) {
       const q = (question || '').trim();
       if (!q) return null;
-      const priority = ['weather','lost','love','money','career','cooperation','exam','message','travel','health'];
+      const priority = ['weather','lost','marriage','love','money','career','cooperation','exam','message','travel','health'];
       let bestKey = null, bestHits = [];
       priority.forEach(key => {
         const rule = CONTEXT_INTENTS[key];
@@ -3495,7 +3489,7 @@ ${nextStep}`;
         if (hits.length && (!bestKey || hits.length > bestHits.length)) { bestKey = key; bestHits = hits; }
       });
       if (!bestKey) {
-        const map = {lost:'lost', love:'love', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message'};
+        const map = {lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message'};
         bestKey = map[sceneKey] || 'message';
         bestHits = [];
       }
@@ -3798,7 +3792,7 @@ ${nextStep}`;
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      if(typeof normalizeResultForTemplateV1059==='function') result = normalizeResultForTemplateV1059(result); if(typeof prepareTemplateBeforeSpecialRenderV1059==='function') prepareTemplateBeforeSpecialRenderV1059(result); if(result.sceneKey === 'destiny'){ renderBoard(result); renderDestinyBoard(result); } else { if(typeof clearDestinyOnlyDomV1059==='function') clearDestinyOnlyDomV1059(); } renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); if(typeof applyTemplateAfterRenderV1059==='function') applyTemplateAfterRenderV1059(result); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; if(typeof scrollResultTopV1059==='function') scrollResultTopV1059(); else window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'auto' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -3906,7 +3900,7 @@ ${nextStep}`;
       const q = (question || '').trim();
       if (!q) return null;
       const selected = forceAuto ? 'auto' : getSelectedContextType();
-      const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
+      const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
       const explicitSceneKey = sceneMap[sceneKey] || 'message';
 
       function has(words){ return contextMatched(q, words); }
@@ -4973,7 +4967,7 @@ ${nextStep}`;
         const q = (question || '').trim();
         if (!q) return null;
         const selected = forceAuto ? 'auto' : getSelectedContextType();
-        const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
+        const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
         const explicitSceneKey = sceneMap[sceneKey] || 'message';
         if (selected && selected !== 'auto' && CONTEXT_INTENTS[selected]) {
           const rule = CONTEXT_INTENTS[selected];
@@ -5461,7 +5455,6 @@ ${nextStep}`;
       result: [
         { id:'homeTopSection', label:'顶部' },
         { id:'resultCard', label:'结果' },
-        { id:'v1059QuickGuideBlock', label:'导读' },
         { id:'answerSummaryBlock', label:'答案' },
         { id:'sceneFocusBlock', label:'重心' },
         { id:'abChoiceResultBlock', label:'A/B' },
@@ -5476,7 +5469,6 @@ ${nextStep}`;
         { id:'radarBlock', label:'雷达' },
         { id:'v1033Glossary', label:'术语' },
         { id:'adviceBlock', label:'建议' },
-        { id:'v1059SimpleGlossaryBlock', label:'术语' },
         { id:'homeAboutRulesBlockWrap', label:'说明' }
       ]
     };
@@ -5495,11 +5487,7 @@ ${nextStep}`;
     }
     function currentJumpTargets(){
       const mode = getJumpMode();
-      let source = SECTION_JUMP_TARGETS[mode] || SECTION_JUMP_TARGETS.home;
-      const normalMode = document.body && document.body.classList && document.body.classList.contains('v1059-normal-mode');
-      if(mode === 'result' && normalMode){
-        source = source.filter(t => !['paipanBlock','destinyBoardBlock','v1025KinshipGuide','v1030DestinyHealth','v1040MarriageBlock'].includes(t.id));
-      }
+      const source = SECTION_JUMP_TARGETS[mode] || SECTION_JUMP_TARGETS.home;
       return source.map(t => ({...t, el: document.getElementById(t.id)})).filter(t => sectionIsJumpVisible(t.el));
     }
     function renderSectionJumpNav(){
@@ -5802,7 +5790,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6614,7 +6602,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7181,7 +7169,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8506,7 +8494,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8682,7 +8670,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -8979,7 +8967,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9255,7 +9243,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9485,7 +9473,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
+  const VERSION="v10.5.5 婚姻场景知识库版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9533,8 +9521,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9697,8 +9685,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9820,8 +9808,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9972,8 +9960,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10195,8 +10183,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10274,8 +10262,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10344,8 +10332,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10483,8 +10471,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10648,8 +10636,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10720,8 +10708,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10829,8 +10817,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -10895,16 +10883,16 @@ body.reading-theme-night {
   --dark-shadow: rgba(0,0,0,.34);
   background: linear-gradient(180deg, var(--dark-bg), var(--dark-bg-2)) !important;
   color: var(--dark-text) !important;
-  filter:none;
-  -webkit-filter:none;
+  filter: none !important;
+  -webkit-filter: none !important;
 }
 
 html[data-theme="dark"] *,
 body.reading-theme-night * {
-  filter:none;
-  -webkit-filter:none;
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   mix-blend-mode: normal !important;
   text-shadow: none !important;
 }
@@ -11199,10 +11187,10 @@ body.reading-theme-night [class*="Name"] {
 body.reading-theme-night *::before,
 body.reading-theme-night *::after {
   background-image: none !important;
-  filter:none;
-  -webkit-filter:none;
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 body.reading-theme-night .card::before,
 body.reading-theme-night .card::after,
@@ -11283,8 +11271,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
+  const VERSION="v10.5.5 婚姻场景知识库版";
+  const META="小六壬个人网页版 v10.5.5 婚姻场景知识库版：基于 v10.5.4 暗夜白块兜底修正版重新开始，仅新增婚姻场景和婚姻 JSON 知识库，不改动普通问事与命运结果模板。";
   const HERO = "本版在暗夜主题基础上增加白块兜底规则：不再只依赖具体类名，而是覆盖常见容器、内联背景、卡片、按钮和标签，修复暗夜模式残留白块。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11487,211 +11475,57 @@ body.reading-theme-night .v1054-dark-suspect-white {
 </style>
 
 
-<style id="v1059-source-direct-template-style">
-/* v10.5.9：源码直改，普通问事不再调用命运排盘渲染 */
-.v1059-guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
-.v1059-guide-card,.v1059-term-card{
-  border:1px solid rgba(124,112,178,.16);border-radius:16px;padding:12px 14px;
-  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.72));line-height:1.65;
-}
-.v1059-guide-card b,.v1059-term-card b{display:block;color:var(--primary);margin-bottom:4px;}
-.v1059-terms-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-@media(max-width:760px){.v1059-guide-grid,.v1059-terms-grid{grid-template-columns:1fr;}}
-body.v1059-normal-mode #paipanBlock,
-body.v1059-normal-mode #destinyBoardBlock,
-body.v1059-normal-mode #v1025KinshipGuide,
-body.v1059-normal-mode #v1030DestinyHealth,
-body.v1059-normal-mode #v1040MarriageBlock{
-  display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;
-}
-body.v1059-destiny-mode #v1059QuickGuideBlock,
-body.v1059-destiny-mode #v1059SimpleGlossaryBlock{display:none!important;}
-body.v1059-normal-mode #v1059QuickGuideBlock,
-body.v1059-normal-mode #v1059SimpleGlossaryBlock{display:block!important;}
-html[data-theme="dark"] *,body.reading-theme-night *{filter:none!important;-webkit-filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
-</style>
-
-<script id="v1059-source-direct-template-script">
+<script id="v1055-clean-marriage-kb-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.9 普通问事源码隔离修正版";
-  const META="小六壬个人网页版 v10.5.9 普通问事源码隔离修正版：从 v10.5.4 干净重做并直接修改结果渲染源码，修复非命运场景误套命运模板、六宫排盘残留、结果页起始位置和历史查看问题。";
-  const HERO="本版从 v10.5.4 干净重做，并直接修改结果渲染源码：命运场景与普通问事独立运作；非命运场景不显示六宫排盘，新增婚姻场景、快速导读与术语解释。";
-  const MARRIAGE_KB={"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
-  const UPDATE_ROW='<details><summary>'+VERSION+'</summary><ul><li>从 v10.5.4 干净重做，并直接修改 renderResult 源码，不再只靠后置补丁。</li><li>非命运场景不再调用 renderBoard / renderDestinyBoard，因此不会套用命运排盘模板。</li><li>普通问事隐藏六宫排盘、命盘、命盘健康、命盘婚姻和六亲专属模块。</li><li>普通问事结果页新增快速导读与术语解释。</li><li>修复结果页从中段开始显示的问题：渲染后直接回到结果卡片顶部。</li><li>修复非命运历史记录查看问题。</li></ul></details>';
-  window.MARRIAGE_KB_V1059=MARRIAGE_KB;
+  const VERSION = "v10.5.5 婚姻场景知识库版";
+  const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
 
-  function $(id){return document.getElementById(id);}
-  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
-  function isDestiny(result){return !!(result&&(result.sceneKey==='destiny'||result.sceneName==='命运'));}
+  window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
-  window.normalizeResultForTemplateV1059=function(result){
-    if(!result||typeof result!=='object') return result;
-    const map={'命运':'destiny','感情':'love','婚姻':'marriage','事业':'career','财运':'money','考试':'exam','失物':'lost','健康':'health','出行':'travel','合作':'cooperation','消息':'message','天气':'weather','求职':'job','家宅':'home','选择':'choice','寻人':'people','贵人':'noble','运势':'fortune','其他':'other','一般事项':'other'};
-    if(result.sceneName&&map[result.sceneName]) result.sceneKey=map[result.sceneName];
-    if(result.sceneName!=='命运'&&result.sceneKey==='destiny') result.sceneKey='other';
-    if(!result.sceneKey) result.sceneKey='other';
-    if(!result.sceneName) result.sceneName=result.sceneKey==='marriage'?'婚姻':(result.sceneKey==='destiny'?'命运':'一般事项');
-    if(!result.sceneIcon) result.sceneIcon=result.sceneKey==='marriage'?'💍':(result.sceneKey==='destiny'?'🪷':'🔮');
-    return result;
-  };
-
-  function setDisplay(el, show){
-    if(!el) return;
-    el.classList.toggle('hidden', !show);
-    el.style.display=show?'':'none';
-    if(show){el.style.visibility='';el.style.height='';el.style.minHeight='';el.style.margin='';el.style.padding='';el.style.overflow='';}
-    else{el.style.visibility='hidden';el.style.height='0';el.style.minHeight='0';el.style.margin='0';el.style.padding='0';el.style.overflow='hidden';}
-  }
-
-  window.clearDestinyOnlyDomV1059=function(){
-    ['destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote'].forEach(id=>{const el=$(id);if(el)el.innerHTML='';});
-    ['v1025KinshipGuide','v1030DestinyHealth','v1040MarriageBlock','destinyBoardBlock','paipanBlock'].forEach(id=>setDisplay($(id), false));
-  };
-
-  function buildQuickGuide(result){
-    const scene=result&&result.sceneName?result.sceneName:'本场景';
-    return '<div class="v1059-guide-grid">'
-      +'<div class="v1059-guide-card"><b>第一步：看答案</b><span>先看一句话直断和偏向判断，快速知道这课偏顺、偏慢、偏争执还是偏落空。</span></div>'
-      +'<div class="v1059-guide-card"><b>第二步：看三象</b><span>普通问事不需要看六宫排盘，重点看本象、中象、末象这三个阶段如何变化。</span></div>'
-      +'<div class="v1059-guide-card"><b>第三步：看专项</b><span>'+esc(scene)+'场景会调用对应主题的知识库，把结果转成该主题的白话判断。</span></div>'
-      +'<div class="v1059-guide-card"><b>第四步：看建议</b><span>最后看行动建议，把占卜结论转成现实中可执行的下一步。</span></div>'
-      +'</div>';
-  }
-  function buildTerms(){
-    const terms=[['本象','事情的起因或当前状态。'],['中象','事情的发展过程、变化方式。'],['末象','事情的结果落点，通常最要重视。'],['大安','安稳、平顺、偏慢。'],['留连','拖延、纠缠、反复。'],['速喜','快速、消息、喜动。'],['赤口','口舌、争执、规则、疼痛。'],['小吉','小成、小利、小帮助。'],['空亡','空虚、落空、未落实。'],['问事专项','根据你选择的场景，调用对应 JSON 知识库，把六宫含义转成主题判断。']];
-    return '<div class="v1059-terms-grid">'+terms.map(t=>'<div class="v1059-term-card"><b>'+esc(t[0])+'</b><span>'+esc(t[1])+'</span></div>').join('')+'</div>';
-  }
-
-  window.prepareTemplateBeforeSpecialRenderV1059=function(result){
-    result=window.normalizeResultForTemplateV1059(result);
-    const destiny=isDestiny(result);
-    document.body.classList.toggle('v1059-destiny-mode', destiny);
-    document.body.classList.toggle('v1059-normal-mode', !destiny);
-    if(!destiny) window.clearDestinyOnlyDomV1059();
-  };
-
-  window.applyTemplateAfterRenderV1059=function(result){
-    result=window.normalizeResultForTemplateV1059(result);
-    const destiny=isDestiny(result);
-    document.body.classList.toggle('v1059-destiny-mode', destiny);
-    document.body.classList.toggle('v1059-normal-mode', !destiny);
-
-    const guide=$('v1059QuickGuideBlock'), guideContent=$('v1059QuickGuideContent');
-    const terms=$('v1059SimpleGlossaryBlock'), termsContent=$('v1059SimpleGlossaryContent');
-    if(guideContent) guideContent.innerHTML=buildQuickGuide(result);
-    if(termsContent) termsContent.innerHTML=buildTerms();
-    setDisplay(guide,!destiny);
-    setDisplay(terms,!destiny);
-
-    if(!destiny){
-      window.clearDestinyOnlyDomV1059();
-      ['answerSummaryBlock','sceneFocusBlock','overallBlock','contextAnalysisBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock'].forEach(id=>{const el=$(id);if(el){el.classList.remove('hidden');if(el.style.display==='none')el.style.display='';}});
-    } else {
-      setDisplay($('paipanBlock'), true);
-      setDisplay($('destinyBoardBlock'), true);
-    }
-  };
-
-  window.scrollResultTopV1059=function(){
-    const card=$('resultCard');
-    if(!card) return;
-    const y=Math.max(0, card.getBoundingClientRect().top+window.scrollY-8);
-    try{window.scrollTo({top:y,behavior:'auto'});}catch(e){window.scrollTo(0,y);}
-  };
-
-  function lockVersionOnce(){
-    try{
-      document.title='小六壬占卜 · '+VERSION;
-      const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);
-      document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});
-      const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;
-    }catch(e){}
-  }
-
-  function patchVersionUpdates(){
-    if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1059){
-      const old=window.buildVersionUpdatesHTML;
-      window.buildVersionUpdatesHTML=function(){
-        let html=old.call(this);
-        try{html=html.replace(/<details><summary>v10\.6\.[0-9][^<]*<\/summary>[\s\S]*?<\/details>/g,'');}catch(e){}
-        try{html=html.replace(/<details><summary>v10\.5\.[5-8][^<]*<\/summary>[\s\S]*?<\/details>/g,'');}catch(e){}
-        if(html.indexOf(VERSION)<0) html+=UPDATE_ROW;
-        return html;
-      };
-      window.buildVersionUpdatesHTML.__v1059=true;
+  function installMarriageContext(){
+    try {
+      if (typeof CONTEXT_INTENTS !== 'undefined') {
+        CONTEXT_INTENTS.marriage = {
+          title: '婚姻 / 夫妻 / 伴侣',
+          keys: ['婚姻','夫妻','老公','老婆','丈夫','妻子','配偶','伴侣','结婚','离婚','复婚','婚后','婆媳','公婆','岳父母','家庭矛盾','第三者','出轨','冷战','分居','家暴','婚礼','领证','彩礼','孩子','子女'],
+          focus: ['婚姻稳定度','相处模式','主要矛盾','外部干扰','是否能修复或落实'],
+          advice: MARRIAGE_KB.data.life_reminders,
+          palace: MARRIAGE_KB.data.marriage_tendency_by_palm,
+          summary: '本课按婚姻问事断，重点看关系是否稳定、相处过程中哪里卡住、最后能否修复或落实。',
+          kb: MARRIAGE_KB
+        };
+      }
+      if (typeof SCENE_PLAIN_INFO !== 'undefined' && !SCENE_PLAIN_INFO.marriage) {
+        SCENE_PLAIN_INFO.marriage = {
+          focus: '婚姻关系',
+          plainGoal: '看婚姻或伴侣关系是否稳定、相处过程哪里卡住、最后能否修复或落实。',
+          quickLabels: ['婚姻稳定','相处节奏','主要矛盾','结果落实','沟通助力','关系气象'],
+          lead: '婚姻课重点不是单纯看吉凶，而是看关系是否稳定、沟通是否顺、矛盾能否被处理、最后是否能落到现实行动。',
+          advice: ['先看末象是否能落实，再看中象是否反复或争执。','见留连，多主旧问题拖着；见赤口，要注意口舌、冷战、规则和边界；见空亡，要防承诺不落地。','现实婚姻仍以双方沟通、尊重和实际行动为准。']
+        };
+      }
+      if (typeof buildVersionUpdatesHTML === 'function' && !buildVersionUpdatesHTML.__v1055CleanMarriage) {
+        const old = buildVersionUpdatesHTML;
+        buildVersionUpdatesHTML = function(){
+          let html = old.call(this);
+          const row = '<details><summary>'+VERSION+'</summary><ul><li>基于 v10.5.4 暗夜白块兜底修正版重新开始。</li><li>新增“婚姻”场景。</li><li>新增婚姻 JSON 知识库，并接入普通问事专项解读。</li><li>不改动普通问事模板与命运模板，不加入 v10.5.5～v10.5.9 / v10.6.x 的问题补丁。</li></ul></details>';
+          if (html.indexOf(VERSION) < 0) html += row;
+          return html;
+        };
+        buildVersionUpdatesHTML.__v1055CleanMarriage = true;
+      }
+    } catch(e) {
+      console.warn('[v10.5.5 marriage kb] install skipped', e);
     }
   }
 
-  function patchMarriageContext(){
-    try{
-      if(typeof CONTEXT_INTENTS!=='undefined'){
-        CONTEXT_INTENTS.marriage={title:'婚姻 / 夫妻 / 伴侣',keys:['婚姻','夫妻','老公','老婆','丈夫','妻子','配偶','伴侣','结婚','离婚','复婚','婚后','婆媳','公婆','岳父母','家庭矛盾','第三者','出轨','冷战','分居','家暴','婚礼','领证','彩礼','孩子','子女'],focus:['婚姻稳定度','相处模式','主要矛盾','外部干扰','是否能修复或落实'],advice:MARRIAGE_KB.data.life_reminders,palace:MARRIAGE_KB.data.marriage_tendency_by_palm,summary:'本课按婚姻问事断，重点看关系是否稳定、相处过程中哪里卡住、最后能否修复或落实。',kb:MARRIAGE_KB};
-      }
-      if(typeof analyzeQuestionContext==='function'&&!analyzeQuestionContext.__v1059Marriage){
-        const old=analyzeQuestionContext;
-        analyzeQuestionContext=function(question,sceneKey,forceAuto){
-          const q=String(question||'');
-          const selected=(typeof getSelectedContextType==='function'&&!forceAuto)?getSelectedContextType():'auto';
-          const rule=(typeof CONTEXT_INTENTS!=='undefined')?CONTEXT_INTENTS.marriage:null;
-          const wants=sceneKey==='marriage'||selected==='marriage'||(rule&&rule.keys.some(k=>q.indexOf(k)!==-1));
-          if(wants&&rule){const hits=rule.keys.filter(k=>q.indexOf(k)!==-1);return {key:'marriage',title:rule.title,question:q,hits:hits.length?hits:['按婚姻场景推断'],focus:rule.focus,advice:rule.advice,rule,manual:selected==='marriage'};}
-          return old(question,sceneKey,forceAuto);
-        };
-        analyzeQuestionContext.__v1059Marriage=true;
-      }
-    }catch(e){}
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', installMarriageContext, {once:true});
+  } else {
+    installMarriageContext();
   }
-
-  function patchContextAnalysis(){
-    try{
-      if(typeof renderContextAnalysis==='function'&&!renderContextAnalysis.__v1059Marriage){
-        const old=renderContextAnalysis;
-        renderContextAnalysis=function(result){
-          old(result);
-          try{
-            if(result&&result.sceneKey==='marriage'){
-              const box=$('contextAnalysisContent');
-              if(box&&!box.querySelector('[data-v1059-marriage-extra]')){
-                const data=MARRIAGE_KB.data;
-                const first=result.details&&result.details[0]?result.details[0].palaceName:'';
-                const mid=result.details&&result.details[1]?result.details[1].palaceName:'';
-                const last=result.details&&result.details[2]?result.details[2].palaceName:'';
-                box.insertAdjacentHTML('beforeend','<div class="context-card" data-v1059-marriage-extra="1"><h5>婚姻知识库参考</h5><p><strong>关系倾向：</strong>'+esc(data.marriage_tendency_by_palm[first]||'结合三象看关系状态。')+'</p><p><strong>过程提醒：</strong>'+esc(data.marriage_tendency_by_palm[mid]||'看相处过程中是否反复、争执或能沟通。')+'</p><p><strong>结果落点：</strong>'+esc(data.marriage_tendency_by_palm[last]||'看最后是否真正落实。')+'</p><p><strong>优势：</strong>'+esc(data.marriage_advantage[last]||data.marriage_advantage[first]||'能看见关系中可用的助力。')+'</p><p><strong>挑战：</strong>'+esc(data.marriage_challenge[mid]||data.marriage_challenge[last]||'需要面对现实问题，不宜只看情绪。')+'</p><p class="muted">'+esc(MARRIAGE_KB.disclaimer)+'</p></div>');
-              }
-            }
-          }catch(e){}
-        };
-        renderContextAnalysis.__v1059Marriage=true;
-      }
-    }catch(e){}
-  }
-
-  function patchHistoryClickCapture(){
-    if(document.__v1059HistoryCapture) return;
-    document.__v1059HistoryCapture=true;
-    document.addEventListener('click',function(e){
-      const btn=e.target.closest&&e.target.closest('button');
-      if(!btn) return;
-      const onclick=btn.getAttribute('onclick')||'';
-      const m=onclick.match(/viewHistoryItem\(['"]?([^'")]+)['"]?\)/);
-      if(!m) return;
-      e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
-      if(typeof viewHistoryItem==='function') viewHistoryItem(m[1]);
-    },true);
-  }
-
-  function boot(){
-    lockVersionOnce();
-    patchVersionUpdates();
-    patchMarriageContext();
-    patchContextAnalysis();
-    patchHistoryClickCapture();
-    try{if(typeof currentResult!=='undefined'&&currentResult){currentResult=window.normalizeResultForTemplateV1059(currentResult);window.applyTemplateAfterRenderV1059(currentResult);}}catch(e){}
-  }
-
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-  window.addEventListener('load',function(){boot();setTimeout(boot,200);},{once:true});
+  window.addEventListener('load', installMarriageContext, {once:true});
 })();
 </script>
 
