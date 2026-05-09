@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.23-career-beta';
+const CACHE_NAME = 'xiaoliuren-v10.5.24-knowledge-table-scroll';
 const APP_SHELL = [
   './',
   './index.html',
