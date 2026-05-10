@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.61 命运答案导航与高亮判定修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。" />
+  <title>小六壬占卜 · v10.5.62 设置功能统一保存修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.61 命运答案导航与高亮判定修正版</h2>
+          <h2>个人占卜台 · v10.5.62 设置功能统一保存修正版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -4317,7 +4317,7 @@ ${nextStep}`;
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.61 命运答案导航与高亮判定修正版', items:['修复命运结果页主导航缺少“答案”的问题，顺序更新为：结果、导读、答案、重心、命盘、综合、口诀、三象、雷达、术语、建议。','修复停在答案摘要区域时导航仍高亮“导读”的问题，固定指针导航的当前章节判定改为更贴近屏幕阅读中心。','保留 v10.5.60 的“显示章节卡点导航”开关持久锁定、v10.5.58 的顶部/底部导航位置、v10.5.57 的详细模块默认折叠。'] },
+        { v:'v10.5.62 设置功能统一保存修正版', items:['修复命运结果页主导航缺少“答案”的问题，顺序更新为：结果、导读、答案、重心、命盘、综合、口诀、三象、雷达、术语、建议。','修复停在答案摘要区域时导航仍高亮“导读”的问题，固定指针导航的当前章节判定改为更贴近屏幕阅读中心。','保留 v10.5.60 的“显示章节卡点导航”开关持久锁定、v10.5.58 的顶部/底部导航位置、v10.5.57 的详细模块默认折叠。'] },
         { v:'v10.5.60 章节导航开关持久锁定修正版', items:['修复设置中关闭“显示章节卡点导航”后，退出设置或自动保存时又被马上重新打开的问题。','新增 showSectionNav 独立意图锁定，用户选择关闭/开启后，旧设置写入也不能把它覆盖回默认值。','关闭后同时隐藏一级章节导航和命运二级导航；开启后恢复固定指针式导航和旧版胶囊外观。','保留 v10.5.58 的导航位置顶部/底部设置、v10.5.57 的详细模块默认折叠，以及 v10.5.56 的命运导航顺序与点击防抖。'] },
         { v:'v10.5.58 导航位置持久化修正版', items:['修复设置中切换“导航位置：顶部”后，关闭设置又恢复到底部的问题。','为导航位置增加独立持久化保护，避免旧设置保存逻辑覆盖 navPosition。','设置打开、切换、关闭、刷新后都会重新读取并应用导航位置。','保持 v10.5.57 已修好的详细模块默认折叠逻辑，以及 v10.5.56/v10.5.55 的固定指针式导航和点击防抖逻辑。'] },
         { v:'v10.5.57 设置折叠与导航位置版', items:['修复设置中“详细模块默认折叠”勾选后，非命运结果页部分详细模块仍默认展开的问题。','新增设置项“导航位置”，可选择底部或顶部显示章节导航。','底部模式保持现在的层级：一级导航在下，命运二级导航在上；顶部模式反向显示：一级导航在上，二级导航在下。','顶部导航模式下，点击跳转会自动预留导航高度，避免目标标题被导航遮住。','保持 v10.5.56 已修好的命运导航顺序、综合入口、固定指针式导航和点击防抖逻辑。'] },
@@ -5854,7 +5854,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6669,7 +6669,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7256,7 +7256,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8586,7 +8586,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8762,7 +8762,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -9059,7 +9059,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9335,7 +9335,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9565,7 +9565,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9613,8 +9613,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9777,8 +9777,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9900,8 +9900,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -10052,8 +10052,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10275,8 +10275,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10354,8 +10354,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10424,8 +10424,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10563,8 +10563,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10742,8 +10742,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10814,8 +10814,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10923,8 +10923,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11377,8 +11377,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const HERO="本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11591,7 +11591,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11847,7 +11847,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12015,7 +12015,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12234,7 +12234,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12573,7 +12573,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12890,7 +12890,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 20;
   const logs = [];
@@ -13066,7 +13066,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13291,8 +13291,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13384,8 +13384,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13607,8 +13607,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10519-destiny-formula-debug-save-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.61 命运答案导航与高亮判定修正版";
-  const META="小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
+  const VERSION="v10.5.62 设置功能统一保存修正版";
+  const META="小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。";
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
@@ -13779,8 +13779,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10520-nav-formula-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const BASE={
     '大安':{formula:'大安事事昌，主安稳、守成、慢成。',plain:'命运中多看根基稳定、节奏偏慢，适合长期经营。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠，容易被过程拖住。'},
@@ -14017,8 +14017,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10521-mobile-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function setStableVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14112,8 +14112,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10523-career-beta-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
@@ -14327,8 +14327,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10524-knowledge-table-scroll-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const SELECTORS=['.v1040-marriage-table','.v1030-health-table','.v1031-health-table','.v10523-career-table','.v1025-table-wrap'];
   function setVersion(){
@@ -14389,8 +14389,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10533-formula-overall-order-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el || (el.classList&&el.classList.contains('hidden')) || (el.closest&&el.closest('.hidden'))) return false;
@@ -14496,8 +14496,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10534-theme-performance-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14583,8 +14583,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10535-theme-return-color-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function isNight(){return !!(document.body&&document.body.classList.contains('reading-theme-night'));}
   function syncThemeRoot(){
@@ -14711,8 +14711,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10541-source-integrated-finalizer">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const ROW='<details open><summary>'+VERSION+'</summary><ul><li>以 v10.5.36 为稳定基线，未继续沿用 v10.5.37-v10.5.40 的命运术语补丁。</li><li>命运“术语解释”已放入结果页主 DOM，不再由后置脚本临时创建。</li><li>主导航正式包含“术语”，并位于“雷达”之后；右侧“一键展开/折叠”可控制该模块。</li><li>导航跳转改为单次稳定定位，减少 Safari 上命盘之后内容跳转抖动。</li><li>同步更新 README、manifest、service-worker 与页面版本记录。</li></ul></details>';
   function $(id){return document.getElementById(id);}
@@ -14770,8 +14770,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10542-home-result-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const RESULT_CLASSES=['result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'];
   const RESULT_HASH_IDS={resultCard:1,v10510QuickGuideBlock:1,answerSummaryBlock:1,sceneFocusBlock:1,abChoiceResultBlock:1,paipanBlock:1,destinyBoardBlock:1,overallBlock:1,contextAnalysisBlock:1,triReadingBlock:1,singlePalaceBlock:1,doublePalaceBlock:1,symbolBlock:1,radarBlock:1,v10536DestinyGlossaryBlock:1,v10518FormulaBlock:1,adviceBlock:1,v10510GlossaryBlock:1,v1033Glossary:1};
   function $(id){return document.getElementById(id);}
@@ -14991,8 +14991,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10546-state-nav-glossary-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const EVENTS=[];
   window.__XLR_V10546_EVENTS=EVENTS;
   function $(id){return document.getElementById(id);}
@@ -15420,8 +15420,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10556-slot-nav-display-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const EVENTS=[]; window.__XLR_V10556_EVENTS=EVENTS;
   const JUMP_LOCK={until:0,main:'',sub:''};
   const oldUpdate=window.updateSectionJumpNav, oldRefresh=window.refreshSectionJumpNavSoon;
@@ -15606,8 +15606,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10557-settings-nav-position-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const DETAIL_DEFAULT_COLLAPSE_IDS=['destinyBoardBlock','v10518FormulaBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock','v10536DestinyGlossaryBlock'];
   function $(id){return document.getElementById(id);}
@@ -15706,8 +15706,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10558-nav-position-persistence-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const DEFAULT_NAV='bottom';
   const $=id=>document.getElementById(id);
@@ -15812,8 +15812,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10559-section-nav-visibility-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const DEFAULT_UI={showQuickButtons:true,showSectionNav:true,showProgressBar:true,defaultClientMode:'auto'};
   const $=id=>document.getElementById(id);
@@ -15932,8 +15932,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1060-section-nav-state-lock-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.61 命运答案导航与高亮判定修正版';
-  const META='小六壬个人网页版 v10.5.61 命运答案导航与高亮判定修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：修复关闭“显示章节卡点导航”后被旧自动保存流程立刻重新打开的问题；使用独立意图锁定和存储保护，确保一级/二级导航按设置稳定显示或隐藏。';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const INTENT_KEY='xiaoliuren_section_nav_intent_v1060';
   const DEFAULT_UI={showQuickButtons:true,showSectionNav:true,showProgressBar:true,defaultClientMode:'auto'};
@@ -16089,6 +16089,227 @@ html[data-theme="dark"] .v10519-destiny-note {
   function boot(){patchStorage();patchSettingsFns();patchRenderHooks();setVersion();apply();bind();setTimeout(apply,180);setTimeout(apply,750);setTimeout(apply,1600);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   window.addEventListener('load',function(){boot();setTimeout(boot,600);},{once:true});
+})();
+</script>
+
+
+<!-- v10.5.62 source-integrated fix: 设置功能统一保存与应用控制器 -->
+<style id="v1062-settings-unified-style">
+  /* v10.5.62：阅读文字大小最终出口，压过早期零散字号补丁。 */
+  body.reading-size-small, body[data-xl-reading-size="small"] { --xlr-reading-scale: .92 !important; }
+  body.reading-size-normal, body[data-xl-reading-size="normal"] { --xlr-reading-scale: 1 !important; }
+  body.reading-size-large, body[data-xl-reading-size="large"] { --xlr-reading-scale: 1.13 !important; }
+  body.reading-size-xlarge, body[data-xl-reading-size="xlarge"] { --xlr-reading-scale: 1.24 !important; }
+  body:not(.force-desktop-mode) #resultCard,
+  body:not(.force-desktop-mode) #resultCard p,
+  body:not(.force-desktop-mode) #resultCard li,
+  body:not(.force-desktop-mode) #resultCard .block,
+  body:not(.force-desktop-mode) #resultCard .answer-card,
+  body:not(.force-desktop-mode) #resultCard .reading-card,
+  body:not(.force-desktop-mode) #resultCard .gua-card,
+  body:not(.force-desktop-mode) #resultCard .context-card,
+  body:not(.force-desktop-mode) #resultCard .summary-item,
+  body:not(.force-desktop-mode) #resultCard .overall-rich,
+  body:not(.force-desktop-mode) #resultCard .question-linked,
+  body:not(.force-desktop-mode) #resultCard .rule-note,
+  body:not(.force-desktop-mode) #resultCard .simple-note,
+  body:not(.force-desktop-mode) #resultCard .destiny-summary,
+  body:not(.force-desktop-mode) #resultCard .v10510-guide-grid,
+  body:not(.force-desktop-mode) #resultCard .v10510-terms-grid,
+  body:not(.force-desktop-mode) #resultCard .keyword-chip,
+  body:not(.force-desktop-mode) #resultCard .pill,
+  body:not(.force-desktop-mode) #resultCard .tag,
+  body:not(.force-desktop-mode) #resultCard .palace-meta,
+  body:not(.force-desktop-mode) #resultCard .radar-metric-pill {
+    font-size: calc(1rem * var(--xlr-reading-scale)) !important;
+  }
+  body:not(.force-desktop-mode) #resultCard h4,
+  body:not(.force-desktop-mode) #resultCard h5,
+  body:not(.force-desktop-mode) #resultCard .result-title {
+    font-size: calc(1.08rem * var(--xlr-reading-scale)) !important;
+  }
+</style>
+<script id="v1062-settings-unified-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.62 设置功能统一保存修正版';
+  const META='小六壬个人网页版 v10.5.62 设置功能统一保存修正版：统一设置保存链路，修复阅读文字大小、默认阅读模式、记住上次选择和快捷按钮设置被旧自动保存覆盖的问题。';
+  const SETTINGS_KEY='xlr_user_settings_v9_1';
+  const UI_KEY='xiaoliuren_ui_settings_v9916';
+  const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
+  const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
+  const VIEW_KEY='xlr_view_mode_v9_1';
+  const QUICK_KEY='xiaoliuren_quick_button_settings_v9919';
+  const MODE_KEY='xiaoliuren_client_mode_v9914';
+  const DEFAULT_CORE={defaultView:'detail',collapseDetails:false,showRadar:true,showAbout:false,showVersionUpdates:false,rememberScene:false,rememberMethod:false,navPosition:'bottom'};
+  const DEFAULT_UI={showQuickButtons:true,showSectionNav:true,showProgressBar:true,defaultClientMode:'auto'};
+  const SIZE_SCALE={small:.92,normal:1,large:1.13,xlarge:1.24};
+  const QUICK_ITEMS=[
+    {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
+    {id:'reset', label:'重占', note:'清空当前结果并重新占卜', title:'重新占卜'},
+    {id:'mode', label:'电脑', note:'切换自适应 / 电脑模式', title:'切换客户端模式'},
+    {id:'expand', label:'展开', note:'展开所有结果模块', title:'一键展开结果模块'},
+    {id:'collapse', label:'折叠', note:'折叠所有结果模块', title:'一键折叠结果模块'},
+    {id:'theme', label:'夜间', note:'切换白天 / 暗夜阅读模式', title:'切换白天 / 暗夜模式'},
+    {id:'top', label:'↑', note:'回到页面顶部', title:'一键置顶'},
+    {id:'bottom', label:'↓', note:'跳到页面底部', title:'一键到底'},
+    {id:'history', label:'历史', note:'打开历史记录', title:'历史记录'},
+    {id:'analytics', label:'分析', note:'打开历史分析', title:'历史分析'},
+    {id:'rules', label:'规则', note:'打开场景规则', title:'场景规则'},
+    {id:'templates', label:'模板', note:'打开问题模板', title:'问题模板'},
+    {id:'settings', label:'设置', note:'打开阅读设置', title:'设置'},
+    {id:'copy', label:'复制', note:'复制当前结果', title:'复制结果'}
+  ];
+  const QUICK_DEFAULT_ORDER=['home','reset','mode','expand','collapse','theme','top','bottom','history','analytics','rules','settings'];
+  const QUICK_DEFAULT_ENABLED={home:true,reset:true,mode:true,expand:true,collapse:true,theme:true,top:true,bottom:true,history:false,analytics:false,rules:false,templates:false,settings:false,copy:false};
+  const $=id=>document.getElementById(id);
+  function parseJSON(raw){try{return JSON.parse(raw||'{}')||{};}catch(e){return {};}}
+  function readJSON(key, fallback){try{return Object.assign({},fallback||{},parseJSON(localStorage.getItem(key)));}catch(e){return Object.assign({},fallback||{});}}
+  function writeJSON(key,obj){try{localStorage.setItem(key,JSON.stringify(obj||{}));}catch(e){}}
+  function normSize(v){v=String(v||'normal');return SIZE_SCALE[v]?v:'normal';}
+  function normCore(v){v=Object.assign({},DEFAULT_CORE,v||{});v.defaultView=(v.defaultView==='simple')?'simple':'detail';v.navPosition=(v.navPosition==='top')?'top':'bottom';v.collapseDetails=!!v.collapseDetails;v.showRadar=v.showRadar!==false;v.showAbout=!!v.showAbout;v.showVersionUpdates=!!v.showVersionUpdates;v.rememberScene=!!v.rememberScene;v.rememberMethod=!!v.rememberMethod;return v;}
+  function normUI(v){v=Object.assign({},DEFAULT_UI,v||{});v.showQuickButtons=v.showQuickButtons!==false;v.showSectionNav=v.showSectionNav!==false;v.showProgressBar=v.showProgressBar!==false;v.defaultClientMode=(v.defaultClientMode==='desktop')?'desktop':'auto';return v;}
+  function quickItem(id){return QUICK_ITEMS.find(x=>x.id===id);}
+  function normQuick(raw){
+    const ids=QUICK_ITEMS.map(x=>x.id); const cfg=raw&&typeof raw==='object'?raw:{};
+    let order=Array.isArray(cfg.order)?cfg.order.filter(id=>ids.includes(id)):QUICK_DEFAULT_ORDER.slice();
+    QUICK_DEFAULT_ORDER.forEach(id=>{if(!order.includes(id)){const pos=QUICK_DEFAULT_ORDER.indexOf(id);const before=QUICK_DEFAULT_ORDER.slice(pos+1).find(next=>order.includes(next)); if(before) order.splice(order.indexOf(before),0,id); else order.push(id);}});
+    ids.forEach(id=>{if(!order.includes(id))order.push(id);});
+    const enabled=Object.assign({},QUICK_DEFAULT_ENABLED,cfg.enabled||{}); ids.forEach(id=>{enabled[id]=!!enabled[id];});
+    return {order,enabled};
+  }
+  function readCore(){return normCore(readJSON(SETTINGS_KEY,DEFAULT_CORE));}
+  function writeCore(v){writeJSON(SETTINGS_KEY,normCore(Object.assign({},readCore(),v||{})));}
+  function readUI(){return normUI(readJSON(UI_KEY,DEFAULT_UI));}
+  function writeUI(v){writeJSON(UI_KEY,normUI(Object.assign({},readUI(),v||{})));}
+  function readQuick(){try{return normQuick(parseJSON(localStorage.getItem(QUICK_KEY)));}catch(e){return normQuick(null);}}
+  function writeQuick(v){try{localStorage.setItem(QUICK_KEY,JSON.stringify(normQuick(v)));}catch(e){}}
+  function savedChoices(){return parseJSON(localStorage.getItem(SAVED_CHOICE_KEY));}
+  function writeSavedChoices(v){writeJSON(SAVED_CHOICE_KEY,v||{});}
+  function setVersion(){try{document.title='小六壬占卜 · '+VERSION;}catch(e){} try{const m=document.querySelector('meta[name="description"]');if(m)m.setAttribute('content',META);}catch(e){} try{document.querySelectorAll('h2').forEach(el=>{if((el.textContent||'').includes('个人占卜台')) el.textContent='个人占卜台 · '+VERSION;});}catch(e){}}
+  function ensureRows(){
+    const form=document.querySelector('#settingsDialog .settings-form'); if(!form) return;
+    if(!$('settingReadingTextSize')){
+      const row=document.createElement('div'); row.className='settings-row'; row.innerHTML='<span>阅读文字大小<small>调整占卜结果正文、卡片说明、术语和建议文字。</small></span><select id="settingReadingTextSize"><option value="small">偏小</option><option value="normal">标准</option><option value="large">偏大</option><option value="xlarge">更大</option></select>';
+      const anchor=$('settingDefaultView')?.closest('.settings-row'); if(anchor) anchor.insertAdjacentElement('afterend',row); else form.prepend(row);
+    }
+    if(!$('quickButtonSettingsCard')){
+      const actions=form.querySelector('.settings-actions'); const card=document.createElement('div'); card.className='settings-card'; card.id='quickButtonSettingsCard';
+      card.innerHTML='<h4>快捷按钮设置</h4><p class="quick-config-note">选择右侧/底部浮动快捷区要显示的按钮，并用 ↑ ↓ 调整顺序。设置会保存在当前浏览器本地。</p><div class="quick-button-config" id="quickButtonConfigList"></div><div class="settings-mini-grid"><button class="ghost-btn" type="button" id="quickButtonsSelectCoreBtn">恢复默认快捷按钮</button><button class="ghost-btn" type="button" id="quickButtonsSelectAllBtn">显示全部快捷按钮</button></div>';
+      if(actions) form.insertBefore(card,actions); else form.appendChild(card);
+    }
+    syncForms(); renderQuickSettingsList();
+  }
+  function applyReadingSize(size){
+    size=normSize(size||localStorage.getItem(SIZE_KEY)||'normal');
+    try{localStorage.setItem(SIZE_KEY,size);}catch(e){}
+    const b=document.body, root=document.documentElement; if(!b)return;
+    b.classList.remove('reading-size-small','reading-size-normal','reading-size-large','reading-size-xlarge');
+    b.classList.add('reading-size-'+size); b.setAttribute('data-xl-reading-size',size);
+    root.style.setProperty('--xlr-reading-scale',String(SIZE_SCALE[size])); b.style.setProperty('--xlr-reading-scale',String(SIZE_SCALE[size]));
+    const sel=$('settingReadingTextSize'); if(sel&&sel.value!==size) sel.value=size;
+    try{ if(typeof window.refreshSectionJumpNavSoon==='function') window.refreshSectionJumpNavSoon(); }catch(e){}
+  }
+  function setResultView(mode){
+    mode=(mode==='simple')?'simple':'detail';
+    try{localStorage.setItem(VIEW_KEY,mode);}catch(e){}
+    try{ if(typeof window.setResultViewMode==='function') window.setResultViewMode(mode); else {const c=$('resultCard'); if(c)c.classList.toggle('simple-mode',mode==='simple');} }catch(e){}
+  }
+  function applyCore(core){
+    core=normCore(core||readCore());
+    const card=$('resultCard');
+    if(card){card.classList.toggle('hide-radar',!core.showRadar);card.classList.toggle('hide-about',!core.showAbout);card.classList.toggle('hide-version-updates',!core.showVersionUpdates);}
+    const home=$('homeInfoBlocks');
+    if(home){home.classList.toggle('hide-about',!core.showAbout);home.classList.toggle('hide-version-updates',!core.showVersionUpdates);}
+    try{ if(typeof window.applyNavPosition==='function') window.applyNavPosition(); }catch(e){}
+    setResultView(core.defaultView);
+  }
+  function applyUI(ui){
+    ui=normUI(ui||readUI()); const b=document.body; if(!b)return;
+    b.classList.toggle('hide-quick-buttons',!ui.showQuickButtons);
+    b.classList.toggle('hide-section-nav',!ui.showSectionNav);
+    b.classList.toggle('xlr-section-nav-off',!ui.showSectionNav);
+    b.classList.toggle('hide-progress-bar',!ui.showProgressBar);
+    if(ui.defaultClientMode==='desktop'){b.classList.add('force-desktop-mode');try{localStorage.setItem(MODE_KEY,'desktop');}catch(e){}}
+    else {b.classList.remove('force-desktop-mode');try{localStorage.setItem(MODE_KEY,'auto');}catch(e){}}
+    ['sectionJumpNav','v1054DestinySubNav'].forEach(id=>{const nav=$(id);if(!nav)return;if(ui.showSectionNav){nav.style.removeProperty('display');nav.style.removeProperty('visibility');nav.style.removeProperty('opacity');nav.style.removeProperty('pointer-events');}else{nav.style.setProperty('display','none','important');nav.style.setProperty('visibility','hidden','important');nav.style.setProperty('opacity','0','important');nav.style.setProperty('pointer-events','none','important');}});
+    renderQuickTools();
+  }
+  function labelForQuick(id){if(id==='mode')return document.body.classList.contains('force-desktop-mode')?'自适':'电脑';if(id==='theme')return document.body.classList.contains('reading-theme-night')?'白天':'夜间';const it=quickItem(id);return it?it.label:id;}
+  function renderQuickTools(){
+    const tools=document.querySelector('.scroll-tools'); if(!tools)return; const ui=readUI(); if(ui.showQuickButtons===false){tools.style.setProperty('display','none','important');return;} tools.style.removeProperty('display');
+    const cfg=readQuick(); const html=cfg.order.filter(id=>cfg.enabled[id]).map(id=>{const it=quickItem(id); if(!it)return ''; const wide=['expand','collapse','theme','history','analytics','rules','templates','settings','copy'].includes(id)?' wide':''; if(id==='theme'){let show=true;try{show=parseJSON(localStorage.getItem('xiaoliuren_reading_mode_v1035')).showToggle!==false;}catch(e){} if(!show)return ''; const title=document.body.classList.contains('reading-theme-night')?'切换为白天模式':'切换为暗夜模式'; return '<button class="scroll-tool-btn'+wide+' reading-mode-toggle" type="button" data-v9919-quick="theme" data-v1038-reading-toggle="1" title="'+title+'" aria-label="'+title+'">'+labelForQuick(id)+'</button>';}
+      return '<button class="scroll-tool-btn'+wide+'" type="button" data-v9919-quick="'+id+'" title="'+it.title+'" aria-label="'+it.title+'">'+labelForQuick(id)+'</button>';}).join('');
+    tools.innerHTML=html||'<button class="scroll-tool-btn wide" type="button" data-v9919-quick="settings" title="设置" aria-label="设置">设置</button>';
+    tools.dataset.v1062Rendered='1';
+  }
+  window.renderQuickTools=renderQuickTools;
+  function renderQuickSettingsList(){
+    const box=$('quickButtonConfigList'); if(!box)return; const cfg=readQuick();
+    box.innerHTML=cfg.order.map((id,idx)=>{const it=quickItem(id); if(!it)return ''; return '<div class="quick-config-row"><label class="quick-config-main"><input type="checkbox" data-quick-enabled="'+id+'" '+(cfg.enabled[id]?'checked':'')+'><span class="quick-config-label"><b>'+it.label+'</b><small>'+it.note+'</small></span></label><span class="quick-config-actions"><button class="quick-order-btn" type="button" data-quick-move="'+id+'" data-dir="-1" '+(idx===0?'disabled':'')+'>↑</button><button class="quick-order-btn" type="button" data-quick-move="'+id+'" data-dir="1" '+(idx===cfg.order.length-1?'disabled':'')+'>↓</button></span></div>';}).join('');
+  }
+  function syncForms(){
+    const core=readCore(), ui=readUI(), size=normSize(localStorage.getItem(SIZE_KEY)||'normal');
+    const set=(id,val)=>{const el=$(id); if(!el)return; if(el.type==='checkbox')el.checked=!!val; else el.value=val;};
+    set('settingDefaultView',core.defaultView); set('settingCollapseDetails',core.collapseDetails); set('settingShowRadar',core.showRadar); set('settingShowAbout',core.showAbout); set('settingShowVersionUpdates',core.showVersionUpdates); set('settingRememberScene',core.rememberScene); set('settingRememberMethod',core.rememberMethod); set('settingNavPosition',core.navPosition);
+    set('settingUiShowQuickButtons',ui.showQuickButtons); set('settingUiShowSectionNav',ui.showSectionNav); set('settingUiShowProgress',ui.showProgressBar); set('settingUiDefaultClientMode',ui.defaultClientMode); set('settingReadingTextSize',size);
+  }
+  function readCoreFromForm(){const c=readCore();return normCore({defaultView:$('settingDefaultView')?.value||c.defaultView,collapseDetails:$('settingCollapseDetails')?!!$('settingCollapseDetails').checked:c.collapseDetails,showRadar:$('settingShowRadar')?!!$('settingShowRadar').checked:c.showRadar,showAbout:$('settingShowAbout')?!!$('settingShowAbout').checked:c.showAbout,showVersionUpdates:$('settingShowVersionUpdates')?!!$('settingShowVersionUpdates').checked:c.showVersionUpdates,rememberScene:$('settingRememberScene')?!!$('settingRememberScene').checked:c.rememberScene,rememberMethod:$('settingRememberMethod')?!!$('settingRememberMethod').checked:c.rememberMethod,navPosition:$('settingNavPosition')?.value==='top'?'top':c.navPosition});}
+  function readUIFromForm(){const u=readUI();return normUI({showQuickButtons:$('settingUiShowQuickButtons')?!!$('settingUiShowQuickButtons').checked:u.showQuickButtons,showSectionNav:$('settingUiShowSectionNav')?!!$('settingUiShowSectionNav').checked:u.showSectionNav,showProgressBar:$('settingUiShowProgress')?!!$('settingUiShowProgress').checked:u.showProgressBar,defaultClientMode:$('settingUiDefaultClientMode')?.value||u.defaultClientMode});}
+  function persistCurrentChoices(core){
+    core=core||readCore(); const saved=savedChoices();
+    try{ if(core.rememberScene && typeof currentScene!=='undefined') saved.scene=currentScene; }catch(e){}
+    try{ if(core.rememberMethod && typeof currentMethod!=='undefined') saved.method=currentMethod; }catch(e){}
+    writeSavedChoices(saved);
+  }
+  function restoreChoices(){
+    const core=readCore(), saved=savedChoices(); let changed=false;
+    try{ if(core.rememberScene && saved.scene && Array.isArray(SCENES) && SCENES.some(s=>s.key===saved.scene) && currentScene!==saved.scene){ currentScene=saved.scene; changed=true; } }catch(e){}
+    try{ if(core.rememberMethod && saved.method && ['number','single','time','event'].includes(saved.method) && currentMethod!==saved.method){ currentMethod=saved.method; changed=true; } }catch(e){}
+    if(changed){try{ if(typeof renderScenes==='function') renderScenes(); }catch(e){} try{ if(typeof applyMethodPanel==='function') applyMethodPanel(currentMethod); }catch(e){} }
+  }
+  function commitAll(reason){
+    ensureRows(); const core=readCoreFromForm(); const ui=readUIFromForm(); const size=normSize($('settingReadingTextSize')?.value||localStorage.getItem(SIZE_KEY)||'normal');
+    writeCore(core); writeUI(ui); applyReadingSize(size); persistCurrentChoices(core); applyCore(core); applyUI(ui); renderQuickSettingsList(); renderQuickTools(); setVersion();
+    try{ if(window.XLR_DEBUG_V10514 && window.XLR_DEBUG_V10514.logs) window.XLR_DEBUG_V10514.logs.push({time:new Date().toLocaleTimeString(), reason:'v1062-settings:'+reason, version:VERSION}); }catch(e){}
+  }
+  function patchStorage(){
+    try{const proto=Storage.prototype;if(proto.setItem.__v1062SettingsGuard)return; const old=proto.setItem; proto.setItem=function(key,value){try{const k=String(key); if(k===SETTINGS_KEY){value=JSON.stringify(normCore(Object.assign({},readCore(),parseJSON(value))));} if(k===UI_KEY){value=JSON.stringify(normUI(Object.assign({},readUI(),parseJSON(value))));} if(k===QUICK_KEY){value=JSON.stringify(normQuick(parseJSON(value)));} if(k===SIZE_KEY){value=normSize(value);} }catch(e){} return old.call(this,key,value);}; proto.setItem.__v1062SettingsGuard=true;}catch(e){}
+  }
+  let pollTimer=null,lastSnapshot='';
+  function snapshotForm(){const dlg=$('settingsDialog'); if(!dlg||!dlg.open)return ''; const data={}; dlg.querySelectorAll('input,select,textarea').forEach(el=>{const id=el.id||el.name;if(!id)return;data[id]=(el.type==='checkbox'||el.type==='radio')?!!el.checked:el.value;}); return JSON.stringify(data);}
+  function startPoll(){clearInterval(pollTimer); lastSnapshot=snapshotForm(); pollTimer=setInterval(()=>{const dlg=$('settingsDialog'); if(!dlg||!dlg.open)return; const now=snapshotForm(); if(now && now!==lastSnapshot){lastSnapshot=now; commitAll('poll');}},220);}
+  function bind(){
+    if(window.__v1062SettingsUnifiedBound)return; window.__v1062SettingsUnifiedBound=true;
+    document.addEventListener('click',function(e){
+      const open=e.target&&e.target.closest&&e.target.closest('#settingsBtn,[data-v9919-quick="settings"]'); if(open){setTimeout(()=>{ensureRows();syncForms();startPoll();},80); setTimeout(()=>{ensureRows();syncForms();startPoll();},360);}
+      const close=e.target&&e.target.closest&&e.target.closest('#closeSettingsBtn,#saveSettingsBtn,#settingResetAllSettingsBtn'); if(close){commitAll('click-'+(close.id||'button')); [80,260,700].forEach(ms=>setTimeout(()=>commitAll('after-close'),ms));}
+      const qmove=e.target&&e.target.closest&&e.target.closest('[data-quick-move]'); if(qmove){const id=qmove.getAttribute('data-quick-move'),dir=Number(qmove.getAttribute('data-dir')||0),cfg=readQuick(),idx=cfg.order.indexOf(id),ni=idx+dir;if(idx>=0&&ni>=0&&ni<cfg.order.length){const tmp=cfg.order[idx];cfg.order[idx]=cfg.order[ni];cfg.order[ni]=tmp;writeQuick(cfg);renderQuickSettingsList();renderQuickTools();e.preventDefault();e.stopPropagation();}}
+      const core=e.target&&e.target.closest&&e.target.closest('#quickButtonsSelectCoreBtn'); if(core){writeQuick({order:QUICK_DEFAULT_ORDER.slice(),enabled:Object.assign({},QUICK_DEFAULT_ENABLED)});renderQuickSettingsList();renderQuickTools();e.preventDefault();e.stopPropagation();}
+      const all=e.target&&e.target.closest&&e.target.closest('#quickButtonsSelectAllBtn'); if(all){const cfg=readQuick();QUICK_ITEMS.forEach(x=>cfg.enabled[x.id]=true);writeQuick(cfg);renderQuickSettingsList();renderQuickTools();e.preventDefault();e.stopPropagation();}
+    },true);
+    document.addEventListener('change',function(e){
+      const el=e.target;if(!el)return;
+      if(el.matches&&el.matches('[data-quick-enabled]')){const cfg=readQuick();cfg.enabled[el.getAttribute('data-quick-enabled')]=!!el.checked;writeQuick(cfg);renderQuickSettingsList();renderQuickTools();}
+      if(el.id==='settingDefaultView'){const core=readCoreFromForm();writeCore(core);setResultView(core.defaultView);}
+      if(el.id==='settingReadingTextSize'){applyReadingSize(el.value);}
+      if(el.id==='settingRememberScene'||el.id==='settingRememberMethod'){const core=readCoreFromForm();writeCore(core);persistCurrentChoices(core);}
+      setTimeout(()=>commitAll('change'),10);
+    },true);
+    document.addEventListener('input',function(e){if(e.target&&$('settingsDialog')&&$('settingsDialog').open)setTimeout(()=>commitAll('input'),20);},true);
+    document.addEventListener('close',function(e){if(e.target&&e.target.id==='settingsDialog'){commitAll('dialog-close');clearInterval(pollTimer);}},true);
+    document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.target.closest('[data-scene]'))setTimeout(()=>persistCurrentChoices(readCore()),0); if(e.target&&e.target.closest&&e.target.closest('[data-method]'))setTimeout(()=>persistCurrentChoices(readCore()),0);},true);
+  }
+  function patchGlobals(){
+    try{window.getUserSettings=function(){return readCore();};window.saveUserSettings=function(settings){writeCore(settings||{});commitAll('saveUserSettings');};}catch(e){}
+    try{window.restoreResultViewMode=function(){const saved=localStorage.getItem(VIEW_KEY)||readCore().defaultView||'detail';setResultView(saved);};}catch(e){}
+    try{const old=window.renderResult;if(typeof old==='function'&&!old.__v1062Settings){window.renderResult=function(){const r=old.apply(this,arguments);setTimeout(()=>{applyReadingSize();setResultView(readCore().defaultView);commitAll('after-render');},80);return r;};window.renderResult.__v1062Settings=true;}}catch(e){}
+  }
+  function patchVersionLog(){try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1062){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);if(html.indexOf('v10.5.62 设置功能统一保存修正版')<0){html='<details><summary>v10.5.62 设置功能统一保存修正版</summary><ul><li>统一设置保存链路，修复阅读文字大小、默认阅读模式、记住上次场景/起课方式、快捷按钮设置被旧自动保存流程覆盖的问题。</li><li>阅读文字大小会同步应用到结果页正文、答案卡、三象、术语与建议。</li><li>默认阅读模式会同步当前结果视图，新起课后按设置进入简洁版或详细版。</li><li>快捷按钮勾选、取消和排序会独立保存，退出设置后不再复原。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1062=true;}}catch(e){}
+  }
+  function boot(){patchStorage();patchGlobals();ensureRows();bind();patchVersionLog();setVersion();restoreChoices();applyReadingSize();applyCore(readCore());applyUI(readUI());renderQuickSettingsList();renderQuickTools();setTimeout(()=>{ensureRows();syncForms();applyReadingSize();applyCore(readCore());applyUI(readUI());renderQuickTools();},500);setTimeout(()=>{setVersion();try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}},1000);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+  window.addEventListener('load',function(){setTimeout(boot,120);setTimeout(boot,900);},{once:true});
 })();
 </script>
 

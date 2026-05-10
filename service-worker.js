@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.61-destiny-answer-nav';
+const CACHE_NAME = 'xiaoliuren-v10.5.62-settings-unified';
 const APP_SHELL = [
   './',
   './index.html',
