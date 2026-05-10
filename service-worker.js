@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.35-theme-return-color';
+const CACHE_NAME = 'xiaoliuren-v10.5.36-nav-terms-jump-stability';
 const APP_SHELL = [
   './',
   './index.html',
