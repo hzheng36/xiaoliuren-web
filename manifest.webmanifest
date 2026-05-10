@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.81 Debug诊断系统增强版",
-  "short_name": "小六壬",
-  "description": "小六壬个人网页版 v10.5.81 Debug诊断系统增强版：以 v10.5.76 稳定版为基线，只升级 Debug 诊断系统；新增环境、版本一致性、设置、本地存储、导航、折叠、历史记录、固定浮层、错误与最近操作检测，并统一增强日志按钮。",
-  "start_url": "./?v=10.5.81",
+  "name": "小六壬占卜 · v10.5.82 版本锁定与Debug稳定修正版",
+  "short_name": "小六壬 v10.5.82",
+  "description": "小六壬个人网页版 v10.5.82 版本锁定与Debug稳定修正版：以 v10.5.76 稳定核心为基线，修复主页标题被旧补丁回写到 v10.5.76 的问题；修复 Debug 面板使用原生 dialog 导致 iPhone Safari 画面跳动；修复 refreshNav 未定义错误，并让复制/刷新/保存 Debug 日志统一输出增强结构。",
+  "start_url": "./?v=10.5.82",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.81"
+  "version": "10.5.82"
 }
