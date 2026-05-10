@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.74 Debug诊断增强版",
+  "name": "小六壬占卜 v10.5.75 Debug按钮稳定版",
   "short_name": "小六壬",
-  "description": "小六壬个人网页版 v10.5.74 Debug诊断增强版：升级 Debug 诊断系统，增加设置、导航、快捷按钮、字号、折叠、版本记录、本地存储、性能和错误日志等更多检测数据。",
-  "start_url": "./?v=10.5.74",
+  "description": "小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复旧详细日志按钮反复插入/删除导致的 Debug 面板按钮时有时无和抖动；增强日志按钮改为稳定复用。",
+  "start_url": "./?v=10.5.75",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.74"
+  "version": "10.5.75"
 }
