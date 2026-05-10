@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.42-home-result-state-isolation';
+const CACHE_NAME = 'xiaoliuren-v10.5.43-destiny-glossary-collapse';
 const APP_SHELL = [
   './',
   './index.html',
