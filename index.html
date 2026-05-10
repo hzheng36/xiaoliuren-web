@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.89 源码主键统一与旧缓存断连版</title>
-<meta content="小六壬个人网页版 v10.5.89 源码主键统一与旧缓存断连版：继续清理旧版本命名残留和重复函数，把扩展场景识别、专项提醒、导读术语样式并回源码主线。" name="description"/>
+<title>小六壬占卜 · v10.5.90 源码Debug修复与缓存版本校正版</title>
+<meta content="小六壬个人网页版 v10.5.90 源码Debug修复与缓存版本校正版：修复源码内建 Debug 采集错误，继续切断旧缓存回读，并同步校正 manifest 与 service-worker 缓存版本。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1061,7 +1061,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.89 源码主键统一与旧缓存断连版</h2>
+<h2>个人占卜台 · v10.5.90 源码Debug修复与缓存版本校正版</h2>
 <p>本版继续执行源码主线整合计划：去掉旧版本命名残留，清理剩余重复函数，把扩展场景识别和专项提醒并入主函数。Debug、阅读、快捷按钮、导航显示、结果渲染、导读术语都由同一个主脚本统一管理。</p>
 </div>
 <div class="actions">
@@ -4064,7 +4064,17 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.90 源码Debug修复与缓存版本校正版', items:[
+          '修复源码内建 Debug 不能打开/不能复制的问题：Debug 采集改用现有主设置键，并加入安全采集兜底，单项审计出错也不会让面板失效。',
+          '继续清补丁：阅读模式不再从旧 v1035 缓存键回读，设置以源码主键为准，旧键只在 Debug 中作为残留项检查或手动清理。',
+          '修正 manifest 的 start_url / version / description，以及 service-worker 的缓存名，避免缓存版本仍停在旧版。'
+        ]},
         { v:'v10.5.89 源码主键统一与旧缓存断连版', items:[
+          '切断阅读字号、快捷按钮、UI 设置对 v9919 / v1070 / v1071 等旧缓存键的依赖。',
+          '把 Debug 审计的 storage 检查改为源码主键，不再把旧缓存键当作运行依据。',
+          '保留历史记录等真实用户数据键；旧功能恢复继续走主函数，不再通过旧版本兼容补丁兜底。'
+        ]},
+        { v:'v10.5.88 源码去版本化与规则主线整合版', items:[
           '把快速导读、术语解释相关 DOM id/class 从旧版本号命名改为源码主线命名，减少旧版本残留误判。',
           '清理剩余重复函数定义：模板排序/点击、场景指标、补充信息、单宫断事等只保留一份主定义。',
           '把扩展场景识别与专项提醒并入 analyzeQuestionContext 和 getContextSpecialNotes 主函数，不再使用中间包装覆盖。',
@@ -4098,7 +4108,7 @@ function buildContextOverallSentence(context, details) {
           '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复第三步：继续删除源码内重复函数和旧包装式覆盖逻辑，恢复快速导读与统一术语学习内容；仍保持单一版本源。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第四步：修复源码内建 Debug，继续切断旧缓存回读，并同步 manifest / service-worker 版本，保持单一主线。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
@@ -4504,7 +4514,7 @@ function buildContextOverallSentence(context, details) {
       s.showToggle = s.showToggle !== false;
       return s;
     }
-    function readReadingSettings(){ return normalizeReadingSettings(readStoredJSON(SOURCE_READING_KEY) || readStoredJSON('xiaoliuren_reading_mode_v1035')); }
+    function readReadingSettings(){ return normalizeReadingSettings(readStoredJSON(SOURCE_READING_KEY)); }
     function saveReadingSettings(settings){ writeStoredJSON(SOURCE_READING_KEY, normalizeReadingSettings(settings)); }
     function readReadingSize(){
       let v=null; try{ v=localStorage.getItem(SOURCE_READING_SIZE_KEY); }catch(e){}
@@ -5464,7 +5474,7 @@ function buildContextOverallSentence(context, details) {
 
 
     /* 源码模块：Debug 诊断，只读状态，不改占卜逻辑 */
-    const XLR_SOURCE_VERSION = 'v10.5.89 源码主键统一与旧缓存断连版';
+    const XLR_SOURCE_VERSION = 'v10.5.90 源码Debug修复与缓存版本校正版';
     const XLR_DEBUG_LOG = [];
     function xlrDebugPush(type, detail){
       try{
@@ -5555,22 +5565,52 @@ function buildContextOverallSentence(context, details) {
         quickButtons:Array.from(document.querySelectorAll('[data-xlr-quick]')).map(btn=>({text:xlrDebugText(btn),quick:btn.getAttribute('data-xlr-quick'),className:btn.className,box:xlrDebugBox(btn)})),
         blocks:Object.fromEntries(blocks.map(sel=>[sel.replace('#',''),xlrDebugBox(sel)])),
         settings:{ userSettings: typeof getUserSettings==='function'?getUserSettings():null, savedChoice: typeof getSavedChoices==='function'?getSavedChoices():null, viewMode: (()=>{try{return localStorage.getItem('xlr_view_mode_v9_1')}catch(e){return null}})() },
-        storage:xlrDebugStorage([SOURCE_SETTINGS_KEY,SOURCE_UI_SETTINGS_KEY,SOURCE_READING_KEY,SOURCE_READING_SIZE_KEY,SOURCE_QUICK_KEY,SOURCE_DEBUG_KEY,'xlr_history_v7','xlr_saved_choice_v9_1','xlr_view_mode_v9_1']),
+        storage:xlrDebugStorage([SETTINGS_KEY,SOURCE_UI_SETTINGS_KEY,SOURCE_READING_KEY,SOURCE_READING_SIZE_KEY,SOURCE_QUICK_KEY,SOURCE_DEBUG_KEY,'xlr_history_v7','xlr_saved_choice_v9_1','xlr_view_mode_v9_1']),
         functions:{ renderResult:typeof renderResult, currentJumpTargets:typeof currentJumpTargets, renderBoard:typeof renderBoard, renderDestinyBoard:typeof renderDestinyBoard, renderRadar:typeof renderRadar, buildVersionUpdatesHTML:typeof buildVersionUpdatesHTML },
         recentEvents:XLR_DEBUG_LOG.slice(-20)
       };
     }
+    function xlrDebugCollectSafe(reason){
+      try{ return xlrDebugCollect(reason||'safe'); }
+      catch(err){
+        const msg = err && (err.stack || err.message) ? (err.stack || err.message) : String(err);
+        xlrDebugPush('debug-error', msg);
+        return { version:XLR_SOURCE_VERSION, reason:reason||'safe-error', generatedAt:new Date().toISOString(), error:msg, environment:{url:location.href,title:document.title,userAgent:navigator.userAgent}, recentEvents:XLR_DEBUG_LOG.slice(-20) };
+      }
+    }
     function xlrDebugRender(reason){
-      const data=xlrDebugCollect(reason||'render');
+      const data=xlrDebugCollectSafe(reason||'render');
       const out=document.getElementById('xlrDebugOutput');
       const status=document.getElementById('xlrDebugStatus');
       if(status){
+        const scriptStyle = data.versionAudit ? `${data.versionAudit.scriptCount} / ${data.versionAudit.styleCount}` : '采集失败';
+        const duplicateCount = data.versionAudit ? data.versionAudit.duplicateIds.length : '采集失败';
+        const extraScript = data.versionAudit ? data.versionAudit.legacyRuntimeTerms.extraScriptCount : '采集失败';
+        const resultPage = data.result ? (data.result.resultPage?'是':'否') : '采集失败';
+        const sceneName = data.result && data.result.currentResult ? data.result.currentResult.sceneName : (data.error?'Debug采集报错':'无结果');
         status.innerHTML=[
-          ['版本', data.version], ['脚本/样式', `${data.versionAudit.scriptCount} / ${data.versionAudit.styleCount}`], ['重复ID', data.versionAudit.duplicateIds.length], ['额外脚本', data.versionAudit.legacyRuntimeTerms.extraScriptCount], ['结果页', data.result.resultPage?'是':'否'], ['当前场景', data.result.currentResult?data.result.currentResult.sceneName:'无结果']
+          ['版本', data.version || XLR_SOURCE_VERSION], ['脚本/样式', scriptStyle], ['重复ID', duplicateCount], ['额外脚本', extraScript], ['结果页', resultPage], ['当前场景', sceneName]
         ].map(([k,v])=>`<div class="xlr-debug-pill"><b>${k}</b>${v}</div>`).join('');
       }
       if(out) out.textContent=JSON.stringify(data,null,2);
       return data;
+    }
+    function xlrDebugOpenDialog(){
+      const dlg=document.getElementById('xlrDebugDialog');
+      if(!dlg) return;
+      try{
+        if(typeof dlg.showModal==='function' && !dlg.open) dlg.showModal();
+        else dlg.setAttribute('open','open');
+      }catch(err){
+        xlrDebugPush('debug-error', 'open dialog: '+(err && err.message ? err.message : err));
+        dlg.setAttribute('open','open');
+      }
+    }
+    function xlrDebugCloseDialog(){
+      const dlg=document.getElementById('xlrDebugDialog');
+      if(!dlg) return;
+      try{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); }
+      catch(err){ dlg.removeAttribute('open'); }
     }
     function xlrDebugEnsureUi(){
       if(document.getElementById('xlrDebugFab')) return;
@@ -5578,25 +5618,25 @@ function buildContextOverallSentence(context, details) {
       fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
       const dlg=document.createElement('dialog');
       dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
-      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.89：只读取页面状态，不改占卜逻辑；用于检查版本、导航、导读、术语、阅读、快捷按钮、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugClearLegacyBtn">清理旧缓存键</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
+      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.90：修复 Debug 采集时的主键引用错误，并继续校正 manifest / service-worker 缓存版本；只读页面状态，不改占卜逻辑。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugClearLegacyBtn">清理旧缓存键</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
       document.body.appendChild(fab); document.body.appendChild(dlg);
-      fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','open'); });
-      document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
+      fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); xlrDebugOpenDialog(); });
+      document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>xlrDebugCloseDialog());
       document.getElementById('xlrDebugRefreshBtn')?.addEventListener('click',()=>xlrDebugRender('manual-audit'));
       document.getElementById('xlrDebugClearLegacyBtn')?.addEventListener('click',()=>{ const keys=xlrDebugLegacyStorageKeys(); try{keys.forEach(k=>localStorage.removeItem(k));}catch(e){} xlrDebugPush('debug','clear legacy storage: '+keys.length); xlrDebugRender('clear-legacy-storage'); });
       document.getElementById('xlrDebugCopyBtn')?.addEventListener('click',()=>{
-        const data=xlrDebugCollect('copy-log');
+        const data=xlrDebugCollectSafe('copy-log');
         const text=JSON.stringify(data,null,2);
         const out=document.getElementById('xlrDebugOutput'); if(out) out.textContent=text;
         const done=()=>{ const btn=document.getElementById('xlrDebugCopyBtn'); if(btn){ const old=btn.textContent; btn.textContent='已复制'; setTimeout(()=>btn.textContent=old,900); } };
         if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(()=>{ prompt('复制下面的 Debug 日志', text); }); }
         else prompt('复制下面的 Debug 日志', text);
       });
-      document.getElementById('xlrDebugHideBtn')?.addEventListener('click',()=>{ document.body.classList.add('xlr-debug-hidden'); try{localStorage.setItem('xiaoliuren_debug_visible_source','0')}catch(e){}; if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
-      try{ if(localStorage.getItem('xiaoliuren_debug_visible_source')==='0') document.body.classList.add('xlr-debug-hidden'); }catch(e){}
+      document.getElementById('xlrDebugHideBtn')?.addEventListener('click',()=>{ document.body.classList.add('xlr-debug-hidden'); try{localStorage.setItem(SOURCE_DEBUG_KEY,'0')}catch(e){}; xlrDebugCloseDialog(); });
+      try{ if(localStorage.getItem(SOURCE_DEBUG_KEY)==='0') document.body.classList.add('xlr-debug-hidden'); }catch(e){}
     }
     function initSourceDebug(){ xlrDebugEnsureUi(); }
-    window.XLRDebug = { collect:xlrDebugCollect, render:xlrDebugRender, show:()=>{ const d=document.getElementById('xlrDebugDialog'); xlrDebugRender('manual-show'); if(d&&d.showModal)d.showModal(); else if(d)d.setAttribute('open','open'); }, unhide:()=>{document.body.classList.remove('xlr-debug-hidden'); try{localStorage.setItem('xiaoliuren_debug_visible_source','1')}catch(e){} } };
+    window.XLRDebug = { collect:xlrDebugCollectSafe, render:xlrDebugRender, show:()=>{ xlrDebugEnsureUi(); document.body.classList.remove('xlr-debug-hidden'); try{localStorage.setItem(SOURCE_DEBUG_KEY,'1')}catch(e){} xlrDebugRender('manual-show'); xlrDebugOpenDialog(); }, unhide:()=>{document.body.classList.remove('xlr-debug-hidden'); try{localStorage.setItem(SOURCE_DEBUG_KEY,'1')}catch(e){} } };
 
 
     init();
