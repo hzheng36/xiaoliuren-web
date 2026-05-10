@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.39",
-  "short_name": "小六壬 v10.5.39",
-  "description": "v10.5.39 命运术语折叠联动防隐藏修复版",
+  "name": "小六壬占卜 · v10.5.40",
+  "short_name": "小六壬 v10.5.40",
+  "description": "v10.5.40 命运术语模块展开防抖修复版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.39"
+  "version": "10.5.40"
 }

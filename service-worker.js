@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.39-destiny-terms-collapse-guard';
+const CACHE_NAME = 'xiaoliuren-v10.5.40-destiny-terms-stable';
 const APP_SHELL = [
   './',
   './index.html',
