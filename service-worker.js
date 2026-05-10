@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.50-state-nav-glossary-stable';
+const CACHE_NAME = 'xiaoliuren-v10.5.51-nav-display-stable';
 const APP_SHELL = [
   './',
   './index.html',
