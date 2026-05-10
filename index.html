@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.80 显示版本统一修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.80 显示版本统一修正版：继续使用 v10.5.76 稳定核心，不改写旧运行时 VERSION 常量；只修复首页标题、浏览器标题、Debug 顶层版本和版本检测出口被旧脚本晚触发覆盖回 v10.5.76 的显示问题。" />
-  <meta name="xiaoliuren-build-version" content="10.5.79" />
-  <meta name="xiaoliuren-build-label" content="v10.5.80 显示版本统一修正版" />
+  <title>小六壬占卜 · v10.5.76 命运导读电脑端布局修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复命运板块快速导读在电脑端被 Grid 嵌套挤成竖排、右侧大面积空白的问题；修复范围限制在宽屏布局，手机端保持原样。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1074,8 +1072,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.80 显示版本统一修正版</h2>
-          <p>本版继续以 v10.5.76 稳定核心为基线，不改写旧运行时 VERSION 常量；本次只统一首页标题、Debug 顶层版本和版本检测出口，避免显示被旧脚本覆盖回 v10.5.76。</p>
+          <h2>个人占卜台 · v10.5.76 命运导读电脑端布局修正版</h2>
+          <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -4320,10 +4318,6 @@ ${nextStep}`;
     function buildVersionUpdatesHTML(){
       const versions = [
         
-        { v:'v10.5.80 显示版本统一修正版', items:['继续使用 v10.5.76 稳定核心，不改写旧脚本内部 VERSION 常量，避免再次影响历史记录和结果渲染。','修复首页大标题、浏览器标题、Debug 顶层版本被旧版本脚本晚触发覆盖回 v10.5.76 的问题。','新增最终显示版本守护：只校正可见版本文案与 Debug 顶层显示，不碰核心占卜逻辑、历史记录结构和结果模板。','同步更新页面版本记录、README、manifest 与 service-worker 缓存名。'] },
-        { v:'v10.5.79 历史与结果渲染回退修正版', items:['回退 v10.5.78 中对所有运行时 VERSION 常量的全量替换方案，恢复 v10.5.76 稳定核心逻辑。','修复 v10.5.78 后历史记录无法识别、点击历史无法正常还原结果的问题。','修复新占卜结果页内容大量缺失的问题，结果渲染、命运模板、普通问事模板继续使用稳定主逻辑。','只保留轻量版本检测出口：页面标题、manifest、service-worker、README 和 Debug 顶层版本可显示 v10.5.79。','本版不引入 v10.5.77 的操作防抖重型逻辑，不再全量改写旧脚本内部 VERSION 常量。'] },
-        { v:'v10.5.78 版本检测一致性修正版（已回退）', items:['该版尝试统一运行时版本检测，但全量替换旧脚本内部 VERSION 常量后，引发历史记录识别和结果渲染异常。','v10.5.79 已回退此方案，后续只采用轻量版本检测出口。'] },
-        { v:'v10.5.77 电脑端操作防抖稳定修正版（未继续沿用）', items:['该版尝试修复电脑端历史、设置、展开折叠操作抖动。','由于后续版本检测处理出现风险，v10.5.79 暂不沿用该重型操作防抖方案，先回到 v10.5.76 稳定核心。'] },
         { v:'v10.5.76 命运导读电脑端布局修正版', items:['修复命运板块“快速导读”在电脑端被嵌套 Grid 挤成竖排文字的问题。','新增宽屏专用导读布局规则，四张导读卡片在电脑端按正常横向卡片显示，减少右侧大面积空白。','增加轻量 DOM 归一化：若导读内容出现外层 Grid 包内层 Grid，会自动展开为单层卡片结构。','修复范围限制在 900px 以上宽屏/电脑端样式；手机端继续沿用原来的单列导读规则。','同步更新页面标题、版本内容更新、README、manifest 和 service-worker 缓存名。'] },
         { v:'v10.5.69 阅读字号下拉选择版', items:['将“阅读文字大小”从数字输入框改为 13px–24px 下拉选择。','保留 v10.5.68 的 px 字号变量方案，只改变设置页输入方式，结果页正文继续按用户选择的字号显示。','设置页自身仍不跟随阅读字号变化，避免控件抖动。','继续保留快捷按钮设置、默认阅读模式、记住场景/起课方式、章节导航开关、顶部/底部导航和命运答案导航修复。'] },
         { v:'v10.5.66 性能回退与阅读字号轻量修正版', items:['回退 v10.5.65 中导致 iPhone Safari / ChatGPT App 卡死的重型 MutationObserver 字号扫描逻辑。','阅读文字大小改为轻量事件式保存：只在打开设置、切换字号、关闭设置、渲染结果后少量同步，不再全页面反复扫描。','保留 v10.5.64 已修好的快捷按钮设置、默认阅读模式、记住场景/起课方式、导航开关与命运答案导航修复。','本版重点先恢复流畅度，再修阅读字号，不再叠加会抢设置状态的轮询补丁。'] },
@@ -10871,7 +10865,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
   function buildHTML(result){const data=cells(result),m=data.m,arr=data.arr,md=data.md,g=gender(result),self=arr.find(c=>c.palace===m.timePalace)||arr[0],selfEl=self.el||'木',targets=targetCells(result,arr),factors=otherFactors(arr,targets,selfEl);const targetNames=targets.map(c=>`${c.kin}·${c.palace}`).join('、');return `<details id="v1040MarriageBlock" class="v1040-marriage" open><summary>💍 婚姻与伴侣参考</summary><div class="v1040-marriage-body"><div class="v1040-marriage-note"><strong>说明：</strong>这里看的是命局中的感情、婚姻与伴侣长期倾向，包括相处模式、配偶特征、可能的优势与挑战；不作为绝对定论。现实感情仍以双方沟通、尊重和理解为准。</div><div class="v1040-marriage-grid"><div class="v1040-marriage-card full"><h5>① 怎么看婚姻模块</h5><p><strong>当前性别侧重：</strong>${esc(targetLabel(g))}</p><p><strong>本次重点宫位：</strong>${esc(targetNames)}。${md==='fixed'?'本盘当前使用固定宫位法，适合对照部分民间命盘口诀。':'本盘当前使用五行生克法，按自身宫地支五行为“我”推六亲。'}</p><p class="v1040-marriage-muted">婚姻模块与健康模块一样，放在“命运”结果页内，属于命盘深度解读子模块；不是单独问“现在这段关系会怎样”。未来可再做独立“婚姻”场景，用于近期婚姻/关系问事。</p></div>${targets.map((c,i)=>buildTargetCard(c,selfEl,g,i)).join('')}<div class="v1040-marriage-card"><h5>② 婚姻中的其它因素</h5><ul>${factors.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="v1040-marriage-card"><h5>③ 生活提醒</h5><ul>${KB.life_reminders.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><p class="v1040-marriage-muted">若关系中存在暴力、长期控制、严重痛苦或安全风险，应优先寻求现实帮助与专业支持。</p></div><div class="v1040-marriage-card full"><h5>④ 婚姻口诀知识库</h5><div class="v1040-marriage-table"><table><thead><tr><th>掌诀</th><th>婚姻倾向</th><th>优势</th><th>挑战</th></tr></thead><tbody>${ORDER.map(p=>`<tr><td>${esc(p)}</td><td>${esc(KB.marriage_tendency_by_palm[p])}</td><td>${esc(KB.marriage_advantage[p])}</td><td>${esc(KB.marriage_challenge[p])}</td></tr>`).join('')}</tbody></table></div></div></div></div></details>`;}
   function renderMarriage(result){const old=$('v1040MarriageBlock');if(old)old.remove();if(!isDestinyResult(result))return;const anchor=$('v1030DestinyHealth')||$('v1025KinshipGuide')||$('destinyBoardBlock')||$('destinyDeepContent');if(!anchor)return;anchor.insertAdjacentHTML('afterend',buildHTML(result));}
   function patchRender(){if(typeof window.renderResult==='function'&&!window.renderResult.__v1040Marriage){const old=window.renderResult;window.renderResult=function(result){const ret=old.apply(this,arguments);setTimeout(()=>renderMarriage(result),0);setTimeout(()=>renderMarriage(result),300);return ret;};window.renderResult.__v1040Marriage=true;}if(typeof window.renderDestinyBoard==='function'&&!window.renderDestinyBoard.__v1040Marriage){const old=window.renderDestinyBoard;window.renderDestinyBoard=function(result){const ret=old.apply(this,arguments);setTimeout(()=>renderMarriage(result),80);setTimeout(()=>renderMarriage(result),360);return ret;};window.renderDestinyBoard.__v1040Marriage=true;}}
-  function setVersion(){document.title='小六壬占卜 · '+VERSION;const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});const lead=document.querySelector('header .hero p, .hero p');if(lead&&lead.textContent&&lead.textContent.includes('本版'))lead.textContent='本版以 v10.5.76 稳定核心为基线，回退 v10.5.78 的运行时版本常量全量替换方案，优先恢复历史记录识别和结果页完整渲染。';if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1040Marriage){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const marker='命盘婚姻参考模块';const row='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“婚姻与伴侣参考”折叠模块。</li><li>男命重点取妻财宫，女命重点取官鬼宫，未指定性别时同时参考官鬼与妻财。</li><li>婚姻模块结合六神性格、地支性格、五行关系、掌诀婚姻倾向、优势挑战和生活提醒。</li><li>当前婚姻模块作为命运命盘子模块，不新增独立婚姻场景；后续可按健康模块架构扩展独立“婚姻”问事场景。</li><li>按固定检查项完成：脚本错误检查、旧补丁/版本跳动检查、页面版本记录/README/manifest/service-worker 更新。</li></ul></details>';if(html.indexOf(marker)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1040Marriage=true;}try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}}
+  function setVersion(){document.title='小六壬占卜 · '+VERSION;const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);document.querySelectorAll('h2').forEach(el=>{if(el.textContent&&el.textContent.includes('个人占卜台'))el.textContent='个人占卜台 · '+VERSION;});const lead=document.querySelector('header .hero p, .hero p');if(lead&&lead.textContent&&lead.textContent.includes('本版'))lead.textContent='本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。';if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1040Marriage){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);const marker='命盘婚姻参考模块';const row='<details><summary>'+VERSION+'</summary><ul><li>命运结果页新增“婚姻与伴侣参考”折叠模块。</li><li>男命重点取妻财宫，女命重点取官鬼宫，未指定性别时同时参考官鬼与妻财。</li><li>婚姻模块结合六神性格、地支性格、五行关系、掌诀婚姻倾向、优势挑战和生活提醒。</li><li>当前婚姻模块作为命运命盘子模块，不新增独立婚姻场景；后续可按健康模块架构扩展独立“婚姻”问事场景。</li><li>按固定检查项完成：脚本错误检查、旧补丁/版本跳动检查、页面版本记录/README/manifest/service-worker 更新。</li></ul></details>';if(html.indexOf(marker)<0)html+=row;return html;};window.buildVersionUpdatesHTML.__v1040Marriage=true;}try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}}
   function boot(){patchRender();setVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderMarriage(window.currentResult);}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',()=>{setTimeout(boot,160);setTimeout(()=>{setVersion();try{if(typeof window.currentResult!=='undefined'&&window.currentResult)renderMarriage(window.currentResult);}catch(e){}},1600);setTimeout(setVersion,3200);});
@@ -10943,7 +10937,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
     });
     const lead=document.querySelector('header .hero p, .hero p');
     if(lead && lead.textContent && lead.textContent.includes('本版')){
-      lead.textContent='本版以 v10.5.76 稳定核心为基线，回退 v10.5.78 的运行时版本常量全量替换方案，优先恢复历史记录识别和结果页完整渲染。';
+      lead.textContent='本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。';
     }
   }
   function patchVersionUpdates(){
@@ -17311,16 +17305,6 @@ html[data-theme="dark"] .v10519-destiny-note {
   const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：重做版本内容更新清单，去掉重复版本，修复 v10 后跳回 v7 的顺序错乱，并补齐近期版本更新。';
   const VERSION_LOG_ENTRIES=[
   [
-    "v10.5.79 历史与结果渲染回退修正版",
-    [
-      "回退 v10.5.78 中对所有运行时 VERSION 常量的全量替换方案，恢复 v10.5.76 稳定核心逻辑。",
-      "修复 v10.5.78 后历史记录无法识别、点击历史无法正常还原结果的问题。",
-      "修复新占卜结果页内容大量缺失的问题，结果渲染、命运模板、普通问事模板继续使用稳定主逻辑。",
-      "只保留轻量版本检测出口：页面标题、manifest、service-worker、README 和 Debug 顶层版本可显示 v10.5.79。",
-      "本版不引入 v10.5.77 的操作防抖重型逻辑，不再全量改写旧脚本内部 VERSION 常量。"
-    ]
-  ],
-  [
     "v10.5.76 命运导读电脑端布局修正版",
     [
       "修复命运板块“快速导读”在电脑端被嵌套 Grid 挤成竖排文字的问题。",
@@ -18014,137 +17998,6 @@ html[data-theme="dark"] .v10519-destiny-note {
 })();
 </script>
 
-
-
-<!-- v10.5.79 source-integrated fix: 轻量版本检测出口，禁止改写核心运行时常量 -->
-<script id="v10579-light-version-consistency-script">
-(function(){
-  'use strict';
-  const VERSION='v10.5.79 历史与结果渲染回退修正版';
-  const META='小六壬个人网页版 v10.5.79 历史与结果渲染回退修正版：回退 v10.5.78 的运行时 VERSION 全量替换方案，恢复 v10.5.76 稳定核心，修复历史记录无法识别与新占卜结果内容大量缺失的问题；仅保留轻量版本检测出口与版本记录更新。';
-  const BUILD='10.5.79';
-  function q(s){return document.querySelector(s);}
-  function ensureMeta(name,content){
-    try{let m=q('meta[name="'+name+'"]'); if(!m){m=document.createElement('meta');m.setAttribute('name',name);document.head&&document.head.appendChild(m);} m.setAttribute('content',content);}catch(e){}
-  }
-  function applyVersionOnly(){
-    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
-    try{const m=q('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
-    ensureMeta('xiaoliuren-build-version',BUILD);
-    ensureMeta('xiaoliuren-build-label',VERSION);
-    ensureMeta('xiaoliuren-runtime-version',VERSION);
-    try{document.querySelectorAll('h2').forEach(function(el){if((el.textContent||'').indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
-    try{window.XLR_CURRENT_VERSION=VERSION;window.__xiaoliurenBuildVersion={version:VERSION,build:BUILD,reason:'v10579-light-version-consistency',source:'v10.5.76-stable-core'};}catch(e){}
-  }
-  function enhanceDebug(){
-    try{
-      const api=window.XLR_DEBUG_V10514; if(!api||api.__v10579LightVersion)return;
-      const old=api.snapshot;
-      api.snapshot=function(reason){
-        const base=old?old.call(this,reason):{};
-        base.version=VERSION;
-        base.v10579={
-          debugVersion:VERSION,
-          build:BUILD,
-          coreBaseline:'v10.5.76 命运导读电脑端布局修正版',
-          rollbackFrom:'v10.5.78 版本检测一致性修正版',
-          documentTitle:document.title,
-          buildMeta:(q('meta[name="xiaoliuren-build-version"]')||{}).content||'',
-          runtimeGlobal:(window.__xiaoliurenBuildVersion&&window.__xiaoliurenBuildVersion.version)||'',
-          note:'v10.5.79：只做轻量版本检测出口，不再全量替换各脚本内部 VERSION，避免影响历史记录和结果渲染。'
-        };
-        return base;
-      };
-      api.__v10579LightVersion=true;
-    }catch(e){}
-  }
-  function boot(){applyVersionOnly();enhanceDebug();try{if(window.XLR_DEBUG_V10514&&window.XLR_DEBUG_V10514.logs)window.XLR_DEBUG_V10514.logs.push({time:new Date().toLocaleTimeString(),reason:'v10579-light-version:boot',version:VERSION});}catch(e){}}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,700);},{once:true});
-})();
-</script>
-
-
-
-<!-- v10.5.80 source-integrated fix: 最终显示版本守护，不改核心运行时常量 -->
-<script id="v10580-display-version-guard-script">
-(function(){
-  'use strict';
-  const VERSION='v10.5.80 显示版本统一修正版';
-  const BUILD='10.5.80';
-  const CORE='v10.5.76 命运导读电脑端布局修正版';
-  const META='小六壬个人网页版 v10.5.80 显示版本统一修正版：继续使用 v10.5.76 稳定核心，不改写旧运行时 VERSION 常量；只修复首页标题、浏览器标题、Debug 顶层版本和版本检测出口被旧脚本晚触发覆盖回 v10.5.76 的显示问题。';
-  const HERO='本版继续以 v10.5.76 稳定核心为基线，不改写旧运行时 VERSION 常量；本次只统一首页标题、Debug 顶层版本和版本检测出口，避免显示被旧脚本覆盖回 v10.5.76。';
-  function q(s){try{return document.querySelector(s);}catch(e){return null;}}
-  function qa(s){try{return Array.from(document.querySelectorAll(s));}catch(e){return [];}}
-  function ensureMeta(name,content){
-    try{let m=q('meta[name="'+name+'"]');if(!m){m=document.createElement('meta');m.setAttribute('name',name);document.head&&document.head.appendChild(m);}m.setAttribute('content',content);}catch(e){}
-  }
-  function apply(reason){
-    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
-    try{const m=q('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
-    ensureMeta('xiaoliuren-build-version',BUILD);
-    ensureMeta('xiaoliuren-build-label',VERSION);
-    ensureMeta('xiaoliuren-runtime-version',VERSION);
-    try{
-      qa('h2').forEach(function(el){
-        const t=el.textContent||'';
-        if(t.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION;
-      });
-    }catch(e){}
-    try{
-      const lead=q('header .hero p, .hero p');
-      if(lead && /^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;
-    }catch(e){}
-    try{window.XLR_CURRENT_VERSION=VERSION;window.__xiaoliurenBuildVersion={version:VERSION,build:BUILD,coreBaseline:CORE,reason:'v10580-display-version-guard',lastApplyReason:reason||''};}catch(e){}
-  }
-  function patchDebug(){
-    try{
-      const api=window.XLR_DEBUG_V10514;if(!api||api.__v10580DisplayVersionGuard)return;
-      const old=api.snapshot;
-      api.snapshot=function(reason){
-        const base=old?old.call(this,reason):{};
-        base.version=VERSION;
-        base.v10580={
-          displayVersion:VERSION,
-          build:BUILD,
-          coreBaseline:CORE,
-          documentTitle:document.title,
-          heroTitle:(q('h2')||{}).textContent||'',
-          buildMeta:(q('meta[name="xiaoliuren-build-version"]')||{}).content||'',
-          note:'v10.5.80 只修正可见版本与 Debug 顶层版本；核心逻辑仍保持 v10.5.76 稳定基线。'
-        };
-        return base;
-      };
-      api.__v10580DisplayVersionGuard=true;
-    }catch(e){}
-  }
-  function patchVersionLog(){
-    try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10580Display){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.call(this)||'';
-          if(html.indexOf(VERSION)<0){
-            html='<details open><summary>'+VERSION+'</summary><ul><li>继续使用 v10.5.76 稳定核心，不改写旧脚本内部 VERSION 常量。</li><li>修复首页大标题、浏览器标题、Debug 顶层版本被旧脚本晚触发覆盖回 v10.5.76 的问题。</li><li>新增最终显示版本守护，只校正可见版本文案，不碰历史记录和结果渲染主逻辑。</li><li>同步更新 README、manifest 与 service-worker。</li></ul></details>'+html;
-          }
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v10580Display=true;
-      }
-    }catch(e){}
-  }
-  function boot(reason){apply(reason||'boot');patchDebug();patchVersionLog();}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){boot('dom');},{once:true});else boot('immediate');
-  window.addEventListener('load',function(){[80,700,1800,3600,6500].forEach(function(ms){setTimeout(function(){boot('load-'+ms);},ms);});},{once:true});
-  document.addEventListener('visibilitychange',function(){if(!document.hidden)boot('visibility');},true);
-  window.addEventListener('focus',function(){boot('focus');},true);
-  try{
-    const hero=q('header .hero')||q('.hero');
-    if(hero) new MutationObserver(function(){clearTimeout(window.__v10580VersionGuardTimer);window.__v10580VersionGuardTimer=setTimeout(function(){boot('hero-mutation');},60);}).observe(hero,{childList:true,subtree:true,characterData:true});
-  }catch(e){}
-})();
-</script>
 
 </body>
 </html>
