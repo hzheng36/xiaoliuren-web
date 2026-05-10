@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.57-settings-nav-position';
+const CACHE_NAME = 'xiaoliuren-v10.5.58-nav-position-persistence';
 const APP_SHELL = [
   './',
   './index.html',
