@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.38-nav-isolation-terms';
+const CACHE_NAME = 'xiaoliuren-v10.5.41-source-integrated-stable';
 const APP_SHELL = [
   './',
   './index.html',
