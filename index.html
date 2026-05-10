@@ -1,18 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.86 源码净化与快捷阅读恢复版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.86 源码净化与快捷阅读恢复版：继续清理旧后置残留，并把阅读模式、字号、UI显示和快捷按钮自定义恢复为源码主模块；保持单一主脚本、单一主样式和统一版本源。" />
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="apple-mobile-web-app-title" content="小六壬" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="theme-color" content="#6753a5" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>小六壬占卜 · v10.5.87 源码清理与导读术语恢复版</title>
+<meta content="小六壬个人网页版 v10.5.87 源码清理与导读术语恢复版：清理重复函数与一批旧覆盖逻辑，恢复快速导读与统一术语学习内容，保留单一主样式与单一主脚本。" name="description"/>
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="manifest.webmanifest" rel="manifest"/>
+<meta content="小六壬" name="apple-mobile-web-app-title"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#6753a5" name="theme-color"/>
+<style>
     :root {
       --bg: #f7f3ee;
       --panel: rgba(255,255,255,.84);
@@ -982,7 +983,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
   
 
-/* v10.5.86 源码主模块：阅读模式、UI显示、快捷按钮设置 */
+/* 源码主模块：阅读模式、UI显示、快捷按钮设置 */
 body.reading-theme-night {
   --bg:#151421; --panel:rgba(35,32,52,.92); --panel-strong:rgba(43,39,64,.97);
   --text:#f3edf8; --muted:#c9bfd9; --line:rgba(255,255,255,.16); --accent-soft:rgba(229,196,138,.14);
@@ -1014,544 +1015,516 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 @media(max-width:760px){ .settings-mini-grid { grid-template-columns:1fr; } }
 
   </style>
-
-
-
 </head>
 <body>
-  <div class="page-progress" aria-hidden="true"><div id="pageProgressBar"></div></div>
-  <nav class="section-jump-nav" id="sectionJumpNav" aria-label="章节卡点导航"></nav>
-  <div class="shell">
-    <aside class="sidebar card">
-      <div class="brand-row">
-        <div class="seal">小六壬</div>
-        <div class="brand">
-          <h1>小六壬占卜</h1>
-          <p>三数知吉凶，事事有指引</p>
-        </div>
-      </div>
-      <div class="art theme-illustration" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid meet">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fdf8f2"/><stop offset="100%" stop-color="#f8f3ee"/></linearGradient>
-    <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cbc0e5" stop-opacity="0.92"/><stop offset="100%" stop-color="#b7a9d7" stop-opacity="0.35"/></linearGradient>
-    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f8e9cc"/><stop offset="100%" stop-color="#eed7aa"/></linearGradient>
-  </defs>
-  <rect width="1200" height="520" fill="url(#bg)"/>
-  <circle cx="920" cy="110" r="78" fill="url(#sun)" opacity=".92"/>
-  <g fill="#eee4d2" opacity=".78"><path d="M980 132c22-22 48-20 67-5 13-10 30-10 42 0 21-9 47 5 48 28-20-2-34-1-45 6-23-4-52-5-77 0-16 3-35 4-51 10-4-15 0-29 16-39z"/><path d="M120 178c22-20 48-19 67-5 12-8 29-8 40 0 18-8 41 1 47 19-18 2-34 4-48 10-35-8-68-5-101 12-8-12-10-25-5-36z" opacity=".55"/></g>
-  <g opacity=".58" fill="url(#mount)"><path d="M-30 334c70-46 112-98 154-145 61 51 76 122 140 146 72 27 178 4 280-49 99 57 172 83 246 77 86-7 128-53 197-104 43 55 76 102 163 130v70H-30z"/><path d="M26 356c48-23 78-60 112-101 33 31 45 74 96 93 52 19 112 9 178-17 51 33 113 44 180 38 56-5 110-31 169-73 30 41 57 78 116 100v76H26z" opacity=".8"/></g>
-  <g opacity=".24" fill="none" stroke="#ebd7b6"><circle cx="604" cy="258" r="150" stroke-width="2"/><circle cx="604" cy="258" r="104" stroke-width="2"/><circle cx="604" cy="258" r="60" stroke-width="2"/><path d="M604 108V408M454 258H754M497 151L711 365M497 365L711 151"/></g>
-  <g fill="#9b7a58" font-family="PingFang SC, Microsoft YaHei, sans-serif" text-anchor="middle"><text x="604" y="168" font-size="28" font-weight="700">大安</text><text x="760" y="222" font-size="28" font-weight="700">留连</text><text x="760" y="333" font-size="28" font-weight="700">速喜</text><text x="604" y="390" font-size="28" font-weight="700">赤口</text><text x="452" y="332" font-size="28" font-weight="700">小吉</text><text x="450" y="220" font-size="28" font-weight="700">空亡</text></g>
-  <g transform="translate(604 258)"><circle r="68" fill="#f5e8d5" stroke="#e8d3b2" stroke-width="2"/><path d="M0-42a42 42 0 1 1 0 84a21 21 0 1 0 0-42a21 21 0 1 1 0-42" fill="#9a8ad0"/><path d="M0-42a42 42 0 1 0 0 84a21 21 0 1 1 0-42a21 21 0 1 0 0-42" fill="#f6f1e6"/><circle cx="0" cy="-21" r="6" fill="#f7f4ee"/><circle cx="0" cy="21" r="6" fill="#9a8ad0"/></g>
-  <g stroke="#b8a9d8" fill="none" stroke-width="4" opacity=".55"><path d="M470 92h28M466 104h36M470 116h28"/><path d="M831 92h28M827 104h36M831 116h28"/><path d="M466 390h36M470 402h28M466 414h36"/></g>
-  <g fill="#dfbfd0" opacity=".85"><path d="M201 233c4-2 11 3 14 7-8 4-15 2-14-7z"/><path d="M302 307c5-4 12 1 15 6-8 5-15 5-15-6z"/><path d="M903 286c5-4 12 1 15 6-8 5-15 5-15-6z"/><path d="M785 349c4-2 11 3 14 7-8 4-15 2-14-7z"/></g>
+<div aria-hidden="true" class="page-progress"><div id="pageProgressBar"></div></div>
+<nav aria-label="章节卡点导航" class="section-jump-nav" id="sectionJumpNav"></nav>
+<div class="shell">
+<aside class="sidebar card">
+<div class="brand-row">
+<div class="seal">小六壬</div>
+<div class="brand">
+<h1>小六壬占卜</h1>
+<p>三数知吉凶，事事有指引</p>
+</div>
+</div>
+<div aria-hidden="true" class="art theme-illustration"><svg preserveaspectratio="xMidYMid meet" viewbox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="bg" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#fdf8f2"></stop><stop offset="100%" stop-color="#f8f3ee"></stop></lineargradient>
+<lineargradient id="mount" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#cbc0e5" stop-opacity="0.92"></stop><stop offset="100%" stop-color="#b7a9d7" stop-opacity="0.35"></stop></lineargradient>
+<lineargradient id="sun" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f8e9cc"></stop><stop offset="100%" stop-color="#eed7aa"></stop></lineargradient>
+</defs>
+<rect fill="url(#bg)" height="520" width="1200"></rect>
+<circle cx="920" cy="110" fill="url(#sun)" opacity=".92" r="78"></circle>
+<g fill="#eee4d2" opacity=".78"><path d="M980 132c22-22 48-20 67-5 13-10 30-10 42 0 21-9 47 5 48 28-20-2-34-1-45 6-23-4-52-5-77 0-16 3-35 4-51 10-4-15 0-29 16-39z"></path><path d="M120 178c22-20 48-19 67-5 12-8 29-8 40 0 18-8 41 1 47 19-18 2-34 4-48 10-35-8-68-5-101 12-8-12-10-25-5-36z" opacity=".55"></path></g>
+<g fill="url(#mount)" opacity=".58"><path d="M-30 334c70-46 112-98 154-145 61 51 76 122 140 146 72 27 178 4 280-49 99 57 172 83 246 77 86-7 128-53 197-104 43 55 76 102 163 130v70H-30z"></path><path d="M26 356c48-23 78-60 112-101 33 31 45 74 96 93 52 19 112 9 178-17 51 33 113 44 180 38 56-5 110-31 169-73 30 41 57 78 116 100v76H26z" opacity=".8"></path></g>
+<g fill="none" opacity=".24" stroke="#ebd7b6"><circle cx="604" cy="258" r="150" stroke-width="2"></circle><circle cx="604" cy="258" r="104" stroke-width="2"></circle><circle cx="604" cy="258" r="60" stroke-width="2"></circle><path d="M604 108V408M454 258H754M497 151L711 365M497 365L711 151"></path></g>
+<g fill="#9b7a58" font-family="PingFang SC, Microsoft YaHei, sans-serif" text-anchor="middle"><text font-size="28" font-weight="700" x="604" y="168">大安</text><text font-size="28" font-weight="700" x="760" y="222">留连</text><text font-size="28" font-weight="700" x="760" y="333">速喜</text><text font-size="28" font-weight="700" x="604" y="390">赤口</text><text font-size="28" font-weight="700" x="452" y="332">小吉</text><text font-size="28" font-weight="700" x="450" y="220">空亡</text></g>
+<g transform="translate(604 258)"><circle fill="#f5e8d5" r="68" stroke="#e8d3b2" stroke-width="2"></circle><path d="M0-42a42 42 0 1 1 0 84a21 21 0 1 0 0-42a21 21 0 1 1 0-42" fill="#9a8ad0"></path><path d="M0-42a42 42 0 1 0 0 84a21 21 0 1 1 0-42a21 21 0 1 0 0-42" fill="#f6f1e6"></path><circle cx="0" cy="-21" fill="#f7f4ee" r="6"></circle><circle cx="0" cy="21" fill="#9a8ad0" r="6"></circle></g>
+<g fill="none" opacity=".55" stroke="#b8a9d8" stroke-width="4"><path d="M470 92h28M466 104h36M470 116h28"></path><path d="M831 92h28M827 104h36M831 116h28"></path><path d="M466 390h36M470 402h28M466 414h36"></path></g>
+<g fill="#dfbfd0" opacity=".85"><path d="M201 233c4-2 11 3 14 7-8 4-15 2-14-7z"></path><path d="M302 307c5-4 12 1 15 6-8 5-15 5-15-6z"></path><path d="M903 286c5-4 12 1 15 6-8 5-15 5-15-6z"></path><path d="M785 349c4-2 11 3 14 7-8 4-15 2-14-7z"></path></g>
 </svg></div>
-      <div class="feature-list">
-        <div class="feature-item"><strong>三法起课</strong><small>数字、时辰、事件三种起课方式，适配不同使用情境。</small></div>
-        <div class="feature-item"><strong>六宫排盘</strong><small>把三象直接落入六宫，直观看到本象、中象、末象的分布关系。</small></div>
-        <div class="feature-item"><strong>增强解读</strong><small>增加关键词、方位、颜色、五行、物象、地点和应期参考。</small></div>
-      </div>
-    </aside>
-    <main class="main">
-      <header class="hero card" id="homeTopSection">
-        <div>
-          <h2>个人占卜台 · v10.5.86 源码净化与快捷阅读恢复版</h2>
-          <p>本版继续清理旧后置残留，并把阅读模式、字号、UI显示和快捷按钮自定义按源码主模块恢复。Debug、阅读、快捷按钮、导航显示都由同一个主脚本统一管理，避免多个运行逻辑互相抢状态。</p>
-        </div>
-        <div class="actions">
-          <button class="ghost-btn" id="historyBtn">历史记录</button>
-          <button class="ghost-btn" id="analyticsBtn">历史分析</button>
-          <button class="ghost-btn" id="rulesBtn">场景规则</button>
-          <button class="ghost-btn" id="settingsBtn">设置</button>
-          <button class="ghost-btn" id="resetBtn">重新占卜</button>
-        </div>
-      </header>
+<div class="feature-list">
+<div class="feature-item"><strong>三法起课</strong><small>数字、时辰、事件三种起课方式，适配不同使用情境。</small></div>
+<div class="feature-item"><strong>六宫排盘</strong><small>把三象直接落入六宫，直观看到本象、中象、末象的分布关系。</small></div>
+<div class="feature-item"><strong>增强解读</strong><small>增加关键词、方位、颜色、五行、物象、地点和应期参考。</small></div>
+</div>
+</aside>
+<main class="main">
+<header class="hero card" id="homeTopSection">
+<div>
+<h2>个人占卜台 · v10.5.87 源码清理与导读术语恢复版</h2>
+<p>本版继续清理旧后置残留，把快速导读、统一术语学习、A/B 对比、备份导出、设置关闭提醒按源码主模块恢复。Debug、阅读、快捷按钮、导航显示和结果渲染都由同一个主脚本统一管理。</p>
+</div>
+<div class="actions">
+<button class="ghost-btn" id="historyBtn">历史记录</button>
+<button class="ghost-btn" id="analyticsBtn">历史分析</button>
+<button class="ghost-btn" id="rulesBtn">场景规则</button>
+<button class="ghost-btn" id="settingsBtn">设置</button>
+<button class="ghost-btn" id="resetBtn">重新占卜</button>
+</div>
+</header>
+<section class="card section" id="sceneSection">
+<div class="section-title">
+<div class="step">1</div>
+<div>
+<h3>选择场景</h3>
+<p>不同场景会影响本象、中象、末象的解释侧重点。</p>
+</div>
+</div>
+<div class="scene-grid" id="sceneGrid"></div>
+</section>
+<section class="card section" id="questionSection">
+<div class="section-title">
+<div class="step">2</div>
+<div>
+<h3>填写占问事项（可选）</h3>
+<p>填得越具体，后面的“问事专项解读”越贴近你的问题；不填也可以正常起课。</p>
+</div>
+</div>
+<div class="question-panel">
+<label><span>你具体想问什么？</span><textarea id="questionInput" maxlength="160" placeholder="例如：今天会不会下雨？ / 前任会不会主动联系我？ / 铜制小算盘放哪里了？ / 这次投资能不能做？"></textarea></label>
+<div class="question-tools">
+<span class="question-count" id="questionCount">0 / 160 字</span>
+<div class="question-actions">
+<button class="ghost-btn" id="templateBtn" type="button">问题模板</button>
+<button class="ghost-btn" id="clearQuestionBtn" type="button">清空事项</button>
+</div>
+</div>
+<div class="context-controls">
+<label><span>识别到的问题类型，可手动修正</span><select class="select-control" id="contextTypeSelect">
+<option value="auto">自动识别</option>
+<option value="weather">天气 / 降雨</option>
+<option value="message">消息 / 联系</option>
+<option value="love">感情 / 复合</option>
+<option value="marriage">婚姻 / 夫妻</option>
+<option value="money">财运 / 投资</option>
+<option value="lost">失物 / 找东西</option>
+<option value="career">事业 / 工作</option>
+<option value="job">求职 / 面试</option>
+<option value="cooperation">合作 / 合同</option>
+<option value="exam">考试 / 申请</option>
+<option value="travel">出行 / 行程</option>
+<option value="health">健康 / 调理</option>
+<option value="home">家宅 / 居住</option>
+<option value="legal">文书 / 纠纷</option>
+<option value="choice">选择 / 决策</option>
+</select></label>
+<button class="ghost-btn" id="resetContextTypeBtn" type="button">恢复自动</button>
+</div>
+<div class="question-tip">本功能是本地规则分析，不联网、不接 API；它会把你的问题转换成天气、消息、感情、财运、失物等专项断法。系统会自动识别，也可以手动修正类型。</div>
+<div class="ab-choice-panel" id="abChoicePanel">
+<div class="ab-choice-head">
+<div>
+<h4>A/B 选择起课（可选）</h4>
+<p>适合“选 A 还是 B”“买这个还是那个”“去还是不去”“留还是走”等决策问题。开启后会分别为 A、B 两个选项生成辅助课，并给出对比建议。</p>
+</div>
+<label class="ab-toggle"><input id="abEnable" type="checkbox"/> 开启 A/B 对比</label>
+</div>
+<div class="ab-grid hidden" id="abFields">
+<label><span>选项 A</span><textarea id="optionAInput" maxlength="100" placeholder="例如：留在现在的工作 / 买 A 款手机 / 明天出门"></textarea></label>
+<label><span>选项 B</span><textarea id="optionBInput" maxlength="100" placeholder="例如：跳槽去新公司 / 买 B 款手机 / 改天再去"></textarea></label>
+</div>
+<div class="ab-mini hidden" id="abMiniTip">A/B 对比为辅助判断：系统会把“占问事项 + 选项文字”分别转成事件三数，再按连续顺推落宫。主课仍按你下面选择的起课方式生成。</div>
+</div>
+</div>
+</section>
+<section class="card section" id="methodSection">
+<div class="section-title">
+<div class="step">3</div>
+<div>
+<h3>选择起课方式</h3>
+<p id="methodDescription">数字起课适合直接报数；单数起课适合快速判断；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
+</div>
+</div>
+<div class="method-tabs" id="methodTabs">
+<button class="method-tab active" data-method="number"><b>数字起课</b><small>输入三个数字</small></button>
+<button class="method-tab" data-method="single"><b>单数起课</b><small>一个数字速断</small></button>
+<button class="method-tab" data-method="time"><b>时辰起课</b><small>按时间取三象</small></button>
+<button class="method-tab" data-method="event"><b>事件起课</b><small>以事件文字取数</small></button>
+</div>
+<div class="method-panel" id="numberPanel">
+<div class="number-row">
+<label><span>第一数</span><input id="num1" inputmode="numeric" max="100" min="1" placeholder="3" type="number"/></label>
+<label><span>第二数</span><input id="num2" inputmode="numeric" max="100" min="1" placeholder="7" type="number"/></label>
+<label><span>第三数</span><input id="num3" inputmode="numeric" max="100" min="1" placeholder="12" type="number"/></label>
+</div>
+<div class="number-tools">
+<span class="number-range-note">数字起课建议使用 1–100；下方 1–12 为快捷输入。</span>
+<div class="number-tool-actions">
+<button class="ghost-btn" id="randomNumbersBtn" onclick="randomNumbers()" type="button">随机数字</button>
+<button class="ghost-btn" id="clearNumbersBtn" onclick="clearNumbers()" type="button">清空数字</button>
+</div>
+</div>
+<div class="quick-pad" id="quickPad"></div>
+</div>
+<div class="method-panel hidden" id="singlePanel">
+<div class="number-row single-number-row">
+<label><span>单数</span><input id="singleNum" inputmode="numeric" max="100" min="1" placeholder="例如：9" type="number"/></label>
+</div>
+<div class="number-tools">
+<span class="number-range-note">单数起课：只报一个数字，从大安起数，适合快速判断吉凶。</span>
+<div class="number-tool-actions">
+<button class="ghost-btn" id="randomSingleBtn" onclick="randomSingleNumber()" type="button">随机单数</button>
+<button class="ghost-btn" id="clearSingleBtn" onclick="clearSingleNumber()" type="button">清空单数</button>
+</div>
+</div>
+<div class="quick-pad" id="singleQuickPad"></div>
+<div class="method-note" id="singleNote">单数起课为传统快捷法：从大安起数，落到一个主宫。本工具会以该主宫贯穿三象显示，便于统一阅读和复盘。</div>
+</div>
+<div class="method-panel hidden" id="timePanel">
+<div class="time-grid">
+<label class="time-field"><span id="timeFieldLabel">起课时间</span><div class="time-display-control"><input id="timeInput" type="datetime-local"/><div class="time-display-facade" id="timeDisplayText">May 2, 2026 at 20:07</div></div></label>
+<button class="ghost-btn inline-action" id="nowBtn" type="button">取当前时间</button>
+</div>
+<div class="method-note" id="timeNote">时辰起课将自动显示公历、农历、时辰与取数依据。</div>
+</div>
+<div class="method-panel hidden" id="eventPanel">
+<label><span>事件描述</span><textarea id="eventText" maxlength="120" placeholder="例如：想问这次合作是否能顺利推进，接下来会不会有明确消息？"></textarea></label>
+<div class="event-tools">
+<span id="eventCount">0 / 120 字</span>
+<button class="ghost-btn" id="clearEventBtn" type="button">清空事件</button>
+</div>
+<div class="method-note" id="eventNote">事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。</div>
+</div>
+<button class="primary-btn" id="divineBtn">开始占卜</button>
+<p class="hint">提示：这个工具以传统文化娱乐与自我梳理为主，不替代医学、法律、投资等专业判断。</p>
+</section>
+<section class="card result-section hidden" id="resultCard">
+<div class="result-header">
+<div>
+<p class="eyebrow" id="resultScene">占问场景</p>
+<h3 id="resultTitle">占卜结果</h3>
+<p class="result-method" id="resultMethod"></p>
+</div>
+<div class="actions">
+<button class="ghost-btn" id="copyResultBtn">复制结果</button><span class="view-toggle"><button class="ghost-btn active" id="detailViewBtn" type="button">详细版</button><button class="ghost-btn" id="simpleViewBtn" type="button">简洁版</button></span>
+<button class="ghost-btn" id="saveBtn">保存结果</button>
+<button class="ghost-btn" id="favBtn">收藏</button>
+</div>
+</div>
+<article class="block collapsible-block" data-collapse-key="quickGuide" id="v10510QuickGuideBlock">
+<h4>快速导读</h4>
+<div class="v10510-guide-grid" id="v10510QuickGuideContent"></div>
+</article>
+<article class="block" id="answerSummaryBlock">
+<h4>答案摘要</h4>
+<div class="answer-summary" id="answerSummaryContent"></div>
+</article>
+<article class="block" id="sceneFocusBlock">
+<h4>本场景判断重心</h4>
+<div class="focus-grid" id="sceneFocusContent"></div>
+</article>
+<article class="block hidden" id="abChoiceResultBlock">
+<h4>A/B 选择对比</h4>
+<div class="ab-choice-result" id="abChoiceResultContent"></div>
+</article>
+<div class="top-results">
+<article class="block">
+<h4>三数落宫</h4>
+<div class="palace-cards" id="palaceCards"></div>
+</article>
+</div>
+<div class="stack-row">
+<article class="block" id="paipanBlock">
+<div class="paipan-top">
+<h4 style="margin:0">六宫排盘</h4>
+<span class="tag" id="distributionTag">三象分布</span>
+</div>
+<div class="paipan-wrap">
+<div class="hex-board" id="hexBoard"><div class="hex-center"></div></div>
+</div>
+<div class="distribution-text" id="distributionText"></div>
+</article>
+</div>
+<article class="block hidden detail-only collapsible-block" data-collapse-key="destiny" id="destinyBoardBlock">
+<h4>命运六亲参考盘</h4>
+<div class="destiny-summary" id="destinyBoardIntro"></div>
+<div class="destiny-board-grid" id="destinyBoardGrid"></div>
+<div class="destiny-deep" id="destinyDeepContent"></div>
+<div class="destiny-note" id="destinyBoardNote"></div>
+</article>
+<div class="overall-wrap">
+<article class="block" id="overallBlock"><h4>综合判断</h4><p class="overall-rich" id="overallText"></p></article>
+</div>
+<article class="block hidden" id="contextAnalysisBlock">
+<h4>问事专项解读</h4>
+<div class="context-analysis" id="contextAnalysisContent"></div>
+</article>
+<div class="summary-grid" id="summaryGrid"></div>
+<article class="block detail-only collapsible-block" data-collapse-key="tri" id="triReadingBlock">
+<h4>三象解读</h4>
+<div class="tri-reading" id="threeReading"></div>
+</article>
+<article class="block detail-only collapsible-block" data-collapse-key="single" id="singlePalaceBlock">
+<h4>单宫断事解卦</h4>
+<div class="gua-reading" id="singlePalaceReading"></div>
+</article>
+<article class="block detail-only collapsible-block" data-collapse-key="double" id="doublePalaceBlock">
+<h4>双宫断事解卦</h4>
+<div class="gua-reading" id="doublePalaceReading"></div>
+</article>
+<div class="insight-grid detail-only">
+<article class="block collapsible-block" data-collapse-key="symbol" id="symbolBlock"><h4>象意补充</h4><div class="symbol-table" id="symbolSupplement"></div></article>
+<article class="block collapsible-block" data-collapse-key="radar" id="radarBlock"><h4>雷达分析图</h4><div class="radar-wrap"><canvas height="380" id="radarCanvas" width="420"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
+</div>
 
-      <section class="card section" id="sceneSection">
-        <div class="section-title">
-          <div class="step">1</div>
-          <div>
-            <h3>选择场景</h3>
-            <p>不同场景会影响本象、中象、末象的解释侧重点。</p>
-          </div>
-        </div>
-        <div class="scene-grid" id="sceneGrid"></div>
-      </section>
-      <section class="card section" id="questionSection">
-        <div class="section-title">
-          <div class="step">2</div>
-          <div>
-            <h3>填写占问事项（可选）</h3>
-            <p>填得越具体，后面的“问事专项解读”越贴近你的问题；不填也可以正常起课。</p>
-          </div>
-        </div>
-        <div class="question-panel">
-          <label><span>你具体想问什么？</span><textarea id="questionInput" maxlength="160" placeholder="例如：今天会不会下雨？ / 前任会不会主动联系我？ / 铜制小算盘放哪里了？ / 这次投资能不能做？"></textarea></label>
-          <div class="question-tools">
-            <span class="question-count" id="questionCount">0 / 160 字</span>
-            <div class="question-actions">
-              <button class="ghost-btn" id="templateBtn" type="button">问题模板</button>
-              <button class="ghost-btn" id="clearQuestionBtn" type="button">清空事项</button>
-            </div>
-          </div>
-          <div class="context-controls">
-            <label><span>识别到的问题类型，可手动修正</span><select id="contextTypeSelect" class="select-control">
-              <option value="auto">自动识别</option>
-              <option value="weather">天气 / 降雨</option>
-              <option value="message">消息 / 联系</option>
-              <option value="love">感情 / 复合</option>
-              <option value="marriage">婚姻 / 夫妻</option>
-              <option value="money">财运 / 投资</option>
-              <option value="lost">失物 / 找东西</option>
-              <option value="career">事业 / 工作</option>
-              <option value="job">求职 / 面试</option>
-              <option value="cooperation">合作 / 合同</option>
-              <option value="exam">考试 / 申请</option>
-              <option value="travel">出行 / 行程</option>
-              <option value="health">健康 / 调理</option>
-              <option value="home">家宅 / 居住</option>
-              <option value="legal">文书 / 纠纷</option>
-              <option value="choice">选择 / 决策</option>
-            </select></label>
-            <button class="ghost-btn" id="resetContextTypeBtn" type="button">恢复自动</button>
-          </div>
-          <div class="question-tip">本功能是本地规则分析，不联网、不接 API；它会把你的问题转换成天气、消息、感情、财运、失物等专项断法。系统会自动识别，也可以手动修正类型。</div>
-          <div class="ab-choice-panel" id="abChoicePanel">
-            <div class="ab-choice-head">
-              <div>
-                <h4>A/B 选择起课（可选）</h4>
-                <p>适合“选 A 还是 B”“买这个还是那个”“去还是不去”“留还是走”等决策问题。开启后会分别为 A、B 两个选项生成辅助课，并给出对比建议。</p>
-              </div>
-              <label class="ab-toggle"><input type="checkbox" id="abEnable"> 开启 A/B 对比</label>
-            </div>
-            <div class="ab-grid hidden" id="abFields">
-              <label><span>选项 A</span><textarea id="optionAInput" maxlength="100" placeholder="例如：留在现在的工作 / 买 A 款手机 / 明天出门"></textarea></label>
-              <label><span>选项 B</span><textarea id="optionBInput" maxlength="100" placeholder="例如：跳槽去新公司 / 买 B 款手机 / 改天再去"></textarea></label>
-            </div>
-            <div class="ab-mini hidden" id="abMiniTip">A/B 对比为辅助判断：系统会把“占问事项 + 选项文字”分别转成事件三数，再按连续顺推落宫。主课仍按你下面选择的起课方式生成。</div>
-          </div>
-        </div>
-      </section>
-      <section class="card section" id="methodSection">
-        <div class="section-title">
-          <div class="step">3</div>
-          <div>
-            <h3>选择起课方式</h3>
-            <p id="methodDescription">数字起课适合直接报数；单数起课适合快速判断；时辰起课适合按当下时间；事件起课适合围绕一件具体事情起念。</p>
-          </div>
-        </div>
-        <div class="method-tabs" id="methodTabs">
-          <button class="method-tab active" data-method="number"><b>数字起课</b><small>输入三个数字</small></button>
-          <button class="method-tab" data-method="single"><b>单数起课</b><small>一个数字速断</small></button>
-          <button class="method-tab" data-method="time"><b>时辰起课</b><small>按时间取三象</small></button>
-          <button class="method-tab" data-method="event"><b>事件起课</b><small>以事件文字取数</small></button>
-        </div>
-        <div class="method-panel" id="numberPanel">
-          <div class="number-row">
-            <label><span>第一数</span><input id="num1" type="number" min="1" max="100" inputmode="numeric" placeholder="3"></label>
-            <label><span>第二数</span><input id="num2" type="number" min="1" max="100" inputmode="numeric" placeholder="7"></label>
-            <label><span>第三数</span><input id="num3" type="number" min="1" max="100" inputmode="numeric" placeholder="12"></label>
-          </div>
-          <div class="number-tools">
-            <span class="number-range-note">数字起课建议使用 1–100；下方 1–12 为快捷输入。</span>
-            <div class="number-tool-actions">
-              <button class="ghost-btn" id="randomNumbersBtn" type="button" onclick="randomNumbers()">随机数字</button>
-              <button class="ghost-btn" id="clearNumbersBtn" type="button" onclick="clearNumbers()">清空数字</button>
-            </div>
-          </div>
-          <div class="quick-pad" id="quickPad"></div>
-        </div>
-        <div class="method-panel hidden" id="singlePanel">
-          <div class="number-row single-number-row">
-            <label><span>单数</span><input id="singleNum" type="number" min="1" max="100" inputmode="numeric" placeholder="例如：9"></label>
-          </div>
-          <div class="number-tools">
-            <span class="number-range-note">单数起课：只报一个数字，从大安起数，适合快速判断吉凶。</span>
-            <div class="number-tool-actions">
-              <button class="ghost-btn" id="randomSingleBtn" type="button" onclick="randomSingleNumber()">随机单数</button>
-              <button class="ghost-btn" id="clearSingleBtn" type="button" onclick="clearSingleNumber()">清空单数</button>
-            </div>
-          </div>
-          <div class="quick-pad" id="singleQuickPad"></div>
-          <div class="method-note" id="singleNote">单数起课为传统快捷法：从大安起数，落到一个主宫。本工具会以该主宫贯穿三象显示，便于统一阅读和复盘。</div>
-        </div>
-        <div class="method-panel hidden" id="timePanel">
-          <div class="time-grid">
-            <label class="time-field"><span id="timeFieldLabel">起课时间</span><div class="time-display-control"><input id="timeInput" type="datetime-local"><div class="time-display-facade" id="timeDisplayText">May 2, 2026 at 20:07</div></div></label>
-            <button class="ghost-btn inline-action" id="nowBtn" type="button">取当前时间</button>
-          </div>
-          <div class="method-note" id="timeNote">时辰起课将自动显示公历、农历、时辰与取数依据。</div>
-        </div>
-        <div class="method-panel hidden" id="eventPanel">
-          <label><span>事件描述</span><textarea id="eventText" maxlength="120" placeholder="例如：想问这次合作是否能顺利推进，接下来会不会有明确消息？"></textarea></label>
-          <div class="event-tools">
-            <span id="eventCount">0 / 120 字</span>
-            <button class="ghost-btn" id="clearEventBtn" type="button">清空事件</button>
-          </div>
-          <div class="method-note" id="eventNote">事件法会根据文字生成三数；同一段文字通常会得到同一组结果，方便复盘。</div>
-        </div>
-        <button class="primary-btn" id="divineBtn">开始占卜</button>
-        <p class="hint">提示：这个工具以传统文化娱乐与自我梳理为主，不替代医学、法律、投资等专业判断。</p>
-      </section>
-      <section class="card result-section hidden" id="resultCard">
-        <div class="result-header">
-          <div>
-            <p class="eyebrow" id="resultScene">占问场景</p>
-            <h3 id="resultTitle">占卜结果</h3>
-            <p class="result-method" id="resultMethod"></p>
-          </div>
-          <div class="actions">
-            <button class="ghost-btn" id="copyResultBtn">复制结果</button><span class="view-toggle"><button class="ghost-btn active" id="detailViewBtn" type="button">详细版</button><button class="ghost-btn" id="simpleViewBtn" type="button">简洁版</button></span>
-            <button class="ghost-btn" id="saveBtn">保存结果</button>
-            <button class="ghost-btn" id="favBtn">收藏</button>
-          </div>
-        </div>
-        <article class="block collapsible-block" data-collapse-key="quickGuide" id="v10510QuickGuideBlock">
-          <h4>快速导读</h4>
-          <div class="v10510-guide-grid" id="v10510QuickGuideContent"></div>
-        </article>
-        <article class="block" id="answerSummaryBlock">
-          <h4>答案摘要</h4>
-          <div class="answer-summary" id="answerSummaryContent"></div>
-        </article>
-        <article class="block" id="sceneFocusBlock">
-          <h4>本场景判断重心</h4>
-          <div class="focus-grid" id="sceneFocusContent"></div>
-        </article>
-        <article class="block hidden" id="abChoiceResultBlock">
-          <h4>A/B 选择对比</h4>
-          <div class="ab-choice-result" id="abChoiceResultContent"></div>
-        </article>
-        <div class="top-results">
-          <article class="block">
-            <h4>三数落宫</h4>
-            <div class="palace-cards" id="palaceCards"></div>
-          </article>
-        </div>
-        <div class="stack-row">
-          <article class="block" id="paipanBlock">
-            <div class="paipan-top">
-              <h4 style="margin:0">六宫排盘</h4>
-              <span class="tag" id="distributionTag">三象分布</span>
-            </div>
-            <div class="paipan-wrap">
-              <div class="hex-board" id="hexBoard"><div class="hex-center"></div></div>
-            </div>
-            <div class="distribution-text" id="distributionText"></div>
-          </article>
-        </div>
-        <article class="block hidden detail-only collapsible-block" data-collapse-key="destiny" id="destinyBoardBlock">
-          <h4>命运六亲参考盘</h4>
-          <div class="destiny-summary" id="destinyBoardIntro"></div>
-          <div class="destiny-board-grid" id="destinyBoardGrid"></div>
-          <div class="destiny-deep" id="destinyDeepContent"></div>
-          <div class="destiny-note" id="destinyBoardNote"></div>
-        </article>
-        <div class="overall-wrap">
-          <article class="block" id="overallBlock"><h4>综合判断</h4><p id="overallText" class="overall-rich"></p></article>
-        </div>
-        <article class="block hidden" id="contextAnalysisBlock">
-          <h4>问事专项解读</h4>
-          <div class="context-analysis" id="contextAnalysisContent"></div>
-        </article>
-        <div class="summary-grid" id="summaryGrid"></div>
-        <article class="block detail-only collapsible-block" data-collapse-key="tri" id="triReadingBlock">
-          <h4>三象解读</h4>
-          <div class="tri-reading" id="threeReading"></div>
-        </article>
-        <article class="block detail-only collapsible-block" data-collapse-key="single" id="singlePalaceBlock">
-          <h4>单宫断事解卦</h4>
-          <div class="gua-reading" id="singlePalaceReading"></div>
-        </article>
-        <article class="block detail-only collapsible-block" data-collapse-key="double" id="doublePalaceBlock">
-          <h4>双宫断事解卦</h4>
-          <div class="gua-reading" id="doublePalaceReading"></div>
-        </article>
-        <div class="insight-grid detail-only">
-          <article class="block collapsible-block" data-collapse-key="symbol" id="symbolBlock"><h4>象意补充</h4><div class="symbol-table" id="symbolSupplement"></div></article>
-          <article class="block collapsible-block" data-collapse-key="radar" id="radarBlock"><h4>雷达分析图</h4><div class="radar-wrap"><canvas id="radarCanvas" width="420" height="380"></canvas></div><div class="radar-metrics" id="radarMetrics"></div></article>
-        </div>
-        <article class="block detail-only collapsible-block" data-collapse-key="destinyGlossary" id="v10536DestinyGlossaryBlock">
-          <h4>术语解释</h4>
-          <div id="v10536DestinyGlossaryContent">
-            <div class="v10536-terms-grid">
-              <div class="v10536-term-card"><h5>三象</h5><p>本象看起点与当前，中象看过程与阻力，末象看结果落点；命运场景要把三宫串成长期倾向。</p></div>
-              <div class="v10536-term-card"><h5>掌诀</h5><p>大安主稳，留连主拖，速喜主快，赤口主争，小吉主小成，空亡主虚或未落实。</p></div>
-              <div class="v10536-term-card"><h5>六亲</h5><p>自身看自己与根基；父母看保护、文书和长辈；官鬼看压力、事业、规则和病痛；兄弟看同辈竞争；妻财看钱财和关系资源；子孙看子女、才华、快乐和医药。</p></div>
-              <div class="v10536-term-card"><h5>地支与五行</h5><p>地支用于落宫五行和气象判断。木火土金水之间的生克，会影响助力、压力、消耗和稳定性。</p></div>
-              <div class="v10536-term-card"><h5>六神</h5><p>青龙偏正直与生发，朱雀偏表达与火气，勾陈偏迟缓纠缠，腾蛇偏虚惊缠绕，白虎偏强烈冲突，玄武偏隐藏暗线。</p></div>
-              <div class="v10536-term-card"><h5>五星 / 生克</h5><p>星生地多助力，星克地多外压，地克星多内耗，地生星多付出，比和多稳定。</p></div>
-            </div>
-          </div>
-        </article>
-        <article class="block collapsible-block" data-collapse-key="advice" id="adviceBlock"><h4>行动建议</h4><ul id="adviceList"></ul></article>
-        <article class="block detail-only collapsible-block" data-collapse-key="glossary" id="v10510GlossaryBlock">
-          <h4>术语解释</h4>
-          <div class="v10510-terms-grid" id="v10510GlossaryContent"></div>
-        </article>
-      </section>
+<article class="block collapsible-block" data-collapse-key="advice" id="adviceBlock"><h4>行动建议</h4><ul id="adviceList"></ul></article>
+<article class="block detail-only collapsible-block" data-collapse-key="glossary" id="v10510GlossaryBlock">
+<h4>术语解释</h4>
+<div class="v10510-terms-grid" id="v10510GlossaryContent"></div>
+</article>
+</section>
 <section class="home-info hide-about hide-version-updates" id="homeInfoBlocks">
-        <article class="card section" id="homeAboutRulesBlockWrap">
-          <div class="section-title">
-            <div class="step">i</div>
-            <div>
-              <h3>版本说明 / 起课规则说明</h3>
-              <p>这里说明本工具采用的起课规则、六宫顺序和结果阅读方式。</p>
-            </div>
-          </div>
-          <div class="about-rules" id="homeAboutRulesBlock"></div>
-        </article>
-        <article class="card section" id="homeVersionUpdatesBlockWrap">
-          <div class="section-title">
-            <div class="step">v</div>
-            <div>
-              <h3>版本内容更新</h3>
-              <p>这里记录本工具从 v7 到当前版本的主要功能演进。</p>
-            </div>
-          </div>
-          <div class="version-log" id="homeVersionUpdatesBlock"></div>
-        </article>
-      </section>
-    </main>
-  </div>
-
-  <div class="scroll-tools" aria-label="页面快捷操作" data-source-quick-tools="1"></div>
-
-
-  <dialog id="settingsDialog">
-    <div class="dialog-head">
-      <div>
-        <h3>阅读设置</h3>
-        <p>设置会保存在当前浏览器本地，下次打开自动沿用。</p>
-      </div>
-      <button class="icon-btn" id="closeSettingsBtn" type="button">×</button>
-    </div>
-    <div class="settings-form">
-      <div class="settings-card">
-        <h4>结果页显示</h4>
-        <div class="settings-row">
-          <span>默认阅读模式<small>打开结果时默认使用简洁版或详细版。</small></span>
-          <select id="settingDefaultView"><option value="detail">详细版</option><option value="simple">简洁版</option></select>
-        </div>
-        <label class="settings-row"><span>详细模块默认折叠<small>三象、单宫、双宫、象意补充等模块可先折叠，需要时再展开。</small></span><input id="settingCollapseDetails" type="checkbox"></label>
-        <div class="settings-row" data-v10557-nav-position-row="1">
-          <span>导航位置<small>底部：一级导航在下面、二级导航在上面；顶部：一级导航在上面、二级导航在下面。</small></span>
-          <select id="settingNavPosition"><option value="bottom">底部</option><option value="top">顶部</option></select>
-        </div>
-        <label class="settings-row"><span>显示雷达分析图<small>关闭后结果页不显示雷达图模块。</small></span><input id="settingShowRadar" type="checkbox"></label>
-        <label class="settings-row"><span>显示版本说明 / 起课规则<small>开启后在页面底部显示版本说明和起课规则；默认关闭。</small></span><input id="settingShowAbout" type="checkbox"></label>
-        <label class="settings-row"><span>显示版本内容更新<small>开启后在页面底部显示历代主要更新记录；默认关闭。</small></span><input id="settingShowVersionUpdates" type="checkbox"></label>
-      </div>
-      <div class="settings-card" id="readingSettingsCard">
-        <h4>阅读模式</h4>
-        <div class="settings-row"><span>阅读主题<small>白天、暗夜、跟随系统，或按时间自动切换。</small></span><select id="settingReadingMode"><option value="day">白天模式</option><option value="night">暗夜模式</option><option value="system">跟随系统深色模式</option><option value="auto">夜间自动切换</option></select></div>
-        <div class="settings-row"><span>背景颜色<small>护眼色、米黄色、淡绿色、淡紫色、浅灰色或自定义颜色。</small></span><select id="settingReadingBg"><option value="default">默认</option><option value="eye">护眼色</option><option value="cream">米黄色</option><option value="green">淡绿色</option><option value="lavender">淡紫色</option><option value="gray">浅灰色</option><option value="custom">自定义颜色</option></select></div>
-        <div class="settings-row"><span>自定义背景色<small>选择“自定义颜色”后生效。</small></span><input id="settingReadingCustomBg" type="color" value="#f7f3ee"></div>
-        <div class="settings-row"><span>夜间自动时间<small>仅在“夜间自动切换”下生效。</small></span><div class="settings-mini-grid"><input id="settingAutoNightStart" type="time" value="19:00"><input id="settingAutoNightEnd" type="time" value="07:00"></div></div>
-        <div class="settings-row"><span>阅读字号<small>控制结果、术语、历史、模板等正文阅读区域。</small></span><select id="settingReadingTextSize"><option value="small">小</option><option value="normal">标准</option><option value="large">大</option><option value="xlarge">特大</option></select></div>
-        <label class="settings-row"><span>显示夜间快捷按钮<small>关闭后，浮动快捷按钮中不显示“夜间/白天”。</small></span><input id="settingReadingQuickToggle" type="checkbox"></label>
-      </div>
-      <div class="settings-card" id="uiSettingsCard">
-        <h4>界面显示</h4>
-        <label class="settings-row"><span>显示右侧快捷按钮<small>控制主页、历史、分析、重占、电脑、展开、折叠、设置、夜间、置顶、到底等浮动按钮。</small></span><input id="settingUiShowQuickButtons" type="checkbox"></label>
-        <label class="settings-row"><span>显示章节导航<small>控制顶部/底部的章节卡点导航。</small></span><input id="settingUiShowSectionNav" type="checkbox"></label>
-        <label class="settings-row"><span>显示阅读进度条<small>控制页面顶部细进度条。</small></span><input id="settingUiShowProgress" type="checkbox"></label>
-        <div class="settings-row"><span>默认客户端模式<small>自动适配、强制电脑宽度，或回到自适应模式。</small></span><select id="settingUiDefaultClientMode"><option value="auto">自适应</option><option value="desktop">电脑模式</option></select></div>
-        <label class="settings-row"><span>显示源码 Debug<small>打开后显示 DEBUG 按钮，用于复制状态日志；关闭后不影响占卜功能。</small></span><input id="settingDebugEnabled" type="checkbox"></label>
-      </div>
-      <div class="settings-card" id="quickButtonSettingsCard">
-        <h4>快捷按钮设置</h4>
-        <p class="quick-config-note">选择浮动快捷区要显示的按钮，并用 ↑ ↓ 调整顺序。设置只保存在当前浏览器本地。</p>
-        <div class="quick-button-config" id="quickButtonConfigList"></div>
-        <div class="settings-mini-grid"><button class="ghost-btn" type="button" id="quickButtonsDefaultBtn">恢复默认快捷按钮</button><button class="ghost-btn" type="button" id="quickButtonsAllBtn">显示全部快捷按钮</button></div>
-      </div>
-      <div class="settings-card">
-        <h4>起课习惯</h4>
-        <label class="settings-row"><span>记住上次选择的场景<small>例如上次选择“财运”，下次打开仍停留在财运。</small></span><input id="settingRememberScene" type="checkbox"></label>
-        <label class="settings-row"><span>记住上次选择的起课方式<small>例如上次使用“时辰起课”，下次打开仍显示时辰起课。</small></span><input id="settingRememberMethod" type="checkbox"></label>
-      </div>
-      <div class="settings-actions">
-        <button class="ghost-btn" id="resetSettingsBtn" type="button">恢复默认</button>
-        <button class="primary-btn" id="saveSettingsBtn" type="button" style="width:auto;margin-top:0;">保存设置</button>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog id="analyticsDialog">
-    <div class="dialog-head">
-      <div>
-        <h3>历史分析</h3>
-        <p>基于当前浏览器本地保存的历史记录统计，不联网、不上传数据。</p>
-      </div>
-      <button class="icon-btn" id="closeAnalyticsBtn">×</button>
-    </div>
-    <div class="analytics-date-row">
-      <label>分析日期<div class="date-picker-shell"><input id="analyticsDateInput" class="date-text-input" type="text" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off"><button class="date-picker-btn" id="analyticsDatePickBtn" type="button" aria-label="选择分析日期">📅</button><input id="analyticsDatePicker" class="date-native-input" type="date"></div></label>
-      <button class="ghost-btn" id="clearAnalyticsDateBtn" type="button">清除日期</button>
-      <details class="tool-folder" style="flex:1 1 100%;">
-        <summary>分析导出</summary>
-        <div class="tool-folder-body">
-          <button class="ghost-btn" id="exportReviewBtn" type="button" onclick="exportReviews()">导出复盘 TXT</button>
-          <button class="ghost-btn" type="button" onclick="exportHistory()">导出历史 TXT</button>
-          <span class="tool-folder-note">分析页导出以阅读与复盘为主；完整迁移请到“历史记录 → 完整备份”。</span>
-        </div>
-      </details>
-      <span class="hint" id="analyticsDateHint">不选日期时统计全部历史。</span>
-    </div>
-    <div id="analyticsContent"></div>
-  </dialog>
-
-
-
-  <dialog id="templateDialog">
-    <div class="dialog-head">
-      <div>
-        <h3>问题模板</h3>
-        <p>按场景选择常用问法，点击后会自动填入“占问事项”，你可以再自行修改。</p>
-      </div>
-      <button class="icon-btn" id="closeTemplateBtn" onclick="closeTemplateDialog()">×</button>
-    </div>
-    <details class="modal-section" open>
-      <summary>搜索与筛选</summary>
-      <div class="modal-section-body">
-        <div class="template-toolbar">
-          <input id="templateSearchInput" type="search" placeholder="搜索模板：支持多个词，例如 前任 联系 / 油价 下跌">
-          <select id="templateSceneFilter"><option value="all">全部模板场景</option></select>
-          <select id="templateSortMode"><option value="default">默认排序</option><option value="favorite">收藏优先</option><option value="recent">最近使用</option><option value="usage">使用次数</option></select>
-        </div>
-      </div>
-    </details>
-    <details class="modal-section">
-      <summary>我的模板</summary>
-      <div class="modal-section-body">
-        <div class="custom-template-box">
-          <h4>⭐ 我的模板</h4>
-          <div class="custom-template-form">
-            <label><span>模板场景</span><select id="customTemplateScene"></select></label>
-            <label><span>模板内容</span><input id="customTemplateText" type="text" maxlength="120" placeholder="例如：这个选择 A 和 B 哪个更适合我？"></label>
-            <button class="ghost-btn" id="saveCustomTemplateBtn" type="button">保存模板</button>
-          </div>
-          <p class="custom-template-note" id="customTemplateStats">自定义模板会保存在当前浏览器本地，也会随完整备份 JSON 一起导出。点击模板可填入占问事项并自动切换到对应场景。</p>
-        </div>
-      </div>
-    </details>
-    <details class="modal-section">
-      <summary>模板工具</summary>
-      <div class="modal-section-body">
-        <div class="tool-folder-body">
-          <button class="ghost-btn" id="exportTemplatesBtn" type="button">导出模板 JSON</button>
-          <button class="ghost-btn" id="importTemplatesBtn" type="button">导入模板 JSON</button>
-          <button class="danger-btn" id="clearCustomTemplatesBtn" type="button">清空我的模板</button>
-          <span class="tool-folder-note">模板 JSON 只用于迁移“我的模板”、收藏、最近使用与使用次数；不会导入历史记录。</span>
-        </div>
-      </div>
-    </details>
-    <details class="modal-section">
-      <summary>批量管理</summary>
-      <div class="modal-section-body">
-        <div class="template-bulk-tools">
-          <span id="templateSelectedCount">已选 0 条</span>
-          <button class="ghost-btn" id="selectAllCustomTemplatesBtn" type="button">全选当前我的模板</button>
-          <button class="ghost-btn" id="clearTemplateSelectionBtn" type="button">取消选择</button>
-          <select id="bulkTemplateScene"><option value="">批量改场景</option></select>
-          <button class="ghost-btn" id="applyBulkTemplateSceneBtn" type="button">应用场景</button>
-          <button class="ghost-btn" id="exportSelectedTemplatesBtn" type="button">导出选中</button>
-          <button class="danger-btn" id="deleteSelectedTemplatesBtn" type="button">删除选中</button>
-        </div>
-      </div>
-    </details>
-    <input id="templateImportInput" type="file" accept="application/json,.json" style="display:none">
-    <details class="modal-section" open>
-      <summary>模板列表</summary>
-      <div class="modal-section-body">
-        <p class="template-dialog-note">点击模板会自动填入“占问事项”，并自动切换到对应场景。勾选“我的模板”后可在“批量管理”中处理。</p>
-        <div class="template-content" id="templateContent"></div>
-      </div>
-    </details>
-  </dialog>
-
-  <dialog id="rulesDialog">
-    <div class="dialog-head">
-      <div>
-        <h3>场景规则</h3>
-        <p>首页选择“大场景”，占问事项会触发更细的“专项规则”。这里可查询该选哪个场景。</p>
-      </div>
-      <button class="icon-btn" id="closeRulesBtn" onclick="closeRulesDialog()">×</button>
-    </div>
-    <div class="rules-toolbar">
-      <input id="rulesSearchInput" type="search" placeholder="搜索规则：例如 油价 / 前任 / 宠物 / 签证 / 抽奖">
-      <select id="rulesSceneFilter"><option value="all">全部建议场景</option></select>
-    </div>
-    <div class="rules-content" id="rulesContent"></div>
-  </dialog>
-
-  <dialog id="historyDialog">
-    <div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
-    <div class="history-search-row"><input id="historySearchInput" type="search" placeholder="搜索历史：场景 / 问题 / 宫位"><select id="historySceneFilter"><option value="all">全部场景</option></select></div>
-    <div class="history-date-row"><label>选择日期<div class="date-picker-shell"><input id="historyDateInput" class="date-text-input" type="text" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off"><button class="date-picker-btn" id="historyDatePickBtn" type="button" aria-label="选择历史日期">📅</button><input id="historyDatePicker" class="date-native-input" type="date"></div></label><button class="ghost-btn" id="clearHistoryDateBtn" type="button">清除日期</button><span class="hint">不选日期时显示全部历史。</span></div>
-    <div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button></div>
-    <div class="tool-folder-row">
-      <details class="tool-folder" open>
-        <summary>历史记录</summary>
-        <div class="tool-folder-body">
-          <button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史 TXT</button>
-          <button class="ghost-btn" id="exportHistoryJsonBtn" onclick="exportHistoryJSON()">导出历史 JSON</button>
-          <button class="ghost-btn" id="importHistoryJsonBtn" onclick="triggerImportHistory()">导入历史 JSON</button>
-          <button class="ghost-btn" id="exportReviewHistoryBtn" onclick="exportReviews()">导出复盘 TXT</button>
-          <button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button>
-          <span class="tool-folder-note">TXT 用于阅读；历史 JSON 只迁移历史记录、收藏、复盘与 A/B 数据，不影响模板和阅读设置。</span>
-        </div>
-      </details>
-      <details class="tool-folder">
-        <summary>完整备份</summary>
-        <div class="tool-folder-body">
-          <button class="ghost-btn" id="exportBackupBtn" onclick="exportBackupJSON()">导出完整备份 JSON</button>
-          <button class="ghost-btn" id="importBackupBtn" onclick="triggerImportBackup()">导入完整备份 JSON</button>
-          <span class="tool-folder-note">完整备份 JSON 包含历史、复盘、A/B、阅读设置、问题模板与模板使用数据，适合换设备或清缓存前保存。</span>
-        </div>
-      </details>
-    </div>
-    <input id="backupImportInput" type="file" accept="application/json,.json" style="display:none"><input id="historyImportInput" type="file" accept="application/json,.json" style="display:none">
-    <div class="history-list" id="historyList"></div>
-  </dialog>
-
-
-  <dialog id="reviewDialog">
-    <div class="dialog-head">
-      <div>
-        <h3>复盘记录</h3>
-        <p>记录实际结果与准确度，方便以后回看和改进判断。</p>
-      </div>
-      <button class="icon-btn" id="closeReviewBtn" type="button" onclick="closeReviewDialog()">×</button>
-    </div>
-    <div class="review-form">
-      <div class="review-target" id="reviewTargetText">请选择一条历史记录。</div>
-      <div class="review-timeline">
-        <div class="review-timeline-title"><span>复盘时间线</span><span id="reviewTimelineCount" style="color:var(--muted);font-size:.95rem;">0 条</span></div>
-        <div id="reviewTimelineList" class="review-timeline-list"><div class="review-empty">暂无复盘。可以在下方添加第一条复盘。</div></div>
-      </div>
-      <label>准确度
+<article class="card section" id="homeAboutRulesBlockWrap">
+<div class="section-title">
+<div class="step">i</div>
+<div>
+<h3>版本说明 / 起课规则说明</h3>
+<p>这里说明本工具采用的起课规则、六宫顺序和结果阅读方式。</p>
+</div>
+</div>
+<div class="about-rules" id="homeAboutRulesBlock"></div>
+</article>
+<article class="card section" id="homeVersionUpdatesBlockWrap">
+<div class="section-title">
+<div class="step">v</div>
+<div>
+<h3>版本内容更新</h3>
+<p>这里记录本工具从 v7 到当前版本的主要功能演进。</p>
+</div>
+</div>
+<div class="version-log" id="homeVersionUpdatesBlock"></div>
+</article>
+</section>
+</main>
+</div>
+<div aria-label="页面快捷操作" class="scroll-tools" data-source-quick-tools="1"></div>
+<dialog id="settingsDialog">
+<div class="dialog-head">
+<div>
+<h3>阅读设置</h3>
+<p>设置会保存在当前浏览器本地，下次打开自动沿用。</p>
+</div>
+<button class="icon-btn" id="closeSettingsBtn" type="button">×</button>
+</div>
+<div class="settings-form">
+<div class="settings-card">
+<h4>结果页显示</h4>
+<div class="settings-row">
+<span>默认阅读模式<small>打开结果时默认使用简洁版或详细版。</small></span>
+<select id="settingDefaultView"><option value="detail">详细版</option><option value="simple">简洁版</option></select>
+</div>
+<label class="settings-row"><span>详细模块默认折叠<small>三象、单宫、双宫、象意补充等模块可先折叠，需要时再展开。</small></span><input id="settingCollapseDetails" type="checkbox"/></label>
+<div class="settings-row" data-v10557-nav-position-row="1">
+<span>导航位置<small>底部：一级导航在下面、二级导航在上面；顶部：一级导航在上面、二级导航在下面。</small></span>
+<select id="settingNavPosition"><option value="bottom">底部</option><option value="top">顶部</option></select>
+</div>
+<label class="settings-row"><span>显示雷达分析图<small>关闭后结果页不显示雷达图模块。</small></span><input id="settingShowRadar" type="checkbox"/></label>
+<label class="settings-row"><span>显示版本说明 / 起课规则<small>开启后在页面底部显示版本说明和起课规则；默认关闭。</small></span><input id="settingShowAbout" type="checkbox"/></label>
+<label class="settings-row"><span>显示版本内容更新<small>开启后在页面底部显示历代主要更新记录；默认关闭。</small></span><input id="settingShowVersionUpdates" type="checkbox"/></label>
+</div>
+<div class="settings-card" id="readingSettingsCard">
+<h4>阅读模式</h4>
+<div class="settings-row"><span>阅读主题<small>白天、暗夜、跟随系统，或按时间自动切换。</small></span><select id="settingReadingMode"><option value="day">白天模式</option><option value="night">暗夜模式</option><option value="system">跟随系统深色模式</option><option value="auto">夜间自动切换</option></select></div>
+<div class="settings-row"><span>背景颜色<small>护眼色、米黄色、淡绿色、淡紫色、浅灰色或自定义颜色。</small></span><select id="settingReadingBg"><option value="default">默认</option><option value="eye">护眼色</option><option value="cream">米黄色</option><option value="green">淡绿色</option><option value="lavender">淡紫色</option><option value="gray">浅灰色</option><option value="custom">自定义颜色</option></select></div>
+<div class="settings-row"><span>自定义背景色<small>选择“自定义颜色”后生效。</small></span><input id="settingReadingCustomBg" type="color" value="#f7f3ee"/></div>
+<div class="settings-row"><span>夜间自动时间<small>仅在“夜间自动切换”下生效。</small></span><div class="settings-mini-grid"><input id="settingAutoNightStart" type="time" value="19:00"/><input id="settingAutoNightEnd" type="time" value="07:00"/></div></div>
+<div class="settings-row"><span>阅读字号<small>控制结果、术语、历史、模板等正文阅读区域。</small></span><select id="settingReadingTextSize"><option value="small">小</option><option value="normal">标准</option><option value="large">大</option><option value="xlarge">特大</option></select></div>
+<label class="settings-row"><span>显示夜间快捷按钮<small>关闭后，浮动快捷按钮中不显示“夜间/白天”。</small></span><input id="settingReadingQuickToggle" type="checkbox"/></label>
+</div>
+<div class="settings-card" id="uiSettingsCard">
+<h4>界面显示</h4>
+<label class="settings-row"><span>显示右侧快捷按钮<small>控制主页、历史、分析、重占、电脑、展开、折叠、设置、夜间、置顶、到底等浮动按钮。</small></span><input id="settingUiShowQuickButtons" type="checkbox"/></label>
+<label class="settings-row"><span>显示章节导航<small>控制顶部/底部的章节卡点导航。</small></span><input id="settingUiShowSectionNav" type="checkbox"/></label>
+<label class="settings-row"><span>显示阅读进度条<small>控制页面顶部细进度条。</small></span><input id="settingUiShowProgress" type="checkbox"/></label>
+<div class="settings-row"><span>默认客户端模式<small>自动适配、强制电脑宽度，或回到自适应模式。</small></span><select id="settingUiDefaultClientMode"><option value="auto">自适应</option><option value="desktop">电脑模式</option></select></div>
+<label class="settings-row"><span>显示源码 Debug<small>打开后显示 DEBUG 按钮，用于复制状态日志；关闭后不影响占卜功能。</small></span><input id="settingDebugEnabled" type="checkbox"/></label>
+</div>
+<div class="settings-card" id="quickButtonSettingsCard">
+<h4>快捷按钮设置</h4>
+<p class="quick-config-note">选择浮动快捷区要显示的按钮，并用 ↑ ↓ 调整顺序。设置只保存在当前浏览器本地。</p>
+<div class="quick-button-config" id="quickButtonConfigList"></div>
+<div class="settings-mini-grid"><button class="ghost-btn" id="quickButtonsDefaultBtn" type="button">恢复默认快捷按钮</button><button class="ghost-btn" id="quickButtonsAllBtn" type="button">显示全部快捷按钮</button></div>
+</div>
+<div class="settings-card">
+<h4>起课习惯</h4>
+<label class="settings-row"><span>记住上次选择的场景<small>例如上次选择“财运”，下次打开仍停留在财运。</small></span><input id="settingRememberScene" type="checkbox"/></label>
+<label class="settings-row"><span>记住上次选择的起课方式<small>例如上次使用“时辰起课”，下次打开仍显示时辰起课。</small></span><input id="settingRememberMethod" type="checkbox"/></label>
+</div>
+<div class="settings-actions">
+<button class="ghost-btn" id="resetSettingsBtn" type="button">恢复默认</button>
+<button class="primary-btn" id="saveSettingsBtn" style="width:auto;margin-top:0;" type="button">保存设置</button>
+</div>
+</div>
+</dialog>
+<dialog id="analyticsDialog">
+<div class="dialog-head">
+<div>
+<h3>历史分析</h3>
+<p>基于当前浏览器本地保存的历史记录统计，不联网、不上传数据。</p>
+</div>
+<button class="icon-btn" id="closeAnalyticsBtn">×</button>
+</div>
+<div class="analytics-date-row">
+<label>分析日期<div class="date-picker-shell"><input autocomplete="off" class="date-text-input" id="analyticsDateInput" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" type="text"/><button aria-label="选择分析日期" class="date-picker-btn" id="analyticsDatePickBtn" type="button">📅</button><input class="date-native-input" id="analyticsDatePicker" type="date"/></div></label>
+<button class="ghost-btn" id="clearAnalyticsDateBtn" type="button">清除日期</button>
+<details class="tool-folder" style="flex:1 1 100%;">
+<summary>分析导出</summary>
+<div class="tool-folder-body">
+<button class="ghost-btn" id="exportReviewBtn" onclick="exportReviews()" type="button">导出复盘 TXT</button>
+<button class="ghost-btn" onclick="exportHistory()" type="button">导出历史 TXT</button>
+<span class="tool-folder-note">分析页导出以阅读与复盘为主；完整迁移请到“历史记录 → 完整备份”。</span>
+</div>
+</details>
+<span class="hint" id="analyticsDateHint">不选日期时统计全部历史。</span>
+</div>
+<div id="analyticsContent"></div>
+</dialog>
+<dialog id="templateDialog">
+<div class="dialog-head">
+<div>
+<h3>问题模板</h3>
+<p>按场景选择常用问法，点击后会自动填入“占问事项”，你可以再自行修改。</p>
+</div>
+<button class="icon-btn" id="closeTemplateBtn" onclick="closeTemplateDialog()">×</button>
+</div>
+<details class="modal-section" open="">
+<summary>搜索与筛选</summary>
+<div class="modal-section-body">
+<div class="template-toolbar">
+<input id="templateSearchInput" placeholder="搜索模板：支持多个词，例如 前任 联系 / 油价 下跌" type="search"/>
+<select id="templateSceneFilter"><option value="all">全部模板场景</option></select>
+<select id="templateSortMode"><option value="default">默认排序</option><option value="favorite">收藏优先</option><option value="recent">最近使用</option><option value="usage">使用次数</option></select>
+</div>
+</div>
+</details>
+<details class="modal-section">
+<summary>我的模板</summary>
+<div class="modal-section-body">
+<div class="custom-template-box">
+<h4>⭐ 我的模板</h4>
+<div class="custom-template-form">
+<label><span>模板场景</span><select id="customTemplateScene"></select></label>
+<label><span>模板内容</span><input id="customTemplateText" maxlength="120" placeholder="例如：这个选择 A 和 B 哪个更适合我？" type="text"/></label>
+<button class="ghost-btn" id="saveCustomTemplateBtn" type="button">保存模板</button>
+</div>
+<p class="custom-template-note" id="customTemplateStats">自定义模板会保存在当前浏览器本地，也会随完整备份 JSON 一起导出。点击模板可填入占问事项并自动切换到对应场景。</p>
+</div>
+</div>
+</details>
+<details class="modal-section">
+<summary>模板工具</summary>
+<div class="modal-section-body">
+<div class="tool-folder-body">
+<button class="ghost-btn" id="exportTemplatesBtn" type="button">导出模板 JSON</button>
+<button class="ghost-btn" id="importTemplatesBtn" type="button">导入模板 JSON</button>
+<button class="danger-btn" id="clearCustomTemplatesBtn" type="button">清空我的模板</button>
+<span class="tool-folder-note">模板 JSON 只用于迁移“我的模板”、收藏、最近使用与使用次数；不会导入历史记录。</span>
+</div>
+</div>
+</details>
+<details class="modal-section">
+<summary>批量管理</summary>
+<div class="modal-section-body">
+<div class="template-bulk-tools">
+<span id="templateSelectedCount">已选 0 条</span>
+<button class="ghost-btn" id="selectAllCustomTemplatesBtn" type="button">全选当前我的模板</button>
+<button class="ghost-btn" id="clearTemplateSelectionBtn" type="button">取消选择</button>
+<select id="bulkTemplateScene"><option value="">批量改场景</option></select>
+<button class="ghost-btn" id="applyBulkTemplateSceneBtn" type="button">应用场景</button>
+<button class="ghost-btn" id="exportSelectedTemplatesBtn" type="button">导出选中</button>
+<button class="danger-btn" id="deleteSelectedTemplatesBtn" type="button">删除选中</button>
+</div>
+</div>
+</details>
+<input accept="application/json,.json" id="templateImportInput" style="display:none" type="file"/>
+<details class="modal-section" open="">
+<summary>模板列表</summary>
+<div class="modal-section-body">
+<p class="template-dialog-note">点击模板会自动填入“占问事项”，并自动切换到对应场景。勾选“我的模板”后可在“批量管理”中处理。</p>
+<div class="template-content" id="templateContent"></div>
+</div>
+</details>
+</dialog>
+<dialog id="rulesDialog">
+<div class="dialog-head">
+<div>
+<h3>场景规则</h3>
+<p>首页选择“大场景”，占问事项会触发更细的“专项规则”。这里可查询该选哪个场景。</p>
+</div>
+<button class="icon-btn" id="closeRulesBtn" onclick="closeRulesDialog()">×</button>
+</div>
+<div class="rules-toolbar">
+<input id="rulesSearchInput" placeholder="搜索规则：例如 油价 / 前任 / 宠物 / 签证 / 抽奖" type="search"/>
+<select id="rulesSceneFilter"><option value="all">全部建议场景</option></select>
+</div>
+<div class="rules-content" id="rulesContent"></div>
+</dialog>
+<dialog id="historyDialog">
+<div class="dialog-head"><div><h3>历史记录</h3><p>记录只保存在当前浏览器本地。</p></div><button class="icon-btn" id="closeHistoryBtn" onclick="closeHistoryDialog()">×</button></div>
+<div class="history-search-row"><input id="historySearchInput" placeholder="搜索历史：场景 / 问题 / 宫位" type="search"/><select id="historySceneFilter"><option value="all">全部场景</option></select></div>
+<div class="history-date-row"><label>选择日期<div class="date-picker-shell"><input autocomplete="off" class="date-text-input" id="historyDateInput" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" type="text"/><button aria-label="选择历史日期" class="date-picker-btn" id="historyDatePickBtn" type="button">📅</button><input class="date-native-input" id="historyDatePicker" type="date"/></div></label><button class="ghost-btn" id="clearHistoryDateBtn" type="button">清除日期</button><span class="hint">不选日期时显示全部历史。</span></div>
+<div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button></div>
+<div class="tool-folder-row">
+<details class="tool-folder" open="">
+<summary>历史记录</summary>
+<div class="tool-folder-body">
+<button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史 TXT</button>
+<button class="ghost-btn" id="exportHistoryJsonBtn" onclick="exportHistoryJSON()">导出历史 JSON</button>
+<button class="ghost-btn" id="importHistoryJsonBtn" onclick="triggerImportHistory()">导入历史 JSON</button>
+<button class="ghost-btn" id="exportReviewHistoryBtn" onclick="exportReviews()">导出复盘 TXT</button>
+<button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button>
+<span class="tool-folder-note">TXT 用于阅读；历史 JSON 只迁移历史记录、收藏、复盘与 A/B 数据，不影响模板和阅读设置。</span>
+</div>
+</details>
+<details class="tool-folder">
+<summary>完整备份</summary>
+<div class="tool-folder-body">
+<button class="ghost-btn" id="exportBackupBtn" onclick="exportBackupJSON()">导出完整备份 JSON</button>
+<button class="ghost-btn" id="importBackupBtn" onclick="triggerImportBackup()">导入完整备份 JSON</button>
+<span class="tool-folder-note">完整备份 JSON 包含历史、复盘、A/B、阅读设置、问题模板与模板使用数据，适合换设备或清缓存前保存。</span>
+</div>
+</details>
+</div>
+<input accept="application/json,.json" id="backupImportInput" style="display:none" type="file"/><input accept="application/json,.json" id="historyImportInput" style="display:none" type="file"/>
+<div class="history-list" id="historyList"></div>
+</dialog>
+<dialog id="reviewDialog">
+<div class="dialog-head">
+<div>
+<h3>复盘记录</h3>
+<p>记录实际结果与准确度，方便以后回看和改进判断。</p>
+</div>
+<button class="icon-btn" id="closeReviewBtn" onclick="closeReviewDialog()" type="button">×</button>
+</div>
+<div class="review-form">
+<div class="review-target" id="reviewTargetText">请选择一条历史记录。</div>
+<div class="review-timeline">
+<div class="review-timeline-title"><span>复盘时间线</span><span id="reviewTimelineCount" style="color:var(--muted);font-size:.95rem;">0 条</span></div>
+<div class="review-timeline-list" id="reviewTimelineList"><div class="review-empty">暂无复盘。可以在下方添加第一条复盘。</div></div>
+</div>
+<label>准确度
         <select id="reviewAccuracy">
-          <option value="pending">还没发生 / 待验证</option>
-          <option value="accurate">准</option>
-          <option value="partial">部分准</option>
-          <option value="miss">不准</option>
-        </select>
-      </label>
-      <label>实际结果
+<option value="pending">还没发生 / 待验证</option>
+<option value="accurate">准</option>
+<option value="partial">部分准</option>
+<option value="miss">不准</option>
+</select>
+</label>
+<label>实际结果
         <textarea id="reviewActual" maxlength="500" placeholder="例如：第一次复盘：当天没下雨；第二次复盘：三天后开始下雨。可随时间继续追加。"></textarea>
-      </label>
-      <label>复盘备注
+</label>
+<label>复盘备注
         <textarea id="reviewNote" maxlength="500" placeholder="可以记录哪些地方应验、哪些地方偏差、应期是否提前或延后、下次要注意什么。"></textarea>
-      </label>
-      <div class="review-actions">
-        <button class="primary-btn" type="button" onclick="saveReview()" style="width:auto;margin-top:0;">添加复盘</button>
-        <button class="ghost-btn" type="button" onclick="clearReviewForm()">清空复盘</button>
-      </div>
-    </div>
-  </dialog>
-
-  <script>
+</label>
+<div class="review-actions">
+<button class="primary-btn" onclick="saveReview()" style="width:auto;margin-top:0;" type="button">添加复盘</button>
+<button class="ghost-btn" onclick="clearReviewForm()" type="button">清空复盘</button>
+</div>
+</div>
+</dialog>
+<script>
 
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -1597,29 +1570,9 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
       if(typeof applyMethodPanel === 'function') applyMethodPanel(currentMethod); else if(typeof updateSceneMode === 'function') updateSceneMode();
       persistChoiceIfNeeded('scene', currentScene);
     }
-    function updateCustomTemplateStats(){
-      const el=document.getElementById('customTemplateStats');
-      if(!el) return;
-      const list=getCustomTemplates();
-      const byScene={};
-      list.forEach(t=>{ byScene[t.scene]=(byScene[t.scene]||0)+1; });
-      const summary=Object.entries(byScene).map(([scene,count])=>scene+count+'条').join('、') || '暂无我的模板';
-      el.innerHTML='自定义模板会保存在当前浏览器本地，也会随完整备份 JSON 一起导出。当前共有 <span class="template-count-pill">'+list.length+' 条</span>。'+summary+'。点击模板可填入占问事项并自动切换到对应场景。';
-    }
-    function exportCustomTemplatesJSON(){
-      const payload={
-        app:'xiaoliuren-web',
-        exportType:'customQuestionTemplates',
-        sourceVersion:'v9.9.7',
-        exportedAt:new Date().toISOString(),
-        templates:getCustomTemplates()
-      };
-      const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
-      const url=URL.createObjectURL(blob); const a=document.createElement('a');
-      a.href=url; a.download='xiaoliuren_custom_templates_'+new Date().toISOString().slice(0,10)+'.json';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
-    }
-    function triggerImportCustomTemplates(){
+    /* 已清理：早期重复的 updateCustomTemplateStats 函数定义，保留源码主定义。 */
+/* 已清理：早期重复的 exportCustomTemplatesJSON 函数定义，保留源码主定义。 */
+function triggerImportCustomTemplates(){
       const input=document.getElementById('templateImportInput');
       if(!input) return alert('模板导入控件未找到。');
       input.value=''; input.click();
@@ -1661,32 +1614,8 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
       });
       return output.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0)).slice(0,300);
     }
-    function handleImportTemplateFile(e){
-      const file=e && e.target && e.target.files ? e.target.files[0] : null;
-      if(!file) return;
-      const reader=new FileReader();
-      reader.onload=function(){
-        try{
-          const imported=normalizeImportedTemplates(JSON.parse(reader.result));
-          const mode=prompt('请选择模板导入方式：\n输入 merge：与当前我的模板合并\n输入 replace：覆盖当前我的模板\n输入 cancel：取消导入','merge');
-          if(!mode || mode.toLowerCase()==='cancel') return;
-          const normalized=mode.toLowerCase().trim();
-          if(normalized!=='merge' && normalized!=='replace') return alert('未识别的导入方式，已取消。');
-          let duplicateMode='skip';
-          if(normalized==='merge'){
-            const dup=prompt('遇到重复模板时如何处理？\n输入 skip：跳过重复\n输入 keep：保留重复\n输入 overwrite：覆盖旧模板','skip');
-            duplicateMode=(dup || 'skip').toLowerCase().trim();
-            if(!['skip','keep','overwrite'].includes(duplicateMode)) duplicateMode='skip';
-          }
-          const next=normalized==='replace' ? mergeCustomTemplates([], imported, 'keep') : mergeCustomTemplates(getCustomTemplates(), imported, duplicateMode);
-          saveCustomTemplates(next); selectedCustomTemplateIds.clear(); initTemplateFilters(); renderQuestionTemplates(); updateCustomTemplateStats();
-          alert('模板导入完成：当前共有 '+next.length+' 条我的模板。');
-        }catch(err){ alert('模板导入失败：'+(err && err.message ? err.message : err)); }
-      };
-      reader.onerror=function(){ alert('读取模板文件失败。'); };
-      reader.readAsText(file,'utf-8');
-    }
-    function clearCustomTemplates(){
+    /* 已清理：早期重复的 handleImportTemplateFile 函数定义，保留源码主定义。 */
+function clearCustomTemplates(){
       const list=getCustomTemplates();
       if(!list.length) return alert('目前没有自定义模板。');
       if(!confirm('确定清空全部“我的模板”吗？此操作只影响当前浏览器本地模板。')) return;
@@ -1743,22 +1672,13 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     }
     function openTemplateDialog(){ initTemplateFilters(); renderQuestionTemplates(); const dlg=document.getElementById('templateDialog'); if(dlg && dlg.showModal) dlg.showModal(); else if(dlg) dlg.setAttribute('open','open'); }
     function closeTemplateDialog(){ const dlg=document.getElementById('templateDialog'); if(dlg && dlg.close) dlg.close(); else if(dlg) dlg.removeAttribute('open'); }
-    function templateSearchTerms(){
-      return (document.getElementById('templateSearchInput')?.value || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
-    }
-    function templateMatches(hay, terms){
-      const source=String(hay || '').toLowerCase();
-      return !terms.length || terms.every(term=>source.includes(term));
-    }
-    function templateSortMode(){ return document.getElementById('templateSortMode')?.value || 'default'; }
-    function getTemplateUsageKey(scene, text){ return scene+'|'+text; }
-    function getTemplateStats(){
-      try { return JSON.parse(localStorage.getItem('xlr_template_usage_stats_v1') || '{}'); } catch { return {}; }
-    }
-    function getFavoriteTemplates(){
-      try { return JSON.parse(localStorage.getItem('xlr_favorite_templates_v1') || '[]'); } catch { return []; }
-    }
-    function sortTemplateItems(items, scene, isCustom){
+    /* 已清理：早期重复的 templateSearchTerms 函数定义，保留源码主定义。 */
+/* 已清理：早期重复的 templateMatches 函数定义，保留源码主定义。 */
+function templateSortMode(){ return document.getElementById('templateSortMode')?.value || 'default'; }
+    /* 已清理：早期重复的 getTemplateUsageKey 函数定义，保留源码主定义。 */
+/* 已清理：早期重复的 getTemplateStats 函数定义，保留源码主定义。 */
+/* 已清理：早期重复的 getFavoriteTemplates 函数定义，保留源码主定义。 */
+function sortTemplateItems(items, scene, isCustom){
       const mode=templateSortMode();
       const stats=getTemplateStats();
       const favs=new Set(getFavoriteTemplates());
@@ -1774,32 +1694,9 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
         return 0;
       });
     }
-    function updateSelectedTemplateCount(){
-      const el=document.getElementById('templateSelectedCount');
-      if(el) el.textContent='已选 '+selectedCustomTemplateIds.size+' 条';
-    }
-    function renderQuestionTemplates(){
-      const box=document.getElementById('templateContent'); if(!box) return;
-      const terms=templateSearchTerms();
-      const scene=(document.getElementById('templateSceneFilter')?.value || 'all');
-      const groups=buildTemplateGroups().map(group=>{
-        const builtinItems=sortTemplateItems((group.items || []).filter(t=>{
-          const hay=group.scene+' '+group.note+' '+t;
-          return (scene==='all' || group.scene===scene) && templateMatches(hay, terms);
-        }), group.scene, false);
-        const customItems=sortTemplateItems((group.customItems || []).filter(t=>{
-          const hay=group.scene+' 我的模板 '+(t.text||'')+' '+(t.note||'');
-          return (scene==='all' || group.scene===scene) && templateMatches(hay, terms);
-        }), group.scene, true);
-        return {...group, items:builtinItems, customItems};
-      }).filter(g=>g.items.length || g.customItems.length);
-      if(!groups.length){ box.innerHTML='<div class="template-empty">没有找到匹配的问题模板。</div>'; updateCustomTemplateStats(); updateSelectedTemplateCount(); return; }
-      const stats=getTemplateStats();
-      const favs=new Set(getFavoriteTemplates());
-      box.innerHTML='<div class="template-intro">选择一个模板后会自动填入“占问事项”。搜索支持多个词同时匹配；自定义模板可勾选后批量改场景、导出或删除。</div><div class="template-grid">'+groups.map(group=>`<div class="template-card"><h4><span>${group.icon} ${escapeHTML(group.scene)}</span><small>${escapeHTML(group.note)}</small></h4><div class="template-list">${(group.customItems || []).map(item=>{ const key=getTemplateUsageKey(group.scene,item.text); return `<div class="template-btn-row"><label class="template-select-box"><input type="checkbox" data-select-template="${escapeAttr(item.id)}" ${selectedCustomTemplateIds.has(item.id)?'checked':''}></label><button type="button" class="template-btn" data-template="${escapeAttr(item.text)}" data-template-scene="${escapeAttr(group.scene)}">${escapeHTML(item.text)}<span class="custom-template-tag">我的模板</span><span class="template-meta-line">${stats[key] ? '用过'+stats[key]+'次' : '未使用'}${item.note ? '｜'+escapeHTML(item.note) : ''}</span></button><button type="button" class="template-delete-btn" data-delete-template="${escapeAttr(item.id)}">删</button></div>`; }).join('')}${(group.items || []).map(item=>{ const key=getTemplateUsageKey(group.scene,item); return `<button type="button" class="template-btn" data-template="${escapeAttr(item)}" data-template-scene="${escapeAttr(group.scene)}">${favs.has(key)?'★ ':''}${escapeHTML(item)}${stats[key] ? `<span class="template-meta-line">用过${stats[key]}次</span>` : ''}</button>`; }).join('')}</div></div>`).join('')+'</div>';
-      updateCustomTemplateStats(); updateSelectedTemplateCount();
-    }
-    function handleTemplateClick(e){
+    /* 已清理：早期重复的 updateSelectedTemplateCount 函数定义，保留源码主定义。 */
+/* 已清理：早期重复的 renderQuestionTemplates 函数定义，保留源码主定义。 */
+function handleTemplateClick(e){
       const selector=e.target.closest('[data-select-template]');
       if(selector){
         const id=selector.getAttribute('data-select-template');
@@ -1857,7 +1754,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     function exportSelectedTemplatesJSON(){
       const selected=getSelectedCustomTemplates();
       if(!selected.length) return alert('请先勾选要导出的自定义模板。');
-      const payload={ app:'xiaoliuren-web', exportType:'selectedCustomQuestionTemplates', sourceVersion:'v9.9.7', exportedAt:new Date().toISOString(), templates:selected };
+      const payload={ app:'xiaoliuren-web', exportType:'selectedCustomQuestionTemplates', sourceVersion:XLR_SOURCE_VERSION, exportedAt:new Date().toISOString(), templates:selected };
       const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
       const url=URL.createObjectURL(blob); const a=document.createElement('a');
       a.href=url; a.download='xiaoliuren_selected_templates_'+new Date().toISOString().slice(0,10)+'.json';
@@ -2042,8 +1939,9 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
       if(currentMethod==='event'){ const text=document.getElementById('eventText').value.trim(); if(!text) return alert('请先输入事件描述。'); numbers=textToNumbers(text); methodNote=`事件起课：${numbers.join(' / ')}`; extraInfo=`事件：${text}`; }
       currentResult = divine(scene, numbers, currentMethod, methodNote, extraInfo); renderResult(currentResult); saveLastView(currentResult);
     }
-    function divine(scene, numbers, method, methodNote, extraInfo) { const palaces=calculateSequentialPalaces(numbers); const details=palaces.map((name,idx)=>buildPositionDetail(scene, idx, name, numbers[idx])); const metrics=calcMetrics(palaces); const distribution=describeDistribution(palaces, metrics); const overallText=buildOverall(details, metrics, distribution); const advice=buildAdvice(details, metrics); const supplement=buildSupplement(details, metrics); return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, rule:Object.assign({}, DIVINATION_RULE), sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, numbers, palaces, details, metrics, distribution, overallText, advice, supplement }; }
-    function calculateSequentialPalaces(numbers) { let startIndex = 0; return numbers.map(function(n, idx) { const step = Math.max(1, Math.abs(Number(n) || 1)); const palaceIndex = (idx === 0) ? ((step - 1) % 6) : ((startIndex + step - 1) % 6); startIndex = palaceIndex; return PALACE_ORDER[palaceIndex]; }); }
+    
+    /* 已清理：早期重复的 divine 函数定义，保留源码主定义。 */
+function calculateSequentialPalaces(numbers) { let startIndex = 0; return numbers.map(function(n, idx) { const step = Math.max(1, Math.abs(Number(n) || 1)); const palaceIndex = (idx === 0) ? ((step - 1) % 6) : ((startIndex + step - 1) % 6); startIndex = palaceIndex; return PALACE_ORDER[palaceIndex]; }); }
     function numberToPalace(n) { return PALACE_ORDER[(Math.abs(n)-1)%6]; }
     function buildPositionDetail(scene, index, palaceName, number) { const p=PALACE_DATA[palaceName]; const role=scene.positions[index] || POSITION_NAMES[index]; const summary=sceneSpecificSummary(scene.key, palaceName, index); return { positionName: POSITION_NAMES[index], role, number, palaceName, ...p, summary }; }
     function sceneSpecificSummary(sceneKey, palace, idx) {
@@ -2181,58 +2079,11 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
       }).join('');
     }
 
-    function buildSceneFocusHTML(result){
-      const key = result.sceneKey || 'other';
-      const q = result.question ? `你问的是“${escapeHtml(result.question)}”。` : '你没有填写具体占问事项，本课会按所选场景作通用判断。';
-      const end = (result.palaces || [])[2] || '空亡';
-      const mid = (result.palaces || [])[1] || '留连';
-      const map = {
-        love:{title:'感情关系', focus:['先看对方是否有真实行动，而不是只看一句话。','再看中象是否拖延或争执，判断关系过程是否反复。','最后看末象能否落地，决定关系是否真正稳定。'], tip:'感情问题最怕把想象当成事实。末象若空亡或赤口，要先稳住情绪，等对方有明确行动。'},
-        career:{title:'事业工作', focus:['先看事情能不能推进，而不是只看前期有没有机会。','中象看流程、沟通、审批和资源是否卡住。','末象看承诺是否真正落地。'], tip:'事业类问题适合把大目标拆成可执行步骤，先推进能确认的部分。'},
-        wealth:{title:'财运钱财', focus:['先看钱或机会是否真实，不要只看消息热不热。','中象看资金、合同、价格或规则是否反复。','末象看能不能到账、兑现或真正产生收益。'], tip:'财运类尤其要防口头承诺和短线冲动，涉及投资和大额钱财请以现实资料和专业意见为准。'},
-        exam:{title:'考试学习', focus:['先看基础是否稳，不能只看临场运气。','中象看旧错题、拖延、审题和表达。','末象看结果稳定度和是否需要补救。'], tip:'考试学习类更适合用来找薄弱点，而不是替代复习。'},
-        lost:{title:'失物寻找', focus:['先看是否还有线索，东西像不像在原范围内。','中象看被夹住、压住、混入旧物或寻找过程是否反复。','末象看最终能否找回，以及该不该换方向。'], tip:'失物类要把宫位转成现实位置：最后一次使用处、收纳处、包袋夹层、旧物堆、门口桌边等。'},
-        health:{title:'健康状态', focus:['先看当前状态是否稳定。','中象看是否拖延、反复或突然加重。','末象看是否需要复查、休息或专业帮助。'], tip:'健康类只作自我提醒，不替代医生诊断。身体不适请以医学检查为准。'},
-        travel:{title:'出行行程', focus:['先看能不能顺利出发。','中象看交通、天气、证件、路线是否拖延。','末象看最终能否安稳到达或是否临时变更。'], tip:'出行类现实准备很重要，证件、时间、路线和天气要提前确认。'},
-        cooperation:{title:'合作合同', focus:['先看双方是否有真实合作意愿。','中象看条款、责任、利益分配和沟通是否反复。','末象看合同或承诺是否真正落实。'], tip:'合作类不要只看气氛好不好，关键看规则、边界和白纸黑字。'},
-        message:{title:'消息等待', focus:['先看有没有动静。','中象看是否拖延、反复确认或带情绪。','末象看这个消息是否算数、能不能落实。'], tip:'消息类见速喜可能来得快，但末象不稳时仍要二次确认。'},
-        weather:{title:'天气变化', focus:['先看天气是否有动象。','中象看雨势或变化是否持续。','末象看最后是否真的落雨、转晴或落空。'], tip:'天气类要结合现实预报，本课更适合看短时变化和是否反复。'},
-        job:{title:'求职面试', focus:['先看机会是否真实。','中象看面试表达、内部流程、薪资沟通和审批。','末象看正式通知或 offer 是否落地。'], tip:'求职类不要只看口头反馈，最终以正式通知为准。'},
-        home:{title:'家宅居住', focus:['先看家宅是否稳定。','中象看旧问题、维修、邻里、合同是否反复。','末象看最终能否安顿或解决。'], tip:'家宅类要结合现实检查，漏水、维修、合同和安全隐患不要只靠卦象判断。'},
-        choice:{title:'选择决策', focus:['先看当前信息是否足够。','中象看选择过程是否有反复或争议。','末象看哪种结果更容易落地。'], tip:'选择类适合先小步试行，条件不清时不要急着一次定死。'},
-        people:{title:'寻人找人', focus:['先看有没有线索或消息。','中象看联系过程是否拖延、误会或反复。','末象看是否能出现、联系上或得到可靠信息。'], tip:'寻人类要结合现实方式，必要时及时联系家人、朋友或相关机构。'},
-        noble:{title:'贵人与助力', focus:['先看是否有人愿意帮。','中象看帮助是否稳定、是否需要主动开口。','末象看助力能不能真正落到行动上。'], tip:'贵人不一定主动出现，很多时候需要你明确提出请求、准备好资料。'},
-        fortune:{title:'阶段运势', focus:['先看当前阶段整体气势。','中象看近期起伏、机会和阻力。','末象看这一阶段最后更偏稳、动、拖、冲、小成还是落空。'], tip:'运势课适合看阶段提醒，具体事情仍建议用对应场景另起一课。'},
-        destiny:{title:'命运命盘', focus:['先看自身宫与三象主线，了解个人起势和处事节奏。','再看六亲分布，判断助力、压力、资源和人际主题。','最后看空亡、赤口、留连等薄弱点，把它当作长期自我观察提醒。'], tip:'命运场景只作出生时间象意参考，不作人生定论。重点是了解自己的惯性，再用现实行动调整。'},
-        other:{title:'一般事项', focus:['先把问题说清楚。','再看本象、中象、末象如何递进。','最后看结果是否真实落地。'], tip:'通用事项不要只看吉凶，最好结合现实证据和后续复盘。'}
-      };
-      const info = map[key] || map.other;
-      const endTip = end === '空亡' ? '本课末象为空亡，最重要是复核证据和条件，防止期待落空。' : end === '赤口' ? '本课末象为赤口，最后阶段要特别注意沟通、规则、口舌和临门争议。' : end === '留连' ? '本课末象为留连，最后容易拖延反复，要预留时间。' : end === '速喜' ? '本课末象为速喜，后续容易有快速消息或变化，但仍要看是否持续。' : end === '小吉' ? '本课末象为小吉，适合先取小结果、小进展。' : '本课末象为大安，最后重在稳定落实，不宜急躁变动。';
-      return `<div class="focus-card"><h5>这次主要看什么</h5><p>${q}<br>此类问题属于“${info.title}”，重点不是单看吉凶，而是看它能不能推进、哪里会卡、最后是否落地。</p></div>
-      <div class="focus-card"><h5>判断顺序</h5><ul>${info.focus.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-      <div class="focus-card"><h5>本课特别提醒</h5><p>${endTip}</p></div>
-      <div class="focus-card"><h5>现实用法</h5><p>${info.tip}</p></div>`;
-    }
+    
+    /* 已清理：早期重复的 buildSceneFocusHTML 函数定义，保留源码主定义。 */
 
-    function renderResult(result) {
-      try { currentResult = result; window.currentResult = result; } catch(e) { try { window.currentResult = result; } catch(_e){} }
-      try { document.body.classList.add('result-page'); document.body.classList.toggle('result-destiny', !!(result && (result.sceneKey==='destiny' || result.sceneName==='命运'))); } catch(e) {}
-      document.getElementById('resultCard').classList.remove('hidden');
-      document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
-      document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
-      ensureRuleInfo(result); document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}<br><span class="rule-badge">起课规则：${result.rule.name}</span><div class="rule-note">${result.rule.description}</div>`;
-      document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
-      document.getElementById('summaryGrid').innerHTML=[ ['吉凶',result.metrics.luckText], ['快慢',result.metrics.speedText], ['阻力',result.metrics.resistText], ['成事倾向',result.metrics.successText], ['贵人助力',result.metrics.nobleText], ['五行气象',result.metrics.elementText] ].map(([label,val])=>`<div class="summary-item"><span>${label}</span><b>${val}</b></div>`).join('');
-      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div><div class="keyword-row">${d.keywords.map(k=>`<span class="keyword-chip">关键词：${k}</span>`).join('')}</div><p><strong>象意：</strong>${d.summary}</p><p><strong>通俗理解：</strong>这一象不是单纯说好坏，而是在提醒你：这一步最明显的气是“${d.keywords.join('、')}”。问事情，就看它卡在哪里、动在哪里；问人，就看对方或自己目前处在什么状态。</p><p><strong>现实提醒：</strong>${d.palaceName === '赤口' ? '少争论，多确认，话不要说满。' : d.palaceName === '空亡' ? '先查证，不要急着下结论。' : d.palaceName === '留连' ? '拖延反复是重点，先处理旧问题。' : d.palaceName === '速喜' ? '消息和机会来得快，要及时接住。' : d.palaceName === '小吉' ? '先取小成，不要贪大。' : '稳住节奏，按计划推进。'}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
-      document.getElementById('singlePalaceReading').innerHTML=buildSinglePalaceReading(result.details);
-      document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReading(result.details);
-      document.getElementById('overallText').textContent=result.overallText;
-      document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
-      document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
-    }
-
-    function buildPaipanExplanation(result){
+    /* 已清理：早期重复的 renderResult 函数定义，保留源码主定义。 */
+function buildPaipanExplanation(result){
       const d=result.details || [];
       if(d.length < 3) return result.distribution ? result.distribution.text : '';
       const [a,b,c]=d;
@@ -2423,6 +2274,17 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
       lines.push('');
       lines.push('行动建议：');
       (result.advice || []).forEach(a => lines.push(`- ${a}`));
+      if (result && result.abChoice) {
+        const ab = result.abChoice;
+        lines.push('');
+        lines.push('A/B 选择对比：');
+        lines.push(`占问事项：${ab.question || ''}`);
+        lines.push(`选项 A：${ab.A.optionText}`);
+        lines.push(`A 取数：${ab.A.numbers.join(' / ')}｜落宫：${ab.A.palaces.join(' / ')}｜倾向：${ab.A.score.overall}/100`);
+        lines.push(`选项 B：${ab.B.optionText}`);
+        lines.push(`B 取数：${ab.B.numbers.join(' / ')}｜落宫：${ab.B.palaces.join(' / ')}｜倾向：${ab.B.score.overall}/100`);
+        lines.push(`对比结论：${ab.recommendation}`);
+      }
       lines.push('');
       lines.push('提示：本工具以传统文化娱乐与自我梳理为主，不替代医学、法律、投资等专业判断。');
       return lines.join('\n');
@@ -2554,7 +2416,23 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     function handleHistoryActions(e) { const viewId=e.target.closest('[data-view]')?.dataset.view; if(viewId){ const item=getHistory().find(x=>x.id===viewId); if(item){ currentResult=item; renderResult(item); historyDialog.close(); } return; } const delId=e.target.closest('[data-delete]')?.dataset.delete; if(delId){ if(!confirm('确定删除这条历史记录吗？')) return; const list=getHistory().filter(x=>x.id!==delId); localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); renderHistory(); } }
     function clearHistory(){ if(!confirm('确定清空所有历史记录吗？')) return; localStorage.removeItem(STORAGE_KEY); renderHistory(); }
     function getHistory(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
-    function resetForm(){ ['num1','num2','num3'].forEach(id=>document.getElementById(id).value=''); const q=document.getElementById('questionInput'); if(q) q.value=''; document.getElementById('eventText').value=''; updateQuestionCount(); updateEventCount(); setNow(); currentResult=null; try { window.currentResult=null; } catch(e) {} try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {} const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden'); try { if(typeof window.xlrV10542LeaveResultPage==='function') window.xlrV10542LeaveResultPage({scroll:false,clearHash:true}); else document.body.classList.remove('result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'); } catch(e) {} }
+    function resetForm(){
+      ['num1','num2','num3'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+      const q=document.getElementById('questionInput'); if(q) q.value='';
+      const eventText=document.getElementById('eventText'); if(eventText) eventText.value='';
+      const abEnable=document.getElementById('abEnable'), abFields=document.getElementById('abFields'), abTip=document.getElementById('abMiniTip');
+      if(abEnable) abEnable.checked=false;
+      if(abFields) abFields.classList.add('hidden');
+      if(abTip) abTip.classList.add('hidden');
+      const a=document.getElementById('optionAInput'), b=document.getElementById('optionBInput');
+      if(a) a.value=''; if(b) b.value='';
+      updateQuestionCount(); updateEventCount(); setNow(); currentResult=null;
+      try { window.currentResult=null; } catch(e) {}
+      try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {}
+      const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden');
+      try { document.body.classList.remove('result-page','result-destiny','destiny-scene'); } catch(e) {}
+      refreshSectionJumpNavSoon();
+    }
     function saveLastView(result){ localStorage.setItem(LAST_VIEW_KEY, JSON.stringify(result)); }
     function clearStartupResult(){ try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {} const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden'); currentResult=null; try { window.currentResult=null; } catch(e) {} try { document.body.classList.remove('result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'); } catch(e) {} try { if(location.hash) history.replaceState(history.state || null, '', location.pathname + location.search); } catch(e) {} }
     function restoreLastView(){ /* 保留函数名以兼容旧代码，但启动时不再自动恢复上次占卜。 */ }
@@ -2718,20 +2596,8 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     function isGoodPalace(name){ return ['大安','速喜','小吉'].indexOf(name) >= 0; }
     function isHeavyPalace(name){ return ['留连','赤口','空亡'].indexOf(name) >= 0; }
     function palaceRoleSentence(d){ return `${d.positionName}为${d.role}，取数 ${d.number}，连续顺推落宫为${d.palaceName}`; }
-    function sceneLabel(sceneKey, genericLabel){
-      if(sceneKey === 'lost'){
-        return {
-          '吉凶':'找回希望',
-          '快慢':'找回速度',
-          '阻力':'寻找难点',
-          '成事倾向':'找回方式',
-          '贵人助力':'外人帮助',
-          '五行气象':'线索方向'
-        }[genericLabel] || genericLabel;
-      }
-      return genericLabel;
-    }
-    function sceneMetricValue(sceneKey, key, result){
+    /* 已清理：早期重复的 sceneLabel 函数定义，保留源码主定义。 */
+function sceneMetricValue(sceneKey, key, result){
       const m = result.metrics, d = result.details, end = d[2];
       if(sceneKey === 'lost'){
         const palaces = result.palaces;
@@ -2800,39 +2666,9 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
       text += `五行方面，${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}；${metrics.elementText}。`;
       return text;
     }
-    function buildOverallByScene(sceneKey, details, metrics, distribution){
-      return sceneKey === 'lost' ? buildLostOverall(details, metrics, distribution) : buildGenericOverall(details, metrics, distribution);
-    }
-    function buildAdviceByScene(sceneKey, details, metrics){
-      if(sceneKey === 'lost'){
-        const palaces = details.map(d=>d.palaceName);
-        const list = [];
-        list.push('先不要认定已经丢了。重点查“夹、压、旧、金属、卡片、收纳”相关的位置。');
-        list.push('从最后一次拿出来、展示、把玩、拍照或收纳的地方开始，不要直接扩大范围乱找。');
-        list.push('建议顺序：桌面杂物 → 抽屉角落 → 包袋夹层 → 卡包/票据夹 → 旧盒旧包装 → 钥匙硬币/金属小物区。');
-        list.push('每找完一处就复原，避免赤口象导致越找越乱、越翻越漏。');
-        if(palaces.indexOf('赤口') >= 0) list.push('赤口提示金属、钥匙、硬币、刀剪、文具、票据、卡片和门口/桌边一类位置，优先细查。');
-        if(palaces.indexOf('留连') >= 0) list.push('留连提示旧物、夹层、堆放处、旧包、旧盒、包装、柜内转角，适合隔一两天回头复找。');
-        if(palaces.indexOf('空亡') >= 0) list.push('空亡提示记忆可能有偏差，或你以为找过的地方其实漏看了；重新按顺序复核更重要。');
-        return list;
-      }
-      const [start,middle,end] = details;
-      const list = [];
-      if(end.palaceName === '空亡'){
-        list.push('可以先推进，但不要过早下结论；末象空亡时，重点是核实信息、确认条件、避免落空。');
-        list.push('把口头消息、承诺、时间点、对方态度和实际证据逐一确认。');
-      } else if(end.palaceName === '留连'){
-        list.push('此课后段偏慢，适合预留时间，不宜急催急断。');
-      } else if(end.palaceName === '赤口'){
-        list.push('此课后段防口舌和规则问题，重要内容最好文字确认。');
-      } else {
-        list.push('可按当前趋势推进，但仍要看现实条件是否真正落实。');
-      }
-      list.push(`本象${start.palaceName}看起因，中象${middle.palaceName}看过程，末象${end.palaceName}看结果；断事应以后段是否落地为重点。`);
-      list.push(`五行呈现：${details.map(d=>`${d.palaceName}=${d.element}`).join('，')}。不宜只用单一五行下结论。`);
-      return list;
-    }
-    function buildSupplementByScene(sceneKey, details, metrics){
+    /* 已清理：早期重复的 buildOverallByScene 函数定义，保留源码主定义。 */
+/* 已清理：早期重复的 buildAdviceByScene 函数定义，保留源码主定义。 */
+function buildSupplementByScene(sceneKey, details, metrics){
       if(sceneKey === 'lost'){
         const palaces = details.map(d=>d.palaceName);
         const places = [];
@@ -2867,18 +2703,8 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
         { label:'应期参考', value:`${timings}。若现实条件未成熟，应期会后延。` }
       ];
     }
-    function buildReadingCardText(sceneKey, d){
-      if(sceneKey === 'lost'){
-        if(d.palaceName === '留连') return '失物多半不在明面上，容易被压住、夹住，或混入旧物、旧包、旧盒、抽屉、收纳处。';
-        if(d.palaceName === '赤口') return '寻找过程容易急躁、翻乱、判断错；同时提示金属、钥匙、硬币、卡片票据、文具、桌边门边有线索。';
-        if(d.palaceName === '空亡') return '线索虚浮，可能漏看、记错位置，或在空盒、角落、高处、无人注意的位置。';
-        if(d.palaceName === '大安') return '更像在固定收纳处、书房、办公桌、柜内稳定位置，不像跑远。';
-        if(d.palaceName === '速喜') return '线索可能来自最近一次拿取、展示、聊天、拍照或临时放下的位置。';
-        if(d.palaceName === '小吉') return '可从包袋、流动物品、小礼物、票据、交通动线附近找，可能有小线索。';
-      }
-      return `这一象不是单纯说好坏，而是在提醒你：这一步最明显的气是“${d.keywords.join('、')}”。问事情，就看它卡在哪里、动在哪里；问人，就看对方或自己目前处在什么状态。`;
-    }
-    function buildSinglePalaceReadingByScene(sceneKey, details){
+    /* 已清理：早期重复的 buildReadingCardText 函数定义，保留源码主定义。 */
+function buildSinglePalaceReadingByScene(sceneKey, details){
       return details.map(d=>{
         const prefix = sceneKey === 'lost' ? '失物断法' : '断法';
         const plain = sceneKey === 'lost'
@@ -2890,18 +2716,8 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
         return `<div class="gua-card"><h5>${d.positionName} · ${d.palaceName}</h5><p><strong>${prefix}：</strong>${plain}</p><p><strong>提醒：</strong>${practical}</p></div>`;
       }).join('');
     }
-    function buildDoublePalaceReadingByScene(sceneKey, details){
-      if(sceneKey === 'lost'){
-        const [a,b,c] = details;
-        return [
-          `<div class="gua-card"><h5>本象 → 中象</h5><p><strong>用途：</strong>看失物状态如何影响寻找过程。</p><p><strong>组合：</strong>从${a.palaceName}到${b.palaceName}，表示先看“东西藏在哪里”，再看“怎么找会出问题”。若中象见赤口，尤其要防急躁、翻乱和误判。</p></div>`,
-          `<div class="gua-card"><h5>中象 → 末象</h5><p><strong>用途：</strong>看寻找过程会导向什么结果。</p><p><strong>组合：</strong>从${b.palaceName}到${c.palaceName}，若末象为留连，说明还要复找；若末象为空亡，说明结果未实，要重新核实找过的位置。</p></div>`,
-          `<div class="gua-card"><h5>本象 → 末象</h5><p><strong>用途：</strong>看失物整体趋势。</p><p><strong>组合：</strong>从${a.palaceName}到${c.palaceName}，重点判断“能否马上找到”。若末象不是大吉，则不宜一次找不到就放弃，适合缩小范围反复拆找。</p></div>`
-        ].join('');
-      }
-      return buildDoublePalaceReading(details);
-    }
-    function calcMetricsByScene(sceneKey, palaces){
+    /* 已清理：早期重复的 buildDoublePalaceReadingByScene 函数定义，保留源码主定义。 */
+function calcMetricsByScene(sceneKey, palaces){
       const metrics = calcMetrics(palaces);
       const endPalace = palaces[2];
       if(sceneKey !== 'lost'){
@@ -2937,65 +2753,23 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
         advice = mergeContextAdvice(advice, context, details);
       }
       const supplement = buildSupplementByScene(scene.key, details, metrics);
-      return { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, rule:Object.assign({}, DIVINATION_RULE), sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, question, context, numbers, palaces, details, metrics, distribution, overallText, advice, supplement };
+      const result = { id:`r_${Date.now()}`, createdAt:new Date().toISOString(), favorite:false, rule:Object.assign({}, DIVINATION_RULE), sceneKey:scene.key, sceneName:scene.name, sceneIcon:scene.icon, method, methodNote, extraInfo, question, context, numbers, palaces, details, metrics, distribution, overallText, advice, supplement };
+      const ab = (typeof getABInput === 'function') ? getABInput() : {enabled:false};
+      if (ab.enabled) {
+        if (!ab.optionA || !ab.optionB) {
+          alert('已开启 A/B 对比，请填写选项 A 和选项 B；如果不需要，请关闭 A/B 对比。');
+        } else if (typeof buildABChoice === 'function') {
+          buildABChoice(result);
+        }
+      }
+      return result;
     }
 
-    function buildSceneFocusHTML(result){
-      const key = result.sceneKey || 'other';
-      const q = result.question ? `你问的是“${escapeHtml(result.question)}”。` : '你没有填写具体占问事项，本课会按所选场景作通用判断。';
-      const end = (result.palaces || [])[2] || '空亡';
-      const mid = (result.palaces || [])[1] || '留连';
-      const map = {
-        love:{title:'感情关系', focus:['先看对方是否有真实行动，而不是只看一句话。','再看中象是否拖延或争执，判断关系过程是否反复。','最后看末象能否落地，决定关系是否真正稳定。'], tip:'感情问题最怕把想象当成事实。末象若空亡或赤口，要先稳住情绪，等对方有明确行动。'},
-        career:{title:'事业工作', focus:['先看事情能不能推进，而不是只看前期有没有机会。','中象看流程、沟通、审批和资源是否卡住。','末象看承诺是否真正落地。'], tip:'事业类问题适合把大目标拆成可执行步骤，先推进能确认的部分。'},
-        wealth:{title:'财运钱财', focus:['先看钱或机会是否真实，不要只看消息热不热。','中象看资金、合同、价格或规则是否反复。','末象看能不能到账、兑现或真正产生收益。'], tip:'财运类尤其要防口头承诺和短线冲动，涉及投资和大额钱财请以现实资料和专业意见为准。'},
-        exam:{title:'考试学习', focus:['先看基础是否稳，不能只看临场运气。','中象看旧错题、拖延、审题和表达。','末象看结果稳定度和是否需要补救。'], tip:'考试学习类更适合用来找薄弱点，而不是替代复习。'},
-        lost:{title:'失物寻找', focus:['先看是否还有线索，东西像不像在原范围内。','中象看被夹住、压住、混入旧物或寻找过程是否反复。','末象看最终能否找回，以及该不该换方向。'], tip:'失物类要把宫位转成现实位置：最后一次使用处、收纳处、包袋夹层、旧物堆、门口桌边等。'},
-        health:{title:'健康状态', focus:['先看当前状态是否稳定。','中象看是否拖延、反复或突然加重。','末象看是否需要复查、休息或专业帮助。'], tip:'健康类只作自我提醒，不替代医生诊断。身体不适请以医学检查为准。'},
-        travel:{title:'出行行程', focus:['先看能不能顺利出发。','中象看交通、天气、证件、路线是否拖延。','末象看最终能否安稳到达或是否临时变更。'], tip:'出行类现实准备很重要，证件、时间、路线和天气要提前确认。'},
-        cooperation:{title:'合作合同', focus:['先看双方是否有真实合作意愿。','中象看条款、责任、利益分配和沟通是否反复。','末象看合同或承诺是否真正落实。'], tip:'合作类不要只看气氛好不好，关键看规则、边界和白纸黑字。'},
-        message:{title:'消息等待', focus:['先看有没有动静。','中象看是否拖延、反复确认或带情绪。','末象看这个消息是否算数、能不能落实。'], tip:'消息类见速喜可能来得快，但末象不稳时仍要二次确认。'},
-        weather:{title:'天气变化', focus:['先看天气是否有动象。','中象看雨势或变化是否持续。','末象看最后是否真的落雨、转晴或落空。'], tip:'天气类要结合现实预报，本课更适合看短时变化和是否反复。'},
-        job:{title:'求职面试', focus:['先看机会是否真实。','中象看面试表达、内部流程、薪资沟通和审批。','末象看正式通知或 offer 是否落地。'], tip:'求职类不要只看口头反馈，最终以正式通知为准。'},
-        home:{title:'家宅居住', focus:['先看家宅是否稳定。','中象看旧问题、维修、邻里、合同是否反复。','末象看最终能否安顿或解决。'], tip:'家宅类要结合现实检查，漏水、维修、合同和安全隐患不要只靠卦象判断。'},
-        choice:{title:'选择决策', focus:['先看当前信息是否足够。','中象看选择过程是否有反复或争议。','末象看哪种结果更容易落地。'], tip:'选择类适合先小步试行，条件不清时不要急着一次定死。'},
-        people:{title:'寻人找人', focus:['先看有没有线索或消息。','中象看联系过程是否拖延、误会或反复。','末象看是否能出现、联系上或得到可靠信息。'], tip:'寻人类要结合现实方式，必要时及时联系家人、朋友或相关机构。'},
-        noble:{title:'贵人与助力', focus:['先看是否有人愿意帮。','中象看帮助是否稳定、是否需要主动开口。','末象看助力能不能真正落到行动上。'], tip:'贵人不一定主动出现，很多时候需要你明确提出请求、准备好资料。'},
-        fortune:{title:'阶段运势', focus:['先看当前阶段整体气势。','中象看近期起伏、机会和阻力。','末象看这一阶段最后更偏稳、动、拖、冲、小成还是落空。'], tip:'运势课适合看阶段提醒，具体事情仍建议用对应场景另起一课。'},
-        destiny:{title:'命运命盘', focus:['先看自身宫与三象主线，了解个人起势和处事节奏。','再看六亲分布，判断助力、压力、资源和人际主题。','最后看空亡、赤口、留连等薄弱点，把它当作长期自我观察提醒。'], tip:'命运场景只作出生时间象意参考，不作人生定论。重点是了解自己的惯性，再用现实行动调整。'},
-        other:{title:'一般事项', focus:['先把问题说清楚。','再看本象、中象、末象如何递进。','最后看结果是否真实落地。'], tip:'通用事项不要只看吉凶，最好结合现实证据和后续复盘。'}
-      };
-      const info = map[key] || map.other;
-      const endTip = end === '空亡' ? '本课末象为空亡，最重要是复核证据和条件，防止期待落空。' : end === '赤口' ? '本课末象为赤口，最后阶段要特别注意沟通、规则、口舌和临门争议。' : end === '留连' ? '本课末象为留连，最后容易拖延反复，要预留时间。' : end === '速喜' ? '本课末象为速喜，后续容易有快速消息或变化，但仍要看是否持续。' : end === '小吉' ? '本课末象为小吉，适合先取小结果、小进展。' : '本课末象为大安，最后重在稳定落实，不宜急躁变动。';
-      return `<div class="focus-card"><h5>这次主要看什么</h5><p>${q}<br>此类问题属于“${info.title}”，重点不是单看吉凶，而是看它能不能推进、哪里会卡、最后是否落地。</p></div>
-      <div class="focus-card"><h5>判断顺序</h5><ul>${info.focus.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-      <div class="focus-card"><h5>本课特别提醒</h5><p>${endTip}</p></div>
-      <div class="focus-card"><h5>现实用法</h5><p>${info.tip}</p></div>`;
-    }
+    
+    /* 已清理：早期重复的 buildSceneFocusHTML 函数定义，保留源码主定义。 */
 
-    function renderResult(result) {
-      try { currentResult = result; window.currentResult = result; } catch(e) { try { window.currentResult = result; } catch(_e){} }
-      try { document.body.classList.add('result-page'); document.body.classList.toggle('result-destiny', !!(result && (result.sceneKey==='destiny' || result.sceneName==='命运'))); } catch(e) {}
-      document.getElementById('resultCard').classList.remove('hidden');
-      document.getElementById('resultScene').textContent=`${result.sceneIcon} ${result.sceneName}`;
-      document.getElementById('resultTitle').textContent=`${result.sceneName} · 占卜结果`;
-      ensureRuleInfo(result); document.getElementById('resultMethod').innerHTML=`${result.methodNote}${result.extraInfo ? ` ｜ ${result.extraInfo}` : ''}<br><span class="rule-badge">起课规则：${result.rule.name}</span><div class="rule-note">${result.rule.description}</div>`;
-      if(!result.supplement || result.supplement.length < 2) result.supplement = buildSupplementByScene(result.sceneKey, result.details, result.metrics);
-      if(!result.advice || result.advice.length < 2) result.advice = buildAdviceByScene(result.sceneKey, result.details, result.metrics);
-      document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
-      const keys = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'];
-      document.getElementById('summaryGrid').innerHTML=keys.map(label=>`<div class="summary-item"><span>${sceneLabel(result.sceneKey,label)}</span><b>${sceneMetricValue(result.sceneKey,label,result)}</b></div>`).join('');
-      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div><div class="keyword-row">${d.keywords.map(k=>`<span class="keyword-chip">关键词：${k}</span>`).join('')}</div><p><strong>本象说明：</strong>${d.summary}</p><p><strong>通俗理解：</strong>${buildReadingCardText(result.sceneKey, d)}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
-      document.getElementById('singlePalaceReading').innerHTML=buildSinglePalaceReadingByScene(result.sceneKey, result.details);
-      document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
-      document.getElementById('overallText').textContent=result.overallText || buildOverallByScene(result.sceneKey, result.details, result.metrics, result.distribution);
-      document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
-      document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
-    }
-
-
-    /* Global plain-language refinement: keep terms, add user-friendly explanations for every scene */
+    /* 已清理：早期重复的 renderResult 函数定义，保留源码主定义。 */
+/* Global plain-language refinement: keep terms, add user-friendly explanations for every scene */
     const SCENE_PLAIN_INFO = {
       love: {
         focus: '感情关系',
@@ -3507,26 +3281,8 @@ ${nextStep}`;
       return [...new Set(notes)].slice(0, 5);
     }
 
-    function analyzeQuestionContext(question, sceneKey) {
-      const q = (question || '').trim();
-      if (!q) return null;
-      const priority = ['weather','lost','marriage','love','money','career','cooperation','exam','message','travel','health'];
-      let bestKey = null, bestHits = [];
-      priority.forEach(key => {
-        const rule = CONTEXT_INTENTS[key];
-        const hits = rule.keys.filter(k => q.indexOf(k) !== -1);
-        if (hits.length && (!bestKey || hits.length > bestHits.length)) { bestKey = key; bestHits = hits; }
-      });
-      if (!bestKey) {
-        const map = {lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message'};
-        bestKey = map[sceneKey] || 'message';
-        bestHits = [];
-      }
-      const rule = CONTEXT_INTENTS[bestKey];
-      const baseContext = { key: bestKey, title: rule.title, question: q, hits: bestHits.length ? bestHits : ['按所选场景推断'], focus: rule.focus, advice: rule.advice, rule };
-      return baseContext;
-    }
-    function buildContextOverallSentence(context, details) {
+    /* 已清理：早期重复的 analyzeQuestionContext 函数定义，保留源码主定义。 */
+function buildContextOverallSentence(context, details) {
       const seq = details.map(d => d.palaceName).join(' → ');
       const start = details[0], middle = details[1], end = details[2];
       const notes = getContextSpecialNotes(context, details);
@@ -3798,6 +3554,59 @@ ${nextStep}`;
       <div class="focus-card"><h5>现实用法</h5><p>${info.tip}</p></div>`;
     }
 
+
+    function buildQuickGuideHTML(result){
+      const isDestiny = !!(result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
+      const scene = result && result.sceneName ? result.sceneName : '当前问题';
+      const palaces = result && result.palaces ? result.palaces : [];
+      const seq = palaces.length ? palaces.join(' → ') : '本象 → 中象 → 末象';
+      const end = palaces[2] || '末象';
+      const endText = {
+        '大安':'结果重在稳定、守成、慢慢落实，不宜急躁。',
+        '留连':'结果容易拖延反复，要预留时间并回头复查。',
+        '速喜':'结果端有较快消息或变化，但仍要确认后续能否持续。',
+        '赤口':'结果端要防口舌、规则、争执、沟通误会或临门阻力。',
+        '小吉':'结果适合先取小成、小进展、小范围改善。',
+        '空亡':'结果最要防落空、信息不实、承诺未落地，要核实证据。'
+      }[end] || '先看末象是否能真正落地。';
+      const destinyLine = isDestiny ? '命运盘不要只断一件事，要把三象当作长期倾向：自身气象、关系助力、整体走向，再结合六亲与五行看人生主题。' : '普通问事不要只看一个宫，要把三宫串成“起点—过程—结果”的故事，再结合现实证据判断。';
+      const cards = [
+        ['① 先看答案','先看“答案摘要”和“本场景判断重心”，快速抓住这课到底在提醒什么。'],
+        ['② 再看三象',`本课顺序是 ${seq}。本象看起点/当前，中象看过程/阻力，末象看结果/落点。`],
+        ['③ 重点看末象',`末象为「${end}」：${endText}`],
+        ['④ 结合现实',destinyLine],
+        ['⑤ 学习术语','看不懂掌诀、五行、六亲、六神、应期、方位时，展开底部“术语解释”，这一版已把命运与普通问事的学习内容合并到一个模块。']
+      ];
+      return cards.map(([title,text])=>`<div class="v10510-guide-card"><b>${escapeHTML(title)}</b><span>${escapeHTML(text)}</span></div>`).join('');
+    }
+    function buildGlossaryHTML(result){
+      const isDestiny = !!(result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
+      const details = (result && result.details) || [];
+      const seq = details.length ? details.map(d=>`${d.positionName}${d.palaceName}`).join('，') : '本象、中象、末象';
+      const scene = result && result.sceneName ? result.sceneName : '当前问题';
+      const common = [
+        ['三象怎么串联',`本象看起点与当前状态，中象看推进过程与阻力，末象看最终落点。${seq} 要串成一个过程，而不是拆成三个孤立结论。`],
+        ['六宫掌诀','大安主稳，留连主拖，速喜主快，赤口主争，小吉主小成，空亡主虚或未落实。判断时先看末象，再回看中象卡点，最后确认本象起点。'],
+        ['五行与颜色方位','五行、颜色、方位是辅助线索，用来提示环境、状态和行动方向，不要机械套用。真正判断仍要回到问题本身和现实证据。'],
+        ['吉凶不是绝对','同一个宫在不同场景含义不同。速喜在消息类是快，在感情类也可能是冲动；大安在稳定类是好，在求快时可能是慢。'],
+        ['应期怎么看','速喜偏快，小吉偏小周期，大安偏慢而稳，留连偏拖，赤口偏快但有波折，空亡偏不定或落空。应期只看倾向，不当精确日期。'],
+        ['现实校验','本工具适合作为传统文化参考和自我梳理。健康、法律、投资、重大合同、紧急安全问题，都要以专业意见和现实资料为准。']
+      ];
+      const destiny = [
+        ['命运盘怎么看','命运场景看长期倾向，不是给人生定死局。先看自身气象，再看关系与助力，最后看整体走向。'],
+        ['六亲', '自身看自己与根基；父母看保护、文书和长辈；官鬼看压力、事业、规则和病痛；兄弟看同辈竞争；妻财看钱财、伴侣和资源；子孙看子女、才华、快乐和医药。'],
+        ['六神','青龙偏正直与生发，朱雀偏表达与火气，勾陈偏迟缓纠缠，腾蛇偏虚惊缠绕，白虎偏强烈冲突，玄武偏隐藏暗线。'],
+        ['五星 / 生克','星生地多助力，星克地多外压，地克星多内耗，地生星多付出，比和多稳定。生克要结合落宫与现实角色一起看。']
+      ];
+      const normal = [
+        ['问事专项','普通问事优先看你问的场景，例如财运看能否到账，感情看是否有真实行动，失物看线索与位置，天气看是否真的落雨。'],
+        ['单宫与双宫','单宫看某一步的主象，双宫看两步之间如何衔接：是顺着推进、拖住、冲突，还是最后落空。'],
+        ['行动建议','建议不是命令，而是把卦象翻译成现实动作：该核实、该等待、该沟通、该写清楚、该小步试行。']
+      ];
+      const list = common.concat(isDestiny ? destiny : normal);
+      return list.map(([title,text])=>`<div class="v10510-term-card"><h5>${escapeHTML(title)}</h5><p>${escapeHTML(text)}</p></div>`).join('');
+    }
+
     function renderResult(result) {
       try { currentResult = result; window.currentResult = result; } catch(e) { try { window.currentResult = result; } catch(_e){} }
       try { document.body.classList.add('result-page'); document.body.classList.toggle('result-destiny', !!(result && (result.sceneKey==='destiny' || result.sceneName==='命运'))); } catch(e) {}
@@ -3819,16 +3628,18 @@ ${nextStep}`;
       document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
       document.getElementById('overallText').innerText=result.overallText;
       const answerSummary=document.getElementById('answerSummaryContent'); if(answerSummary) answerSummary.innerHTML=buildAnswerSummaryHTML(result);
+      const guideContent=document.getElementById('v10510QuickGuideContent'); if(guideContent) guideContent.innerHTML=buildQuickGuideHTML(result);
+      const glossaryContent=document.getElementById('v10510GlossaryContent'); if(glossaryContent) glossaryContent.innerHTML=buildGlossaryHTML(result);
       const focusContent=document.getElementById('sceneFocusContent'); if(focusContent) focusContent.innerHTML=buildSceneFocusHTML(result);
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderABChoiceResult(result); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
 
-    /* v8.2 综合增强：新增场景、手动修正识别类型、简洁/详细切换、历史搜索导出、版本说明 */
+    /* 源码模块：综合场景、手动修正识别类型、简洁/详细切换、历史搜索导出、版本说明 */
     Object.assign(CONTEXT_INTENTS, {
       job: {
         title: '求职 / 面试 / Offer',
@@ -4103,7 +3914,7 @@ ${nextStep}`;
       const payload = {
         app: 'xiaoliuren-web',
         exportType: 'historyRecords',
-        sourceVersion: 'v9.9.13',
+        sourceVersion: XLR_SOURCE_VERSION,
         exportedAt: new Date().toISOString(),
         note: '这是历史记录 JSON，只包含历史、收藏、复盘、A/B 对比等记录数据；不包含问题模板、阅读设置等完整配置。',
         history
@@ -4208,7 +4019,7 @@ ${nextStep}`;
       return {
         app: 'xiaoliuren-web',
         backupVersion: '1.0',
-        sourceVersion: 'v9.9.13',
+        sourceVersion: XLR_SOURCE_VERSION,
         exportedAt: new Date().toISOString(),
         note: '这是小六壬个人占卜台完整备份 JSON。TXT 适合阅读，JSON 用于恢复历史、收藏、复盘、A/B 对比等结构化数据。',
         storageKeys: {
@@ -4313,12 +4124,12 @@ ${nextStep}`;
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.86 源码净化与快捷阅读恢复版', items:[
+        { v:'v10.5.87 源码清理与导读术语恢复版', items:[
           '继续保持 1 个主样式与 1 个主脚本，不再追加独立运行脚本。',
           '把阅读模式、背景颜色、阅读字号、UI 显示开关、默认电脑模式、快捷按钮自定义写回源码主模块。',
           '右侧快捷按钮现在可在设置中选择显示、隐藏和排序；主页、历史、分析、重占、电脑、展开、折叠、设置、夜间、置顶、到底、规则、模板、复制均可配置。',
           'Debug 仍是源码内建模块；可在设置中显示或隐藏，复制日志只读页面状态，不改占卜逻辑。',
-          '页面 title、首页标题、版本内容更新、README、manifest、service-worker 缓存名统一到 v10.5.86。'
+          '页面 title、首页标题、版本内容更新、README、manifest、service-worker 缓存名统一到 v10.5.87。'
         ]},
         { v:'v10.5.85 源码内建 Debug 恢复版', items:[
           '把 Debug 诊断能力按源码主模块写回，保留单一主脚本结构。',
@@ -4340,11 +4151,11 @@ ${nextStep}`;
           '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复第二步：阅读模式、UI显示和快捷按钮已按主模块写回；仍保持单一版本源。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第三步：继续删除源码内重复函数和旧包装式覆盖逻辑，恢复快速导读与统一术语学习内容；仍保持单一版本源。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
-    /* v9.1 阅读设置与折叠模块 */
+    /* 源码模块：阅读设置与折叠模块 */
     const SETTINGS_KEY = 'xlr_user_settings_v9_1';
     const SAVED_CHOICE_KEY = 'xlr_saved_choice_v9_1';
     const DEFAULT_SETTINGS = {
@@ -4362,15 +4173,48 @@ ${nextStep}`;
       catch(e){ return Object.assign({}, DEFAULT_SETTINGS); }
     }
     function saveUserSettings(settings){ try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, settings || {}))); } catch(e){} }
+    let settingsDirty = false;
+    let settingsSnapshot = '';
+    function readSettingsDialogSnapshot(){
+      const dlg=document.getElementById('settingsDialog');
+      if(!dlg) return '';
+      return Array.from(dlg.querySelectorAll('input,select,textarea')).map(el=>{
+        const key=el.id || el.name || el.type;
+        const val=el.type==='checkbox' ? (el.checked?'1':'0') : String(el.value || '');
+        return key + '=' + val;
+      }).join('&');
+    }
+    function refreshSettingsSnapshot(){ settingsSnapshot=readSettingsDialogSnapshot(); settingsDirty=false; }
+    function markSettingsDirty(){
+      const dlg=document.getElementById('settingsDialog');
+      if(!dlg || !dlg.open) return;
+      const now=readSettingsDialogSnapshot();
+      settingsDirty = !!settingsSnapshot && now !== settingsSnapshot;
+    }
+    function bindSettingsDirtyWatcher(){
+      const dlg=document.getElementById('settingsDialog');
+      if(!dlg || dlg.dataset.dirtyWatcher==='1') return;
+      dlg.dataset.dirtyWatcher='1';
+      dlg.addEventListener('input', markSettingsDirty, true);
+      dlg.addEventListener('change', markSettingsDirty, true);
+      dlg.addEventListener('click', function(e){ if(e.target.closest('[data-quick-move], #quickButtonsDefaultBtn, #quickButtonsAllBtn')) setTimeout(markSettingsDirty,0); }, true);
+    }
     function openSettingsDialog(){
       fillSettingsDialog();
       syncExtraSettingsForm();
+      bindSettingsDirtyWatcher();
+      setTimeout(refreshSettingsSnapshot, 0);
       const dlg=document.getElementById('settingsDialog');
       if(dlg && typeof dlg.showModal === 'function') dlg.showModal();
       else if(dlg) dlg.setAttribute('open','open');
     }
     function closeSettingsDialog(){
       const dlg=document.getElementById('settingsDialog');
+      if(settingsDirty){
+        const shouldSave = confirm('设置有未保存的变动，是否保存后关闭？\n确定：保存并关闭；取消：不保存，直接关闭。');
+        if(shouldSave){ saveSettingsFromDialog(); return; }
+        settingsDirty=false;
+      }
       if(dlg && typeof dlg.close === 'function') dlg.close();
       else if(dlg) dlg.removeAttribute('open');
     }
@@ -4405,6 +4249,7 @@ ${nextStep}`;
       };
       saveUserSettings(settings);
       saveExtraSettingsFromForm();
+      refreshSettingsSnapshot();
       if(settings.rememberScene) persistChoiceIfNeeded('scene', currentScene);
       if(settings.rememberMethod) persistChoiceIfNeeded('method', currentMethod);
       applyUserSettingsToPage();
@@ -4417,6 +4262,7 @@ ${nextStep}`;
       resetExtraSettings();
       try { localStorage.removeItem(SAVED_CHOICE_KEY); localStorage.removeItem('xlr_view_mode_v9_1'); } catch(e) {}
       fillSettingsDialog();
+      refreshSettingsSnapshot();
       applyUserSettingsToPage();
       restoreResultViewMode();
       alert('已恢复默认设置。');
@@ -4666,7 +4512,7 @@ ${nextStep}`;
 
 
 
-    /* v10.5.86 源码主模块：阅读模式、UI显示与快捷按钮 */
+    /* 源码主模块：阅读模式、UI显示与快捷按钮 */
     const SOURCE_UI_SETTINGS_KEY = 'xiaoliuren_ui_settings_source';
     const SOURCE_READING_KEY = 'xiaoliuren_reading_mode_source';
     const SOURCE_READING_SIZE_KEY = 'xiaoliuren_reading_size_source';
@@ -4866,13 +4712,13 @@ ${nextStep}`;
       document.addEventListener('click', function(e){ const btn=e.target.closest && e.target.closest('[data-xlr-quick]'); if(!btn) return; e.preventDefault(); runQuickAction(btn.getAttribute('data-xlr-quick')); }, true);
       const list=document.getElementById('quickButtonConfigList');
       if(list){
-        list.addEventListener('change', function(e){ const input=e.target.closest('[data-quick-enabled]'); if(!input)return; const cfg=readQuickConfig(); cfg.enabled[input.getAttribute('data-quick-enabled')]=!!input.checked; saveQuickConfig(cfg); renderQuickTools(); });
-        list.addEventListener('click', function(e){ const btn=e.target.closest('[data-quick-move]'); if(!btn)return; const cfg=readQuickConfig(); const id=btn.getAttribute('data-quick-move'); const dir=Number(btn.getAttribute('data-dir')||0); const i=cfg.order.indexOf(id), n=i+dir; if(i>=0&&n>=0&&n<cfg.order.length){ [cfg.order[i],cfg.order[n]]=[cfg.order[n],cfg.order[i]]; saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools(); } });
+        list.addEventListener('change', function(e){ const input=e.target.closest('[data-quick-enabled]'); if(!input)return; const cfg=readQuickConfig(); cfg.enabled[input.getAttribute('data-quick-enabled')]=!!input.checked; saveQuickConfig(cfg); markSettingsDirty(); renderQuickTools(); });
+        list.addEventListener('click', function(e){ const btn=e.target.closest('[data-quick-move]'); if(!btn)return; const cfg=readQuickConfig(); const id=btn.getAttribute('data-quick-move'); const dir=Number(btn.getAttribute('data-dir')||0); const i=cfg.order.indexOf(id), n=i+dir; if(i>=0&&n>=0&&n<cfg.order.length){ [cfg.order[i],cfg.order[n]]=[cfg.order[n],cfg.order[i]]; saveQuickConfig(cfg); markSettingsDirty(); renderQuickSettingsList(); renderQuickTools(); } });
       }
-      document.getElementById('quickButtonsDefaultBtn')?.addEventListener('click', function(){ saveQuickConfig({order:DEFAULT_QUICK_ORDER, enabled:DEFAULT_QUICK_ENABLED}); renderQuickSettingsList(); renderQuickTools(); });
-      document.getElementById('quickButtonsAllBtn')?.addEventListener('click', function(){ const cfg=readQuickConfig(); QUICK_ITEMS.forEach(x=>cfg.enabled[x.id]=true); saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools(); });
+      document.getElementById('quickButtonsDefaultBtn')?.addEventListener('click', function(){ saveQuickConfig({order:DEFAULT_QUICK_ORDER, enabled:DEFAULT_QUICK_ENABLED}); markSettingsDirty(); renderQuickSettingsList(); renderQuickTools(); });
+      document.getElementById('quickButtonsAllBtn')?.addEventListener('click', function(){ const cfg=readQuickConfig(); QUICK_ITEMS.forEach(x=>cfg.enabled[x.id]=true); saveQuickConfig(cfg); markSettingsDirty(); renderQuickSettingsList(); renderQuickTools(); });
       ['settingReadingMode','settingReadingBg','settingReadingCustomBg','settingAutoNightStart','settingAutoNightEnd','settingReadingQuickToggle','settingReadingTextSize','settingUiShowQuickButtons','settingUiShowSectionNav','settingUiShowProgress','settingUiDefaultClientMode','settingDebugEnabled'].forEach(id=>{
-        document.getElementById(id)?.addEventListener('change', function(){ saveExtraSettingsFromForm(); });
+        document.getElementById(id)?.addEventListener('change', function(){ markSettingsDirty(); });
       });
       if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyReadingSettings); }catch(e){} }
     }
@@ -5285,7 +5131,7 @@ ${nextStep}`;
       };
     }
 
-    /* v8.8 场景规则查询 */
+    /* 源码模块：场景规则查询 */
     const SCENE_RULE_ROWS = [{"type":"寻人 / 找人 / 失联联系","scenes":["寻人","消息等待","失物"],"keywords":["寻人","找人","失联","联系不上","在哪里","出现","回来","线索"],"questions":"这个人在哪里？还能不能联系上？会不会主动出现？","note":"重点看方位、消息、是否有人见过、能否主动出现；不替代报警或现实寻找。"}, {"type":"贵人 / 助力 / 谁能帮","scenes":["贵人","事业","合作","其他"],"keywords":["贵人","帮忙","助力","谁能帮","支持","介绍","资源","人脉"],"questions":"这件事有没有贵人帮忙？该找谁帮？这个人是不是贵人？","note":"重点看小吉、大安、速喜等助力象，也看方位、人物关系和主动求助时机。"}, {"type":"运势 / 近期趋势 / 阶段提醒","scenes":["运势","其他"],"keywords":["运势","最近","近期","这周","本月","这段时间","阶段","趋势","整体状态"],"questions":"最近整体运势怎么样？这周需要注意什么？接下来一个月顺不顺？","note":"运势场景用于阶段性自我观察，重点看当前气势、过程起伏与近期落点，不作为绝对定论。"}, {"type":"命运 / 出生时间参考 / 六亲象意","scenes":["命运"],"keywords":["命运","出生","生辰","出生时间","六亲","性格","人生","自我观察"],"questions":"用出生时间看整体象意、性格倾向、处事节奏、人际助力与自我观察。","note":"命运场景只用时辰起课，作为出生时间参考盘，不作人生定论。"}, {"type": "感情 / 前任 / 复合 / 暧昧", "scenes": ["感情"], "keywords": ["前任", "复合", "冷战", "断联", "暧昧", "表白", "主动联系"], "questions": "前任会不会联系我？能不能复合？对方是否真心？要不要主动？", "note": "重点看关系是否有实际行动、消息是否落实、末象是否空亡或赤口。"}, {"type": "人物态度判断", "scenes": ["感情", "事业", "合作", "其他"], "keywords": ["怎么看我", "态度", "真心", "领导态度", "客户态度", "朋友态度"], "questions": "他怎么看我？领导会不会同意？客户靠谱吗？", "note": "看对象是谁来归场景；感情对象选感情，领导选事业，客户伙伴选合作。"}, {"type": "消息 / 联系 / 等回复", "scenes": ["消息等待", "感情", "事业", "合作"], "keywords": ["回复", "联系", "消息", "通知", "电话", "微信", "邮件", "审批结果"], "questions": "对方会不会回复？通知什么时候来？邮件有没有结果？", "note": "重点看速喜、小吉是否有动，以及末象是否真正落实。"}, {"type": "财运 / 投资 / 回款 / 工资奖金", "scenes": ["财运"], "keywords": ["投资", "回款", "借钱", "欠款", "工资", "奖金", "副业", "赚钱"], "questions": "钱能不能回来？投资能不能做？工资奖金有没有消息？", "note": "重点看钱能否落袋，空亡防承诺落空，赤口防合同争议。"}, {"type": "行情 / 价格 / 涨跌", "scenes": ["财运"], "keywords": ["油价", "金价", "股价", "基金", "汇率", "价格", "行情", "上涨", "下跌"], "questions": "油价会不会下跌？黄金会不会涨？这只股票走势如何？", "note": "属于行情娱乐参考，不构成投资建议；重点看短线波动和末象落实。"}, {"type": "购物 / 消费 / 买不买", "scenes": ["财运", "选择"], "keywords": ["买不买", "值得买", "网购", "二手", "质量", "售后", "退货", "降价"], "questions": "这个东西值不值得买？现在买会不会后悔？", "note": "花钱决策偏财运；二选一或去不去买可用选择。"}, {"type": "彩票 / 抽奖 / 中奖娱乐", "scenes": ["其他", "财运"], "keywords": ["彩票", "抽奖", "中奖", "奖券", "刮刮乐", "小奖", "大奖"], "questions": "这次抽奖有没有机会？买彩票有没有小惊喜？", "note": "只作娱乐参考，不提供号码，不承诺中奖，不鼓励加注、追投或倍投。"}, {"type": "事业 / 工作 / 项目 / 职场", "scenes": ["事业"], "keywords": ["工作", "项目", "领导", "同事", "升职", "跳槽", "转岗", "绩效", "汇报"], "questions": "项目能不能推进？领导态度怎样？这次跳槽合不合适？", "note": "重点看流程是否推进、沟通是否顺、承诺是否真正落地。"}, {"type": "求职 / 面试 / Offer", "scenes": ["求职", "考试", "事业"], "keywords": ["面试", "offer", "入职", "岗位", "简历", "录用", "求职"], "questions": "这次面试能不能过？offer 会不会来？", "note": "求职相关优先选求职；偏考试申请也可选考试。"}, {"type": "学习 / 技能提升 / 课程", "scenes": ["考试"], "keywords": ["学习", "课程", "老师", "自学", "技能", "语言", "培训", "进步"], "questions": "适不适合学这个课程？学习效率会不会提高？", "note": "长期学习和考证准备都归考试/学习，重点看能否持续。"}, {"type": "考试 / 申请 / 证书", "scenes": ["考试"], "keywords": ["考试", "成绩", "通过", "证书", "报名", "录取", "资格"], "questions": "考试能不能过？申请会不会成功？", "note": "重点看基础、流程、结果是否真正落地。"}, {"type": "失物 / 找东西", "scenes": ["失物"], "keywords": ["丢了", "找不到", "放哪里", "失物", "钥匙", "钱包", "证件", "金属", "抽屉"], "questions": "东西放哪里了？钥匙钱包能不能找到？", "note": "重点看可能位置和寻找顺序，方位要转成现实地点。"}, {"type": "地点 / 方位 / 去哪里找", "scenes": ["失物", "出行", "其他"], "keywords": ["在哪里", "在哪", "去哪里", "哪个方向", "位置", "方位", "找哪里"], "questions": "东西在哪里？该往哪个方向找？适合去哪里？", "note": "找东西选失物；出门路线选出行；泛用地点选其他。"}, {"type": "宠物 / 动物", "scenes": ["失物", "健康", "其他"], "keywords": ["宠物", "猫", "狗", "走失", "跑丢", "宠物医院", "回来"], "questions": "猫狗会不会回来？宠物状态会不会好？", "note": "宠物走失归失物，宠物健康归健康，适应环境归其他。"}, {"type": "健康 / 身体状态", "scenes": ["健康"], "keywords": ["健康", "恢复", "复查", "感冒", "疼痛", "睡眠", "旧疾", "体检"], "questions": "状态会不会好转？复查结果怎样？", "note": "只作传统文化参考，不替代医疗判断。"}, {"type": "情绪 / 心理状态", "scenes": ["健康"], "keywords": ["焦虑", "压力", "心情", "情绪", "内耗", "失眠", "不安"], "questions": "这段时间状态能不能好起来？我是不是想太多？", "note": "偏自我状态观察；持续严重不适请寻求专业支持。"}, {"type": "天气 / 降雨 / 户外天气", "scenes": ["天气", "出行"], "keywords": ["下雨", "降雨", "天气", "阵雨", "晴天", "阴天", "刮风", "降温", "台风"], "questions": "明天会不会下雨？周末适不适合露营？", "note": "天气本身选天气；若问是否影响行程，可同时参考出行。"}, {"type": "出行 / 行程 / 交通", "scenes": ["出行"], "keywords": ["出行", "旅行", "开车", "航班", "火车", "堵车", "延误", "行程"], "questions": "路上顺不顺？航班会不会延误？适不适合出门？", "note": "重点看拖延、变动、规则和安全提醒。"}, {"type": "合作 / 合同 / 客户 / 合伙", "scenes": ["合作"], "keywords": ["合作", "合伙", "合同", "客户", "签约", "谈判", "协议", "订单"], "questions": "合同能不能签？客户靠谱吗？合作能不能成？", "note": "重点看条款、责任边界和承诺是否落实。"}, {"type": "法务 / 纠纷 / 投诉", "scenes": ["合作", "其他"], "keywords": ["纠纷", "投诉", "维权", "赔偿", "诉讼", "证据", "调解", "官司"], "questions": "投诉会不会有结果？纠纷能不能解决？", "note": "合同纠纷偏合作，其它维权投诉可选其他；不替代法律意见。"}, {"type": "手续 / 审批 / 证件", "scenes": ["其他", "事业", "考试"], "keywords": ["签证", "证件", "审批", "审核", "报销", "申请", "材料", "盖章"], "questions": "签证会不会过？报销什么时候下来？材料有没有问题？", "note": "工作审批选事业；报名资格选考试；签证证件选其他。"}, {"type": "家宅 / 房屋 / 搬家", "scenes": ["家宅"], "keywords": ["搬家", "租房", "买房", "装修", "邻里", "漏水", "维修", "家里"], "questions": "这个房子适不适合租？搬家顺不顺？", "note": "重点看居住稳定、家中旧问题、合同与维修争议。"}, {"type": "家人 / 长辈 / 子女", "scenes": ["其他", "健康", "考试"], "keywords": ["父母", "家人", "长辈", "孩子", "子女", "亲子", "家庭"], "questions": "父母会不会同意？孩子考试怎样？家人态度如何？", "note": "家人态度选其他，身体选健康，孩子考试选考试。"}, {"type": "人际关系 / 社交", "scenes": ["其他", "合作", "感情"], "keywords": ["朋友", "同学", "同事关系", "亲戚", "邻里", "社交", "误会", "和好"], "questions": "这个朋友是不是对我有意见？要不要解释？", "note": "普通关系选其他；合作关系选合作；带恋爱暧昧选感情。"}, {"type": "电子产品 / 设备故障", "scenes": ["其他", "选择", "财运"], "keywords": ["手机", "电脑", "家电", "网络", "账号", "软件", "故障", "维修", "数据"], "questions": "手机能不能修好？账号能不能找回？要不要换电脑？", "note": "故障维修选其他；要不要换/买选选择；价格问题选财运。"}, {"type": "创作 / 内容 / 发布", "scenes": ["事业", "其他"], "keywords": ["写作", "文章", "视频", "发布", "作品", "流量", "评论", "投稿", "审核"], "questions": "这篇文章反响如何？视频会不会有流量？", "note": "工作内容选事业，个人创作选其他。"}, {"type": "比赛 / 竞赛 / 游戏", "scenes": ["考试", "其他", "财运"], "keywords": ["比赛", "竞赛", "游戏", "胜负", "赢", "输", "排名", "抽卡"], "questions": "比赛能不能赢？竞赛发挥怎么样？", "note": "正式竞赛选考试，游戏胜负选其他，奖励收益才参考财运。"}, {"type": "梦境 / 预感 / 灵感", "scenes": ["其他"], "keywords": ["梦", "梦见", "预感", "直觉", "灵感", "征兆", "心慌"], "questions": "这个梦是什么意思？这个预感准不准？", "note": "用于自我梳理，不宜过度解读。"}, {"type": "选择 / 决策", "scenes": ["选择"], "keywords": ["要不要", "选哪个", "买不买", "去不去", "换不换", "继续还是放弃"], "questions": "要不要做？选 A 还是 B？现在做还是以后做？", "note": "适合所有二选一、要不要、去不去类问题。"}, {"type": "是 / 否判断", "scenes": ["跟随原问题场景"], "keywords": ["会不会", "能不能", "是否", "能否", "有没有希望", "成不成"], "questions": "会不会发生？能不能成功？有没有希望？", "note": "横向规则，不单独选场景；跟随具体问题类型。"}, {"type": "时间 / 何时发生", "scenes": ["跟随原问题场景"], "keywords": ["什么时候", "多久", "几天", "何时", "快不快"], "questions": "什么时候联系我？多久能找到？什么时候到账？", "note": "横向应期规则，跟随原问题场景。"}, {"type": "是否主动 / 是否等待", "scenes": ["感情", "消息等待", "事业", "合作", "选择"], "keywords": ["要不要主动", "该不该主动", "要不要联系", "要不要催", "等不等"], "questions": "要不要主动联系？要不要催？该不该现在做？", "note": "主动类问题看速喜/小吉是否可动，赤口要柔，空亡先核实。"}, {"type": "风险 / 坑点识别", "scenes": ["财运", "合作", "事业", "其他"], "keywords": ["风险", "坑", "踩坑", "隐患", "靠谱吗", "有没有问题"], "questions": "这件事有没有坑？对方靠谱吗？会不会出问题？", "note": "投资风险选财运，合同风险选合作，项目风险选事业。"}];
     function allSceneFilterNames(){
       const names = new Set(['all']);
@@ -5329,7 +5175,7 @@ ${nextStep}`;
 
 
 
-    /* v9.2 A/B 选择起课增强 */
+    /* 源码模块：A/B 选择起课增强 */
     function initABChoiceUI(){
       const abEnable = document.getElementById('abEnable');
       const abFields = document.getElementById('abFields');
@@ -5446,50 +5292,11 @@ ${nextStep}`;
       if (ab) { block.classList.remove('hidden'); content.innerHTML = buildABChoiceHTML(ab); }
       else { block.classList.add('hidden'); content.innerHTML = ''; }
     }
-    const __v92_oldDivine = divine;
-    divine = function(scene, numbers, method, methodNote, extraInfo){
-      const result = __v92_oldDivine(scene, numbers, method, methodNote, extraInfo);
-      const ab = getABInput();
-      if (ab.enabled) {
-        if (!ab.optionA || !ab.optionB) {
-          alert('已开启 A/B 对比，请填写选项 A 和选项 B；如果不需要，请关闭 A/B 对比。');
-        } else {
-          buildABChoice(result);
-        }
-      }
-      return result;
-    };
-    const __v92_oldRenderResult = renderResult;
-    renderResult = function(result){
-      __v92_oldRenderResult(result);
-      renderABChoiceResult(result);
-    };
-    const __v92_oldBuildCopyResultText = buildCopyResultText;
-    buildCopyResultText = function(result){
-      let text = __v92_oldBuildCopyResultText(result);
-      if (result && result.abChoice) {
-        const ab = result.abChoice;
-        text += `\n\n【A/B 选择对比】\n占问事项：${ab.question || ''}\n选项 A：${ab.A.optionText}\nA 取数：${ab.A.numbers.join(' / ')}｜落宫：${ab.A.palaces.join(' / ')}｜倾向：${ab.A.score.overall}/100\n选项 B：${ab.B.optionText}\nB 取数：${ab.B.numbers.join(' / ')}｜落宫：${ab.B.palaces.join(' / ')}｜倾向：${ab.B.score.overall}/100\n对比结论：${ab.recommendation}`;
-      }
-      return text;
-    };
-    const __v92_oldResetForm = resetForm;
-    resetForm = function(){
-      __v92_oldResetForm();
-      const abEnable = document.getElementById('abEnable');
-      const abFields = document.getElementById('abFields');
-      const abTip = document.getElementById('abMiniTip');
-      if (abEnable) abEnable.checked = false;
-      if (abFields) abFields.classList.add('hidden');
-      if (abTip) abTip.classList.add('hidden');
-      const a=document.getElementById('optionAInput'), b=document.getElementById('optionBInput');
-      if (a) a.value=''; if (b) b.value='';
-    };
     // 初始化 A/B 选择 UI
     initABChoiceUI();
 
 
-    /* v9.8 模板收藏、最近使用与使用次数 */
+    /* 源码模块：模板收藏、最近使用与使用次数 */
     const TEMPLATE_META_KEY = 'xlr_question_template_meta_v9_8';
     function getTemplateMeta(){
       try {
@@ -5650,7 +5457,7 @@ ${nextStep}`;
     }
     function exportCustomTemplatesJSON(){
       const payload={
-        app:'xiaoliuren-web', exportType:'customQuestionTemplates', sourceVersion:'v9.9.7', exportedAt:new Date().toISOString(),
+        app:'xiaoliuren-web', exportType:'customQuestionTemplates', sourceVersion:XLR_SOURCE_VERSION, exportedAt:new Date().toISOString(),
         templates:getCustomTemplates(), templateMeta:getTemplateMeta()
       };
       const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
@@ -5690,17 +5497,9 @@ ${nextStep}`;
       reader.onerror=function(){ alert('读取模板文件失败。'); };
       reader.readAsText(file,'utf-8');
     }
-    const __v98_oldGetBackupPayload = getBackupPayload;
-    getBackupPayload = function(){ const payload=__v98_oldGetBackupPayload(); payload.sourceVersion='v9.8'; payload.templateMeta=getTemplateMeta(); return payload; };
-    const __v98_oldHandleImportBackupFile = handleImportBackupFile;
-    handleImportBackupFile = function(e){
-      // 保留原导入逻辑；完整备份里的 templateMeta 会在原导入后的文件读取流程中无法直接二次读取，
-      // 所以此处只作为兼容占位。模板单独导入可完整同步收藏/最近使用。
-      return __v98_oldHandleImportBackupFile(e);
-    };
 
 
-    // v9.9.6 智能章节卡点导航
+    // 源码模块：智能章节卡点导航
     const SECTION_JUMP_TARGETS = {
       home: [
         { id:'homeTopSection', label:'顶部' },
@@ -5726,8 +5525,6 @@ ${nextStep}`;
         { id:'doublePalaceBlock', label:'双宫' },
         { id:'symbolBlock', label:'象意' },
         { id:'radarBlock', label:'雷达' },
-        { id:'v10536DestinyGlossaryBlock', label:'术语' },
-        { id:'v1033Glossary', label:'术语' },
         { id:'adviceBlock', label:'建议' },
         { id:'v10510GlossaryBlock', label:'术语' },
         { id:'homeAboutRulesBlockWrap', label:'说明' }
@@ -5803,8 +5600,8 @@ ${nextStep}`;
 
 
 
-    /* v10.5.86 源码内建 Debug 模块：主脚本内置，只读诊断，不改占卜逻辑 */
-    const XLR_SOURCE_VERSION = 'v10.5.86 源码净化与快捷阅读恢复版';
+    /* 源码内建 Debug 模块：主脚本内置，只读诊断，不改占卜逻辑 */
+    const XLR_SOURCE_VERSION = 'v10.5.87 源码清理与导读术语恢复版';
     const XLR_DEBUG_LOG = [];
     function xlrDebugPush(type, detail){
       try{
@@ -5864,7 +5661,7 @@ ${nextStep}`;
       const currentResultSafe = (typeof currentResult !== 'undefined' && currentResult) ? {
         sceneKey:currentResult.sceneKey, sceneName:currentResult.sceneName, method:currentResult.method, numbers:currentResult.numbers, palaces:currentResult.palaces
       } : null;
-      const blocks=['#resultCard','#v10510QuickGuideBlock','#answerSummaryBlock','#sceneFocusBlock','#paipanBlock','#destinyBoardBlock','#overallBlock','#triReadingBlock','#singlePalaceBlock','#doublePalaceBlock','#symbolBlock','#radarBlock','#adviceBlock','#v10510GlossaryBlock','#v10536DestinyGlossaryBlock','#homeAboutRulesBlockWrap','#homeVersionUpdatesBlockWrap'];
+      const blocks=['#resultCard','#v10510QuickGuideBlock','#answerSummaryBlock','#sceneFocusBlock','#paipanBlock','#destinyBoardBlock','#overallBlock','#triReadingBlock','#singlePalaceBlock','#doublePalaceBlock','#symbolBlock','#radarBlock','#adviceBlock','#v10510GlossaryBlock','#homeAboutRulesBlockWrap','#homeVersionUpdatesBlockWrap'];
       return {
         version:XLR_SOURCE_VERSION,
         reason:reason||'manual',
@@ -5900,7 +5697,7 @@ ${nextStep}`;
       fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
       const dlg=document.createElement('dialog');
       dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
-      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.86：只读取页面状态，不改占卜逻辑；用于检查版本、导航、阅读、快捷按钮、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
+      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.87：只读取页面状态，不改占卜逻辑；用于检查版本、导航、导读、术语、阅读、快捷按钮、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
       document.body.appendChild(fab); document.body.appendChild(dlg);
       fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','open'); });
       document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
@@ -5925,21 +5722,5 @@ ${nextStep}`;
     initSourceDebug();
     refreshSectionJumpNavSoon();
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
