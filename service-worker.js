@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.59-section-nav-visibility';
+const CACHE_NAME = 'xiaoliuren-v10.5.60-section-nav-state-lock';
 const APP_SHELL = [
   './',
   './index.html',
