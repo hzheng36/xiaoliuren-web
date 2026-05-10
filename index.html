@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.75 Debug按钮稳定版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复 Debug 面板旧“保存详细日志 v10.5.57”按钮被旧补丁反复插入/删除导致的时有时无和抖动；增强日志按钮改为稳定复用。" />
+  <title>小六壬占卜 · v10.5.76 命运导读电脑端布局修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复命运板块快速导读在电脑端被 Grid 嵌套挤成竖排、右侧大面积空白的问题；修复范围限制在宽屏布局，手机端保持原样。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1034,13 +1034,6 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
   }
 </style>
 
-
-<style id="v10575-debug-button-stability-style">
-  #v10545DebugSaveBtn,
-  #v10546DebugSaveBtn{
-    display:none!important;
-  }
-</style>
 </head>
 <body>
   <div class="page-progress" aria-hidden="true"><div id="pageProgressBar"></div></div>
@@ -1079,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.75 Debug按钮稳定版</h2>
+          <h2>个人占卜台 · v10.5.76 命运导读电脑端布局修正版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -4325,8 +4318,7 @@ ${nextStep}`;
     function buildVersionUpdatesHTML(){
       const versions = [
         
-        { v:'v10.5.75 Debug按钮稳定版', items:['修复 Debug 面板中旧“保存详细日志 v10.5.57”按钮被旧补丁反复插入/删除，导致按钮时有时无和界面轻微抖动的问题。','停用旧 v10.5.46/v10.5.57 的详细日志按钮注入逻辑，只保留新版“保存增强日志”。','“保存增强日志”按钮改为稳定复用，不再每次刷新 Debug 面板都删除重建，减少 iPhone Safari 弹窗内布局抖动。','复制日志、刷新日志、清空日志继续保留；增强日志仍包含设置、导航、快捷按钮、折叠、版本记录、本地存储、性能和错误等诊断数据。','同步更新 README、manifest、service-worker 与页面版本记录，继续检查旧版本跳动问题。'] },
-        { v:'v10.5.74 Debug诊断增强版', items:['升级 Debug 诊断系统，复制日志和保存日志都会输出增强版诊断数据。','新增设置状态检测：阅读字号、默认阅读模式、章节导航开关、导航位置、详细模块默认折叠、记住场景/起课方式等。','新增导航检测：一级/二级导航按钮、active/slot-active 状态、跳转锁剩余时间、目标模块可见性和位置。','新增快捷按钮检测：当前浮动按钮、设置页勾选状态、快捷按钮新旧本地存储字段。','新增折叠显示审计、版本记录去重审计、本地存储摘要、性能/视口信息、最近操作事件和最近错误记录。','Debug 面板新增“保存增强日志”按钮，可直接下载完整 JSON；仍保留手动刷新、复制日志、清空日志。'] },
+        { v:'v10.5.76 命运导读电脑端布局修正版', items:['修复命运板块“快速导读”在电脑端被嵌套 Grid 挤成竖排文字的问题。','新增宽屏专用导读布局规则，四张导读卡片在电脑端按正常横向卡片显示，减少右侧大面积空白。','增加轻量 DOM 归一化：若导读内容出现外层 Grid 包内层 Grid，会自动展开为单层卡片结构。','修复范围限制在 900px 以上宽屏/电脑端样式；手机端继续沿用原来的单列导读规则。','同步更新页面标题、版本内容更新、README、manifest 和 service-worker 缓存名。'] },
         { v:'v10.5.69 阅读字号下拉选择版', items:['将“阅读文字大小”从数字输入框改为 13px–24px 下拉选择。','保留 v10.5.68 的 px 字号变量方案，只改变设置页输入方式，结果页正文继续按用户选择的字号显示。','设置页自身仍不跟随阅读字号变化，避免控件抖动。','继续保留快捷按钮设置、默认阅读模式、记住场景/起课方式、章节导航开关、顶部/底部导航和命运答案导航修复。'] },
         { v:'v10.5.66 性能回退与阅读字号轻量修正版', items:['回退 v10.5.65 中导致 iPhone Safari / ChatGPT App 卡死的重型 MutationObserver 字号扫描逻辑。','阅读文字大小改为轻量事件式保存：只在打开设置、切换字号、关闭设置、渲染结果后少量同步，不再全页面反复扫描。','保留 v10.5.64 已修好的快捷按钮设置、默认阅读模式、记住场景/起课方式、导航开关与命运答案导航修复。','本版重点先恢复流畅度，再修阅读字号，不再叠加会抢设置状态的轮询补丁。'] },
         { v:'v10.5.60 章节导航开关持久锁定修正版', items:['修复设置中关闭“显示章节卡点导航”后，退出设置或自动保存时又被马上重新打开的问题。','新增 showSectionNav 独立意图锁定，用户选择关闭/开启后，旧设置写入也不能把它覆盖回默认值。','关闭后同时隐藏一级章节导航和命运二级导航；开启后恢复固定指针式导航和旧版胶囊外观。','保留 v10.5.58 的导航位置顶部/底部设置、v10.5.57 的详细模块默认折叠，以及 v10.5.56 的命运导航顺序与点击防抖。'] },
@@ -5865,7 +5857,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6680,7 +6672,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7267,7 +7259,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8597,7 +8589,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8773,7 +8765,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -9070,7 +9062,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9346,7 +9338,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9576,7 +9568,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9624,8 +9616,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9788,8 +9780,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9911,8 +9903,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -10063,8 +10055,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10286,8 +10278,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10365,8 +10357,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10435,8 +10427,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10574,8 +10566,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10753,8 +10745,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10825,8 +10817,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10934,8 +10926,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11388,8 +11380,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const HERO="本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11602,7 +11594,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11858,7 +11850,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12026,7 +12018,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12245,7 +12237,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12584,7 +12576,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12901,7 +12893,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 20;
   const logs = [];
@@ -13077,7 +13069,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13302,8 +13294,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13395,8 +13387,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13618,8 +13610,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10519-destiny-formula-debug-save-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.75 Debug按钮稳定版";
-  const META="小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
+  const VERSION="v10.5.76 命运导读电脑端布局修正版";
+  const META="小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。";
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
@@ -13790,8 +13782,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10520-nav-formula-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const BASE={
     '大安':{formula:'大安事事昌，主安稳、守成、慢成。',plain:'命运中多看根基稳定、节奏偏慢，适合长期经营。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠，容易被过程拖住。'},
@@ -14028,8 +14020,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10521-mobile-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function setStableVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14123,8 +14115,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10523-career-beta-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
@@ -14338,8 +14330,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10524-knowledge-table-scroll-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const SELECTORS=['.v1040-marriage-table','.v1030-health-table','.v1031-health-table','.v10523-career-table','.v1025-table-wrap'];
   function setVersion(){
@@ -14400,8 +14392,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10533-formula-overall-order-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el || (el.classList&&el.classList.contains('hidden')) || (el.closest&&el.closest('.hidden'))) return false;
@@ -14507,8 +14499,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10534-theme-performance-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14594,8 +14586,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10535-theme-return-color-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function isNight(){return !!(document.body&&document.body.classList.contains('reading-theme-night'));}
   function syncThemeRoot(){
@@ -14722,8 +14714,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10541-source-integrated-finalizer">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const ROW='<details open><summary>'+VERSION+'</summary><ul><li>以 v10.5.36 为稳定基线，未继续沿用 v10.5.37-v10.5.40 的命运术语补丁。</li><li>命运“术语解释”已放入结果页主 DOM，不再由后置脚本临时创建。</li><li>主导航正式包含“术语”，并位于“雷达”之后；右侧“一键展开/折叠”可控制该模块。</li><li>导航跳转改为单次稳定定位，减少 Safari 上命盘之后内容跳转抖动。</li><li>同步更新 README、manifest、service-worker 与页面版本记录。</li></ul></details>';
   function $(id){return document.getElementById(id);}
@@ -14781,8 +14773,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10542-home-result-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const RESULT_CLASSES=['result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'];
   const RESULT_HASH_IDS={resultCard:1,v10510QuickGuideBlock:1,answerSummaryBlock:1,sceneFocusBlock:1,abChoiceResultBlock:1,paipanBlock:1,destinyBoardBlock:1,overallBlock:1,contextAnalysisBlock:1,triReadingBlock:1,singlePalaceBlock:1,doublePalaceBlock:1,symbolBlock:1,radarBlock:1,v10536DestinyGlossaryBlock:1,v10518FormulaBlock:1,adviceBlock:1,v10510GlossaryBlock:1,v1033Glossary:1};
   function $(id){return document.getElementById(id);}
@@ -15002,8 +14994,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10546-state-nav-glossary-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const EVENTS=[];
   window.__XLR_V10546_EVENTS=EVENTS;
   function $(id){return document.getElementById(id);}
@@ -15243,8 +15235,9 @@ html[data-theme="dark"] .v10519-destiny-note {
   }
   function patchDebugButtons(){
     enhanceDebug();
-    // v10.5.75：旧“保存详细日志 v10.5.57”按钮已停用，避免旧补丁反复插入/删除造成 Debug 面板抖动。
-    ['v10545DebugSaveBtn','v10546DebugSaveBtn'].forEach(function(id){const el=$(id); if(el) el.remove();});
+    const old=$('v10545DebugSaveBtn'); if(old) old.remove();
+    const actions=document.querySelector('#v10514DebugDialog .v10514-debug-actions');
+    if(actions&&!$('v10546DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10546DebugSaveBtn';b.textContent='保存详细日志 v10.5.57';b.addEventListener('click',function(){const api=window.XLR_DEBUG_V10514||{};const data=api.snapshot?api.snapshot('save-log'):{version:VERSION};const text=JSON.stringify({version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:data,logs:(api.logs||[]).slice(),v10546Events:EVENTS.slice(),v10556Note:"v10.5.57 settings collapse nav position"},null,2);const name='xiaoliuren-debug-v10.5.57-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){alert('保存失败，请复制 Debug 日志。');}});actions.insertBefore(b,actions.firstChild);}
   }
   function patchVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -15430,8 +15423,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10556-slot-nav-display-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const EVENTS=[]; window.__XLR_V10556_EVENTS=EVENTS;
   const JUMP_LOCK={until:0,main:'',sub:''};
   const oldUpdate=window.updateSectionJumpNav, oldRefresh=window.refreshSectionJumpNavSoon;
@@ -15598,7 +15591,7 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10572-nav-click-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content','小六壬个人网页版 v10.5.72：修复点击章节导航时旧点击监听、MutationObserver 与导航刷新互相抢控制导致的画面抖动。');}catch(e){}
@@ -15611,7 +15604,7 @@ html[data-theme="dark"] .v10519-destiny-note {
         window.buildVersionUpdatesHTML=function(){
           let html=old.apply(this,arguments)||'';
           html=html.replace(/<details[^>]*><summary>v10\.5\.72[^<]*<\/summary>[\s\S]*?<\/details>/g,'');
-          const row='<details open><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>修复点击章节导航跳转内容时，旧 document 点击监听先触发、旧 MutationObserver 后刷新，导致页面上下抖动的问题。</li><li>章节导航点击改为 window 捕获优先处理，先拦截旧监听，再执行单次稳定跳转。</li><li>跳转锁定期间暂停旧导航刷新、口诀刷新、术语刷新和状态同步，避免跳转后上方模块重排抢滚动位置。</li><li>为结果页阅读区关闭滚动锚定，减少 iPhone Safari 地址栏/模块高度变化造成的回弹。</li><li>保留 v10.5.71 快捷按钮勾选直存、v10.5.69 阅读字号下拉选择和固定指针式导航外观。</li></ul></details>';
+          const row='<details open><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>修复点击章节导航跳转内容时，旧 document 点击监听先触发、旧 MutationObserver 后刷新，导致页面上下抖动的问题。</li><li>章节导航点击改为 window 捕获优先处理，先拦截旧监听，再执行单次稳定跳转。</li><li>跳转锁定期间暂停旧导航刷新、口诀刷新、术语刷新和状态同步，避免跳转后上方模块重排抢滚动位置。</li><li>为结果页阅读区关闭滚动锚定，减少 iPhone Safari 地址栏/模块高度变化造成的回弹。</li><li>保留 v10.5.71 快捷按钮勾选直存、v10.5.69 阅读字号下拉选择和固定指针式导航外观。</li></ul></details>';
           return row+html;
         };
         window.buildVersionUpdatesHTML.__v10572=true;
@@ -15655,8 +15648,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10557-settings-nav-position-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const DETAIL_DEFAULT_COLLAPSE_IDS=['destinyBoardBlock','v10518FormulaBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock','v10536DestinyGlossaryBlock'];
   function $(id){return document.getElementById(id);}
@@ -15755,8 +15748,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10558-nav-position-persistence-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const DEFAULT_NAV='bottom';
   const $=id=>document.getElementById(id);
@@ -15861,8 +15854,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10559-section-nav-visibility-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const DEFAULT_UI={showQuickButtons:true,showSectionNav:true,showProgressBar:true,defaultClientMode:'auto'};
   const $=id=>document.getElementById(id);
@@ -15981,8 +15974,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1060-section-nav-state-lock-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复点击章节导航时页面被旧点击监听与布局刷新抢回造成的画面抖动；导航点击改为窗口捕获优先处理，并在跳转锁定期间暂停旧刷新。';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const INTENT_KEY='xiaoliuren_section_nav_intent_v1060';
   const DEFAULT_UI={showQuickButtons:true,showSectionNav:true,showProgressBar:true,defaultClientMode:'auto'};
@@ -16181,8 +16174,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1062-settings-unified-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：统一设置保存链路，修复阅读文字大小、默认阅读模式、记住上次选择和快捷按钮设置被旧自动保存覆盖的问题。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：统一设置保存链路，修复阅读文字大小、默认阅读模式、记住上次选择和快捷按钮设置被旧自动保存覆盖的问题。';
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -16354,7 +16347,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     try{window.restoreResultViewMode=function(){const saved=localStorage.getItem(VIEW_KEY)||readCore().defaultView||'detail';setResultView(saved);};}catch(e){}
     try{const old=window.renderResult;if(typeof old==='function'&&!old.__v1062Settings){window.renderResult=function(){const r=old.apply(this,arguments);setTimeout(()=>{applyReadingSize();setResultView(readCore().defaultView);commitAll('after-render');},80);return r;};window.renderResult.__v1062Settings=true;}}catch(e){}
   }
-  function patchVersionLog(){try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1062){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);if(html.indexOf('v10.5.75 Debug按钮稳定版')<0){html='<details><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>统一设置保存链路，修复阅读文字大小、默认阅读模式、记住上次场景/起课方式、快捷按钮设置被旧自动保存流程覆盖的问题。</li><li>阅读文字大小会同步应用到结果页正文、答案卡、三象、术语与建议。</li><li>默认阅读模式会同步当前结果视图，新起课后按设置进入简洁版或详细版。</li><li>快捷按钮勾选、取消和排序会独立保存，退出设置后不再复原。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1062=true;}}catch(e){}
+  function patchVersionLog(){try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1062){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this);if(html.indexOf('v10.5.76 命运导读电脑端布局修正版')<0){html='<details><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>统一设置保存链路，修复阅读文字大小、默认阅读模式、记住上次场景/起课方式、快捷按钮设置被旧自动保存流程覆盖的问题。</li><li>阅读文字大小会同步应用到结果页正文、答案卡、三象、术语与建议。</li><li>默认阅读模式会同步当前结果视图，新起课后按设置进入简洁版或详细版。</li><li>快捷按钮勾选、取消和排序会独立保存，退出设置后不再复原。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1062=true;}}catch(e){}
   }
   function boot(){patchStorage();patchGlobals();ensureRows();bind();patchVersionLog();setVersion();restoreChoices();applyReadingSize();applyCore(readCore());applyUI(readUI());renderQuickSettingsList();renderQuickTools();setTimeout(()=>{ensureRows();syncForms();applyReadingSize();applyCore(readCore());applyUI(readUI());renderQuickTools();},500);setTimeout(()=>{setVersion();try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){}},1000);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
@@ -16436,8 +16429,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1066-reading-size-light-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：回退 v10.5.65 中导致卡死的重型字号扫描，改用轻量事件式保存阅读字号。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：回退 v10.5.65 中导致卡死的重型字号扫描，改用轻量事件式保存阅读字号。';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
   const INTENT_KEY='xiaoliuren_reading_text_size_v1066_intent';
   const LEGACY_KEYS=['xiaoliuren_reading_text_size_v1065_intent','xiaoliuren_reading_text_size_v1064_intent','xiaoliuren_reading_text_size_v1063_intent'];
@@ -16518,7 +16511,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     try{
       if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1066Light){
         const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.75 Debug按钮稳定版')<0){html='<details><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>回退 v10.5.65 中导致 iPhone Safari / ChatGPT App 卡死的重型 MutationObserver 字号扫描逻辑。</li><li>阅读文字大小改为轻量事件式保存：只在打开设置、切换字号、关闭设置、渲染结果后少量同步。</li><li>保留 v10.5.64 的快捷按钮设置、默认阅读模式、记住场景/起课方式、章节导航开关等修复。</li></ul></details>'+html;}return html;};
+        window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.76 命运导读电脑端布局修正版')<0){html='<details><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>回退 v10.5.65 中导致 iPhone Safari / ChatGPT App 卡死的重型 MutationObserver 字号扫描逻辑。</li><li>阅读文字大小改为轻量事件式保存：只在打开设置、切换字号、关闭设置、渲染结果后少量同步。</li><li>保留 v10.5.64 的快捷按钮设置、默认阅读模式、记住场景/起课方式、章节导航开关等修复。</li></ul></details>'+html;}return html;};
         window.buildVersionUpdatesHTML.__v1066Light=true;
       }
     }catch(e){}
@@ -16655,7 +16648,7 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1067-reading-size-segment-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
   const INTENT_KEY='xiaoliuren_reading_text_size_v1067_intent';
   const MIRROR_KEYS=['xiaoliuren_reading_text_size_v1066_intent','xiaoliuren_reading_text_size_v1065_intent','xiaoliuren_reading_text_size_v1064_intent','xiaoliuren_reading_text_size_v1063_intent'];
@@ -16783,7 +16776,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     },true);
   }
   function patchVersionLog(){
-    try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1067){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.75 Debug按钮稳定版')<0){html='<details><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>阅读文字大小改为 13px-24px 下拉选择，选择后立即保存并应用。</li><li>新增字号存储保护，旧自动保存流程不能再把非标准字号写回标准。</li><li>不使用重型扫描或全页面 MutationObserver，保持 v10.5.66 的流畅度。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1067=true;}}catch(e){}
+    try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1067){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.76 命运导读电脑端布局修正版')<0){html='<details><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>阅读文字大小改为 13px-24px 下拉选择，选择后立即保存并应用。</li><li>新增字号存储保护，旧自动保存流程不能再把非标准字号写回标准。</li><li>不使用重型扫描或全页面 MutationObserver，保持 v10.5.66 的流畅度。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1067=true;}}catch(e){}
   }
   function boot(){patchStorage();setVersion();ensureControls();patchGlobals();bind();patchVersionLog();apply(preferred(),'boot');setTimeout(()=>{ensureControls();apply(preferred(),'boot-late');},500);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
@@ -16863,7 +16856,7 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1068-reader-font-px-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
   const PX_KEY='xiaoliuren_reader_font_px_v1068';
   const PX_ALIAS='xiaoliuren_reader_font_px';
   const OLD_SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -16949,7 +16942,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     try{const old=window.renderResult;if(typeof old==='function'&&!old.__v1068ReaderFont){window.renderResult=function(){const out=old.apply(this,arguments);[80,260,700].forEach(ms=>setTimeout(()=>apply(current(),'after-render'),ms));return out;};window.renderResult.__v1068ReaderFont=true;}}catch(e){}
   }
   function patchVersionLog(){
-    try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1068){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.75 Debug按钮稳定版')<0){html='<details><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>将阅读文字大小从数字输入框改为 13px–24px 下拉选择。</li><li>设置页自身不跟随阅读字号变化，避免控件在切换字号时抖动。</li><li>结果页正文、答案、三象、术语、建议等模块继续使用 px 字号变量，旧 reading-size-normal 不再影响实际字号。</li><li>继续保留 v10.5.66 的性能回退和 v10.5.64 的快捷按钮设置修复。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1068=true;}}catch(e){}
+    try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1068){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.76 命运导读电脑端布局修正版')<0){html='<details><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>将阅读文字大小从数字输入框改为 13px–24px 下拉选择。</li><li>设置页自身不跟随阅读字号变化，避免控件在切换字号时抖动。</li><li>结果页正文、答案、三象、术语、建议等模块继续使用 px 字号变量，旧 reading-size-normal 不再影响实际字号。</li><li>继续保留 v10.5.66 的性能回退和 v10.5.64 的快捷按钮设置修复。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1068=true;}}catch(e){}
   }
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -16968,7 +16961,7 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1070-quick-buttons-persistence-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
   const QUICK_KEY='xiaoliuren_quick_button_settings_v9919';
   const INTENT_KEY='xiaoliuren_quick_button_settings_v1070_intent';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
@@ -17124,8 +17117,8 @@ html[data-theme="dark"] .v10519-destiny-note {
         const old=window.buildVersionUpdatesHTML;
         window.buildVersionUpdatesHTML=function(){
           let html=old.call(this)||'';
-          if(html.indexOf('v10.5.75 Debug按钮稳定版')<0){
-            html='<details><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>修复快捷按钮设置勾选新增按钮后，关闭设置又自动恢复的问题。</li><li>新增快捷按钮最终意图存储和旧保存流程拦截，用户最后一次勾选、取消、排序、显示全部或恢复默认会作为最终配置。</li><li>继续保留 13px–24px 阅读字号下拉选择和此前导航、折叠、记住设置等修复。</li></ul></details>'+html;
+          if(html.indexOf('v10.5.76 命运导读电脑端布局修正版')<0){
+            html='<details><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>修复快捷按钮设置勾选新增按钮后，关闭设置又自动恢复的问题。</li><li>新增快捷按钮最终意图存储和旧保存流程拦截，用户最后一次勾选、取消、排序、显示全部或恢复默认会作为最终配置。</li><li>继续保留 13px–24px 阅读字号下拉选择和此前导航、折叠、记住设置等修复。</li></ul></details>'+html;
           }
           return html;
         };
@@ -17154,7 +17147,7 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v1071-quick-buttons-click-save-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
   const QUICK_KEY='xiaoliuren_quick_button_settings_v9919';
   const INTENT_KEY='xiaoliuren_quick_button_settings_v1071_intent';
   const LEGACY_INTENT_KEY='xiaoliuren_quick_button_settings_v1070_intent';
@@ -17293,7 +17286,7 @@ html[data-theme="dark"] .v10519-destiny-note {
   function patchVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const meta=document.querySelector('meta[name="description"]'); if(meta)meta.setAttribute('content','小六壬个人网页版 '+VERSION+'：快捷按钮勾选改为点击直存，关闭设置时读取当前勾选状态，避免旧自动保存流程恢复旧配置。');}catch(e){}
-    try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1071Quick){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.75 Debug按钮稳定版')<0){html='<details><summary>v10.5.75 Debug按钮稳定版</summary><ul><li>修复快捷按钮勾选新增按钮后，退出设置又恢复修改前状态的问题。</li><li>改为点击/输入/关闭设置时直接读取当前可见勾选状态并写入最终配置。</li><li>同步写入 v1071/v1070/v9919 字段，避免旧自动保存流程抢回旧配置。</li><li>不改阅读字号、导航核心和折叠逻辑。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1071Quick=true;}}catch(e){}
+    try{if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v1071Quick){const old=window.buildVersionUpdatesHTML;window.buildVersionUpdatesHTML=function(){let html=old.call(this)||'';if(html.indexOf('v10.5.76 命运导读电脑端布局修正版')<0){html='<details><summary>v10.5.76 命运导读电脑端布局修正版</summary><ul><li>修复快捷按钮勾选新增按钮后，退出设置又恢复修改前状态的问题。</li><li>改为点击/输入/关闭设置时直接读取当前可见勾选状态并写入最终配置。</li><li>同步写入 v1071/v1070/v9919 字段，避免旧自动保存流程抢回旧配置。</li><li>不改阅读字号、导航核心和折叠逻辑。</li></ul></details>'+html;}return html;};window.buildVersionUpdatesHTML.__v1071Quick=true;}}catch(e){}
   }
   function boot(){patchStorage();bind();patchVersion();ensureCard();const cfg=readCfg();writeCfg(cfg,'boot');renderList();renderTools();setTimeout(()=>{ensureCard();renderList();renderTools();patchVersion();},500);setTimeout(renderTools,1300);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
@@ -17308,17 +17301,17 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10573-version-log-clean-source">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 v10.5.75 Debug按钮稳定版：重做版本内容更新清单，去掉重复版本，修复 v10 后跳回 v7 的顺序错乱，并补齐近期版本更新。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：重做版本内容更新清单，去掉重复版本，修复 v10 后跳回 v7 的顺序错乱，并补齐近期版本更新。';
   const VERSION_LOG_ENTRIES=[
   [
-    "v10.5.75 Debug按钮稳定版",
+    "v10.5.76 命运导读电脑端布局修正版",
     [
-      "修复 Debug 面板中旧“保存详细日志 v10.5.57”按钮被旧补丁反复插入/删除，导致按钮时有时无和界面轻微抖动的问题。",
-      "停用旧 v10.5.46/v10.5.57 的详细日志按钮注入逻辑，只保留新版“保存增强日志”。",
-      "“保存增强日志”按钮改为稳定复用，不再每次刷新 Debug 面板都删除重建，减少 iPhone Safari 弹窗内布局抖动。",
-      "复制日志、刷新日志、清空日志继续保留；增强日志仍包含设置、导航、快捷按钮、折叠、版本记录、本地存储、性能和错误等诊断数据。",
-      "同步更新 README、manifest、service-worker 与页面版本记录，继续检查旧版本跳动问题。"
+      "修复命运板块“快速导读”在电脑端被嵌套 Grid 挤成竖排文字的问题。",
+      "新增宽屏专用导读布局规则，四张导读卡片在电脑端按正常横向卡片显示，减少右侧大面积空白。",
+      "增加轻量 DOM 归一化：若导读内容出现外层 Grid 包内层 Grid，会自动展开为单层卡片结构。",
+      "修复范围限制在 900px 以上宽屏/电脑端样式；手机端继续沿用原来的单列导读规则。",
+      "同步更新页面标题、版本内容更新、README、manifest 和 service-worker 缓存名。"
     ]
   ],
   [
@@ -17713,8 +17706,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10574-debug-enhancement-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.75 Debug按钮稳定版';
-  const META='小六壬个人网页版 '+VERSION+'：修复 Debug 面板旧“保存详细日志 v10.5.57”按钮被旧补丁反复插入/删除导致的时有时无和抖动；增强日志按钮改为稳定复用。';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 '+VERSION+'：修复命运板块快速导读在电脑端被 Grid 嵌套挤成竖排、右侧大面积空白的问题；修复范围限制在宽屏布局，手机端保持原样。';
   const ACTION_LIMIT=100;
   const ERROR_LIMIT=30;
   const ACTIONS=[];
@@ -17840,7 +17833,7 @@ html[data-theme="dark"] .v10519-destiny-note {
   function copyEnhanced(){copyText(JSON.stringify(enhancedPayload('copy-log'),null,2));}
   function saveEnhanced(){
     const text=JSON.stringify(enhancedPayload('save-enhanced-log'),null,2);
-    const name='xiaoliuren-debug-v10.5.75-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';
+    const name='xiaoliuren-debug-v10.5.76-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';
     try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},1200);pushAction('debug-save',{name:name});}catch(e){pushError({type:'debug-save-failed',message:String(e)});copyText(text);}
   }
   function patchDebugApi(){
@@ -17856,17 +17849,11 @@ html[data-theme="dark"] .v10519-destiny-note {
     patchDebugApi();
     const actions=document.querySelector('#v10514DebugDialog .v10514-debug-actions');
     if(!actions)return;
-    // v10.5.75：只清掉旧详细日志按钮；新版增强日志按钮保持复用，避免弹窗内按钮反复重建导致抖动。
-    ['v10545DebugSaveBtn','v10546DebugSaveBtn'].forEach(id=>{const old=$(id); if(old)old.remove();});
-    let save=$('v10574DebugSaveBtn')||$('v10575DebugSaveBtn');
-    if(!save){save=document.createElement('button'); save.type='button';}
-    save.id='v10575DebugSaveBtn';
-    save.textContent='保存增强日志';
-    if(!save.__v10575SaveBound){save.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();saveEnhanced();},true); save.__v10575SaveBound=true;}
-    if(actions.firstElementChild!==save) actions.insertBefore(save,actions.firstElementChild||null);
-    const refresh=$('v10514DebugRefreshBtn'); if(refresh&&!refresh.__v10575){refresh.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();pushAction('debug-refresh');renderEnhanced('manual-refresh');},true);refresh.__v10575=true;}
-    const copy=$('v10514DebugCopyBtn'); if(copy&&!copy.__v10575){copy.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();pushAction('debug-copy');copyEnhanced();},true);copy.__v10575=true;}
-    const clear=$('v10514DebugClearBtn'); if(clear&&!clear.__v10575){clear.addEventListener('click',function(){ACTIONS.length=0;ERRORS.length=0;},true);clear.__v10575=true;}
+    ['v10545DebugSaveBtn','v10546DebugSaveBtn','v10574DebugSaveBtn'].forEach(id=>{const old=$(id); if(old)old.remove();});
+    const save=document.createElement('button'); save.type='button'; save.id='v10574DebugSaveBtn'; save.textContent='保存增强日志'; save.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();saveEnhanced();},true); actions.insertBefore(save,actions.firstChild);
+    const refresh=$('v10514DebugRefreshBtn'); if(refresh&&!refresh.__v10574){refresh.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();pushAction('debug-refresh');renderEnhanced('manual-refresh');},true);refresh.__v10574=true;}
+    const copy=$('v10514DebugCopyBtn'); if(copy&&!copy.__v10574){copy.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();pushAction('debug-copy');copyEnhanced();},true);copy.__v10574=true;}
+    const clear=$('v10514DebugClearBtn'); if(clear&&!clear.__v10574){clear.addEventListener('click',function(){ACTIONS.length=0;ERRORS.length=0;},true);clear.__v10574=true;}
   }
   function setVersion(){try{document.title='小六壬占卜 · '+VERSION;}catch(e){} try{const meta=document.querySelector('meta[name="description"]'); if(meta)meta.setAttribute('content',META);}catch(e){}}
   function patchVersionLog(){
@@ -17885,6 +17872,132 @@ html[data-theme="dark"] .v10519-destiny-note {
   window.XLR_DEBUG_V10574={snapshot:enhancedSnapshot,payload:enhancedPayload,copy:copyEnhanced,save:saveEnhanced,actions:ACTIONS,errors:ERRORS,render:renderEnhanced};
 })();
 </script>
+
+
+<!-- v10.5.76 source-integrated fix: 命运导读电脑端布局稳定 -->
+<style id="v10576-destiny-guide-desktop-style">
+  /* v10.5.76：只修宽屏/电脑端导读布局，手机端仍走原 @media(max-width:760px) 规则。 */
+  @media (min-width: 900px) {
+    body.result-destiny #resultCard #v10510QuickGuideContent.v10510-guide-grid,
+    body.v10510-destiny-result #resultCard #v10510QuickGuideContent.v10510-guide-grid,
+    body.destiny-scene #resultCard #v10510QuickGuideContent.v10510-guide-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(180px, 1fr)) !important;
+      gap: 12px !important;
+      align-items: start !important;
+      align-content: start !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    body.result-destiny #resultCard #v10510QuickGuideContent.v10510-guide-grid > .v10510-guide-grid,
+    body.v10510-destiny-result #resultCard #v10510QuickGuideContent.v10510-guide-grid > .v10510-guide-grid,
+    body.destiny-scene #resultCard #v10510QuickGuideContent.v10510-guide-grid > .v10510-guide-grid {
+      grid-column: 1 / -1 !important;
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(180px, 1fr)) !important;
+      gap: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      align-items: start !important;
+      align-content: start !important;
+      min-height: 0 !important;
+      height: auto !important;
+    }
+    body.result-destiny #resultCard #v10510QuickGuideContent .v10510-guide-card,
+    body.v10510-destiny-result #resultCard #v10510QuickGuideContent .v10510-guide-card,
+    body.destiny-scene #resultCard #v10510QuickGuideContent .v10510-guide-card {
+      min-width: 0 !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      align-self: start !important;
+      writing-mode: horizontal-tb !important;
+      text-orientation: mixed !important;
+      white-space: normal !important;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+    }
+    body.result-destiny #resultCard #v10510QuickGuideContent .v10510-guide-card b,
+    body.v10510-destiny-result #resultCard #v10510QuickGuideContent .v10510-guide-card b,
+    body.destiny-scene #resultCard #v10510QuickGuideContent .v10510-guide-card b,
+    body.result-destiny #resultCard #v10510QuickGuideContent .v10510-guide-card span,
+    body.v10510-destiny-result #resultCard #v10510QuickGuideContent .v10510-guide-card span,
+    body.destiny-scene #resultCard #v10510QuickGuideContent .v10510-guide-card span {
+      writing-mode: horizontal-tb !important;
+      text-orientation: mixed !important;
+      white-space: normal !important;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+    }
+  }
+</style>
+<script id="v10576-destiny-guide-desktop-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.76 命运导读电脑端布局修正版：修复命运板块快速导读在电脑端被 Grid 嵌套挤成竖排、右侧大面积空白的问题；修复范围限制在宽屏布局，手机端保持原样。';
+  function $(id){return document.getElementById(id);}
+  function log(reason,detail){try{if(window.XLR_DEBUG_V10514&&window.XLR_DEBUG_V10514.logs)window.XLR_DEBUG_V10514.logs.push({time:new Date().toLocaleTimeString(),reason:'v10576-guide:'+reason,version:VERSION,detail:detail||''});}catch(e){}}
+  function isDestinyPage(){return document.body.classList.contains('result-destiny')||document.body.classList.contains('v10510-destiny-result')||document.body.classList.contains('destiny-scene');}
+  function normalizeGuide(reason){
+    const box=$('v10510QuickGuideContent');
+    if(!box||!isDestinyPage())return false;
+    box.classList.add('v10576-guide-layout-fixed');
+    const kids=Array.from(box.children||[]);
+    if(kids.length===1 && kids[0].classList && kids[0].classList.contains('v10510-guide-grid')){
+      const inner=kids[0];
+      box.innerHTML=inner.innerHTML;
+      log('flatten-nested-grid',reason||'');
+      return true;
+    }
+    return false;
+  }
+  function setVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const meta=document.querySelector('meta[name="description"]'); if(meta)meta.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){if((el.textContent||'').indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
+  }
+  function patchVersionLog(){
+    try{
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10576GuideDesktop){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.call(this)||'';
+          if(html.indexOf(VERSION)<0){
+            html='<details><summary>'+VERSION+'</summary><ul><li>修复命运板块“快速导读”在电脑端被嵌套 Grid 挤成竖排文字的问题。</li><li>新增宽屏专用导读布局规则，四张导读卡片在电脑端按正常横向卡片显示，减少右侧大面积空白。</li><li>增加轻量 DOM 归一化：若导读内容出现外层 Grid 包内层 Grid，会自动展开为单层卡片结构。</li><li>修复范围限制在 900px 以上宽屏/电脑端样式；手机端继续沿用原来的单列导读规则。</li><li>同步更新页面标题、版本内容更新、README、manifest 和 service-worker 缓存名。</li></ul></details>'+html;
+          }
+          return html;
+        };
+        window.buildVersionUpdatesHTML.__v10576GuideDesktop=true;
+      }
+    }catch(e){}
+  }
+  function enhanceDebug(){
+    const api=window.XLR_DEBUG_V10514;
+    if(!api||api.__v10576GuideDebug)return;
+    const old=api.snapshot;
+    api.snapshot=function(reason){
+      const base=old?old(reason):{};
+      try{
+        const box=$('v10510QuickGuideContent');
+        const cards=box?Array.from(box.querySelectorAll('.v10510-guide-card')).map(function(card){const r=card.getBoundingClientRect();return {text:(card.textContent||'').replace(/\s+/g,' ').trim().slice(0,50),width:Math.round(r.width),height:Math.round(r.height),writingMode:getComputedStyle(card).writingMode};}):[];
+        base.v10576GuideDesktop={exists:!!box, fixedClass:!!(box&&box.classList.contains('v10576-guide-layout-fixed')), directChildren:box?box.children.length:0, hasNestedGrid:!!(box&&box.querySelector(':scope > .v10510-guide-grid')), cardCount:cards.length, cards:cards, possibleVerticalText:cards.some(function(c){return c.width>0&&c.width<110&&c.height>220;})};
+      }catch(e){base.v10576GuideDesktop={error:String(e&&e.message||e)};}
+      base.version=VERSION;
+      return base;
+    };
+    api.__v10576GuideDebug=true;
+  }
+  function boot(){setVersion();patchVersionLog();normalizeGuide('boot');enhanceDebug();try{if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();}catch(e){} setTimeout(function(){setVersion();normalizeGuide('t120');enhanceDebug();},120); setTimeout(function(){setVersion();normalizeGuide('t700');},700);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,700);},{once:true});
+  try{const box=$('v10510QuickGuideContent'); if(box){new MutationObserver(function(){clearTimeout(window.__v10576GuideTimer);window.__v10576GuideTimer=setTimeout(function(){normalizeGuide('mutation');},80);}).observe(box,{childList:true,subtree:false});}}catch(e){}
+})();
+</script>
+
 
 </body>
 </html>
