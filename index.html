@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.48 命运导航分层与跳转稳定版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。" />
+  <title>小六壬占卜 · v10.5.49 导航抢滚动清理版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.48 命运导航分层与跳转稳定版</h2>
+          <h2>个人占卜台 · v10.5.49 导航抢滚动清理版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -5845,7 +5845,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6660,7 +6660,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7247,7 +7247,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8577,7 +8577,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8753,7 +8753,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -9050,7 +9050,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9326,7 +9326,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9556,7 +9556,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9604,8 +9604,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9768,8 +9768,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9891,8 +9891,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -10043,8 +10043,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10266,8 +10266,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10345,8 +10345,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10415,8 +10415,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10554,8 +10554,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10733,8 +10733,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10805,8 +10805,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10914,8 +10914,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11368,8 +11368,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const HERO="本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11466,14 +11466,7 @@ body.reading-theme-night .reading-card::after {
     items.forEach(t=>{ if(t.el && t.el.getBoundingClientRect().top <= marker) active = t.id; });
     return active;
   }
-  function centerActive(nav,id){
-    if(!nav || nav.__v1054Touching || !id) return;
-    const btn = nav.querySelector('[data-destiny-sub-target="'+id+'"]');
-    if(btn && typeof btn.scrollIntoView==='function'){
-      try { btn.scrollIntoView({block:'nearest', inline:'center', behavior:'auto'}); }
-      catch(e) { try { btn.scrollIntoView({block:'nearest', inline:'center'}); } catch(_e){} }
-    }
-  }
+  function centerActive(nav,id){ return; }
   function bindTouchPause(nav){
     if(!nav || nav.__v1054TouchBound) return;
     const on=()=>{ nav.__v1054Touching=true; clearTimeout(nav.__v1054TouchTimer); };
@@ -11485,7 +11478,7 @@ body.reading-theme-night .reading-card::after {
     nav.addEventListener('touchend',off,{passive:true});
     nav.__v1054TouchBound=true;
   }
-  function updateDestinySubNav(){
+  function updateDestinySubNav(){ return; 
     const nav = ensureSubNav();
     bindTouchPause(nav);
     const items = subItems();
@@ -11614,7 +11607,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11870,7 +11863,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12038,7 +12031,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12257,7 +12250,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12596,7 +12589,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12913,7 +12906,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 20;
   const logs = [];
@@ -13089,7 +13082,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
+  const VERSION="v10.5.49 导航抢滚动清理版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13313,8 +13306,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13343,149 +13336,6 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 
 
 <!-- v10.5.17 patch: 当前章节按钮自动居中 -->
-<style id="v10517-active-chip-center-style">
-  /* 底部章节导航：容器保持在屏幕中间，内部由当前 active 按钮自动滚到中心 */
-  @media (max-width: 1240px) {
-    #sectionJumpNav.section-jump-nav {
-      left: 50% !important;
-      right: auto !important;
-      transform: translateX(-50%) !important;
-      width: min(720px, calc(100vw - 88px)) !important;
-      max-width: calc(100vw - 88px) !important;
-      justify-content: flex-start !important;
-      scroll-behavior: auto !important;
-      scroll-snap-type: none !important;
-      overflow-x: auto !important;
-      overscroll-behavior-x: contain !important;
-    }
-  }
-  @media (max-width: 760px) {
-    #sectionJumpNav.section-jump-nav {
-      width: calc(100vw - 72px) !important;
-      max-width: calc(100vw - 72px) !important;
-    }
-  }
-  @media (max-width: 430px) {
-    #sectionJumpNav.section-jump-nav {
-      width: calc(100vw - 64px) !important;
-      max-width: calc(100vw - 64px) !important;
-    }
-  }
-</style>
-<script id="v10517-active-chip-center-script">
-(function(){
-  'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
-  let lastActiveId='';
-  let rafId=0;
-  let lastManualTouch=0;
-
-  function navEl(){ return document.getElementById('sectionJumpNav'); }
-  function isHorizontal(nav){
-    if(!nav) return false;
-    const cs=getComputedStyle(nav);
-    return cs.flexDirection.indexOf('row') >= 0 || window.innerWidth <= 1240;
-  }
-  function activeBtn(nav){ return nav && nav.querySelector('.jump-chip.active,[data-jump-target].active'); }
-  function setVersion(){
-    try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
-    try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
-    try{ document.querySelectorAll('h2').forEach(function(el){ if(el.textContent && el.textContent.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION; }); }catch(e){}
-  }
-  function prepareEdgeSpace(nav, btn){
-    if(!nav || !btn || !isHorizontal(nav)) return;
-    const w = nav.clientWidth || 0;
-    const bw = btn.offsetWidth || 64;
-    const side = Math.max(8, Math.round((w - bw) / 2));
-    if(nav.__v10517Side !== side){
-      nav.__v10517Side = side;
-      nav.style.paddingLeft = side + 'px';
-      nav.style.paddingRight = side + 'px';
-      nav.style.boxSizing = 'border-box';
-    }
-  }
-  function centerActiveChip(reason, behavior){
-    const nav=navEl();
-    if(!nav || !isHorizontal(nav)) return;
-    const btn=activeBtn(nav);
-    if(!btn) return;
-    prepareEdgeSpace(nav, btn);
-    const activeId=btn.getAttribute('data-jump-target') || btn.textContent || '';
-    const now=Date.now();
-    if(reason === 'scroll' && now - lastManualTouch < 600) return;
-    const desired = btn.offsetLeft + btn.offsetWidth/2 - nav.clientWidth/2;
-    const max = Math.max(0, nav.scrollWidth - nav.clientWidth);
-    const left = Math.max(0, Math.min(max, Math.round(desired)));
-    if(Math.abs(nav.scrollLeft - left) < 2 && activeId === lastActiveId) return;
-    lastActiveId = activeId;
-    try{ nav.scrollTo({left:left, behavior: behavior || 'auto'}); }catch(e){ nav.scrollLeft=left; }
-  }
-  function scheduleCenter(reason, behavior){
-    cancelAnimationFrame(rafId);
-    rafId=requestAnimationFrame(function(){ centerActiveChip(reason, behavior); });
-  }
-  function patchUpdateFunction(){
-    try{
-      if(typeof window.updateSectionJumpNav === 'function' && !window.updateSectionJumpNav.__v10517Center){
-        const old=window.updateSectionJumpNav;
-        window.updateSectionJumpNav=function(){
-          const ret=old.apply(this, arguments);
-          scheduleCenter('updateSectionJumpNav','auto');
-          return ret;
-        };
-        window.updateSectionJumpNav.__v10517Center=true;
-      }
-      if(typeof window.renderSectionJumpNav === 'function' && !window.renderSectionJumpNav.__v10517Center){
-        const oldRender=window.renderSectionJumpNav;
-        window.renderSectionJumpNav=function(){
-          const ret=oldRender.apply(this, arguments);
-          setTimeout(function(){ scheduleCenter('renderSectionJumpNav','auto'); }, 0);
-          setTimeout(function(){ scheduleCenter('renderSectionJumpNav-late','auto'); }, 120);
-          return ret;
-        };
-        window.renderSectionJumpNav.__v10517Center=true;
-      }
-    }catch(e){}
-  }
-  function patchVersionLog(){
-    try{
-      if(typeof window.buildVersionUpdatesHTML==='function' && !window.buildVersionUpdatesHTML.__v10517){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.apply(this,arguments)||'';
-          html=html.replace(/<details><summary>v10\.5\.17 当前导航居中跟随版<\/summary>[\s\S]*?<\/details>/g,'');
-          html += '<details><summary>v10.5.17 当前导航居中跟随版</summary><ul><li>修正“导航居中”的理解：不是只让整排导航居中，而是让当前正在阅读的章节按钮始终自动滚到屏幕中间。</li><li>刷到“导读 / 答案 / 重心 / 三象 / 建议 / 术语”等部分时，对应按钮会自动居中显示。</li><li>为底部横向导航增加左右动态留白，避免靠前或靠后的按钮无法居中。</li><li>保留 Debug 左下角、设置即时保存、命运/非命运模板隔离修复。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查旧补丁/版本跳动问题。</li></ul></details>';
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v10517=true;
-      }
-    }catch(e){}
-  }
-  function boot(){
-    setVersion();
-    patchUpdateFunction();
-    patchVersionLog();
-    scheduleCenter('boot','auto');
-    setTimeout(function(){ patchUpdateFunction(); scheduleCenter('t100','auto'); },100);
-    setTimeout(function(){ patchUpdateFunction(); scheduleCenter('t500','auto'); },500);
-    setTimeout(function(){ scheduleCenter('t1500','auto'); },1500);
-  }
-  document.addEventListener('touchstart', function(e){ if(e.target && e.target.closest && e.target.closest('#sectionJumpNav')) lastManualTouch=Date.now(); }, {passive:true});
-  document.addEventListener('pointerdown', function(e){ if(e.target && e.target.closest && e.target.closest('#sectionJumpNav')) lastManualTouch=Date.now(); }, true);
-  window.addEventListener('scroll', function(){ scheduleCenter('scroll','auto'); }, {passive:true});
-  window.addEventListener('resize', function(){ const nav=navEl(); if(nav){ nav.__v10517Side=null; } setTimeout(function(){ scheduleCenter('resize','auto'); },120); });
-  document.addEventListener('click', function(e){
-    if(e.target && e.target.closest && e.target.closest('#sectionJumpNav')) setTimeout(function(){ scheduleCenter('nav-click','smooth'); },180);
-    else setTimeout(function(){ scheduleCenter('click','auto'); },160);
-  }, true);
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
-  window.addEventListener('load', function(){ setTimeout(boot,80); setTimeout(boot,900); });
-  try{ new MutationObserver(function(){ clearTimeout(window.__v10517CenterTimer); window.__v10517CenterTimer=setTimeout(function(){ patchUpdateFunction(); scheduleCenter('mutation','auto'); },120); }).observe(document.body,{subtree:true, childList:true, attributes:true, attributeFilter:['class','style']}); }catch(e){}
-})();
-</script>
-
-
 <!-- v10.5.18 patch: 普通问事结果页新增“本课用到的口诀”Beta 模块 -->
 <style id="v10518-formula-beta-style">
   #v10518FormulaBlock { position:relative; }
@@ -13549,8 +13399,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13772,8 +13622,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10519-destiny-formula-debug-save-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.48 命运导航分层与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。";
+  const VERSION="v10.5.49 导航抢滚动清理版";
+  const META="小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。";
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
@@ -13944,8 +13794,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10520-nav-formula-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const BASE={
     '大安':{formula:'大安事事昌，主安稳、守成、慢成。',plain:'命运中多看根基稳定、节奏偏慢，适合长期经营。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠，容易被过程拖住。'},
@@ -14182,8 +14032,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10521-mobile-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
   function setStableVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14277,8 +14127,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10523-career-beta-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
   const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
@@ -14492,8 +14342,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10524-knowledge-table-scroll-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
   const SELECTORS=['.v1040-marriage-table','.v1030-health-table','.v1031-health-table','.v10523-career-table','.v1025-table-wrap'];
   function setVersion(){
@@ -14548,415 +14398,14 @@ html[data-theme="dark"] .v10519-destiny-note {
 
 
 <!-- v10.5.25 patch: 事业正式子导航版 -->
-<style id="v10525-career-subnav-style">
-  #v1054DestinySubNav [data-destiny-sub-target="v10523CareerBlock"]{font-weight:850;}
-</style>
-<script id="v10525-career-subnav-script">
-(function(){
-  'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
-  const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
-  function $(id){return document.getElementById(id);} 
-  function visible(el){
-    if(!el) return false;
-    if(el.classList && el.classList.contains('hidden')) return false;
-    if(el.closest && el.closest('.hidden')) return false;
-    const st=getComputedStyle(el);
-    if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
-    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
-  }
-  function lockVersion(){
-    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
-    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
-    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0){el.textContent='个人占卜台 · '+VERSION;el.setAttribute('data-version-locked','true');}});}catch(e){}
-    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
-  }
-  function removeBetaText(){
-    try{
-      document.querySelectorAll('#v10523CareerBlock summary, .v10523-career summary').forEach(function(el){
-        el.childNodes.forEach(function(n){ if(n.nodeType===3) n.nodeValue=n.nodeValue.replace(/\s*Beta\s*/g,''); });
-        el.innerHTML=el.innerHTML.replace(/\s*Beta\s*/g,'');
-      });
-    }catch(e){}
-  }
-  function ensureCareerSubNav(){
-    try{
-      const nav=$('v1054DestinySubNav'), career=$('v10523CareerBlock');
-      if(!nav||!visible(career)||!nav.classList.contains('show')) return;
-      let btn=nav.querySelector('[data-destiny-sub-target="v10523CareerBlock"]');
-      if(!btn){
-        btn=document.createElement('button');
-        btn.className='jump-chip';
-        btn.type='button';
-        btn.setAttribute('data-destiny-sub-target','v10523CareerBlock');
-        btn.title='跳转到事业';
-        btn.textContent='事业';
-        const marriage=nav.querySelector('[data-destiny-sub-target="v1040MarriageBlock"]');
-        if(marriage&&marriage.nextSibling) nav.insertBefore(btn,marriage.nextSibling); else if(marriage) nav.appendChild(btn); else nav.appendChild(btn);
-        btn.addEventListener('click',function(){window.xlrStableJumpV10547 ? window.xlrStableJumpV10547('v10523CareerBlock') : career.scrollIntoView({behavior:'auto',block:'start'});});
-      }
-      const items=[
-        {id:'destinyBoardBlock',el:$('destinyBoardBlock')},
-        {id:'v1030DestinyHealth',el:$('v1030DestinyHealth')},
-        {id:'v1040MarriageBlock',el:$('v1040MarriageBlock')},
-        {id:'v10523CareerBlock',el:career}
-      ].filter(function(x){return visible(x.el);});
-      let active=items[0]&&items[0].id;
-      const marker=(innerHeight||700)*0.34;
-      items.forEach(function(x){ if(x.el.getBoundingClientRect().top<=marker) active=x.id; });
-      nav.querySelectorAll('[data-destiny-sub-target]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-destiny-sub-target')===active);});
-      const activeBtn=nav.querySelector('[data-destiny-sub-target="'+active+'"]');
-      if(activeBtn&&!nav.__v1054Touching){try{activeBtn.scrollIntoView({block:'nearest',inline:'center',behavior:'auto'});}catch(e){}}
-    }catch(e){}
-  }
-  function patchVersionHistory(){
-    try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10525){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.call(this)||'';
-          html=html.replace(/事业与财富参考\s*Beta/g,'事业与财富参考').replace(/事业模块\s*Beta/g,'事业模块');
-          html=html.replace(/<details><summary>v10\.5\.26 性能与版本稳定修复版<\/summary>[\s\S]*?<\/details>/g,'');
-          {
-            html+='<details><summary>'+VERSION+'</summary><ul><li>命运场景“事业与财富参考”去掉 Beta 标记，作为正式命盘子模块保留。</li><li>事业模块纳入“命运六亲参考盘”二级导航，与“健康”“婚姻”并排显示。</li><li>二级导航会在命盘内部滚动范围内自动出现，并随当前阅读位置高亮“命盘 / 健康 / 婚姻 / 事业”。</li><li>保留 v10.5.24 宽表横向滑动修复、右侧快捷按钮稳定修复、Debug 保存日志与当前导航自动居中逻辑。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';
-          }
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v10525=true;
-      }
-    }catch(e){}
-  }
-  function boot(){lockVersion();removeBetaText();ensureCareerSubNav();patchVersionHistory();try{window.__v10525CareerSubNav={version:VERSION,careerOfficial:true,subnav:true};}catch(e){}}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
-  window.addEventListener('load',function(){boot();setTimeout(boot,150);setTimeout(boot,800);setTimeout(boot,2200);});
-  window.addEventListener('scroll',function(){setTimeout(ensureCareerSubNav,60);},{passive:true});
-  document.addEventListener('click',function(e){ if(e.target && e.target.closest && e.target.closest('#v1054DestinySubNav,.history-item,.history-card,[data-history-id]')) setTimeout(boot,180);},true);
-  try{new MutationObserver(function(){ clearTimeout(window.__v10526CareerNavTimer); window.__v10526CareerNavTimer=setTimeout(function(){removeBetaText();ensureCareerSubNav();},220);}).observe(document.body,{subtree:true,childList:true});}catch(e){}
-  /* v10.5.26 removed aggressive 0.9s boot polling; this caused settings/debug卡顿 and version跳动. */
-})();
-</script>
-
-
-
 <!-- v10.5.26 patch: 性能与版本稳定修复版 -->
-<style id="v10526-performance-version-stability-style">
-  /* v10.5.26：保留现有视觉，不新增重排；只给 Debug 弹窗增加一点性能保护。 */
-  #v10514DebugDialog, #v10514DebugOutput { contain: content; }
-</style>
-<script id="v10526-performance-version-stability-script">
-(function(){
-  'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
-  const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
-  function $(id){return document.getElementById(id);}
-  function setVersion(){
-    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
-    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
-    try{document.querySelectorAll('h2').forEach(function(el){ if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION; });}catch(e){}
-    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
-  }
-  function removeBetaText(){
-    try{document.querySelectorAll('#v10523CareerBlock summary, .v10523-career summary').forEach(function(el){el.innerHTML=el.innerHTML.replace(/\s*Beta\s*/g,'');});}catch(e){}
-  }
-  function enhanceTablesOnce(){
-    try{
-      ['.v1040-marriage-table','.v1030-health-table','.v1031-health-table','.v10523-career-table','.v1025-table-wrap'].forEach(function(sel){
-        document.querySelectorAll(sel).forEach(function(wrap){
-          wrap.classList.add('v10524-wide-scroll');
-          const table=wrap.querySelector('table');
-          if(table){ table.style.width='max-content'; table.style.maxWidth='none'; table.style.tableLayout='auto'; }
-          const parent=wrap.parentElement;
-          if(parent && !parent.querySelector(':scope > .v10524-scroll-hint')){
-            const hint=document.createElement('div'); hint.className='v10524-scroll-hint'; hint.textContent='此表可左右滑动查看更多内容'; parent.insertBefore(hint,wrap);
-          }
-        });
-      });
-    }catch(e){}
-  }
-  function visible(el){
-    if(!el) return false;
-    if(el.classList&&el.classList.contains('hidden')) return false;
-    if(el.closest&&el.closest('.hidden')) return false;
-    const st=getComputedStyle(el); if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
-    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
-  }
-  function ensureCareerSubNav(){
-    try{
-      const nav=$('v1054DestinySubNav'), career=$('v10523CareerBlock');
-      if(!nav||!visible(career)||!nav.classList.contains('show')) return;
-      let btn=nav.querySelector('[data-destiny-sub-target="v10523CareerBlock"]');
-      if(!btn){
-        btn=document.createElement('button'); btn.className='jump-chip'; btn.type='button'; btn.setAttribute('data-destiny-sub-target','v10523CareerBlock'); btn.title='跳转到事业'; btn.textContent='事业';
-        const marriage=nav.querySelector('[data-destiny-sub-target="v1040MarriageBlock"]');
-        if(marriage&&marriage.nextSibling) nav.insertBefore(btn,marriage.nextSibling); else if(marriage) nav.appendChild(btn); else nav.appendChild(btn);
-        btn.addEventListener('click',function(){window.xlrStableJumpV10547 ? window.xlrStableJumpV10547('v10523CareerBlock') : career.scrollIntoView({behavior:'auto',block:'start'});});
-      }
-    }catch(e){}
-  }
-  function patchVersionHistory(){
-    try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10526){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.call(this)||'';
-          html=html.replace(/事业与财富参考\s*Beta/g,'事业与财富参考').replace(/事业模块\s*Beta/g,'事业模块');
-          html=html.replace(/<details><summary>v10\.5\.26 性能与版本稳定修复版<\/summary>[\s\S]*?<\/details>/g,'');
-          {
-            html+='<details><summary>'+VERSION+'</summary><ul><li>修复 v10.5.25 中页面标题、首页说明和脚本内部版本仍可能被旧补丁改回旧版本的问题。</li><li>清理/停用会反复轮询页面的旧补丁逻辑，包括 0.9 秒事业子导航轮询、1.8 秒宽表轮询、2.2 秒事业模块轮询和 Debug 定时抓取，降低手机端卡顿。</li><li>Debug 改为按需刷新/复制日志，不再开启后持续写入大量 interval/mutation 日志；保留设置开关、关闭按钮、复制日志和保存日志能力。</li><li>保留事业与财富参考正式模块、命运二级导航“命盘 / 健康 / 婚姻 / 事业”、宽表横向滑动、右侧快捷按钮稳定和当前导航自动居中。</li><li>基于 v10.5.26 稳定版，只移除事业被注入底部主导航的旧补丁，不加入新的页面滚动/居中逻辑，避免再次引起抖动。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并重新检查路径和内嵌脚本语法。</li></ul></details>';
-          }
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v10526=true;
-      }
-    }catch(e){}
-  }
-  function run(){setVersion(); removeBetaText(); enhanceTablesOnce(); ensureCareerSubNav(); patchVersionHistory(); try{window.__v10526PerformanceVersionStability={version:VERSION, pollingCleaned:true, debugOnDemand:true};}catch(e){}}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run,{once:true}); else run();
-  window.addEventListener('load',function(){run(); setTimeout(run,120); setTimeout(run,700);},{once:true});
-  window.addEventListener('scroll',function(){ clearTimeout(window.__v10526ScrollTimer); window.__v10526ScrollTimer=setTimeout(ensureCareerSubNav,80);},{passive:true});
-  try{new MutationObserver(function(){ clearTimeout(window.__v10526MutTimer); window.__v10526MutTimer=setTimeout(function(){removeBetaText(); enhanceTablesOnce(); ensureCareerSubNav();},300); }).observe(document.body,{subtree:true,childList:true});}catch(e){}
-})();
-</script>
-
-
 <!-- v10.5.31 patch: 命运二级导航显示范围修复版 -->
-<style id="v10531-destiny-subnav-range-style">
-  /* v10.5.31：二级导航只属于“命运六亲参考盘”内部；离开命盘/健康/婚姻/事业范围后强制隐藏。 */
-  #v1054DestinySubNav.v10531-subnav-outside {
-    display: none !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-  }
-</style>
-<script id="v10531-destiny-subnav-range-script">
-(function(){
-  'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
-  const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
-  function $(id){return document.getElementById(id);}
-  function visible(el){
-    if(!el) return false;
-    if(el.classList&&el.classList.contains('hidden')) return false;
-    if(el.closest&&el.closest('.hidden')) return false;
-    const st=getComputedStyle(el);
-    if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
-    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
-  }
-  function lockVersion(){
-    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
-    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
-    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0){el.textContent='个人占卜台 · '+VERSION;el.setAttribute('data-version-locked','true');}});}catch(e){}
-    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
-  }
-  function subModuleItems(){
-    return ['destinyBoardBlock','v1030DestinyHealth','v1040MarriageBlock','v10523CareerBlock']
-      .map(function(id){return $(id);})
-      .filter(visible);
-  }
-  function withinSubModuleRange(){
-    if(!document.body.classList.contains('result-destiny')) return false;
-    const items=subModuleItems();
-    if(!items.length) return false;
-    let top=Infinity, bottom=-Infinity;
-    items.forEach(function(el){
-      const r=el.getBoundingClientRect();
-      const y1=r.top+window.scrollY;
-      const y2=r.bottom+window.scrollY;
-      if(y1<top) top=y1;
-      if(y2>bottom) bottom=y2;
-    });
-    const marker=window.scrollY+(window.innerHeight||700)*0.34;
-    return marker>=top-120 && marker<=bottom+80;
-  }
-  function activeSubId(){
-    const items=[
-      ['destinyBoardBlock',$('destinyBoardBlock')],
-      ['v1030DestinyHealth',$('v1030DestinyHealth')],
-      ['v1040MarriageBlock',$('v1040MarriageBlock')],
-      ['v10523CareerBlock',$('v10523CareerBlock')]
-    ].filter(function(x){return visible(x[1]);});
-    let active=items[0]&&items[0][0];
-    const marker=(window.innerHeight||700)*0.34;
-    items.forEach(function(x){if(x[1].getBoundingClientRect().top<=marker) active=x[0];});
-    return active||'';
-  }
-  function syncSubNavScope(){
-    const nav=$('v1054DestinySubNav');
-    if(!nav) return;
-    const inside=withinSubModuleRange();
-    nav.classList.toggle('v10531-subnav-outside',!inside);
-    if(!inside){
-      nav.classList.remove('show');
-      nav.querySelectorAll('[data-destiny-sub-target]').forEach(function(btn){btn.classList.remove('active');});
-      nav.setAttribute('data-v10531-scope','outside');
-      return;
-    }
-    nav.classList.remove('v10531-subnav-outside');
-    nav.classList.add('show');
-    nav.setAttribute('data-v10531-scope','inside');
-    const active=activeSubId();
-    if(active){
-      nav.querySelectorAll('[data-destiny-sub-target]').forEach(function(btn){btn.classList.toggle('active',btn.getAttribute('data-destiny-sub-target')===active);});
-    }
-  }
-  function patchVersionHistory(){
-    try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10531){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.call(this)||'';
-          html=html.replace(/<details><summary>v10\.5\.31 命运二级导航范围修复版<\/summary>[\s\S]*?<\/details>/g,'');
-          html+='<details><summary>'+VERSION+'</summary><ul><li>修复命运二级导航在离开“命运六亲参考盘”子模块后仍然停留的问题。</li><li>二级导航现在只在命盘、健康、婚姻、事业这几个命运子模块范围内显示；滚到“本课用到的口诀 / 综合判断 / 三象 / 雷达”等主模块后自动隐藏。</li><li>保留 v10.5.30 已验证稳定的导航去重方案：事业不再进入主阅读导航，只保留在命运二级导航中。</li><li>本次不修改主导航居中、页面滚动、Debug、快捷按钮和排盘逻辑，避免再次引入页面抖动。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v10531=true;
-      }
-    }catch(e){}
-  }
-  function run(){lockVersion();syncSubNavScope();patchVersionHistory();try{window.__v10531DestinySubNavRange={version:VERSION,scopeFixed:true};}catch(e){}}
-  let timer=0;
-  function schedule(delay){clearTimeout(timer);timer=setTimeout(run,delay||60);}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){schedule(0);},{once:true}); else schedule(0);
-  window.addEventListener('load',function(){schedule(0);schedule(180);schedule(700);},{once:true});
-  window.addEventListener('scroll',function(){schedule(50);},{passive:true});
-  window.addEventListener('resize',function(){schedule(80);},{passive:true});
-  document.addEventListener('click',function(){schedule(120);},true);
-  try{new MutationObserver(function(){schedule(180);}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
-})();
-</script>
-
-
-
 <!-- v10.5.32 patch: 命运二级导航主从同步修复版 -->
-<style id="v10532-destiny-subnav-master-sync-style">
-  /* v10.5.32：当主阅读导航不在“命盘”时，命运二级导航必须隐藏。 */
-  #v1054DestinySubNav.v10532-master-outside,
-  #v1054DestinySubNav.v10532-main-outside,
-  #v1054DestinySubNav.v10532-force-hide {
-    display: none !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-  }
-</style>
-<script id="v10532-destiny-subnav-master-sync-script">
-(function(){
-  'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
-  const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
-  const SUB_IDS=['destinyBoardBlock','v1030DestinyHealth','v1040MarriageBlock','v10523CareerBlock'];
-  function $(id){return document.getElementById(id);}
-  function visible(el){
-    if(!el) return false;
-    if(el.classList&&el.classList.contains('hidden')) return false;
-    if(el.closest&&el.closest('.hidden')) return false;
-    const st=getComputedStyle(el);
-    if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
-    const r=el.getBoundingClientRect();
-    return !!(r.width||r.height||el.offsetWidth||el.offsetHeight||el.getClientRects().length);
-  }
-  function lockVersion(){
-    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
-    try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
-    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0){el.textContent='个人占卜台 · '+VERSION;el.setAttribute('data-version-locked','true');}});}catch(e){}
-    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
-  }
-  function currentMainTarget(){
-    const btn=document.querySelector('#sectionJumpNav [data-jump-target].active');
-    return btn ? (btn.getAttribute('data-jump-target')||'') : '';
-  }
-  function calculatedMainTarget(){
-    try{
-      const items=(typeof window.currentJumpTargets==='function'?window.currentJumpTargets():[]).filter(function(t){return t&&t.el&&visible(t.el);});
-      if(!items.length) return '';
-      let active=items[0].id;
-      const marker=(window.innerHeight||700)*0.28;
-      items.forEach(function(t){ if(t.el.getBoundingClientRect().top<=marker) active=t.id; });
-      return active||'';
-    }catch(e){return '';}
-  }
-  function activeSubId(){
-    const items=SUB_IDS.map(function(id){return [id,$(id)];}).filter(function(x){return visible(x[1]);});
-    let active=items[0]&&items[0][0];
-    const marker=(window.innerHeight||700)*0.34;
-    items.forEach(function(x){if(x[1].getBoundingClientRect().top<=marker) active=x[0];});
-    return active||'';
-  }
-  function isMarkerInsideAnySubModule(){
-    const marker=window.scrollY+(window.innerHeight||700)*0.34;
-    return SUB_IDS.some(function(id){
-      const el=$(id); if(!visible(el)) return false;
-      const r=el.getBoundingClientRect();
-      const top=r.top+window.scrollY-80;
-      const bottom=r.bottom+window.scrollY+40;
-      return marker>=top && marker<=bottom;
-    });
-  }
-  function syncSubNav(){
-    const nav=$('v1054DestinySubNav');
-    if(!nav) return;
-    const isDestiny=document.body.classList.contains('result-destiny');
-    const main=currentMainTarget()||calculatedMainTarget();
-    /* 主导航已经进入“口诀/综合/三象/雷达”等主模块时，二级导航必须消失。 */
-    const mainAllowsSub = (main==='destinyBoardBlock');
-    const insideSub = isMarkerInsideAnySubModule();
-    const hide = !isDestiny || !mainAllowsSub || !insideSub;
-    nav.classList.toggle('v10532-master-outside', hide);
-    nav.classList.toggle('v10532-main-outside', hide);
-    if(hide){
-      nav.classList.remove('show');
-      nav.setAttribute('data-v10532-scope','outside-main-'+(main||'none'));
-      nav.querySelectorAll('[data-destiny-sub-target]').forEach(function(btn){btn.classList.remove('active');});
-      return;
-    }
-    nav.classList.remove('v10532-master-outside','v10532-main-outside','v10532-force-hide','v10531-subnav-outside');
-    nav.classList.add('show');
-    nav.setAttribute('data-v10532-scope','inside-main-destinyBoardBlock');
-    const active=activeSubId();
-    if(active){
-      nav.querySelectorAll('[data-destiny-sub-target]').forEach(function(btn){btn.classList.toggle('active',btn.getAttribute('data-destiny-sub-target')===active);});
-    }
-  }
-  function patchVersionHistory(){
-    try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10532){
-        const old=window.buildVersionUpdatesHTML;
-        window.buildVersionUpdatesHTML=function(){
-          let html=old.call(this)||'';
-          html=html.replace(/<details><summary>v10\.5\.32 命运二级导航主从同步修复版<\/summary>[\s\S]*?<\/details>/g,'');
-          html+='<details><summary>'+VERSION+'</summary><ul><li>继续修复命运二级导航显示范围：二级导航现在会跟主阅读导航同步。</li><li>当主导航当前阅读位置已经是“口诀、综合、三象、雷达”等主模块时，命盘 / 健康 / 婚姻 / 事业二级导航会强制隐藏。</li><li>二级导航只在主导航仍处于“命盘”范围，并且屏幕阅读点确实落在命盘、健康、婚姻或事业子模块内时显示。</li><li>保留 v10.5.30 / v10.5.31 的稳定方案，不新增轮询，不改排盘逻辑，不改主导航居中逻辑，降低再次抖动风险。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名。</li></ul></details>';
-          return html;
-        };
-        window.buildVersionUpdatesHTML.__v10532=true;
-      }
-    }catch(e){}
-  }
-  let raf=0, lateTimer=0;
-  function run(){raf=0; lockVersion(); syncSubNav(); patchVersionHistory(); try{window.__v10532DestinySubNavMasterSync={version:VERSION,masterSync:true};}catch(e){}}
-  function schedule(late){
-    if(!raf) raf=requestAnimationFrame(run);
-    clearTimeout(lateTimer);
-    lateTimer=setTimeout(run,late||110);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){schedule(160);},{once:true}); else schedule(160);
-  window.addEventListener('load',function(){schedule(160);setTimeout(run,700);},{once:true});
-  window.addEventListener('scroll',function(){schedule(120);},{passive:true});
-  window.addEventListener('resize',function(){schedule(160);},{passive:true});
-  document.addEventListener('click',function(e){
-    if(e.target&&e.target.closest&&e.target.closest('#sectionJumpNav,#v1054DestinySubNav,.collapsible-block,summary,.history-item,.history-card,[data-history-id]')) schedule(180);
-  },true);
-})();
-</script>
-
-
 <script id="v10533-formula-overall-order-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el || (el.classList&&el.classList.contains('hidden')) || (el.closest&&el.closest('.hidden'))) return false;
@@ -15062,8 +14511,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10534-theme-performance-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -15149,8 +14598,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10535-theme-return-color-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
   function isNight(){return !!(document.body&&document.body.classList.contains('reading-theme-night'));}
   function syncThemeRoot(){
@@ -15277,8 +14726,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10541-source-integrated-finalizer">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const HERO='本版以 v10.5.36 为稳定基线，清理命运术语后置补丁，把术语解释、导航目标、快捷展开/折叠和跳转稳定逻辑合并进主结构。';
   const ROW='<details open><summary>'+VERSION+'</summary><ul><li>以 v10.5.36 为稳定基线，未继续沿用 v10.5.37-v10.5.40 的命运术语补丁。</li><li>命运“术语解释”已放入结果页主 DOM，不再由后置脚本临时创建。</li><li>主导航正式包含“术语”，并位于“雷达”之后；右侧“一键展开/折叠”可控制该模块。</li><li>导航跳转改为单次稳定定位，减少 Safari 上命盘之后内容跳转抖动。</li><li>同步更新 README、manifest、service-worker 与页面版本记录。</li></ul></details>';
   function $(id){return document.getElementById(id);}
@@ -15336,8 +14785,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10542-home-result-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const RESULT_CLASSES=['result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'];
   const RESULT_HASH_IDS={resultCard:1,v10510QuickGuideBlock:1,answerSummaryBlock:1,sceneFocusBlock:1,abChoiceResultBlock:1,paipanBlock:1,destinyBoardBlock:1,overallBlock:1,contextAnalysisBlock:1,triReadingBlock:1,singlePalaceBlock:1,doublePalaceBlock:1,symbolBlock:1,radarBlock:1,v10536DestinyGlossaryBlock:1,v10518FormulaBlock:1,adviceBlock:1,v10510GlossaryBlock:1,v1033Glossary:1};
   function $(id){return document.getElementById(id);}
@@ -15488,107 +14937,55 @@ html[data-theme="dark"] .v10519-destiny-note {
 </script>
 
 
-<!-- v10.5.48 integrated source logic: 命运导航分层、跳转稳定、标题左对齐 -->
-<style id="v10548-nav-layer-stable-style">
-  #v1033QuickGuide, #v1033Glossary{ display:none!important; }
-  #resultCard .block, #resultCard article, #resultCard .card{ scroll-margin-top:90px; }
+<!-- v10.5.49 integrated source logic: 单一导航入口、禁止自动居中抢滚动、标题左对齐 -->
 
-  /* 模块标题恢复左对齐；折叠按钮仍靠右。 */
+<style id="v10549-nav-single-owner-style">
+  html { scroll-behavior: auto !important; }
+  #resultCard .block, #resultCard article, #resultCard .card,
+  #homeTopSection, #sceneSection, #questionSection, #methodSection { scroll-margin-top: 16px; }
+
+  /* v10.5.49：导航只允许横向手动滑动，不再自动把 active 按钮滚到中间。 */
+  #sectionJumpNav.section-jump-nav,
+  #v1054DestinySubNav {
+    scroll-behavior: auto !important;
+    scroll-snap-type: none !important;
+    overscroll-behavior-x: contain !important;
+  }
+  #sectionJumpNav.section-jump-nav.xlr-v10549-nav-lock,
+  #v1054DestinySubNav.xlr-v10549-nav-lock {
+    pointer-events: none;
+  }
+
+  /* 模块标题固定左对齐：标题在左，折叠按钮在右。 */
   #resultCard .block > h4,
   #resultCard .block > h3,
-  #resultCard article.block > h4,
-  #resultCard article.block > h3,
-  #resultCard .reading-card > h5,
-  #resultCard .gua-card > h5,
-  #resultCard .answer-card > h5,
-  #resultCard .context-card > h5,
-  #resultCard details > summary,
-  .block h4,
-  .reading-card h5,
-  .gua-card h5,
-  .answer-card h5,
-  .context-card h5{
-    text-align:left!important;
-    justify-content:flex-start!important;
-    align-items:center!important;
+  #resultCard article > h4,
+  #resultCard article > h3 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    gap: 12px !important;
   }
   #resultCard .block > h4 .collapse-toggle,
   #resultCard .block > h3 .collapse-toggle,
-  #resultCard article.block > h4 .collapse-toggle,
-  #resultCard article.block > h3 .collapse-toggle{
-    margin-left:auto!important;
-    flex:0 0 auto!important;
+  #resultCard article > h4 .collapse-toggle,
+  #resultCard article > h3 .collapse-toggle {
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
   }
-
-  body.result-page #resultCard #v10510QuickGuideBlock,
-  body.result-destiny #resultCard #v10510QuickGuideBlock,
-  body.destiny-scene #resultCard #v10510QuickGuideBlock,
-  body.v10510-destiny-result #resultCard #v10510QuickGuideBlock,
-  body.v10511-destiny-result #resultCard #v10510QuickGuideBlock,
-  body.v10513-destiny-result #resultCard #v10510QuickGuideBlock{
-    display:block!important;
-    visibility:visible!important;
-    height:auto!important;
-    min-height:0!important;
-    overflow:visible!important;
-  }
-  body.result-page.result-destiny #resultCard #v10510GlossaryBlock,
-  body.result-page.destiny-scene #resultCard #v10510GlossaryBlock,
-  body.v10510-destiny-result #resultCard #v10510GlossaryBlock,
-  body.v10511-destiny-result #resultCard #v10510GlossaryBlock,
-  body.v10513-destiny-result #resultCard #v10510GlossaryBlock{
-    display:none!important;
-    visibility:hidden!important;
-  }
-  body.result-page:not(.result-destiny):not(.destiny-scene):not(.v10510-destiny-result):not(.v10511-destiny-result):not(.v10513-destiny-result) #resultCard #v10536DestinyGlossaryBlock{
-    display:none!important;
-    visibility:hidden!important;
-  }
-  #resultCard .collapsible-block.is-collapsed > :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(summary){
-    display:none!important;
-  }
-  #resultCard .collapsible-block.is-collapsed{ overflow:hidden!important; }
-  #resultCard .collapsible-block.is-collapsed > h4{ margin-bottom:0!important; }
-  #resultCard .collapse-toggle{
-    border:1px solid rgba(124,112,178,.22);
-    border-radius:999px;
-    background:rgba(255,255,255,.78);
-    color:var(--primary);
-    padding:4px 10px;
-    font-size:.78rem;
-    line-height:1.2;
-  }
-  #resultCard .xlr-learning-terms{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-  #resultCard .xlr-term-card{
-    border:1px solid rgba(124,112,178,.16);
-    border-radius:16px;
-    padding:12px 14px;
-    background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.72));
-    line-height:1.65;
-  }
-  #resultCard .xlr-term-card b{display:block;color:var(--primary);margin-bottom:4px;}
-  #resultCard .xlr-term-card span{color:var(--muted);}
-  #resultCard .xlr-term-card.xlr-term-wide{grid-column:1/-1;}
-  #resultCard .xlr-term-card.xlr-term-scene{background:linear-gradient(180deg,rgba(255,250,240,.98),rgba(255,246,225,.72));}
-  body.reading-theme-night #resultCard .collapse-toggle,
-  html[data-theme="dark"] #resultCard .collapse-toggle{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:var(--dark-text);}
-  body.reading-theme-night #resultCard .xlr-term-card,
-  html[data-theme="dark"] #resultCard .xlr-term-card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);}
-  body.reading-theme-night #resultCard .xlr-term-card.xlr-term-scene,
-  html[data-theme="dark"] #resultCard .xlr-term-card.xlr-term-scene{background:rgba(229,196,138,.10);}
-  @media(max-width:760px){#resultCard .xlr-learning-terms{grid-template-columns:1fr;}}
 </style>
-<script id="v10548-nav-layer-stable-script">
+
+<script id="v10549-nav-single-owner-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.48 命运导航分层与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.48 命运导航分层与跳转稳定版：命运主导航保留“导读”，命运二级导航只保留命盘内部子模块；重写导航跳转为单次定位且不写入 hash，避免导读、重心、命盘之间来回跳动，并继续保持所有模块标题左对齐。';
+  const VERSION='v10.5.49 导航抢滚动清理版';
+  const META='小六壬个人网页版 v10.5.49 导航抢滚动清理版：删除旧的导航自动居中、二级导航轮询和多套跳转纠偏逻辑，统一为单一导航入口；点击只滚动一次，滚动只更新高亮，不再互相抢滚动。';
   const EVENTS=[];
-  window.__XLR_V10548_EVENTS=EVENTS; window.__XLR_V10547_EVENTS=EVENTS;
+  window.__XLR_V10549_EVENTS=EVENTS;
+  window.__XLR_V10548_EVENTS=EVENTS;
+  window.__XLR_V10547_EVENTS=EVENTS;
+
   function $(id){return document.getElementById(id);}
   function textOf(el,n){return String(el?(el.textContent||''):'').replace(/\s+/g,' ').trim().slice(0,n||160);}
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c;});}
@@ -15600,33 +14997,31 @@ html[data-theme="dark"] .v10519-destiny-note {
     if(!el || hiddenByClass(el)) return false;
     const st=css(el); if(!st) return false;
     if(st.display==='none'||st.visibility==='hidden'||st.opacity==='0') return false;
-    return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+    const r=el.getBoundingClientRect ? el.getBoundingClientRect() : {width:0,height:0};
+    return !!(r.width||r.height||el.offsetWidth||el.offsetHeight||el.getClientRects().length);
   }
   function current(){
     try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){}
     try{if(window.currentResult)return window.currentResult;}catch(e){}
     return null;
   }
-  function resultCardVisible(){
-    const card=$('resultCard'); if(!card) return false;
-    const st=css(card); if(!st) return false;
-    if(card.classList.contains('hidden')||st.display==='none'||st.visibility==='hidden') return false;
-    return !!(card.offsetWidth||card.offsetHeight||card.getClientRects().length) || document.body.classList.contains('result-page');
-  }
   function getMode(){
     const r=current();
     const body=document.body.className||'';
-    const sceneText=[textOf($('resultScene'),120),textOf($('resultTitle'),120),textOf($('resultMethod'),160)].join(' ');
+    const card=$('resultCard');
+    const sceneText=[textOf($('resultScene'),120),textOf($('resultTitle'),120),textOf($('resultMethod'),180)].join(' ');
     const sceneKey=String((r&&(r.sceneKey||r.type||r.scene))||document.body.dataset.sceneKey||'').toLowerCase();
     const sceneName=String((r&&(r.sceneName||r.sceneLabel||r.category))||sceneText||'');
-    const card=$('resultCard');
     const cardLooksActive=!!(card && !card.classList.contains('hidden') && card.getClientRects && card.getClientRects().length);
     const bodyLooksActive=/\bresult-page\b|\bresult-destiny\b|\bdestiny-scene\b|\bv105\d+-normal-result\b|\bv105\d+-destiny-result\b/.test(body);
     const isResultActive=cardLooksActive || bodyLooksActive || !!(r && card && !card.classList.contains('hidden'));
     const isDestinyHint=(sceneKey==='destiny'||/命运|destiny|🪷/i.test(sceneName+' '+sceneText)||/\bresult-destiny\b|\bdestiny-scene\b|\bv105\d+-destiny-result\b/.test(body));
     return {result:r,sceneKey:sceneKey,sceneName:sceneName,isResultActive:!!isResultActive,isDestiny:!!(isResultActive&&isDestinyHint),bodyClass:body,sceneText:sceneText};
   }
-  window.xlrGetResultModeV10548=getMode; window.xlrGetResultModeV10547=getMode;
+  window.xlrGetResultModeV10549=getMode;
+  window.xlrGetResultModeV10548=getMode;
+  window.xlrGetResultModeV10547=getMode;
+
   function show(el){if(!el)return;el.classList.remove('hidden');el.style.removeProperty('display');el.style.removeProperty('visibility');el.style.removeProperty('height');el.style.removeProperty('overflow');}
   function hide(el){if(!el)return;el.classList.add('hidden');el.style.setProperty('display','none','important');el.style.setProperty('visibility','hidden','important');}
   function syncBody(){
@@ -15636,10 +15031,9 @@ html[data-theme="dark"] .v10519-destiny-note {
     else if(m.isResultActive) document.body.classList.remove('result-destiny','destiny-scene','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result');
     return m;
   }
-  function removeLegacy(){['v1033QuickGuide','v1033Glossary'].forEach(function(id){const el=$(id);if(el){el.remove();log('remove-legacy',id);}});}
   function chainText(){
     const r=current();
-    if(r&&Array.isArray(r.details)&&r.details.length){const names=r.details.map(function(d){return d&&(d.palaceName||d.name);}).filter(Boolean); if(names.length)return names.join(' → ');}
+    if(r&&Array.isArray(r.details)&&r.details.length){const names=r.details.map(function(d){return d&&(d.palaceName||d.name);}).filter(Boolean); if(names.length)return names.join(' → ');}    
     const tri=textOf($('triReadingBlock'),300);
     const m=tri.match(/本象\s*·\s*([^\s]+).*?中象\s*·\s*([^\s]+).*?末象\s*·\s*([^\s]+)/);
     return m?(m[1]+' → '+m[2]+' → '+m[3]):'本象 → 中象 → 末象';
@@ -15661,15 +15055,15 @@ html[data-theme="dark"] .v10519-destiny-note {
     if(!block)return; block.classList.add('collapsible-block'); if(key)block.setAttribute('data-collapse-key',key);
     const h=block.querySelector('h4,h3,h2,summary'); if(!h)return;
     let btn=h.querySelector('.collapse-toggle');
-    if(!btn){btn=document.createElement('button');btn.type='button';btn.className='collapse-toggle';h.appendChild(btn);}
+    if(!btn){btn=document.createElement('button');btn.type='button';btn.className='collapse-toggle';h.appendChild(btn);}    
     btn.textContent=block.classList.contains('is-collapsed')?'展开':'折叠';
     btn.setAttribute('aria-expanded',block.classList.contains('is-collapsed')?'false':'true');
-    if(!btn.__v10547){btn.__v10547=true;btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();setCollapsed(block,!block.classList.contains('is-collapsed'),'header-button');},true);}
+    if(!btn.__v10549){btn.__v10549=true;btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();setCollapsed(block,!block.classList.contains('is-collapsed'),'header-button');},true);}
   }
   function setCollapsed(block,collapse,source){
     if(!block)return; block.classList.add('collapsible-block');
     if(collapse) block.classList.add('is-collapsed'); else block.classList.remove('is-collapsed');
-    if(!collapse){show(block);Array.from(block.children||[]).forEach(function(child){if(!/^H[1-6]$/.test(child.tagName)&&child.tagName!=='SUMMARY'){child.style.removeProperty('display');child.style.removeProperty('visibility');child.style.removeProperty('height');child.style.removeProperty('overflow');}});}
+    if(!collapse){show(block);Array.from(block.children||[]).forEach(function(child){if(!/^H[1-6]$/.test(child.tagName)&&child.tagName!=='SUMMARY'){child.style.removeProperty('display');child.style.removeProperty('visibility');child.style.removeProperty('height');child.style.removeProperty('overflow');}});}    
     ensureButton(block); log('collapse-change',(source||'')+':'+(block.id||block.tagName)+':' +(collapse?'collapsed':'expanded'));
   }
   function updateGuide(destiny){const b=$('v10510QuickGuideBlock'), c=$('v10510QuickGuideContent'); if(!b||!c)return; show(b); b.classList.add('collapsible-block'); c.className='v10510-guide-grid'; c.innerHTML=guideHTML(destiny); if(!b.classList.contains('is-collapsed'))show(c); ensureButton(b,'quickGuide');}
@@ -15678,12 +15072,14 @@ html[data-theme="dark"] .v10519-destiny-note {
     if(normalC)normalC.innerHTML=termsHTML(false); if(dc)dc.innerHTML=termsHTML(true);
     if(destiny){hide(normal);show(db);ensureButton(db,'destinyGlossary');} else {hide(db);show(normal);ensureButton(normal,'glossary');}
   }
+  function removeLegacy(){['v1033QuickGuide','v1033Glossary'].forEach(function(id){const el=$(id);if(el){el.remove();log('remove-legacy',id);}});}
   function syncBlocks(){
     removeLegacy(); const m=syncBody();
     [['v10510QuickGuideBlock','quickGuide'],['answerSummaryBlock','answer'],['sceneFocusBlock','focus'],['overallBlock','overall'],['v10518FormulaBlock','formula'],['destinyBoardBlock','destiny'],['triReadingBlock','tri'],['singlePalaceBlock','single'],['doublePalaceBlock','double'],['symbolBlock','symbol'],['radarBlock','radar'],['adviceBlock','advice'],['v10510GlossaryBlock','glossary'],['v10536DestinyGlossaryBlock','destinyGlossary']].forEach(function(p){ensureButton($(p[0]),p[1]);});
-    if(m.isResultActive){updateGuide(m.isDestiny);updateGlossary(m.isDestiny);}
+    if(m.isResultActive){updateGuide(m.isDestiny);updateGlossary(m.isDestiny);}    
     return m;
   }
+
   function resultDefs(m){
     if(m.isDestiny) return [['resultCard','结果'],['v10510QuickGuideBlock','导读'],['sceneFocusBlock','重心'],['destinyBoardBlock','命盘'],['v10518FormulaBlock','口诀'],['triReadingBlock','三象'],['radarBlock','雷达'],['v10536DestinyGlossaryBlock','术语'],['adviceBlock','建议']];
     return [['resultCard','结果'],['v10510QuickGuideBlock','导读'],['answerSummaryBlock','答案'],['sceneFocusBlock','重心'],['overallBlock','综合'],['triReadingBlock','三象'],['v10518FormulaBlock','口诀'],['singlePalaceBlock','单宫'],['doublePalaceBlock','双宫'],['symbolBlock','象意'],['radarBlock','雷达'],['adviceBlock','建议'],['v10510GlossaryBlock','术语']];
@@ -15695,81 +15091,103 @@ html[data-theme="dark"] .v10519-destiny-note {
     return defs.map(function(x){return {id:x[0],label:x[1],el:$(x[0])};}).filter(function(t){if(!t.el||seen[t.id])return false; seen[t.id]=1; return visible(t.el);});
   }
   window.currentJumpTargets=function(){return buildTargets();};
-  window.currentJumpTargets.__v10547Unified=true;
-  function setActive(id){document.querySelectorAll('#sectionJumpNav [data-jump-target],#v1054DestinySubNav [data-destiny-sub-target]').forEach(function(btn){const attr=btn.getAttribute('data-jump-target')||btn.getAttribute('data-destiny-sub-target');btn.classList.toggle('active',attr===id);});}
-  function activeId(items){let active=items[0]&&items[0].id; const marker=(innerHeight||700)*0.30; items.forEach(function(t){if(t.el&&t.el.getBoundingClientRect().top<=marker)active=t.id;}); return active;}
-  function renderMainNav(){
-    const nav=$('sectionJumpNav'); if(!nav)return;
-    const items=buildTargets();
-    const key=items.map(function(t){return t.id+':'+t.label;}).join('|');
-    if(nav.getAttribute('data-v10547-key')!==key){
-      nav.setAttribute('data-v10547-key',key);
-      nav.innerHTML=items.map(function(t){return '<button class="jump-chip" type="button" data-jump-target="'+esc(t.id)+'" title="跳转到'+esc(t.label)+'"><span class="dot"></span>'+esc(t.label)+'</button>';}).join('');
-    }
-    if(!(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)) setActive(activeId(items));
+  window.currentJumpTargets.__v10549Unified=true;
+
+  function ensureSubNav(){
+    let nav=$('v1054DestinySubNav');
+    if(!nav){nav=document.createElement('nav');nav.id='v1054DestinySubNav';nav.setAttribute('aria-label','命盘内部子模块导航');document.body.appendChild(nav);}
+    return nav;
   }
   function destinySubItems(){
     return [['destinyBoardBlock','命盘'],['v1030DestinyHealth','健康'],['v1040MarriageBlock','婚姻'],['v10523CareerBlock','事业']]
       .map(function(x){return {id:x[0],label:x[1],el:$(x[0])};}).filter(function(t){return visible(t.el);});
   }
-  function renderDestinySubNav(){
-    const nav=$('v1054DestinySubNav'); if(!nav)return;
-    const m=getMode(); const items=destinySubItems();
+  function setActive(id){
+    document.querySelectorAll('#sectionJumpNav [data-jump-target],#v1054DestinySubNav [data-destiny-sub-target]').forEach(function(btn){
+      const attr=btn.getAttribute('data-jump-target')||btn.getAttribute('data-destiny-sub-target');
+      btn.classList.toggle('active',attr===id);
+    });
+  }
+  function activeId(items,ratio){let active=items[0]&&items[0].id; const marker=(innerHeight||700)*(ratio||0.30); items.forEach(function(t){if(t.el&&t.el.getBoundingClientRect().top<=marker)active=t.id;}); return active||'';}
+
+  let lastMainKey='';
+  function renderMainNav(force){
+    const nav=$('sectionJumpNav'); if(!nav)return;
+    const items=buildTargets();
+    const key=items.map(function(t){return t.id+':'+t.label;}).join('|');
+    if(force || key!==lastMainKey || nav.getAttribute('data-v10549-key')!==key){
+      lastMainKey=key; nav.setAttribute('data-v10549-key',key);
+      nav.innerHTML=items.map(function(t){return '<button class="jump-chip" type="button" data-jump-target="'+esc(t.id)+'" title="跳转到'+esc(t.label)+'"><span class="dot"></span>'+esc(t.label)+'</button>';}).join('');
+    }
+    if(!(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)) setActive(activeId(items,0.30));
+  }
+  let lastSubKey='';
+  function updateDestinySubNav(force){
+    const nav=ensureSubNav();
+    const m=getMode();
+    const items=destinySubItems();
     const board=$('destinyBoardBlock');
-    const boundary=$('v10518FormulaBlock')||$('triReadingBlock')||$('radarBlock')||$('v10536DestinyGlossaryBlock')||$('adviceBlock');
     let should=false;
     if(m.isResultActive&&m.isDestiny&&items.length>1&&visible(board)){
       const y=window.scrollY||0;
-      const start=board.getBoundingClientRect().top+y-150;
-      const end=boundary&&visible(boundary)?boundary.getBoundingClientRect().top+y-80:($('resultCard')?$('resultCard').getBoundingClientRect().top+y+$('resultCard').offsetHeight+80:Infinity);
+      const start=board.getBoundingClientRect().top+y-140;
+      const bottomCandidates=['v10518FormulaBlock','triReadingBlock','radarBlock','v10536DestinyGlossaryBlock','adviceBlock'].map($).filter(visible);
+      const boundary=bottomCandidates[0]||null;
+      const end=boundary?boundary.getBoundingClientRect().top+y-80:($('resultCard')?$('resultCard').getBoundingClientRect().top+y+$('resultCard').offsetHeight+80:Infinity);
       should=y>=start&&y<end;
     }
     if(!should){nav.classList.remove('show');return;}
     const key=items.map(function(t){return t.id+':'+t.label;}).join('|');
-    if(nav.getAttribute('data-v10548-key')!==key){
-      nav.setAttribute('data-v10548-key',key);
+    if(force || key!==lastSubKey || nav.getAttribute('data-v10549-key')!==key){
+      lastSubKey=key; nav.setAttribute('data-v10549-key',key);
       nav.setAttribute('aria-label','命盘内部子模块导航');
       nav.innerHTML=items.map(function(t){return '<button class="jump-chip" type="button" data-destiny-sub-target="'+esc(t.id)+'" title="跳转到'+esc(t.label)+'">'+esc(t.label)+'</button>';}).join('');
     }
     nav.classList.add('show');
-    if(!(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)){
-      const id=activeId(items); setActive(id);
-    }
+    if(!(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)) setActive(activeId(items,0.34));
   }
-  let navTimer=null;
-  function refreshNav(delay){clearTimeout(navTimer);navTimer=setTimeout(function(){renderMainNav();renderDestinySubNav();},delay==null?60:delay);}
+
+  let raf=0;
+  function updateOnScroll(){
+    if(raf) return;
+    raf=requestAnimationFrame(function(){
+      raf=0;
+      if(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil) return;
+      try{renderMainNav(false); updateDestinySubNav(false);}catch(e){}
+    });
+  }
+  let refreshTimer=0;
+  function refreshNav(delay,force){clearTimeout(refreshTimer);refreshTimer=setTimeout(function(){try{renderMainNav(!!force);updateDestinySubNav(!!force);}catch(e){}},delay==null?60:delay);}
+
   function stableJump(id){
     const target=$(id); if(!target)return;
     const stamp=Date.now();
-    if(window.__xlrV10548LastJump && window.__xlrV10548LastJump.id===id && stamp-window.__xlrV10548LastJump.time<320) return;
-    window.__xlrV10548LastJump={id:id,time:stamp};
-    try{window.__xlrNavJumpLockUntil=stamp+850;window.__xlrV10548JumpLockUntil=stamp+850;document.body.classList.add('v10536-nav-jumping','v10547-nav-jumping','v10548-nav-jumping');}catch(e){}
-    syncBlocks();
+    if(window.__xlrV10549LastJump && window.__xlrV10549LastJump.id===id && stamp-window.__xlrV10549LastJump.time<260) return;
+    window.__xlrV10549LastJump={id:id,time:stamp};
+    try{window.__xlrNavJumpLockUntil=stamp+520;window.__xlrV10549JumpLockUntil=stamp+520;document.body.classList.add('v10549-nav-jumping');}catch(e){}
     const root=document.documentElement, body=document.body;
     const oldRoot=root&&root.style?root.style.scrollBehavior:'';
     const oldBody=body&&body.style?body.style.scrollBehavior:'';
-    try{if(root)root.style.scrollBehavior='auto'; if(body)body.style.scrollBehavior='auto';}catch(e){}
-    requestAnimationFrame(function(){
-      const t=$(id); if(!t)return;
-      const offset=14;
-      const top=Math.max(0,Math.round(t.getBoundingClientRect().top+(window.scrollY||0)-offset));
-      try{window.scrollTo({top:top,behavior:'auto'});}catch(e){window.scrollTo(0,top);}
-      setActive(id);
-      // 不写入 #hash，避免 iOS Safari/GoodReader 再触发浏览器锚点定位或旧 hash 监听。
-      setTimeout(function(){
-        try{if(root)root.style.scrollBehavior=oldRoot; if(body)body.style.scrollBehavior=oldBody;}catch(e){}
-        try{document.body.classList.remove('v10536-nav-jumping','v10547-nav-jumping','v10548-nav-jumping');window.__xlrNavJumpLockUntil=0;window.__xlrV10548JumpLockUntil=0;}catch(e){}
-        try{setActive(id); renderMainNav(); renderDestinySubNav();}catch(e){}
-      },520);
-    });
-    log('stable-jump',id);
+    const nav=$('sectionJumpNav'), sub=$('v1054DestinySubNav');
+    try{if(root)root.style.scrollBehavior='auto'; if(body)body.style.scrollBehavior='auto'; if(nav)nav.classList.add('xlr-v10549-nav-lock'); if(sub)sub.classList.add('xlr-v10549-nav-lock');}catch(e){}
+    const y=Math.max(0,Math.round(target.getBoundingClientRect().top+(window.pageYOffset||window.scrollY||0)-12));
+    try{window.scrollTo(0,y);}catch(e){try{window.scrollTo({top:y,behavior:'auto'});}catch(_e){}}
+    setActive(id);
+    try{ if(location.hash) history.replaceState(history.state||null,'',location.pathname+location.search); }catch(e){}
+    setTimeout(function(){
+      try{if(root)root.style.scrollBehavior=oldRoot; if(body)body.style.scrollBehavior=oldBody; if(nav)nav.classList.remove('xlr-v10549-nav-lock'); if(sub)sub.classList.remove('xlr-v10549-nav-lock');document.body.classList.remove('v10549-nav-jumping','v10536-nav-jumping','v10547-nav-jumping','v10548-nav-jumping');window.__xlrNavJumpLockUntil=0;window.__xlrV10549JumpLockUntil=0;}catch(e){}
+      try{setActive(id);}catch(e){}
+    },360);
+    log('single-jump',id);
   }
+  window.xlrStableJumpV10549=stableJump;
   window.xlrStableJumpV10548=stableJump;
   window.xlrStableJumpV10547=stableJump;
-  window.renderSectionJumpNav=renderMainNav;
-  window.updateSectionJumpNav=function(){if(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)return;renderMainNav();};
-  window.refreshSectionJumpNavSoon=function(){refreshNav(80);};
+  window.renderSectionJumpNav=function(){renderMainNav(true);updateDestinySubNav(true);};
+  window.updateSectionJumpNav=function(){if(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)return;renderMainNav(false);updateDestinySubNav(false);};
+  window.refreshSectionJumpNavSoon=function(){refreshNav(80,true);};
   window.stableJumpToSection=function(target,id){stableJump(id||(target&&target.id));};
+
   document.addEventListener('click',function(e){
     const btn=e.target&&e.target.closest?e.target.closest('#sectionJumpNav [data-jump-target],#v1054DestinySubNav [data-destiny-sub-target]'):null;
     if(!btn)return;
@@ -15777,24 +15195,25 @@ html[data-theme="dark"] .v10519-destiny-note {
     if(!id)return;
     e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();stableJump(id);
   },true);
-  function blockIds(){const m=getMode(); if(!m.isResultActive)return[]; return resultDefs(m).map(function(x){return x[0];});}
-  function setAll(collapse){syncBlocks(); if(getMode().isResultActive)blockIds().forEach(function(id){const el=$(id); if(el&&visible(el))setCollapsed(el,collapse,collapse?'quick-collapse':'quick-expand');}); else document.querySelectorAll('#homeInfoBlocks details').forEach(function(d){d.open=!collapse;}); refreshNav(20);}
+
+  function setAll(collapse){syncBlocks(); const m=getMode(); const defs=m.isResultActive?resultDefs(m):[]; defs.forEach(function(p){const el=$(p[0]); if(el&&visible(el))setCollapsed(el,collapse,collapse?'quick-collapse':'quick-expand');}); refreshNav(20,true);}
   window.expandAllResultBlocks=function(){setAll(false);};
   window.collapseAllResultBlocks=function(){setAll(true);};
+
   function patchVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);}catch(e){}
     try{document.querySelectorAll('h2').forEach(function(el){if((el.textContent||'').indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
     try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10548){
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10549){
         const old=window.buildVersionUpdatesHTML;
         window.buildVersionUpdatesHTML=function(){
           let html=old.apply(this,arguments)||'';
-          html=html.replace(/<details[^>]*><summary>v10\.5\.48[^<]*<\/summary>[\s\S]*?<\/details>/g,'');
-          const row='<details open><summary>'+VERSION+'</summary><ul><li>命运主导航保留“导读”，命运二级导航移除“导读”，只显示命盘内部子模块。</li><li>点击“导读”和“重心”不再写入 hash，也不再进行二次纠偏滚动，避免二者来回跳。</li><li>二级导航从命盘模块开始出现，不再覆盖导读与重心区域。</li><li>滚动监听不再反复重建导读和术语内容，减少连续位移。</li><li>继续保持所有模块标题左对齐，并同步 README、manifest、service-worker。</li></ul></details>';
+          html=html.replace(/<details[^>]*><summary>v10\.5\.49[^<]*<\/summary>[\s\S]*?<\/details>/g,'');
+          const row='<details open><summary>'+VERSION+'</summary><ul><li>删除旧的“当前导航自动居中”逻辑，滚动页面时只更新 active 高亮，不再移动导航条本身。</li><li>删除旧的事业子导航追加、命运二级导航范围修正、主从同步等多套 scroll/click/mutation 监听，避免命运导航乱跳。</li><li>主导航和命运二级导航统一由同一个入口管理；点击导航只执行一次 window.scrollTo，不写 hash，不做二次纠偏。</li><li>命运二级导航只保留“命盘 / 健康 / 婚姻 / 事业”，不会加入“导读”。</li><li>所有模块 header 保持左对齐，折叠按钮在右侧；README、manifest、service-worker 同步更新。</li></ul></details>';
           return row+html;
         };
-        window.buildVersionUpdatesHTML.__v10548=true;
+        window.buildVersionUpdatesHTML.__v10549=true;
       }
       if(typeof window.renderHomeInfoBlocks==='function')window.renderHomeInfoBlocks();
     }catch(e){}
@@ -15808,28 +15227,28 @@ html[data-theme="dark"] .v10519-destiny-note {
   }
   function patchDebug(){
     const api=window.XLR_DEBUG_V10514; if(!api)return;
-    if(!api.__v10548Enhanced){
+    if(!api.__v10549Enhanced){
       const oldSnap=api.snapshot;
       api.snapshot=function(reason){
         const base=oldSnap?oldSnap(reason):{};
         const ids=['v10510QuickGuideBlock','answerSummaryBlock','sceneFocusBlock','overallBlock','v10518FormulaBlock','destinyBoardBlock','v1030DestinyHealth','v1040MarriageBlock','v10523CareerBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock','v10536DestinyGlossaryBlock','v1033QuickGuide','v1033Glossary'];
         base.version=VERSION;
-        base.v10548={debugVersion:VERSION,pageMode:getMode(),mainJumpTargets:buildTargets().map(function(t){return {id:t.id,label:t.label,visible:visible(t.el),className:t.el?t.el.className:''};}),destinySubTargets:destinySubItems().map(function(t){return {id:t.id,label:t.label,visible:visible(t.el)};}),collapsibleAudit:ids.map(stateFor),recentUiEvents:EVENTS.slice(-100)};
+        base.v10549={debugVersion:VERSION,pageMode:getMode(),mainJumpTargets:buildTargets().map(function(t){return {id:t.id,label:t.label,visible:visible(t.el),className:t.el?t.el.className:''};}),destinySubTargets:destinySubItems().map(function(t){return {id:t.id,label:t.label,visible:visible(t.el)};}),navPolicy:{singleOwner:true,noAutoCenter:true,noHash:true,noSecondCorrection:true},collapsibleAudit:ids.map(stateFor),recentUiEvents:EVENTS.slice(-100)};
         return base;
       };
-      api.__v10548Enhanced=true;
+      api.__v10549Enhanced=true;
     }
-    ['v10546DebugSaveBtn','v10547DebugSaveBtn'].forEach(function(id){const old=$(id); if(old)old.remove();});
+    ['v10546DebugSaveBtn','v10547DebugSaveBtn','v10548DebugSaveBtn'].forEach(function(id){const old=$(id); if(old)old.remove();});
     const actions=document.querySelector('#v10514DebugDialog .v10514-debug-actions');
-    if(actions&&!$('v10548DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10548DebugSaveBtn';b.textContent='保存详细日志 v10.5.48';b.addEventListener('click',function(){const api=window.XLR_DEBUG_V10514||{};const data=api.snapshot?api.snapshot('save-log'):{version:VERSION};const text=JSON.stringify({version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:data,logs:(api.logs||[]).slice(),v10548Events:EVENTS.slice()},null,2);const name='xiaoliuren-debug-v10.5.48-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){alert('保存失败，请复制 Debug 日志。');}});actions.insertBefore(b,actions.firstChild);}
+    if(actions&&!$('v10549DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10549DebugSaveBtn';b.textContent='保存详细日志 v10.5.49';b.addEventListener('click',function(){const api=window.XLR_DEBUG_V10514||{};const data=api.snapshot?api.snapshot('save-log'):{version:VERSION};const text=JSON.stringify({version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:data,logs:(api.logs||[]).slice(),v10549Events:EVENTS.slice()},null,2);const name='xiaoliuren-debug-v10.5.49-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){alert('保存失败，请复制 Debug 日志。');}});actions.insertBefore(b,actions.firstChild);}
   }
-  function boot(){patchVersion();syncBlocks();renderMainNav();renderDestinySubNav();patchDebug();}
+  function boot(){patchVersion();syncBlocks();renderMainNav(true);updateDestinySubNav(true);patchDebug();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
-  window.addEventListener('load',function(){boot();[120,500,1200,2600,5200].forEach(function(ms){setTimeout(boot,ms);});},{once:true});
-  window.addEventListener('scroll',function(){if(window.__xlrNavJumpLockUntil&&Date.now()<window.__xlrNavJumpLockUntil)return;refreshNav(80);},{passive:true});
-  window.addEventListener('resize',function(){refreshNav(120);});
-  document.addEventListener('click',function(e){const q=e.target&&e.target.closest?e.target.closest('[data-v9919-quick],.collapse-toggle,#v10514DebugFab,#v10514DebugDialog button,.history-item,.history-card,[data-history-id]'):null;if(q){log('click',textOf(q,70)+' target='+(q.getAttribute('data-v9919-quick')||q.id||''));setTimeout(boot,120);}},true);
-  try{new MutationObserver(function(){clearTimeout(window.__v10548Timer);window.__v10548Timer=setTimeout(function(){syncBlocks();refreshNav(20);patchDebug();},180);}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
+  window.addEventListener('load',function(){boot();[120,500,1200,2600].forEach(function(ms){setTimeout(boot,ms);});},{once:true});
+  window.addEventListener('scroll',updateOnScroll,{passive:true});
+  window.addEventListener('resize',function(){refreshNav(120,true);},{passive:true});
+  document.addEventListener('click',function(e){const q=e.target&&e.target.closest?e.target.closest('[data-v9919-quick],.collapse-toggle,#v10514DebugFab,#v10514DebugDialog button,.history-item,.history-card,[data-history-id]'):null;if(q){log('click',textOf(q,70)+' target='+(q.getAttribute('data-v9919-quick')||q.id||''));setTimeout(function(){syncBlocks();refreshNav(40,true);patchDebug();},120);}},true);
+  try{new MutationObserver(function(){clearTimeout(window.__v10549Timer);window.__v10549Timer=setTimeout(function(){syncBlocks();refreshNav(20,true);patchDebug();},220);}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
 })();
 </script>
 

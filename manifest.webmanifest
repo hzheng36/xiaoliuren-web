@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.48",
-  "short_name": "小六壬 v10.5.48",
-  "description": "v10.5.48 命运导航分层与跳转稳定版",
-  "start_url": "./index.html?v=10.5.48",
+  "name": "小六壬占卜 v10.5.49",
+  "short_name": "小六壬 v10.5.49",
+  "description": "v10.5.49 导航抢滚动清理版",
+  "start_url": "./index.html?v=10.5.49",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.48"
+  "version": "10.5.49"
 }

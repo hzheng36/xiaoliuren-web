@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.48-destiny-nav-layer-stable';
+const CACHE_NAME = 'xiaoliuren-v10.5.49-nav-single-owner';
 const APP_SHELL = [
   './',
   './index.html',
