@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.79 历史与结果渲染回退修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.79 历史与结果渲染回退修正版：回退 v10.5.78 的运行时 VERSION 全量替换方案，恢复 v10.5.76 稳定核心，修复历史记录无法识别与新占卜结果内容大量缺失的问题；仅保留轻量版本检测出口与版本记录更新。" />
+  <title>小六壬占卜 · v10.5.80 显示版本统一修正版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.80 显示版本统一修正版：继续使用 v10.5.76 稳定核心，不改写旧运行时 VERSION 常量；只修复首页标题、浏览器标题、Debug 顶层版本和版本检测出口被旧脚本晚触发覆盖回 v10.5.76 的显示问题。" />
   <meta name="xiaoliuren-build-version" content="10.5.79" />
-  <meta name="xiaoliuren-build-label" content="v10.5.79 历史与结果渲染回退修正版" />
+  <meta name="xiaoliuren-build-label" content="v10.5.80 显示版本统一修正版" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1074,8 +1074,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.79 历史与结果渲染回退修正版</h2>
-          <p>本版以 v10.5.76 稳定核心为基线，回退 v10.5.78 的运行时版本常量全量替换方案，优先恢复历史记录识别和结果页完整渲染。</p>
+          <h2>个人占卜台 · v10.5.80 显示版本统一修正版</h2>
+          <p>本版继续以 v10.5.76 稳定核心为基线，不改写旧运行时 VERSION 常量；本次只统一首页标题、Debug 顶层版本和版本检测出口，避免显示被旧脚本覆盖回 v10.5.76。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -4320,6 +4320,7 @@ ${nextStep}`;
     function buildVersionUpdatesHTML(){
       const versions = [
         
+        { v:'v10.5.80 显示版本统一修正版', items:['继续使用 v10.5.76 稳定核心，不改写旧脚本内部 VERSION 常量，避免再次影响历史记录和结果渲染。','修复首页大标题、浏览器标题、Debug 顶层版本被旧版本脚本晚触发覆盖回 v10.5.76 的问题。','新增最终显示版本守护：只校正可见版本文案与 Debug 顶层显示，不碰核心占卜逻辑、历史记录结构和结果模板。','同步更新页面版本记录、README、manifest 与 service-worker 缓存名。'] },
         { v:'v10.5.79 历史与结果渲染回退修正版', items:['回退 v10.5.78 中对所有运行时 VERSION 常量的全量替换方案，恢复 v10.5.76 稳定核心逻辑。','修复 v10.5.78 后历史记录无法识别、点击历史无法正常还原结果的问题。','修复新占卜结果页内容大量缺失的问题，结果渲染、命运模板、普通问事模板继续使用稳定主逻辑。','只保留轻量版本检测出口：页面标题、manifest、service-worker、README 和 Debug 顶层版本可显示 v10.5.79。','本版不引入 v10.5.77 的操作防抖重型逻辑，不再全量改写旧脚本内部 VERSION 常量。'] },
         { v:'v10.5.78 版本检测一致性修正版（已回退）', items:['该版尝试统一运行时版本检测，但全量替换旧脚本内部 VERSION 常量后，引发历史记录识别和结果渲染异常。','v10.5.79 已回退此方案，后续只采用轻量版本检测出口。'] },
         { v:'v10.5.77 电脑端操作防抖稳定修正版（未继续沿用）', items:['该版尝试修复电脑端历史、设置、展开折叠操作抖动。','由于后续版本检测处理出现风险，v10.5.79 暂不沿用该重型操作防抖方案，先回到 v10.5.76 稳定核心。'] },
@@ -18060,6 +18061,88 @@ html[data-theme="dark"] .v10519-destiny-note {
   function boot(){applyVersionOnly();enhanceDebug();try{if(window.XLR_DEBUG_V10514&&window.XLR_DEBUG_V10514.logs)window.XLR_DEBUG_V10514.logs.push({time:new Date().toLocaleTimeString(),reason:'v10579-light-version:boot',version:VERSION});}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
   window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,700);},{once:true});
+})();
+</script>
+
+
+
+<!-- v10.5.80 source-integrated fix: 最终显示版本守护，不改核心运行时常量 -->
+<script id="v10580-display-version-guard-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.80 显示版本统一修正版';
+  const BUILD='10.5.80';
+  const CORE='v10.5.76 命运导读电脑端布局修正版';
+  const META='小六壬个人网页版 v10.5.80 显示版本统一修正版：继续使用 v10.5.76 稳定核心，不改写旧运行时 VERSION 常量；只修复首页标题、浏览器标题、Debug 顶层版本和版本检测出口被旧脚本晚触发覆盖回 v10.5.76 的显示问题。';
+  const HERO='本版继续以 v10.5.76 稳定核心为基线，不改写旧运行时 VERSION 常量；本次只统一首页标题、Debug 顶层版本和版本检测出口，避免显示被旧脚本覆盖回 v10.5.76。';
+  function q(s){try{return document.querySelector(s);}catch(e){return null;}}
+  function qa(s){try{return Array.from(document.querySelectorAll(s));}catch(e){return [];}}
+  function ensureMeta(name,content){
+    try{let m=q('meta[name="'+name+'"]');if(!m){m=document.createElement('meta');m.setAttribute('name',name);document.head&&document.head.appendChild(m);}m.setAttribute('content',content);}catch(e){}
+  }
+  function apply(reason){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const m=q('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
+    ensureMeta('xiaoliuren-build-version',BUILD);
+    ensureMeta('xiaoliuren-build-label',VERSION);
+    ensureMeta('xiaoliuren-runtime-version',VERSION);
+    try{
+      qa('h2').forEach(function(el){
+        const t=el.textContent||'';
+        if(t.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION;
+      });
+    }catch(e){}
+    try{
+      const lead=q('header .hero p, .hero p');
+      if(lead && /^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;
+    }catch(e){}
+    try{window.XLR_CURRENT_VERSION=VERSION;window.__xiaoliurenBuildVersion={version:VERSION,build:BUILD,coreBaseline:CORE,reason:'v10580-display-version-guard',lastApplyReason:reason||''};}catch(e){}
+  }
+  function patchDebug(){
+    try{
+      const api=window.XLR_DEBUG_V10514;if(!api||api.__v10580DisplayVersionGuard)return;
+      const old=api.snapshot;
+      api.snapshot=function(reason){
+        const base=old?old.call(this,reason):{};
+        base.version=VERSION;
+        base.v10580={
+          displayVersion:VERSION,
+          build:BUILD,
+          coreBaseline:CORE,
+          documentTitle:document.title,
+          heroTitle:(q('h2')||{}).textContent||'',
+          buildMeta:(q('meta[name="xiaoliuren-build-version"]')||{}).content||'',
+          note:'v10.5.80 只修正可见版本与 Debug 顶层版本；核心逻辑仍保持 v10.5.76 稳定基线。'
+        };
+        return base;
+      };
+      api.__v10580DisplayVersionGuard=true;
+    }catch(e){}
+  }
+  function patchVersionLog(){
+    try{
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10580Display){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.call(this)||'';
+          if(html.indexOf(VERSION)<0){
+            html='<details open><summary>'+VERSION+'</summary><ul><li>继续使用 v10.5.76 稳定核心，不改写旧脚本内部 VERSION 常量。</li><li>修复首页大标题、浏览器标题、Debug 顶层版本被旧脚本晚触发覆盖回 v10.5.76 的问题。</li><li>新增最终显示版本守护，只校正可见版本文案，不碰历史记录和结果渲染主逻辑。</li><li>同步更新 README、manifest 与 service-worker。</li></ul></details>'+html;
+          }
+          return html;
+        };
+        window.buildVersionUpdatesHTML.__v10580Display=true;
+      }
+    }catch(e){}
+  }
+  function boot(reason){apply(reason||'boot');patchDebug();patchVersionLog();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){boot('dom');},{once:true});else boot('immediate');
+  window.addEventListener('load',function(){[80,700,1800,3600,6500].forEach(function(ms){setTimeout(function(){boot('load-'+ms);},ms);});},{once:true});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)boot('visibility');},true);
+  window.addEventListener('focus',function(){boot('focus');},true);
+  try{
+    const hero=q('header .hero')||q('.hero');
+    if(hero) new MutationObserver(function(){clearTimeout(window.__v10580VersionGuardTimer);window.__v10580VersionGuardTimer=setTimeout(function(){boot('hero-mutation');},60);}).observe(hero,{childList:true,subtree:true,characterData:true});
+  }catch(e){}
 })();
 </script>
 
