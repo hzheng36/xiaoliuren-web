@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.34-theme-performance';
+const CACHE_NAME = 'xiaoliuren-v10.5.35-theme-return-color';
 const APP_SHELL = [
   './',
   './index.html',
