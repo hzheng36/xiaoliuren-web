@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.41",
-  "short_name": "小六壬 v10.5.41",
-  "description": "v10.5.41 源码整合稳定版",
+  "name": "小六壬占卜 · v10.5.42",
+  "short_name": "小六壬 v10.5.42",
+  "description": "v10.5.42 主页结果状态隔离修复版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.41"
+  "version": "10.5.42"
 }
