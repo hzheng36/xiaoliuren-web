@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.40-destiny-terms-stable';
+const CACHE_NAME = 'xiaoliuren-v10.5.36-nav-terms-jump-stability';
 const APP_SHELL = [
   './',
   './index.html',
