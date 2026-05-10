@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.44 导读术语去重与Debug增强版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.44 导读术语去重与Debug增强版：去除旧动态导读/术语重复模块，补齐命运导读导航，并增强 Debug 对折叠、导航、重复模块和快捷按钮的诊断能力。" />
+  <title>小六壬占卜 · v10.5.45 导读回归与术语学习增强版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.45 导读回归与术语学习增强版：修复命运导读显示、非命运术语折叠内容不隐藏的问题，合并旧术语解释内容并扩展为学习型术语库，同时增强 Debug 对当前页面与折叠状态的判断。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.44 导读术语去重与Debug增强版</h2>
+          <h2>个人占卜台 · v10.5.45 导读回归与术语学习增强版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -4313,6 +4313,7 @@ ${nextStep}`;
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.45 导读回归与术语学习增强版', items:['修复非命运“术语解释”点击折叠后内容仍显示的问题，统一折叠状态与内容隐藏规则。','命运结果页恢复“快速导读”，并保留导航里的“导读”入口。','普通术语与命运术语改为学习型内容，合并旧第二个术语解释重点，并扩展三象串联、六宫掌诀、六亲、六神、地支、五星、生克和现实校验说明。','命运与非命运只显示各自一个术语解释模块，避免两个术语互相抢显示或快捷按钮控制错对象。','Debug 增加 v10.5.45 审计信息：结果页判断、命运判断、术语块数量、导航目标和折叠内容区状态。'] },
         { v:'v10.5.44 导读术语去重与Debug增强版', items:['补齐命运结果页导航里的“导读”，并保持主页/结果页导航隔离。','停用旧 v10.3.3 动态 details 导读/术语，避免底部出现两个“术语解释”。','把主导读、行动建议、普通术语、命运术语统一纳入快捷展开/折叠控制。','Debug 新增重复模块检查、折叠审计、导航目标审计、最近快捷按钮事件，并新增“保存详细日志”。','同步更新 README、manifest、service-worker 与页面版本记录，并继续检查旧版本跳动问题。'] },
         { v:'v10.5.42 主页结果状态隔离修复版', items:['修复返回主页后仍残留 result-page、result-destiny、旧结果 class、旧 hash 和 currentResult，导致主页导航被结果页导航覆盖的问题。','返回主页、重新占卜、启动清理都会同步隐藏结果卡片、清空当前结果，并重建主页导航。','主导航判断改为“结果页 class + 结果卡片可见”同时成立才进入结果模式，避免历史结果残留让主页误判。','右侧快捷按钮“展开 / 折叠”按当前页面状态执行：结果页控制结果模块，主页控制主页说明/版本 details。','同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并继续防止旧版本标题回跳。'] },
         { v:'v10.5.41 源码整合稳定版', items:['以 v10.5.36 导航术语与跳转稳定版为干净基线，不沿用 v10.5.37-v10.5.40 的命运术语后置补丁。','删除 v10.5.36 末尾动态创建命运术语模块的后置脚本，把“命运术语解释”直接放回结果页主 DOM 结构。','主阅读导航正式加入命运术语目标，位置在“雷达”之后；一键展开/折叠可直接管理该模块。','主导航点击改为单次稳定定位，避免 smooth scroll、导航居中和折叠刷新叠加导致画面抖动。','同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查旧版本标题回跳问题。'] },
@@ -15481,123 +15482,242 @@ html[data-theme="dark"] .v10519-destiny-note {
 </script>
 
 
-<!-- v10.5.44 source-integrated fix: 导读术语去重、统一折叠、Debug增强 -->
-<style id="v10544-guide-glossary-debug-style">
+<!-- v10.5.45 source-integrated fix: 导读回归、术语学习增强、折叠状态统一 -->
+<style id="v10545-guide-glossary-learning-style">
   #v1033QuickGuide, #v1033Glossary{ display:none!important; }
-  #v10510QuickGuideBlock.collapsible-block.is-collapsed > *:not(h4),
-  #adviceBlock.collapsible-block.is-collapsed > *:not(h4){ display:none!important; }
+  body.result-page #resultCard #v10510QuickGuideBlock,
+  body.result-destiny #resultCard #v10510QuickGuideBlock,
+  body.v10510-destiny-result #resultCard #v10510QuickGuideBlock,
+  body.v10511-destiny-result #resultCard #v10510QuickGuideBlock,
+  body.v10513-destiny-result #resultCard #v10510QuickGuideBlock{
+    display:block!important;
+    visibility:visible!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  body.result-page.result-destiny #resultCard #v10510GlossaryBlock,
+  body.v10510-destiny-result #resultCard #v10510GlossaryBlock,
+  body.v10511-destiny-result #resultCard #v10510GlossaryBlock,
+  body.v10513-destiny-result #resultCard #v10510GlossaryBlock{
+    display:none!important;
+    visibility:hidden!important;
+  }
+  body.result-page:not(.result-destiny):not(.v10510-destiny-result):not(.v10511-destiny-result):not(.v10513-destiny-result) #resultCard #v10536DestinyGlossaryBlock{
+    display:none!important;
+    visibility:hidden!important;
+  }
+  #resultCard .collapsible-block.is-collapsed > *:not(h4):not(summary){
+    display:none!important;
+  }
+  #resultCard .collapsible-block.is-collapsed{
+    overflow:hidden!important;
+  }
+  #resultCard .collapsible-block.is-collapsed > h4{
+    margin-bottom:0!important;
+  }
+  #resultCard .xlr-learning-terms{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+  #resultCard .xlr-term-card{
+    border:1px solid rgba(124,112,178,.16);
+    border-radius:16px;
+    padding:12px 14px;
+    background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,247,255,.72));
+    line-height:1.65;
+  }
+  #resultCard .xlr-term-card b{display:block;color:var(--primary);margin-bottom:4px;}
+  #resultCard .xlr-term-card span{color:var(--muted);}
+  #resultCard .xlr-term-card.xlr-term-wide{grid-column:1/-1;}
+  #resultCard .xlr-term-card.xlr-term-scene{background:linear-gradient(180deg,rgba(255,250,240,.98),rgba(255,246,225,.72));}
+  body.reading-theme-night #resultCard .xlr-term-card,
+  html[data-theme="dark"] #resultCard .xlr-term-card{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);}
+  body.reading-theme-night #resultCard .xlr-term-card.xlr-term-scene,
+  html[data-theme="dark"] #resultCard .xlr-term-card.xlr-term-scene{background:rgba(229,196,138,.10);}
+  @media(max-width:760px){#resultCard .xlr-learning-terms{grid-template-columns:1fr;}}
 </style>
-<script id="v10544-guide-glossary-debug-script">
+<script id="v10545-guide-glossary-learning-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.44 导读术语去重与Debug增强版';
-  const META='小六壬个人网页版 v10.5.44 导读术语去重与Debug增强版：去除旧动态导读/术语重复模块，补齐命运导读导航，并增强 Debug 对折叠、导航、重复模块和快捷按钮的诊断能力。';
+  const VERSION='v10.5.45 导读回归与术语学习增强版';
+  const META='小六壬个人网页版 v10.5.45 导读回归与术语学习增强版：修复命运导读显示、非命运术语折叠内容不隐藏的问题，合并旧术语解释内容并扩展为学习型术语库，同时增强 Debug 对当前页面与折叠状态的判断。';
   const EVENTS=[];
-  window.__XLR_V10544_EVENTS=EVENTS;
+  window.__XLR_V10545_EVENTS=EVENTS;
   function $(id){return document.getElementById(id);}
   function txt(el,n){return String(el?(el.textContent||''):'').replace(/\s+/g,' ').trim().slice(0,n||120);}
-  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]||c;});}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c;});}
   function now(){try{return new Date().toLocaleTimeString();}catch(e){return String(Date.now());}}
-  function log(type,detail){try{EVENTS.push({time:now(),type:type,detail:detail||'',scrollY:Math.round(window.scrollY||0),hash:location.hash||'',bodyClass:document.body.className});while(EVENTS.length>80)EVENTS.shift();}catch(e){}}
-  function stateFor(id){
-    const el=$(id);
-    if(!el) return {exists:false,id:id};
-    const cs=getComputedStyle(el);
-    const h4=el.querySelector('h4,summary');
-    const btn=el.querySelector('.collapse-toggle');
-    const content=Array.from(el.children).filter(function(c){return !/^H[1-6]$/.test(c.tagName)&&c.tagName!=='SUMMARY';})[0]||null;
-    const ccs=content?getComputedStyle(content):null;
-    return {
-      exists:true,id:id,tag:el.tagName,className:el.className||'',
-      dataCollapseKey:el.getAttribute('data-collapse-key')||'',
-      inlineDisplay:el.style.display||'',display:cs.display,visibility:cs.visibility,overflow:cs.overflow,
-      rect:{top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height),width:Math.round(el.getBoundingClientRect().width)},
-      offsetHeight:el.offsetHeight||0,hiddenClass:el.classList.contains('hidden'),isCollapsed:el.classList.contains('is-collapsed'),
-      hasToggle:!!btn,toggleText:btn?txt(btn,20):'',ariaExpanded:btn?btn.getAttribute('aria-expanded'):'',
-      headerText:txt(h4,60),textLength:(el.textContent||'').trim().length,
-      content:{exists:!!content,tag:content?content.tagName:'',id:content?content.id:'',className:content?content.className:'',display:ccs?ccs.display:'',visibility:ccs?ccs.visibility:'',height:content?Math.round(content.getBoundingClientRect().height):0,offsetHeight:content?content.offsetHeight:0}
-    };
-  }
-  function visible(el){
-    if(!el || (el.classList&&el.classList.contains('hidden')) || (el.closest&&el.closest('.hidden'))) return false;
-    const st=getComputedStyle(el);
+  function log(type,detail){try{EVENTS.push({time:now(),type:type,detail:detail||'',scrollY:Math.round(window.scrollY||0),hash:location.hash||'',bodyClass:document.body.className});while(EVENTS.length>120)EVENTS.shift();}catch(e){}}
+  function comp(el){return el?getComputedStyle(el):null;}
+  function domVisible(el){
+    if(!el || (el.closest&&el.closest('.hidden'))) return false;
+    const st=comp(el); if(!st) return false;
     return st.display!=='none' && st.visibility!=='hidden' && st.opacity!=='0' && !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
   }
-  function current(){try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){}try{return window.currentResult||null;}catch(e){return null;}}
-  function isResultActive(){try{return window.xlrV10542IsResultActive?!!window.xlrV10542IsResultActive():document.body.classList.contains('result-page')&&visible($('resultCard'));}catch(e){return document.body.classList.contains('result-page')&&visible($('resultCard'));}}
-  function isDestiny(){const r=current();return !!(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'))||/\bresult-destiny\b/.test(document.body.className);}
+  function resultCardActive(){
+    const card=$('resultCard'); if(!card) return false;
+    const st=comp(card); if(!st || card.classList.contains('hidden') || st.display==='none' || st.visibility==='hidden') return false;
+    return document.body.classList.contains('result-page') || document.body.classList.contains('result-destiny') || /v105\d+-normal-result|v105\d+-destiny-result/.test(document.body.className) || !!(card.offsetWidth||card.offsetHeight||card.getClientRects().length);
+  }
+  function current(){
+    try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){}
+    try{if(window.currentResult)return window.currentResult;}catch(e){}
+    return null;
+  }
+  function isDestinyResult(){
+    const r=current();
+    if(r && (r.sceneKey==='destiny'||r.sceneName==='命运')) return true;
+    const b=document.body.className||'';
+    if(/result-destiny|v105\d+-destiny-result/.test(b)) return true;
+    const scene=txt($('resultScene'),40)+txt($('resultTitle'),40);
+    return resultCardActive() && /命运|🪷/.test(scene);
+  }
   function removeLegacyDuplicates(){
-    ['v1033QuickGuide','v1033Glossary'].forEach(function(id){const el=$(id); if(el){log('remove-legacy-duplicate',id); el.remove();}});
+    ['v1033QuickGuide','v1033Glossary'].forEach(function(id){const el=$(id); if(el){el.remove(); log('remove-legacy-duplicate',id);}});
   }
-  function makeCollapsible(id,key){
-    const block=$(id); if(!block) return null;
-    block.classList.add('collapsible-block');
-    if(key) block.setAttribute('data-collapse-key',key);
-    const h=block.querySelector('h4');
-    if(h && !h.querySelector('.collapse-toggle')){
-      const btn=document.createElement('button');
-      btn.type='button'; btn.className='collapse-toggle'; btn.textContent=block.classList.contains('is-collapsed')?'展开':'折叠';
-      btn.setAttribute('aria-expanded',block.classList.contains('is-collapsed')?'false':'true');
-      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();setCollapsed(block,!block.classList.contains('is-collapsed'),'header-button');});
-      h.appendChild(btn);
+  function chainText(){
+    const r=current();
+    if(r && Array.isArray(r.details) && r.details.length) return r.details.map(function(d){return d&&d.palaceName;}).filter(Boolean).join(' → ');
+    const t=txt($('triReadingBlock'),200);
+    const m=t.match(/本象\s*·\s*([^\s]+).*?中象\s*·\s*([^\s]+).*?末象\s*·\s*([^\s]+)/);
+    return m ? (m[1]+' → '+m[2]+' → '+m[3]) : '本象 → 中象 → 末象';
+  }
+  function sceneName(){
+    const r=current();
+    if(r&&r.sceneName) return r.sceneName;
+    const t=txt($('resultScene'),30).replace(/[🪷💍🧩⚕️🌦️💰📚🚗📦🔎]/g,'').trim();
+    return t||'本场景';
+  }
+  function guideHTML(destiny){
+    const chain=esc(chainText());
+    const scene=esc(sceneName());
+    if(destiny){
+      return '<div class="v10510-guide-card"><b>1. 先看答案</b><span>先看一句话直断和偏向判断，快速知道长期倾向的大方向。</span></div>'+
+        '<div class="v10510-guide-card"><b>2. 看命盘</b><span>命运场景重点看命盘、六亲、六神、地支和五星，不套普通问事模板。</span></div>'+
+        '<div class="v10510-guide-card"><b>3. 串三象</b><span>本课三象是：'+chain+'。前面看起势，中间看过程，最后看长期落点。</span></div>'+
+        '<div class="v10510-guide-card"><b>4. 查术语</b><span>看不懂六亲、生克、六神、五星时，再看底部术语解释，当作学习索引。</span></div>';
     }
-    try{if(typeof updateCollapseButton==='function')updateCollapseButton(block);}catch(e){}
-    return block;
+    return '<div class="v10510-guide-card"><b>1. 先看答案</b><span>先看“一句话直断”和偏向判断，快速知道这课大方向。</span></div>'+
+      '<div class="v10510-guide-card"><b>2. 再看重心</b><span>“本场景判断重心”会告诉你这类问题最该看哪里。</span></div>'+
+      '<div class="v10510-guide-card"><b>3. 看三象变化</b><span>本课三象是：'+chain+'。前面看当前，中间看过程，最后看结果。</span></div>'+
+      '<div class="v10510-guide-card"><b>4. 看专项与建议</b><span>'+scene+'会套用对应知识库，再结合行动建议落到现实处理。</span></div>';
   }
-  function setCollapsed(block,collapse,source){
+  function card(name,text,cls){return '<div class="xlr-term-card '+(cls||'')+'"><b>'+esc(name)+'</b><span>'+esc(text)+'</span></div>';}
+  function learningTerms(destiny){
+    const common=[
+      ['本象 / 中象 / 末象','本象看起点与当前，中象看发展过程，末象看最后落点。读课时不要把三宫拆开看，要把它们串成“起因 → 过程 → 结果”的故事。'],
+      ['三象串联','例如“大安 → 留连 → 速喜”：先稳住，中间有拖延，最后有消息或推进。结论重点看末象，但中象会说明为什么顺或为什么卡。'],
+      ['六宫掌诀','大安主稳，留连主拖，速喜主快，赤口主争，小吉主小成，空亡主虚或未落实。'],
+      ['大安','安稳、守成、偏慢，适合按计划推进；缺点是速度慢，容易过于保守。'],
+      ['留连','拖延、纠缠、反复、旧事未决；常提示事情卡在过程里，需要耐心清理牵扯。'],
+      ['速喜','消息快、变化快、有机会，适合主动接住；但也要防虚热、冲动和来得快去得快。'],
+      ['赤口','口舌、争执、规则、冲突、误会；遇到赤口要谨慎沟通，先核对事实和边界。'],
+      ['小吉','小成、小利、小机会、小贵人；通常不是大成，但可以先小步推进，积少成多。'],
+      ['空亡','虚、空、未落实、落空、信息不准；遇到空亡要先核实，不宜只凭期待下判断。'],
+      ['单宫 / 双宫 / 三象','单宫看一个点，双宫看两个阶段之间的变化，三象看完整过程。越复杂的问题越要看三象，而不是只抓一个宫。'],
+      ['场景专项','同一组宫位放在不同主题下会有不同侧重点：感情看关系与沟通，财运看钱与落地，健康看状态提醒，失物看方位与物象。'],
+      ['现实校验','小六壬适合作为传统文化参考和自我梳理，不替代医学、法律、投资等专业判断；最终仍要看现实证据。']
+    ];
+    const destinyTerms=[
+      ['命运场景读法','命运偏长期倾向，不适合按一次问事直接断绝对吉凶。要看命盘结构、六亲分布、三象主线和薄弱点。','xlr-term-scene'],
+      ['起盘口诀','大安起月，月上起日，日上起时；排地支时，以时宫起支，隔位顺排。','xlr-term-scene'],
+      ['六亲','自身看自己与根基；父母看保护、文书、长辈；官鬼看事业、规则、压力和病痛；兄弟看同辈竞争；妻财看钱财与关系资源；子孙看子女、才华、快乐和医药。','xlr-term-scene'],
+      ['六神','青龙偏正直与生发，朱雀偏表达与火气，勾陈偏迟缓纠缠，腾蛇偏虚惊缠绕，白虎偏强烈冲突，玄武偏隐藏暗线。','xlr-term-scene'],
+      ['地支与五行','地支用于判断宫位气象，木火土金水之间的生克，会影响助力、压力、消耗和稳定性。','xlr-term-scene'],
+      ['五星 / 生克','星生地多助力，星克地多外压，地克星多内耗，地生星多付出，比和多稳定。','xlr-term-scene'],
+      ['命运健康与婚姻','命盘里的健康、婚姻属于长期倾向参考；如果是近期具体问题，应切换到健康或婚姻问事场景单独起课。','xlr-term-scene']
+    ];
+    const arr=destiny?destinyTerms.concat(common):common;
+    return '<div class="xlr-learning-terms">'+arr.map(function(x){return card(x[0],x[1],x[2]||'');}).join('')+'</div>';
+  }
+  function updateGuide(destiny){
+    const b=$('v10510QuickGuideBlock'), c=$('v10510QuickGuideContent'); if(!b||!c) return;
+    b.classList.remove('hidden');
+    b.style.removeProperty('display'); b.style.removeProperty('visibility'); b.style.removeProperty('height'); b.style.removeProperty('overflow');
+    c.className='v10510-guide-grid';
+    c.innerHTML=guideHTML(destiny);
+    if(!b.classList.contains('is-collapsed')){c.style.removeProperty('display'); c.style.removeProperty('visibility');}
+  }
+  function updateGlossary(destiny){
+    const normal=$('v10510GlossaryBlock'), normalC=$('v10510GlossaryContent');
+    const dBlock=$('v10536DestinyGlossaryBlock'), dC=$('v10536DestinyGlossaryContent');
+    if(normalC) normalC.innerHTML=learningTerms(false);
+    if(dC) dC.innerHTML=learningTerms(true);
+    if(destiny){
+      if(normal){normal.classList.add('hidden'); normal.style.setProperty('display','none','important'); normal.style.setProperty('visibility','hidden','important');}
+      if(dBlock){dBlock.classList.remove('hidden'); dBlock.style.removeProperty('display'); dBlock.style.removeProperty('visibility'); dBlock.style.removeProperty('height'); dBlock.style.removeProperty('overflow');}
+    }else{
+      if(dBlock){dBlock.classList.add('hidden'); dBlock.style.setProperty('display','none','important'); dBlock.style.setProperty('visibility','hidden','important');}
+      if(normal){normal.classList.remove('hidden'); normal.style.removeProperty('display'); normal.style.removeProperty('visibility'); normal.style.removeProperty('height'); normal.style.removeProperty('overflow');}
+    }
+  }
+  function ensureButton(block,key){
     if(!block) return;
     block.classList.add('collapsible-block');
-    block.classList.remove('hidden');
-    block.style.removeProperty('display');
-    block.style.removeProperty('visibility');
-    if(collapse) block.classList.add('is-collapsed'); else block.classList.remove('is-collapsed');
-    try{if(typeof updateCollapseButton==='function')updateCollapseButton(block);}catch(e){
-      const btn=block.querySelector('.collapse-toggle'); if(btn){btn.textContent=collapse?'展开':'折叠';btn.setAttribute('aria-expanded',collapse?'false':'true');}
+    if(key) block.setAttribute('data-collapse-key',key);
+    const h=block.querySelector('h4'); if(!h) return;
+    let btn=h.querySelector('.collapse-toggle');
+    if(!btn){btn=document.createElement('button');btn.type='button';btn.className='collapse-toggle';h.appendChild(btn);}
+    if(!btn.__v10545){
+      btn.__v10545=true;
+      btn.addEventListener('click',function(e){
+        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+        setCollapsed(block,!block.classList.contains('is-collapsed'),false,'header-button');
+      },true);
     }
+    updateButton(block);
+  }
+  function updateButton(block){
+    const btn=block&&block.querySelector('.collapse-toggle'); if(!btn) return;
+    const collapsed=block.classList.contains('is-collapsed');
+    btn.textContent=collapsed?'展开':'折叠';
+    btn.setAttribute('aria-expanded',collapsed?'false':'true');
+  }
+  function setCollapsed(block,collapse,forceVisible,source){
+    if(!block) return;
+    block.classList.add('collapsible-block');
+    if(forceVisible){
+      block.classList.remove('hidden');
+      block.style.removeProperty('display');
+      block.style.removeProperty('visibility');
+      block.style.removeProperty('height');
+      block.style.removeProperty('overflow');
+    }
+    if(collapse) block.classList.add('is-collapsed'); else block.classList.remove('is-collapsed');
+    if(!collapse){
+      Array.from(block.children||[]).forEach(function(child){
+        if(!/^H[1-6]$/.test(child.tagName) && child.tagName!=='SUMMARY'){
+          child.style.removeProperty('display');
+          child.style.removeProperty('visibility');
+          child.style.removeProperty('height');
+          child.style.removeProperty('overflow');
+        }
+      });
+    }
+    updateButton(block);
     log('collapse-change',(source||'')+':'+(block.id||block.tagName)+':' +(collapse?'collapsed':'expanded'));
   }
-  function fillDestinyGuide(){
-    const block=$('v10510QuickGuideBlock'), content=$('v10510QuickGuideContent');
-    if(!block||!content) return;
-    const r=current();
-    const chain=(r&&Array.isArray(r.details)&&r.details.length)?r.details.map(function(d){return d.palaceName;}).filter(Boolean).join(' → '):'本象 → 中象 → 末象';
-    block.classList.remove('hidden'); block.style.removeProperty('display'); block.style.removeProperty('visibility');
-    content.className='v10510-guide-grid'; content.style.removeProperty('display'); content.style.removeProperty('visibility');
-    if(isDestiny()){
-      content.innerHTML='<div class="guide-item"><b>1. 先看答案</b><span>先看一句话直断和偏向判断，快速知道整体倾向。</span></div>'
-        +'<div class="guide-item"><b>2. 看命盘</b><span>命运场景重点看命盘、六亲、六神、地支和五星，不套普通问事模板。</span></div>'
-        +'<div class="guide-item"><b>3. 串三象</b><span>本课三象是：'+esc(chain)+'。前面看起势，中间看过程，最后看长期落点。</span></div>'
-        +'<div class="guide-item"><b>4. 查术语</b><span>看不懂六亲、生克、六神、五星时，再看底部术语解释。</span></div>';
-    }
-  }
-  function syncVisibleBlocks(){
+  function syncBlocks(){
     removeLegacyDuplicates();
-    makeCollapsible('v10510QuickGuideBlock','quickGuide');
-    makeCollapsible('v10510GlossaryBlock','glossary');
-    makeCollapsible('v10536DestinyGlossaryBlock','destinyGlossary');
-    makeCollapsible('adviceBlock','advice');
-    ['v10518FormulaBlock','destinyBoardBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock'].forEach(function(id){makeCollapsible(id,($(id)&&$(id).getAttribute('data-collapse-key'))||'');});
-    if(isResultActive()){
-      fillDestinyGuide();
-      const normalGloss=$('v10510GlossaryBlock'), destinyGloss=$('v10536DestinyGlossaryBlock');
-      if(isDestiny()){
-        if(normalGloss){normalGloss.classList.add('hidden'); normalGloss.style.setProperty('display','none','important');}
-        if(destinyGloss){destinyGloss.classList.remove('hidden'); destinyGloss.style.removeProperty('display'); destinyGloss.style.removeProperty('visibility');}
-      }else{
-        if(destinyGloss){destinyGloss.classList.add('hidden'); destinyGloss.style.setProperty('display','none','important');}
-        if(normalGloss){normalGloss.classList.remove('hidden'); normalGloss.style.removeProperty('display'); normalGloss.style.removeProperty('visibility');}
-      }
-    }
+    const active=resultCardActive();
+    const destiny=active&&isDestinyResult();
+    const pairs=[['v10510QuickGuideBlock','quickGuide'],['v10510GlossaryBlock','glossary'],['v10536DestinyGlossaryBlock','destinyGlossary'],['adviceBlock','advice'],['v10518FormulaBlock','formula'],['destinyBoardBlock','destiny'],['triReadingBlock','tri'],['singlePalaceBlock','single'],['doublePalaceBlock','double'],['symbolBlock','symbol'],['radarBlock','radar']];
+    pairs.forEach(function(p){ensureButton($(p[0]),p[1]);});
+    if(active){updateGuide(destiny); updateGlossary(destiny);}
   }
   function resultBlockIds(){
-    if(!isResultActive()) return [];
-    return isDestiny()?['v10510QuickGuideBlock','destinyBoardBlock','v10518FormulaBlock','triReadingBlock','radarBlock','v10536DestinyGlossaryBlock']:
+    if(!resultCardActive()) return [];
+    return isDestinyResult()?['v10510QuickGuideBlock','destinyBoardBlock','v10518FormulaBlock','triReadingBlock','radarBlock','v10536DestinyGlossaryBlock']:
       ['v10510QuickGuideBlock','v10518FormulaBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock'];
   }
   function setAll(collapse){
-    syncVisibleBlocks();
-    if(isResultActive()){
-      resultBlockIds().forEach(function(id){const el=$(id); if(el) setCollapsed(el,collapse,collapse?'quick-collapse':'quick-expand');});
+    syncBlocks();
+    if(resultCardActive()){
+      resultBlockIds().forEach(function(id){const el=$(id); if(el) setCollapsed(el,collapse,true,collapse?'quick-collapse':'quick-expand');});
+      updateGlossary(isDestinyResult());
+      updateGuide(isDestinyResult());
     }else{
       document.querySelectorAll('#homeInfoBlocks details').forEach(function(d){d.open=!collapse;});
       log(collapse?'home-collapse':'home-expand','home details');
@@ -15608,85 +15728,69 @@ html[data-theme="dark"] .v10519-destiny-note {
   window.expandAllResultBlocks=function(){setAll(false);};
   window.collapseAllResultBlocks=function(){setAll(true);};
   function buildTargets(){
-    if(!isResultActive()){
-      return [['homeTopSection','顶部'],['sceneSection','场景'],['questionSection','问事'],['methodSection','起课'],['homeAboutRulesBlockWrap','说明'],['homeVersionUpdatesBlockWrap','版本']].map(function(x){return {id:x[0],label:x[1],el:$(x[0])};}).filter(function(t){return visible(t.el);});
+    if(!resultCardActive()){
+      return [['homeTopSection','顶部'],['sceneSection','场景'],['questionSection','问事'],['methodSection','起课'],['homeAboutRulesBlockWrap','说明'],['homeVersionUpdatesBlockWrap','版本']].map(function(x){return {id:x[0],label:x[1],el:$(x[0])};}).filter(function(t){return domVisible(t.el);});
     }
-    syncVisibleBlocks();
-    const defs=isDestiny()?
+    syncBlocks();
+    const defs=isDestinyResult()?
       [['resultCard','结果'],['v10510QuickGuideBlock','导读'],['answerSummaryBlock','答案'],['sceneFocusBlock','重心'],['destinyBoardBlock','命盘'],['overallBlock','综合'],['triReadingBlock','三象'],['v10518FormulaBlock','口诀'],['radarBlock','雷达'],['v10536DestinyGlossaryBlock','术语']]:
       [['resultCard','结果'],['v10510QuickGuideBlock','导读'],['answerSummaryBlock','答案'],['sceneFocusBlock','重心'],['overallBlock','综合'],['triReadingBlock','三象'],['v10518FormulaBlock','口诀'],['singlePalaceBlock','单宫'],['doublePalaceBlock','双宫'],['symbolBlock','象意'],['radarBlock','雷达'],['adviceBlock','建议'],['v10510GlossaryBlock','术语']];
     const seen={};
-    return defs.map(function(x){return {id:x[0],label:x[1],el:$(x[0])};}).filter(function(t){if(!t.el||seen[t.id])return false; seen[t.id]=1; return visible(t.el);});
+    return defs.map(function(x){return {id:x[0],label:x[1],el:$(x[0])};}).filter(function(t){if(!t.el||seen[t.id])return false; seen[t.id]=1; return domVisible(t.el);});
   }
   window.currentJumpTargets=function(){return buildTargets();};
-  window.currentJumpTargets.__v10544Unified=true;
+  window.currentJumpTargets.__v10545Unified=true;
   function refreshNav(){try{if(typeof refreshSectionJumpNavSoon==='function')refreshSectionJumpNavSoon(); else if(typeof renderSectionJumpNav==='function')renderSectionJumpNav();}catch(e){}}
+  function stateFor(id){
+    const el=$(id); if(!el) return {exists:false,id:id};
+    const st=comp(el), h=el.querySelector('h4,summary'), btn=el.querySelector('.collapse-toggle');
+    const content=Array.from(el.children).filter(function(c){return !/^H[1-6]$/.test(c.tagName)&&c.tagName!=='SUMMARY';})[0]||null;
+    const cs=content?comp(content):null;
+    return {exists:true,id:id,tag:el.tagName,className:el.className||'',inlineDisplay:el.style.display||'',display:st?st.display:'',visibility:st?st.visibility:'',overflow:st?st.overflow:'',rect:{top:Math.round(el.getBoundingClientRect().top),height:Math.round(el.getBoundingClientRect().height),width:Math.round(el.getBoundingClientRect().width)},offsetHeight:el.offsetHeight||0,hiddenClass:el.classList.contains('hidden'),isCollapsed:el.classList.contains('is-collapsed'),hasToggle:!!btn,toggleText:btn?txt(btn,20):'',ariaExpanded:btn?btn.getAttribute('aria-expanded'):'',headerText:txt(h,80),textLength:(el.textContent||'').trim().length,content:{exists:!!content,tag:content?content.tagName:'',id:content?content.id:'',className:content?content.className:'',display:cs?cs.display:'',visibility:cs?cs.visibility:'',height:content?Math.round(content.getBoundingClientRect().height):0,offsetHeight:content?content.offsetHeight:0,textLength:content?(content.textContent||'').trim().length:0}};
+  }
   function enhanceDebug(){
-    const api=window.XLR_DEBUG_V10514;
-    if(!api||api.__v10544Enhanced) return;
+    const api=window.XLR_DEBUG_V10514; if(!api||api.__v10545Enhanced) return;
     const oldSnap=api.snapshot;
-    function extra(){
-      const ids=['v10510QuickGuideBlock','v1033QuickGuide','answerSummaryBlock','sceneFocusBlock','overallBlock','v10518FormulaBlock','destinyBoardBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock','v10536DestinyGlossaryBlock','v1033Glossary'];
-      const headingMap={};
-      Array.from(document.querySelectorAll('h4,summary')).forEach(function(h){const t=txt(h,40); if(!t)return; (headingMap[t]=headingMap[t]||[]).push({tag:h.tagName,parentId:h.parentElement?h.parentElement.id:'',parentClass:h.parentElement?h.parentElement.className:''});});
-      let jump=[]; try{jump=buildTargets().map(function(t){return {id:t.id,label:t.label,visible:visible(t.el),className:t.el?t.el.className:'',rect:t.el?{top:Math.round(t.el.getBoundingClientRect().top),height:Math.round(t.el.getBoundingClientRect().height)}:null};});}catch(e){}
-      return {
-        debugVersion:VERSION,
-        pageMode:{isResultActive:isResultActive(),isDestiny:isDestiny(),hash:location.hash||'',scrollY:Math.round(scrollY||0),bodyClass:document.body.className},
-        duplicateCheck:{v1033QuickGuide:document.querySelectorAll('#v1033QuickGuide').length,v1033Glossary:document.querySelectorAll('#v1033Glossary').length,v10510GlossaryBlock:document.querySelectorAll('#v10510GlossaryBlock').length,v10536DestinyGlossaryBlock:document.querySelectorAll('#v10536DestinyGlossaryBlock').length,headings:headingMap},
-        unifiedJumpTargets:jump,
-        collapsibleAudit:ids.map(stateFor),
-        recentUiEvents:EVENTS.slice(-40)
-      };
-    }
-    api.snapshot=function(reason){const base=oldSnap?oldSnap(reason):{}; base.v10544=extra(); return base;};
-    api.__v10544Enhanced=true;
+    api.snapshot=function(reason){
+      const base=oldSnap?oldSnap(reason):{};
+      const ids=['v10510QuickGuideBlock','answerSummaryBlock','sceneFocusBlock','overallBlock','v10518FormulaBlock','destinyBoardBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock','v10536DestinyGlossaryBlock','v1033QuickGuide','v1033Glossary'];
+      let jump=[]; try{jump=buildTargets().map(function(t){return {id:t.id,label:t.label,visible:domVisible(t.el),className:t.el?t.el.className:'',rect:t.el?{top:Math.round(t.el.getBoundingClientRect().top),height:Math.round(t.el.getBoundingClientRect().height)}:null};});}catch(e){}
+      base.v10545={debugVersion:VERSION,pageMode:{isResultActive:resultCardActive(),isDestiny:isDestinyResult(),hash:location.hash||'',scrollY:Math.round(scrollY||0),bodyClass:document.body.className,resultCardClass:$('resultCard')?$('resultCard').className:''},duplicateCheck:{v1033QuickGuide:document.querySelectorAll('#v1033QuickGuide').length,v1033Glossary:document.querySelectorAll('#v1033Glossary').length,v10510GlossaryBlock:document.querySelectorAll('#v10510GlossaryBlock').length,v10536DestinyGlossaryBlock:document.querySelectorAll('#v10536DestinyGlossaryBlock').length},unifiedJumpTargets:jump,collapsibleAudit:ids.map(stateFor),recentUiEvents:EVENTS.slice(-60)};
+      return base;
+    };
+    api.__v10545Enhanced=true;
   }
-  function enhancedPayload(reason){
-    enhanceDebug();
-    const api=window.XLR_DEBUG_V10514||{};
-    let latest=null; try{latest=api.snapshot?api.snapshot(reason||'copy-log'):null;}catch(e){}
-    return {version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:latest,logs:(api.logs||[]).slice(),v10544Events:EVENTS.slice()};
-  }
-  function downloadDebug(){
-    const text=JSON.stringify(enhancedPayload('save-log'),null,2);
-    const name='xiaoliuren-debug-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';
-    try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){copyText(text,'保存失败，已复制详细日志。');}
-  }
-  function copyText(text,msg){try{navigator.clipboard.writeText(text).then(function(){alert(msg||'详细 Debug 日志已复制。');}).catch(function(){throw new Error('clipboard');});}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');alert(msg||'详细 Debug 日志已复制。');}catch(_e){alert('复制失败，请使用保存日志。');}ta.remove();}}
   function patchDebugButtons(){
     enhanceDebug();
     const actions=document.querySelector('#v10514DebugDialog .v10514-debug-actions');
-    if(actions&&!$('v10544DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10544DebugSaveBtn';b.textContent='保存详细日志';b.addEventListener('click',downloadDebug);actions.insertBefore(b,actions.firstChild);}
-    const copy=$('v10514DebugCopyBtn');
-    if(copy&&!copy.__v10544Copy){copy.__v10544Copy=true;copy.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();copyText(JSON.stringify(enhancedPayload('copy-log'),null,2));},true);}
+    if(actions&&!$('v10545DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10545DebugSaveBtn';b.textContent='保存详细日志 v10.5.45';b.addEventListener('click',function(){const api=window.XLR_DEBUG_V10514||{};const data=api.snapshot?api.snapshot('save-log'):{version:VERSION};const text=JSON.stringify({version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:data,logs:(api.logs||[]).slice(),v10545Events:EVENTS.slice()},null,2);const name='xiaoliuren-debug-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){alert('保存失败，请复制 Debug 日志。');}});actions.insertBefore(b,actions.firstChild);}
   }
   function patchVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const m=document.querySelector('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
     try{document.querySelectorAll('h2').forEach(function(el){if((el.textContent||'').indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
     try{
-      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10544){
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10545){
         const old=window.buildVersionUpdatesHTML;
         window.buildVersionUpdatesHTML=function(){
           let html=old.apply(this,arguments)||'';
-          html=html.replace(/<details[^>]*><summary>v10\.5\.44[^<]*<\/summary>[\s\S]*?<\/details>/g,'');
-          const row='<details open><summary>'+VERSION+'</summary><ul><li>补齐命运结果页导航里的“导读”，顺序为“结果 → 导读 → 答案 → 重心 → 命盘 → 综合 → 三象 → 口诀 → 雷达 → 术语”。</li><li>停用旧 v10.3.3 动态 details 导读/术语，避免页面底部出现两个“术语解释”。</li><li>把主导读、行动建议、普通术语、命运术语统一纳入 collapsible-block，右侧快捷“展开 / 折叠”按当前场景统一控制。</li><li>Debug 系统新增重复模块检查、折叠审计、导航目标审计、最近快捷按钮事件，并新增“保存详细日志”。</li><li>同步更新 README、manifest、service-worker 与页面版本记录，并继续检查旧版本跳动问题。</li></ul></details>';
+          html=html.replace(/<details[^>]*><summary>v10\.5\.45[^<]*<\/summary>[\s\S]*?<\/details>/g,'');
+          const row='<details open><summary>'+VERSION+'</summary><ul><li>修复非命运“术语解释”点击折叠后内容仍显示的问题，统一采用 is-collapsed + 内容隐藏规则。</li><li>命运结果页恢复“快速导读”，并继续保留导航里的“导读”。</li><li>普通术语与命运术语都改为学习型内容，合并旧第二个术语解释的重点，并补充三象串联、六宫掌诀、六亲、六神、地支、五星、生克和现实校验说明。</li><li>命运与非命运只显示各自一个术语解释模块，避免两个术语互相抢显示或快捷按钮控制错对象。</li><li>Debug 继续增强 v10.5.45 审计区，记录当前是否结果页、是否命运、两个术语块数量、导航目标和每个折叠块的内容区状态。</li></ul></details>';
           return row+html;
         };
-        window.buildVersionUpdatesHTML.__v10544=true;
+        window.buildVersionUpdatesHTML.__v10545=true;
       }
     }catch(e){}
   }
-  function boot(){patchVersion();syncVisibleBlocks();refreshNav();patchDebugButtons();}
+  function boot(){patchVersion();syncBlocks();refreshNav();patchDebugButtons();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
   window.addEventListener('load',function(){boot();setTimeout(boot,120);setTimeout(boot,600);setTimeout(boot,1800);},{once:true});
   document.addEventListener('click',function(e){
     const q=e.target&&e.target.closest?e.target.closest('[data-v9919-quick],.collapse-toggle,.jump-chip,#v10514DebugFab,#v10514DebugDialog button'):null;
-    if(q) log('click',txt(q,40)+' target='+(q.getAttribute('data-v9919-quick')||q.getAttribute('data-jump-target')||q.id||''));
-    setTimeout(function(){syncVisibleBlocks();refreshNav();patchDebugButtons();},80);
+    if(q) log('click',txt(q,60)+' target='+(q.getAttribute('data-v9919-quick')||q.getAttribute('data-jump-target')||q.id||''));
+    setTimeout(function(){syncBlocks();refreshNav();patchDebugButtons();},60);
   },true);
-  try{new MutationObserver(function(){clearTimeout(window.__v10544Timer);window.__v10544Timer=setTimeout(function(){syncVisibleBlocks();refreshNav();patchDebugButtons();},160);}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
+  try{new MutationObserver(function(){clearTimeout(window.__v10545Timer);window.__v10545Timer=setTimeout(function(){syncBlocks();refreshNav();patchDebugButtons();},120);}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
 })();
 </script>
 
