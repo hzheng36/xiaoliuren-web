@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.85 源码内建Debug恢复版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.85 源码内建Debug恢复版：继续执行补丁回源码计划，在保持单一主脚本、单一主样式的前提下，把调试诊断能力以源码主模块方式写回，不再使用旧后置Debug补丁、保存日志补丁或版本抢写补丁。" />
+  <title>小六壬占卜 · v10.5.86 源码净化与快捷阅读恢复版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.86 源码净化与快捷阅读恢复版：继续清理旧后置残留，并把阅读模式、字号、UI显示和快捷按钮自定义恢复为源码主模块；保持单一主脚本、单一主样式和统一版本源。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -980,6 +980,39 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .xlr-debug-output{white-space:pre-wrap;word-break:break-word;max-height:48vh;overflow:auto;border:1px solid rgba(188,133,65,.20);border-radius:16px;background:#171321;color:#f8f3e8;padding:12px;font-size:11px;line-height:1.55;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;}
     body.xlr-debug-hidden .xlr-debug-fab{display:none!important;}
 
+  
+
+/* v10.5.86 源码主模块：阅读模式、UI显示、快捷按钮设置 */
+body.reading-theme-night {
+  --bg:#151421; --panel:rgba(35,32,52,.92); --panel-strong:rgba(43,39,64,.97);
+  --text:#f3edf8; --muted:#c9bfd9; --line:rgba(255,255,255,.16); --accent-soft:rgba(229,196,138,.14);
+  background:linear-gradient(180deg,#11101b 0%,#1c1a2a 100%) !important;
+}
+body.reading-theme-night .card,
+body.reading-theme-night .feature-item,
+body.reading-theme-night .block,
+body.reading-theme-night .settings-card,
+body.reading-theme-night .dialog-head,
+body.reading-theme-night dialog { background:var(--panel) !important; color:var(--text); border-color:var(--line); }
+body.reading-theme-night input,
+body.reading-theme-night textarea,
+body.reading-theme-night select { background:#211f32 !important; color:var(--text) !important; border-color:var(--line) !important; }
+body.reading-theme-night .ghost-btn,
+body.reading-theme-night .scroll-tool-btn,
+body.reading-theme-night .quick-order-btn { background:#26233a !important; color:var(--text) !important; border-color:var(--line) !important; }
+body.reading-theme-eye { background:linear-gradient(180deg,#f3f6e9 0%,#e9f0dc 100%) !important; }
+body.reading-bg-cream { background:linear-gradient(180deg,#fbf3df 0%,#f2e6cd 100%) !important; }
+body.reading-bg-green { background:linear-gradient(180deg,#eef7ea 0%,#e2efdc 100%) !important; }
+body.reading-bg-lavender { background:linear-gradient(180deg,#f1edfb 0%,#e6e0f5 100%) !important; }
+body.reading-bg-gray { background:linear-gradient(180deg,#f3f3f4 0%,#e8e8eb 100%) !important; }
+body.reading-bg-custom { background:var(--xlr-custom-bg, #f7f3ee) !important; }
+body.xlr-hide-quick-tools .scroll-tools { display:none !important; }
+body.xlr-hide-section-nav #sectionJumpNav { display:none !important; }
+body.xlr-hide-progress .page-progress { display:none !important; }
+body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
+.settings-mini-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
+@media(max-width:760px){ .settings-mini-grid { grid-template-columns:1fr; } }
+
   </style>
 
 
@@ -1022,8 +1055,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.85 源码内建Debug恢复版</h2>
-          <p>本版开始把必要功能按源码主模块方式恢复：先恢复内建 Debug 诊断，但继续保持单一主脚本、单一主样式，不再追加后置补丁。Debug 只读取页面状态、复制诊断日志，不改动占卜逻辑。</p>
+          <h2>个人占卜台 · v10.5.86 源码净化与快捷阅读恢复版</h2>
+          <p>本版继续清理旧后置残留，并把阅读模式、字号、UI显示和快捷按钮自定义按源码主模块恢复。Debug、阅读、快捷按钮、导航显示都由同一个主脚本统一管理，避免多个运行逻辑互相抢状态。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1282,16 +1315,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     </main>
   </div>
 
-  <div class="scroll-tools" aria-label="页面快捷操作" data-v10522-static="1">
-    <button class="scroll-tool-btn wide" type="button" data-v9919-quick="home" title="返回主页" aria-label="返回主页">主页</button>
-    <button class="scroll-tool-btn wide" type="button" data-v9919-quick="reset" title="重新占卜" aria-label="重新占卜">重占</button>
-    <button class="scroll-tool-btn wide" type="button" data-v9919-quick="mode" title="切换客户端模式" aria-label="切换客户端模式">电脑</button>
-    <button class="scroll-tool-btn wide" type="button" data-v9919-quick="expand" title="一键展开结果模块" aria-label="一键展开结果模块">展开</button>
-    <button class="scroll-tool-btn wide" type="button" data-v9919-quick="collapse" title="一键折叠结果模块" aria-label="一键折叠结果模块">折叠</button>
-    <button class="scroll-tool-btn wide reading-mode-toggle" type="button" data-v1038-reading-toggle="1" data-v9919-quick="theme" title="切换为暗夜模式" aria-label="切换为暗夜模式">夜间</button>
-    <button class="scroll-tool-btn" type="button" data-v9919-quick="top" title="一键置顶" aria-label="一键置顶">↑</button>
-    <button class="scroll-tool-btn" type="button" data-v9919-quick="bottom" title="一键到底" aria-label="一键到底">↓</button>
-  </div>
+  <div class="scroll-tools" aria-label="页面快捷操作" data-source-quick-tools="1"></div>
 
 
   <dialog id="settingsDialog">
@@ -1317,6 +1341,29 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
         <label class="settings-row"><span>显示雷达分析图<small>关闭后结果页不显示雷达图模块。</small></span><input id="settingShowRadar" type="checkbox"></label>
         <label class="settings-row"><span>显示版本说明 / 起课规则<small>开启后在页面底部显示版本说明和起课规则；默认关闭。</small></span><input id="settingShowAbout" type="checkbox"></label>
         <label class="settings-row"><span>显示版本内容更新<small>开启后在页面底部显示历代主要更新记录；默认关闭。</small></span><input id="settingShowVersionUpdates" type="checkbox"></label>
+      </div>
+      <div class="settings-card" id="readingSettingsCard">
+        <h4>阅读模式</h4>
+        <div class="settings-row"><span>阅读主题<small>白天、暗夜、跟随系统，或按时间自动切换。</small></span><select id="settingReadingMode"><option value="day">白天模式</option><option value="night">暗夜模式</option><option value="system">跟随系统深色模式</option><option value="auto">夜间自动切换</option></select></div>
+        <div class="settings-row"><span>背景颜色<small>护眼色、米黄色、淡绿色、淡紫色、浅灰色或自定义颜色。</small></span><select id="settingReadingBg"><option value="default">默认</option><option value="eye">护眼色</option><option value="cream">米黄色</option><option value="green">淡绿色</option><option value="lavender">淡紫色</option><option value="gray">浅灰色</option><option value="custom">自定义颜色</option></select></div>
+        <div class="settings-row"><span>自定义背景色<small>选择“自定义颜色”后生效。</small></span><input id="settingReadingCustomBg" type="color" value="#f7f3ee"></div>
+        <div class="settings-row"><span>夜间自动时间<small>仅在“夜间自动切换”下生效。</small></span><div class="settings-mini-grid"><input id="settingAutoNightStart" type="time" value="19:00"><input id="settingAutoNightEnd" type="time" value="07:00"></div></div>
+        <div class="settings-row"><span>阅读字号<small>控制结果、术语、历史、模板等正文阅读区域。</small></span><select id="settingReadingTextSize"><option value="small">小</option><option value="normal">标准</option><option value="large">大</option><option value="xlarge">特大</option></select></div>
+        <label class="settings-row"><span>显示夜间快捷按钮<small>关闭后，浮动快捷按钮中不显示“夜间/白天”。</small></span><input id="settingReadingQuickToggle" type="checkbox"></label>
+      </div>
+      <div class="settings-card" id="uiSettingsCard">
+        <h4>界面显示</h4>
+        <label class="settings-row"><span>显示右侧快捷按钮<small>控制主页、历史、分析、重占、电脑、展开、折叠、设置、夜间、置顶、到底等浮动按钮。</small></span><input id="settingUiShowQuickButtons" type="checkbox"></label>
+        <label class="settings-row"><span>显示章节导航<small>控制顶部/底部的章节卡点导航。</small></span><input id="settingUiShowSectionNav" type="checkbox"></label>
+        <label class="settings-row"><span>显示阅读进度条<small>控制页面顶部细进度条。</small></span><input id="settingUiShowProgress" type="checkbox"></label>
+        <div class="settings-row"><span>默认客户端模式<small>自动适配、强制电脑宽度，或回到自适应模式。</small></span><select id="settingUiDefaultClientMode"><option value="auto">自适应</option><option value="desktop">电脑模式</option></select></div>
+        <label class="settings-row"><span>显示源码 Debug<small>打开后显示 DEBUG 按钮，用于复制状态日志；关闭后不影响占卜功能。</small></span><input id="settingDebugEnabled" type="checkbox"></label>
+      </div>
+      <div class="settings-card" id="quickButtonSettingsCard">
+        <h4>快捷按钮设置</h4>
+        <p class="quick-config-note">选择浮动快捷区要显示的按钮，并用 ↑ ↓ 调整顺序。设置只保存在当前浏览器本地。</p>
+        <div class="quick-button-config" id="quickButtonConfigList"></div>
+        <div class="settings-mini-grid"><button class="ghost-btn" type="button" id="quickButtonsDefaultBtn">恢复默认快捷按钮</button><button class="ghost-btn" type="button" id="quickButtonsAllBtn">显示全部快捷按钮</button></div>
       </div>
       <div class="settings-card">
         <h4>起课习惯</h4>
@@ -4266,32 +4313,34 @@ ${nextStep}`;
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.85 源码内建Debug恢复版', items:[
-          '在继续清补丁的前提下，先把 Debug 诊断能力按源码主模块方式写回。',
-          'Debug 模块现在由主脚本统一创建按钮、弹窗、审计、复制日志，不再依赖旧 v10514/v10546/v10574/v10581/v10582 后置诊断脚本。',
-          '继续保持单一主脚本与单一主样式，避免多个版本脚本互相抢 title、版本号、导航、字体或日志。',
-          'Debug 只读取页面状态、复制诊断信息，不修改占卜结果、不抢版本、不做多阶段延迟覆盖。',
-          '页面 title、首页版本、版本内容更新、README、manifest、service-worker 缓存名统一到 v10.5.85。'
+        { v:'v10.5.86 源码净化与快捷阅读恢复版', items:[
+          '继续保持 1 个主样式与 1 个主脚本，不再追加独立运行脚本。',
+          '把阅读模式、背景颜色、阅读字号、UI 显示开关、默认电脑模式、快捷按钮自定义写回源码主模块。',
+          '右侧快捷按钮现在可在设置中选择显示、隐藏和排序；主页、历史、分析、重占、电脑、展开、折叠、设置、夜间、置顶、到底、规则、模板、复制均可配置。',
+          'Debug 仍是源码内建模块；可在设置中显示或隐藏，复制日志只读页面状态，不改占卜逻辑。',
+          '页面 title、首页标题、版本内容更新、README、manifest、service-worker 缓存名统一到 v10.5.86。'
+        ]},
+        { v:'v10.5.85 源码内建 Debug 恢复版', items:[
+          '把 Debug 诊断能力按源码主模块写回，保留单一主脚本结构。',
+          'Debug 只读取页面状态、复制诊断信息，不修改占卜结果、导航或版本源。'
         ]},
         { v:'v10.5.84 源码净化过渡版', items:[
-          '继续以 v10.5.76 稳定版为回溯基准，移除旧运行补丁、旧 Debug/诊断、旧保存日志、重复版本写入、延迟覆盖和后置增强脚本。',
-          '当前版本暂时不追求功能完整，先把运行残留清掉。'
+          '先清理旧后置运行逻辑、旧诊断、保存日志、重复版本写入和延迟覆盖残留。',
+          '该版暂时不追求功能完整，目标是先让运行结构干净。'
         ]},
         { v:'v10.5.83 源码整合清理版', items:[
-          '第一步从 v10.5.76 回退并清理最明显的版本锁定、增强诊断和日志保存残留。'
+          '从 v10.5.76 稳定基线重新整理，统一版本源和页面版本记录。'
         ]},
         { v:'v10.5.76 稳定回溯基准', items:[
-          '命运导读电脑端布局较稳定，作为后续功能恢复的参考基线。',
-          '后续只把确认需要的能力按正式源码模块重写回来，不直接照搬后置运行脚本。'
+          '命运导读电脑端布局较稳定，作为后续功能恢复参考基线。',
+          '后续只把确认需要的能力按正式源码模块重写回来。'
         ]},
         { v:'后续恢复方向', items:[
-          '基础：起课、结果渲染、历史记录、设置、阅读模式、快捷按钮。',
-          '学习：快速导读、术语解释、口诀、三象、单宫/双宫断事。',
-          '命运：命盘、健康、婚姻、事业子模块与对应导航。',
-          '诊断：只保留源码内建 Debug，不再恢复旧后置诊断脚本。'
+          '继续恢复：命运导读、术语学习内容、命运/非命运导航子模块、历史复盘细节和 GoodReader/iPhone 兼容性检查。',
+          '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复第一步：Debug 已按主模块写回，但继续保持无后置补丁、无版本抢写、无延迟覆盖。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第二步：阅读模式、UI显示和快捷按钮已按主模块写回；仍保持单一版本源。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
@@ -4300,7 +4349,7 @@ ${nextStep}`;
     const SAVED_CHOICE_KEY = 'xlr_saved_choice_v9_1';
     const DEFAULT_SETTINGS = {
       defaultView: 'detail',
-      collapseDetails: false,
+      collapseDetails: true,
       showRadar: true,
       showAbout: false,
       showVersionUpdates: false,
@@ -4315,6 +4364,7 @@ ${nextStep}`;
     function saveUserSettings(settings){ try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, settings || {}))); } catch(e){} }
     function openSettingsDialog(){
       fillSettingsDialog();
+      syncExtraSettingsForm();
       const dlg=document.getElementById('settingsDialog');
       if(dlg && typeof dlg.showModal === 'function') dlg.showModal();
       else if(dlg) dlg.setAttribute('open','open');
@@ -4340,6 +4390,7 @@ ${nextStep}`;
         const el=document.getElementById(id); if(!el) return;
         if(el.type === 'checkbox') el.checked = !!map[id]; else el.value = map[id];
       });
+      syncExtraSettingsForm();
     }
     function saveSettingsFromDialog(){
       const settings = {
@@ -4353,6 +4404,7 @@ ${nextStep}`;
         navPosition: document.getElementById('settingNavPosition')?.value === 'top' ? 'top' : 'bottom'
       };
       saveUserSettings(settings);
+      saveExtraSettingsFromForm();
       if(settings.rememberScene) persistChoiceIfNeeded('scene', currentScene);
       if(settings.rememberMethod) persistChoiceIfNeeded('method', currentMethod);
       applyUserSettingsToPage();
@@ -4362,6 +4414,7 @@ ${nextStep}`;
     }
     function resetUserSettings(){
       saveUserSettings(DEFAULT_SETTINGS);
+      resetExtraSettings();
       try { localStorage.removeItem(SAVED_CHOICE_KEY); localStorage.removeItem('xlr_view_mode_v9_1'); } catch(e) {}
       fillSettingsDialog();
       applyUserSettingsToPage();
@@ -4457,6 +4510,8 @@ ${nextStep}`;
         else block.classList.remove('is-collapsed');
         updateCollapseButton(block);
       });
+      applyReadingSettings();
+      applyUISettings();
       refreshSectionJumpNavSoon();
     }
 
@@ -4608,6 +4663,220 @@ ${nextStep}`;
       try { window.scrollTo({ top: h, behavior: 'smooth' }); }
       catch(e) { window.scrollTo(0, h); }
     }
+
+
+
+    /* v10.5.86 源码主模块：阅读模式、UI显示与快捷按钮 */
+    const SOURCE_UI_SETTINGS_KEY = 'xiaoliuren_ui_settings_source';
+    const SOURCE_READING_KEY = 'xiaoliuren_reading_mode_source';
+    const SOURCE_READING_SIZE_KEY = 'xiaoliuren_reading_size_source';
+    const SOURCE_QUICK_KEY = 'xiaoliuren_quick_button_settings_source';
+    const SOURCE_DEBUG_KEY = 'xiaoliuren_debug_visible_source';
+    const DEFAULT_UI_SETTINGS = { showQuickButtons:true, showSectionNav:true, showProgressBar:true, defaultClientMode:'auto' };
+    const DEFAULT_READING_SETTINGS = { mode:'day', bg:'default', custom:'#f7f3ee', autoStart:'19:00', autoEnd:'07:00', showToggle:true };
+    const DEFAULT_READING_SIZE = 'small';
+    const QUICK_ITEMS = [
+      {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
+      {id:'history', label:'历史', note:'打开历史记录', title:'历史记录'},
+      {id:'analytics', label:'分析', note:'打开历史分析', title:'历史分析'},
+      {id:'reset', label:'重占', note:'清空当前结果并重新占卜', title:'重新占卜'},
+      {id:'mode', label:'电脑', note:'切换自适应 / 电脑模式', title:'切换客户端模式'},
+      {id:'expand', label:'展开', note:'展开所有结果模块', title:'一键展开结果模块'},
+      {id:'collapse', label:'折叠', note:'折叠所有结果模块', title:'一键折叠结果模块'},
+      {id:'settings', label:'设置', note:'打开阅读设置', title:'设置'},
+      {id:'theme', label:'夜间', note:'切换白天 / 暗夜阅读模式', title:'切换白天 / 暗夜模式'},
+      {id:'top', label:'↑', note:'回到页面顶部', title:'一键置顶'},
+      {id:'bottom', label:'↓', note:'跳到页面底部', title:'一键到底'},
+      {id:'rules', label:'规则', note:'打开场景规则', title:'场景规则'},
+      {id:'templates', label:'模板', note:'打开问题模板', title:'问题模板'},
+      {id:'copy', label:'复制', note:'复制当前结果', title:'复制结果'}
+    ];
+    const DEFAULT_QUICK_ORDER = ['home','history','analytics','reset','mode','expand','collapse','settings','theme','top','bottom','rules','templates','copy'];
+    const DEFAULT_QUICK_ENABLED = { home:true, history:true, analytics:true, reset:true, mode:true, expand:true, collapse:true, settings:true, theme:true, top:true, bottom:true, rules:false, templates:false, copy:false };
+    function parseJSONSafe(raw){ try{return raw ? JSON.parse(raw) : null;}catch(e){return null;} }
+    function readStoredJSON(key){ try{return parseJSONSafe(localStorage.getItem(key));}catch(e){return null;} }
+    function writeStoredJSON(key, value){ try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){} }
+    function normalizeUISettings(raw){ return Object.assign({}, DEFAULT_UI_SETTINGS, raw && typeof raw==='object' ? raw : {}); }
+    function readUISettings(){ return normalizeUISettings(readStoredJSON(SOURCE_UI_SETTINGS_KEY) || readStoredJSON('xiaoliuren_ui_settings_v9916')); }
+    function saveUISettings(settings){ writeStoredJSON(SOURCE_UI_SETTINGS_KEY, normalizeUISettings(settings)); }
+    function validHex(v){ return /^#[0-9a-fA-F]{6}$/.test(String(v||'')); }
+    function validTimeText(v){ return /^\d{2}:\d{2}$/.test(String(v||'')); }
+    function normalizeReadingSettings(raw){
+      const s=Object.assign({}, DEFAULT_READING_SETTINGS, raw && typeof raw==='object' ? raw : {});
+      if(!['day','night','system','auto'].includes(s.mode)) s.mode='day';
+      if(!['default','eye','cream','green','lavender','gray','custom'].includes(s.bg)) s.bg='default';
+      if(!validHex(s.custom)) s.custom=DEFAULT_READING_SETTINGS.custom;
+      if(!validTimeText(s.autoStart)) s.autoStart=DEFAULT_READING_SETTINGS.autoStart;
+      if(!validTimeText(s.autoEnd)) s.autoEnd=DEFAULT_READING_SETTINGS.autoEnd;
+      s.showToggle = s.showToggle !== false;
+      return s;
+    }
+    function readReadingSettings(){ return normalizeReadingSettings(readStoredJSON(SOURCE_READING_KEY) || readStoredJSON('xiaoliuren_reading_mode_v1035')); }
+    function saveReadingSettings(settings){ writeStoredJSON(SOURCE_READING_KEY, normalizeReadingSettings(settings)); }
+    function readReadingSize(){
+      let v=null; try{ v=localStorage.getItem(SOURCE_READING_SIZE_KEY) || localStorage.getItem('xiaoliuren_reading_text_size_v9915'); }catch(e){}
+      return ['small','normal','large','xlarge'].includes(v) ? v : DEFAULT_READING_SIZE;
+    }
+    function saveReadingSize(size){ try{ localStorage.setItem(SOURCE_READING_SIZE_KEY, ['small','normal','large','xlarge'].includes(size)?size:DEFAULT_READING_SIZE); }catch(e){} }
+    function isAutoNightNow(start,end){
+      const [sh,sm]=String(start||'19:00').split(':').map(Number), [eh,em]=String(end||'07:00').split(':').map(Number);
+      const now=new Date(); const cur=now.getHours()*60+now.getMinutes(); const s=sh*60+sm, e=eh*60+em;
+      return s<=e ? (cur>=s && cur<e) : (cur>=s || cur<e);
+    }
+    function getEffectiveReadingTheme(s){
+      s=normalizeReadingSettings(s||readReadingSettings());
+      if(s.mode==='night') return 'night';
+      if(s.mode==='system') return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+      if(s.mode==='auto') return isAutoNightNow(s.autoStart,s.autoEnd) ? 'night' : 'day';
+      return 'day';
+    }
+    function applyReadingSettings(){
+      const s=readReadingSettings(); const size=readReadingSize(); const theme=getEffectiveReadingTheme(s);
+      const cls=document.body.classList;
+      ['reading-theme-day','reading-theme-night','reading-theme-eye','reading-bg-default','reading-bg-cream','reading-bg-green','reading-bg-lavender','reading-bg-gray','reading-bg-custom','reading-size-small','reading-size-normal','reading-size-large','reading-size-xlarge'].forEach(c=>cls.remove(c));
+      cls.add(theme==='night'?'reading-theme-night':'reading-theme-day');
+      if(theme!=='night' && s.bg==='eye') cls.add('reading-theme-eye');
+      if(s.bg==='default') cls.add('reading-bg-default');
+      if(['cream','green','lavender','gray','custom'].includes(s.bg)) cls.add('reading-bg-'+s.bg);
+      cls.add('reading-size-'+size);
+      document.body.style.setProperty('--xlr-custom-bg', s.custom);
+      updateThemeQuickButtonLabel();
+    }
+    function toggleReadingThemeQuick(){
+      const s=readReadingSettings();
+      const now=getEffectiveReadingTheme(s);
+      s.mode = now==='night' ? 'day' : 'night';
+      saveReadingSettings(s); applyReadingSettings(); syncExtraSettingsForm(); renderQuickTools();
+    }
+    function updateThemeQuickButtonLabel(){
+      const night=document.body.classList.contains('reading-theme-night');
+      document.querySelectorAll('[data-xlr-quick="theme"]').forEach(btn=>{ btn.textContent=night?'白天':'夜间'; btn.title=night?'切换为白天模式':'切换为暗夜模式'; btn.setAttribute('aria-label', btn.title); });
+    }
+    function normalizeQuickConfig(raw){
+      const ids=QUICK_ITEMS.map(x=>x.id); const cfg=raw&&typeof raw==='object'?raw:{};
+      let order=Array.isArray(cfg.order)?cfg.order.filter(id=>ids.includes(id)):DEFAULT_QUICK_ORDER.slice();
+      DEFAULT_QUICK_ORDER.forEach(id=>{ if(!order.includes(id)) order.push(id); });
+      ids.forEach(id=>{ if(!order.includes(id)) order.push(id); });
+      const enabled=Object.assign({}, DEFAULT_QUICK_ENABLED, cfg.enabled||{}); ids.forEach(id=>enabled[id]=!!enabled[id]);
+      return {order, enabled};
+    }
+    function readQuickConfig(){
+      return normalizeQuickConfig(readStoredJSON(SOURCE_QUICK_KEY) || readStoredJSON('xiaoliuren_quick_button_settings_v1071_intent') || readStoredJSON('xiaoliuren_quick_button_settings_v1070_intent') || readStoredJSON('xiaoliuren_quick_button_settings_v9919'));
+    }
+    function saveQuickConfig(cfg){ writeStoredJSON(SOURCE_QUICK_KEY, normalizeQuickConfig(cfg)); }
+    function quickItem(id){ return QUICK_ITEMS.find(x=>x.id===id); }
+    function quickButtonLabel(id){ if(id==='mode') return document.body.classList.contains('force-desktop-mode')?'自适':'电脑'; if(id==='theme') return document.body.classList.contains('reading-theme-night')?'白天':'夜间'; return quickItem(id)?.label || id; }
+    function applyUISettings(){
+      const ui=readUISettings();
+      document.body.classList.toggle('xlr-hide-quick-tools', !ui.showQuickButtons);
+      document.body.classList.toggle('xlr-hide-section-nav', !ui.showSectionNav);
+      document.body.classList.toggle('xlr-hide-progress', !ui.showProgressBar);
+      const manualMode = (()=>{ try{return localStorage.getItem('xiaoliuren_client_mode_source')||'';}catch(e){return '';} })();
+      const mode = manualMode || ui.defaultClientMode;
+      document.body.classList.toggle('force-desktop-mode', mode==='desktop');
+      refreshSectionJumpNavSoon(); renderQuickTools();
+    }
+    function toggleClientModeSource(){
+      const on=!document.body.classList.contains('force-desktop-mode');
+      document.body.classList.toggle('force-desktop-mode', on);
+      try{ localStorage.setItem('xiaoliuren_client_mode_source', on?'desktop':'auto'); }catch(e){}
+      renderQuickTools(); refreshSectionJumpNavSoon(); syncExtraSettingsForm();
+    }
+    function goHomeSource(){
+      const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden');
+      currentResult=null; try{window.currentResult=null;}catch(e){}
+      document.body.classList.remove('result-page','result-destiny');
+      try{ localStorage.removeItem(LAST_VIEW_KEY); if(location.hash) history.replaceState(history.state||null,'',location.pathname+location.search); }catch(e){}
+      const top=document.getElementById('homeTopSection')||document.body; top.scrollIntoView({behavior:'smooth',block:'start'}); refreshSectionJumpNavSoon();
+    }
+    function runQuickAction(id){
+      const click=(btnId)=>{ const b=document.getElementById(btnId); if(b) b.click(); else alert('当前按钮暂不可用。'); };
+      if(id==='home') return goHomeSource();
+      if(id==='reset') return resetForm();
+      if(id==='mode') return toggleClientModeSource();
+      if(id==='expand') return expandAllResultBlocks();
+      if(id==='collapse') return collapseAllResultBlocks();
+      if(id==='theme') return toggleReadingThemeQuick();
+      if(id==='top') return scrollToTopQuick();
+      if(id==='bottom') return scrollToBottomQuick();
+      if(id==='history') return click('historyBtn');
+      if(id==='analytics') return click('analyticsBtn');
+      if(id==='rules') return click('rulesBtn');
+      if(id==='templates') return click('templateBtn');
+      if(id==='settings') return click('settingsBtn');
+      if(id==='copy') return click('copyResultBtn');
+    }
+    function renderQuickTools(){
+      const tools=document.querySelector('.scroll-tools'); if(!tools) return;
+      const reading=readReadingSettings(); const cfg=readQuickConfig();
+      const wideIds=new Set(['history','analytics','expand','collapse','settings','theme','rules','templates','copy']);
+      const html=cfg.order.filter(id=>cfg.enabled[id]).map(id=>{
+        if(id==='theme' && reading.showToggle===false) return '';
+        const it=quickItem(id); if(!it) return '';
+        const cls=wideIds.has(id)?' wide':''; const extra=id==='theme'?' reading-mode-toggle':'';
+        return `<button class="scroll-tool-btn${cls}${extra}" type="button" data-xlr-quick="${id}" title="${it.title}" aria-label="${it.title}">${quickButtonLabel(id)}</button>`;
+      }).join('');
+      tools.innerHTML=html || '<button class="scroll-tool-btn wide" type="button" data-xlr-quick="settings" title="设置" aria-label="设置">设置</button>';
+      updateThemeQuickButtonLabel();
+    }
+    function renderQuickSettingsList(){
+      const box=document.getElementById('quickButtonConfigList'); if(!box) return; const cfg=readQuickConfig();
+      box.innerHTML=cfg.order.map((id,idx)=>{ const it=quickItem(id); if(!it) return '';
+        return `<div class="quick-config-row"><label class="quick-config-main"><input type="checkbox" data-quick-enabled="${id}" ${cfg.enabled[id]?'checked':''}><span class="quick-config-label"><b>${it.label}</b><small>${it.note}</small></span></label><span class="quick-config-actions"><button class="quick-order-btn" type="button" data-quick-move="${id}" data-dir="-1" ${idx===0?'disabled':''}>↑</button><button class="quick-order-btn" type="button" data-quick-move="${id}" data-dir="1" ${idx===cfg.order.length-1?'disabled':''}>↓</button></span></div>`;
+      }).join('');
+    }
+    function readExtraSettingsFromForm(){
+      const ui=readUISettings(), r=readReadingSettings();
+      ui.showQuickButtons=!!document.getElementById('settingUiShowQuickButtons')?.checked;
+      ui.showSectionNav=!!document.getElementById('settingUiShowSectionNav')?.checked;
+      ui.showProgressBar=!!document.getElementById('settingUiShowProgress')?.checked;
+      ui.defaultClientMode=document.getElementById('settingUiDefaultClientMode')?.value==='desktop'?'desktop':'auto';
+      r.mode=document.getElementById('settingReadingMode')?.value||r.mode;
+      r.bg=document.getElementById('settingReadingBg')?.value||r.bg;
+      const custom=document.getElementById('settingReadingCustomBg')?.value; if(validHex(custom)) r.custom=custom;
+      const st=document.getElementById('settingAutoNightStart')?.value, en=document.getElementById('settingAutoNightEnd')?.value;
+      if(validTimeText(st)) r.autoStart=st; if(validTimeText(en)) r.autoEnd=en;
+      r.showToggle=!!document.getElementById('settingReadingQuickToggle')?.checked;
+      const size=document.getElementById('settingReadingTextSize')?.value||readReadingSize();
+      return {ui:normalizeUISettings(ui), reading:normalizeReadingSettings(r), size:['small','normal','large','xlarge'].includes(size)?size:DEFAULT_READING_SIZE, debugVisible:!!document.getElementById('settingDebugEnabled')?.checked};
+    }
+    function syncExtraSettingsForm(){
+      const ui=readUISettings(), r=readReadingSettings(), size=readReadingSize();
+      const set=(id,val)=>{ const el=document.getElementById(id); if(!el)return; if(el.type==='checkbox') el.checked=!!val; else el.value=val; };
+      set('settingUiShowQuickButtons', ui.showQuickButtons); set('settingUiShowSectionNav', ui.showSectionNav); set('settingUiShowProgress', ui.showProgressBar); set('settingUiDefaultClientMode', ui.defaultClientMode);
+      set('settingReadingMode', r.mode); set('settingReadingBg', r.bg); set('settingReadingCustomBg', r.custom); set('settingAutoNightStart', r.autoStart); set('settingAutoNightEnd', r.autoEnd); set('settingReadingQuickToggle', r.showToggle); set('settingReadingTextSize', size);
+      const visible=(()=>{try{return localStorage.getItem(SOURCE_DEBUG_KEY)!=='0'}catch(e){return true}})(); set('settingDebugEnabled', visible);
+      renderQuickSettingsList();
+    }
+    function saveExtraSettingsFromForm(){
+      const x=readExtraSettingsFromForm(); saveUISettings(x.ui); saveReadingSettings(x.reading); saveReadingSize(x.size);
+      try{ localStorage.setItem(SOURCE_DEBUG_KEY, x.debugVisible?'1':'0'); localStorage.removeItem('xiaoliuren_client_mode_source'); }catch(e){}
+      applyReadingSettings(); applyUISettings(); applyDebugVisibility(); renderQuickTools(); renderQuickSettingsList();
+    }
+    function resetExtraSettings(){
+      saveUISettings(DEFAULT_UI_SETTINGS); saveReadingSettings(DEFAULT_READING_SETTINGS); saveReadingSize(DEFAULT_READING_SIZE); saveQuickConfig({order:DEFAULT_QUICK_ORDER, enabled:DEFAULT_QUICK_ENABLED});
+      try{ localStorage.setItem(SOURCE_DEBUG_KEY,'1'); localStorage.removeItem('xiaoliuren_client_mode_source'); }catch(e){}
+      applyReadingSettings(); applyUISettings(); applyDebugVisibility(); syncExtraSettingsForm(); renderQuickTools();
+    }
+    function applyDebugVisibility(){
+      let show=true; try{ show=localStorage.getItem(SOURCE_DEBUG_KEY)!=='0'; }catch(e){}
+      document.body.classList.toggle('xlr-debug-hidden', !show);
+    }
+    function bindSourceUiModules(){
+      document.addEventListener('click', function(e){ const btn=e.target.closest && e.target.closest('[data-xlr-quick]'); if(!btn) return; e.preventDefault(); runQuickAction(btn.getAttribute('data-xlr-quick')); }, true);
+      const list=document.getElementById('quickButtonConfigList');
+      if(list){
+        list.addEventListener('change', function(e){ const input=e.target.closest('[data-quick-enabled]'); if(!input)return; const cfg=readQuickConfig(); cfg.enabled[input.getAttribute('data-quick-enabled')]=!!input.checked; saveQuickConfig(cfg); renderQuickTools(); });
+        list.addEventListener('click', function(e){ const btn=e.target.closest('[data-quick-move]'); if(!btn)return; const cfg=readQuickConfig(); const id=btn.getAttribute('data-quick-move'); const dir=Number(btn.getAttribute('data-dir')||0); const i=cfg.order.indexOf(id), n=i+dir; if(i>=0&&n>=0&&n<cfg.order.length){ [cfg.order[i],cfg.order[n]]=[cfg.order[n],cfg.order[i]]; saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools(); } });
+      }
+      document.getElementById('quickButtonsDefaultBtn')?.addEventListener('click', function(){ saveQuickConfig({order:DEFAULT_QUICK_ORDER, enabled:DEFAULT_QUICK_ENABLED}); renderQuickSettingsList(); renderQuickTools(); });
+      document.getElementById('quickButtonsAllBtn')?.addEventListener('click', function(){ const cfg=readQuickConfig(); QUICK_ITEMS.forEach(x=>cfg.enabled[x.id]=true); saveQuickConfig(cfg); renderQuickSettingsList(); renderQuickTools(); });
+      ['settingReadingMode','settingReadingBg','settingReadingCustomBg','settingAutoNightStart','settingAutoNightEnd','settingReadingQuickToggle','settingReadingTextSize','settingUiShowQuickButtons','settingUiShowSectionNav','settingUiShowProgress','settingUiDefaultClientMode','settingDebugEnabled'].forEach(id=>{
+        document.getElementById(id)?.addEventListener('change', function(){ saveExtraSettingsFromForm(); });
+      });
+      if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyReadingSettings); }catch(e){} }
+    }
+    function initSourceUiModules(){ applyReadingSettings(); applyUISettings(); applyDebugVisibility(); renderQuickTools(); syncExtraSettingsForm(); bindSourceUiModules(); }
 
     function updatePageProgress(){
       const bar = document.getElementById('pageProgressBar');
@@ -5534,8 +5803,8 @@ ${nextStep}`;
 
 
 
-    /* v10.5.85 源码内建 Debug 模块：主脚本内置，只读诊断，不改占卜逻辑 */
-    const XLR_SOURCE_VERSION = 'v10.5.85 源码内建Debug恢复版';
+    /* v10.5.86 源码内建 Debug 模块：主脚本内置，只读诊断，不改占卜逻辑 */
+    const XLR_SOURCE_VERSION = 'v10.5.86 源码净化与快捷阅读恢复版';
     const XLR_DEBUG_LOG = [];
     function xlrDebugPush(type, detail){
       try{
@@ -5546,7 +5815,7 @@ ${nextStep}`;
     window.addEventListener('error', e=>xlrDebugPush('error', (e.message||'')+' @ '+(e.filename||'')+':'+(e.lineno||'')), true);
     window.addEventListener('unhandledrejection', e=>xlrDebugPush('promise', e.reason && (e.reason.stack||e.reason.message||e.reason) || 'unhandled rejection'), true);
     window.addEventListener('click', e=>{
-      const t=e.target && e.target.closest ? e.target.closest('button,[data-jump-target],[data-v9919-quick],summary,a') : null;
+      const t=e.target && e.target.closest ? e.target.closest('button,[data-jump-target],[data-xlr-quick],summary,a') : null;
       if(t) xlrDebugPush('click', (t.textContent||t.id||t.className||t.tagName||'').trim());
     }, true);
     function xlrDebugText(el){ return el ? (el.textContent||'').replace(/\s+/g,' ').trim().slice(0,180) : ''; }
@@ -5602,10 +5871,10 @@ ${nextStep}`;
         generatedAt:new Date().toISOString(),
         environment:{ url:location.href, title:document.title, metaDescription:meta?meta.content:'', userAgent:navigator.userAgent, language:navigator.language, online:navigator.onLine, serviceWorkerController:navigator.serviceWorker&&navigator.serviceWorker.controller?navigator.serviceWorker.controller.scriptURL:null },
         viewport:{ inner:{width:innerWidth,height:innerHeight}, outer:{width:outerWidth,height:outerHeight}, screen:{width:screen.width,height:screen.height,availWidth:screen.availWidth,availHeight:screen.availHeight}, devicePixelRatio:devicePixelRatio||1, scroll:{x:Math.round(scrollX||0),y:Math.round(scrollY||0),docHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight}, visualViewport:window.visualViewport?{width:Math.round(visualViewport.width),height:Math.round(visualViewport.height),offsetTop:Math.round(visualViewport.offsetTop),scale:visualViewport.scale}:null },
-        versionAudit:{ expected:XLR_SOURCE_VERSION, title:document.title, meta:meta?meta.content:'', homeTitle, versionStrings:xlrDebugVersionStrings(), scriptCount, styleCount, duplicateIds:xlrDebugDuplicateIds(), legacyRuntimeTerms:{ bootLate:document.documentElement.innerHTML.includes('boot'+'-late'), loadLate:document.documentElement.innerHTML.includes('load'+'-late'), versionLockResidue:document.documentElement.innerHTML.includes('version'+'Locked'), oldDebugIds:['v10514'+'DebugFab','v10546'+'DebugSaveBtn','v10581'+'DebugSaveBtn','v10582'+'DebugCopyBtn'].filter(id=>document.getElementById(id)) } },
+        versionAudit:{ expected:XLR_SOURCE_VERSION, title:document.title, meta:meta?meta.content:'', homeTitle, versionStrings:xlrDebugVersionStrings(), scriptCount, styleCount, duplicateIds:xlrDebugDuplicateIds(), legacyRuntimeTerms:{ delayedBootText:document.documentElement.innerHTML.includes('boot'+'-late')||document.documentElement.innerHTML.includes('load'+'-late'), versionLockResidue:document.documentElement.innerHTML.includes('version'+'Locked'), extraScriptCount:Math.max(0, scriptCount-1) } },
         result:{ currentResult:currentResultSafe, bodyClass:document.body.className, resultPage:document.body.classList.contains('result-page'), resultDestiny:document.body.classList.contains('result-destiny'), scene:xlrDebugText(document.getElementById('resultScene')), title:xlrDebugText(document.getElementById('resultTitle')), method:xlrDebugText(document.getElementById('resultMethod')), hexNodeCount:document.querySelectorAll('.hex-node').length },
         navigation:{ main:xlrDebugBox('#sectionJumpNav'), items:Array.from(document.querySelectorAll('#sectionJumpNav [data-jump-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-jump-target'),className:btn.className,active:btn.classList.contains('active')})), targets:(typeof currentJumpTargets==='function'?currentJumpTargets().map(t=>({id:t.id,label:t.label,exists:!!t.el,visible:!!(t.el&&sectionIsJumpVisible(t.el)), box:xlrDebugBox(t.el)})):[]) },
-        quickButtons:Array.from(document.querySelectorAll('[data-v9919-quick]')).map(btn=>({text:xlrDebugText(btn),quick:btn.getAttribute('data-v9919-quick'),className:btn.className,box:xlrDebugBox(btn)})),
+        quickButtons:Array.from(document.querySelectorAll('[data-xlr-quick]')).map(btn=>({text:xlrDebugText(btn),quick:btn.getAttribute('data-xlr-quick'),className:btn.className,box:xlrDebugBox(btn)})),
         blocks:Object.fromEntries(blocks.map(sel=>[sel.replace('#',''),xlrDebugBox(sel)])),
         settings:{ userSettings: typeof getUserSettings==='function'?getUserSettings():null, savedChoice: typeof getSavedChoices==='function'?getSavedChoices():null, viewMode: (()=>{try{return localStorage.getItem('xlr_view_mode_v9_1')}catch(e){return null}})() },
         storage:xlrDebugStorage(['xlr_user_settings_v9_1','xlr_saved_choice_v9_1','xlr_history_v7','xlr_view_mode_v9_1','xiaoliuren_client_mode_v9914']),
@@ -5619,7 +5888,7 @@ ${nextStep}`;
       const status=document.getElementById('xlrDebugStatus');
       if(status){
         status.innerHTML=[
-          ['版本', data.version], ['脚本/样式', `${data.versionAudit.scriptCount} / ${data.versionAudit.styleCount}`], ['重复ID', data.versionAudit.duplicateIds.length], ['旧Debug残留', data.versionAudit.legacyRuntimeTerms.oldDebugIds.length], ['结果页', data.result.resultPage?'是':'否'], ['当前场景', data.result.currentResult?data.result.currentResult.sceneName:'无结果']
+          ['版本', data.version], ['脚本/样式', `${data.versionAudit.scriptCount} / ${data.versionAudit.styleCount}`], ['重复ID', data.versionAudit.duplicateIds.length], ['额外脚本', data.versionAudit.legacyRuntimeTerms.extraScriptCount], ['结果页', data.result.resultPage?'是':'否'], ['当前场景', data.result.currentResult?data.result.currentResult.sceneName:'无结果']
         ].map(([k,v])=>`<div class="xlr-debug-pill"><b>${k}</b>${v}</div>`).join('');
       }
       if(out) out.textContent=JSON.stringify(data,null,2);
@@ -5631,7 +5900,7 @@ ${nextStep}`;
       fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
       const dlg=document.createElement('dialog');
       dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
-      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.85：只读取页面状态，不改占卜逻辑；用于检查版本、导航、折叠、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
+      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.86：只读取页面状态，不改占卜逻辑；用于检查版本、导航、阅读、快捷按钮、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
       document.body.appendChild(fab); document.body.appendChild(dlg);
       fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','open'); });
       document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
@@ -5644,14 +5913,15 @@ ${nextStep}`;
         if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(()=>{ prompt('复制下面的 Debug 日志', text); }); }
         else prompt('复制下面的 Debug 日志', text);
       });
-      document.getElementById('xlrDebugHideBtn')?.addEventListener('click',()=>{ document.body.classList.add('xlr-debug-hidden'); try{localStorage.setItem('xlr_debug_hidden_v10585','1')}catch(e){}; if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
-      try{ if(localStorage.getItem('xlr_debug_hidden_v10585')==='1') document.body.classList.add('xlr-debug-hidden'); }catch(e){}
+      document.getElementById('xlrDebugHideBtn')?.addEventListener('click',()=>{ document.body.classList.add('xlr-debug-hidden'); try{localStorage.setItem('xiaoliuren_debug_visible_source','0')}catch(e){}; if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
+      try{ if(localStorage.getItem('xiaoliuren_debug_visible_source')==='0') document.body.classList.add('xlr-debug-hidden'); }catch(e){}
     }
     function initSourceDebug(){ xlrDebugEnsureUi(); }
-    window.XLRDebug = { collect:xlrDebugCollect, render:xlrDebugRender, show:()=>{ const d=document.getElementById('xlrDebugDialog'); xlrDebugRender('manual-show'); if(d&&d.showModal)d.showModal(); else if(d)d.setAttribute('open','open'); }, unhide:()=>{document.body.classList.remove('xlr-debug-hidden'); try{localStorage.removeItem('xlr_debug_hidden_v10585')}catch(e){} } };
+    window.XLRDebug = { collect:xlrDebugCollect, render:xlrDebugRender, show:()=>{ const d=document.getElementById('xlrDebugDialog'); xlrDebugRender('manual-show'); if(d&&d.showModal)d.showModal(); else if(d)d.setAttribute('open','open'); }, unhide:()=>{document.body.classList.remove('xlr-debug-hidden'); try{localStorage.setItem('xiaoliuren_debug_visible_source','1')}catch(e){} } };
 
 
     init();
+    initSourceUiModules();
     initSourceDebug();
     refreshSectionJumpNavSoon();
   </script>
@@ -5667,8 +5937,6 @@ ${nextStep}`;
 
 
 
-<!-- v10.5.41 source integration: 命运术语与稳定跳转 -->
-<!-- v10.5.46 source-integrated fix: 状态源统一、导航稳定、术语折叠整合 -->
 
 
 
