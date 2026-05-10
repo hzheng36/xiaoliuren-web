@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.54-old-nav-ui-click-stable';
+const CACHE_NAME = 'xiaoliuren-v10.5.55-slot-nav-content-sync';
 const APP_SHELL = [
   './',
   './index.html',
