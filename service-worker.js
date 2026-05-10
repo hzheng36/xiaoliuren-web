@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.37-destiny-terms-nav-collapse';
+const CACHE_NAME = 'xiaoliuren-v10.5.38-nav-isolation-terms';
 const APP_SHELL = [
   './',
   './index.html',

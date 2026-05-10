@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.37",
-  "short_name": "小六壬 v10.5.37",
-  "description": "v10.5.37 命运术语导航与折叠联动修复版",
+  "name": "小六壬占卜 · v10.5.38",
+  "short_name": "小六壬 v10.5.38",
+  "description": "v10.5.38 非命运导航隔离与术语回归修复版",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.37"
+  "version": "10.5.38"
 }
