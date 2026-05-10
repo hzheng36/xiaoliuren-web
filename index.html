@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.87 源码清理与导读术语恢复版</title>
-<meta content="小六壬个人网页版 v10.5.87 源码清理与导读术语恢复版：清理重复函数与一批旧覆盖逻辑，恢复快速导读与统一术语学习内容，保留单一主样式与单一主脚本。" name="description"/>
+<title>小六壬占卜 · v10.5.88 源码去版本化与规则主线整合版</title>
+<meta content="小六壬个人网页版 v10.5.88 源码去版本化与规则主线整合版：继续清理旧版本命名残留和重复函数，把扩展场景识别、专项提醒、导读术语样式并回源码主线。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -965,7 +965,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
 
 
-    /* v10.5.85 源码内建 Debug：主样式内置，不再追加后置样式块 */
+    /* 源码内建 Debug：主样式内置 */
     .xlr-debug-fab{position:fixed;left:12px;bottom:max(18px,env(safe-area-inset-bottom));z-index:9998;border:0;border-radius:999px;padding:9px 13px;background:#1f1730;color:#fff;box-shadow:0 10px 28px rgba(31,23,48,.28);font-weight:850;font-size:12px;letter-spacing:.02em;display:flex;align-items:center;gap:6px;min-height:34px;}
     .xlr-debug-dialog{width:min(760px,calc(100vw - 28px));max-height:min(82vh,760px);border:0;border-radius:20px;padding:0;box-shadow:0 24px 70px rgba(31,23,48,.32);background:#fffdfb;color:#241d33;}
     .xlr-debug-dialog::backdrop{background:rgba(22,16,33,.42);backdrop-filter:blur(3px);}
@@ -1011,6 +1011,14 @@ body.xlr-hide-quick-tools .scroll-tools { display:none !important; }
 body.xlr-hide-section-nav #sectionJumpNav { display:none !important; }
 body.xlr-hide-progress .page-progress { display:none !important; }
 body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
+
+    .xlr-guide-grid,.xlr-terms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px;}
+    .xlr-guide-card,.xlr-term-card{border:1px solid rgba(188,133,65,.18);background:rgba(255,255,255,.76);border-radius:16px;padding:11px 12px;line-height:1.65;box-shadow:0 8px 22px rgba(70,47,105,.06);}
+    .xlr-guide-card b,.xlr-term-card h5{display:block;margin:0 0 6px;color:#2d2540;font-size:14px;}
+    .xlr-guide-card span,.xlr-term-card p{display:block;margin:0;color:#5f566d;font-size:13px;}
+    body.reading-theme-night .xlr-guide-card,body.reading-theme-night .xlr-term-card{background:rgba(37,31,50,.78);border-color:rgba(229,196,138,.20);}
+    body.reading-theme-night .xlr-guide-card b,body.reading-theme-night .xlr-term-card h5{color:#f6ead8;}
+    body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 .settings-mini-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
 @media(max-width:760px){ .settings-mini-grid { grid-template-columns:1fr; } }
 
@@ -1053,8 +1061,8 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.87 源码清理与导读术语恢复版</h2>
-<p>本版继续清理旧后置残留，把快速导读、统一术语学习、A/B 对比、备份导出、设置关闭提醒按源码主模块恢复。Debug、阅读、快捷按钮、导航显示和结果渲染都由同一个主脚本统一管理。</p>
+<h2>个人占卜台 · v10.5.88 源码去版本化与规则主线整合版</h2>
+<p>本版继续执行源码主线整合计划：去掉旧版本命名残留，清理剩余重复函数，把扩展场景识别和专项提醒并入主函数。Debug、阅读、快捷按钮、导航显示、结果渲染、导读术语都由同一个主脚本统一管理。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1203,9 +1211,9 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 <button class="ghost-btn" id="favBtn">收藏</button>
 </div>
 </div>
-<article class="block collapsible-block" data-collapse-key="quickGuide" id="v10510QuickGuideBlock">
+<article class="block collapsible-block" data-collapse-key="quickGuide" id="xlrQuickGuideBlock">
 <h4>快速导读</h4>
-<div class="v10510-guide-grid" id="v10510QuickGuideContent"></div>
+<div class="xlr-guide-grid" id="xlrQuickGuideContent"></div>
 </article>
 <article class="block" id="answerSummaryBlock">
 <h4>答案摘要</h4>
@@ -1270,9 +1278,9 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 </div>
 
 <article class="block collapsible-block" data-collapse-key="advice" id="adviceBlock"><h4>行动建议</h4><ul id="adviceList"></ul></article>
-<article class="block detail-only collapsible-block" data-collapse-key="glossary" id="v10510GlossaryBlock">
+<article class="block detail-only collapsible-block" data-collapse-key="glossary" id="xlrGlossaryBlock">
 <h4>术语解释</h4>
-<div class="v10510-terms-grid" id="v10510GlossaryContent"></div>
+<div class="xlr-terms-grid" id="xlrGlossaryContent"></div>
 </article>
 </section>
 <section class="home-info hide-about hide-version-updates" id="homeInfoBlocks">
@@ -1316,7 +1324,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 <select id="settingDefaultView"><option value="detail">详细版</option><option value="simple">简洁版</option></select>
 </div>
 <label class="settings-row"><span>详细模块默认折叠<small>三象、单宫、双宫、象意补充等模块可先折叠，需要时再展开。</small></span><input id="settingCollapseDetails" type="checkbox"/></label>
-<div class="settings-row" data-v10557-nav-position-row="1">
+<div class="settings-row" data-nav-position-row="1">
 <span>导航位置<small>底部：一级导航在下面、二级导航在上面；顶部：一级导航在上面、二级导航在下面。</small></span>
 <select id="settingNavPosition"><option value="bottom">底部</option><option value="top">顶部</option></select>
 </div>
@@ -1672,49 +1680,9 @@ function clearCustomTemplates(){
     }
     function openTemplateDialog(){ initTemplateFilters(); renderQuestionTemplates(); const dlg=document.getElementById('templateDialog'); if(dlg && dlg.showModal) dlg.showModal(); else if(dlg) dlg.setAttribute('open','open'); }
     function closeTemplateDialog(){ const dlg=document.getElementById('templateDialog'); if(dlg && dlg.close) dlg.close(); else if(dlg) dlg.removeAttribute('open'); }
-    /* 已清理：早期重复的 templateSearchTerms 函数定义，保留源码主定义。 */
-/* 已清理：早期重复的 templateMatches 函数定义，保留源码主定义。 */
-function templateSortMode(){ return document.getElementById('templateSortMode')?.value || 'default'; }
-    /* 已清理：早期重复的 getTemplateUsageKey 函数定义，保留源码主定义。 */
-/* 已清理：早期重复的 getTemplateStats 函数定义，保留源码主定义。 */
-/* 已清理：早期重复的 getFavoriteTemplates 函数定义，保留源码主定义。 */
-function sortTemplateItems(items, scene, isCustom){
-      const mode=templateSortMode();
-      const stats=getTemplateStats();
-      const favs=new Set(getFavoriteTemplates());
-      const arr=(items || []).slice();
-      if(mode==='default') return arr;
-      return arr.sort((a,b)=>{
-        const ta=isCustom ? a.text : a;
-        const tb=isCustom ? b.text : b;
-        const ka=getTemplateUsageKey(scene, ta), kb=getTemplateUsageKey(scene, tb);
-        if(mode==='favorite') return (favs.has(kb)?1:0)-(favs.has(ka)?1:0) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
-        if(mode==='usage') return ((stats[kb]||0)-(stats[ka]||0)) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
-        if(mode==='recent') return ((stats[kb+'_last']||0)-(stats[ka+'_last']||0)) || String(ta).localeCompare(String(tb),'zh-Hans-CN');
-        return 0;
-      });
-    }
-    /* 已清理：早期重复的 updateSelectedTemplateCount 函数定义，保留源码主定义。 */
-/* 已清理：早期重复的 renderQuestionTemplates 函数定义，保留源码主定义。 */
-function handleTemplateClick(e){
-      const selector=e.target.closest('[data-select-template]');
-      if(selector){
-        const id=selector.getAttribute('data-select-template');
-        if(selector.checked) selectedCustomTemplateIds.add(id); else selectedCustomTemplateIds.delete(id);
-        updateSelectedTemplateCount();
-        return;
-      }
-      const del=e.target.closest('[data-delete-template]');
-      if(del){ deleteCustomTemplate(del.getAttribute('data-delete-template')); return; }
-      const btn=e.target.closest('[data-template]'); if(!btn) return;
-      const value=btn.getAttribute('data-template') || '';
-      const sceneName=btn.getAttribute('data-template-scene') || findTemplateSceneByText(value);
-      recordTemplateUsage(sceneName, value);
-      if(sceneName) selectSceneByName(sceneName);
-      const input=document.getElementById('questionInput');
-      if(input){ input.value=value; updateQuestionCount(); updateContextTypeAuto(); input.focus(); }
-      closeTemplateDialog();
-    }
+
+
+
     function recordTemplateUsage(scene, text){
       const key=getTemplateUsageKey(scene || '其他', text || '');
       const stats=getTemplateStats();
@@ -2434,7 +2402,7 @@ function buildPaipanExplanation(result){
       refreshSectionJumpNavSoon();
     }
     function saveLastView(result){ localStorage.setItem(LAST_VIEW_KEY, JSON.stringify(result)); }
-    function clearStartupResult(){ try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {} const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden'); currentResult=null; try { window.currentResult=null; } catch(e) {} try { document.body.classList.remove('result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'); } catch(e) {} try { if(location.hash) history.replaceState(history.state || null, '', location.pathname + location.search); } catch(e) {} }
+    function clearStartupResult(){ try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {} const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden'); currentResult=null; try { window.currentResult=null; } catch(e) {} try { document.body.classList.remove('result-page','result-destiny'); } catch(e) {} try { if(location.hash) history.replaceState(history.state || null, '', location.pathname + location.search); } catch(e) {} }
     function restoreLastView(){ /* 保留函数名以兼容旧代码，但启动时不再自动恢复上次占卜。 */ }
     function getTimeDerived(dt){ const shichenMap=[{name:'子时',start:23,end:1,idx:1,range:'23:00-00:59'},{name:'丑时',start:1,end:3,idx:2,range:'01:00-02:59'},{name:'寅时',start:3,end:5,idx:3,range:'03:00-04:59'},{name:'卯时',start:5,end:7,idx:4,range:'05:00-06:59'},{name:'辰时',start:7,end:9,idx:5,range:'07:00-08:59'},{name:'巳时',start:9,end:11,idx:6,range:'09:00-10:59'},{name:'午时',start:11,end:13,idx:7,range:'11:00-12:59'},{name:'未时',start:13,end:15,idx:8,range:'13:00-14:59'},{name:'申时',start:15,end:17,idx:9,range:'15:00-16:59'},{name:'酉时',start:17,end:19,idx:10,range:'17:00-18:59'},{name:'戌时',start:19,end:21,idx:11,range:'19:00-20:59'},{name:'亥时',start:21,end:23,idx:12,range:'21:00-22:59'}]; const hour=dt.getHours(); const s=shichenMap.find(({start,end})=> start>end ? (hour>=start || hour<end) : (hour>=start && hour<end)) || shichenMap[0]; const lunar=formatChineseLunar(dt); const lunarNums=parseLunarNumbers(lunar); return { numbers:[lunarNums.month, lunarNums.day, s.idx], lunarMonth:lunarNums.month, lunarDay:lunarNums.day, shichen:s.name, shichenRange:s.range, shichenIndex:s.idx, lunar }; }
     function formatChineseLunar(dt){ try { const fmt=new Intl.DateTimeFormat('zh-CN-u-ca-chinese', {year:'numeric', month:'long', day:'numeric'}); const text=fmt.format(dt).replace(/\s/g,''); return text.replace(/^.*年/,''); } catch { return '农历信息不可用'; } }
@@ -2596,27 +2564,7 @@ function buildPaipanExplanation(result){
     function isGoodPalace(name){ return ['大安','速喜','小吉'].indexOf(name) >= 0; }
     function isHeavyPalace(name){ return ['留连','赤口','空亡'].indexOf(name) >= 0; }
     function palaceRoleSentence(d){ return `${d.positionName}为${d.role}，取数 ${d.number}，连续顺推落宫为${d.palaceName}`; }
-    /* 已清理：早期重复的 sceneLabel 函数定义，保留源码主定义。 */
-function sceneMetricValue(sceneKey, key, result){
-      const m = result.metrics, d = result.details, end = d[2];
-      if(sceneKey === 'lost'){
-        const palaces = result.palaces;
-        const hasKong = palaces.indexOf('空亡') >= 0;
-        const hasLiulian = palaces.indexOf('留连') >= 0;
-        const hasChikou = palaces.indexOf('赤口') >= 0;
-        const goodCount = palaces.filter(isGoodPalace).length;
-        const values = {
-          '吉凶': hasKong ? '未绝但需复查' : (goodCount >= 2 ? '有希望' : '偏低但未绝'),
-          '快慢': (end.palaceName === '留连' || hasLiulian) ? '偏慢，需复找' : (end.palaceName === '速喜' ? '较快有线索' : '不宜急找'),
-          '阻力': hasChikou ? '急躁/翻乱/误判' : (hasLiulian ? '夹住/压住/混旧物' : '线索不明显'),
-          '成事倾向': hasKong ? '先核实再下结论' : (hasLiulian ? '慢找、复找' : '按线索查找'),
-          '贵人助力': '外人帮助有限',
-          '五行气象': lostSearchClue(d)
-        };
-        return values[key];
-      }
-      return { '吉凶':m.luckText, '快慢':m.speedText, '阻力':m.resistText, '成事倾向':m.successText, '贵人助力':m.nobleText, '五行气象':m.elementText }[key];
-    }
+
     function lostSearchClue(details){
       const palaces = details.map(d=>d.palaceName);
       const clues = [];
@@ -2666,56 +2614,8 @@ function sceneMetricValue(sceneKey, key, result){
       text += `五行方面，${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}；${metrics.elementText}。`;
       return text;
     }
-    /* 已清理：早期重复的 buildOverallByScene 函数定义，保留源码主定义。 */
-/* 已清理：早期重复的 buildAdviceByScene 函数定义，保留源码主定义。 */
-function buildSupplementByScene(sceneKey, details, metrics){
-      if(sceneKey === 'lost'){
-        const palaces = details.map(d=>d.palaceName);
-        const places = [];
-        if(palaces.indexOf('留连') >= 0) places.push('抽屉角落、旧盒旧包装、柜子转角、堆放处、旧包、收纳盒、包袋夹层');
-        if(palaces.indexOf('赤口') >= 0) places.push('钥匙盘、硬币盒、金属小物旁、文具盒、票据夹、卡包、桌边、门口');
-        if(palaces.indexOf('空亡') >= 0) places.push('空盒、空位、高处、角落、已经找过但可能漏看的地方');
-        if(palaces.indexOf('大安') >= 0) places.push('固定收纳处、书房、办公桌、柜内稳定位置');
-        if(palaces.indexOf('小吉') >= 0) places.push('包袋、流动物品旁、交通动线、随手放的小物区');
-        if(palaces.indexOf('速喜') >= 0) places.push('最近拿出来、展示、拍照、临时放下的位置');
-        return [
-          {label:'一句话结论', value:'短时间未必一下找到，但不像完全无望；更像被夹住、压住、混进旧物或小物收纳里。'},
-          {label:'优先位置', value:[...new Set(places.join('、').split('、'))].filter(Boolean).join('、')},
-          {label:'寻找顺序', value:'最后一次使用处 → 桌面杂物 → 抽屉角落 → 包袋夹层 → 卡包/票据夹 → 旧盒旧包装 → 金属小物区。'},
-          {label:'关键线索', value:lostSearchClue(details)},
-          {label:'方位参考', value:`${[...new Set(details.map(d=>d.direction))].join('、')}。方位只作辅助，不要替代现实寻找顺序。`},
-          {label:'颜色/材质', value:`${[...new Set(details.map(d=>d.color))].join('、')}；另可特别留意金属、小铜件、卡片大小的小物。`},
-          {label:'应期参考', value:'偏慢，适合当天细找一次；若未得，隔一两天按旧物和夹层再复查。'}
-        ];
-      }
-      const mainDirs=[...new Set(details.map(d=>d.direction))].join('、');
-      const mainColors=[...new Set(details.map(d=>d.color))].join('、');
-      const mainObjects=[...new Set(details.map(d=>d.object))].join('、');
-      const mainPlaces=[...new Set(details.map(d=>d.place))].join('、');
-      const timings=[...new Set(details.map(d=>d.timing))].join('；');
-      return [
-        { label:'关键判断', value:`${details.map(d=>`${d.positionName}${d.palaceName}`).join('，')}。重点看末象${details[2].palaceName}是否能落地。` },
-        { label:'有利方位', value:`${mainDirs}。作为行动、沟通、寻找或摆放方向的象意参考。` },
-        { label:'颜色参考', value:`${mainColors}。用于提醒状态即可，不必机械照做。` },
-        { label:'五行结构', value:`${details.map(d=>`${d.palaceName}属${d.element}`).join('、')}；${metrics.elementText}。` },
-        { label:'相关物象', value:mainObjects },
-        { label:'地点象意', value:mainPlaces },
-        { label:'应期参考', value:`${timings}。若现实条件未成熟，应期会后延。` }
-      ];
-    }
-    /* 已清理：早期重复的 buildReadingCardText 函数定义，保留源码主定义。 */
-function buildSinglePalaceReadingByScene(sceneKey, details){
-      return details.map(d=>{
-        const prefix = sceneKey === 'lost' ? '失物断法' : '断法';
-        const plain = sceneKey === 'lost'
-          ? `${palaceRoleSentence(d)}。${buildReadingCardText(sceneKey, d)}`
-          : `${palaceRoleSentence(d)}。通俗说，就是这一步的气象偏向“${d.keywords.join('、')}”。${SINGLE_PALACE_GUIDE[d.palaceName]}`;
-        const practical = sceneKey === 'lost'
-          ? '这里的“取数”是起课用数，“落宫”才是断事宫位。找失物时，优先看现实位置和寻找顺序，方位颜色只作辅助。'
-          : '这里的“取数”是起课用数，“落宫”才是断事宫位，两者不要混在一起理解。';
-        return `<div class="gua-card"><h5>${d.positionName} · ${d.palaceName}</h5><p><strong>${prefix}：</strong>${plain}</p><p><strong>提醒：</strong>${practical}</p></div>`;
-      }).join('');
-    }
+
+
     /* 已清理：早期重复的 buildDoublePalaceReadingByScene 函数定义，保留源码主定义。 */
 function calcMetricsByScene(sceneKey, palaces){
       const metrics = calcMetrics(palaces);
@@ -3276,9 +3176,23 @@ ${nextStep}`;
       if (context.key === 'health') {
         notes.push('健康提醒：本工具只作传统文化娱乐参考；身体不适、症状持续或加重时，应以正规医疗检查和医生意见为准。');
       }
+
+      if (context.key === 'lottery') {
+        notes.push('彩票/抽奖提示：只作娱乐参考，不给号码、不承诺中奖、不建议加注追投。');
+        notes.push('判断重点：小吉偏小奖小喜，速喜偏短暂好运，空亡偏期望落空，赤口要防冲动和懊恼。');
+      }
+      if (context.key === 'shopping') notes.push('购物提示：重点看到手是否符合预期，赤口防售后争议，空亡防买到不符。');
+      if (context.key === 'device') notes.push('设备提示：赤口多看接口、线路、报错；留连多为旧故障反复；空亡多为数据、账号或信号不实。');
+      if (context.key === 'procedure') notes.push('手续提示：留连多排队拖延，赤口多材料口径或窗口沟通问题，空亡多材料缺失或被退。');
+      if (context.key === 'emotion') notes.push('情绪提示：若持续严重不适，请寻求专业帮助；卦象只作自我观察。');
+      if (context.key === 'timing') notes.push('应期提示：这里给的是快慢倾向，不是精确日期。速喜偏快，留连偏拖，空亡偏不定。');
+      if (context.key === 'yesno') notes.push('是非提示：不要只看“会/不会”，要看末象是否落实，中象是否有卡点。');
+      if (context.key === 'active_wait') notes.push('主动/等待提示：速喜可动，小吉可试探，大安先稳，赤口要柔，空亡先核实。');
+      if (context.key === 'risk') notes.push('风险提示：赤口看争议，留连看旧问题，空亡看信息真假和承诺落空。');
+      if (context.key === 'location') notes.push('地点提示：方位只作辅助，要结合现实最后出现地点、路线和收纳习惯。');
       if (end.palaceName === '空亡') notes.push('末象空亡提示：不论哪类问题，最后都要防“看起来有、实际未落地”，需复核信息、条件和承诺。');
       if (end.palaceName === '留连') notes.push('末象留连提示：结果端偏慢、偏反复，适合等待、复查、回头处理旧问题。');
-      return [...new Set(notes)].slice(0, 5);
+      return [...new Set(notes)].slice(0, 7);
     }
 
     /* 已清理：早期重复的 analyzeQuestionContext 函数定义，保留源码主定义。 */
@@ -3577,7 +3491,7 @@ function buildContextOverallSentence(context, details) {
         ['④ 结合现实',destinyLine],
         ['⑤ 学习术语','看不懂掌诀、五行、六亲、六神、应期、方位时，展开底部“术语解释”，这一版已把命运与普通问事的学习内容合并到一个模块。']
       ];
-      return cards.map(([title,text])=>`<div class="v10510-guide-card"><b>${escapeHTML(title)}</b><span>${escapeHTML(text)}</span></div>`).join('');
+      return cards.map(([title,text])=>`<div class="xlr-guide-card"><b>${escapeHTML(title)}</b><span>${escapeHTML(text)}</span></div>`).join('');
     }
     function buildGlossaryHTML(result){
       const isDestiny = !!(result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
@@ -3604,7 +3518,7 @@ function buildContextOverallSentence(context, details) {
         ['行动建议','建议不是命令，而是把卦象翻译成现实动作：该核实、该等待、该沟通、该写清楚、该小步试行。']
       ];
       const list = common.concat(isDestiny ? destiny : normal);
-      return list.map(([title,text])=>`<div class="v10510-term-card"><h5>${escapeHTML(title)}</h5><p>${escapeHTML(text)}</p></div>`).join('');
+      return list.map(([title,text])=>`<div class="xlr-term-card"><h5>${escapeHTML(title)}</h5><p>${escapeHTML(text)}</p></div>`).join('');
     }
 
     function renderResult(result) {
@@ -3628,8 +3542,8 @@ function buildContextOverallSentence(context, details) {
       document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
       document.getElementById('overallText').innerText=result.overallText;
       const answerSummary=document.getElementById('answerSummaryContent'); if(answerSummary) answerSummary.innerHTML=buildAnswerSummaryHTML(result);
-      const guideContent=document.getElementById('v10510QuickGuideContent'); if(guideContent) guideContent.innerHTML=buildQuickGuideHTML(result);
-      const glossaryContent=document.getElementById('v10510GlossaryContent'); if(glossaryContent) glossaryContent.innerHTML=buildGlossaryHTML(result);
+      const guideContent=document.getElementById('xlrQuickGuideContent'); if(guideContent) guideContent.innerHTML=buildQuickGuideHTML(result);
+      const glossaryContent=document.getElementById('xlrGlossaryContent'); if(glossaryContent) glossaryContent.innerHTML=buildGlossaryHTML(result);
       const focusContent=document.getElementById('sceneFocusContent'); if(focusContent) focusContent.innerHTML=buildSceneFocusHTML(result);
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
@@ -3779,7 +3693,25 @@ function buildContextOverallSentence(context, details) {
         health: ['健康','病','不舒服','头痛','感冒','发烧','咳嗽','胃','睡眠','恢复','调理','身体','复查','体检','牙','喉咙','皮肤','焦虑','失眠','旧疾','摔倒','跌倒'],
         home: ['家宅','房子','搬家','租房','买房','装修','邻居','漏水','风水','居住','家里'],
         legal: ['官司','纠纷','投诉','维权','法律','律师','文件','签字','赔偿','仲裁','条款','证据'],
-        choice: ['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线']
+        choice: ['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线'],
+        lottery:['彩票','抽奖','中奖','刮刮乐','奖券','号码','小奖','大奖'],
+        device:['手机','电脑','家电','网络','账号','软件','故障','维修','数据','路由器','电池','充电','系统','App'],
+        procedure:['签证','证件','审批','审核','报销','申请','材料','盖章','表格','文件提交','手续'],
+        shopping:['买不买','值得买','网购','二手','质量','售后','退货','降价','保修','订单'],
+        pet:['宠物','猫','狗','走失','跑丢','宠物医院','兽医','回来'],
+        social:['朋友','同学','同事关系','亲戚','邻里','社交','聚会','误会','解释','和好'],
+        family:['父母','家人','长辈','孩子','子女','亲子','家庭','老婆','老公'],
+        emotion:['焦虑','压力','心情','情绪','内耗','想太多','睡不好','失眠','烦','难受','不安'],
+        learning:['学习','课程','老师','自学','技能','语言','培训','进步','练习'],
+        creation:['写作','文章','视频','发布','作品','灵感','流量','反馈','评论','投稿','审核','内容'],
+        competition:['比赛','竞赛','游戏','胜负','赢','输','排名','竞技','对手','晋级','抽卡'],
+        dream:['梦','做梦','梦见','预感','直觉','灵感','征兆','心慌'],
+        timing:['什么时候','多久','几天','何时','哪天','几点','多长时间','快不快'],
+        active_wait:['要不要主动','该不该主动','要不要联系','要不要催','主动','等待','等不等'],
+        yesno:['会不会','能不能','可不可以','是否','能否','成不成','行不行','有没有希望'],
+        risk:['风险','踩坑','隐患','靠谱不靠谱','有没有问题','危险','风控'],
+        location:['在哪里','在哪','去哪里','哪个方向','位置','方位','找哪里'],
+        attitude:['怎么看我','态度','真心','怎么想','对我','靠谱不靠谱']
       };
 
       // 排除/降权：防止短词造成误判。
@@ -3788,7 +3720,10 @@ function buildContextOverallSentence(context, details) {
         market: ['下雨','降雨','天气','阵雨','小雨','大雨','暴雨','下雪','跌倒','摔倒'],
         message: ['消息面','市场消息','新闻行情'],
         love: ['喜欢这个工作','喜欢这个项目'],
-        money: ['天气','下雨','感情']
+        money: ['天气','下雨','感情'],
+        lottery:['投资','股票','基金','房价','油价'],
+        competition:['彩票','抽奖','中奖'],
+        device:['前任','感情','复合']
       };
 
       function scoreContext(key, hits) {
@@ -3833,6 +3768,11 @@ function buildContextOverallSentence(context, details) {
           // “会不会/能不能/是否”太通用，不单独触发选择类；必须有明确取舍词。
           if (!has(['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线'])) score -= 25;
         }
+
+        if (key === 'market' && has(['涨','跌']) && !has(['油价','价格','股价','股票','基金','黄金','金价','行情','走势','市场','汇率'])) score -= 25;
+        if (key === 'lottery' && has(['号码'])) score += 10;
+        if (key === 'yesno' && !has(['会不会','能不能','可不可以','是否','能否','成不成','行不行','有没有希望'])) score -= 20;
+        if (key === 'location' && !has(['在哪里','在哪','去哪里','哪个方向','位置','方位','找哪里'])) score -= 15;
         return score;
       }
 
@@ -3843,7 +3783,7 @@ function buildContextOverallSentence(context, details) {
         if (!bestHits.length) bestHits = ['手动指定'];
       } else {
         // 优先级从“强专门领域”到“较通用领域”，降低泛化误判。
-        const priority = ['market','weather','lost','job','exam','love','money','career','cooperation','legal','message','travel','health','home','choice'];
+        const priority = ['lottery','market','weather','lost','device','procedure','shopping','legal','job','exam','love','attitude','social','family','emotion','health','pet','money','career','cooperation','message','travel','home','learning','creation','competition','dream','timing','active_wait','yesno','risk','location','choice'];
         priority.forEach(key => {
           const hits = getHitsFor(key);
           const score = scoreContext(key, hits);
@@ -4124,6 +4064,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.88 源码去版本化与规则主线整合版', items:[
+          '把快速导读、术语解释相关 DOM id/class 从旧版本号命名改为源码主线命名，减少旧版本残留误判。',
+          '清理剩余重复函数定义：模板排序/点击、场景指标、补充信息、单宫断事等只保留一份主定义。',
+          '把扩展场景识别与专项提醒并入 analyzeQuestionContext 和 getContextSpecialNotes 主函数，不再使用中间包装覆盖。',
+          '新增导读/术语卡片的主样式，保持白天、夜间阅读模式下都可读。',
+          '同步修正 manifest 的 start_url/version 与 service-worker 缓存名，避免旧缓存残留造成版本错觉。'
+        ] },
         { v:'v10.5.87 源码清理与导读术语恢复版', items:[
           '继续保持 1 个主样式与 1 个主脚本，不再追加独立运行脚本。',
           '把阅读模式、背景颜色、阅读字号、UI 显示开关、默认电脑模式、快捷按钮自定义写回源码主模块。',
@@ -4741,9 +4688,9 @@ function buildContextOverallSentence(context, details) {
     setTimeout(updatePageProgress, 50);
 
 
-    /* v8.7 规则库扩容版：新增子场景与横向断法 */
-    function installV87ExpandedRules(){
-      const V87_RULES = {
+    /* 源码模块：扩展场景规则与横向断法 */
+    function initExtendedContextRules(){
+      const EXTENDED_CONTEXT_RULES = {
         social: {
           title:'人际关系 / 社交 / 朋友',
           keys:['朋友','同学','同事关系','亲戚','邻里','社交','聚会','误会','解释','和好','人情','关系','对方态度','闹矛盾'],
@@ -5031,7 +4978,7 @@ function buildContextOverallSentence(context, details) {
         }
       };
 
-      Object.assign(CONTEXT_INTENTS, V87_RULES);
+      Object.assign(CONTEXT_INTENTS, EXTENDED_CONTEXT_RULES);
 
       const select = document.getElementById('contextTypeSelect');
       if (select) {
@@ -5045,90 +4992,6 @@ function buildContextOverallSentence(context, details) {
         });
       }
 
-      const baseSpecialNotes = getContextSpecialNotes;
-      getContextSpecialNotes = function(context, details){
-        const notes = baseSpecialNotes ? baseSpecialNotes(context, details) : [];
-        if (!context) return notes;
-        const q = context.question || '';
-        if (context.key === 'lottery') {
-          notes.push('彩票/抽奖提示：只作娱乐参考，不给号码、不承诺中奖、不建议加注追投。');
-          notes.push('判断重点：小吉偏小奖小喜，速喜偏短暂好运，空亡偏期望落空，赤口要防冲动和懊恼。');
-        }
-        if (context.key === 'shopping') notes.push('购物提示：重点看到手是否符合预期，赤口防售后争议，空亡防买到不符。');
-        if (context.key === 'device') notes.push('设备提示：赤口多看接口、线路、报错；留连多为旧故障反复；空亡多为数据/账号/信号不实。');
-        if (context.key === 'procedure') notes.push('手续提示：留连多排队拖延，赤口多材料口径或窗口沟通问题，空亡多材料缺失或被退。');
-        if (context.key === 'emotion') notes.push('情绪提示：若持续严重不适，请寻求专业帮助；卦象只作自我观察。');
-        if (context.key === 'timing') notes.push('应期提示：这里给的是快慢倾向，不是精确日期。速喜偏快，留连偏拖，空亡偏不定。');
-        if (context.key === 'yesno') notes.push('是非提示：不要只看“会/不会”，要看末象是否落实，中象是否有卡点。');
-        if (context.key === 'active_wait') notes.push('主动/等待提示：速喜可动，小吉可试探，大安先稳，赤口要柔，空亡先核实。');
-        if (context.key === 'risk') notes.push('风险提示：赤口看争议，留连看旧问题，空亡看信息真假和承诺落空。');
-        if (context.key === 'location') notes.push('地点提示：方位只作辅助，要结合现实最后出现地点、路线和收纳习惯。');
-        return [...new Set(notes)].slice(0, 7);
-      };
-
-      const baseAnalyze = analyzeQuestionContext;
-      analyzeQuestionContext = function(question, sceneKey, forceAuto=false){
-        const q = (question || '').trim();
-        if (!q) return null;
-        const selected = forceAuto ? 'auto' : getSelectedContextType();
-        const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
-        const explicitSceneKey = sceneMap[sceneKey] || 'message';
-        if (selected && selected !== 'auto' && CONTEXT_INTENTS[selected]) {
-          const rule = CONTEXT_INTENTS[selected];
-          const hits = rule.keys.filter(k => q.indexOf(k) !== -1);
-          return { key:selected, title:rule.title, question:q, hits:hits.length ? hits : ['手动指定'], focus:rule.focus, advice:rule.advice, rule, manual:true };
-        }
-        const priority = ['lottery','market','weather','lost','device','procedure','shopping','legal','job','exam','love','attitude','social','family','emotion','health','pet','money','career','cooperation','message','travel','home','learning','creation','competition','dream','timing','active_wait','risk','location','yesno','choice'];
-        const strong = {
-          lottery:['彩票','抽奖','中奖','奖券','刮刮乐','大奖','小奖','抽中','中不中奖','能中奖'],
-          market:['油价','价格','物价','房价','金价','银价','黄金','白银','汇率','美元','人民币','股票','股价','基金','指数','行情','走势','涨价','降价','上涨','下跌','回落','反弹','回调'],
-          device:['手机坏','电脑坏','故障','维修','修好','数据丢失','账号找回','报错','充电','屏幕','网络','软件'],
-          procedure:['签证','证件','审批','审核','报销','补材料','盖章','窗口','批下来'],
-          shopping:['买不买','值得买','网购','下单','二手','售后','退货','会不会后悔'],
-          pet:['宠物','猫','狗','猫咪','狗狗','走失','跑丢','宠物医院'],
-          emotion:['焦虑','压力','情绪','内耗','睡不好','失眠','担心','心情'],
-          legal:['官司','纠纷','投诉','维权','律师','赔偿','仲裁','证据'],
-          timing:['什么时候','多久','几天','何时','多长时间'],
-          active_wait:['要不要主动','该不该主动','要不要联系','要不要催','要不要表白'],
-          risk:['风险','踩坑','隐患','靠谱不靠谱','有没有问题','危险','风控'],
-          location:['在哪里','在哪','去哪里','哪个方向','位置','方位','找哪里'],
-          attitude:['怎么看我','态度','真心','怎么想','对我','靠谱不靠谱']
-        };
-        const negative = {
-          lottery:['投资','股票','基金','房价','油价'],
-          weather:['油价','价格','物价','房价','金价','股价','股票','基金','行情','走势','上涨','下跌','涨价','降价','冷战','风险'],
-          market:['下雨','降雨','天气','阵雨','小雨','大雨','暴雨','下雪','跌倒','摔倒'],
-          competition:['彩票','抽奖','中奖'],
-          device:['前任','感情','复合']
-        };
-        function hitsFor(key){ const r=CONTEXT_INTENTS[key]; return r ? r.keys.filter(k=>q.indexOf(k)!==-1) : []; }
-        function has(words){ return (words||[]).some(w=>q.indexOf(w)!==-1); }
-        function score(key){
-          const rule = CONTEXT_INTENTS[key]; if(!rule) return -999;
-          const hits = hitsFor(key);
-          let s = 0;
-          hits.forEach(h => { s += h.length <= 1 ? 1 : h.length === 2 ? 7 : h.length === 3 ? 12 : 16; });
-          if (key === explicitSceneKey) s += 8;
-          if (has(strong[key] || [])) s += 55;
-          if (negative[key] && has(negative[key])) s -= 65;
-          if (key === 'weather' && !has(['下雨','降雨','天气','阵雨','小雨','大雨','暴雨','雷雨','下雪','阴天','晴天','刮风','台风','气温','温度','降温','升温','出太阳'])) s -= 45;
-          if (key === 'market' && has(['涨','跌']) && !has(['油价','价格','股价','股票','基金','黄金','金价','行情','走势','市场','汇率'])) s -= 25;
-          if (key === 'lottery' && has(['号码'])) s += 10;
-          if (key === 'yesno' && !has(['会不会','能不能','可不可以','是否','能否','成不成','行不行','有没有希望'])) s -= 20;
-          if (key === 'choice' && !has(['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线'])) s -= 25;
-          return s;
-        }
-        let bestKey = null, bestScore = -999;
-        priority.forEach(k => { const s = score(k); if(s > bestScore){ bestScore = s; bestKey = k; } });
-        if (!bestKey || bestScore <= 8) {
-          // 如果扩容规则没有明显命中，回退到原有识别逻辑。
-          const base = baseAnalyze ? baseAnalyze(question, sceneKey, forceAuto) : null;
-          return base || (CONTEXT_INTENTS[explicitSceneKey] ? { key:explicitSceneKey, title:CONTEXT_INTENTS[explicitSceneKey].title, question:q, hits:['按所选场景推断'], focus:CONTEXT_INTENTS[explicitSceneKey].focus, advice:CONTEXT_INTENTS[explicitSceneKey].advice, rule:CONTEXT_INTENTS[explicitSceneKey] } : null);
-        }
-        const rule = CONTEXT_INTENTS[bestKey];
-        const hits = hitsFor(bestKey);
-        return { key:bestKey, title:rule.title, question:q, hits:hits.length ? hits : ['按语义推断'], focus:rule.focus, advice:rule.advice, rule, manual:false };
-      };
     }
 
     /* 源码模块：场景规则查询 */
@@ -5512,7 +5375,7 @@ function buildContextOverallSentence(context, details) {
       result: [
         { id:'homeTopSection', label:'顶部' },
         { id:'resultCard', label:'结果' },
-        { id:'v10510QuickGuideBlock', label:'导读' },
+        { id:'xlrQuickGuideBlock', label:'导读' },
         { id:'answerSummaryBlock', label:'答案' },
         { id:'sceneFocusBlock', label:'重心' },
         { id:'abChoiceResultBlock', label:'A/B' },
@@ -5526,7 +5389,7 @@ function buildContextOverallSentence(context, details) {
         { id:'symbolBlock', label:'象意' },
         { id:'radarBlock', label:'雷达' },
         { id:'adviceBlock', label:'建议' },
-        { id:'v10510GlossaryBlock', label:'术语' },
+        { id:'xlrGlossaryBlock', label:'术语' },
         { id:'homeAboutRulesBlockWrap', label:'说明' }
       ]
     };
@@ -5550,13 +5413,13 @@ function buildContextOverallSentence(context, details) {
     }
     function stableJumpToSection(target, id){
       if(!target) return;
-      try{ document.body.classList.add('v10536-nav-jumping'); }catch(e){}
+      try{ document.body.classList.add('xlr-nav-jumping'); }catch(e){}
       const y = Math.max(0, Math.round(target.getBoundingClientRect().top + window.scrollY - 12));
       try{ window.scrollTo({ top:y, behavior:'auto' }); }catch(e){ window.scrollTo(0,y); }
       try{ history.replaceState(history.state || null, '', location.pathname + location.search); }catch(e){}
       setTimeout(()=>{
         try{ if(typeof updateSectionJumpNav === 'function') updateSectionJumpNav(); }catch(e){}
-        try{ document.body.classList.remove('v10536-nav-jumping'); }catch(e){}
+        try{ document.body.classList.remove('xlr-nav-jumping'); }catch(e){}
       }, 260);
     }
     function renderSectionJumpNav(){
@@ -5596,12 +5459,12 @@ function buildContextOverallSentence(context, details) {
     window.addEventListener('load', refreshSectionJumpNavSoon);
 
 
-    installV87ExpandedRules();
+    initExtendedContextRules();
 
 
 
-    /* 源码内建 Debug 模块：主脚本内置，只读诊断，不改占卜逻辑 */
-    const XLR_SOURCE_VERSION = 'v10.5.87 源码清理与导读术语恢复版';
+    /* 源码模块：Debug 诊断，只读状态，不改占卜逻辑 */
+    const XLR_SOURCE_VERSION = 'v10.5.88 源码去版本化与规则主线整合版';
     const XLR_DEBUG_LOG = [];
     function xlrDebugPush(type, detail){
       try{
@@ -5648,10 +5511,16 @@ function buildContextOverallSentence(context, details) {
       return dup;
     }
     function xlrDebugVersionStrings(){
-      const html=document.documentElement.innerHTML;
-      const list=(html.match(/v\d+\.\d+(?:\.\d+)?[^<"\n]{0,34}/g)||[]).filter(Boolean);
-      const map={}; list.forEach(v=>{ map[v]=(map[v]||0)+1; });
-      return Object.keys(map).sort((a,b)=>map[b]-map[a]).slice(0,30).map(version=>({version,count:map[version]}));
+      const meta=document.querySelector('meta[name="description"]');
+      const homeTitle=Array.from(document.querySelectorAll('h2')).map(x=>xlrDebugText(x)).filter(x=>x.includes('个人占卜台')).join(' | ');
+      const critical=[
+        ['XLR_SOURCE_VERSION', XLR_SOURCE_VERSION],
+        ['document.title', document.title],
+        ['meta.description', meta ? meta.content : ''],
+        ['home.title', homeTitle]
+      ];
+      const reg=/v\d+\.\d+(?:\.\d+)?[^<"\n]{0,34}/g;
+      return critical.map(([area,text])=>({ area, text, versions:(String(text).match(reg)||[]) }));
     }
     function xlrDebugCollect(reason){
       const meta=document.querySelector('meta[name="description"]');
@@ -5661,7 +5530,7 @@ function buildContextOverallSentence(context, details) {
       const currentResultSafe = (typeof currentResult !== 'undefined' && currentResult) ? {
         sceneKey:currentResult.sceneKey, sceneName:currentResult.sceneName, method:currentResult.method, numbers:currentResult.numbers, palaces:currentResult.palaces
       } : null;
-      const blocks=['#resultCard','#v10510QuickGuideBlock','#answerSummaryBlock','#sceneFocusBlock','#paipanBlock','#destinyBoardBlock','#overallBlock','#triReadingBlock','#singlePalaceBlock','#doublePalaceBlock','#symbolBlock','#radarBlock','#adviceBlock','#v10510GlossaryBlock','#homeAboutRulesBlockWrap','#homeVersionUpdatesBlockWrap'];
+      const blocks=['#resultCard','#xlrQuickGuideBlock','#answerSummaryBlock','#sceneFocusBlock','#paipanBlock','#destinyBoardBlock','#overallBlock','#triReadingBlock','#singlePalaceBlock','#doublePalaceBlock','#symbolBlock','#radarBlock','#adviceBlock','#xlrGlossaryBlock','#homeAboutRulesBlockWrap','#homeVersionUpdatesBlockWrap'];
       return {
         version:XLR_SOURCE_VERSION,
         reason:reason||'manual',
@@ -5697,7 +5566,7 @@ function buildContextOverallSentence(context, details) {
       fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
       const dlg=document.createElement('dialog');
       dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
-      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.87：只读取页面状态，不改占卜逻辑；用于检查版本、导航、导读、术语、阅读、快捷按钮、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
+      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.88：只读取页面状态，不改占卜逻辑；用于检查版本、导航、导读、术语、阅读、快捷按钮、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
       document.body.appendChild(fab); document.body.appendChild(dlg);
       fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','open'); });
       document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
