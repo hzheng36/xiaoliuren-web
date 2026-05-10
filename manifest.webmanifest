@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.45",
-  "short_name": "小六壬 v10.5.45",
-  "description": "v10.5.45 导读回归与术语学习增强版",
-  "start_url": "./index.html",
+  "name": "小六壬占卜 · v10.5.46",
+  "short_name": "小六壬 v10.5.46",
+  "description": "v10.5.46 状态源统一与导航稳定修正版",
+  "start_url": "./index.html?v=10.5.46",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.45"
+  "version": "10.5.46"
 }

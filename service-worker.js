@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.45-guide-glossary-learning';
+const CACHE_NAME = 'xiaoliuren-v10.5.46-state-nav-glossary-stable';
 const APP_SHELL = [
   './',
   './index.html',
@@ -32,7 +32,8 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const accept = req.headers.get('accept') || '';
-  const isHTML = req.mode === 'navigate' || accept.includes('text/html') || new URL(req.url).pathname.endsWith('/index.html');
+  const url = new URL(req.url);
+  const isHTML = req.mode === 'navigate' || accept.includes('text/html') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/');
   if (isHTML) {
     event.respondWith(fetch(req, { cache: 'no-store' }).then((res) => {
       const copy = res.clone();
