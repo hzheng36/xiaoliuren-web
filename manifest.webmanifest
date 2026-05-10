@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.65",
-  "short_name": "小六壬 v10.5.65",
-  "description": "小六壬个人占卜工具 v10.5.64 设置字号与快捷按钮持久化修正版",
-  "start_url": "./?v=10.5.65",
+  "name": "小六壬占卜 v10.5.66 性能回退与阅读字号轻量修正版",
+  "short_name": "小六壬",
+  "description": "小六壬个人网页版 v10.5.66 性能回退与阅读字号轻量修正版：回退 v10.5.65 中导致 iPhone Safari/ChatGPT App 卡死的重型字号扫描与 MutationObserver，改用轻量事件式阅读字号保存；保留 v10.5.64 的快捷按钮与设置修复。",
+  "start_url": "./?v=10.5.66",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.65"
+  "version": "10.5.66"
 }
