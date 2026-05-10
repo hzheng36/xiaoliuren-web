@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.56 命运导航顺序与点击防抖修正版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。" />
+  <title>小六壬占卜 · v10.5.57 设置折叠与导航位置版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.56 命运导航顺序与点击防抖修正版</h2>
+          <h2>个人占卜台 · v10.5.57 设置折叠与导航位置版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -1361,6 +1361,10 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
           <select id="settingDefaultView"><option value="detail">详细版</option><option value="simple">简洁版</option></select>
         </div>
         <label class="settings-row"><span>详细模块默认折叠<small>三象、单宫、双宫、象意补充等模块可先折叠，需要时再展开。</small></span><input id="settingCollapseDetails" type="checkbox"></label>
+        <div class="settings-row" data-v10557-nav-position-row="1">
+          <span>导航位置<small>底部：一级导航在下面、二级导航在上面；顶部：一级导航在上面、二级导航在下面。</small></span>
+          <select id="settingNavPosition"><option value="bottom">底部</option><option value="top">顶部</option></select>
+        </div>
         <label class="settings-row"><span>显示雷达分析图<small>关闭后结果页不显示雷达图模块。</small></span><input id="settingShowRadar" type="checkbox"></label>
         <label class="settings-row"><span>显示版本说明 / 起课规则<small>开启后在页面底部显示版本说明和起课规则；默认关闭。</small></span><input id="settingShowAbout" type="checkbox"></label>
         <label class="settings-row"><span>显示版本内容更新<small>开启后在页面底部显示历代主要更新记录；默认关闭。</small></span><input id="settingShowVersionUpdates" type="checkbox"></label>
@@ -4313,6 +4317,7 @@ ${nextStep}`;
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.57 设置折叠与导航位置版', items:['修复设置中“详细模块默认折叠”勾选后，非命运结果页部分详细模块仍默认展开的问题。','新增设置项“导航位置”，可选择底部或顶部显示章节导航。','底部模式保持现在的层级：一级导航在下，命运二级导航在上；顶部模式反向显示：一级导航在上，二级导航在下。','顶部导航模式下，点击跳转会自动预留导航高度，避免目标标题被导航遮住。','保持 v10.5.56 已修好的命运导航顺序、综合入口、固定指针式导航和点击防抖逻辑。'] },
         { v:'v10.5.56 命运导航顺序与点击防抖修正版', items:['从 v10.5.46 稳定内容基线回溯，不沿用 v10.5.47-v10.5.49 中导致内容缺失和导航互抢的改动。','主章节导航改为固定选中槽/指针式导航：中间选中槽固定不动，导航 chip 横向滑过槽位时才显示槽位高亮。','移除旧自动居中逻辑，页面上下滚动只更新当前章节状态，不再强制导航条横向居中，也不再与用户手动横滑抢控制。','命运结果页主导航固定包含“导读”，顺序为：结果、导读、重心、命盘、口诀、三象、雷达、术语、建议。','命运二级导航只保留命盘内部子模块：命盘、健康、婚姻、事业；导读不进入二级导航。','点击导航名称只执行一次无动画定位，不写入 hash，不二次纠偏，减少导读、重心、命盘之间来回跳和抖三抖。','所有结果模块 header 恢复左对齐，标题在左，折叠按钮在右。'] },
         { v:'v10.5.46 状态源统一与导航稳定修正版', items:['统一结果页状态源：currentResult、body class、结果卡片显示状态和标题文字共同判断，避免命运页被误判为普通页。','修复旧补丁延时 setVersion / lockVersion 把主页标题和 Debug 版本抢回 v10.5.44 的问题，所有当前版本入口统一为 v10.5.46。','命运结果页导航固定补回“导读”，并按“结果、导读、重心、命盘、口诀、三象、雷达、术语、建议”顺序稳定显示。','术语解释统一为一个学习型模块：命运显示命运术语，普通问事显示普通术语，右侧快捷展开/折叠和模块标题按钮都可真实控制内容。','导航点击改为单次稳定跳转，跳转期间加锁，减少点击命盘后再跳到术语/建议时的连续抖动。','Debug 增加 v10.5.46 审计：状态源、导航目标、折叠内容区、旧模块残留和最近交互记录。'] },
         { v:'v10.5.45 导读回归与术语学习增强版', items:['修复非命运“术语解释”点击折叠后内容仍显示的问题，统一折叠状态与内容隐藏规则。','命运结果页恢复“快速导读”，并保留导航里的“导读”入口。','普通术语与命运术语改为学习型内容，合并旧第二个术语解释重点，并扩展三象串联、六宫掌诀、六亲、六神、地支、五星、生克和现实校验说明。','命运与非命运只显示各自一个术语解释模块，避免两个术语互相抢显示或快捷按钮控制错对象。','Debug 增加 v10.5.45 审计信息：结果页判断、命运判断、术语块数量、导航目标和折叠内容区状态。'] },
@@ -5843,7 +5848,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6658,7 +6663,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7245,7 +7250,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8575,7 +8580,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8751,7 +8756,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -9048,7 +9053,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9324,7 +9329,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9554,7 +9559,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9602,8 +9607,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9766,8 +9771,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9889,8 +9894,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -10041,8 +10046,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10264,8 +10269,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10343,8 +10348,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10413,8 +10418,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10552,8 +10557,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10731,8 +10736,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10803,8 +10808,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10912,8 +10917,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11366,8 +11371,8 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const HERO="本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
@@ -11580,7 +11585,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11836,7 +11841,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12004,7 +12009,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12223,7 +12228,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12562,7 +12567,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12879,7 +12884,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 20;
   const logs = [];
@@ -13055,7 +13060,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13279,8 +13284,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13372,8 +13377,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13595,8 +13600,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10519-destiny-formula-debug-save-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.56 命运导航顺序与点击防抖修正版";
-  const META="小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。";
+  const VERSION="v10.5.57 设置折叠与导航位置版";
+  const META="小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。";
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
@@ -13767,8 +13772,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10520-nav-formula-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const BASE={
     '大安':{formula:'大安事事昌，主安稳、守成、慢成。',plain:'命运中多看根基稳定、节奏偏慢，适合长期经营。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠，容易被过程拖住。'},
@@ -14005,8 +14010,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10521-mobile-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function setStableVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14100,8 +14105,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10523-career-beta-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
@@ -14315,8 +14320,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10524-knowledge-table-scroll-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const SELECTORS=['.v1040-marriage-table','.v1030-health-table','.v1031-health-table','.v10523-career-table','.v1025-table-wrap'];
   function setVersion(){
@@ -14377,8 +14382,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10533-formula-overall-order-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el || (el.classList&&el.classList.contains('hidden')) || (el.closest&&el.closest('.hidden'))) return false;
@@ -14484,8 +14489,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10534-theme-performance-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14571,8 +14576,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10535-theme-return-color-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   function isNight(){return !!(document.body&&document.body.classList.contains('reading-theme-night'));}
   function syncThemeRoot(){
@@ -14699,8 +14704,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10541-source-integrated-finalizer">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const HERO='本版回溯到 v10.5.46 稳定内容基线，重构底部章节导航为固定选中槽/指针式导航，页面滚动、导航横滑和点击跳转互不抢控制。';
   const ROW='<details open><summary>'+VERSION+'</summary><ul><li>以 v10.5.36 为稳定基线，未继续沿用 v10.5.37-v10.5.40 的命运术语补丁。</li><li>命运“术语解释”已放入结果页主 DOM，不再由后置脚本临时创建。</li><li>主导航正式包含“术语”，并位于“雷达”之后；右侧“一键展开/折叠”可控制该模块。</li><li>导航跳转改为单次稳定定位，减少 Safari 上命盘之后内容跳转抖动。</li><li>同步更新 README、manifest、service-worker 与页面版本记录。</li></ul></details>';
   function $(id){return document.getElementById(id);}
@@ -14758,8 +14763,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10542-home-result-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const RESULT_CLASSES=['result-page','result-destiny','v1058-normal-result','v1059-normal-result','v10510-normal-result','v10511-normal-result','v10513-normal-result','v1058-destiny-result','v10510-destiny-result','v10511-destiny-result','v10513-destiny-result'];
   const RESULT_HASH_IDS={resultCard:1,v10510QuickGuideBlock:1,answerSummaryBlock:1,sceneFocusBlock:1,abChoiceResultBlock:1,paipanBlock:1,destinyBoardBlock:1,overallBlock:1,contextAnalysisBlock:1,triReadingBlock:1,singlePalaceBlock:1,doublePalaceBlock:1,symbolBlock:1,radarBlock:1,v10536DestinyGlossaryBlock:1,v10518FormulaBlock:1,adviceBlock:1,v10510GlossaryBlock:1,v1033Glossary:1};
   function $(id){return document.getElementById(id);}
@@ -14979,8 +14984,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10546-state-nav-glossary-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：统一主页/结果页/命运状态判断，修复版本新旧跳动、命运导读导航、术语解释折叠与导航点击抖动，并增强 Debug 审计。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const EVENTS=[];
   window.__XLR_V10546_EVENTS=EVENTS;
   function $(id){return document.getElementById(id);}
@@ -15222,7 +15227,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     enhanceDebug();
     const old=$('v10545DebugSaveBtn'); if(old) old.remove();
     const actions=document.querySelector('#v10514DebugDialog .v10514-debug-actions');
-    if(actions&&!$('v10546DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10546DebugSaveBtn';b.textContent='保存详细日志 v10.5.56';b.addEventListener('click',function(){const api=window.XLR_DEBUG_V10514||{};const data=api.snapshot?api.snapshot('save-log'):{version:VERSION};const text=JSON.stringify({version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:data,logs:(api.logs||[]).slice(),v10546Events:EVENTS.slice(),v10556Note:"v10.5.56 destiny nav order click jitter stable"},null,2);const name='xiaoliuren-debug-v10.5.56-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){alert('保存失败，请复制 Debug 日志。');}});actions.insertBefore(b,actions.firstChild);}
+    if(actions&&!$('v10546DebugSaveBtn')){const b=document.createElement('button');b.type='button';b.id='v10546DebugSaveBtn';b.textContent='保存详细日志 v10.5.57';b.addEventListener('click',function(){const api=window.XLR_DEBUG_V10514||{};const data=api.snapshot?api.snapshot('save-log'):{version:VERSION};const text=JSON.stringify({version:VERSION,userAgent:navigator.userAgent,savedAt:new Date().toISOString(),latest:data,logs:(api.logs||[]).slice(),v10546Events:EVENTS.slice(),v10556Note:"v10.5.57 settings collapse nav position"},null,2);const name='xiaoliuren-debug-v10.5.57-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';try{const blob=new Blob([text],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1200);}catch(e){alert('保存失败，请复制 Debug 日志。');}});actions.insertBefore(b,actions.firstChild);}
   }
   function patchVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -15408,8 +15413,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10556-slot-nav-display-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.56 命运导航顺序与点击防抖修正版';
-  const META='小六壬个人网页版 v10.5.56 命运导航顺序与点击防抖修正版：继续以 v10.5.46 内容基线为准，让页面上下滚动同步带动底部导航横向移动到固定选中槽，同时避免导航反向抢页面滚动。';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
   const EVENTS=[]; window.__XLR_V10556_EVENTS=EVENTS;
   const JUMP_LOCK={until:0,main:'',sub:''};
   const oldUpdate=window.updateSectionJumpNav, oldRefresh=window.refreshSectionJumpNavSoon;
@@ -15516,12 +15521,25 @@ html[data-theme="dark"] .v10519-destiny-note {
     buttons.forEach(btn=>{const r=btn.getBoundingClientRect();if(r.right<nr.left+2||r.left>nr.right-2)return;const d=Math.abs((r.left+r.right)/2-center);if(d<dist){dist=d;best=btn;}});
     buttons.forEach(btn=>btn.classList.toggle('slot-active',btn===best));
   }
+  function navTopOffset(){
+    try{
+      const raw=JSON.parse(localStorage.getItem('xlr_user_settings_v9_1')||'{}');
+      if(raw && raw.navPosition==='top'){
+        const main=$('sectionJumpNav'), sub=$('v1054DestinySubNav');
+        let offset=18;
+        if(main && getComputedStyle(main).display!=='none') offset += (main.offsetHeight||44) + 10;
+        if(sub && sub.classList.contains('show') && getComputedStyle(sub).display!=='none') offset += (sub.offsetHeight||44) + 8;
+        return Math.max(72, offset);
+      }
+    }catch(e){}
+    return 16;
+  }
   function jumpTo(id,kind){
     enforceFormulaPlacement();
     const el=$(id);if(!el)return;kind=kind||'main';
     const lockMs=980;JUMP_LOCK.until=Date.now()+lockMs;if(kind==='sub')JUMP_LOCK.sub=id;else JUMP_LOCK.main=id;
     try{document.body.classList.add('v10556-nav-jumping');}catch(e){}
-    const y=Math.max(0,Math.round(el.getBoundingClientRect().top+(scrollY||0)-16));
+    const y=Math.max(0,Math.round(el.getBoundingClientRect().top+(scrollY||0)-navTopOffset()));
     try{history.replaceState(history.state||null,'',location.pathname+location.search);}catch(e){}
     try{scrollTo({top:y,behavior:'auto'});}catch(e){scrollTo(0,y);}
     /* 点击后只做导航状态校准，不做第二次页面纠偏；避免 iPhone Safari 上出现上下抖动。 */
@@ -15543,6 +15561,132 @@ html[data-theme="dark"] .v10519-destiny-note {
   window.addEventListener('load',()=>{boot();setTimeout(boot,900);},{once:true});
   window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',()=>setTimeout(updateAll,80));
   try{new MutationObserver(()=>{clearTimeout(window.__v10556Mo);window.__v10556Mo=setTimeout(()=>{if(Date.now()<JUMP_LOCK.until){enhanceDebug();return;}updateAll();enhanceDebug();},160);}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});}catch(e){}
+})();
+</script>
+
+
+
+<!-- v10.5.57 source-integrated settings patch: 详细折叠与导航位置 -->
+<style id="v10557-settings-nav-position-style">
+  body.xlr-nav-position-bottom #sectionJumpNav.section-jump-nav{
+    top:auto!important;
+    bottom:var(--xlr-nav-bottom)!important;
+  }
+  body.xlr-nav-position-bottom #v1054DestinySubNav{
+    top:auto!important;
+    bottom:var(--xlr-subnav-bottom)!important;
+  }
+  body.xlr-nav-position-top #sectionJumpNav.section-jump-nav{
+    top:max(12px, env(safe-area-inset-top))!important;
+    bottom:auto!important;
+  }
+  body.xlr-nav-position-top #v1054DestinySubNav{
+    top:calc(max(12px, env(safe-area-inset-top)) + 54px)!important;
+    bottom:auto!important;
+  }
+  body.xlr-nav-position-top #sectionJumpNav.section-jump-nav,
+  body.xlr-nav-position-top #v1054DestinySubNav{
+    box-shadow:0 12px 28px rgba(66,49,109,.12)!important;
+  }
+  @media(min-width:1241px){
+    body.xlr-nav-position-top #sectionJumpNav.section-jump-nav{top:22px!important;bottom:auto!important;}
+    body.xlr-nav-position-top #v1054DestinySubNav{top:82px!important;bottom:auto!important;}
+  }
+</style>
+<script id="v10557-settings-nav-position-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.57 设置折叠与导航位置版';
+  const META='小六壬个人网页版 v10.5.57 设置折叠与导航位置版：修复详细模块默认折叠在非命运结果页不生效的问题，并在设置中新增导航位置，可选择底部或顶部显示。';
+  const SETTINGS_KEY='xlr_user_settings_v9_1';
+  const DETAIL_DEFAULT_COLLAPSE_IDS=['destinyBoardBlock','v10518FormulaBlock','triReadingBlock','singlePalaceBlock','doublePalaceBlock','symbolBlock','radarBlock','adviceBlock','v10510GlossaryBlock','v10536DestinyGlossaryBlock'];
+  function $(id){return document.getElementById(id);}
+  function read(){try{return Object.assign({navPosition:'bottom',collapseDetails:false},JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')||{});}catch(e){return {navPosition:'bottom',collapseDetails:false};}}
+  function write(patch){try{const cur=read();localStorage.setItem(SETTINGS_KEY,JSON.stringify(Object.assign({},cur,patch||{})));}catch(e){}}
+  function setVersion(){try{document.title='小六壬占卜 · '+VERSION;}catch(e){} try{const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content',META);}catch(e){} try{document.querySelectorAll('h2').forEach(function(el){if((el.textContent||'').indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}}
+  function ensureNavRow(){
+    if($('settingNavPosition')) return;
+    const anchor=$('settingCollapseDetails');
+    if(!anchor) return;
+    const row=document.createElement('div');
+    row.className='settings-row';
+    row.setAttribute('data-v10557-nav-position-row','1');
+    row.innerHTML='<span>导航位置<small>底部：一级导航在下面、二级导航在上面；顶部：一级导航在上面、二级导航在下面。</small></span><select id="settingNavPosition"><option value="bottom">底部</option><option value="top">顶部</option></select>';
+    const parent=anchor.closest('.settings-row');
+    if(parent&&parent.parentNode) parent.insertAdjacentElement('afterend',row);
+  }
+  function syncForm(){ensureNavRow();const el=$('settingNavPosition');if(el) el.value=(read().navPosition==='top'?'top':'bottom');}
+  function applyNavPosition(){
+    const pos=read().navPosition==='top'?'top':'bottom';
+    document.body.classList.toggle('xlr-nav-position-top',pos==='top');
+    document.body.classList.toggle('xlr-nav-position-bottom',pos!=='top');
+    syncForm();
+    try{ if(typeof refreshSectionJumpNavSoon==='function') refreshSectionJumpNavSoon(); else if(typeof renderSectionJumpNav==='function') renderSectionJumpNav(); }catch(e){}
+  }
+  function setCollapsed(block,collapsed){
+    if(!block) return;
+    block.classList.add('collapsible-block');
+    block.classList.toggle('is-collapsed',!!collapsed);
+    try{ if(typeof updateCollapseButton==='function') updateCollapseButton(block); }catch(e){
+      const btn=block.querySelector('.collapse-toggle'); if(btn){btn.textContent=collapsed?'展开':'折叠';btn.setAttribute('aria-expanded',collapsed?'false':'true');}
+    }
+  }
+  function collapseDefaultDetailModules(){
+    const s=read();
+    if(!s.collapseDetails) return;
+    const card=$('resultCard');
+    if(!card || card.classList.contains('hidden')) return;
+    DETAIL_DEFAULT_COLLAPSE_IDS.forEach(function(id){const block=$(id); if(block && card.contains(block)) setCollapsed(block,true);});
+  }
+  function scheduleDefaultCollapse(){[40,180,520,980,1550].forEach(function(ms){setTimeout(collapseDefaultDetailModules,ms);});}
+  function patchSettingsFunctions(){
+    if(typeof window.getUserSettings==='function' && !window.getUserSettings.__v10557){
+      const old=window.getUserSettings;
+      window.getUserSettings=function(){const base=old.apply(this,arguments)||{};const cur=read();return Object.assign({},base,{navPosition:cur.navPosition||'bottom',collapseDetails:!!cur.collapseDetails});};
+      window.getUserSettings.__v10557=true;
+    }
+    if(typeof window.saveUserSettings==='function' && !window.saveUserSettings.__v10557){
+      const old=window.saveUserSettings;
+      window.saveUserSettings=function(settings){const cur=read();const next=Object.assign({},settings||{});if(!next.navPosition)next.navPosition=cur.navPosition||'bottom';return old.call(this,next);};
+      window.saveUserSettings.__v10557=true;
+    }
+    if(typeof window.fillSettingsDialog==='function' && !window.fillSettingsDialog.__v10557){
+      const old=window.fillSettingsDialog;
+      window.fillSettingsDialog=function(){const r=old.apply(this,arguments);syncForm();return r;};
+      window.fillSettingsDialog.__v10557=true;
+    }
+    if(typeof window.applyUserSettingsToPage==='function' && !window.applyUserSettingsToPage.__v10557){
+      const old=window.applyUserSettingsToPage;
+      window.applyUserSettingsToPage=function(){const r=old.apply(this,arguments);applyNavPosition();scheduleDefaultCollapse();return r;};
+      window.applyUserSettingsToPage.__v10557=true;
+    }
+    if(typeof window.renderResult==='function' && !window.renderResult.__v10557){
+      const old=window.renderResult;
+      window.renderResult=function(){const r=old.apply(this,arguments);applyNavPosition();scheduleDefaultCollapse();return r;};
+      window.renderResult.__v10557=true;
+    }
+  }
+  function bind(){
+    if(window.__v10557Bound) return; window.__v10557Bound=true;
+    document.addEventListener('change',function(e){
+      if(e.target&&e.target.id==='settingNavPosition'){
+        write({navPosition:e.target.value==='top'?'top':'bottom'});
+        applyNavPosition();
+      }
+      if(e.target&&e.target.closest&&e.target.closest('#settingsDialog')&&e.target.matches&&e.target.matches('input,select,textarea')){
+        setTimeout(function(){const nav=$('settingNavPosition'); if(nav) write({navPosition:nav.value==='top'?'top':'bottom'}); applyNavPosition();},90);
+      }
+      if(e.target&&e.target.id==='settingCollapseDetails'){
+        setTimeout(function(){ if(read().collapseDetails) scheduleDefaultCollapse(); },120);
+      }
+    },true);
+    document.addEventListener('click',function(e){
+      if(e.target&&e.target.closest&&e.target.closest('[data-v9919-quick="settings"],#closeSettingsBtn,#v10514DebugFab')) setTimeout(function(){syncForm();applyNavPosition();},120);
+    },true);
+  }
+  function boot(){setVersion();patchSettingsFunctions();ensureNavRow();syncForm();applyNavPosition();scheduleDefaultCollapse();bind();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',function(){boot();setTimeout(boot,400);setTimeout(function(){setVersion();applyNavPosition();scheduleDefaultCollapse();},1200);},{once:true});
 })();
 </script>
 

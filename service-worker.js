@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.56-slot-nav-content-sync';
+const CACHE_NAME = 'xiaoliuren-v10.5.57-settings-nav-position';
 const APP_SHELL = [
   './',
   './index.html',
