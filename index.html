@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.36 导航术语与跳转稳定版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。" />
+  <title>小六壬占卜 · v10.5.38 非命运导航隔离与术语回归修复版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -1072,7 +1072,7 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.36 导航术语与跳转稳定版</h2>
+          <h2>个人占卜台 · v10.5.38 非命运导航隔离与术语回归修复版</h2>
           <p>本版继续修复右侧快捷按钮稳定性：白天/夜间按钮不再由后续补丁单独插入，而是和主页、重占、电脑、展开、折叠等快捷按钮一起生成，减少刷新时右侧按钮跳动。</p>
         </div>
         <div class="actions">
@@ -5804,7 +5804,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9914-layout-result-page-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
 
   function qs(id){ return document.getElementById(id); }
   function visible(el){ return !!el && !el.classList.contains('hidden') && el.offsetParent !== null; }
@@ -6616,7 +6616,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9919-custom-quick-buttons-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const STORE_KEY = 'xiaoliuren_quick_button_settings_v9919';
   const ALL_QUICK_ITEMS = [
     {id:'home', label:'主页', note:'返回输入主页', title:'返回主页'},
@@ -7203,7 +7203,7 @@ body.hide-progress-bar .page-progress { display:none !important; }
 <script id="v9927-result-page-separation-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   function $(id){ return document.getElementById(id); }
   function isResultVisible(){
     const card = $('resultCard');
@@ -8528,7 +8528,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1016-unsaved-settings-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const WATCH_KEYS=[
     'xlr_user_settings_v9_1',
     'xiaoliuren_ui_settings_v9916',
@@ -8704,7 +8704,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1020-case-log-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const LOG_FILTERS=[
     ['all','全部日志'],['pending','待观察'],['accurate','已应验'],['partial','部分应验'],['miss','未应验'],['void','已作废'],['important','重点案例']
   ];
@@ -9001,7 +9001,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1022-destiny-input-upgrade">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const SHICHEN=[
     {idx:1,name:'子时',range:'23:00-00:59',mid:'23:30'},
     {idx:2,name:'丑时',range:'01:00-02:59',mid:'01:30'},
@@ -9277,7 +9277,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1018-settings-save-adaptive-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -9507,7 +9507,7 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1021-palace-elements-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   function fixPalaceElements(){
     try{
       if(typeof PALACE_DATA!=='undefined'){
@@ -9555,8 +9555,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1025-destiny-gender-kinship-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const GENDER_KEY='xlr_destiny_gender_v1025';
   function $(id){return document.getElementById(id);} 
   function isDestiny(){try{return typeof currentScene!=='undefined' && currentScene==='destiny';}catch(e){return document.body.classList.contains('destiny-scene');}}
@@ -9719,8 +9719,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1030-destiny-health-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -9842,8 +9842,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1032-health-scene-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const HEALTH_KB={"version":"1.0","description":"小六壬健康口诀知识库 - 用于体质与健康参考模块","disclaimer":"此内容为传统术数意象参考，不替代医学诊断。若有持续不适，请及时就医。","data":{"palms":[{"name":"大安","pinyin":"Da An","element":"木","organ_yin":"肝","organ_yang":"胆","body_parts":["四肢","左腿","呼吸道","神经系统"],"common_symptoms":["肝胆代谢问题","头痛","抽搐","情绪抑郁"],"ancient_verse":"病者主无妨，病者离魂主无妨，久病必是缓中强，近病无碍寿必良","modern_interpretation":"病情不重，容易康复；长期问题恢复偏慢但趋势向好","mnemonic":"病占大安不用慌，上天佑你保健康","reminder":"不要因为‘无妨’就拖延，该检查仍要检查"},{"name":"留连","pinyin":"Liu Lian","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿","生殖系统"],"common_symptoms":["腰膝酸软","耳鸣","尿频","寒湿病","慢性病反复"],"ancient_verse":"此日患疾病，几天不复康，占病为溃疡肠胃之病昏迷，主病不能去根","modern_interpretation":"慢性病、易反复、难断根；多为寒湿或虚症","mnemonic":"病占留连多忧愁，绵绵缠缠病不离","reminder":"需要长期调理，不要指望速效"},{"name":"速喜","pinyin":"Su Xi","element":"火","organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部","脑部"],"common_symptoms":["心悸","失眠","高血压","炎症","口腔溃疡","虚火上炎"],"ancient_verse":"病者无祸侵，病者无大伤，久病必是心疾，占病为虚火上炎或外烧烫伤","modern_interpretation":"急性发作或心脑血管问题；来得快去得快","mnemonic":"病占速喜病来急，急速医治别延误","reminder":"出现急性症状不要拖，尽快处理"},{"name":"赤口","pinyin":"Chi Kou","element":"金","organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","牙齿","骨骼"],"common_symptoms":["咳嗽","气喘","便秘","皮肤过敏","牙痛","外伤","炎症"],"ancient_verse":"病者出西方，更须防咒诅，恐怕染瘟疫","modern_interpretation":"急性疼痛、外伤、手术、炎症；需谨慎对待","mnemonic":"病占赤口是重衰，忍受痛苦度病关","reminder":"若有持续疼痛或炎症，建议及时就医检查"},{"name":"小吉","pinyin":"Xiao Ji","element":"水","organ_yin":"肾","organ_yang":"膀胱","body_parts":["右腿","耳朵","泌尿系统"],"common_symptoms":["泌尿系统问题","寒湿","精力不足"],"ancient_verse":"病者保安康，病者叩穹苍，病者无大凶，久病得安康","modern_interpretation":"无大碍，能自愈；长期问题也会逐步好转","mnemonic":"病占小吉为吉利，不用慌忙病有安","reminder":"保持良好作息，恢复会更快"},{"name":"空亡","pinyin":"Kong Wang","element":"土","organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","免疫系统","消化系统"],"common_symptoms":["消化不良","湿气重","疑难杂症","功能衰退","查不出原因"],"ancient_verse":"病人逢暗鬼，解禳保平安，久病添祸殃，病人遇邪鬼","modern_interpretation":"癔病、虚病、查不出原因的毛病；或免疫力低下","mnemonic":"病占空亡为无病，有病可能是癔病","reminder":"若长期查不出原因，可考虑虚病因素，同时不放弃现实医疗"}],"six_spirits_health":[{"spirit":"青龙","element":"木","health_meaning":"肝气、情绪、筋、眼睛，代表正气和修复力"},{"spirit":"朱雀","element":"火","health_meaning":"心火、炎症、发热、口舌、血液"},{"spirit":"勾陈","element":"土","health_meaning":"脾胃湿气、慢性病、积滞、恢复慢"},{"spirit":"腾蛇","element":"土","health_meaning":"神经问题、莫名不适、缠绕、虚惊"},{"spirit":"白虎","element":"金","health_meaning":"急痛、外伤、手术、血光、炎症"},{"spirit":"玄武","element":"水","health_meaning":"肾虚、隐疾、生殖系统、寒湿、难查病因"}],"five_elements_organs":{"木":{"organ_yin":"肝","organ_yang":"胆","body_parts":["眼睛","筋","爪甲"],"tendency":"肝火旺、眼睛干涩、筋痛、情绪抑郁"},"火":{"organ_yin":"心","organ_yang":"小肠","body_parts":["舌头","血脉","面部"],"tendency":"心悸、失眠、口腔溃疡、循环偏弱"},"土":{"organ_yin":"脾","organ_yang":"胃","body_parts":["肌肉","口唇","消化"],"tendency":"消化不良、腹胀、湿气重、肌肉无力"},"金":{"organ_yin":"肺","organ_yang":"大肠","body_parts":["皮肤","鼻","毛发"],"tendency":"咳嗽、气喘、便秘、皮肤敏感"},"水":{"organ_yin":"肾","organ_yang":"膀胱","body_parts":["耳朵","骨骼","头发","腰腿"],"tendency":"腰膝酸软、耳鸣、尿频、精力不足"}},"combination_reminders":[{"combination":["大安","留连"],"meaning":"家中有保家仙或祖先庇佑，健康问题多与家宅有关"},{"combination":["留连","空亡","赤口"],"meaning":"许愿未还，或因果类健康问题，可结合自身信仰处理"},{"combination":["大安","空亡"],"meaning":"老辈女性长辈相关健康影响"},{"combination":["大安","小吉"],"meaning":"老辈男性长辈相关健康影响"}],"shock_verses":{"大安":"庙神鳞甲","留连":"男鬼口愿","速喜":"无邪","赤口":"女鬼伤灵","小吉":"毛类","空亡":"院内矮子"}}};
   const DATA=HEALTH_KB.data||{};
   const PALMS=DATA.palms||[];
@@ -9994,8 +9994,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1033-guide-glossary-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const KINSHIP_KEY='xlr_destiny_kinship_mode_v10';
   function $(id){return document.getElementById(id)}
   function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -10217,8 +10217,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1035-reading-mode-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const LEGACY_KEYS=['xiaoliuren_reading_mode_v1034'];
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
@@ -10296,8 +10296,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1036-reading-mode-save-fix">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee'};
   const MODES=['day','night','system','auto'];
@@ -10366,8 +10366,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1037-custom-night-time-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00'};
   const MODES=['day','night','system','auto'];
@@ -10505,8 +10505,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1038-reading-quick-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const KEY='xiaoliuren_reading_mode_v1035';
   const DEFAULT={mode:'day',bg:'default',custom:'#f7f3ee',autoStart:'19:00',autoEnd:'07:00',showToggle:true};
   const MODES=['day','night','system','auto'];
@@ -10684,8 +10684,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1039-auto-save-settings-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const SAVED_CHOICE_KEY='xlr_saved_choice_v9_1';
   const READING_KEY='xiaoliuren_reading_mode_v1035';
@@ -10756,8 +10756,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1040-marriage-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const ORDER=(typeof window.PALACE_ORDER!=='undefined')?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -10865,8 +10865,8 @@ body:not(.force-desktop-mode).reading-size-xlarge { --xlr-reading-scale: 1.16 !i
 <script id="v1041-marriage-layout-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   function applyVersion(){
     document.title='小六壬占卜 · '+VERSION;
     const meta=document.querySelector('meta[name="description"]');
@@ -11319,9 +11319,9 @@ body.reading-theme-night .reading-card::after {
 <script id="v1054-dark-whiteblock-sweep-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
-  const HERO="本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
+  const HERO="本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。";
   const DESTINY_SUB_TARGETS = [
     {id:'destinyBoardBlock', label:'命盘'},
     {id:'v1030DestinyHealth', label:'健康'},
@@ -11563,7 +11563,7 @@ body.v1058-normal-result a[data-target="paipanBlock"] {
 (function(){
   'use strict';
 
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const MARRIAGE_KB = {"version": "1.0", "description": "小六壬婚姻感情参考知识库 - 用于婚姻场景普通问事", "disclaimer": "这里看的是婚姻、夫妻、伴侣关系中的相处模式、沟通状态、阻力和可能走向，只作传统象意参考，不作为现实关系定论。现实感情以双方沟通、尊重和实际行动为准。", "data": {"relationship_mode_by_wuxing": {"生我": "对方付出多，你较轻松，被包容", "我生": "你付出多，包容对方，容易累", "克我": "对方强势，你需忍让，容易压抑", "我克": "你占主导，对方顺从，但别太强势", "比和": "平等互助，但也容易争执互不相让"}, "marriage_tendency_by_palm": {"大安": "婚姻稳定，平淡，适合细水长流，但缺少激情", "留连": "感情拖延、反复，容易藕断丝连或长期分居", "速喜": "闪婚、快速热恋，来得快去得也快，防一时冲动", "赤口": "争吵多，口舌是非，注意冲突、冷战或规则问题", "小吉": "夫妻各自奔波，聚少离多，但自由独立", "空亡": "感情空虚，有名无实，或一方逃避责任"}, "marriage_advantage": {"大安": "安全、稳定，不易轻易散", "留连": "感情韧性强，不容易彻底断", "速喜": "互动来得快，热度容易被点燃", "赤口": "吵架后若能好好沟通，反而能把问题说开", "小吉": "给彼此自由，适合双事业或各自奔波", "空亡": "无牵无挂，适合重新审视关系真实度"}, "marriage_challenge": {"大安": "太闷，容易冷淡或缺少推动", "留连": "拖泥带水，旧问题反复", "速喜": "激情退后容易失衡或冲动决定", "赤口": "争执、言语伤害、规则冲突明显", "小吉": "聚少离多，感情容易淡", "空亡": "承诺不落地，或一方逃避责任"}, "life_reminders": ["多沟通，避免冷战", "财务尽量清晰或分开", "尊重彼此空间，别控制", "处理长辈关系要一致对外", "吵架不翻旧账", "若长期痛苦，重新评估关系"]}};
   window.XLR_MARRIAGE_KB = MARRIAGE_KB;
 
@@ -11819,7 +11819,7 @@ html[data-theme="dark"] .v1059-content-note {
 <script id="v1059-missing-content-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -11987,7 +11987,7 @@ html[data-theme="dark"] .v10510-term-card.v10510-scene-term { background:rgba(22
 <script id="v10510-guide-terms-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   function $(id){ return document.getElementById(id); }
   function getCurrentResult(){
     try{ if(typeof currentResult !== 'undefined' && currentResult) return currentResult; }catch(e){}
@@ -12206,7 +12206,7 @@ html[data-theme="dark"] .v10511-content-note {
 <script id="v10511-hard-result-repair-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   let lastTopKey = '';
 
   function $(id) { return document.getElementById(id); }
@@ -12545,7 +12545,7 @@ body.v10513-normal-result .xlr-v10513-hide-nav {
 <script id="v10513-state-isolation-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   let lastTopKey = '';
   function $(id){ return document.getElementById(id); }
   function safe(s){ return String(s==null?'':s).replace(/[&<>]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];}); }
@@ -12862,7 +12862,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10514-debug-toggle-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const DEBUG_KEY = 'xlr_debug_enabled_v10514';
   const LOG_LIMIT = 20;
   const logs = [];
@@ -13038,7 +13038,7 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10515-settings-autosave-fix-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
   const SETTINGS_KEY='xlr_user_settings_v9_1';
   const UI_KEY='xiaoliuren_ui_settings_v9916';
   const SIZE_KEY='xiaoliuren_reading_text_size_v9915';
@@ -13262,8 +13262,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10516-version-nav-debug-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   function setVersion(){
     try{ document.title='小六壬占卜 · '+VERSION; }catch(e){}
     try{ const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META); }catch(e){}
@@ -13324,8 +13324,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10517-active-chip-center-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   let lastActiveId='';
   let rafId=0;
   let lastManualTouch=0;
@@ -13498,8 +13498,8 @@ html[data-theme="dark"] #v10514DebugOutput { background: rgba(255,255,255,.07); 
 <script id="v10518-formula-beta-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const ORDER=['大安','留连','速喜','赤口','小吉','空亡'];
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'事情偏稳，宜守宜稳，重在落实和维持。'},
@@ -13721,8 +13721,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10519-destiny-formula-debug-save-script">
 (function(){
   'use strict';
-  const VERSION="v10.5.36 导航术语与跳转稳定版";
-  const META="小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。";
+  const VERSION="v10.5.38 非命运导航隔离与术语回归修复版";
+  const META="小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。";
   const BASE={
     '大安':{formula:'大安身不动，主安稳、守成、缓成。',plain:'命运中多看根基、家宅、长期稳定与守成能力。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠、节奏偏慢。'},
@@ -13893,8 +13893,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10520-nav-formula-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
   const BASE={
     '大安':{formula:'大安事事昌，主安稳、守成、慢成。',plain:'命运中多看根基稳定、节奏偏慢，适合长期经营。'},
     '留连':{formula:'留连事难成，主拖延、反复、牵连。',plain:'命运中多看旧事牵挂、反复纠缠，容易被过程拖住。'},
@@ -14131,9 +14131,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10521-mobile-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function setStableVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
@@ -14226,9 +14226,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10523-career-beta-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   const ORDER=(window.PALACE_ORDER&&Array.isArray(window.PALACE_ORDER))?window.PALACE_ORDER:['大安','留连','速喜','赤口','小吉','空亡'];
   const BRANCH_ALL=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
   const BRANCH_YIN=['丑','卯','巳','未','酉','亥'];
@@ -14441,9 +14441,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10524-knowledge-table-scroll-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   const SELECTORS=['.v1040-marriage-table','.v1030-health-table','.v1031-health-table','.v10523-career-table','.v1025-table-wrap'];
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14503,9 +14503,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10525-career-subnav-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function $(id){return document.getElementById(id);} 
   function visible(el){
     if(!el) return false;
@@ -14596,9 +14596,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10526-performance-version-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function $(id){return document.getElementById(id);}
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
@@ -14682,9 +14682,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10531-destiny-subnav-range-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el) return false;
@@ -14793,9 +14793,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10532-destiny-subnav-master-sync-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   const SUB_IDS=['destinyBoardBlock','v1030DestinyHealth','v1040MarriageBlock','v10523CareerBlock'];
   function $(id){return document.getElementById(id);}
   function visible(el){
@@ -14904,8 +14904,8 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10533-formula-overall-order-fix-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
   function $(id){return document.getElementById(id);}
   function visible(el){
     if(!el || (el.classList&&el.classList.contains('hidden')) || (el.closest&&el.closest('.hidden'))) return false;
@@ -14920,7 +14920,7 @@ html[data-theme="dark"] .v10519-destiny-note {
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const meta=document.querySelector('meta[name="description"]'); if(meta) meta.setAttribute('content',META);}catch(e){}
     try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0) el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
-    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';}catch(e){}
+    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';}catch(e){}
   }
   function moveFormulaAfterTri(){
     if(!isDestiny()) return;
@@ -14954,7 +14954,7 @@ html[data-theme="dark"] .v10519-destiny-note {
         window.buildVersionUpdatesHTML=function(){
           let html=old.apply(this,arguments)||'';
           html=html.replace(/<details><summary>v10\.5\.33 口诀与综合导航顺序修复版<\/summary>[\s\S]*?<\/details>/g,'');
-          html+='<details><summary>v10.5.36 导航术语与跳转稳定版</summary><ul><li>修复命运结果页“综合判断”区域主导航误高亮“口诀”的问题。</li><li>将命运“本课用到的口诀”模块重新固定到“三象解读”之后，使 DOM 顺序与主导航顺序一致。</li><li>保留 v10.5.32 的命运二级导航主从同步逻辑：二级导航只在命盘子模块范围内显示。</li><li>不新增轮询，不改排盘逻辑，不改事业/健康/婚姻子模块内容，避免再次引起页面抖动。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查旧补丁抢回旧版本问题。</li></ul></details>';
+          html+='<details><summary>v10.5.38 非命运导航隔离与术语回归修复版</summary><ul><li>修复命运结果页“综合判断”区域主导航误高亮“口诀”的问题。</li><li>将命运“本课用到的口诀”模块重新固定到“三象解读”之后，使 DOM 顺序与主导航顺序一致。</li><li>保留 v10.5.32 的命运二级导航主从同步逻辑：二级导航只在命盘子模块范围内显示。</li><li>不新增轮询，不改排盘逻辑，不改事业/健康/婚姻子模块内容，避免再次引起页面抖动。</li><li>同步更新页面版本记录、README、manifest 与 service-worker 缓存名，并检查旧补丁抢回旧版本问题。</li></ul></details>';
           return html;
         };
         window.buildVersionUpdatesHTML.__v10533FormulaOrder=true;
@@ -15011,9 +15011,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10534-theme-performance-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function setVersion(){
     try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
     try{const m=document.querySelector('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
@@ -15098,9 +15098,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10535-theme-return-color-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function isNight(){return !!(document.body&&document.body.classList.contains('reading-theme-night'));}
   function syncThemeRoot(){
     try{
@@ -15225,9 +15225,9 @@ html[data-theme="dark"] .v10519-destiny-note {
 <script id="v10536-nav-terms-jump-stability-script">
 (function(){
   'use strict';
-  const VERSION='v10.5.36 导航术语与跳转稳定版';
-  const META='小六壬个人网页版 v10.5.36 导航术语与跳转稳定版：补回命运结果页“术语解释”导航，并修复点击命盘之后导航目标时多次 smooth 滚动叠加造成的画面抖动；保留 v10.5.35 的主题回切显色修复。';
-  const HERO='本版补回命运结果页“术语解释”导航，并把主导航点击改为单次稳定定位，修复命盘之后内容跳转时画面抖动的问题。';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
   function $(id){return document.getElementById(id);}
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
   function getCurrent(){try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){} try{return window.currentResult||null;}catch(e){return null;}}
@@ -15391,6 +15391,510 @@ html[data-theme="dark"] .v10519-destiny-note {
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
   window.addEventListener('load',function(){boot();setTimeout(boot,150);setTimeout(boot,700);},{once:true});
+})();
+</script>
+
+
+
+<!-- v10.5.37 patch: 命运术语导航与折叠联动修复版 -->
+<style id="v10537-destiny-terms-nav-collapse-style">
+  body.result-destiny #v10510GlossaryBlock.v10537-destiny-terms {
+    display:block!important;
+    visibility:visible!important;
+  }
+  body.result-destiny #v10510GlossaryBlock.v10537-destiny-terms.hidden {
+    display:block!important;
+    visibility:visible!important;
+  }
+  body.result-destiny #v10510GlossaryBlock.v10537-destiny-terms .v10510-terms-grid,
+  body.result-destiny #v10510GlossaryBlock.v10537-destiny-terms .v10537-destiny-terms-grid {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+  body.result-destiny #v10536DestinyGlossaryBlock { display:none!important; }
+  .v10537-term-card{
+    border:1px solid rgba(103,83,165,.13);
+    border-radius:18px;
+    background:rgba(255,255,255,.88);
+    padding:13px 14px;
+    line-height:1.7;
+  }
+  .v10537-term-card h5{margin:0 0 7px;color:var(--primary,#6753a5);font-size:1rem;}
+  .v10537-term-card p{margin:0;color:var(--muted,#756e83);}
+  body.reading-theme-night .v10537-term-card{
+    background:rgba(45,39,62,.92)!important;
+    border-color:rgba(221,213,255,.18)!important;
+  }
+  body.reading-theme-night .v10537-term-card h5,
+  body.reading-theme-night .v10537-term-card p{color:#f4efff!important;}
+  @media(max-width:760px){
+    body.result-destiny #v10510GlossaryBlock.v10537-destiny-terms .v10510-terms-grid,
+    body.result-destiny #v10510GlossaryBlock.v10537-destiny-terms .v10537-destiny-terms-grid{grid-template-columns:1fr;}
+  }
+</style>
+<script id="v10537-destiny-terms-nav-collapse-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复命运术语补丁误影响非命运结果的问题；非命运术语恢复普通显示，命运二级导航只在命运命盘范围显示，主导航高亮更稳定。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
+  function $(id){return document.getElementById(id);}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
+  function getCurrent(){try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){} try{return window.currentResult||null;}catch(e){return null;}}
+  function isDestiny(){
+    const r=getCurrent();
+    if(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运')) return true;
+    const body=document.body?document.body.className:'';
+    const scene=(($('resultScene')&&$('resultScene').textContent)||'')+' '+(($('resultTitle')&&$('resultTitle').textContent)||'');
+    return /\bresult-destiny\b/.test(body)||/命运/.test(scene);
+  }
+  function visible(el){
+    if(!el) return false;
+    if(el.classList&&el.classList.contains('hidden')&&!el.classList.contains('v10537-destiny-terms')) return false;
+    if(el.closest&&el.closest('.hidden')&&!(el.id==='v10510GlossaryBlock'&&isDestiny())) return false;
+    const st=getComputedStyle(el);
+    return st.display!=='none'&&st.visibility!=='hidden'&&st.opacity!=='0'&&!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+  }
+  function setVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const m=document.querySelector('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
+    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
+  }
+  function termCard(title,text){return '<div class="v10537-term-card"><h5>'+esc(title)+'</h5><p>'+esc(text)+'</p></div>';}
+  function destinyTermsHTML(){
+    const terms=[
+      ['三象','本象看起点与当前，中象看过程与阻力，末象看结果落点；命运场景要把三宫串成长期倾向。'],
+      ['掌诀','大安主稳，留连主拖，速喜主快，赤口主争，小吉主小成，空亡主虚或未落实。'],
+      ['六亲','自身看自己与根基；父母看保护、文书和长辈；官鬼看压力、事业、规则和病痛；兄弟看同辈竞争；妻财看钱财和关系资源；子孙看子女、才华、快乐和医药。'],
+      ['地支与五行','地支用于落宫五行和气象判断。木火土金水之间的生克，会影响助力、压力、消耗和稳定性。'],
+      ['六神','青龙偏正直与生发，朱雀偏表达与火气，勾陈偏迟缓纠缠，腾蛇偏虚惊缠绕，白虎偏强烈冲突，玄武偏隐藏暗线。'],
+      ['五星 / 生克','星生地多助力，星克地多外压，地克星多内耗，地生星多付出，比和多稳定。']
+    ];
+    return '<div class="v10537-destiny-terms-grid">'+terms.map(function(t){return termCard(t[0],t[1]);}).join('')+'</div>';
+  }
+  function ensureCanonicalGlossary(){
+    if(!isDestiny()) return null;
+    let block=$('v10510GlossaryBlock');
+    if(!block){
+      block=document.createElement('article');
+      block.id='v10510GlossaryBlock';
+      block.className='block detail-only collapsible-block v10537-destiny-terms';
+      block.setAttribute('data-collapse-key','glossary');
+      block.innerHTML='<h4>术语解释</h4><div class="v10510-terms-grid" id="v10510GlossaryContent"></div>';
+    }
+    block.classList.remove('hidden');
+    block.classList.add('block','detail-only','collapsible-block','v10537-destiny-terms');
+    block.setAttribute('data-collapse-key','glossary');
+    block.style.removeProperty('display');
+    block.style.removeProperty('visibility');
+    const h=block.querySelector('h4')||document.createElement('h4');
+    if(!h.parentNode){h.textContent='术语解释'; block.insertBefore(h,block.firstChild);} else if(!/术语/.test(h.textContent||'')){h.childNodes[0]?h.childNodes[0].nodeValue='术语解释':h.insertBefore(document.createTextNode('术语解释'),h.firstChild);}
+    let content=$('v10510GlossaryContent');
+    if(!content){content=document.createElement('div'); content.id='v10510GlossaryContent'; content.className='v10510-terms-grid'; block.appendChild(content);}
+    content.className='v10510-terms-grid';
+    content.style.removeProperty('display');
+    content.style.removeProperty('visibility');
+    if(!/v10537-term-card|六亲|五星/.test(content.innerHTML||'')) content.innerHTML=destinyTermsHTML();
+    const old=$('v10536DestinyGlossaryBlock');
+    if(old) old.classList.add('hidden');
+    const radar=$('radarBlock');
+    const advice=$('adviceBlock');
+    const result=$('resultCard');
+    if(radar&&radar.parentNode&&radar.nextElementSibling!==block){radar.insertAdjacentElement('afterend',block);}
+    else if(advice&&advice.parentNode&&advice.previousElementSibling!==block){advice.parentNode.insertBefore(block,advice);}
+    else if(result&&!block.parentNode){result.appendChild(block);}
+    try{ if(typeof enhanceCollapsibleBlocks==='function') enhanceCollapsibleBlocks(); }catch(e){}
+    updateCollapseButton(block);
+    return block;
+  }
+  function updateCollapseButton(block){
+    if(!block) return;
+    const btn=block.querySelector('.collapse-toggle');
+    if(!btn) return;
+    const collapsed=block.classList.contains('is-collapsed');
+    btn.textContent=collapsed?'展开':'折叠';
+    btn.setAttribute('aria-expanded',collapsed?'false':'true');
+  }
+  function allCollapsibleBlocks(){
+    const arr=Array.from(document.querySelectorAll('.collapsible-block'));
+    ['v10510GlossaryBlock','v10536DestinyGlossaryBlock'].forEach(function(id){const el=$(id); if(el&&arr.indexOf(el)<0) arr.push(el);});
+    return arr.filter(function(el){return el&&(!el.classList.contains('hidden')||el.id==='v10510GlossaryBlock')&&visible(el);});
+  }
+  function setAllCollapsed(collapsed){
+    if(isDestiny()) ensureCanonicalGlossary();
+    allCollapsibleBlocks().forEach(function(block){
+      block.classList.toggle('is-collapsed',!!collapsed);
+      updateCollapseButton(block);
+    });
+    try{ if(typeof updatePageProgress==='function') setTimeout(updatePageProgress,20); }catch(e){}
+    try{ if(typeof updateSectionJumpNav==='function') setTimeout(updateSectionJumpNav,30); }catch(e){}
+  }
+  function installQuickCollapsePatch(){
+    window.collapseAllResultBlocks=function(){setAllCollapsed(true);};
+    window.expandAllResultBlocks=function(){setAllCollapsed(false);};
+    window.__v10537CollapseLinked=true;
+  }
+  function resultTargets(){
+    if(!isDestiny()) return null;
+    const glossary=ensureCanonicalGlossary();
+    const defs=[
+      ['resultCard','结果'],['answerSummaryBlock','答案'],['sceneFocusBlock','重心'],['destinyBoardBlock','命盘'],
+      ['overallBlock','综合'],['triReadingBlock','三象'],['v10518FormulaBlock','口诀'],['radarBlock','雷达'],['v10510GlossaryBlock','术语']
+    ];
+    const seen={};
+    return defs.map(function(d){return {id:d[0],label:d[1],el:$(d[0])};}).filter(function(t){
+      if(!t.el||seen[t.id]||!visible(t.el)) return false;
+      seen[t.id]=1;
+      return true;
+    });
+  }
+  function installJumpTargetPatch(){
+    if(typeof window.currentJumpTargets!=='function') return;
+    if(window.currentJumpTargets.__v10537DestinyTerms) return;
+    const old=window.currentJumpTargets;
+    window.currentJumpTargets=function(){
+      if(isDestiny()) return resultTargets()||[];
+      return old.apply(this,arguments)||[];
+    };
+    window.currentJumpTargets.__v10537DestinyTerms=true;
+  }
+  function refreshNav(){
+    try{
+      const nav=$('sectionJumpNav');
+      const items=(typeof window.currentJumpTargets==='function')?window.currentJumpTargets():[];
+      const sig=items.map(function(t){return t.id+':'+t.label;}).join('|');
+      if(nav&&nav.getAttribute('data-v10537-sig')!==sig&&typeof window.renderSectionJumpNav==='function'){
+        nav.setAttribute('data-v10537-sig',sig);
+        window.renderSectionJumpNav();
+        nav.setAttribute('data-v10537-sig',sig);
+      }else if(typeof window.updateSectionJumpNav==='function') window.updateSectionJumpNav();
+    }catch(e){}
+  }
+  function patchRender(){
+    try{
+      if(typeof window.renderResult==='function'&&!window.renderResult.__v10537DestinyTerms){
+        const old=window.renderResult;
+        window.renderResult=function(){
+          const ret=old.apply(this,arguments);
+          requestAnimationFrame(boot);
+          setTimeout(boot,120);
+          return ret;
+        };
+        window.renderResult.__v10537DestinyTerms=true;
+      }
+    }catch(e){}
+  }
+  function patchVersionLog(){
+    try{
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10537){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.apply(this,arguments)||'';
+          try{html=html.replace(/<details><summary>v10\.5\.37[^<]*<\/summary>[\s\S]*?<\/details>/g,'');}catch(e){}
+          html+='<details><summary>'+VERSION+'</summary><ul><li>修复命运场景“术语解释”没有进入主阅读导航的问题：改为复用统一的 v10510GlossaryBlock 作为命运术语目标。</li><li>命运术语解释现在加入一键展开/一键折叠快捷按钮控制范围，和三象、口诀、雷达等折叠模块同步。</li><li>隐藏旧的 v10536DestinyGlossaryBlock，避免命运术语出现两个目标或被旧补丁过滤。</li><li>重写命运场景 currentJumpTargets 最终顺序：结果、答案、重心、命盘、综合、三象、口诀、雷达、术语。</li><li>同步更新页面版本标题、README、manifest、service-worker，并检查旧补丁抢回旧版本问题。</li></ul></details>';
+          return html;
+        };
+        window.buildVersionUpdatesHTML.__v10537=true;
+      }
+    }catch(e){}
+  }
+  function boot(){
+    setVersion();
+    if(isDestiny()) ensureCanonicalGlossary();
+    installQuickCollapsePatch();
+    installJumpTargetPatch();
+    patchRender();
+    patchVersionLog();
+    refreshNav();
+    try{window.__v10537DestinyTermsNavCollapse={version:VERSION,nav:true,quickCollapse:true};}catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',function(){boot();setTimeout(boot,150);setTimeout(boot,700);},{once:true});
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.closest&&e.target.closest('[data-v9919-quick="expand"],[data-v9919-quick="collapse"],#sectionJumpNav,#v1054DestinySubNav,.collapse-toggle')) setTimeout(boot,80);
+  },true);
+})();
+</script>
+
+
+<!-- v10.5.38 patch: 非命运导航隔离与术语回归修复版 -->
+<style id="v10538-nav-isolation-terms-style">
+  body:not(.result-destiny) #v1054DestinySubNav,
+  body:not(.result-destiny) #v1054DestinySubNav.show {
+    display:none!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+  }
+  body:not(.result-destiny) #v10536DestinyGlossaryBlock,
+  body:not(.result-destiny) #v10536DestinyGlossaryBlock.show {
+    display:none!important;
+    visibility:hidden!important;
+  }
+  body:not(.result-destiny) #v10510GlossaryBlock.v10537-destiny-terms,
+  body:not(.result-destiny) #v10510GlossaryBlock.v10538-destiny-terms {
+    display:block!important;
+    visibility:visible!important;
+  }
+  body.result-destiny #v10536DestinyGlossaryBlock { display:none!important; }
+  body.result-destiny #v10510GlossaryBlock.v10538-destiny-terms {
+    display:block!important;
+    visibility:visible!important;
+  }
+  body.result-destiny #v10510GlossaryBlock.v10538-destiny-terms.hidden {
+    display:block!important;
+    visibility:visible!important;
+  }
+  body.result-destiny #v10510GlossaryBlock.v10538-destiny-terms .v10510-terms-grid,
+  body.result-destiny #v10510GlossaryBlock.v10538-destiny-terms .v10538-destiny-terms-grid {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+  .v10538-term-card{
+    border:1px solid rgba(103,83,165,.13);
+    border-radius:18px;
+    background:rgba(255,255,255,.88);
+    padding:13px 14px;
+    line-height:1.7;
+  }
+  .v10538-term-card h5{margin:0 0 7px;color:var(--primary,#6753a5);font-size:1rem;}
+  .v10538-term-card p{margin:0;color:var(--muted,#756e83);}
+  body.reading-theme-night .v10538-term-card{
+    background:rgba(45,39,62,.92)!important;
+    border-color:rgba(221,213,255,.18)!important;
+  }
+  body.reading-theme-night .v10538-term-card h5,
+  body.reading-theme-night .v10538-term-card p{color:#f4efff!important;}
+  @media(max-width:760px){
+    body.result-destiny #v10510GlossaryBlock.v10538-destiny-terms .v10510-terms-grid,
+    body.result-destiny #v10510GlossaryBlock.v10538-destiny-terms .v10538-destiny-terms-grid{grid-template-columns:1fr;}
+  }
+</style>
+<script id="v10538-nav-isolation-terms-script">
+(function(){
+  'use strict';
+  const VERSION='v10.5.38 非命运导航隔离与术语回归修复版';
+  const META='小六壬个人网页版 v10.5.38 非命运导航隔离与术语回归修复版：修复 v10.5.37 命运术语补丁误影响婚姻等非命运结果的问题；非命运页面恢复普通术语模块，命运二级导航只在命运命盘范围显示；统一主导航目标，避免术语与建议高亮错位。';
+  const HERO='本版修复命运术语补丁误影响非命运结果的问题：非命运术语恢复普通显示，命运子导航不再泄漏到婚姻等普通结果，主导航高亮更稳定。';
+  function $(id){return document.getElementById(id);}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
+  function getCurrent(){try{if(typeof currentResult!=='undefined'&&currentResult)return currentResult;}catch(e){} try{return window.currentResult||null;}catch(e){return null;}}
+  function isDestiny(){
+    const r=getCurrent();
+    if(r&&(r.sceneKey==='destiny'||r.sceneName==='命运'||r.scene==='命运')) return true;
+    const body=document.body?document.body.className:'';
+    const scene=(($('resultScene')&&$('resultScene').textContent)||'')+' '+(($('resultTitle')&&$('resultTitle').textContent)||'');
+    return /\bresult-destiny\b/.test(body)&&/命运/.test(scene);
+  }
+  function rawVisible(el){
+    if(!el) return false;
+    const st=getComputedStyle(el);
+    return st.display!=='none'&&st.visibility!=='hidden'&&st.opacity!=='0'&&!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+  }
+  function visible(el){
+    if(!el) return false;
+    if(el.classList&&el.classList.contains('hidden')) return false;
+    if(el.closest&&el.closest('.hidden')) return false;
+    return rawVisible(el);
+  }
+  function visibleDestiny(el){
+    if(!el) return false;
+    if(el.id==='v10510GlossaryBlock'&&isDestiny()){
+      const st=getComputedStyle(el);
+      return st.display!=='none'&&st.visibility!=='hidden'&&!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
+    }
+    return visible(el);
+  }
+  function setVersion(){
+    try{document.title='小六壬占卜 · '+VERSION;}catch(e){}
+    try{const m=document.querySelector('meta[name="description"]'); if(m)m.setAttribute('content',META);}catch(e){}
+    try{document.querySelectorAll('h2').forEach(function(el){if(el.textContent&&el.textContent.indexOf('个人占卜台')>=0)el.textContent='个人占卜台 · '+VERSION;});}catch(e){}
+    try{const lead=document.querySelector('header .hero p, .hero p'); if(lead&&/^本版/.test((lead.textContent||'').trim())) lead.textContent=HERO;}catch(e){}
+  }
+  function termCard(title,text){return '<div class="v10538-term-card"><h5>'+esc(title)+'</h5><p>'+esc(text)+'</p></div>';}
+  function destinyTermsHTML(){
+    const terms=[
+      ['三象','本象看起点与当前，中象看过程与阻力，末象看结果落点；命运场景要把三宫串成长期倾向。'],
+      ['掌诀','大安主稳，留连主拖，速喜主快，赤口主争，小吉主小成，空亡主虚或未落实。'],
+      ['六亲','自身看自己与根基；父母看保护、文书和长辈；官鬼看压力、事业、规则和病痛；兄弟看同辈竞争；妻财看钱财和关系资源；子孙看子女、才华、快乐和医药。'],
+      ['地支与五行','地支用于落宫五行和气象判断。木火土金水之间的生克，会影响助力、压力、消耗和稳定性。'],
+      ['六神','青龙偏正直与生发，朱雀偏表达与火气，勾陈偏迟缓纠缠，腾蛇偏虚惊缠绕，白虎偏强烈冲突，玄武偏隐藏暗线。'],
+      ['五星 / 生克','星生地多助力，星克地多外压，地克星多内耗，地生星多付出，比和多稳定。']
+    ];
+    return '<div class="v10538-destiny-terms-grid">'+terms.map(function(t){return termCard(t[0],t[1]);}).join('')+'</div>';
+  }
+  function removeCollapseChrome(block){
+    if(!block) return;
+    block.querySelectorAll('.collapse-toggle,.collapse-btn,[data-collapse-toggle]').forEach(function(btn){try{btn.remove();}catch(e){}});
+    const h=block.querySelector('h4');
+    if(h){
+      Array.from(h.childNodes).forEach(function(n){
+        if(n.nodeType===3 && /^\s*(展开|折叠)\s*$/.test(n.nodeValue||'')) n.nodeValue='';
+      });
+    }
+  }
+  function cleanupNonDestiny(){
+    const old=$('v10536DestinyGlossaryBlock');
+    if(old){old.classList.add('hidden'); old.style.setProperty('display','none','important'); old.style.setProperty('visibility','hidden','important');}
+    const sub=$('v1054DestinySubNav');
+    if(sub){sub.classList.remove('show'); sub.classList.add('v10538-force-hide'); sub.style.setProperty('display','none','important'); sub.style.setProperty('visibility','hidden','important');}
+    const block=$('v10510GlossaryBlock');
+    if(block){
+      block.classList.remove('detail-only','collapsible-block','is-collapsed','v10537-destiny-terms','v10538-destiny-terms');
+      block.classList.add('block');
+      block.removeAttribute('data-collapse-key');
+      block.style.removeProperty('display');
+      block.style.removeProperty('visibility');
+      removeCollapseChrome(block);
+      const h=block.querySelector('h4');
+      if(h){h.childNodes[0]?h.childNodes[0].nodeValue='术语解释':h.insertBefore(document.createTextNode('术语解释'),h.firstChild);}
+      const c=$('v10510GlossaryContent');
+      if(c){c.className='v10510-terms-grid'; c.style.removeProperty('display'); c.style.removeProperty('visibility');}
+    }
+  }
+  function ensureDestinyGlossary(){
+    const sub=$('v1054DestinySubNav');
+    if(sub){sub.classList.remove('v10538-force-hide'); sub.style.removeProperty('display'); sub.style.removeProperty('visibility');}
+    const old=$('v10536DestinyGlossaryBlock');
+    if(old){old.classList.add('hidden'); old.style.setProperty('display','none','important'); old.style.setProperty('visibility','hidden','important');}
+    let block=$('v10510GlossaryBlock');
+    if(!block){
+      block=document.createElement('article');
+      block.id='v10510GlossaryBlock';
+      block.innerHTML='<h4>术语解释</h4><div class="v10510-terms-grid" id="v10510GlossaryContent"></div>';
+    }
+    block.classList.remove('hidden','v10537-destiny-terms');
+    block.classList.add('block','detail-only','collapsible-block','v10538-destiny-terms');
+    block.setAttribute('data-collapse-key','glossary');
+    block.style.removeProperty('display');
+    block.style.removeProperty('visibility');
+    let h=block.querySelector('h4');
+    if(!h){h=document.createElement('h4'); block.insertBefore(h,block.firstChild);} 
+    h.childNodes[0]?h.childNodes[0].nodeValue='术语解释':h.insertBefore(document.createTextNode('术语解释'),h.firstChild);
+    let content=$('v10510GlossaryContent');
+    if(!content){content=document.createElement('div'); content.id='v10510GlossaryContent'; block.appendChild(content);} 
+    content.className='v10510-terms-grid';
+    content.style.removeProperty('display');
+    content.style.removeProperty('visibility');
+    if(!/v10538-term-card|六亲|五星/.test(content.innerHTML||'')) content.innerHTML=destinyTermsHTML();
+    const radar=$('radarBlock'), advice=$('adviceBlock'), result=$('resultCard');
+    if(radar&&radar.parentNode&&radar.nextElementSibling!==block) radar.insertAdjacentElement('afterend',block);
+    else if(advice&&advice.parentNode&&advice.previousElementSibling!==block) advice.parentNode.insertBefore(block,advice);
+    else if(result&&!block.parentNode) result.appendChild(block);
+    try{if(typeof enhanceCollapsibleBlocks==='function') enhanceCollapsibleBlocks();}catch(e){}
+    syncCollapseButton(block);
+    return block;
+  }
+  function syncCollapseButton(block){
+    if(!block) return;
+    const btn=block.querySelector('.collapse-toggle');
+    if(btn){
+      const collapsed=block.classList.contains('is-collapsed');
+      btn.textContent=collapsed?'展开':'折叠';
+      btn.setAttribute('aria-expanded',collapsed?'false':'true');
+    }
+  }
+  const destinyDefs=[['resultCard','结果'],['answerSummaryBlock','答案'],['sceneFocusBlock','重心'],['destinyBoardBlock','命盘'],['overallBlock','综合'],['triReadingBlock','三象'],['v10518FormulaBlock','口诀'],['radarBlock','雷达'],['v10510GlossaryBlock','术语']];
+  const normalDefs=[['resultCard','结果'],['v10510QuickGuideBlock','导读'],['answerSummaryBlock','答案'],['sceneFocusBlock','重心'],['overallBlock','综合'],['triReadingBlock','三象'],['v10518FormulaBlock','口诀'],['singlePalaceBlock','单宫'],['doublePalaceBlock','双宫'],['symbolBlock','象意'],['radarBlock','雷达'],['adviceBlock','建议'],['v10510GlossaryBlock','术语']];
+  function buildTargets(defs, destinyMode){
+    const seen={};
+    return defs.map(function(d){return {id:d[0],label:d[1],el:$(d[0])};}).filter(function(t){
+      if(!t.el||seen[t.id]) return false;
+      seen[t.id]=1;
+      return destinyMode?visibleDestiny(t.el):visible(t.el);
+    });
+  }
+  function installTargetPatch(){
+    if(typeof window.currentJumpTargets==='function' && window.currentJumpTargets.__v10538Final) return;
+    window.currentJumpTargets=function(){
+      if(isDestiny()){
+        ensureDestinyGlossary();
+        return buildTargets(destinyDefs,true);
+      }
+      cleanupNonDestiny();
+      return buildTargets(normalDefs,false);
+    };
+    window.currentJumpTargets.__v10538Final=true;
+  }
+  function installQuickCollapsePatch(){
+    window.collapseAllResultBlocks=function(){
+      if(isDestiny()) ensureDestinyGlossary(); else cleanupNonDestiny();
+      document.querySelectorAll('.collapsible-block').forEach(function(block){
+        if(!visibleDestiny(block)) return;
+        block.classList.add('is-collapsed');
+        syncCollapseButton(block);
+      });
+      try{if(typeof updatePageProgress==='function') setTimeout(updatePageProgress,20);}catch(e){}
+      try{if(typeof updateSectionJumpNav==='function') setTimeout(updateSectionJumpNav,30);}catch(e){}
+    };
+    window.expandAllResultBlocks=function(){
+      if(isDestiny()) ensureDestinyGlossary(); else cleanupNonDestiny();
+      document.querySelectorAll('.collapsible-block').forEach(function(block){
+        if(!visibleDestiny(block)) return;
+        block.classList.remove('is-collapsed');
+        syncCollapseButton(block);
+      });
+      try{if(typeof updatePageProgress==='function') setTimeout(updatePageProgress,20);}catch(e){}
+      try{if(typeof updateSectionJumpNav==='function') setTimeout(updateSectionJumpNav,30);}catch(e){}
+    };
+  }
+  function refreshNav(){
+    try{
+      const nav=$('sectionJumpNav');
+      const items=(typeof window.currentJumpTargets==='function')?window.currentJumpTargets():[];
+      const sig=items.map(function(t){return t.id+':'+t.label;}).join('|');
+      if(nav&&nav.getAttribute('data-v10538-sig')!==sig&&typeof window.renderSectionJumpNav==='function'){
+        nav.setAttribute('data-v10538-sig',sig);
+        window.renderSectionJumpNav();
+        nav.setAttribute('data-v10538-sig',sig);
+      }else if(typeof window.updateSectionJumpNav==='function') window.updateSectionJumpNav();
+    }catch(e){}
+  }
+  function patchRender(){
+    try{
+      if(typeof window.renderResult==='function'&&!window.renderResult.__v10538Isolation){
+        const old=window.renderResult;
+        window.renderResult=function(){
+          const ret=old.apply(this,arguments);
+          requestAnimationFrame(boot);
+          setTimeout(boot,120);
+          return ret;
+        };
+        window.renderResult.__v10538Isolation=true;
+      }
+    }catch(e){}
+  }
+  function patchVersionLog(){
+    try{
+      if(typeof window.buildVersionUpdatesHTML==='function'&&!window.buildVersionUpdatesHTML.__v10538){
+        const old=window.buildVersionUpdatesHTML;
+        window.buildVersionUpdatesHTML=function(){
+          let html=old.apply(this,arguments)||'';
+          try{html=html.replace(/<details><summary>v10\.5\.38[^<]*<\/summary>[\s\S]*?<\/details>/g,'');}catch(e){}
+          html+='<details><summary>'+VERSION+'</summary><ul><li>修复 v10.5.37 的命运术语补丁误套到婚姻等非命运结果：非命运“术语解释”恢复普通 block，不再带命运折叠类。</li><li>命运二级导航仅在命运结果与命盘范围显示，离开命运或切到历史普通结果时强制隐藏，避免“健康 / 婚姻 / 事业”泄漏到普通导航。</li><li>重建最终 currentJumpTargets：命运与非命运分开生成，避免“建议”和“术语”高亮错位。</li><li>命运术语仍保留可折叠，并继续接入右侧一键展开 / 折叠。</li><li>同步更新页面版本标题、README、manifest、service-worker，并检查旧补丁抢回旧版本问题。</li></ul></details>';
+          return html;
+        };
+        window.buildVersionUpdatesHTML.__v10538=true;
+      }
+    }catch(e){}
+  }
+  function boot(){
+    setVersion();
+    installTargetPatch();
+    installQuickCollapsePatch();
+    if(isDestiny()) ensureDestinyGlossary(); else cleanupNonDestiny();
+    patchRender();
+    patchVersionLog();
+    refreshNav();
+    try{window.__v10538NavIsolationTerms={version:VERSION,isDestiny:isDestiny()};}catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',function(){boot();setTimeout(boot,160);setTimeout(boot,800);},{once:true});
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.closest&&e.target.closest('#sectionJumpNav,#v1054DestinySubNav,.history-item,.history-card,[data-history-id],[data-v9919-quick="expand"],[data-v9919-quick="collapse"],.collapse-toggle')) setTimeout(boot,90);
+  },true);
 })();
 </script>
 
