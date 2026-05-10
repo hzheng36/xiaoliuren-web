@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.63",
-  "short_name": "小六壬",
-  "description": "小六壬个人占卜工具 v10.5.63 阅读字号最终生效修正版",
-  "start_url": "./?v=10.5.63",
+  "name": "小六壬占卜 v10.5.64",
+  "short_name": "小六壬 v10.5.64",
+  "description": "小六壬个人占卜工具 v10.5.64 设置字号与快捷按钮持久化修正版",
+  "start_url": "./?v=10.5.64",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.63"
+  "version": "10.5.64"
 }
