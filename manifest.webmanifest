@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.82 版本锁定与Debug稳定修正版",
-  "short_name": "小六壬 v10.5.82",
-  "description": "小六壬个人网页版 v10.5.82 版本锁定与Debug稳定修正版：以 v10.5.76 稳定核心为基线，修复主页标题被旧补丁回写到 v10.5.76 的问题；修复 Debug 面板使用原生 dialog 导致 iPhone Safari 画面跳动；修复 refreshNav 未定义错误，并让复制/刷新/保存 Debug 日志统一输出增强结构。",
-  "start_url": "./?v=10.5.82",
+  "name": "小六壬占卜 v10.5.83 源码整合清补丁版",
+  "short_name": "小六壬",
+  "description": "小六壬个人网页版 v10.5.83 源码整合清补丁版：以 v10.5.76 稳定版为干净基线，清理后置 Debug、版本抢写、延迟覆盖与重复版本记录逻辑，把稳定功能回写到源码主流程，作为补丁回源码计划的第一版。",
+  "start_url": "./?v=10.5.83",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.82"
+  "version": "10.5.83"
 }
