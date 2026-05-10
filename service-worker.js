@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.43-destiny-glossary-collapse';
+const CACHE_NAME = 'xiaoliuren-v10.5.44-guide-glossary-debug';
 const APP_SHELL = [
   './',
   './index.html',
