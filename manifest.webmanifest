@@ -1,16 +1,30 @@
 {
-  "name": "小六壬占卜 v10.5.91 深度清补丁与命盘功能恢复版",
-  "short_name": "小六壬 v10.5.91",
-  "description": "小六壬个人网页版 v10.5.91 深度清补丁与命盘功能恢复版：扩大旧缓存清理范围，恢复命运性别侧重、六亲排法、地支六神与五星解读。",
-  "start_url": "./?v=10.5.91",
+  "name": "小六壬占卜 v10.5.92 源码导航恢复与命盘子导航版",
+  "short_name": "小六壬 v10.5.92",
+  "description": "小六壬个人网页版 v10.5.92：恢复章节卡点导航、顶部/底部位置与命盘子导航，继续保持单一源码主线。",
+  "start_url": "./?v=10.5.92",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
   "theme_color": "#6753a5",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
-    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
   ],
-  "version": "10.5.91"
+  "version": "10.5.92"
 }

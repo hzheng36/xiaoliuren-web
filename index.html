@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.91 深度清补丁与命盘功能恢复版</title>
-<meta content="小六壬个人网页版 v10.5.91 深度清补丁与命盘功能恢复版：扩大旧补丁缓存清理范围，恢复命运性别侧重与六亲排法选择，并把命盘四层解读写回源码主函数。" name="description"/>
+<title>小六壬占卜 · v10.5.92 源码导航恢复与命盘子导航版</title>
+<meta content="小六壬个人网页版 v10.5.92 源码导航恢复与命盘子导航版：恢复接近 v10.5.76 的章节卡点导航、顶部/底部位置设置、命运命盘子导航，并继续保持单一源码主线。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1037,6 +1037,90 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card,body.reading-theme-night .xlr-term-card{background:rgba(37,31,50,.78);border-color:rgba(229,196,138,.20);}
     body.reading-theme-night .xlr-guide-card b,body.reading-theme-night .xlr-term-card h5{color:#f6ead8;}
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
+
+
+/* 源码模块：导航恢复主样式（v10.5.92 写入主 CSS，不再后置补丁） */
+html, body, #resultCard, #resultCard .block, #resultCard .collapsible-block { overflow-anchor:none; }
+#sectionJumpNav.section-jump-nav,
+#destinySubNav.destiny-sub-nav {
+  position:fixed;
+  left:50%;
+  right:auto;
+  top:auto;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  z-index:58;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:6px;
+  width:auto;
+  max-width:calc(100vw - 92px);
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:4px;
+  border-radius:999px;
+  background:rgba(255,255,255,.76);
+  border:1px solid rgba(103,83,165,.10);
+  box-shadow:0 12px 28px rgba(66,49,109,.12);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  backdrop-filter:none;
+}
+#sectionJumpNav.section-jump-nav::-webkit-scrollbar,
+#destinySubNav.destiny-sub-nav::-webkit-scrollbar { display:none; }
+#sectionJumpNav .jump-chip,
+#destinySubNav .jump-chip {
+  flex:0 0 auto;
+  padding:8px 10px;
+  font-size:.78rem;
+  line-height:1;
+  box-shadow:none;
+  opacity:.76;
+  transform:none;
+}
+#sectionJumpNav .jump-chip:hover,
+#destinySubNav .jump-chip:hover { transform:none; opacity:1; }
+#sectionJumpNav .jump-chip.active,
+#destinySubNav .jump-chip.active {
+  opacity:1;
+}
+#sectionJumpNav .jump-chip.slot-active,
+#destinySubNav .jump-chip.slot-active {
+  opacity:1;
+  color:#fff;
+  border-color:rgba(103,83,165,.36);
+  background:linear-gradient(135deg, var(--primary), var(--primary-2));
+  box-shadow:0 10px 22px rgba(66,49,109,.16);
+}
+#sectionJumpNav .jump-chip.active:not(.slot-active),
+#destinySubNav .jump-chip.active:not(.slot-active) {
+  color:var(--primary);
+  background:rgba(255,255,255,.92);
+  border-color:rgba(103,83,165,.18);
+}
+#destinySubNav.destiny-sub-nav { z-index:59; display:none; bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px)); }
+#destinySubNav.destiny-sub-nav.show { display:flex; }
+body.xlr-nav-position-top #sectionJumpNav.section-jump-nav { top:max(14px, env(safe-area-inset-top)); bottom:auto; }
+body.xlr-nav-position-top #destinySubNav.destiny-sub-nav { top:max(70px, calc(env(safe-area-inset-top) + 70px)); bottom:auto; }
+body.xlr-nav-position-bottom #sectionJumpNav.section-jump-nav { bottom:max(14px, env(safe-area-inset-bottom)); top:auto; }
+body.xlr-nav-position-bottom #destinySubNav.destiny-sub-nav { bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px)); top:auto; }
+body.xlr-hide-section-nav #sectionJumpNav,
+body.xlr-hide-section-nav #destinySubNav,
+body.xlr-hide-section-nav #destinySubNav.show { display:none!important; }
+body.reading-theme-night #sectionJumpNav.section-jump-nav,
+body.reading-theme-night #destinySubNav.destiny-sub-nav { background:rgba(28,25,41,.78); border-color:rgba(255,255,255,.12); box-shadow:0 14px 30px rgba(0,0,0,.28); }
+body.reading-theme-night #sectionJumpNav .jump-chip,
+body.reading-theme-night #destinySubNav .jump-chip { background:rgba(36,31,52,.82); color:var(--text); border-color:rgba(255,255,255,.12); }
+body.reading-theme-night #sectionJumpNav .jump-chip.slot-active,
+body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:linear-gradient(135deg,#7357c8,#8a72dc); color:#fff; }
+@media(max-width:760px){
+  #sectionJumpNav.section-jump-nav,
+  #destinySubNav.destiny-sub-nav { max-width:calc(100vw - 76px); }
+  #sectionJumpNav .jump-chip,
+  #destinySubNav .jump-chip { padding:7px 9px; font-size:.76rem; }
+}
+
 .settings-mini-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
 @media(max-width:760px){ .settings-mini-grid { grid-template-columns:1fr; } }
 
@@ -1045,6 +1129,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 <body>
 <div aria-hidden="true" class="page-progress"><div id="pageProgressBar"></div></div>
 <nav aria-label="章节卡点导航" class="section-jump-nav" id="sectionJumpNav"></nav>
+<nav aria-label="命盘子模块导航" class="destiny-sub-nav" id="destinySubNav"></nav>
 <div class="shell">
 <aside class="sidebar card">
 <div class="brand-row">
@@ -1079,7 +1164,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.91 深度清补丁与命盘功能恢复版</h2>
+<h2>个人占卜台 · v10.5.92 源码导航恢复与命盘子导航版</h2>
 <p>本版继续加大“清补丁 + 恢复功能”的力度：旧缓存键清理范围扩大到历史补丁残留；命运场景恢复性别侧重、六亲排法选择、地支六神与五星参考，并全部写入源码主函数，不再靠后置补丁覆盖。</p>
 </div>
 <div class="actions">
@@ -2150,15 +2235,16 @@ function buildPaipanExplanation(result){
         const weak=ordered.filter(c=>['留连','赤口','空亡'].includes(c.palace)).map(c=>c.kin+'落'+c.palace).join('、') || '阻滞象不明显';
         const help=ordered.filter(c=>['大安','速喜','小吉'].includes(c.palace)).map(c=>c.kin+'落'+c.palace).join('、') || '助力象不明显';
         deep.innerHTML=`
-          <div class="destiny-deep-card full"><h5>📌 命盘阅读顺序</h5><p>先看 <strong>时宫/自身</strong>：${timePalace}、${timeBranch}、${selfEl}，再按六亲逐宫看人事主题。每一宫按四层信息合看：<strong>六亲 + 掌诀 + 地支六神 + 五星</strong>。</p><p>本盘三象主线为 <strong>${p0} → ${p1} → ${p2}</strong>，代表自身气象、关系助力与整体走向。</p></div>
-          <div class="destiny-deep-card"><h5>👤 自身底色</h5><p>${selfCell.kin}落${selfCell.palace}，时支${selfCell.branch}，六神${selfCell.spirit}。${p0==='速喜'?'起势偏快，反应灵敏，遇事容易先动起来。':p0==='大安'?'性格底色偏稳，重安全感和秩序，适合长期积累。':p0==='留连'?'思虑较多，容易反复考虑，重感受和旧经验。':p0==='赤口'?'表达和边界感较强，遇事容易直接判断。':p0==='小吉'?'性格中有柔和、善意和求和的一面，适合小步推进。':'内在感受较强，容易对未确定的事情敏感。'}</p></div>
-          <div class="destiny-deep-card"><h5>⏱ 处事节奏</h5><p>${p0}起头，${p1}过渡，${p2}收尾。${heavy?'阻滞象较明显，做大事宜预留时间，先处理卡点，再谈推进。':good?'顺象较多，适合主动把握机会，但也要看末象是否真正落实。':'顺阻参半，适合先小步试行，边走边核实。'}</p></div>
-          <div class="destiny-deep-card"><h5>🧲 助力来源</h5><p>${help}。这些位置更适合积累资源、主动请教或先取小成果。</p></div>
-          <div class="destiny-deep-card"><h5>⚠️ 阻力来源</h5><p>${weak}。留连多拖延旧事，赤口多沟通规则，空亡多虚与未定；不是定坏，而是提醒要核实、复盘、落地。</p></div>
-          <div class="destiny-deep-card"><h5>💼 事业与规则</h5><p>重点看官鬼宫及其掌诀、六神、五星。官鬼偏顺，适合承接责任；官鬼受阻，要注意压力、制度、上司、合同与健康节奏。</p></div>
-          <div class="destiny-deep-card"><h5>💰 财务与关系资源</h5><p>重点看妻财宫。${gender==='male'?'男命可兼看妻子、女友与钱财资源。':gender==='female'?'女命主要看钱财资产和现实资源，不直接把妻财作为丈夫主位。':'未指定性别时，妻财按钱财、资源、现实经营来读。'}见空亡要防未到账，见赤口要防合同争议。</p></div>
-          <div class="destiny-deep-card"><h5>🌙 情绪与自我观察</h5><p>留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p></div>
-          <div class="destiny-deep-card full"><h5>🧭 行动建议</h5><p>命运盘更适合做长期提醒卡：若起势强，就学会稳住；若起势慢，就学会持续；若末象虚，就多核实承诺；若末象稳，就长期积累。遇到重大选择时回头看：我是不是又陷入拖延、急躁、空想或过度保守？</p></div>
+          <div class="destiny-deep-card full" id="destinyReadOrder"><h5>📌 命盘阅读顺序</h5><p>先看 <strong>时宫/自身</strong>：${timePalace}、${timeBranch}、${selfEl}，再按六亲逐宫看人事主题。每一宫按四层信息合看：<strong>六亲 + 掌诀 + 地支六神 + 五星</strong>。</p><p>本盘三象主线为 <strong>${p0} → ${p1} → ${p2}</strong>，代表自身气象、关系助力与整体走向。</p></div>
+          <div class="destiny-deep-card" id="destinySelfCard"><h5>👤 自身底色</h5><p>${selfCell.kin}落${selfCell.palace}，时支${selfCell.branch}，六神${selfCell.spirit}。${p0==='速喜'?'起势偏快，反应灵敏，遇事容易先动起来。':p0==='大安'?'性格底色偏稳，重安全感和秩序，适合长期积累。':p0==='留连'?'思虑较多，容易反复考虑，重感受和旧经验。':p0==='赤口'?'表达和边界感较强，遇事容易直接判断。':p0==='小吉'?'性格中有柔和、善意和求和的一面，适合小步推进。':'内在感受较强，容易对未确定的事情敏感。'}</p></div>
+          <div class="destiny-deep-card" id="destinyPaceCard"><h5>⏱ 处事节奏</h5><p>${p0}起头，${p1}过渡，${p2}收尾。${heavy?'阻滞象较明显，做大事宜预留时间，先处理卡点，再谈推进。':good?'顺象较多，适合主动把握机会，但也要看末象是否真正落实。':'顺阻参半，适合先小步试行，边走边核实。'}</p></div>
+          <div class="destiny-deep-card" id="destinyHelpCard"><h5>🧲 助力来源</h5><p>${help}。这些位置更适合积累资源、主动请教或先取小成果。</p></div>
+          <div class="destiny-deep-card" id="destinyRiskCard"><h5>⚠️ 阻力来源</h5><p>${weak}。留连多拖延旧事，赤口多沟通规则，空亡多虚与未定；不是定坏，而是提醒要核实、复盘、落地。</p></div>
+          <div class="destiny-deep-card" id="v10523CareerBlock"><h5>💼 事业与规则</h5><p>重点看官鬼宫及其掌诀、六神、五星。官鬼偏顺，适合承接责任；官鬼受阻，要注意压力、制度、上司、合同与健康节奏。</p></div>
+          <div class="destiny-deep-card" id="destinyFinanceRelationBlock"><h5>💰 财务与关系资源</h5><p>重点看妻财宫。${gender==='male'?'男命可兼看妻子、女友与钱财资源。':gender==='female'?'女命主要看钱财资产和现实资源，不直接把妻财作为丈夫主位。':'未指定性别时，妻财按钱财、资源、现实经营来读。'}见空亡要防未到账，见赤口要防合同争议。</p></div>
+          <div class="destiny-deep-card" id="v1030DestinyHealth"><h5>🌿 健康与节奏参考</h5><p>命盘健康只作长期节奏提醒。留连、空亡多时注意拖延、睡眠和反复；赤口明显时注意急躁、炎症感和表达压力；大安、小吉多时适合建立稳定作息；速喜明显时注意节奏过快。</p></div>
+          <div class="destiny-deep-card" id="destinyEmotionBlock"><h5>🌙 情绪与自我观察</h5><p>留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p></div>
+          <div class="destiny-deep-card full" id="destinyActionCard"><h5>🧭 行动建议</h5><p>命运盘更适合做长期提醒卡：若起势强，就学会稳住；若起势慢，就学会持续；若末象虚，就多核实承诺；若末象稳，就长期积累。遇到重大选择时回头看：我是不是又陷入拖延、急躁、空想或过度保守？</p></div>
         `;
       }
       const note=document.getElementById('destinyBoardNote');
@@ -4099,7 +4185,7 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.91 深度清补丁与命盘功能恢复版', items:[
+        { v:'v10.5.92 源码导航恢复与命盘子导航版', items:[
           '加大清理力度：Debug 的“清理旧缓存键”改为白名单保留主数据，批量识别并清理旧补丁留下的 v9/v10、intent、snapshot、旧 Debug、旧字号、旧快捷按钮等缓存键。',
           '加大恢复力度：命运场景恢复性别侧重、六亲排法二选一，并使用源码主键保存，不再依赖 v1025/v10 旧补丁键。',
           '命盘结果恢复四层合看：六亲 + 掌诀 + 地支六神 + 五星；命运六宫按时宫/自身起排，加入青龙、朱雀、勾陈、腾蛇、白虎、玄武说明。',
@@ -4150,7 +4236,7 @@ function buildContextOverallSentence(context, details) {
           '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复第五步：扩大旧补丁缓存清理范围，同时把命运性别侧重、六亲排法、地支六神与五星解读写回源码主函数，保持单一主线。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第六步：优先恢复导航系统，把接近 v10.5.76 的章节卡点导航、顶部/底部位置设置、命运命盘子导航写回源码主函数，保持单一主线。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
@@ -4339,6 +4425,8 @@ function buildContextOverallSentence(context, details) {
     function applyUserSettingsToPage(){
       renderHomeInfoBlocks();
       const settings=getUserSettings();
+      document.body.classList.toggle('xlr-nav-position-top', settings.navPosition === 'top');
+      document.body.classList.toggle('xlr-nav-position-bottom', settings.navPosition !== 'top');
       const card=document.getElementById('resultCard');
       if(card){
         card.classList.toggle('hide-radar', !settings.showRadar);
@@ -5451,7 +5539,32 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    // 源码模块：智能章节卡点导航
+    // 源码模块：智能章节卡点导航（v10.5.92 主线恢复版）
+    const XLR_NAV_LOCK = { until:0, main:'', sub:'' };
+    function xlrNav$(id){ return document.getElementById(id); }
+    function applyNavPositionClass(){
+      let pos='bottom';
+      try{ const s=typeof getUserSettings==='function' ? getUserSettings() : {}; pos = s && s.navPosition === 'top' ? 'top' : 'bottom'; }catch(e){}
+      document.body.classList.toggle('xlr-nav-position-top', pos==='top');
+      document.body.classList.toggle('xlr-nav-position-bottom', pos!=='top');
+      return pos;
+    }
+    function sectionIsJumpVisible(el){
+      if(!el) return false;
+      if(el.classList && el.classList.contains('hidden')) return false;
+      if(el.closest && el.closest('.hidden')) return false;
+      const style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+      if(style && (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0')) return false;
+      const rect = el.getBoundingClientRect ? el.getBoundingClientRect() : {width:0,height:0};
+      return !!(rect.width || rect.height || el.offsetHeight || el.offsetWidth);
+    }
+    function getJumpMode(){
+      const result=xlrNav$('resultCard');
+      const active = document.body.classList.contains('result-page') && sectionIsJumpVisible(result);
+      if(!active) return 'home';
+      const isDestiny = document.body.classList.contains('result-destiny') || !!(window.currentResult && (window.currentResult.sceneKey==='destiny' || window.currentResult.sceneName==='命运'));
+      return isDestiny ? 'destiny' : 'result';
+    }
     const SECTION_JUMP_TARGETS = {
       home: [
         { id:'homeTopSection', label:'顶部' },
@@ -5462,98 +5575,246 @@ function buildContextOverallSentence(context, details) {
         { id:'homeVersionUpdatesBlockWrap', label:'版本' }
       ],
       result: [
-        { id:'homeTopSection', label:'顶部' },
         { id:'resultCard', label:'结果' },
         { id:'xlrQuickGuideBlock', label:'导读' },
         { id:'answerSummaryBlock', label:'答案' },
         { id:'sceneFocusBlock', label:'重心' },
-        { id:'abChoiceResultBlock', label:'A/B' },
-        { id:'paipanBlock', label:'排盘' },
-        { id:'destinyBoardBlock', label:'命盘' },
         { id:'overallBlock', label:'综合' },
         { id:'contextAnalysisBlock', label:'专项' },
+        { id:'paipanBlock', label:'排盘' },
         { id:'triReadingBlock', label:'三象' },
         { id:'singlePalaceBlock', label:'单宫' },
         { id:'doublePalaceBlock', label:'双宫' },
         { id:'symbolBlock', label:'象意' },
         { id:'radarBlock', label:'雷达' },
         { id:'adviceBlock', label:'建议' },
-        { id:'xlrGlossaryBlock', label:'术语' },
-        { id:'homeAboutRulesBlockWrap', label:'说明' }
+        { id:'xlrGlossaryBlock', label:'术语' }
+      ],
+      destiny: [
+        { id:'resultCard', label:'结果' },
+        { id:'xlrQuickGuideBlock', label:'导读' },
+        { id:'answerSummaryBlock', label:'答案' },
+        { id:'sceneFocusBlock', label:'重心' },
+        { id:'paipanBlock', label:'排盘' },
+        { id:'destinyBoardBlock', label:'命盘' },
+        { id:'overallBlock', label:'综合' },
+        { id:'triReadingBlock', label:'三象' },
+        { id:'radarBlock', label:'雷达' },
+        { id:'adviceBlock', label:'建议' },
+        { id:'xlrGlossaryBlock', label:'术语' }
       ]
     };
-    function sectionIsJumpVisible(el){
-      if(!el) return false;
-      if(el.classList && el.classList.contains('hidden')) return false;
-      if(el.closest && el.closest('.hidden')) return false;
-      const style = window.getComputedStyle ? window.getComputedStyle(el) : null;
-      if(style && (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0')) return false;
-      const rect = el.getBoundingClientRect();
-      return !!(rect.width || rect.height || el.offsetHeight || el.offsetWidth);
-    }
-    function getJumpMode(){
-      const result=document.getElementById('resultCard');
-      return (document.body.classList.contains('result-page') && sectionIsJumpVisible(result)) ? 'result' : 'home';
-    }
+    const DESTINY_SUB_TARGETS = [
+      { id:'destinyBoardIntro', label:'起盘' },
+      { id:'destinyBoardGrid', label:'六宫' },
+      { id:'destinyDeepContent', label:'深读' },
+      { id:'v10523CareerBlock', label:'事业' },
+      { id:'destinyFinanceRelationBlock', label:'财务' },
+      { id:'v1030DestinyHealth', label:'健康' },
+      { id:'destinyEmotionBlock', label:'情绪' },
+      { id:'destinyActionCard', label:'建议' }
+    ];
     function currentJumpTargets(){
-      const mode = getJumpMode();
-      const source = SECTION_JUMP_TARGETS[mode] || SECTION_JUMP_TARGETS.home;
-      return source.map(t => ({...t, el: document.getElementById(t.id)})).filter(t => sectionIsJumpVisible(t.el));
-    }
-    function stableJumpToSection(target, id){
-      if(!target) return;
-      try{ document.body.classList.add('xlr-nav-jumping'); }catch(e){}
-      const y = Math.max(0, Math.round(target.getBoundingClientRect().top + window.scrollY - 12));
-      try{ window.scrollTo({ top:y, behavior:'auto' }); }catch(e){ window.scrollTo(0,y); }
-      try{ history.replaceState(history.state || null, '', location.pathname + location.search); }catch(e){}
-      setTimeout(()=>{
-        try{ if(typeof updateSectionJumpNav === 'function') updateSectionJumpNav(); }catch(e){}
-        try{ document.body.classList.remove('xlr-nav-jumping'); }catch(e){}
-      }, 260);
-    }
-    function renderSectionJumpNav(){
-      const nav=document.getElementById('sectionJumpNav');
-      if(!nav) return;
-      const items=currentJumpTargets();
-      nav.innerHTML=items.map(t=>`<button class="jump-chip" type="button" data-jump-target="${t.id}" title="跳转到${t.label}"><span class="dot"></span>${t.label}</button>`).join('');
-      nav.querySelectorAll('[data-jump-target]').forEach(btn=>{
-        btn.addEventListener('click',(event)=>{
-          event.preventDefault();
-          const id=btn.getAttribute('data-jump-target');
-          const target=document.getElementById(id);
-          if(target) stableJumpToSection(target,id);
-        });
+      const mode=getJumpMode();
+      const source=SECTION_JUMP_TARGETS[mode] || SECTION_JUMP_TARGETS.home;
+      const seen={};
+      return source.map(t=>Object.assign({}, t, {el:xlrNav$(t.id)})).filter(t=>{
+        if(seen[t.id]) return false;
+        seen[t.id]=true;
+        return sectionIsJumpVisible(t.el);
       });
-      updateSectionJumpNav();
     }
-    function updateSectionJumpNav(){
-      const nav=document.getElementById('sectionJumpNav');
-      if(!nav) return;
-      const items=currentJumpTargets();
-      let activeId = items.length ? items[0].id : '';
-      const marker = (window.innerHeight || 700) * 0.28;
+    function currentDestinySubTargets(){
+      return DESTINY_SUB_TARGETS.map(t=>Object.assign({}, t, {el:xlrNav$(t.id)})).filter(t=>sectionIsJumpVisible(t.el));
+    }
+    function xlrNavCurrentId(items){
+      if(!items.length) return '';
+      const pos=applyNavPositionClass();
+      const marker = pos==='top' ? Math.max(92, (window.innerHeight||700)*0.18) : (window.innerHeight||700)*0.32;
+      let active=items[0].id;
       items.forEach(t=>{
         const top=t.el.getBoundingClientRect().top;
-        if(top <= marker) activeId=t.id;
+        if(top <= marker) active=t.id;
       });
-      nav.querySelectorAll('[data-jump-target]').forEach(btn=>btn.classList.toggle('active', btn.getAttribute('data-jump-target')===activeId));
+      return active;
     }
-    let __sectionJumpTimer = null;
+    function bindNavManualScroll(nav){
+      if(!nav || nav.dataset.navManualBound==='1') return;
+      nav.dataset.navManualBound='1';
+      const mark=()=>{ if(nav.dataset.navSyncing!=='1') nav.__manualUntil=Date.now()+900; };
+      nav.addEventListener('pointerdown', mark, {passive:true});
+      nav.addEventListener('touchstart', mark, {passive:true});
+      nav.addEventListener('wheel', mark, {passive:true});
+      nav.addEventListener('scroll', ()=>xlrNavUpdateSlot(nav), {passive:true});
+    }
+    function xlrNavSyncToActive(nav, selector, id, force){
+      if(!nav || !id) return;
+      bindNavManualScroll(nav);
+      if(!force && nav.__manualUntil && Date.now() < nav.__manualUntil) return;
+      const attr = selector.indexOf('destiny-sub') >= 0 ? 'data-destiny-sub-target' : 'data-jump-target';
+      const esc = window.CSS && CSS.escape ? CSS.escape(id) : String(id).replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+      const btn = nav.querySelector('['+attr+'="'+esc+'"]');
+      if(!btn) return;
+      const target = Math.max(0, Math.round(btn.offsetLeft + btn.offsetWidth/2 - nav.clientWidth/2));
+      if(Math.abs((nav.scrollLeft||0)-target) < 2) return;
+      nav.dataset.navSyncing='1';
+      try{ nav.scrollTo({left:target, behavior:'auto'}); }catch(e){ nav.scrollLeft=target; }
+      clearTimeout(nav.__syncTimer);
+      nav.__syncTimer=setTimeout(()=>{ nav.dataset.navSyncing='0'; xlrNavUpdateSlot(nav); }, 80);
+    }
+    function xlrNavUpdateSlot(nav){
+      if(!nav) return;
+      const selector = nav.id==='destinySubNav' ? '[data-destiny-sub-target]' : '[data-jump-target]';
+      const buttons=Array.from(nav.querySelectorAll(selector));
+      if(!buttons.length) return;
+      const nr=nav.getBoundingClientRect();
+      const center=nr.left + nr.width/2;
+      let best=null, dist=Infinity;
+      buttons.forEach(btn=>{
+        const r=btn.getBoundingClientRect();
+        if(r.right < nr.left+2 || r.left > nr.right-2) return;
+        const d=Math.abs((r.left+r.right)/2-center);
+        if(d<dist){ dist=d; best=btn; }
+      });
+      buttons.forEach(btn=>btn.classList.toggle('slot-active', btn===best));
+    }
+    function renderSectionJumpNav(){
+      applyNavPositionClass();
+      const nav=xlrNav$('sectionJumpNav');
+      if(!nav) return;
+      nav.classList.add('section-jump-nav');
+      const items=currentJumpTargets();
+      const keys=items.map(t=>t.id).join('|');
+      if(nav.getAttribute('data-nav-keys') !== keys){
+        nav.setAttribute('data-nav-keys', keys);
+        nav.innerHTML=items.map(t=>`<button class="jump-chip" type="button" data-jump-target="${t.id}" title="跳转到${t.label}"><span class="dot"></span>${t.label}</button>`).join('');
+        nav.scrollLeft=0;
+      }
+      const locked=XLR_NAV_LOCK.main && Date.now()<XLR_NAV_LOCK.until && items.some(t=>t.id===XLR_NAV_LOCK.main);
+      const activeId=locked ? XLR_NAV_LOCK.main : xlrNavCurrentId(items);
+      nav.querySelectorAll('[data-jump-target]').forEach(btn=>{
+        const active=btn.getAttribute('data-jump-target')===activeId;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+      xlrNavSyncToActive(nav, '[data-jump-target]', activeId, false);
+      xlrNavUpdateSlot(nav);
+    }
+    function destinyBoardInRange(){
+      if(getJumpMode() !== 'destiny') return false;
+      const board=xlrNav$('destinyBoardBlock');
+      if(!sectionIsJumpVisible(board)) return false;
+      const rect=board.getBoundingClientRect();
+      const y=window.scrollY||0;
+      const top=rect.top + y - 140;
+      const bottom=rect.bottom + y - 80;
+      return y >= top && y < bottom;
+    }
+    function renderDestinySubNav(){
+      const nav=xlrNav$('destinySubNav');
+      if(!nav) return;
+      nav.classList.add('destiny-sub-nav');
+      const items = destinyBoardInRange() ? currentDestinySubTargets() : [];
+      if(!items.length){
+        nav.classList.remove('show');
+        nav.setAttribute('data-nav-keys','');
+        nav.innerHTML='';
+        return;
+      }
+      const keys=items.map(t=>t.id).join('|');
+      if(nav.getAttribute('data-nav-keys') !== keys){
+        nav.setAttribute('data-nav-keys', keys);
+        nav.innerHTML=items.map(t=>`<button class="jump-chip" type="button" data-destiny-sub-target="${t.id}" title="跳转到${t.label}">${t.label}</button>`).join('');
+        nav.scrollLeft=0;
+      }
+      nav.classList.add('show');
+      const locked=XLR_NAV_LOCK.sub && Date.now()<XLR_NAV_LOCK.until && items.some(t=>t.id===XLR_NAV_LOCK.sub);
+      const activeId=locked ? XLR_NAV_LOCK.sub : xlrNavCurrentId(items);
+      nav.querySelectorAll('[data-destiny-sub-target]').forEach(btn=>{
+        const active=btn.getAttribute('data-destiny-sub-target')===activeId;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+      xlrNavSyncToActive(nav, '[data-destiny-sub-target]', activeId, false);
+      xlrNavUpdateSlot(nav);
+    }
+    function xlrNavTopOffset(){
+      const pos=applyNavPositionClass();
+      if(pos !== 'top') return 16;
+      let offset=18;
+      const main=xlrNav$('sectionJumpNav');
+      const sub=xlrNav$('destinySubNav');
+      if(main && window.getComputedStyle(main).display !== 'none') offset += (main.offsetHeight || 44) + 8;
+      if(sub && sub.classList.contains('show') && window.getComputedStyle(sub).display !== 'none') offset += (sub.offsetHeight || 44) + 8;
+      return Math.max(72, offset);
+    }
+    function stableJumpToSection(target, id, kind){
+      if(!target) return;
+      kind = kind || 'main';
+      const lockMs=920;
+      XLR_NAV_LOCK.until=Date.now()+lockMs;
+      if(kind==='sub') XLR_NAV_LOCK.sub=id; else XLR_NAV_LOCK.main=id;
+      try{ document.body.classList.add('xlr-nav-jumping'); }catch(e){}
+      const y=Math.max(0, Math.round(target.getBoundingClientRect().top + (window.scrollY||0) - xlrNavTopOffset()));
+      try{ history.replaceState(history.state || null, '', location.pathname + location.search); }catch(e){}
+      try{ window.scrollTo({ top:y, behavior:'auto' }); }catch(e){ window.scrollTo(0,y); }
+      updateSectionJumpNav();
+      setTimeout(()=>{ updateSectionJumpNav(); }, 90);
+      setTimeout(()=>{
+        try{ document.body.classList.remove('xlr-nav-jumping'); }catch(e){}
+        if(Date.now() >= XLR_NAV_LOCK.until-20){ if(kind==='sub') XLR_NAV_LOCK.sub=''; else XLR_NAV_LOCK.main=''; }
+        updateSectionJumpNav();
+      }, lockMs+40);
+    }
+    function updateSectionJumpNav(){
+      renderSectionJumpNav();
+      renderDestinySubNav();
+    }
+    let __sectionJumpTimer=null;
+    let __sectionJumpTicking=false;
     function refreshSectionJumpNavSoon(){
       clearTimeout(__sectionJumpTimer);
-      __sectionJumpTimer = setTimeout(renderSectionJumpNav, 80);
+      __sectionJumpTimer=setTimeout(()=>{
+        if(Date.now()<XLR_NAV_LOCK.until) return;
+        updateSectionJumpNav();
+      }, 60);
     }
-    window.addEventListener('scroll', updateSectionJumpNav, {passive:true});
+    function scheduleSectionJumpNav(){
+      if(Date.now()<XLR_NAV_LOCK.until) return;
+      if(__sectionJumpTicking) return;
+      __sectionJumpTicking=true;
+      requestAnimationFrame(()=>{ __sectionJumpTicking=false; if(Date.now()>=XLR_NAV_LOCK.until) updateSectionJumpNav(); });
+    }
+    window.addEventListener('click', function(event){
+      const btn = event.target && event.target.closest ? event.target.closest('#sectionJumpNav [data-jump-target], #destinySubNav [data-destiny-sub-target]') : null;
+      if(!btn) return;
+      const id=btn.getAttribute('data-jump-target') || btn.getAttribute('data-destiny-sub-target');
+      const target=xlrNav$(id);
+      if(!target) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      const nav=btn.closest('#sectionJumpNav,#destinySubNav');
+      const kind=nav && nav.id==='destinySubNav' ? 'sub' : 'main';
+      xlrNavSyncToActive(nav, kind==='sub'?'[data-destiny-sub-target]':'[data-jump-target]', id, true);
+      stableJumpToSection(target, id, kind);
+    }, true);
+    window.addEventListener('scroll', scheduleSectionJumpNav, {passive:true});
     window.addEventListener('resize', refreshSectionJumpNavSoon);
-    window.addEventListener('load', refreshSectionJumpNavSoon);
-
+    window.addEventListener('load', refreshSectionJumpNavSoon, {once:true});
+    try{
+      new MutationObserver(()=>{
+        clearTimeout(window.__xlrNavObserverTimer);
+        window.__xlrNavObserverTimer=setTimeout(()=>{ if(Date.now()>=XLR_NAV_LOCK.until) updateSectionJumpNav(); }, 120);
+      }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});
+    }catch(e){}
 
     initExtendedContextRules();
 
 
 
     /* 源码模块：Debug 诊断，只读状态，不改占卜逻辑 */
-    const XLR_SOURCE_VERSION = 'v10.5.91 深度清补丁与命盘功能恢复版';
+    const XLR_SOURCE_VERSION = 'v10.5.92 源码导航恢复与命盘子导航版';
     const XLR_DEBUG_LOG = [];
     function xlrDebugPush(type, detail){
       try{
@@ -5653,7 +5914,7 @@ function buildContextOverallSentence(context, details) {
         viewport:{ inner:{width:innerWidth,height:innerHeight}, outer:{width:outerWidth,height:outerHeight}, screen:{width:screen.width,height:screen.height,availWidth:screen.availWidth,availHeight:screen.availHeight}, devicePixelRatio:devicePixelRatio||1, scroll:{x:Math.round(scrollX||0),y:Math.round(scrollY||0),docHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight}, visualViewport:window.visualViewport?{width:Math.round(visualViewport.width),height:Math.round(visualViewport.height),offsetTop:Math.round(visualViewport.offsetTop),scale:visualViewport.scale}:null },
         versionAudit:{ expected:XLR_SOURCE_VERSION, title:document.title, meta:meta?meta.content:'', homeTitle, versionStrings:xlrDebugVersionStrings(), scriptCount, styleCount, duplicateIds:xlrDebugDuplicateIds(), legacyRuntimeTerms:{ delayedBootText:document.documentElement.innerHTML.includes('boot'+'-late')||document.documentElement.innerHTML.includes('load'+'-late'), versionLockResidue:document.documentElement.innerHTML.includes('version'+'Locked'), extraScriptCount:Math.max(0, scriptCount-1), legacyStorageKeys:xlrDebugLegacyStorageKeys() }, sourceRecovery:{ destinyGender:getDestinyGenderSource(), destinyKinship:getDestinyKinshipSource(), cleanupKeepKeys:Array.from(xlrSourceStorageKeepKeys()), renderDestinyBoard:typeof renderDestinyBoard } },
         result:{ currentResult:currentResultSafe, bodyClass:document.body.className, resultPage:document.body.classList.contains('result-page'), resultDestiny:document.body.classList.contains('result-destiny'), scene:xlrDebugText(document.getElementById('resultScene')), title:xlrDebugText(document.getElementById('resultTitle')), method:xlrDebugText(document.getElementById('resultMethod')), hexNodeCount:document.querySelectorAll('.hex-node').length },
-        navigation:{ main:xlrDebugBox('#sectionJumpNav'), items:Array.from(document.querySelectorAll('#sectionJumpNav [data-jump-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-jump-target'),className:btn.className,active:btn.classList.contains('active')})), targets:(typeof currentJumpTargets==='function'?currentJumpTargets().map(t=>({id:t.id,label:t.label,exists:!!t.el,visible:!!(t.el&&sectionIsJumpVisible(t.el)), box:xlrDebugBox(t.el)})):[]) },
+        navigation:{ main:xlrDebugBox('#sectionJumpNav'), sub:xlrDebugBox('#destinySubNav'), items:Array.from(document.querySelectorAll('#sectionJumpNav [data-jump-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-jump-target'),className:btn.className,active:btn.classList.contains('active'),slotActive:btn.classList.contains('slot-active')})), subItems:Array.from(document.querySelectorAll('#destinySubNav [data-destiny-sub-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-destiny-sub-target'),className:btn.className,active:btn.classList.contains('active'),slotActive:btn.classList.contains('slot-active')})), targets:(typeof currentJumpTargets==='function'?currentJumpTargets().map(t=>({id:t.id,label:t.label,exists:!!t.el,visible:!!(t.el&&sectionIsJumpVisible(t.el)), box:xlrDebugBox(t.el)})):[]), mode:(typeof getJumpMode==='function'?getJumpMode():'unknown') },
         quickButtons:Array.from(document.querySelectorAll('[data-xlr-quick]')).map(btn=>({text:xlrDebugText(btn),quick:btn.getAttribute('data-xlr-quick'),className:btn.className,box:xlrDebugBox(btn)})),
         blocks:Object.fromEntries(blocks.map(sel=>[sel.replace('#',''),xlrDebugBox(sel)])),
         settings:{ userSettings: typeof getUserSettings==='function'?getUserSettings():null, savedChoice: typeof getSavedChoices==='function'?getSavedChoices():null, viewMode: (()=>{try{return localStorage.getItem('xlr_view_mode_v9_1')}catch(e){return null}})() },
@@ -5711,7 +5972,7 @@ function buildContextOverallSentence(context, details) {
       fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
       const dlg=document.createElement('dialog');
       dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
-      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.91：扩大旧补丁缓存清理范围，并恢复命运性别侧重、六亲排法、地支六神与五星审计；只读页面状态，不改占卜逻辑。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugClearLegacyBtn">清理旧缓存键</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
+      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.92：恢复主章节导航、顶部/底部位置与命盘子导航审计；只读页面状态，不改占卜逻辑。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugClearLegacyBtn">清理旧缓存键</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
       document.body.appendChild(fab); document.body.appendChild(dlg);
       fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); xlrDebugOpenDialog(); });
       document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>xlrDebugCloseDialog());

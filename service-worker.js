@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.91-deep-clean-destiny-restore';
+const CACHE_NAME = 'xiaoliuren-v10.5.92-source-nav-restore';
 const APP_SHELL = [
   './',
   './index.html',
