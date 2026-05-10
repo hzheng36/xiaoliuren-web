@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.73 版本记录整理补齐版",
+  "name": "小六壬占卜 v10.5.74 Debug诊断增强版",
   "short_name": "小六壬",
-  "description": "小六壬个人网页版 v10.5.73 版本记录整理补齐版：修复版本内容更新重复、顺序错乱和缺失记录问题。",
-  "start_url": "./?v=10.5.73",
+  "description": "小六壬个人网页版 v10.5.74 Debug诊断增强版：升级 Debug 诊断系统，增加设置、导航、快捷按钮、字号、折叠、版本记录、本地存储、性能和错误日志等更多检测数据。",
+  "start_url": "./?v=10.5.74",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.73"
+  "version": "10.5.74"
 }
