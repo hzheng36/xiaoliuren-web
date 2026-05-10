@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>小六壬占卜 · v10.5.84 源码净化过渡版</title>
-  <meta name="description" content="小六壬个人网页版 v10.5.84 源码净化过渡版：继续以 v10.5.76 稳定版为回溯基准，进入深度清理阶段；先移除旧后置运行逻辑、旧诊断脚本、延迟覆盖脚本和重复版本写入，后续再把 v10.5.76 中确认需要保留的功能按主模块方式重写回来。" />
+  <title>小六壬占卜 · v10.5.85 源码内建Debug恢复版</title>
+  <meta name="description" content="小六壬个人网页版 v10.5.85 源码内建Debug恢复版：继续执行补丁回源码计划，在保持单一主脚本、单一主样式的前提下，把调试诊断能力以源码主模块方式写回，不再使用旧后置Debug补丁、保存日志补丁或版本抢写补丁。" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -962,7 +962,25 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
 .v10-palace-label{display:inline-block;margin-right:6px;color:var(--primary);font-weight:800;}
 @media (max-width: 760px){.destiny-kinship-options{grid-template-columns:1fr}.destiny-board-grid.v10-destiny-grid{grid-template-columns:1fr}.destiny-cell.v10-cell{min-height:auto}}
 
-</style>
+
+
+    /* v10.5.85 源码内建 Debug：主样式内置，不再追加后置样式块 */
+    .xlr-debug-fab{position:fixed;left:12px;bottom:max(18px,env(safe-area-inset-bottom));z-index:9998;border:0;border-radius:999px;padding:9px 13px;background:#1f1730;color:#fff;box-shadow:0 10px 28px rgba(31,23,48,.28);font-weight:850;font-size:12px;letter-spacing:.02em;display:flex;align-items:center;gap:6px;min-height:34px;}
+    .xlr-debug-dialog{width:min(760px,calc(100vw - 28px));max-height:min(82vh,760px);border:0;border-radius:20px;padding:0;box-shadow:0 24px 70px rgba(31,23,48,.32);background:#fffdfb;color:#241d33;}
+    .xlr-debug-dialog::backdrop{background:rgba(22,16,33,.42);backdrop-filter:blur(3px);}
+    .xlr-debug-head{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line,#eadfce);background:rgba(255,253,251,.96);}
+    .xlr-debug-head h3{margin:0;font-size:16px;}
+    .xlr-debug-head p{margin:5px 0 0;color:#6b617a;font-size:12px;line-height:1.6;}
+    .xlr-debug-body{padding:14px 16px 16px;display:grid;gap:12px;}
+    .xlr-debug-actions{display:flex;flex-wrap:wrap;gap:8px;}
+    .xlr-debug-actions button{width:auto;margin:0;border-radius:999px;border:1px solid rgba(188,133,65,.28);background:rgba(255,255,255,.86);color:#5a426d;padding:8px 12px;font-size:12px;font-weight:760;}
+    .xlr-debug-status{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;}
+    .xlr-debug-pill{border:1px solid rgba(188,133,65,.18);background:rgba(229,196,138,.10);border-radius:14px;padding:9px 10px;font-size:12px;line-height:1.55;}
+    .xlr-debug-pill b{display:block;color:#2d2540;font-size:13px;}
+    .xlr-debug-output{white-space:pre-wrap;word-break:break-word;max-height:48vh;overflow:auto;border:1px solid rgba(188,133,65,.20);border-radius:16px;background:#171321;color:#f8f3e8;padding:12px;font-size:11px;line-height:1.55;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;}
+    body.xlr-debug-hidden .xlr-debug-fab{display:none!important;}
+
+  </style>
 
 
 
@@ -1004,8 +1022,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     <main class="main">
       <header class="hero card" id="homeTopSection">
         <div>
-          <h2>个人占卜台 · v10.5.84 源码净化过渡版</h2>
-          <p>本版进入深度源码净化阶段：先把旧后置运行逻辑、旧诊断、延迟覆盖、重复版本写入继续清掉。诊断面板等功能暂不急着加回，后续会从 v10.5.76 稳定版中筛选需要保留的功能，再按源码主模块方式重写回来。</p>
+          <h2>个人占卜台 · v10.5.85 源码内建Debug恢复版</h2>
+          <p>本版开始把必要功能按源码主模块方式恢复：先恢复内建 Debug 诊断，但继续保持单一主脚本、单一主样式，不再追加后置补丁。Debug 只读取页面状态、复制诊断日志，不改动占卜逻辑。</p>
         </div>
         <div class="actions">
           <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -4248,28 +4266,32 @@ ${nextStep}`;
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.85 源码内建Debug恢复版', items:[
+          '在继续清补丁的前提下，先把 Debug 诊断能力按源码主模块方式写回。',
+          'Debug 模块现在由主脚本统一创建按钮、弹窗、审计、复制日志，不再依赖旧 v10514/v10546/v10574/v10581/v10582 后置诊断脚本。',
+          '继续保持单一主脚本与单一主样式，避免多个版本脚本互相抢 title、版本号、导航、字体或日志。',
+          'Debug 只读取页面状态、复制诊断信息，不修改占卜结果、不抢版本、不做多阶段延迟覆盖。',
+          '页面 title、首页版本、版本内容更新、README、manifest、service-worker 缓存名统一到 v10.5.85。'
+        ]},
         { v:'v10.5.84 源码净化过渡版', items:[
-          '继续以 v10.5.76 稳定版为回溯基准，进入深度源码净化阶段。',
-          '移除旧后置运行逻辑、旧诊断、旧保存日志、重复版本写入、延迟覆盖和后置增强脚本。',
-          '当前版本暂时不追求功能完整，诊断等被移除功能后续会从 v10.5.76 稳定版重新按主模块方式写回。',
-          '页面 title、首页版本、版本内容更新、README、manifest、service-worker 缓存名统一到 v10.5.84。',
-          '后续恢复功能时遵守原则：不再追加后置脚本，不再使用延迟启动/延迟加载，不再用版本抢写兜底。'
+          '继续以 v10.5.76 稳定版为回溯基准，移除旧运行补丁、旧 Debug/诊断、旧保存日志、重复版本写入、延迟覆盖和后置增强脚本。',
+          '当前版本暂时不追求功能完整，先把运行残留清掉。'
         ]},
         { v:'v10.5.83 源码整合清理版', items:[
-          '第一步从 v10.5.76 回退并清理最明显的版本锁定、增强诊断和日志保存残留。',
-          '发现仍有不少旧版本脚本留在源码末尾，因此 v10.5.84 继续做更深一层清理。'
+          '第一步从 v10.5.76 回退并清理最明显的版本锁定、增强诊断和日志保存残留。'
         ]},
         { v:'v10.5.76 稳定回溯基准', items:[
           '命运导读电脑端布局较稳定，作为后续功能恢复的参考基线。',
           '后续只把确认需要的能力按正式源码模块重写回来，不直接照搬后置运行脚本。'
         ]},
         { v:'后续恢复方向', items:[
-          '先恢复基础可用性：起课、结果渲染、历史记录、设置、阅读模式、快捷按钮。',
-          '再恢复学习模块：导读、术语解释、口诀、命盘健康/婚姻/事业子模块。',
-          '最后重写诊断模块：只做一个源码内建诊断模块，不再作为后置运行逻辑挂载。'
+          '基础：起课、结果渲染、历史记录、设置、阅读模式、快捷按钮。',
+          '学习：快速导读、术语解释、口诀、三象、单宫/双宫断事。',
+          '命运：命盘、健康、婚姻、事业子模块与对应导航。',
+          '诊断：只保留源码内建 Debug，不再恢复旧后置诊断脚本。'
         ]}
       ];
-      return `<div class="version-log-note">当前处于源码净化过渡阶段：功能会先减少，等旧运行残留清干净后，再把 v10.5.76 中确认稳定的功能按主模块方式恢复。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第一步：Debug 已按主模块写回，但继续保持无后置补丁、无版本抢写、无延迟覆盖。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
@@ -5511,7 +5533,126 @@ ${nextStep}`;
     installV87ExpandedRules();
 
 
+
+    /* v10.5.85 源码内建 Debug 模块：主脚本内置，只读诊断，不改占卜逻辑 */
+    const XLR_SOURCE_VERSION = 'v10.5.85 源码内建Debug恢复版';
+    const XLR_DEBUG_LOG = [];
+    function xlrDebugPush(type, detail){
+      try{
+        XLR_DEBUG_LOG.push({ time:new Date().toLocaleTimeString(), type, detail:String(detail||'').slice(0,240), scrollY:Math.round(window.scrollY||0), bodyClass:document.body?.className||'' });
+        if(XLR_DEBUG_LOG.length>30) XLR_DEBUG_LOG.shift();
+      }catch(e){}
+    }
+    window.addEventListener('error', e=>xlrDebugPush('error', (e.message||'')+' @ '+(e.filename||'')+':'+(e.lineno||'')), true);
+    window.addEventListener('unhandledrejection', e=>xlrDebugPush('promise', e.reason && (e.reason.stack||e.reason.message||e.reason) || 'unhandled rejection'), true);
+    window.addEventListener('click', e=>{
+      const t=e.target && e.target.closest ? e.target.closest('button,[data-jump-target],[data-v9919-quick],summary,a') : null;
+      if(t) xlrDebugPush('click', (t.textContent||t.id||t.className||t.tagName||'').trim());
+    }, true);
+    function xlrDebugText(el){ return el ? (el.textContent||'').replace(/\s+/g,' ').trim().slice(0,180) : ''; }
+    function xlrDebugBox(selector){
+      const el=typeof selector==='string'?document.querySelector(selector):selector;
+      if(!el) return { exists:false };
+      const st=window.getComputedStyle?getComputedStyle(el):null;
+      const r=el.getBoundingClientRect?el.getBoundingClientRect():{top:0,left:0,width:0,height:0,bottom:0,right:0};
+      return { exists:true, id:el.id||'', tag:el.tagName||'', className:el.className||'', display:st?st.display:'', visibility:st?st.visibility:'', position:st?st.position:'', rect:{top:Math.round(r.top),left:Math.round(r.left),width:Math.round(r.width),height:Math.round(r.height),bottom:Math.round(r.bottom),right:Math.round(r.right)}, offsetHeight:el.offsetHeight||0, hiddenClass:!!(el.classList&&el.classList.contains('hidden')), text:xlrDebugText(el) };
+    }
+    function xlrDebugStorage(keys){
+      const out={ totalKeys:0, matchingKeys:[], known:{} };
+      try{
+        out.totalKeys=localStorage.length;
+        for(let i=0;i<localStorage.length;i++){
+          const key=localStorage.key(i);
+          if(/^xlr_|^xiaoliuren_/.test(key)) out.matchingKeys.push(key);
+        }
+        (keys||[]).forEach(key=>{
+          const raw=localStorage.getItem(key);
+          if(raw==null){ out.known[key]=null; return; }
+          try{ out.known[key]=JSON.parse(raw); }catch(e){ out.known[key]=raw; }
+        });
+      }catch(e){ out.error=String(e.message||e); }
+      return out;
+    }
+    function xlrDebugDuplicateIds(){
+      const seen={}, dup=[];
+      document.querySelectorAll('[id]').forEach(el=>{
+        const id=el.id; seen[id]=(seen[id]||0)+1;
+      });
+      Object.keys(seen).forEach(id=>{ if(seen[id]>1) dup.push({id,count:seen[id]}); });
+      return dup;
+    }
+    function xlrDebugVersionStrings(){
+      const html=document.documentElement.innerHTML;
+      const list=(html.match(/v\d+\.\d+(?:\.\d+)?[^<"\n]{0,34}/g)||[]).filter(Boolean);
+      const map={}; list.forEach(v=>{ map[v]=(map[v]||0)+1; });
+      return Object.keys(map).sort((a,b)=>map[b]-map[a]).slice(0,30).map(version=>({version,count:map[version]}));
+    }
+    function xlrDebugCollect(reason){
+      const meta=document.querySelector('meta[name="description"]');
+      const scriptCount=document.querySelectorAll('script').length;
+      const styleCount=document.querySelectorAll('style').length;
+      const homeTitle=Array.from(document.querySelectorAll('h2')).map(x=>xlrDebugText(x)).filter(x=>x.includes('个人占卜台'));
+      const currentResultSafe = (typeof currentResult !== 'undefined' && currentResult) ? {
+        sceneKey:currentResult.sceneKey, sceneName:currentResult.sceneName, method:currentResult.method, numbers:currentResult.numbers, palaces:currentResult.palaces
+      } : null;
+      const blocks=['#resultCard','#v10510QuickGuideBlock','#answerSummaryBlock','#sceneFocusBlock','#paipanBlock','#destinyBoardBlock','#overallBlock','#triReadingBlock','#singlePalaceBlock','#doublePalaceBlock','#symbolBlock','#radarBlock','#adviceBlock','#v10510GlossaryBlock','#v10536DestinyGlossaryBlock','#homeAboutRulesBlockWrap','#homeVersionUpdatesBlockWrap'];
+      return {
+        version:XLR_SOURCE_VERSION,
+        reason:reason||'manual',
+        generatedAt:new Date().toISOString(),
+        environment:{ url:location.href, title:document.title, metaDescription:meta?meta.content:'', userAgent:navigator.userAgent, language:navigator.language, online:navigator.onLine, serviceWorkerController:navigator.serviceWorker&&navigator.serviceWorker.controller?navigator.serviceWorker.controller.scriptURL:null },
+        viewport:{ inner:{width:innerWidth,height:innerHeight}, outer:{width:outerWidth,height:outerHeight}, screen:{width:screen.width,height:screen.height,availWidth:screen.availWidth,availHeight:screen.availHeight}, devicePixelRatio:devicePixelRatio||1, scroll:{x:Math.round(scrollX||0),y:Math.round(scrollY||0),docHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight}, visualViewport:window.visualViewport?{width:Math.round(visualViewport.width),height:Math.round(visualViewport.height),offsetTop:Math.round(visualViewport.offsetTop),scale:visualViewport.scale}:null },
+        versionAudit:{ expected:XLR_SOURCE_VERSION, title:document.title, meta:meta?meta.content:'', homeTitle, versionStrings:xlrDebugVersionStrings(), scriptCount, styleCount, duplicateIds:xlrDebugDuplicateIds(), legacyRuntimeTerms:{ bootLate:document.documentElement.innerHTML.includes('boot'+'-late'), loadLate:document.documentElement.innerHTML.includes('load'+'-late'), versionLockResidue:document.documentElement.innerHTML.includes('version'+'Locked'), oldDebugIds:['v10514'+'DebugFab','v10546'+'DebugSaveBtn','v10581'+'DebugSaveBtn','v10582'+'DebugCopyBtn'].filter(id=>document.getElementById(id)) } },
+        result:{ currentResult:currentResultSafe, bodyClass:document.body.className, resultPage:document.body.classList.contains('result-page'), resultDestiny:document.body.classList.contains('result-destiny'), scene:xlrDebugText(document.getElementById('resultScene')), title:xlrDebugText(document.getElementById('resultTitle')), method:xlrDebugText(document.getElementById('resultMethod')), hexNodeCount:document.querySelectorAll('.hex-node').length },
+        navigation:{ main:xlrDebugBox('#sectionJumpNav'), items:Array.from(document.querySelectorAll('#sectionJumpNav [data-jump-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-jump-target'),className:btn.className,active:btn.classList.contains('active')})), targets:(typeof currentJumpTargets==='function'?currentJumpTargets().map(t=>({id:t.id,label:t.label,exists:!!t.el,visible:!!(t.el&&sectionIsJumpVisible(t.el)), box:xlrDebugBox(t.el)})):[]) },
+        quickButtons:Array.from(document.querySelectorAll('[data-v9919-quick]')).map(btn=>({text:xlrDebugText(btn),quick:btn.getAttribute('data-v9919-quick'),className:btn.className,box:xlrDebugBox(btn)})),
+        blocks:Object.fromEntries(blocks.map(sel=>[sel.replace('#',''),xlrDebugBox(sel)])),
+        settings:{ userSettings: typeof getUserSettings==='function'?getUserSettings():null, savedChoice: typeof getSavedChoices==='function'?getSavedChoices():null, viewMode: (()=>{try{return localStorage.getItem('xlr_view_mode_v9_1')}catch(e){return null}})() },
+        storage:xlrDebugStorage(['xlr_user_settings_v9_1','xlr_saved_choice_v9_1','xlr_history_v7','xlr_view_mode_v9_1','xiaoliuren_client_mode_v9914']),
+        functions:{ renderResult:typeof renderResult, currentJumpTargets:typeof currentJumpTargets, renderBoard:typeof renderBoard, renderDestinyBoard:typeof renderDestinyBoard, renderRadar:typeof renderRadar, buildVersionUpdatesHTML:typeof buildVersionUpdatesHTML },
+        recentEvents:XLR_DEBUG_LOG.slice(-20)
+      };
+    }
+    function xlrDebugRender(reason){
+      const data=xlrDebugCollect(reason||'render');
+      const out=document.getElementById('xlrDebugOutput');
+      const status=document.getElementById('xlrDebugStatus');
+      if(status){
+        status.innerHTML=[
+          ['版本', data.version], ['脚本/样式', `${data.versionAudit.scriptCount} / ${data.versionAudit.styleCount}`], ['重复ID', data.versionAudit.duplicateIds.length], ['旧Debug残留', data.versionAudit.legacyRuntimeTerms.oldDebugIds.length], ['结果页', data.result.resultPage?'是':'否'], ['当前场景', data.result.currentResult?data.result.currentResult.sceneName:'无结果']
+        ].map(([k,v])=>`<div class="xlr-debug-pill"><b>${k}</b>${v}</div>`).join('');
+      }
+      if(out) out.textContent=JSON.stringify(data,null,2);
+      return data;
+    }
+    function xlrDebugEnsureUi(){
+      if(document.getElementById('xlrDebugFab')) return;
+      const fab=document.createElement('button');
+      fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
+      const dlg=document.createElement('dialog');
+      dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
+      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.85：只读取页面状态，不改占卜逻辑；用于检查版本、导航、折叠、历史和设置。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
+      document.body.appendChild(fab); document.body.appendChild(dlg);
+      fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','open'); });
+      document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
+      document.getElementById('xlrDebugRefreshBtn')?.addEventListener('click',()=>xlrDebugRender('manual-audit'));
+      document.getElementById('xlrDebugCopyBtn')?.addEventListener('click',()=>{
+        const data=xlrDebugCollect('copy-log');
+        const text=JSON.stringify(data,null,2);
+        const out=document.getElementById('xlrDebugOutput'); if(out) out.textContent=text;
+        const done=()=>{ const btn=document.getElementById('xlrDebugCopyBtn'); if(btn){ const old=btn.textContent; btn.textContent='已复制'; setTimeout(()=>btn.textContent=old,900); } };
+        if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(()=>{ prompt('复制下面的 Debug 日志', text); }); }
+        else prompt('复制下面的 Debug 日志', text);
+      });
+      document.getElementById('xlrDebugHideBtn')?.addEventListener('click',()=>{ document.body.classList.add('xlr-debug-hidden'); try{localStorage.setItem('xlr_debug_hidden_v10585','1')}catch(e){}; if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); });
+      try{ if(localStorage.getItem('xlr_debug_hidden_v10585')==='1') document.body.classList.add('xlr-debug-hidden'); }catch(e){}
+    }
+    function initSourceDebug(){ xlrDebugEnsureUi(); }
+    window.XLRDebug = { collect:xlrDebugCollect, render:xlrDebugRender, show:()=>{ const d=document.getElementById('xlrDebugDialog'); xlrDebugRender('manual-show'); if(d&&d.showModal)d.showModal(); else if(d)d.setAttribute('open','open'); }, unhide:()=>{document.body.classList.remove('xlr-debug-hidden'); try{localStorage.removeItem('xlr_debug_hidden_v10585')}catch(e){} } };
+
+
     init();
+    initSourceDebug();
     refreshSectionJumpNavSoon();
   </script>
 
