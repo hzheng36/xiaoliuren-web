@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-107-destiny-topic-paipan-font';
+const CACHE_NAME = 'xiaoliuren-v10-5-108-destiny-font-spacing';
 const APP_SHELL = [
   './',
   './index.html',

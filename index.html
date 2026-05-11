@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.107 命盘专题扩展与排盘字号修复版</title>
-<meta content="小六壬个人网页版 v10.5.107 命盘专题扩展与排盘字号修复版：继续清补丁回主源码，扩展命盘总览、财运、家宅文书、人际竞争、子女成果与长期倾向，恢复接近 v10.5.76 的排盘卡片样式，并修复阅读字号全局生效与命盘六宫序号重叠。" name="description"/>
+<title>小六壬占卜 · v10.5.108 命盘字号与六宫间距主源码修复版</title>
+<meta content="小六壬个人网页版 v10.5.108 命盘字号与六宫间距主源码修复版：在 v10.5.107 命盘专题扩展基础上，继续清补丁回主源码，修复命盘区域阅读字号异常放大、字号切换叠加生效和命盘六宫地支/序号贴近问题，并增加字号一致性自检。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -872,7 +872,7 @@ body.result-page.force-desktop-mode .shell {
 body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
 
-/* 源码主模块：首页与占卜结果页分离（v10.5.107 延续）
+/* 源码主模块：首页与占卜结果页分离（v10.5.108 延续）
    目标：参考 v10.5.76 稳定逻辑，进入结果页后只显示结果卡片；返回主页/重新占卜后再显示主页输入区。 */
 body.result-page .sidebar,
 body.result-page #homeTopSection,
@@ -955,7 +955,7 @@ body:not(.result-page) #resultCard.hidden {
     .destiny-deep-card p { margin: 6px 0; line-height: 1.75; color: var(--muted); }
     .destiny-deep-card strong { color: var(--ink); }
 
-    /* 源码主模块：命盘专题详细内容（v10.5.107） */
+    /* 源码主模块：命盘专题详细内容（v10.5.108） */
     .destiny-topic-card.full { grid-column: 1 / -1; }
     .destiny-topic-note { margin: 8px 0 12px; padding: 12px 14px; border-radius: 16px; border: 1px solid rgba(124,112,178,.16); background: rgba(255,255,255,.72); color: var(--muted); line-height: 1.75; }
     .destiny-topic-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-top:12px; }
@@ -1046,7 +1046,7 @@ body:not(.result-page) #resultCard.hidden {
 
 
 
-/* 源码主模块：v10.5.107 阅读字号全局化、排盘卡片恢复与命盘六宫防重叠 */
+/* 源码主模块：v10.5.108 阅读字号全局化、排盘卡片恢复与命盘六宫防重叠 */
 body.reading-size-small { font-size: 15px; }
 body.reading-size-normal { font-size: 16px; }
 body.reading-size-large { font-size: 17.5px; }
@@ -1198,8 +1198,219 @@ body.reading-theme-night .v105107-paipan-tag.empty { background:rgba(255,255,255
   .v105107-paipan-cell{min-height:0;}
 }
 
-    /* 源码模块：Debug 主源码样式（v10.5.107，含命盘、暗夜主题、历史回看与结果页分离自检） */
-/* 小六壬 v10.5.107 Debug 主源码样式 */
+
+
+/* 源码主模块：v10.5.108 命盘字号与六宫间距最终归一
+   目标：字号不再按 body 与卡片重复叠加；命盘六宫地支与右上序号彻底拉开。 */
+body.reading-size-small { --xlr-font-body: 15px; --xlr-font-small: 13.5px; --xlr-font-note: 14px; --xlr-font-head: 16.5px; --xlr-font-title: 18px; --xlr-reading-scale: .94; }
+body.reading-size-normal { --xlr-font-body: 16px; --xlr-font-small: 14px; --xlr-font-note: 15px; --xlr-font-head: 17px; --xlr-font-title: 19px; --xlr-reading-scale: 1; }
+body.reading-size-large { --xlr-font-body: 17px; --xlr-font-small: 15px; --xlr-font-note: 16px; --xlr-font-head: 18.5px; --xlr-font-title: 20.5px; --xlr-reading-scale: 1.06; }
+body.reading-size-xlarge { --xlr-font-body: 18px; --xlr-font-small: 16px; --xlr-font-note: 17px; --xlr-font-head: 20px; --xlr-font-title: 22px; --xlr-reading-scale: 1.12; }
+body .hero,
+body .card,
+body dialog,
+body .block,
+body .reading-card,
+body .gua-card,
+body .answer-card,
+body .context-card,
+body .summary-item,
+body .focus-card,
+body .question-linked,
+body .rule-note,
+body .version-log-note,
+body .history-card,
+body .analysis-table,
+body .template-card,
+body .rule-card,
+body .paipan-explain,
+body .paipan-explain-card,
+body .destiny-summary,
+body .destiny-cell,
+body .destiny-deep,
+body .destiny-deep-card,
+body .destiny-topic-card,
+body .destiny-topic-mini,
+body .destiny-source-panel,
+body .destiny-source-formula,
+body .xlr-guide-card,
+body .xlr-term-card {
+  font-size: var(--xlr-font-body) !important;
+}
+body .block p,
+body .block li,
+body .answer-card p,
+body .answer-card li,
+body .reading-card p,
+body .reading-card li,
+body .gua-card p,
+body .gua-card li,
+body .paipan-explain,
+body .paipan-explain-card,
+body .destiny-summary,
+body .destiny-cell p,
+body .destiny-cell li,
+body .destiny-cell .destiny-lines,
+body .destiny-cell .destiny-analysis,
+body .destiny-deep-card p,
+body .destiny-deep-card li,
+body .destiny-topic-mini p,
+body .destiny-topic-mini li,
+body .destiny-topic-note,
+body .overall-rich,
+body .history-card,
+body dialog p,
+body dialog li {
+  font-size: var(--xlr-font-body) !important;
+  line-height: 1.75 !important;
+}
+body small,
+body .mini,
+body .subtle,
+body .muted,
+body .palace-meta,
+body .tool-folder-note,
+body .destiny-note,
+body .destiny-topic-muted,
+body .destiny-topic-pill,
+body .destiny-cell.v10-cell .mark,
+body .v105107-paipan-meta,
+body .v105107-paipan-tag {
+  font-size: var(--xlr-font-note) !important;
+  line-height: 1.65 !important;
+}
+body .block h4,
+body .reading-card h5,
+body .gua-card h5,
+body .answer-card h5,
+body .context-card h5,
+body .focus-card h5,
+body .destiny-cell h5,
+body .destiny-deep-card h5,
+body .destiny-topic-mini h6,
+body .settings-card h4,
+body .rule-card h4 {
+  font-size: var(--xlr-font-head) !important;
+  line-height: 1.42 !important;
+}
+body .result-header h3,
+body .section-title h3,
+body .hero h2,
+body .palace-card h5 {
+  font-size: var(--xlr-font-title) !important;
+  line-height: 1.35 !important;
+}
+/* 命盘深读不允许被已展开/详情卡片再次放大 */
+#destinyDeepContent,
+#destinyDeepContent .destiny-deep-card,
+#destinyDeepContent .destiny-topic-card,
+#destinyDeepContent .destiny-topic-mini,
+#destinyReadOrder,
+#destinySelfCard,
+#v10523CareerBlock,
+#destinyFinanceRelationBlock,
+#destinyFamilyDocBlock,
+#destinyRelationBlock,
+#destinyChildrenOutputBlock,
+#destinyMarriageBlock,
+#v1030DestinyHealth,
+#destinyLongTermBlock {
+  font-size: var(--xlr-font-body) !important;
+}
+#destinyDeepContent .destiny-deep-card p,
+#destinyDeepContent .destiny-topic-mini p,
+#destinyDeepContent .destiny-topic-mini li,
+#destinyDeepContent .destiny-topic-note {
+  font-size: var(--xlr-font-body) !important;
+  line-height: 1.76 !important;
+}
+#destinyDeepContent .destiny-topic-table,
+#destinyDeepContent .destiny-topic-table table,
+#destinyDeepContent .destiny-topic-table th,
+#destinyDeepContent .destiny-topic-table td {
+  font-size: var(--xlr-font-small) !important;
+  line-height: 1.55 !important;
+}
+/* 命盘六宫：标题从“左右挤压”改成“左侧流式标题 + 右上角独立序号” */
+.destiny-board-grid.v10-destiny-grid,
+#destinyBoardGrid.destiny-board-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+.destiny-cell.v10-cell {
+  position: relative !important;
+  overflow: visible !important;
+  padding: 17px 16px 16px !important;
+  padding-right: 76px !important;
+  min-height: 0 !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+.destiny-cell.v10-cell .corner-index {
+  position: absolute !important;
+  top: 14px !important;
+  right: 14px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  z-index: 3 !important;
+  font-size: var(--xlr-font-small) !important;
+  font-weight: 900 !important;
+}
+.destiny-cell.v10-cell h5 {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: baseline !important;
+  flex-wrap: wrap !important;
+  gap: 6px 10px !important;
+  padding: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 0 8px !important;
+  min-height: 34px !important;
+  max-width: calc(100% - 4px) !important;
+}
+.destiny-cell.v10-cell h5 span:first-child {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+.destiny-cell.v10-cell .branch {
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 1px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(184,97,79,.10) !important;
+  color: #d06d59 !important;
+  font-size: var(--xlr-font-note) !important;
+  line-height: 1.35 !important;
+  font-weight: 900 !important;
+}
+.destiny-cell.v10-cell .mark-row {
+  clear: both !important;
+  margin-top: 8px !important;
+}
+@media(max-width:760px){
+  .destiny-board-grid.v10-destiny-grid,
+  #destinyBoardGrid.destiny-board-grid { grid-template-columns: 1fr !important; }
+  .destiny-cell.v10-cell { padding-right: 82px !important; }
+  .destiny-cell.v10-cell .corner-index { right: 16px !important; top: 16px !important; }
+  .destiny-cell.v10-cell h5 { padding-right: 0 !important; }
+}
+@media(max-width:430px){
+  body.reading-size-xlarge { --xlr-font-body: 17.5px; --xlr-font-head: 19px; --xlr-font-title: 21px; }
+  .destiny-cell.v10-cell { padding-right: 78px !important; }
+  .destiny-cell.v10-cell .branch { font-size: 15px !important; }
+}
+
+    /* 源码模块：Debug 主源码样式（v10.5.108，含命盘、暗夜主题、历史回看与结果页分离自检） */
+/* 小六壬 v10.5.108 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1539,7 +1750,7 @@ body.reading-theme-night canvas,
 body.reading-theme-night img,
 body.reading-theme-night svg { filter:none !important; }
 
-/* 源码主模块：暗夜主题关键残留清理（v10.5.107 延续） */
+/* 源码主模块：暗夜主题关键残留清理（v10.5.108 延续） */
 body.reading-theme-night .feature-item,
 body.reading-theme-night .ab-choice-panel,
 body.reading-theme-night .ab-toggle,
@@ -1682,7 +1893,7 @@ body.reading-theme-night ::-webkit-scrollbar-thumb {
 
 
 
-/* 源码主模块：暗夜弹窗与历史残留最终清理（v10.5.107 延续） */
+/* 源码主模块：暗夜弹窗与历史残留最终清理（v10.5.108 延续） */
 body.reading-theme-night dialog,
 body.reading-theme-night #historyDialog,
 body.reading-theme-night #settingsDialog,
@@ -1972,8 +2183,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.107 命盘专题扩展与排盘字号修复版</h2>
-<p>本版继续执行“补丁回源码计划”：在首页/结果页分离稳定基础上，参考 v10.5.76 的命盘健康、婚姻与事业专题，把详细内容直接写回主源码，继续减少后置补丁和功能散落。</p>
+<h2>个人占卜台 · v10.5.108 命盘字号与六宫间距主源码修复版</h2>
+<p>本版继续执行“补丁回源码计划”：在 v10.5.107 命盘专题扩展基础上，重点修复命盘区域阅读字号异常放大、字号切换残留和六宫地支/序号贴近问题，继续全部写回主源码。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -2452,7 +2663,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.107 命盘专题扩展与排盘字号修复版';
+    const XLR_SOURCE_VERSION = 'v10.5.108 命盘字号与六宫间距主源码修复版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -3412,7 +3623,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.107',
+      source: 'mainline-v10.5.108',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5294,12 +5505,17 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.107 命盘专题扩展与排盘字号修复版', items:[
-          '命盘在健康、婚姻、事业专题恢复基础上继续扩展：新增命盘总览、财运与资源、父母/家宅/文书、人际/兄弟/竞争、子女/成果/输出、长期人生倾向总结。',
-          '阅读字号设置改为全局生效：不仅影响结果卡片，也覆盖首页、历史、分析、弹窗、导读、术语、命盘专题与排盘说明。',
-          '六宫排盘恢复为更接近 v10.5.76 的卡片式布局，手机端不再使用占位较大的中心环形排盘，阅读更直接。',
-          '修复命盘六宫卡片里右上序号与地支/时辰文字接近重叠的问题，统一标题留白和角标安全区域。',
+        { v:'v10.5.108 命盘字号与六宫间距主源码修复版', items:[
+          '修复命盘区域阅读字号异常放大：取消 body、card、detail-only、destiny-deep-card 之间的重复字号叠加。',
+          '设置里的阅读字号改用固定主源码字号变量控制，普通/大/超大之间来回切换后，命盘阅读顺序和专题卡片不会残留大字。',
+          '命盘六宫卡片中“地支/时辰文字”改为标题左侧小胶囊，右上序号独立占位，进一步拉开距离。',
+          '新增 Debug 字号一致性快照与自检，检查命盘深读、命盘六宫和当前 body 字号状态。',
           '继续保持主源码修复，不新增后置补丁、不恢复 boot-late/load-late。'
+        ]},
+        { v:'v10.5.107 命盘专题扩展与排盘字号修复版', items:[
+          '命盘模块新增总览、财运、家宅文书、人际竞争、子女成果与长期倾向总结。',
+          '恢复接近 v10.5.76 的六宫排盘卡片式布局。',
+          '尝试统一阅读字号影响范围，并修复六宫序号安全留白。'
         ]},
         { v:'v10.5.106 命盘专题内容主源码恢复版', items:[
           '参考 v10.5.76 的命盘健康、婚姻与事业模块，把详细专题内容直接整合进 renderDestinyBoard 主源码，不再通过后置脚本插入。',
@@ -5877,7 +6093,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.107',
+      source: 'mainline-v10.5.108',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -5953,7 +6169,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.107',
+      source: 'mainline-v10.5.108',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock','destinyActionCard'],
@@ -7256,16 +7472,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.107'
+      source: 'mainline-v10.5.108'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.107） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.108） */
 /*
- * 小六壬 v10.5.107 Debug 主源码模块
+ * 小六壬 v10.5.108 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -7273,7 +7489,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.107 命盘专题扩展与排盘字号修复版';
+  const APP_VERSION = 'v10.5.108 命盘字号与六宫间距主源码修复版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -8167,10 +8383,10 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
     if (!snapshot.versionInfo.meta.includes('10.5.102') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.107', snapshot.versionInfo.meta);
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.108', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.107'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.107', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.108'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.108', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -8222,8 +8438,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.107') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.107 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.108') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.108 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -8238,8 +8454,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.107') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.107 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.108') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.108 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -8257,8 +8473,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.107') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.107 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.108') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.108 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -8285,8 +8501,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.107') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.107 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.108') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.108 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -8345,22 +8561,22 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.107') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.108') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.107') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.108') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.107') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.108') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.107') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.108') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
