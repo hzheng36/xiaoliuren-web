@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.127 三步行动方案增强版</title>
-<meta content="小六壬个人网页版 v10.5.127 三步行动方案增强版：在 v10.5.126 基础上，继续按原计划小步升级普通问事白话层；在答案摘要中新增“三步行动方案”，把结论进一步拆成“先做什么、再观察什么、最后如何收口”，让用户看完后更容易直接行动；同时保留落地检查清单、追问建议、复盘观察点、导航双模式、历史、命盘、缓存和复盘结构稳定。" name="description"/>
+<title>小六壬占卜 · v10.5.128 反向验证提示增强版</title>
+<meta content="小六壬个人网页版 v10.5.128 反向验证提示增强版：在 v10.5.127 基础上，继续按原计划小步升级普通问事白话层；在答案摘要中新增“反向验证提示”，告诉用户出现哪些现实情况时需要修正判断，避免只看顺向结论；同时保留三步行动方案、落地检查清单、追问建议、复盘观察点、导航双模式、历史、命盘、缓存和复盘结构稳定。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1532,8 +1532,8 @@ body .palace-card h5 {
   }
 }
 
-    /* 源码模块：Debug 主源码样式（v10.5.127，含发版体检、补丁审计、场景白话覆盖、专项串联覆盖、追问复盘建议、白话答案质量检查、场景深化、现实验证清单、三步行动方案、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
-/* 小六壬 v10.5.127 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.128，含发版体检、补丁审计、场景白话覆盖、专项串联覆盖、追问复盘建议、白话答案质量检查、场景深化、现实验证清单、三步行动方案、反向验证提示、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
+/* 小六壬 v10.5.128 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -2324,8 +2324,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.127 三步行动方案增强版</h2>
-<p>本版继续按原计划小步升级白话答案层：新增“三步行动方案”，把结果页从“知道该核实什么”继续推进到“知道先做什么、再看什么、最后如何收口”。导航、历史、命盘、缓存与复盘结构保持稳定。</p>
+<h2>个人占卜台 · v10.5.128 反向验证提示增强版</h2>
+<p>本版继续按原计划小步升级白话答案层：新增“反向验证提示”，把结果页从“知道怎么做”继续推进到“知道什么时候该修正判断”。导航、历史、命盘、缓存与复盘结构保持稳定。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -2808,7 +2808,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.127 三步行动方案增强版';
+    const XLR_SOURCE_VERSION = 'v10.5.128 反向验证提示增强版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3771,7 +3771,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.127',
+      source: 'mainline-v10.5.128',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5451,12 +5451,66 @@ function buildContextOverallSentence(context, details) {
         && buildThreeStepActionPlan({sceneKey:'choice', question:'我要不要现在决定', palaces:['大安','留连','空亡']}).some(x=>x.indexOf('选项') >= 0 || x.indexOf('落地') >= 0);
     }
 
+
+    function buildCounterCheckHints(result){
+      const ctx = result.context || analyzeQuestionContext(result.question, result.sceneKey);
+      const key = (ctx && ctx.key) || (result && result.sceneKey) || 'other';
+      const q = ((ctx && ctx.question) || (result && result.question) || '').trim();
+      const palaces = (result && result.palaces) || [];
+      const mid = palaces[1] || '留连';
+      const end = palaces[2] || '空亡';
+      const intent = detectAnswerIntent(result);
+      const sceneMap = {
+        health:['如果症状明显加重、高烧不退、呼吸困难、精神状态变差，不能继续按普通恢复节奏理解，应优先就医或咨询专业人员。','如果 24-48 小时内没有缓解，或者好一阵又反复，说明要按“拖延反复”处理，而不是只看前面的快象。'],
+        weather:['如果临近预报、雷达和实际云雨明显改变，就按现实天气修正，不要硬套前面的判断。','如果只是短暂一阵风、一阵云、一阵雨，不能直接当成整段时间都会如此。'],
+        lost:['如果最后使用位置、常放位置和路径排查都对不上，要及时修正方向，不要在同一处反复翻。','如果出现“记忆不确定、可能带出门、可能被别人移动”，要先核实人和路径，而不是继续只找物。'],
+        message:['如果对方没有明确文字、电话、时间点或实际动作，就不能把含糊回应当成最终结果。','如果后续说法前后不一致，要按新证据修正判断。'],
+        love:['如果对方只有情绪或语气变化，没有稳定行动，就不能把它当成关系真正转好。','如果沟通后更拖、更躲、更争，要把判断从“有机会”修正为“过程仍卡住”。'],
+        marriage:['如果现实问题没有被谈清楚，不能只因为一时缓和就当成问题解决。','如果钱、家务、孩子、长辈、承诺边界继续反复，就要按“长期卡点”处理。'],
+        wealth:['如果合同、价格、回款、成本或收益没有落到纸面和账户，就不能把机会当成已经兑现。','如果风险条件和退出条件不清楚，大额钱财事项要先暂停核实。'],
+        market:['如果价格没有真正突破或回落，只是一根短线波动，就不能当作趋势已经成立。','如果消息来源不可靠，或风险边界不清楚，要先回到数据和止损纪律。'],
+        money:['如果款项没有到账、责任没有写清、时间点没有确认，就不能当作钱财事项已经落地。','如果对方只口头承诺，没有支付能力或明确动作，要降低预期并保留证据。'],
+        job:['如果没有正式邮件、面试节点、offer、合同或可验证反馈，就不能把口头好感当成结果。','如果流程反复延后，要把判断改成“仍在流程中”，不要提前定论。'],
+        career:['如果机会没有真实资源、明确角色、时间节点和可执行路径，就不能只按“有机会”推进。','如果一直停在想法层，没有任何可验证进展，要先缩小目标。'],
+        exam:['如果复习计划、错题和材料没有补上，不能只靠临场运气判断结果。','如果正式结果或证明没有出来，就先不要把预期当成成绩。'],
+        choice:['如果某个选项的关键条件没有确认，就不能因为它看起来更吸引人而直接定下。','如果小步试行后发现成本、风险或阻力超出预期，要及时退回重新比较。'],
+        cooperation:['如果合作范围、金额、责任、交付时间、验收标准没有写清，就不能把气氛好当成合作能成。','如果对方没有权限、资源或实际动作，要把判断从“可谈”修正为“未落地”。'],
+        travel:['如果时间、路线、证件、票据、天气或备用方案有一项不确定，就不能只按顺利出行处理。','如果临近出发前出现延误、规则变化或天气变化，要按现实信息优先调整。'],
+        home:['如果维修、合同、账单、照片、聊天记录或安全隐患没有核实，不能只凭感觉说稳定。','如果旧问题反复出现，要设明确时间节点和责任人，不要只靠口头承诺。'],
+        people:['如果信息来源不可靠，不能把传闻当成可靠线索。','如果涉及安全或紧急情况，不要等待卦象验证，优先联系家人、朋友或相关机构。'],
+        noble:['如果对方没有权限、资源或时间，就不能把口头支持当成真正助力。','如果你没有把需求、资料和时间说清楚，贵人助力也很难落地。'],
+        fortune:['如果具体事项没有证据和行动，阶段运势只能当提醒，不能当绝对结论。','如果现实基本盘不稳，先守住已有资源，再谈机会。'],
+        destiny:['如果某个命盘提示在现实中长期没有反复出现，就先把它当作参考，不要当成人生定论。','如果你正在问的是短期具体事情，建议回到对应场景另起一课，不要用命盘替代单次问事。']
+      };
+      const endMap = {
+        '大安':'末象大安的反向验证：如果稳定条件不存在、基础一直变动，就不能只按“稳”来判断。',
+        '留连':'末象留连的反向验证：如果卡点已经被明确拆掉并持续改善，可以把“拖延反复”的权重下调。',
+        '速喜':'末象速喜的反向验证：如果快消息之后没有持续动作，就不能把第一波动静当成最终落地。',
+        '赤口':'末象赤口的反向验证：如果沟通规则已经写清且没有争议，风险会下降；反之要提高警惕。',
+        '小吉':'末象小吉的反向验证：如果连小结果都没有出现，就不要急着扩大投入。',
+        '空亡':'末象空亡的反向验证：只要关键证据没有出现，就先按“未落实”处理。'
+      };
+      let list = (sceneMap[key] || ['如果没有证据、时间点、实际行动或可验证结果，就不要把感觉当成结论。','如果后续现实证据和本课方向相反，要按现实证据修正判断。']).slice();
+      if(intent === 'timing') list.push('问时间类问题时，如果第一次变化没有持续，就不要把它当成最终应期。');
+      if(intent === 'location') list.push('问位置类问题时，如果路径线索不成立，要回到最后一次确定的位置重新排查。');
+      if(mid === '赤口') list.push('中象赤口：过程里一旦出现争执、规则、合同或口舌，就要先处理沟通边界。');
+      list.push(endMap[end] || '最后仍以现实证据为准，不要只凭单一宫位下结论。');
+      if(q && key === 'other') list.unshift(`围绕“${q}”，先看有没有新的现实证据能推翻原判断。`);
+      return polishAnswerList(list).slice(0,3);
+    }
+    function answerCounterCheckReady(){
+      return typeof buildCounterCheckHints === 'function'
+        && buildCounterCheckHints({sceneKey:'health', question:'感冒什么时候好', palaces:['速喜','速喜','留连']}).some(x=>x.indexOf('就医') >= 0 || x.indexOf('24-48') >= 0)
+        && buildCounterCheckHints({sceneKey:'choice', question:'我要不要现在决定', palaces:['大安','留连','空亡']}).some(x=>x.indexOf('未落实') >= 0 || x.indexOf('关键条件') >= 0);
+    }
+
     function buildAnswerSummaryHTML(result) {
       const actions = buildAnswerActions(result);
       const reviewHints = buildReviewObservationHints(result);
       const followupHints = buildFollowupQuestionHints(result);
       const realityHints = buildRealityChecklistHints(result);
       const stepPlan = buildThreeStepActionPlan(result);
+      const counterHints = buildCounterCheckHints(result);
       return `<div class="answer-card answer-direct"><h5>直接答案</h5><p>${answerDirectByContext(result)}</p></div>
       <div class="answer-grid">
         <div class="answer-card"><h5>为什么这么看</h5><p>${buildAnswerReason(result)}</p></div>
@@ -5465,6 +5519,7 @@ function buildContextOverallSentence(context, details) {
       <div class="answer-card"><h5>你现在该怎么做</h5><ul class="answer-list">${actions.map(a=>`<li>${escapeHTML(a)}</li>`).join('')}</ul></div>
       <div class="answer-card"><h5>三步行动方案</h5><ul class="answer-list">${stepPlan.map((a,i)=>`<li><strong>${['先做','再看','收口'][i] || '行动'}：</strong>${escapeHTML(a)}</li>`).join('')}</ul></div>
       <div class="answer-card"><h5>落地检查清单</h5><ul class="answer-list">${realityHints.map(a=>`<li>${escapeHTML(a)}</li>`).join('')}</ul></div>
+      <div class="answer-card"><h5>反向验证提示</h5><ul class="answer-list">${counterHints.map(a=>`<li>${escapeHTML(a)}</li>`).join('')}</ul></div>
       <div class="answer-grid">
         <div class="answer-card"><h5>接下来观察什么</h5><ul class="answer-list">${reviewHints.map(a=>`<li>${escapeHTML(a)}</li>`).join('')}</ul></div>
         <div class="answer-card"><h5>可以怎么追问</h5><ul class="answer-list">${followupHints.map(a=>`<li>${escapeHTML(a)}</li>`).join('')}</ul></div>
@@ -5690,7 +5745,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.127',
+        source: 'mainline-v10.5.128',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -5706,7 +5761,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.127',
+      source: 'mainline-v10.5.128',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -6262,6 +6317,14 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.128 反向验证提示增强版', items:[
+          '新增“反向验证提示”：在答案摘要中告诉用户什么现实情况会推翻或修正当前判断，减少只看顺向结论的误用。',
+          '反向验证按场景生成：健康看症状加重和就医信号，天气看预报雷达变化，失物看路径线索是否成立，合作看合同责任是否落地，选择看关键条件是否确认。',
+          '反向验证会结合末象自动变化：空亡重“未落实”，赤口重沟通规则，留连重反复是否被拆掉，速喜重快消息是否持续，大安重稳定条件，小吉重小结果。',
+          '保留 v10.5.127 的三步行动方案、v10.5.126 的落地检查清单、v10.5.124 的追问复盘建议与 v10.5.125 的场景深化白话答案。',
+          'Debug 发版体检表新增“反向验证提示可用”，一键自检通过时会显示“反向验证提示检查通过”。',
+          '阅读字号大小疑似失效的问题继续记录在统一修复清单中，暂不打断 v10.5.130 前正常小步升级节奏。'
+        ]},
         { v:'v10.5.127 三步行动方案增强版', items:[
           '新增“三步行动方案”：在答案摘要中把结果拆成“先做、再看、收口”三段，让用户看完后更容易直接行动。',
           '三步行动方案按场景生成：健康看症状与医生建议，天气看预报雷达与出行影响，失物按路径排查，合作看范围责任与验收，选择看条件与风险。',
@@ -7000,7 +7063,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.127',
+      source: 'mainline-v10.5.128',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -7078,7 +7141,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.127',
+      source: 'mainline-v10.5.128',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -8262,7 +8325,7 @@ function buildContextOverallSentence(context, details) {
       if(!nav) return;
       const overflow = (nav.scrollWidth || 0) > (nav.clientWidth || 0) + 2;
       const mode = getNavFollowMode();
-      nav.dataset.navAdaptive = (mode === 'fixed' ? 'fixed-pointer-v10.5.127' : 'adaptive-reveal-v10.5.127');
+      nav.dataset.navAdaptive = (mode === 'fixed' ? 'fixed-pointer-v10.5.128' : 'adaptive-reveal-v10.5.128');
       nav.dataset.navMode = mode;
       nav.dataset.navOverflow = overflow ? '1' : '0';
     }
@@ -8446,16 +8509,16 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.127'
+      source: 'mainline-v10.5.128'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.127） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.128） */
 /*
- * 小六壬 v10.5.127 Debug 主源码模块
+ * 小六壬 v10.5.128 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -8463,7 +8526,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.127 三步行动方案增强版';
+  const APP_VERSION = 'v10.5.128 反向验证提示增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -9401,7 +9464,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.127', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.127') },
+      { id:'nav-core', label:'导航主源码为 v10.5.128', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.128') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -9410,6 +9473,7 @@ function buildContextOverallSentence(context, details) {
       { id:'scene-deep-v125', label:'场景深化白话答案可用', ok: typeof scenePlainDeepeningReady === 'function' && scenePlainDeepeningReady() },
       { id:'reality-check-v126', label:'现实验证清单可用', ok: typeof answerRealityChecklistReady === 'function' && answerRealityChecklistReady() },
       { id:'step-plan-v127', label:'三步行动方案可用', ok: typeof answerStepPlanReady === 'function' && answerStepPlanReady() },
+      { id:'counter-check-v128', label:'反向验证提示可用', ok: typeof answerCounterCheckReady === 'function' && answerCounterCheckReady() },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
       { id:'normal-boundary', label:'普通问事不显示六宫排盘/命盘', ok: !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.normalShowingPaipan || snapshot.destiny.boundary.normalShowingDestinyBoard)) },
       { id:'destiny-boundary', label:'命运页保留六宫排盘/命盘', ok: !isDestiny || !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.destinyMissingPaipan || snapshot.destiny.boundary.destinyMissingBoard)) },
@@ -9478,7 +9542,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.127' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.128' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -9520,7 +9584,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.127') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.128') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -9536,7 +9600,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.127') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.128') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -9555,7 +9619,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.127') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.128') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.125 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -9589,8 +9653,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.127') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.127 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.128') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.128 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -9658,27 +9722,27 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.127' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.128' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.127') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.128') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.127') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.128') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.127') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.128') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.127') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.128') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -9690,6 +9754,7 @@ function buildContextOverallSentence(context, details) {
     if (typeof scenePlainDeepeningReady === 'function' && scenePlainDeepeningReady()) passes.push('场景深化白话答案检查通过');
     if (typeof answerRealityChecklistReady === 'function' && answerRealityChecklistReady()) passes.push('现实验证清单检查通过');
     if (typeof answerStepPlanReady === 'function' && answerStepPlanReady()) passes.push('三步行动方案检查通过');
+    if (typeof answerCounterCheckReady === 'function' && answerCounterCheckReady()) passes.push('反向验证提示检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.status === 'pass') passes.push('发布前体检表检查通过');
     if (snapshot.sourceAudit && !snapshot.sourceAudit.strictHitCount) passes.push('严格旧补丁源码关键词检查通过');

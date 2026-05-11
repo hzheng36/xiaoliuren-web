@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-127-step-action-plan';
+const CACHE_NAME = 'xiaoliuren-v10-5-128-counter-check';
 const APP_SHELL = [
   './',
   './index.html',
