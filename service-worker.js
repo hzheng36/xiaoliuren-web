@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.93-debug-core-selfcheck';
+const CACHE_NAME = 'xiaoliuren-v10.5.94-source-clean-restore';
 const APP_SHELL = [
   './',
   './index.html',
