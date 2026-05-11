@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.100 命盘模块主源码归一版</title>
-<meta content="小六壬个人网页版 v10.5.100 命盘模块主源码归一版：继续执行补丁回源码计划，新增 XLRDestinyCore 主命名空间，统一命盘状态、六亲、六神、五星、健康婚姻与模板串用自检。" name="description"/>
+<title>小六壬占卜 · v10.5.101 清补丁与阅读模式修复版</title>
+<meta content="小六壬个人网页版 v10.5.101 清补丁与阅读模式修复版：修复默认简洁版被旧视图主键覆盖、Debug 命盘边界误报，恢复稳定暗夜配色，并继续清理旧补丁残留。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -246,7 +246,7 @@
     .view-toggle .ghost-btn.active { background:rgba(103,83,165,.12); border-color:rgba(103,83,165,.35); color:var(--primary); font-weight:700; }
     .result-section.simple-mode .detail-only { display:none !important; }
 
-    /* v9.1 阅读设置 */
+    /* 阅读设置主样式 */
     .settings-form { padding:18px 24px 24px; display:grid; gap:14px; max-height:70vh; overflow:auto; -webkit-overflow-scrolling:touch; }
     .settings-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:15px 16px; display:grid; gap:10px; }
     .settings-card h4 { margin:0; color:var(--primary); font-size:1.02rem; }
@@ -429,7 +429,7 @@
     .history-actions { margin-top:12px; }
     .history-empty { text-align:center; color: var(--muted); padding:28px 10px; }
 
-    /* v8.4 一键置顶 / 一键到底 */
+    /* 快捷按钮主样式 */
     .scroll-tools {
       position: fixed;
       right: max(18px, env(safe-area-inset-right));
@@ -651,7 +651,7 @@
     .rule-note { color:var(--muted); font-size:.92rem; line-height:1.7; margin-top:6px; }
 
 
-    /* v9.9.6 智能章节卡点导航 */
+    /* 智能章节卡点导航 */
     .section-jump-nav {
       position: fixed;
       left: max(18px, env(safe-area-inset-left));
@@ -718,7 +718,7 @@
 
 
 
-    /* v9.9.9 全局弹窗滚动修复：所有弹窗整体可滚动，避免手机/小屏内容被截断 */
+    /* 全局弹窗滚动修复：所有弹窗整体可滚动，避免手机/小屏内容被截断 */
     dialog {
       max-height: calc(100dvh - 24px) !important;
       overflow-y: auto !important;
@@ -983,8 +983,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.100，含命盘主线自检） */
-/* 小六壬 v10.5.100 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.101，含命盘主线自检） */
+/* 小六壬 v10.5.101 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1107,22 +1107,117 @@ body.xlr-debug-hidden #xlrDebugFab { display:none !important; }
 
 /* 源码主模块：阅读模式、UI显示、快捷按钮设置 */
 body.reading-theme-night {
-  --bg:#151421; --panel:rgba(35,32,52,.92); --panel-strong:rgba(43,39,64,.97);
-  --text:#f3edf8; --muted:#c9bfd9; --line:rgba(255,255,255,.16); --accent-soft:rgba(229,196,138,.14);
-  background:linear-gradient(180deg,#11101b 0%,#1c1a2a 100%) !important;
+  color-scheme: dark;
+  --bg:#151421;
+  --panel:rgba(32,29,45,.94);
+  --panel-strong:rgba(42,37,58,.98);
+  --text:#f6f1ff;
+  --muted:#cbc2d8;
+  --primary:#d8c8ff;
+  --primary-2:#ab96e7;
+  --line:rgba(255,255,255,.14);
+  --accent:#e5c48a;
+  --accent-soft:rgba(229,196,138,.13);
+  --shadow:0 22px 55px rgba(0,0,0,.28);
+  --shadow-sm:0 10px 24px rgba(0,0,0,.20);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(137,118,194,.14), transparent 26%),
+    radial-gradient(circle at 100% 100%, rgba(229,196,138,.10), transparent 25%),
+    linear-gradient(180deg,#11101b 0%,#1b1929 100%) !important;
+  color:var(--text);
 }
+body.reading-theme-night::before { background:linear-gradient(180deg, rgba(255,255,255,.04), transparent 30%); }
+body.reading-theme-night .card::after { background:linear-gradient(180deg, rgba(255,255,255,.045), transparent 28%); }
 body.reading-theme-night .card,
 body.reading-theme-night .feature-item,
 body.reading-theme-night .block,
 body.reading-theme-night .settings-card,
 body.reading-theme-night .dialog-head,
-body.reading-theme-night dialog { background:var(--panel) !important; color:var(--text); border-color:var(--line); }
+body.reading-theme-night dialog,
+body.reading-theme-night .history-item,
+body.reading-theme-night .review-form,
+body.reading-theme-night .review-list,
+body.reading-theme-night .analytics-card,
+body.reading-theme-night .stat-card,
+body.reading-theme-night .metric-card,
+body.reading-theme-night .context-card,
+body.reading-theme-night .focus-card,
+body.reading-theme-night .destiny-cell,
+body.reading-theme-night .destiny-deep-card,
+body.reading-theme-night .reading-card,
+body.reading-theme-night .summary-item,
+body.reading-theme-night .palace-card,
+body.reading-theme-night .symbol-row,
+body.reading-theme-night .question-linked,
+body.reading-theme-night .method-note,
+body.reading-theme-night .time-display-facade,
+body.reading-theme-night .scene-btn,
+body.reading-theme-night .method-tab,
+body.reading-theme-night .pad-btn,
+body.reading-theme-night .template-card,
+body.reading-theme-night .rule-card,
+body.reading-theme-night .rules-card {
+  background:var(--panel) !important;
+  color:var(--text) !important;
+  border-color:var(--line) !important;
+  box-shadow:var(--shadow-sm);
+}
+body.reading-theme-night .hero,
+body.reading-theme-night .section,
+body.reading-theme-night .result-section { background:var(--panel) !important; color:var(--text) !important; }
 body.reading-theme-night input,
 body.reading-theme-night textarea,
-body.reading-theme-night select { background:#211f32 !important; color:var(--text) !important; border-color:var(--line) !important; }
+body.reading-theme-night select {
+  background:#211f32 !important;
+  color:var(--text) !important;
+  border-color:var(--line) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+body.reading-theme-night input::placeholder,
+body.reading-theme-night textarea::placeholder { color:rgba(246,241,255,.48); }
 body.reading-theme-night .ghost-btn,
 body.reading-theme-night .scroll-tool-btn,
-body.reading-theme-night .quick-order-btn { background:#26233a !important; color:var(--text) !important; border-color:var(--line) !important; }
+body.reading-theme-night .quick-order-btn,
+body.reading-theme-night .icon-btn {
+  background:#26233a !important;
+  color:var(--text) !important;
+  border-color:var(--line) !important;
+}
+body.reading-theme-night .primary-btn,
+body.reading-theme-night .step,
+body.reading-theme-night .seal,
+body.reading-theme-night .jump-chip.active,
+body.reading-theme-night .jump-chip.slot-active {
+  background:linear-gradient(135deg,#6f58b9,#927be0) !important;
+  color:#fff !important;
+}
+body.reading-theme-night .scene-btn.active,
+body.reading-theme-night .method-tab.active,
+body.reading-theme-night .view-toggle .ghost-btn.active {
+  background:rgba(121,100,196,.26) !important;
+  color:#fff !important;
+  border-color:rgba(216,200,255,.36) !important;
+}
+body.reading-theme-night .mini,
+body.reading-theme-night small,
+body.reading-theme-night label span,
+body.reading-theme-night .brand p,
+body.reading-theme-night .hero p,
+body.reading-theme-night .section-title p,
+body.reading-theme-night .rule-note,
+body.reading-theme-night .palace-meta,
+body.reading-theme-night .history-empty { color:var(--muted) !important; }
+body.reading-theme-night .pill,
+body.reading-theme-night .rule-badge,
+body.reading-theme-night .tags span {
+  background:rgba(229,196,138,.12) !important;
+  color:#f4dfb4 !important;
+  border-color:rgba(229,196,138,.18) !important;
+}
+body.reading-theme-night .art { background:linear-gradient(180deg, rgba(38,33,54,.84), rgba(25,23,36,.96)) !important; border-color:var(--line) !important; }
+body.reading-theme-night canvas,
+body.reading-theme-night img,
+body.reading-theme-night svg { filter:none !important; }
 body.reading-theme-eye { background:linear-gradient(180deg,#f3f6e9 0%,#e9f0dc 100%) !important; }
 body.reading-bg-cream { background:linear-gradient(180deg,#fbf3df 0%,#f2e6cd 100%) !important; }
 body.reading-bg-green { background:linear-gradient(180deg,#eef7ea 0%,#e2efdc 100%) !important; }
@@ -1143,7 +1238,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航随动自动居中主样式（v10.5.100，主 CSS 内建，不再后置补丁） */
+/* 源码模块：导航随动自动居中主样式（主 CSS 内建） */
 :root {
   --xlr-nav-slot-width:82px;
   --xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));
@@ -1313,7 +1408,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.100 命盘模块主源码归一版</h2>
+<h2>个人占卜台 · v10.5.101 清补丁与阅读模式修复版</h2>
 <p>本版继续执行“补丁回源码计划”：在 v10.5.98 历史分析稳定的基础上，继续清理旧设置主键，把用户设置、上次选择和结果视图迁移到 source 主键，降低旧缓存残留导致的新旧跳动与误判。</p>
 </div>
 <div class="actions">
@@ -1793,7 +1888,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.100 命盘模块主源码归一版';
+    const XLR_SOURCE_VERSION = 'v10.5.101 清补丁与阅读模式修复版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -2642,7 +2737,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.100',
+      source: 'mainline-v10.5.101',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -3959,7 +4054,7 @@ function buildContextOverallSentence(context, details) {
       const ctxBlock=document.getElementById('contextAnalysisBlock'); const ctxContent=document.getElementById('contextAnalysisContent'); if(result.context){ ctxBlock.classList.remove('hidden'); ctxContent.innerHTML=buildContextAnalysisHTML(result); } else { ctxBlock.classList.add('hidden'); ctxContent.innerHTML=''; }
       document.getElementById('adviceList').innerHTML=result.advice.map(a=>`<li>${a}</li>`).join('');
       document.getElementById('symbolSupplement').innerHTML=result.supplement.map(item=>`<div class="symbol-row"><div class="label">${item.label}</div><div>${item.value}</div></div>`).join('');
-      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderABChoiceResult(result); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
+      renderBoard(result); renderDestinyBoard(result); renderRadar(result.metrics); renderABChoiceResult(result); renderHomeInfoBlocks(); applyUserSettingsToPage(); restoreResultViewMode(true); document.getElementById('favBtn').textContent=result.favorite ? '已收藏' : '收藏'; window.scrollTo({ top: document.getElementById('resultCard').offsetTop - 12, behavior: 'smooth' }); refreshSectionJumpNavSoon();
     }
 
 
@@ -4206,21 +4301,26 @@ function buildContextOverallSentence(context, details) {
       const rule = CONTEXT_INTENTS[bestKey] || CONTEXT_INTENTS[explicitSceneKey] || CONTEXT_INTENTS.message;
       return { key: bestKey, title: rule.title, question: q, hits: bestHits.length ? bestHits : ['按语义推断'], focus: rule.focus, advice: rule.advice, rule, manual: selected && selected !== 'auto' };
     }
-    function setResultViewMode(mode){
+    function normalizeResultViewMode(mode){ return mode === 'simple' ? 'simple' : 'detail'; }
+    function setResultViewMode(mode, options){
+      const viewMode = normalizeResultViewMode(mode);
       const card=document.getElementById('resultCard'); if(!card) return;
-      card.classList.toggle('simple-mode', mode === 'simple');
+      card.classList.toggle('simple-mode', viewMode === 'simple');
       const d=document.getElementById('detailViewBtn'), s=document.getElementById('simpleViewBtn');
-      if(d) d.classList.toggle('active', mode !== 'simple');
-      if(s) s.classList.toggle('active', mode === 'simple');
-      try { localStorage.setItem(VIEW_MODE_KEY, mode); } catch(e) {}
+      if(d) d.classList.toggle('active', viewMode !== 'simple');
+      if(s) s.classList.toggle('active', viewMode === 'simple');
+      if(!(options && options.skipPersist)){
+        try { localStorage.setItem(VIEW_MODE_KEY, viewMode); } catch(e) {}
+      }
     }
-    function restoreResultViewMode(){
+    function restoreResultViewMode(preferDefault){
       try {
-        const saved = (localStorage.getItem(VIEW_MODE_KEY) || localStorage.getItem(LEGACY_VIEW_MODE_KEY));
-        if(saved) return setResultViewMode(saved);
         const settings = getUserSettings();
-        return setResultViewMode(settings.defaultView || 'detail');
-      } catch(e) { setResultViewMode('detail'); }
+        const defaultMode = normalizeResultViewMode(settings.defaultView || 'detail');
+        if(preferDefault) return setResultViewMode(defaultMode, { skipPersist:true });
+        const saved = normalizeResultViewMode(localStorage.getItem(VIEW_MODE_KEY) || localStorage.getItem(LEGACY_VIEW_MODE_KEY) || defaultMode);
+        return setResultViewMode(saved, { skipPersist:true });
+      } catch(e) { setResultViewMode('detail', { skipPersist:true }); }
     }
     function renderHistorySceneFilter(){
       const sel=document.getElementById('historySceneFilter'); if(!sel) return;
@@ -4474,7 +4574,7 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.100 命盘模块主源码归一版', items:[
+        { v:'v10.5.101 清补丁与阅读模式修复版', items:[
           '新增 window.XLRDestinyCore 主命名空间，把命盘状态构建、六亲排法、地支六神、五星与健康/婚姻/长期倾向检查集中到主源码。',
           'renderDestinyBoard 改为读取 XLRDestinyCore.buildState() 的统一结果，减少命盘渲染函数里散落的推导逻辑，后续 Debug 可以直接审计。',
           'Debug 一键自检新增命盘主命名空间、命盘 DOM、命运页必备模块、普通问事误显示命盘、命运/非命运模板边界检查。',
@@ -4699,12 +4799,13 @@ function buildContextOverallSentence(context, details) {
         navPosition: document.getElementById('settingNavPosition')?.value === 'top' ? 'top' : 'bottom'
       };
       saveUserSettings(settings);
+      try { localStorage.setItem(VIEW_MODE_KEY, normalizeResultViewMode(settings.defaultView)); } catch(e) {}
       saveExtraSettingsFromForm();
       refreshSettingsSnapshot();
       if(settings.rememberScene) persistChoiceIfNeeded('scene', currentScene);
       if(settings.rememberMethod) persistChoiceIfNeeded('method', currentMethod);
       applyUserSettingsToPage();
-      restoreResultViewMode();
+      restoreResultViewMode(true);
       closeSettingsDialog();
       alert('设置已保存。');
     }
@@ -4715,7 +4816,7 @@ function buildContextOverallSentence(context, details) {
       fillSettingsDialog();
       refreshSettingsSnapshot();
       applyUserSettingsToPage();
-      restoreResultViewMode();
+      restoreResultViewMode(true);
       alert('已恢复默认设置。');
     }
     function getSavedChoices(){ migrateCoreSettingsStorage(); try { return JSON.parse(localStorage.getItem(SAVED_CHOICE_KEY) || '{}'); } catch(e){ return {}; } }
@@ -5004,7 +5105,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.100',
+      source: 'mainline-v10.5.101',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -5076,11 +5177,11 @@ function buildContextOverallSentence(context, details) {
     function syncDestinySourcePanel(){ const isDestiny = currentScene === 'destiny'; const panel=document.getElementById('destinySourcePanel'); if(panel) panel.classList.toggle('hidden', !isDestiny); const gender=getDestinyGenderSource(); const mode=getDestinyKinshipSource(); const gSelect=document.getElementById('destinyGenderSource'); if(gSelect) gSelect.value=gender; const note=document.getElementById('destinyGenderSourceNote'); if(note) note.textContent='性别只影响断语侧重点，不改变六亲推导规则。'+destinyGenderExplain(gender); document.querySelectorAll('input[name="destinyKinshipModeSource"]').forEach(input=>{ input.checked=input.value===mode; }); const info=destinyCurrentTimeInfo(); const branch=info ? destinyBranchFromShichen(info.shichen) : ''; const formula=document.getElementById('destinySourceFormula'); if(formula){ const base = mode==='fixed' ? '固定宫位法：留连自身，速喜子孙，赤口兄弟，小吉官鬼，空亡父母，大安妻财。' : '五行生克法：生我者为父母，克我者为官鬼，我生者为子孙，我克者为妻财，同我者为兄弟。'; const warn = mode==='fixed' && info ? '固定法用于对照民间口诀；若本盘时宫/自身不是留连，解读时需注明前提差异。' : '默认推荐五行生克法，按自身地支五行定六亲。'; formula.innerHTML='<strong>当前：</strong>'+destinyGenderLabel(gender)+'｜'+(mode==='fixed'?'固定宫位法':'五行生克法')+(branch?'｜时支 '+branch+'（'+DESTINY_BRANCH_ELEMENT[branch]+'）':'')+'<br>'+base+'<br>'+warn; } }
     function applyDestinySourceMetaToResult(result){ if(!result || result.sceneKey !== 'destiny') return result; const info=destinyCurrentTimeInfo(); const gender=getDestinyGenderSource(); const mode=getDestinyKinshipSource(); result.destinyGender=gender; result.destinyKinshipMode=mode; result.destinyInput=Object.assign({}, result.destinyInput || {}, { gender, genderLabel:destinyGenderLabel(gender), genderExplain:destinyGenderExplain(gender), shichenName: info ? info.shichen : '', shichenRange: info ? info.shichenRange : '' }); result.destinyMeta=Object.assign({}, result.destinyMeta || {}, { shichen: info ? info.shichen : '', timeBranch: info ? destinyBranchFromShichen(info.shichen) : '', kinshipMode:mode, gender }); if(result.extraInfo && result.extraInfo.indexOf('性别：') < 0) result.extraInfo += '；性别：' + destinyGenderLabel(gender); return result; }
 
-    /* 源码模块：命盘主源码归一（v10.5.100）
+    /* 源码模块：命盘主源码归一（v10.5.101 延续维护）
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.100',
+      source: 'mainline-v10.5.101',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyActionCard'],
@@ -5136,21 +5237,27 @@ function buildContextOverallSentence(context, details) {
         });
       },
       validateTemplateBoundary: function(result){
-        const isDestiny=this.isDestinyResult(result || window.currentResult);
+        const activeResult = result || window.currentResult || null;
+        const isDestiny=this.isDestinyResult(activeResult);
+        const resultCard=document.getElementById('resultCard');
+        const resultCardVisible=!!(resultCard && !resultCard.classList.contains('hidden') && getComputedStyle(resultCard).display !== 'none');
+        const bodyResult=!!(document.body && document.body.classList.contains('result-page'));
         const board=document.getElementById('destinyBoardBlock');
         const boardEnabled=!!(board && !board.classList.contains('hidden'));
-        const boardVisible=!!(boardEnabled && getComputedStyle(board).display !== 'none');
+        const boardVisible=!!(resultCardVisible && boardEnabled && getComputedStyle(board).display !== 'none');
         const title=(document.getElementById('resultTitle')?.innerText || '');
         const scene=(document.getElementById('resultScene')?.innerText || '');
         return {
           isDestiny,
+          resultCardVisible,
+          bodyResult,
           boardEnabled,
           boardVisible,
           bodyDestiny:!!(document.body && document.body.classList.contains('result-destiny')),
           title,
           scene,
-          normalShowingDestinyBoard:!isDestiny && boardEnabled,
-          destinyMissingBoard:isDestiny && !boardEnabled
+          normalShowingDestinyBoard:!!(bodyResult && resultCardVisible && !isDestiny && boardVisible),
+          destinyMissingBoard:!!(bodyResult && resultCardVisible && isDestiny && !boardVisible)
         };
       }
     };
@@ -6364,16 +6471,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.100'
+      source: 'mainline-v10.5.101'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.100） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.101） */
 /*
- * 小六壬 v10.5.100 Debug 主源码模块
+ * 小六壬 v10.5.101 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -6381,7 +6488,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.100 命盘模块主源码归一版';
+  const APP_VERSION = 'v10.5.101 清补丁与阅读模式修复版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -7066,18 +7173,13 @@ function buildContextOverallSentence(context, details) {
     } catch (err) {}
 
     const styleScript = [];
-    qa('script, style').forEach(el => {
-      const text = el.textContent || '';
-      LEGACY_ACTIVE_TOKENS.forEach(token => {
-        const count = (text.match(new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
-        if (count) styleScript.push({ token, tag: el.tagName, id: el.id || '', count, textStart: text.slice(0, 120).replace(/\s+/g, ' ') });
-      });
-    });
+    /* v10.5.101：不再扫描主 script/style 的纯文本，因为诊断模块自身会包含旧补丁关键词清单和历史版本说明。
+       旧补丁判定只看真实 DOM id/class、window 上的旧函数名和 localStorage 旧键，避免自检误报。 */
 
     return {
       activeAttrMatches: attrs.slice(0, 80),
       functionNameMatches: fnNames.slice(0, 80),
-      scriptStyleMatches: styleScript.slice(0, 80)
+      scriptStyleMatches: styleScript
     };
   }
 
@@ -7232,11 +7334,11 @@ function buildContextOverallSentence(context, details) {
     if (!document.title.includes(APP_VERSION)) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    if (!snapshot.versionInfo.meta.includes('10.5.100') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.100', snapshot.versionInfo.meta);
+    if (!snapshot.versionInfo.meta.includes('10.5.101') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.101', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.100'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.100', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.101'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.101', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -7282,8 +7384,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.100') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.100 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.101') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.101 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -7298,8 +7400,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.100') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.100 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.101') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.101 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -7317,8 +7419,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.100') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.100 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.101') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.101 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -7345,8 +7447,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.100') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.100 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.101') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.101 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -7403,22 +7505,22 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.100') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.101') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.100') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.101') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.100') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.101') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.100') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.101') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
