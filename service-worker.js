@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-119-nav-gap-tighter';
+const CACHE_NAME = 'xiaoliuren-v10-5-120-stable-audit';
 const APP_SHELL = [
   './',
   './index.html',
