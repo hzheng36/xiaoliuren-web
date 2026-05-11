@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-120-stable-audit';
+const CACHE_NAME = 'xiaoliuren-v10-5-121-scene-plain-health';
 const APP_SHELL = [
   './',
   './index.html',
