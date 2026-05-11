@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-114-render-scroll-fix';
+const CACHE_NAME = 'xiaoliuren-v10-5-115-nav-adaptive-beta';
 const APP_SHELL = [
   './',
   './index.html',

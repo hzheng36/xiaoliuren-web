@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.114 普通问事渲染中断与顶部复位修正版</title>
-<meta content="小六壬个人网页版 v10.5.114 普通问事渲染中断与顶部复位修正版：在 v10.5.113 基础上，修复普通问事 buildSceneFocusHTML 调用旧 escapeHtml 名称导致 ReferenceError、结果页部分内容未更新和历史查看后从中部显示的问题；把结果页顶部复位提前到渲染开始并保留渲染完成后的二次校准，同时清理普通问事隐藏排盘/命盘 DOM 残留。" name="description"/>
+<title>小六壬占卜 · v10.5.115 一级二级导航自适应 Beta 版</title>
+<meta content="小六壬个人网页版 v10.5.115 一级二级导航自适应 Beta 版：在 v10.5.114 基础上，把一级导航和命盘二级导航改为内容自适应宽度，子项少时不再撑满整屏，子项多时保留横向滑动与 active 自动居中；同时优化主页返回滚动归零与 Debug 导航自适应检查。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1532,8 +1532,8 @@ body .palace-card h5 {
   }
 }
 
-    /* 源码模块：Debug 主源码样式（v10.5.114，含普通问事渲染稳定、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
-/* 小六壬 v10.5.114 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.115，含普通问事渲染稳定、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
+/* 小六壬 v10.5.115 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -2159,11 +2159,11 @@ body.result-page.xlr-result-scroll-resetting, body.result-page.xlr-result-scroll
   align-items:center;
   justify-content:flex-start;
   gap:6px;
-  width:min(720px, calc(100vw - 72px));
-  max-width:calc(100vw - 72px);
+  width:max-content;
+  max-width:min(720px, calc(100vw - 72px));
   min-height:44px;
   box-sizing:border-box;
-  padding:4px calc((100% - var(--xlr-nav-slot-width)) / 2);
+  padding:4px;
   border-radius:999px;
   background:rgba(255,255,255,.76);
   border:1px solid rgba(103,83,165,.13);
@@ -2182,14 +2182,15 @@ body.result-page.xlr-result-scroll-resetting, body.result-page.xlr-result-scroll
   z-index:59;
   display:none;
   bottom:var(--xlr-subnav-bottom);
-  width:min(560px, calc(100vw - 72px));
-  max-width:calc(100vw - 72px);
+  width:max-content;
+  max-width:min(560px, calc(100vw - 72px));
   background:rgba(255,255,255,.88);
   box-shadow:0 12px 28px rgba(66,49,109,.13);
 }
 #destinySubNav.destiny-sub-nav.show { display:flex; }
 #sectionJumpNav.section-jump-nav::-webkit-scrollbar,
 #destinySubNav.destiny-sub-nav::-webkit-scrollbar { display:none; }
+/* v10.5.115 Beta：一级/二级导航采用内容自适应宽度；内容少时只包住按钮，内容多时才横向滚动。 */
 #sectionJumpNav .jump-chip,
 #destinySubNav .jump-chip {
   position:relative;
@@ -2249,14 +2250,14 @@ body.reading-theme-night #sectionJumpNav .jump-chip.slot-active,
 body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:linear-gradient(135deg,#7357c8,#8a72dc); color:#fff; border-color:rgba(158,132,255,.36); }
 @media(max-width:760px){
   :root{--xlr-nav-slot-width:78px;--xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));--xlr-subnav-bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px));}
-  #sectionJumpNav.section-jump-nav,
-  #destinySubNav.destiny-sub-nav { width:calc(100vw - 72px); max-width:calc(100vw - 72px); }
+  #sectionJumpNav.section-jump-nav { width:max-content; max-width:calc(100vw - 72px); }
+  #destinySubNav.destiny-sub-nav { width:max-content; max-width:calc(100vw - 72px); }
   #sectionJumpNav .jump-chip { padding:7px 9px; font-size:.78rem; }
   #destinySubNav .jump-chip { padding:7px 9px; font-size:.72rem; }
 }
 @media(max-width:430px){
-  #sectionJumpNav.section-jump-nav,
-  #destinySubNav.destiny-sub-nav { width:calc(100vw - 72px); max-width:calc(100vw - 72px); }
+  #sectionJumpNav.section-jump-nav { width:max-content; max-width:calc(100vw - 72px); }
+  #destinySubNav.destiny-sub-nav { width:max-content; max-width:calc(100vw - 72px); }
 }
 @media(min-width:1241px){
   #sectionJumpNav.section-jump-nav{bottom:24px;}
@@ -2307,7 +2308,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.114 普通问事渲染中断与顶部复位修正版</h2>
+<h2>个人占卜台 · v10.5.115 一级二级导航自适应 Beta 版</h2>
 <p>本版继续执行“补丁回源码计划”：在 v10.5.107 命盘专题扩展基础上，重点修复命盘区域阅读字号异常放大、字号切换残留和六宫地支/序号贴近问题，继续全部写回主源码。</p>
 </div>
 <div class="actions">
@@ -2787,7 +2788,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.114 普通问事渲染中断与顶部复位修正版';
+    const XLR_SOURCE_VERSION = 'v10.5.115 一级二级导航自适应 Beta 版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3749,7 +3750,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.114',
+      source: 'mainline-v10.5.115',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5178,7 +5179,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.114',
+        source: 'mainline-v10.5.115',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -5194,7 +5195,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.114',
+      source: 'mainline-v10.5.115',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -5750,6 +5751,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.115 一级二级导航自适应 Beta 版', items:[
+          '一级章节导航改为内容自适应宽度：导航项少时只包住按钮，不再固定撑满整屏；导航项多时仍保留横向滑动。',
+          '命盘二级导航同步改为自适应宽度，减少绿色高亮区域和导航底板占用空间，active 高亮优先只包住当前按钮。',
+          '优化导航 active / slot-active 逻辑：无横向溢出时以当前 active 按钮为准，有溢出时继续支持自动居中。',
+          '优化“主页”快捷按钮：返回首页时立即归零并做多次校准，减少 iPhone Safari 停在中部的情况。',
+          'Debug 新增导航自适应 Beta 状态字段与自检通过项，方便继续观察一级/二级导航在手机和桌面端的表现。'
+        ]},
         { v:'v10.5.114 普通问事渲染中断与顶部复位修正版', items:[
           '修复普通问事结果页 buildSceneFocusHTML 调用旧 escapeHtml 名称导致 ReferenceError 的问题，避免天气、婚姻等非命运结果页只渲染一半或混入上一条结果内容。',
           '结果页进入时把顶部复位提前到渲染开始，并在渲染完成后再次校准；历史记录查看、重新占卜和刷新后的结果页都默认从顶部开始。',
@@ -6380,7 +6388,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.114',
+      source: 'mainline-v10.5.115',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -6458,7 +6466,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.114',
+      source: 'mainline-v10.5.115',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -6675,7 +6683,13 @@ function buildContextOverallSentence(context, details) {
       currentResult=null; try{window.currentResult=null;}catch(e){}
       document.body.classList.remove('result-page','result-destiny');
       try{ localStorage.removeItem(LAST_VIEW_KEY); if(location.hash) history.replaceState(history.state||null,'',location.pathname+location.search); }catch(e){}
-      const top=document.getElementById('homeTopSection')||document.body; top.scrollIntoView({behavior:'smooth',block:'start'}); refreshSectionJumpNavSoon();
+      try{ if(typeof XLR_NAV_LOCK !== 'undefined' && XLR_NAV_LOCK){ XLR_NAV_LOCK.until=Date.now()+900; XLR_NAV_LOCK.main='homeTopSection'; XLR_NAV_LOCK.sub=''; } }catch(e){}
+      const forceTop=()=>{ try{ document.documentElement.scrollTop=0; document.body.scrollTop=0; window.scrollTo({top:0,left:0,behavior:'auto'}); }catch(e){ try{ window.scrollTo(0,0); }catch(_){} } };
+      forceTop();
+      setTimeout(forceTop, 40);
+      setTimeout(forceTop, 160);
+      setTimeout(()=>{ forceTop(); refreshSectionJumpNavSoon(); }, 360);
+      refreshSectionJumpNavSoon();
     }
     function runQuickAction(id){
       const click=(btnId)=>{ const b=document.getElementById(btnId); if(b) b.click(); else alert('当前按钮暂不可用。'); };
@@ -7601,24 +7615,35 @@ function buildContextOverallSentence(context, details) {
       clearTimeout(nav.__syncTimer);
       nav.__syncTimer=setTimeout(()=>{ nav.dataset.navSyncing='0'; xlrNavUpdateSlot(nav); }, 120);
     }
+    function xlrNavUpdateAdaptiveState(nav){
+      if(!nav) return;
+      const overflow = (nav.scrollWidth || 0) > (nav.clientWidth || 0) + 2;
+      nav.dataset.navAdaptive = 'beta-v10.5.115';
+      nav.dataset.navOverflow = overflow ? '1' : '0';
+    }
     function xlrNavUpdateSlot(nav){
       if(!nav) return;
+      xlrNavUpdateAdaptiveState(nav);
       const selector = nav.id==='destinySubNav' ? '[data-destiny-sub-target]' : '[data-jump-target]';
+      const attr = nav.id==='destinySubNav' ? 'data-destiny-sub-target' : 'data-jump-target';
       const buttons=Array.from(nav.querySelectorAll(selector));
       if(!buttons.length) return;
-      const nr=nav.getBoundingClientRect();
-      const center=nr.left + nr.width/2;
-      let best=null, dist=Infinity;
-      buttons.forEach(btn=>{
-        const r=btn.getBoundingClientRect();
-        if(r.right < nr.left+2 || r.left > nr.right-2) return;
-        const d=Math.abs((r.left+r.right)/2-center);
-        if(d<dist){ dist=d; best=btn; }
-      });
-      if(!best){
-        const currentTarget=nav.dataset.currentTarget || '';
-        best = currentTarget ? nav.querySelector((nav.id==='destinySubNav'?'[data-destiny-sub-target="':'[data-jump-target="') + currentTarget.replace(/"/g,'\\"') + '"]') : null;
+      const currentTarget=nav.dataset.currentTarget || '';
+      const esc = window.CSS && CSS.escape ? CSS.escape(currentTarget) : String(currentTarget).replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+      let best = currentTarget ? nav.querySelector('['+attr+'="'+esc+'"]') : null;
+      const overflow = (nav.scrollWidth || 0) > (nav.clientWidth || 0) + 2;
+      if(overflow){
+        const nr=nav.getBoundingClientRect();
+        const center=nr.left + nr.width/2;
+        let dist=Infinity;
+        buttons.forEach(btn=>{
+          const r=btn.getBoundingClientRect();
+          if(r.right < nr.left+2 || r.left > nr.right-2) return;
+          const d=Math.abs((r.left+r.right)/2-center);
+          if(d<dist){ dist=d; best=btn; }
+        });
       }
+      if(!best) best = buttons.find(btn=>btn.classList && btn.classList.contains('active')) || buttons[0];
       buttons.forEach(btn=>btn.classList.toggle('slot-active', btn===best));
     }
     function renderSectionJumpNav(){
@@ -7626,12 +7651,14 @@ function buildContextOverallSentence(context, details) {
       const nav=xlrNav$('sectionJumpNav');
       if(!nav) return;
       nav.classList.add('section-jump-nav');
+      xlrNavUpdateAdaptiveState(nav);
       const items=currentJumpTargets();
       const keys=items.map(t=>t.id).join('|');
       if(nav.getAttribute('data-nav-keys') !== keys){
         nav.setAttribute('data-nav-keys', keys);
         nav.innerHTML=items.map(t=>`<button class="jump-chip" type="button" data-jump-target="${t.id}" title="跳转到${t.label}"><span class="dot"></span>${t.label}</button>`).join('');
         nav.scrollLeft=0;
+        xlrNavUpdateAdaptiveState(nav);
       }
       const locked=XLR_NAV_LOCK.main && Date.now()<XLR_NAV_LOCK.until && items.some(t=>t.id===XLR_NAV_LOCK.main);
       const activeId=locked ? XLR_NAV_LOCK.main : xlrNavCurrentId(items);
@@ -7659,6 +7686,7 @@ function buildContextOverallSentence(context, details) {
       const nav=xlrNav$('destinySubNav');
       if(!nav) return;
       nav.classList.add('destiny-sub-nav');
+      xlrNavUpdateAdaptiveState(nav);
       const items = destinyBoardInRange() ? currentDestinySubTargets() : [];
       if(!items.length){
         nav.classList.remove('show');
@@ -7671,6 +7699,7 @@ function buildContextOverallSentence(context, details) {
         nav.setAttribute('data-nav-keys', keys);
         nav.innerHTML=items.map(t=>`<button class="jump-chip" type="button" data-destiny-sub-target="${t.id}" title="跳转到${t.label}">${t.label}</button>`).join('');
         nav.scrollLeft=0;
+        xlrNavUpdateAdaptiveState(nav);
       }
       nav.classList.add('show');
       const locked=XLR_NAV_LOCK.sub && Date.now()<XLR_NAV_LOCK.until && items.some(t=>t.id===XLR_NAV_LOCK.sub);
@@ -7763,17 +7792,19 @@ function buildContextOverallSentence(context, details) {
       getDestinySubTargets: currentDestinySubTargets,
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
+      adaptiveBeta: true,
+      measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { main: main ? { adaptive: main.dataset.navAdaptive||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.114'
+      source: 'mainline-v10.5.115'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.114） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.115） */
 /*
- * 小六壬 v10.5.114 Debug 主源码模块
+ * 小六壬 v10.5.115 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -7781,7 +7812,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.114 普通问事渲染中断与顶部复位修正版';
+  const APP_VERSION = 'v10.5.115 一级二级导航自适应 Beta 版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -8256,8 +8287,8 @@ function buildContextOverallSentence(context, details) {
     try { coreSubTargets = window.XLRNavCore && typeof window.XLRNavCore.getDestinySubTargets === 'function' ? window.XLRNavCore.getDestinySubTargets().map(t => ({ id:t.id, label:t.label, visible:!!(t.el && visibleOf(t.el)) })) : []; } catch (err) {}
     return {
       bodyNavPosition: document.body ? Array.from(document.body.classList).find(cls => cls.indexOf('xlr-nav-position-') === 0) || '' : '',
-      main: Object.assign(describeElement(nav), nav ? { scrollLeft: nav.scrollLeft || 0, scrollWidth: nav.scrollWidth || 0, clientWidth: nav.clientWidth || 0, currentTarget: nav.dataset ? nav.dataset.currentTarget || '' : '' } : {}),
-      sub: Object.assign(describeElement(sub), sub ? { scrollLeft: sub.scrollLeft || 0, scrollWidth: sub.scrollWidth || 0, clientWidth: sub.clientWidth || 0, currentTarget: sub.dataset ? sub.dataset.currentTarget || '' : '' } : {}),
+      main: Object.assign(describeElement(nav), nav ? { scrollLeft: nav.scrollLeft || 0, scrollWidth: nav.scrollWidth || 0, clientWidth: nav.clientWidth || 0, currentTarget: nav.dataset ? nav.dataset.currentTarget || '' : '', adaptive: nav.dataset ? nav.dataset.navAdaptive || '' : '', overflow: nav.dataset ? nav.dataset.navOverflow || '' : '', cssWidth: getComputedStyle(nav).width, cssMaxWidth: getComputedStyle(nav).maxWidth } : {}),
+      sub: Object.assign(describeElement(sub), sub ? { scrollLeft: sub.scrollLeft || 0, scrollWidth: sub.scrollWidth || 0, clientWidth: sub.clientWidth || 0, currentTarget: sub.dataset ? sub.dataset.currentTarget || '' : '', adaptive: sub.dataset ? sub.dataset.navAdaptive || '' : '', overflow: sub.dataset ? sub.dataset.navOverflow || '' : '', cssWidth: getComputedStyle(sub).width, cssMaxWidth: getComputedStyle(sub).maxWidth } : {}),
       itemCount: buttons.length,
       subItemCount: subButtons.length,
       activeCount: allButtons.filter(b => b.active).length,
@@ -8271,6 +8302,8 @@ function buildContextOverallSentence(context, details) {
         source: window.XLRNavCore ? window.XLRNavCore.source : '',
         mode: window.XLRNavCore && typeof window.XLRNavCore.getMode === 'function' ? window.XLRNavCore.getMode() : '',
         canCenterActive: !!(window.XLRNavCore && typeof window.XLRNavCore.centerActive === 'function'),
+        adaptiveBeta: !!(window.XLRNavCore && window.XLRNavCore.adaptiveBeta),
+        adaptiveMeasure: window.XLRNavCore && typeof window.XLRNavCore.measureAdaptive === 'function' ? window.XLRNavCore.measureAdaptive() : null,
         mainTargets: coreTargets,
         subTargets: coreSubTargets
       },
@@ -8720,7 +8753,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.114' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.115' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -8762,7 +8795,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.114') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.115') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -8778,7 +8811,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.114') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.115') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -8797,7 +8830,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.114') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.115') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.114 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -8831,14 +8864,17 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.114') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.114 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.115') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.115 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
     }
     if (!snapshot.navigation.core.canCenterActive) {
       addIssue(issues, 'error', 'NAV_CENTER_SYNC_MISSING', '导航随动自动居中函数未挂载', snapshot.navigation.core);
+    }
+    if (!snapshot.navigation.core.adaptiveBeta) {
+      addIssue(issues, 'warning', 'NAV_ADAPTIVE_BETA_MISSING', '一级/二级导航自适应 Beta 未挂载', snapshot.navigation.core);
     }
     requiredNav.forEach(([target, label]) => {
       const targetEl = document.getElementById(target);
@@ -8888,29 +8924,30 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.114' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.115' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.114') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.115') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.114') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.115') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.114') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.115') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.114') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.115') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
+    if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应 Beta 检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
 
     const report = {
@@ -8941,7 +8978,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、历史记录主源码、历史分析主源码、命盘子导航、折叠、设置和运行错误。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、一级/二级导航自适应、历史记录主源码、历史分析主源码、命盘子导航、折叠、设置和运行错误。</p>
         <div class="xlr-debug-toolbar">
           <button type="button" data-debug-action="selfcheck">一键自检</button>
           <button type="button" data-debug-action="snapshot">刷新快照</button>
