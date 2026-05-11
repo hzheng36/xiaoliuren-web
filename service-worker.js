@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-112-result-scroll-reset';
+const CACHE_NAME = 'xiaoliuren-v10-5-113-normal-result-trim';
 const APP_SHELL = [
   './',
   './index.html',
