@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.121 场景白话增强与健康专项版</title>
-<meta content="小六壬个人网页版 v10.5.121 场景白话增强与健康专项版：在 v10.5.120 稳定基准上，继续做低风险升级；增强普通问事的场景化白话表达，重点优化健康、天气、求职/考试、消息等待等场景的答案摘要、三象说明、行动建议和 Debug 场景文案覆盖检查，减少通用话术串场。" name="description"/>
+<title>小六壬占卜 · v10.5.122 专项解读白话串联版</title>
+<meta content="小六壬个人网页版 v10.5.122 专项解读白话串联版：在 v10.5.121 场景白话增强基础上，继续低风险升级普通问事的专项解读区；把“问事专项解读”从关键词堆叠改成更像日常对话的三段串联：这一段看什么、落宫怎么说、回到问题怎么用，并加入场景化下一步核实建议，同时让三象/双宫白话继续使用场景专属话术。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1532,8 +1532,8 @@ body .palace-card h5 {
   }
 }
 
-    /* 源码模块：Debug 主源码样式（v10.5.121，含发版体检、补丁审计、场景白话覆盖、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
-/* 小六壬 v10.5.121 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.122，含发版体检、补丁审计、场景白话覆盖、专项串联覆盖、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
+/* 小六壬 v10.5.122 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -2324,7 +2324,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.121 场景白话增强与健康专项版</h2>
+<h2>个人占卜台 · v10.5.122 专项解读白话串联版</h2>
 <p>本版继续执行“补丁回源码计划”：在保留导航模式可切换的基础上，微调一级与二级导航之间的距离，让底部双层导航更紧凑，同时继续全部写回主源码。</p>
 </div>
 <div class="actions">
@@ -2808,7 +2808,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.121 场景白话增强与健康专项版';
+    const XLR_SOURCE_VERSION = 'v10.5.122 专项解读白话串联版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3771,7 +3771,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.121',
+      source: 'mainline-v10.5.122',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4542,7 +4542,8 @@ ${nextStep}`;
         if(d.palaceName === '速喜') return '线索可能来自最近一次拿取、展示、聊天、拍照或临时放下的位置。';
         if(d.palaceName === '小吉') return '可从包袋、流动物品、小礼物、票据、交通动线附近找，可能有小线索。';
       }
-      return `${sceneInfo(sceneKey).focus}中，${d.positionName}代表“${d.role}”。落${d.palaceName}，白话就是：${PALACE_PLAIN_EFFECT[d.palaceName].plain}要注意的是：${PALACE_PLAIN_EFFECT[d.palaceName].risk}`;
+      const effect = scenePalaceEffect(sceneKey, d.palaceName);
+      return `${sceneInfo(sceneKey).focus}中，${d.positionName}代表“${d.role}”。落${d.palaceName}，白话就是：${effect.plain}要注意的是：${effect.risk}`;
     }
     function buildSinglePalaceReadingByScene(sceneKey, details){
       return details.map(d=>{
@@ -4559,7 +4560,7 @@ ${nextStep}`;
         const keys = pairKeywords(x, y).slice(0, 14);
         const transition = `前一宫关键词是“${shortKeywords(x, 6).join('、')}”，后一宫关键词是“${shortKeywords(y, 6).join('、')}”。`;
         const lostExtra = sceneKey === 'lost' ? '问失物时，双宫重点看“东西状态”如何影响“寻找过程”或“最终能否找到”，关键词要转成现实位置和寻找顺序。' : '';
-        return `<div class="gua-card"><h5>${title}</h5>${keywordChips(keys, '组合关键词：')}<p><strong>用途：</strong>${use}</p><p><strong>术语组合：</strong>${x.palaceName} → ${y.palaceName}，${x.palaceName}属${x.element}，${y.palaceName}属${y.element}。${transition}</p><p><strong>白话理解：</strong>先是“${PALACE_PLAIN_EFFECT[x.palaceName].plain}”，接着转成“${PALACE_PLAIN_EFFECT[y.palaceName].plain}”。所以不要只看单宫，要看事情是变顺、变慢、变虚，还是变得需要沟通确认。${lostExtra}</p></div>`;
+        return `<div class="gua-card"><h5>${title}</h5>${keywordChips(keys, '组合关键词：')}<p><strong>用途：</strong>${use}</p><p><strong>术语组合：</strong>${x.palaceName} → ${y.palaceName}，${x.palaceName}属${x.element}，${y.palaceName}属${y.element}。${transition}</p><p><strong>白话理解：</strong>先是“${scenePalaceEffect(sceneKey, x.palaceName).plain}”，接着转成“${scenePalaceEffect(sceneKey, y.palaceName).plain}”。所以不要只看单宫，要看事情是变顺、变慢、变虚，还是变得需要沟通确认。${lostExtra}</p></div>`;
       }
       return [
         pairCard('本象 → 中象', a, b, sceneKey === 'lost' ? '看失物状态如何影响寻找过程。' : '看当前状态如何发展成过程变化。'),
@@ -4921,19 +4922,60 @@ function buildContextOverallSentence(context, details) {
       return generic[p] || `问「${q}」，这一象要结合${d.palaceName}的传统象意来判断。`;
     }
 
+    function contextSceneKey(context, result){
+      return (context && context.key) || (result && result.sceneKey) || 'other';
+    }
+    function contextStageUseText(context, result, d){
+      const key = contextSceneKey(context, result);
+      const q = escapeHTML((context && context.question) || (result && result.question) || '这件事');
+      const effect = scenePalaceEffect(key, d.palaceName);
+      const role = d.role || d.positionName || '这一段';
+      if(key === 'health') return `${role}落${d.palaceName}，放到「${q}」里，就是看身体状态在这一段会不会明显变化、是否拖延反复，以及需不需要复查或就医。这里的重点是：${effect.plain}`;
+      if(key === 'weather') return `${role}落${d.palaceName}，放到「${q}」里，就是看天气在这一段是稳定、快速变化、阵雨断续，还是最后落空。这里的重点是：${effect.plain}`;
+      if(key === 'message') return `${role}落${d.palaceName}，放到「${q}」里，就是看消息在这一段是快回、慢拖、带误会，还是有消息但不算数。这里的重点是：${effect.plain}`;
+      if(key === 'lost') return `${role}落${d.palaceName}，放到「${q}」里，就是把宫位转成寻找线索：位置、夹层、旧物、金属小物、桌边门边或是否找错方向。这里的重点是：${effect.plain || (context.rule.palace[d.palaceName] || '')}`;
+      if(key === 'job' || key === 'exam' || key === 'career') return `${role}落${d.palaceName}，放到「${q}」里，就是看机会、流程、表达、审核或正式结果在哪一段最容易推进或卡住。这里的重点是：${effect.plain}`;
+      if(key === 'love') return `${role}落${d.palaceName}，放到「${q}」里，就是看互动、态度、旧问题、沟通和真实行动在这一段怎样变化。这里的重点是：${effect.plain}`;
+      return `${role}落${d.palaceName}，放到「${q}」里，不是单独看吉凶，而是看这一阶段会怎样推进、哪里会卡、最后能不能落实。这里的重点是：${effect.plain}`;
+    }
+    function contextNextCheckLine(context, result){
+      const key = contextSceneKey(context, result);
+      const end = ((result && result.palaces) || [])[2] || ((result && result.details && result.details[2] && result.details[2].palaceName) || '');
+      const q = escapeHTML((context && context.question) || (result && result.question) || '这件事');
+      const endRisk = scenePalaceEffect(key, end).risk || PALACE_PLAIN_EFFECT[end]?.risk || '先复核现实条件。';
+      const common = `本课末象为${end}，下一步先按末象复核：${endRisk}`;
+      if(key === 'health') return `${common}。具体到「${q}」，建议看体温、精神状态、睡眠饮食、症状是否加重；宝宝、老人或症状持续时优先听医生建议。`;
+      if(key === 'weather') return `${common}。具体到「${q}」，建议临近再看预报和雷达，不要只凭现在天色判断。`;
+      if(key === 'message') return `${common}。具体到「${q}」，建议等明确文字/电话/邮件确认，不要把语气或传闻当最终结果。`;
+      if(key === 'lost') return `${common}。具体到「${q}」，建议从最后一次使用处开始，按桌面杂物、抽屉角落、包袋夹层、旧盒旧包装、金属小物区复查。`;
+      if(key === 'job' || key === 'exam' || key === 'career') return `${common}。具体到「${q}」，建议把材料、时间节点、面试表达、正式通知或结果证明逐项确认。`;
+      if(key === 'love') return `${common}。具体到「${q}」，建议先看对方是否有实际行动，少靠猜测和情绪判断。`;
+      return `${common}。具体到「${q}」，建议把证据、时间、条件、承诺和下一步动作逐项确认。`;
+    }
+    function buildContextConversationSummary(context, result){
+      const seq = result.details.map(d=>d.palaceName).join(' → ');
+      const key = contextSceneKey(context, result);
+      const start = result.details[0], mid = result.details[1], end = result.details[2];
+      const q = escapeHTML((context && context.question) || (result && result.question) || '这件事');
+      return `把这课串起来看：你问「${q}」，三象是 ${seq}。前面看${start.role || '起点'}，中间看${mid.role || '过程'}，最后看${end.role || '结果'}。所以重点不是“${start.palaceName}好不好”或“${end.palaceName}坏不坏”，而是：先有${scenePalaceEffect(key,start.palaceName).plain}，中途转成${scenePalaceEffect(key,mid.palaceName).plain}，最后落到${scenePalaceEffect(key,end.palaceName).plain}。`;
+    }
     function buildContextAnalysisHTML(result) {
       const context = result.context || analyzeQuestionContext(result.question, result.sceneKey);
       if (!context) return '';
       const q = context.question || '这件事';
+      const key = contextSceneKey(context, result);
       const cards = result.details.map(d => {
-        const palaceText = context.rule.palace[d.palaceName] || PALACE_PLAIN_EFFECT[d.palaceName].plain;
+        const palaceText = context.rule.palace[d.palaceName] || scenePalaceEffect(key, d.palaceName).plain || PALACE_PLAIN_EFFECT[d.palaceName].plain;
         const direct = buildPalaceQuestionLinkText(context, d);
-        return `<div class="context-card"><h5>${d.positionName} · ${d.palaceName}</h5>${keywordChips([context.title, ...context.focus.slice(0,4), ...shortKeywords(d, 5)].slice(0,10), '重点：')}<p><strong>专项断法：</strong>${palaceText}</p><div class="question-linked"><strong>联系你的问题：</strong>${direct}</div><p><strong>对应本课：</strong>${d.positionName}代表“${d.role}”，所以这里不是泛泛地说${d.palaceName}，而是把${d.palaceName}落到你问的「${escapeHTML(q)}」这一阶段来看。</p></div>`;
+        const stageUse = contextStageUseText(context, result, d);
+        const chips = [d.role || d.positionName, context.title, ...context.focus.slice(0,3), d.palaceName].filter(Boolean).slice(0,7);
+        return `<div class="context-card context-card-dialogue"><h5>${d.positionName} · ${d.palaceName}</h5>${keywordChips(chips, '看点：')}<p><strong>这一段看什么：</strong>${d.positionName}主要看“${d.role || '这一阶段'}”。</p><p><strong>落宫怎么说：</strong>${palaceText}</p><p><strong>回到你的问题：</strong>${stageUse}</p><div class="question-linked"><strong>一句话落地：</strong>${direct}</div></div>`;
       }).join('');
-      const seq = result.details.map(d=>d.palaceName).join(' → ');
       const notes = getContextSpecialNotes(context, result.details);
       const notesHTML = notes.length ? `<div class="context-summary"><strong>专项细分提示：</strong><ul>${notes.map(n=>`<li>${n}</li>`).join('')}</ul></div>` : '';
-      return `<div class="context-head"><p><strong>你问的是：</strong>${escapeHTML(context.question)}</p><p><strong>识别类型：</strong>${context.title}</p><p><strong>识别重点：</strong>${context.hits.join('、')}；本题主要看：${context.focus.join('、')}。</p></div><div class="context-cards">${cards}</div>${notesHTML}<div class="context-summary"><strong>本题白话串联：</strong>${context.rule.summary} 本课为 ${seq}。${buildContextOverallSentence(context, result.details)}</div>`;
+      const summary = buildContextConversationSummary(context, result);
+      const nextLine = contextNextCheckLine(context, result);
+      return `<div class="context-head"><p><strong>你问的是：</strong>${escapeHTML(context.question)}</p><p><strong>识别类型：</strong>${context.title}</p><p><strong>本题主要看：</strong>${context.focus.join('、')}。</p></div><div class="context-cards">${cards}</div>${notesHTML}<div class="context-summary"><strong>本题白话串联：</strong>${summary}</div><div class="context-summary"><strong>下一步怎么核实：</strong>${nextLine}</div>`;
     }
     function escapeHTML(str) { return String(str || '').replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s])); }
     const escapeHtml = escapeHTML;
@@ -5267,7 +5309,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.121',
+        source: 'mainline-v10.5.122',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -5283,7 +5325,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.121',
+      source: 'mainline-v10.5.122',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -5308,7 +5350,7 @@ function buildContextOverallSentence(context, details) {
       document.getElementById('palaceCards').innerHTML=result.details.map((d,idx)=>`<div class="palace-card"><div class="mini">${POSITION_NAMES[idx]} · ${d.role}</div><h5>${d.palaceName}</h5><div class="palace-meta"><span>取数：${d.number}</span><span>落宫：${d.palaceName}</span><span>方位：${d.direction}</span><span>五行：${d.element}</span><span>颜色：${d.color}</span></div></div>`).join('');
       const keys = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'];
       document.getElementById('summaryGrid').innerHTML=keys.map(label=>`<div class="summary-item"><span>${sceneLabel(result.sceneKey,label)}</span><b>${sceneMetricValue(result.sceneKey,label,result)}</b></div>`).join('');
-      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div>${keywordChips(shortKeywords(d, 14), '关键词：')}<p><strong>关键词提示：</strong>${shortKeywords(d, 14).join('、')}。这些词用来帮助你快速抓住这一象的重点。</p><p><strong>术语象意：</strong>${d.summary}</p><p><strong>白话理解：</strong>${buildReadingCardText(result.sceneKey, d)}</p>${result.context ? `<div class="question-linked"><strong>联系占问事项：</strong>${buildPalaceQuestionLinkText(result.context, d)}</div>` : ''}<p><strong>现实提醒：</strong>${PALACE_PLAIN_EFFECT[d.palaceName].risk}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
+      document.getElementById('threeReading').innerHTML=result.details.map(d=>`<div class="reading-card"><h5>${d.positionName} · ${d.palaceName}</h5><div class="tags"><span class="pill">${d.role}</span><span class="pill">方位：${d.direction}</span><span class="pill">五行：${d.element}</span><span class="pill">颜色：${d.color.split(' / ')[0]}</span></div>${keywordChips(shortKeywords(d, 14), '关键词：')}<p><strong>关键词提示：</strong>${shortKeywords(d, 14).join('、')}。这些词用来帮助你快速抓住这一象的重点。</p><p><strong>术语象意：</strong>${d.summary}</p><p><strong>白话理解：</strong>${buildReadingCardText(result.sceneKey, d)}</p>${result.context ? `<div class="question-linked"><strong>联系占问事项：</strong>${buildPalaceQuestionLinkText(result.context, d)}</div>` : ''}<p><strong>现实提醒：</strong>${scenePalaceEffect(result.sceneKey, d.palaceName).risk}</p><p><strong>物象：</strong>${d.object}</p><p><strong>地点：</strong>${d.place}</p><p><strong>应期：</strong>${d.timing}</p></div>`).join('');
       document.getElementById('singlePalaceReading').innerHTML=buildSinglePalaceReadingByScene(result.sceneKey, result.details);
       document.getElementById('doublePalaceReading').innerHTML=buildDoublePalaceReadingByScene(result.sceneKey, result.details);
       document.getElementById('overallText').innerText=result.overallText;
@@ -5839,6 +5881,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.122 专项解读白话串联版', items:[
+          '升级“问事专项解读”：从关键词堆叠改成“这一段看什么 → 落宫怎么说 → 回到你的问题怎么用”的日常对话式结构。',
+          '新增场景化“下一步核实建议”，健康、天气、消息、求职/考试、感情、失物等场景会给出更贴近日常操作的提醒。',
+          '三象解读和双宫断事继续接入场景白话，不再退回通用“有消息、有机会”等泛化话术。',
+          'Debug 发版体检表新增“专项解读串联可用”，一键自检通过时会显示“专项解读白话串联检查通过”。',
+          '同步更新首页版本、版本内容更新、README、manifest 和 service-worker 缓存名，避免旧版本跳动。'
+        ]},
         { v:'v10.5.121 场景白话增强与健康专项版', items:[
           '以 v10.5.120 稳定收口版为基准继续低风险升级，不改动导航、历史、命盘和缓存主结构。',
           '新增场景化宫位白话层：健康、天气、消息、求职/考试等场景不再直接套用通用“有消息、有机会、适合主动接住”的话术。',
@@ -6528,7 +6577,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.121',
+      source: 'mainline-v10.5.122',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -6606,7 +6655,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.121',
+      source: 'mainline-v10.5.122',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -7790,7 +7839,7 @@ function buildContextOverallSentence(context, details) {
       if(!nav) return;
       const overflow = (nav.scrollWidth || 0) > (nav.clientWidth || 0) + 2;
       const mode = getNavFollowMode();
-      nav.dataset.navAdaptive = (mode === 'fixed' ? 'fixed-pointer-v10.5.121' : 'adaptive-reveal-v10.5.121');
+      nav.dataset.navAdaptive = (mode === 'fixed' ? 'fixed-pointer-v10.5.122' : 'adaptive-reveal-v10.5.122');
       nav.dataset.navMode = mode;
       nav.dataset.navOverflow = overflow ? '1' : '0';
     }
@@ -7974,16 +8023,16 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.121'
+      source: 'mainline-v10.5.122'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.121） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.122） */
 /*
- * 小六壬 v10.5.121 Debug 主源码模块
+ * 小六壬 v10.5.122 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -7991,7 +8040,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.121 场景白话增强与健康专项版';
+  const APP_VERSION = 'v10.5.122 专项解读白话串联版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -8924,14 +8973,15 @@ function buildContextOverallSentence(context, details) {
       { id:'version-title', label:'页面 title 已更新到当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.title && snapshot.versionInfo.title.includes(APP_VERSION)) },
       { id:'version-meta', label:'meta description 已更新到当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.meta && snapshot.versionInfo.meta.includes(APP_VERSION)) },
       { id:'version-heading', label:'首页/主标题已更新到当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.headings && snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION))) },
-      { id:'version-log', label:'版本内容更新包含当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.headings && snapshot.versionInfo.headings.some(text => text.includes('v10.5.121'))) },
+      { id:'version-log', label:'版本内容更新包含当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.headings && snapshot.versionInfo.headings.some(text => text.includes('v10.5.122'))) },
       { id:'source-structure', label:'源码结构保持 1 个主 style + 1 个主 script', ok: !!(snapshot.sourceStructure && snapshot.sourceStructure.ok) },
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.121', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.121') },
+      { id:'nav-core', label:'导航主源码为 v10.5.122', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.122') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
+      { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
       { id:'normal-boundary', label:'普通问事不显示六宫排盘/命盘', ok: !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.normalShowingPaipan || snapshot.destiny.boundary.normalShowingDestinyBoard)) },
       { id:'destiny-boundary', label:'命运页保留六宫排盘/命盘', ok: !isDestiny || !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.destinyMissingPaipan || snapshot.destiny.boundary.destinyMissingBoard)) },
@@ -9000,7 +9050,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.121' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.122' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -9042,7 +9092,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.121') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.122') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -9058,7 +9108,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.121') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.122') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -9077,8 +9127,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.121') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.121 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.122') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.122 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -9111,8 +9161,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.121') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.121 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.122') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.122 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -9180,32 +9230,33 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.121' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.122' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.121') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.122') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.121') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.122') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.121') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.122') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.121') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.122') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
     if (snapshot.navigation.core.navModeSwitch) passes.push('导航模式设置切换检查通过');
     if (typeof scenePalaceEffect === 'function' && scenePalaceEffect('health','速喜').plain && scenePalaceEffect('weather','空亡').plain) passes.push('场景白话覆盖检查通过');
+    if (typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function') passes.push('专项解读白话串联检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.status === 'pass') passes.push('发布前体检表检查通过');
     if (snapshot.sourceAudit && !snapshot.sourceAudit.strictHitCount) passes.push('严格旧补丁源码关键词检查通过');
