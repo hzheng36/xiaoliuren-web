@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.97-history-core';
+const CACHE_NAME = 'xiaoliuren-v10.5.98-analytics-review-core';
 const APP_SHELL = [
   './',
   './index.html',

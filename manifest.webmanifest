@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.97 历史记录主源码恢复版",
-  "short_name": "小六壬 v10.5.97",
-  "description": "小六壬个人网页版 v10.5.97：恢复历史记录主源码，包含保存、查看、收藏、搜索筛选、导出导入、完整备份、复盘时间线与 Debug 历史自检。",
-  "start_url": "./index.html?v=10.5.97",
+  "name": "小六壬占卜 v10.5.98 历史分析与复盘主源码恢复版",
+  "short_name": "小六壬 v10.5.98",
+  "description": "小六壬个人网页版 v10.5.98：恢复历史分析与复盘统计主源码，包含统计卡片、分布图、复盘明细、分析导出与 Debug 分析自检。",
+  "start_url": "./index.html?v=10.5.98",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.97"
+  "version": "10.5.98"
 }

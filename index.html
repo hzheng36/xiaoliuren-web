@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.97 历史记录主源码恢复版</title>
-<meta content="小六壬个人网页版 v10.5.97 历史记录主源码恢复版：在导航稳定后继续清补丁，把历史列表、收藏、删除、搜索筛选、TXT/JSON 导出导入、复盘时间线与历史自检写回主源码。" name="description"/>
+<title>小六壬占卜 · v10.5.98 历史分析与复盘主源码恢复版</title>
+<meta content="小六壬个人网页版 v10.5.98 历史分析与复盘主源码恢复版：在历史记录主源码恢复后继续恢复历史分析、复盘统计、复盘明细、分析导出与 Debug 分析自检，修正多条复盘统计只看最新记录的问题。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -983,8 +983,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.97，含历史记录自检与旧键安全清理） */
-/* 小六壬 v10.5.97 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.98，含历史分析与复盘自检） */
+/* 小六壬 v10.5.98 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1143,7 +1143,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航随动自动居中主样式（v10.5.97，主 CSS 内建，不再后置补丁） */
+/* 源码模块：导航随动自动居中主样式（v10.5.98，主 CSS 内建，不再后置补丁） */
 :root {
   --xlr-nav-slot-width:82px;
   --xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));
@@ -1313,8 +1313,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.97 历史记录主源码恢复版</h2>
-<p>本版继续执行“补丁回源码计划”：在 v10.5.96 导航稳定的基础上，重点恢复历史记录主源码，包括历史查看、收藏、删除、搜索筛选、日期筛选、TXT/JSON 导出导入、完整备份、复盘时间线与 Debug 历史自检。</p>
+<h2>个人占卜台 · v10.5.98 历史分析与复盘主源码恢复版</h2>
+<p>本版继续执行“补丁回源码计划”：在 v10.5.97 历史记录主源码稳定的基础上，重点恢复历史分析与复盘统计主源码，包括统计卡片、分布图、历史明细、复盘明细、分析导出与 Debug 分析自检。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1793,7 +1793,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.97 历史记录主源码恢复版';
+    const XLR_SOURCE_VERSION = 'v10.5.98 历史分析与复盘主源码恢复版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -2561,7 +2561,7 @@ function buildPaipanExplanation(result){
     }
 
     
-    /* 源码模块：历史记录主源码恢复（v10.5.97）
+    /* 源码模块：历史记录主源码恢复（v10.5.98）
        目标：把保存、读取、收藏、筛选、导入导出、复盘刷新全部归入主源码，不再依赖旧补丁或后置兜底。 */
     const HISTORY_MAX_ITEMS = 160;
     function safeHistoryArray(value){ return Array.isArray(value) ? value.filter(Boolean) : []; }
@@ -2649,7 +2649,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.97',
+      source: 'mainline-v10.5.98',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -2825,7 +2825,7 @@ function buildPaipanExplanation(result){
     function formatTimePretty(dt){ const months=['January','February','March','April','May','June','July','August','September','October','November','December']; return `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()} at ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`; }
     
     function formatLunarFull(text, dt){ const raw=String(text || '').replace(/^\d{2,4}年\s*/,'').replace(/^农历/,'').replace(/^\s+/,'').replace(/\s+/g,''); return `${dt.getFullYear()}年 农历${raw}`; }
-    function formatISO(iso){ return formatDateTimeCN(new Date(iso)); }
+    function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
     
     function openHistoryDialog(){
@@ -2859,7 +2859,7 @@ function buildPaipanExplanation(result){
 
     let currentReviewId = null;
     function reviewAccuracyLabel(value){
-      const map = { pending:'还没发生 / 待验证', accurate:'准', partial:'部分准', miss:'不准' };
+      const map = { pending:'还没发生 / 待验证', accurate:'准', partial:'部分准', miss:'不准', inaccurate:'不准' };
       return map[value] || '未复盘';
     }
 
@@ -4480,6 +4480,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.98 历史分析与复盘主源码恢复版', items:[
+          '历史分析进入主源码阶段：新增 window.XLRAnalyticsCore 主命名空间，统一管理统计、图表、复盘明细、分析刷新与导出入口。',
+          '复盘统计从“只看最新 review”改为“统计全部 reviews 时间线”，多次复盘不会再被分析页漏算。',
+          '分析页新增末象落点分布、识别类型分布、复盘条目总数、已复盘记录数、分析导读和更完整的复盘明细表。',
+          '修正复盘准确度字段兼容：旧数据里的 inaccurate 与当前 miss 都会按“不准”处理，避免历史数据统计偏差。',
+          'Debug 自检新增历史分析主命名空间、分析 DOM、分析日期控件、复盘导出按钮与分析指标检查；继续保持 1 个主 style + 1 个主 script。'
+        ]},
         { v:'v10.5.97 历史记录主源码恢复版', items:[
           '历史记录恢复进入主源码阶段：新增 window.XLRHistoryCore 主命名空间，统一管理保存、读取、排序、收藏、删除、清空、筛选、导入与导出。',
           '历史列表增强：支持场景、日期、关键词、只看收藏筛选；每条记录恢复查看、收藏/取消收藏、复盘、删除按钮，并保留复盘摘要。',
@@ -4567,7 +4574,7 @@ function buildContextOverallSentence(context, details) {
           '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复第七步：在 Debug 主源码可用后，继续增强自检与旧缓存安全清理，确保清补丁不是靠新的补丁覆盖，而是靠主源码、主函数、主设置键稳定运行。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第八步：在历史记录主源码稳定后，继续把历史分析与复盘统计写回主函数，让统计、图表、复盘明细和导出都走同一套干净数据源。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
@@ -4781,7 +4788,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    /* v8.3 历史分析功能 */
+    /* 源码模块：历史分析与复盘主源码恢复（v10.5.98）
+       目标：把历史统计、复盘统计、明细表和分析导出统一归入主源码，不再沿用旧 v8.3 零散分析逻辑。 */
     const analyticsDialog = document.getElementById('analyticsDialog');
     function openAnalyticsDialog(){
       renderAnalytics();
@@ -4794,7 +4802,7 @@ function buildContextOverallSentence(context, details) {
     }
     function countBy(list, getter){
       const map = {};
-      list.forEach(item => {
+      (list || []).forEach(item => {
         const value = getter(item) || '未记录';
         map[value] = (map[value] || 0) + 1;
       });
@@ -4803,12 +4811,21 @@ function buildContextOverallSentence(context, details) {
     function palaceFrequency(list){
       const map = {};
       PALACE_ORDER.forEach(p => map[p] = 0);
-      list.forEach(item => (item.palaces || []).forEach(p => { map[p] = (map[p] || 0) + 1; }));
+      (list || []).forEach(item => (item.palaces || []).forEach(p => { map[p] = (map[p] || 0) + 1; }));
+      return PALACE_ORDER.map(p => [p, map[p] || 0]).sort((a,b)=>b[1]-a[1]);
+    }
+    function endingPalaceFrequency(list){
+      const map = {};
+      PALACE_ORDER.forEach(p => map[p] = 0);
+      (list || []).forEach(item => {
+        const end = Array.isArray(item.palaces) && item.palaces.length ? item.palaces[item.palaces.length - 1] : '';
+        if(end) map[end] = (map[end] || 0) + 1;
+      });
       return PALACE_ORDER.map(p => [p, map[p] || 0]).sort((a,b)=>b[1]-a[1]);
     }
     function topName(entries){ return entries && entries.length ? entries[0][0] : '暂无'; }
     function renderBarChart(entries, maxRows){
-      const rows = (entries || []).slice(0, maxRows || 8);
+      const rows = (entries || []).filter(row => row && row[1] > 0).slice(0, maxRows || 8);
       const max = rows.length ? Math.max.apply(null, rows.map(r=>r[1])) : 1;
       if (!rows.length) return '<div class="analysis-empty">暂无数据</div>';
       return '<div class="analysis-chart">' + rows.map(([label,value]) => {
@@ -4828,28 +4845,89 @@ function buildContextOverallSentence(context, details) {
       if (note.indexOf('事件') >= 0) return '事件起课';
       return '未记录';
     }
+    function analyticsReviewEntries(item){
+      if (typeof getReviewEntries === 'function') return getReviewEntries(item);
+      if (!item) return [];
+      if (Array.isArray(item.reviews)) return item.reviews.filter(Boolean);
+      return item.review ? [item.review] : [];
+    }
+    function latestAnalyticsReview(item){
+      const list = analyticsReviewEntries(item);
+      return list.length ? list[list.length - 1] : null;
+    }
+    function getReviewEntryRows(list){
+      const rows = [];
+      (list || []).forEach(item => {
+        const reviews = analyticsReviewEntries(item);
+        reviews.forEach((review, idx) => rows.push({ item, review, index: idx + 1, total: reviews.length }));
+      });
+      return rows;
+    }
+    function reviewRateTextFromRows(rows){
+      const judged = (rows || []).filter(row => row.review && row.review.accuracy && row.review.accuracy !== 'pending');
+      if(!judged.length) return '暂无';
+      const good = judged.filter(row => row.review.accuracy === 'accurate' || row.review.accuracy === 'partial').length;
+      return Math.round(good / judged.length * 100) + '%';
+    }
+    function reviewRateText(list){ return reviewRateTextFromRows(getReviewEntryRows(list)); }
+    function buildAnalyticsMetrics(list){
+      const normalized = Array.isArray(list) ? list : [];
+      const reviewRows = getReviewEntryRows(normalized);
+      const sceneEntries = countBy(normalized, item => item.sceneName || '未记录');
+      const methodEntries = countBy(normalized, item => methodLabel(item));
+      const palaceEntries = palaceFrequency(normalized);
+      const endingEntries = endingPalaceFrequency(normalized);
+      const contextEntries = countBy(normalized, item => item.context && item.context.title ? item.context.title : '未识别');
+      const reviewedRecords = normalized.filter(item => analyticsReviewEntries(item).length);
+      const reviewAccEntries = countBy(reviewRows, row => reviewAccuracyLabel(row.review && row.review.accuracy));
+      const reviewedSceneEntries = countBy(reviewRows, row => row.item && row.item.sceneName || '未记录');
+      return {
+        total: normalized.length,
+        favoriteCount: normalized.filter(item => item.favorite).length,
+        reviewedRecordCount: reviewedRecords.length,
+        reviewEntryCount: reviewRows.length,
+        accurateCount: reviewRows.filter(row => row.review && row.review.accuracy === 'accurate').length,
+        partialCount: reviewRows.filter(row => row.review && row.review.accuracy === 'partial').length,
+        missCount: reviewRows.filter(row => row.review && (row.review.accuracy === 'miss' || row.review.accuracy === 'inaccurate')).length,
+        pendingCount: reviewRows.filter(row => row.review && row.review.accuracy === 'pending').length,
+        reviewRate: reviewRateTextFromRows(reviewRows),
+        sceneEntries,
+        methodEntries,
+        palaceEntries,
+        endingEntries,
+        contextEntries,
+        reviewAccEntries,
+        reviewedSceneEntries,
+        reviewRows,
+        latestTime: normalized[0] && normalized[0].createdAt ? formatISO(normalized[0].createdAt) : '暂无'
+      };
+    }
+    function renderAnalyticsInsight(metrics){
+      if(!metrics || !metrics.total) return '';
+      const topScene = topName(metrics.sceneEntries);
+      const topMethod = topName(metrics.methodEntries);
+      const topPalace = topName(metrics.palaceEntries);
+      const topEnd = topName(metrics.endingEntries);
+      const reviewHint = metrics.reviewEntryCount ? `已记录 ${metrics.reviewEntryCount} 条复盘，参考率 ${metrics.reviewRate}。` : '暂时还没有复盘，建议从重点案例开始补实际结果。';
+      return `<div class="analysis-section"><div class="review-summary"><strong>分析导读：</strong>当前范围内最常问「${escapeHTML(topScene)}」，最常用「${escapeHTML(topMethod)}」，最常见宫位为「${escapeHTML(topPalace)}」，末象最多落在「${escapeHTML(topEnd)}」。${escapeHTML(reviewHint)}</div></div>`;
+    }
     function renderAnalyticsTable(list){
       if (!list.length) return '<div class="analysis-empty">暂无历史记录。保存几条占卜结果后，这里会自动生成分析。</div>';
       return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>场景</th><th>起课方式</th><th>占问事项</th><th>三数</th><th>落宫</th><th>识别类型</th><th>复盘</th></tr></thead><tbody>` + list.map(item => {
         const contextTitle = item.context && item.context.title ? item.context.title : '—';
-        const reviewText = item.review ? reviewAccuracyLabel(item.review.accuracy) : '—';
+        const latest = latestAnalyticsReview(item);
+        const reviewText = latest ? (analyticsReviewEntries(item).length + ' 条｜' + reviewAccuracyLabel(latest.accuracy)) : '—';
         return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(methodLabel(item))}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.numbers || []).join(' / '))}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${escapeHTML(contextTitle)}</td><td>${escapeHTML(reviewText)}</td></tr>`;
       }).join('') + '</tbody></table></div>';
     }
-
     function renderReviewAnalyticsTable(list){
-      const reviewed = list.filter(item => item.review);
-      if (!reviewed.length) return '<div class="analysis-empty">当前范围内还没有复盘记录。你可以在“历史记录”中点击“复盘”补充实际结果。</div>';
-      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>时间</th><th>场景</th><th>占问事项</th><th>落宫</th><th>准确度</th><th>实际结果</th><th>复盘备注</th></tr></thead><tbody>` + reviewed.map(item => {
-        const review = item.review || {};
-        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${escapeHTML(reviewAccuracyLabel(review.accuracy))}</td><td>${escapeHTML(review.actual || '—')}</td><td>${escapeHTML(review.note || '—')}</td></tr>`;
+      const rows = getReviewEntryRows(list);
+      if (!rows.length) return '<div class="analysis-empty">当前范围内还没有复盘记录。你可以在“历史记录”中点击“复盘”补充实际结果。</div>';
+      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>占卜时间</th><th>场景</th><th>占问事项</th><th>落宫</th><th>复盘序号</th><th>准确度</th><th>复盘时间</th><th>实际结果</th><th>复盘备注</th></tr></thead><tbody>` + rows.map(row => {
+        const item = row.item || {};
+        const review = row.review || {};
+        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${row.index}/${row.total}</td><td>${escapeHTML(reviewAccuracyLabel(review.accuracy))}</td><td>${escapeHTML(formatISO(review.reviewedAt || review.updatedAt || review.createdAt || ''))}</td><td>${escapeHTML(review.actual || '—')}</td><td>${escapeHTML(review.note || '—')}</td></tr>`;
       }).join('') + '</tbody></table></div>';
-    }
-    function reviewRateText(list){
-      const reviewed = list.filter(item => item.review && item.review.accuracy && item.review.accuracy !== 'pending');
-      if(!reviewed.length) return '暂无';
-      const good = reviewed.filter(item => item.review.accuracy === 'accurate' || item.review.accuracy === 'partial').length;
-      return Math.round(good / reviewed.length * 100) + '%';
     }
     function renderAnalytics(){
       const container = document.getElementById('analyticsContent');
@@ -4868,41 +4946,46 @@ function buildContextOverallSentence(context, details) {
         container.innerHTML = '<div class="analysis-empty">' + (selectedDate ? '这一天暂无占卜记录：' + selectedDate : '暂无历史记录。') + '</div>';
         return;
       }
-      const sceneEntries = countBy(list, item => item.sceneName || '未记录');
-      const methodEntries = countBy(list, item => methodLabel(item));
-      const palaceEntries = palaceFrequency(list);
-      const favCount = list.filter(item => item.favorite).length;
-      const reviewCount = list.filter(item => item.review).length;
-      const accurateCount = list.filter(item => item.review && item.review.accuracy === 'accurate').length;
-      const partialCount = list.filter(item => item.review && item.review.accuracy === 'partial').length;
-      const inaccurateCount = list.filter(item => item.review && item.review.accuracy === 'inaccurate').length;
-      const pendingCount = list.filter(item => item.review && item.review.accuracy === 'pending').length;
-      const reviewEntries = countBy(list.filter(item => item.review), item => reviewAccuracyLabel(item.review.accuracy));
-      const reviewedSceneEntries = countBy(list.filter(item => item.review), item => item.sceneName || '未记录');
-      const lastTime = list[0] && list[0].createdAt ? formatISO(list[0].createdAt) : '暂无';
+      const metrics = buildAnalyticsMetrics(list);
       container.innerHTML = `
         <div class="analysis-grid">
           <div class="analysis-card"><span>统计范围</span><b>${escapeHTML(renderDateScopeLabel(selectedDate))}</b></div>
-          <div class="analysis-card"><span>总占卜次数</span><b>${list.length}</b></div>
-          <div class="analysis-card"><span>收藏记录</span><b>${favCount}</b></div>
-          <div class="analysis-card"><span>已复盘</span><b>${reviewCount}</b></div>
-          <div class="analysis-card"><span>复盘准/部分准</span><b>${accurateCount}/${partialCount}</b></div>
-          <div class="analysis-card"><span>复盘不准/未发生</span><b>${inaccurateCount}/${pendingCount}</b></div>
-          <div class="analysis-card"><span>复盘参考率</span><b>${reviewRateText(list)}</b></div>
-          <div class="analysis-card"><span>最近一次</span><b>${lastTime}</b></div>
-          <div class="analysis-card"><span>最常问场景</span><b>${escapeHTML(topName(sceneEntries))}</b></div>
-          <div class="analysis-card"><span>最常用起课</span><b>${escapeHTML(topName(methodEntries))}</b></div>
-          <div class="analysis-card"><span>最常见宫位</span><b>${escapeHTML(topName(palaceEntries))}</b></div>
+          <div class="analysis-card"><span>总占卜次数</span><b>${metrics.total}</b></div>
+          <div class="analysis-card"><span>收藏记录</span><b>${metrics.favoriteCount}</b></div>
+          <div class="analysis-card"><span>已复盘记录</span><b>${metrics.reviewedRecordCount}</b></div>
+          <div class="analysis-card"><span>复盘条目</span><b>${metrics.reviewEntryCount}</b></div>
+          <div class="analysis-card"><span>复盘准/部分准</span><b>${metrics.accurateCount}/${metrics.partialCount}</b></div>
+          <div class="analysis-card"><span>复盘不准/待验证</span><b>${metrics.missCount}/${metrics.pendingCount}</b></div>
+          <div class="analysis-card"><span>复盘参考率</span><b>${metrics.reviewRate}</b></div>
+          <div class="analysis-card"><span>最近一次</span><b>${metrics.latestTime}</b></div>
+          <div class="analysis-card"><span>最常问场景</span><b>${escapeHTML(topName(metrics.sceneEntries))}</b></div>
+          <div class="analysis-card"><span>最常用起课</span><b>${escapeHTML(topName(metrics.methodEntries))}</b></div>
+          <div class="analysis-card"><span>最常见末象</span><b>${escapeHTML(topName(metrics.endingEntries))}</b></div>
         </div>
-        <div class="analysis-section"><h4>场景分布</h4>${renderBarChart(sceneEntries, 10)}</div>
-        <div class="analysis-section"><h4>起课方式分布</h4>${renderBarChart(methodEntries, 6)}</div>
-        <div class="analysis-section"><h4>六宫出现频率</h4>${renderBarChart(palaceEntries, 6)}</div>
-        <div class="analysis-section"><h4>复盘准确度分布</h4>${renderBarChart(reviewEntries, 6)}</div>
-        <div class="analysis-section"><h4>已复盘场景分布</h4>${renderBarChart(reviewedSceneEntries, 10)}</div>
+        ${renderAnalyticsInsight(metrics)}
+        <div class="analysis-section"><h4>场景分布</h4>${renderBarChart(metrics.sceneEntries, 10)}</div>
+        <div class="analysis-section"><h4>起课方式分布</h4>${renderBarChart(metrics.methodEntries, 6)}</div>
+        <div class="analysis-section"><h4>六宫出现频率</h4>${renderBarChart(metrics.palaceEntries, 6)}</div>
+        <div class="analysis-section"><h4>末象落点分布</h4>${renderBarChart(metrics.endingEntries, 6)}</div>
+        <div class="analysis-section"><h4>识别类型分布</h4>${renderBarChart(metrics.contextEntries, 10)}</div>
+        <div class="analysis-section"><h4>复盘准确度分布</h4>${renderBarChart(metrics.reviewAccEntries, 6)}</div>
+        <div class="analysis-section"><h4>已复盘场景分布</h4>${renderBarChart(metrics.reviewedSceneEntries, 10)}</div>
         <div class="analysis-section"><h4>历史明细表</h4>${renderAnalyticsTable(list)}</div>
         <div class="analysis-section"><h4>复盘明细表</h4>${renderReviewAnalyticsTable(list)}</div>
         <div style="height:24px"></div>`;
     }
+    window.XLRAnalyticsCore = {
+      version: XLR_SOURCE_VERSION,
+      source: 'mainline-v10.5.98',
+      open: openAnalyticsDialog,
+      close: closeAnalyticsDialog,
+      render: renderAnalytics,
+      buildMetrics: buildAnalyticsMetrics,
+      getReviewEntries: analyticsReviewEntries,
+      getReviewRows: getReviewEntryRows,
+      reviewRateText: reviewRateText,
+      exportReviews: function(){ if(typeof exportReviews === 'function') return exportReviews(); }
+    };
 
 
     function setAllResultBlocksCollapsed(shouldCollapse){
@@ -6173,16 +6256,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.97'
+      source: 'mainline-v10.5.98'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.97） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.98） */
 /*
- * 小六壬 v10.5.97 Debug 主源码模块
+ * 小六壬 v10.5.98 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并恢复导航自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -6190,7 +6273,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.97 历史记录主源码恢复版';
+  const APP_VERSION = 'v10.5.98 历史分析与复盘主源码恢复版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -6276,7 +6359,12 @@ function buildContextOverallSentence(context, details) {
     'exportHistory',
     'exportHistoryJSON',
     'triggerImportHistory',
-    'handleImportHistoryFile'
+    'handleImportHistoryFile',
+    'openAnalyticsDialog',
+    'closeAnalyticsDialog',
+    'renderAnalytics',
+    'renderReviewAnalyticsTable',
+    'exportReviews'
   ];
 
   const KNOWN_BLOCKS = [
@@ -6694,6 +6782,38 @@ function buildContextOverallSentence(context, details) {
     };
   }
 
+  function getAnalyticsInfo() {
+    let list = [];
+    let metrics = null;
+    try { list = typeof window.getHistory === 'function' ? window.getHistory() : []; } catch (err) { list = []; }
+    try { metrics = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildMetrics === 'function' ? window.XLRAnalyticsCore.buildMetrics(list) : null; } catch (err) { metrics = { error: String(err && err.message || err) }; }
+    return {
+      core: {
+        exists: !!window.XLRAnalyticsCore,
+        version: window.XLRAnalyticsCore ? window.XLRAnalyticsCore.version : '',
+        source: window.XLRAnalyticsCore ? window.XLRAnalyticsCore.source : '',
+        hasRender: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.render === 'function'),
+        hasMetrics: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildMetrics === 'function'),
+        hasReviewRows: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.getReviewRows === 'function')
+      },
+      hasDialog: !!document.getElementById('analyticsDialog'),
+      hasContent: !!document.getElementById('analyticsContent'),
+      hasDateInput: !!document.getElementById('analyticsDateInput'),
+      hasDatePicker: !!document.getElementById('analyticsDatePicker'),
+      hasExportReview: !!document.getElementById('exportReviewBtn') && !!document.getElementById('exportReviewHistoryBtn'),
+      metrics: metrics ? {
+        total: metrics.total,
+        reviewedRecordCount: metrics.reviewedRecordCount,
+        reviewEntryCount: metrics.reviewEntryCount,
+        reviewRate: metrics.reviewRate,
+        topScene: metrics.sceneEntries && metrics.sceneEntries[0] ? metrics.sceneEntries[0] : null,
+        topEndingPalace: metrics.endingEntries && metrics.endingEntries[0] ? metrics.endingEntries[0] : null,
+        error: metrics.error || null
+      } : null
+    };
+  }
+
+
   function getStorageInfo() {
     const keys = [];
     try {
@@ -6944,6 +7064,7 @@ function buildContextOverallSentence(context, details) {
       },
       functions: getFunctionStatus(),
       history: getHistoryInfo(),
+      analytics: getAnalyticsInfo(),
       navigation: getNavInfo(),
       quickButtons: getQuickButtonsInfo(),
       collapsible: getCollapsibleInfo(),
@@ -6972,11 +7093,11 @@ function buildContextOverallSentence(context, details) {
     if (!document.title.includes(APP_VERSION)) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    if (!snapshot.versionInfo.meta.includes('10.5.97') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.97', snapshot.versionInfo.meta);
+    if (!snapshot.versionInfo.meta.includes('10.5.98') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.98', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.97'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.97', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.98'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.98', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -7015,8 +7136,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.97') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.97 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.98') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.98 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -7031,6 +7152,25 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.98') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.98 主源码分析模块', snapshot.analytics.core);
+    }
+    if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
+      addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
+    }
+    if (!snapshot.analytics.hasDateInput || !snapshot.analytics.hasDatePicker) {
+      addIssue(issues, 'warning', 'ANALYTICS_DATE_DOM_MISSING', '历史分析日期控件不完整', snapshot.analytics);
+    }
+    if (!snapshot.analytics.hasExportReview) {
+      addIssue(issues, 'warning', 'ANALYTICS_EXPORT_DOM_MISSING', '复盘导出按钮缺失或不完整', snapshot.analytics);
+    }
+    if (!snapshot.analytics.core.hasMetrics || !snapshot.analytics.core.hasReviewRows) {
+      addIssue(issues, 'error', 'ANALYTICS_METRIC_FUNCTION_MISSING', '历史分析统计函数或复盘行函数缺失', snapshot.analytics.core);
+    }
+    if (snapshot.analytics.metrics && snapshot.analytics.metrics.error) {
+      addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
+    }
+
     const isResult = snapshot.page.isResultPage || snapshot.page.resultCard.visible;
     const isDestiny = snapshot.page.isDestinyPage || (snapshot.page.currentResult && snapshot.page.currentResult.sceneKey === 'destiny');
     const requiredNav = isResult ? REQUIRED_RESULT_NAV.slice() : REQUIRED_HOME_NAV.slice();
@@ -7043,8 +7183,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.97') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.97 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.98') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.98 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -7101,14 +7241,19 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.97') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.98') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
+    if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.98') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
+    if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
+    if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.97') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.98') passes.push('导航主命名空间检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
 
@@ -7140,7 +7285,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、历史记录主源码、命盘子导航、折叠、设置和运行错误。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、历史记录主源码、历史分析主源码、命盘子导航、折叠、设置和运行错误。</p>
         <div class="xlr-debug-toolbar">
           <button type="button" data-debug-action="selfcheck">一键自检</button>
           <button type="button" data-debug-action="snapshot">刷新快照</button>
