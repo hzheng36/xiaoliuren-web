@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-117-nav-mode-switch';
+const CACHE_NAME = 'xiaoliuren-v10-5-118-nav-gap-compact';
 const APP_SHELL = [
   './',
   './index.html',
