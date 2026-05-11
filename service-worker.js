@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-110-destiny-night-paipan-trim';
+const CACHE_NAME = 'xiaoliuren-v10-5-111-destiny-subnav-night-check';
 const APP_SHELL = [
   './',
   './index.html',
