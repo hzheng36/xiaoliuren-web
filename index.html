@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.105 首页结果页分离主源码版</title>
-<meta content="小六壬个人网页版 v10.5.105 首页结果页分离主源码版：参考 v10.5.76 稳定逻辑，恢复主页与占卜结果页独立显示，修复起课和历史查看后主页输入区混入结果页的问题。" name="description"/>
+<title>小六壬占卜 · v10.5.106 命盘专题内容主源码恢复版</title>
+<meta content="小六壬个人网页版 v10.5.106 命盘专题内容主源码恢复版：在首页/结果页分离稳定基础上，参考 v10.5.76 的命盘健康、婚姻与事业专题，把详细内容直接收回 XLRDestinyCore 与 renderDestinyBoard 主源码，不新增后置补丁。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -872,7 +872,7 @@ body.result-page.force-desktop-mode .shell {
 body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
 
-/* 源码主模块：首页与占卜结果页分离（v10.5.105）
+/* 源码主模块：首页与占卜结果页分离（v10.5.106 延续）
    目标：参考 v10.5.76 稳定逻辑，进入结果页后只显示结果卡片；返回主页/重新占卜后再显示主页输入区。 */
 body.result-page .sidebar,
 body.result-page #homeTopSection,
@@ -954,6 +954,37 @@ body:not(.result-page) #resultCard.hidden {
     .destiny-deep-card h5 { margin: 0 0 8px; font-size: 1rem; color: var(--deep); display:flex; align-items:center; gap:8px; }
     .destiny-deep-card p { margin: 6px 0; line-height: 1.75; color: var(--muted); }
     .destiny-deep-card strong { color: var(--ink); }
+
+    /* 源码主模块：命盘专题详细内容（v10.5.106） */
+    .destiny-topic-card.full { grid-column: 1 / -1; }
+    .destiny-topic-note { margin: 8px 0 12px; padding: 12px 14px; border-radius: 16px; border: 1px solid rgba(124,112,178,.16); background: rgba(255,255,255,.72); color: var(--muted); line-height: 1.75; }
+    .destiny-topic-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-top:12px; }
+    .destiny-topic-mini { border:1px solid rgba(124,112,178,.15); border-radius:16px; padding:13px 14px; background:rgba(255,255,255,.76); box-shadow:0 6px 16px rgba(51,43,71,.04); line-height:1.72; }
+    .destiny-topic-mini.full { grid-column: 1 / -1; }
+    .destiny-topic-mini h6 { margin:0 0 8px; font-size:.96rem; color:var(--primary); display:flex; align-items:center; gap:6px; }
+    .destiny-topic-mini p { margin:6px 0; color:var(--muted); line-height:1.72; }
+    .destiny-topic-mini ul { margin:8px 0 0; padding-left:1.1rem; }
+    .destiny-topic-mini li { margin:4px 0; color:var(--muted); line-height:1.65; }
+    .destiny-topic-pills { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+    .destiny-topic-pill { display:inline-flex; align-items:center; border-radius:999px; padding:3px 9px; background:rgba(108,91,166,.10); color:var(--primary); font-weight:800; font-size:.82rem; }
+    .destiny-topic-muted { color: var(--muted); font-size:.9rem; }
+    .destiny-topic-table { overflow-x:auto; border:1px solid rgba(124,112,178,.15); border-radius:16px; background:rgba(255,255,255,.78); margin-top:10px; }
+    .destiny-topic-table table { width:100%; min-width:680px; border-collapse:collapse; font-size:.9rem; }
+    .destiny-topic-table th, .destiny-topic-table td { padding:9px 10px; border-bottom:1px solid rgba(124,112,178,.12); text-align:left; vertical-align:top; line-height:1.55; }
+    .destiny-topic-table th { background:rgba(108,91,166,.08); color:var(--ink); font-weight:900; }
+    .destiny-topic-table tr:last-child td { border-bottom:0; }
+    body.reading-theme-night .destiny-topic-note,
+    body.reading-theme-night .destiny-topic-mini,
+    body.reading-theme-night .destiny-topic-table { background:rgba(35,31,50,.92); border-color:rgba(164,144,235,.22); box-shadow:none; }
+    body.reading-theme-night .destiny-topic-mini h6,
+    body.reading-theme-night .destiny-topic-pill { color:#d8c8ff; }
+    body.reading-theme-night .destiny-topic-pill { background:rgba(139,111,230,.18); border:1px solid rgba(164,144,235,.18); }
+    body.reading-theme-night .destiny-topic-table th { background:rgba(139,111,230,.16); color:#f4efff; }
+    body.reading-theme-night .destiny-topic-table td,
+    body.reading-theme-night .destiny-topic-mini p,
+    body.reading-theme-night .destiny-topic-mini li,
+    body.reading-theme-night .destiny-topic-note { color:#d5cce8; }
+    @media(max-width:760px){ .destiny-topic-grid{grid-template-columns:1fr;} .destiny-topic-table table{min-width:640px;font-size:.86rem;} .destiny-topic-mini{padding:12px;} }
     .paipan-explain-grid { display:grid; gap:10px; margin-top:10px; }
     .paipan-explain-card { padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.78); border:1px solid rgba(124,112,178,.14); line-height:1.75; }
     .paipan-explain-card b { color:var(--deep); }
@@ -1013,8 +1044,8 @@ body:not(.result-page) #resultCard.hidden {
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.105，含命盘、暗夜主题、历史回看与结果页分离自检） */
-/* 小六壬 v10.5.105 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.106，含命盘、暗夜主题、历史回看与结果页分离自检） */
+/* 小六壬 v10.5.106 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1354,7 +1385,7 @@ body.reading-theme-night canvas,
 body.reading-theme-night img,
 body.reading-theme-night svg { filter:none !important; }
 
-/* 源码主模块：暗夜主题关键残留清理（v10.5.105） */
+/* 源码主模块：暗夜主题关键残留清理（v10.5.106 延续） */
 body.reading-theme-night .feature-item,
 body.reading-theme-night .ab-choice-panel,
 body.reading-theme-night .ab-toggle,
@@ -1497,7 +1528,7 @@ body.reading-theme-night ::-webkit-scrollbar-thumb {
 
 
 
-/* 源码主模块：暗夜弹窗与历史残留最终清理（v10.5.105） */
+/* 源码主模块：暗夜弹窗与历史残留最终清理（v10.5.106 延续） */
 body.reading-theme-night dialog,
 body.reading-theme-night #historyDialog,
 body.reading-theme-night #settingsDialog,
@@ -1787,8 +1818,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.105 首页结果页分离主源码版</h2>
-<p>本版继续执行“补丁回源码计划”：在 v10.5.98 历史分析稳定的基础上，继续清理旧设置主键，把用户设置、上次选择和结果视图迁移到 source 主键，降低旧缓存残留导致的新旧跳动与误判。</p>
+<h2>个人占卜台 · v10.5.106 命盘专题内容主源码恢复版</h2>
+<p>本版继续执行“补丁回源码计划”：在首页/结果页分离稳定基础上，参考 v10.5.76 的命盘健康、婚姻与事业专题，把详细内容直接写回主源码，继续减少后置补丁和功能散落。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -2267,7 +2298,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.105 首页结果页分离主源码版';
+    const XLR_SOURCE_VERSION = 'v10.5.106 命盘专题内容主源码恢复版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -2851,16 +2882,80 @@ function buildPaipanExplanation(result){
         const selfCell=ordered[0];
         const weak=ordered.filter(c=>['留连','赤口','空亡'].includes(c.palace)).map(c=>c.kin+'落'+c.palace).join('、') || '阻滞象不明显';
         const help=ordered.filter(c=>['大安','速喜','小吉'].includes(c.palace)).map(c=>c.kin+'落'+c.palace).join('、') || '助力象不明显';
+        const topicEsc = escapeHTML;
+        const topicElementOrgan = {
+          木:{zang:'肝',fu:'胆',parts:'眼睛、筋、爪甲、情绪舒展',risk:'肝火旺、眼睛干涩、筋痛、情绪郁结',care:'规律作息，减少久坐和长期压抑，适合伸展、散步和稳定情绪。'},
+          火:{zang:'心',fu:'小肠',parts:'舌头、血脉、面部、睡眠',risk:'心悸、失眠、口腔溃疡、上火、循环偏弱',care:'少熬夜，减少过度兴奋和咖啡因刺激，重要事情避免临睡前反复想。'},
+          土:{zang:'脾',fu:'胃',parts:'肌肉、口唇、消化、湿气',risk:'消化不良、腹胀、湿气重、肌肉乏力',care:'饮食规律，少生冷油腻，重视脾胃和长期稳定的生活节奏。'},
+          金:{zang:'肺',fu:'大肠',parts:'皮肤、鼻、呼吸、毛发',risk:'咳嗽、鼻敏感、皮肤干敏、便秘或气机不畅',care:'注意空气、保暖和呼吸节律，情绪紧绷时先放慢表达。'},
+          水:{zang:'肾',fu:'膀胱',parts:'耳朵、骨骼、腰腿、头发、泌尿',risk:'腰膝酸软、耳鸣、尿频、精力不足、脱发',care:'避免长期透支和熬夜，注意保暖、恢复精力和睡眠质量。'}
+        };
+        const topicHealthByPalace={
+          大安:'小病易安，整体偏稳，但也容易把问题拖着不处理，适合稳步调理。',
+          留连:'容易慢性、反复、拖延，恢复过程不宜急，需防旧问题反复。',
+          速喜:'变化较快，可能突然发作也可能较快缓解，急性表现要留意。',
+          赤口:'偏疼痛、炎症、外伤、手术、急性刺激，若身体已有不适要谨慎。',
+          小吉:'多与奔波、劳损、活动、筋骨或生活节奏有关，动中求调。',
+          空亡:'偏虚、空、查不清、症状不稳定，容易有“感觉明显但不易定位”的象。'
+        };
+        const topicSpiritHealth={青龙:'偏肝气、情绪、筋、眼睛，也代表正气和修复力。',朱雀:'偏心火、炎症、发热、口舌、睡眠与表达紧张。',勾陈:'偏脾胃、湿气、慢性、黏滞、恢复慢。',腾蛇:'偏神经、缠绕、焦虑、莫名不适、反复不清。',白虎:'偏急痛、外伤、磕碰、手术、强烈疼痛感。',玄武:'偏肾水、隐疾、泌尿、生殖、湿寒与暗耗。'};
+        const topicMarriageKB={
+          relation:{生我:'对方付出多，你较轻松，被包容',我生:'你付出多，包容对方，容易累',克我:'对方强势，你需忍让，容易压抑',我克:'你占主导，对方顺从，但别太强势',比和:'平等互助，但也容易争执互不相让'},
+          tendency:{大安:'婚姻稳定，平淡，适合细水长流，但缺少激情',留连:'感情拖延、反复，容易藕断丝连或长期分居',速喜:'闪婚、快速热恋，来得快去得也快，防一时冲动',赤口:'争吵多，口舌是非，注意冲突、冷战或规则问题',小吉:'夫妻各自奔波，聚少离多，但自由独立',空亡:'感情空虚，有名无实，或一方逃避责任'},
+          advantage:{大安:'安全、稳定，不易轻易散',留连:'感情韧性强，不容易彻底断',速喜:'互动来得快，热度容易被点燃',赤口:'吵架后若能好好沟通，反而能把问题说开',小吉:'给彼此自由，适合双事业或各自奔波',空亡:'无牵无挂，适合重新审视关系真实度'},
+          challenge:{大安:'太闷，容易冷淡或缺少推动',留连:'拖泥带水，旧问题反复',速喜:'激情退后容易失衡或冲动决定',赤口:'争执、言语伤害、规则冲突明显',小吉:'聚少离多，感情容易淡',空亡:'承诺不落地，或一方逃避责任'},
+          reminders:['多沟通，避免冷战','财务尽量清晰或分开','尊重彼此空间，别控制','处理长辈关系要一致对外','吵架不翻旧账','若长期痛苦，重新评估关系']
+        };
+        const topicCareerKB={
+          career:{大安:'工作稳定，适合固定职业，升迁慢但安稳，宜长期积累',留连:'事业拖延，晋升反复，易被旧单位牵制，适合积累人脉和经验',速喜:'快速变动，有突然机会，适合新行业、创业、短期项目',赤口:'职场争斗，口舌是非，压力大，谨防官司或小人，适合法务、竞争性岗位',小吉:'奔波、自由职业、外勤、多行业体验，小成，适合出差型工作',空亡:'事业空虚，无发展，或公司不景气，建议骑驴找马，提升技能'},
+          wealth:{大安:'正财稳定，储蓄型，不宜投机，适合固定薪资',留连:'财来财去，回款慢，投资易被套，宜保守理财',速喜:'偏财、意外财，快钱，但波动大，需防见好不收',赤口:'因财惹是非，合同纠纷，求财辛苦，宜兼职开源',小吉:'小财不断，多劳多得，适合副业或提成型收入',空亡:'财虚，投资易亏，收入不稳定，需多储备'},
+          industry:{木:'教育、文化、设计、林业、出版、培训',火:'互联网、餐饮、能源、传媒、娱乐、直播',土:'房地产、建筑、农业、仓储、行政、物业',金:'金融、法律、机械、精密加工、审计、数据',水:'物流、贸易、旅游、咨询、水利、航运'},
+          spirit:{青龙:'正直、领导力、适合管理、教育、公务员',朱雀:'口才、市场、公关、销售、主持人',勾陈:'稳重、耐心、适合后勤、财务、档案',腾蛇:'灵活、善变、适合策划、咨询、设计',白虎:'果断、强势、适合执法、竞争、外科',玄武:'观察力强、适合调查、情报、后台、会计'},
+          advantage:{大安:'有稳定平台，不会轻易失业',留连:'人脉沉淀，经验丰富',速喜:'敢闯敢试，抓住风口',赤口:'抗压能力强，能处理危机',小吉:'资源广，能身兼数职',空亡:'无压力，清闲自由度'},
+          challenge:{大安:'晋升慢，易安于现状',留连:'被旧事拖累，决策犹豫',速喜:'变动大，难扎根基',赤口:'口舌是非，易得罪人',小吉:'无晋升路径，不稳定',空亡:'发展受限，公司不景气'},
+          reminders:['多积累行业人脉，关键时刻能助你','不要频繁跳槽，尤其赤口、空亡明显时','提升不可替代的技能','注意合同细节，避免口头协议','劳逸结合，防止过劳']
+        };
+        function topicCellByKin(kin, fallbackPalace){ return ordered.find(c=>c.kin===kin) || cells.find(c=>c.kin===kin) || ordered.find(c=>c.palace===fallbackPalace) || ordered[0]; }
+        function topicRelationType(otherEl){ if(otherEl===selfEl) return '比和'; if(destinyGenerating(otherEl)===selfEl) return '生我'; if(destinyGenerating(selfEl)===otherEl) return '我生'; if(destinyControlling(otherEl)===selfEl) return '克我'; if(destinyControlling(selfEl)===otherEl) return '我克'; return '比和'; }
+        function topicRelationText(otherEl){ const r=topicRelationType(otherEl); return ({比和:'同气比和：适合靠熟悉领域、同类资源或稳定人脉累积。',生我:'外部生我：容易得到平台、规则、长辈或他人支持。',我生:'我去生事：需要投入精力培养项目，适合输出型工作或照顾型关系。',克我:'外部克我：压力、制度、对方要求或现实责任较明显。',我克:'我能克财/事：有掌控资源的机会，但要避免过度强势。'})[r] || '关系中平，需要合看掌诀和现实条件。'; }
+        function topicPills(c){ return `<div class="destiny-topic-pills"><span class="destiny-topic-pill">${topicEsc(c.kin)}·${topicEsc(c.palace)}</span><span class="destiny-topic-pill">${topicEsc(c.branch)}${topicEsc(c.branchEl)}</span><span class="destiny-topic-pill">${topicEsc(c.spirit)}</span><span class="destiny-topic-pill">${topicEsc(c.star)}${c.starEl && c.starEl!=='空'?'｜'+topicEsc(c.starEl):''}</span></div>`; }
+        function topicOrganLine(el){ const o=topicElementOrgan[el] || topicElementOrgan.土; return `${el}主${o.zang}/${o.fu}，关联${o.parts}；常见倾向：${o.risk}。`; }
+        function buildCareerTopicCard(){
+          const career=topicCellByKin('官鬼','小吉'), wealth=topicCellByKin('妻财','大安'), output=topicCellByKin('子孙','速喜'), parents=topicCellByKin('父母','空亡');
+          const inds=[career.branchEl,selfEl,wealth.branchEl].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).map(el=>`<li><strong>${topicEsc(el)}：</strong>${topicEsc(topicCareerKB.industry[el]||'')}</li>`).join('');
+          const combo = result.palaces.join(' → ');
+          return `<div class="destiny-deep-card full destiny-topic-card" id="v10523CareerBlock"><h5>💼 事业与财富参考</h5><div class="destiny-topic-note"><strong>说明：</strong>这里看的是命局中事业、工作、财富与现实资源的长期倾向，不替代现实职业决策。重点按“官鬼看事业规则，妻财看收入资源，父母看文书平台，兄弟看竞争合作，子孙看作品结果”来读。</div><div class="destiny-topic-grid"><div class="destiny-topic-mini full"><h6>① 怎么看事业模块</h6><p><strong>本盘主线：</strong>${topicEsc(combo)}。当前六亲排法为 <strong>${topicEsc(modeName)}</strong>。事业先看官鬼宫：${topicEsc(career.kin)}·${topicEsc(career.palace)}；财富先看妻财宫：${topicEsc(wealth.kin)}·${topicEsc(wealth.palace)}。</p></div><div class="destiny-topic-mini"><h6>② 事业趋势：${topicEsc(career.palace)}</h6>${topicPills(career)}<p><strong>趋势：</strong>${topicEsc(topicCareerKB.career[career.palace]||'需结合掌诀看事业趋势。')}</p><p><strong>压力关系：</strong>${topicEsc(topicRelationText(career.branchEl))}</p><p><strong>工作方式：</strong>${topicEsc(topicCareerKB.spirit[career.spirit]||destinySixSpiritText(career.spirit))}</p></div><div class="destiny-topic-mini"><h6>③ 财富资源：${topicEsc(wealth.palace)}</h6>${topicPills(wealth)}<p><strong>财务倾向：</strong>${topicEsc(topicCareerKB.wealth[wealth.palace]||'需结合妻财宫看收入和资源。')}</p><p><strong>资源关系：</strong>${topicEsc(topicRelationText(wealth.branchEl))}</p><p class="destiny-topic-muted">这里偏长期财富习惯，不等于短线投资判断。</p></div><div class="destiny-topic-mini"><h6>④ 平台文书与规则</h6>${topicPills(parents)}<p>父母宫可看平台、证照、合同、学历、房屋与保护资源。若父母宫空亡，要防资料不全；若赤口，要防合同文字争议。</p></div><div class="destiny-topic-mini"><h6>⑤ 输出与成果</h6>${topicPills(output)}<p>子孙宫可看作品、绩效、表达、客户反馈、项目结果和副业释放。${['大安','速喜','小吉'].includes(output.palace)?'此处偏可用，适合先拿小成果。':'此处偏阻滞，成果端要多复核和持续打磨。'}</p></div><div class="destiny-topic-mini"><h6>⑥ 适合方向</h6><ul>${inds}</ul><p class="destiny-topic-muted">优先看事业宫五行，其次看自身宫能承受什么节奏，再看财宫更容易从哪里变现。</p></div><div class="destiny-topic-mini"><h6>⑦ 优势与挑战</h6><p><strong>优势：</strong>${topicEsc(topicCareerKB.advantage[career.palace]||'有可发挥之处。')}</p><p><strong>挑战：</strong>${topicEsc(topicCareerKB.challenge[career.palace]||'需要结合现实环境观察。')}</p></div><div class="destiny-topic-mini"><h6>⑧ 行动提醒</h6><ul>${topicCareerKB.reminders.map(x=>`<li>${topicEsc(x)}</li>`).join('')}</ul></div><div class="destiny-topic-mini full"><h6>⑨ 事业知识库速览</h6><div class="destiny-topic-table"><table><thead><tr><th>掌诀</th><th>事业趋势</th><th>财富趋势</th><th>优势</th><th>挑战</th></tr></thead><tbody>${PALACE_ORDER.map(p=>`<tr><td>${topicEsc(p)}</td><td>${topicEsc(topicCareerKB.career[p])}</td><td>${topicEsc(topicCareerKB.wealth[p])}</td><td>${topicEsc(topicCareerKB.advantage[p])}</td><td>${topicEsc(topicCareerKB.challenge[p])}</td></tr>`).join('')}</tbody></table></div></div></div></div>`;
+        }
+        function buildMarriageTopicCard(){
+          const targetCells = gender==='male' ? ordered.filter(c=>c.kin==='妻财') : gender==='female' ? ordered.filter(c=>c.kin==='官鬼') : ordered.filter(c=>['官鬼','妻财'].includes(c.kin));
+          const targets = targetCells.length ? targetCells : [topicCellByKin('妻财','大安'), topicCellByKin('官鬼','小吉')].filter((c,i,a)=>c && a.indexOf(c)===i);
+          const parentCells=ordered.filter(c=>c.kin==='父母'), broCells=ordered.filter(c=>c.kin==='兄弟'), childCells=ordered.filter(c=>c.kin==='子孙');
+          const targetNames=targets.map(c=>`${c.kin}·${c.palace}`).join('、');
+          const targetLabel = gender==='male' ? '男命重点看妻财宫，也兼看现实钱财与资源。' : gender==='female' ? '女命重点看官鬼宫，也兼看事业规则、压力与伴侣主题。' : '未指定性别时，同时参考官鬼宫与妻财宫，并按实际情况自行侧重。';
+          const factorList=[];
+          if(parentCells.length) factorList.push('父母宫看长辈、家宅、文书和现实规则；父母强则关系需要被规则支持，父母冲则需处理边界。');
+          if(broCells.length) factorList.push('兄弟宫看同辈、朋友、竞争和资源分摊；兄弟强时，第三方意见或比较心容易影响关系。');
+          if(childCells.length) factorList.push('子孙宫看子女、共同兴趣、快乐感和表达方式；子孙顺时可润滑关系，受阻时容易因生活节奏起争执。');
+          if(!factorList.length) factorList.push('其它宫位没有特别强的干扰提示，婚姻主题主要回到双方沟通、责任分工和现实经营。');
+          const targetCards=targets.map((c,i)=>{ const rel=topicRelationType(c.branchEl); return `<div class="destiny-topic-mini"><h6>${i+1}. ${topicEsc(c.kin)}·${topicEsc(c.palace)}</h6>${topicPills(c)}<p><strong>关系五行：</strong>${topicEsc(rel)}，${topicEsc(topicMarriageKB.relation[rel]||'需结合实际关系理解。')}</p><p><strong>婚姻倾向：</strong>${topicEsc(topicMarriageKB.tendency[c.palace]||'需结合掌诀看关系底色。')}</p><p><strong>优势：</strong>${topicEsc(topicMarriageKB.advantage[c.palace]||'有可经营之处。')}</p><p><strong>挑战：</strong>${topicEsc(topicMarriageKB.challenge[c.palace]||'需防沟通与现实压力。')}</p><p><strong>六神表现：</strong>${topicEsc(destinySixSpiritText(c.spirit))}</p></div>`; }).join('');
+          return `<div class="destiny-deep-card full destiny-topic-card" id="destinyMarriageBlock"><h5>💍 婚姻与伴侣参考</h5><div class="destiny-topic-note"><strong>说明：</strong>这里看的是命局中的感情、婚姻与伴侣长期倾向，包括相处模式、配偶特征、优势与挑战；不作为绝对定论。现实感情仍以双方沟通、尊重和理解为准。</div><div class="destiny-topic-grid"><div class="destiny-topic-mini full"><h6>① 怎么看婚姻模块</h6><p><strong>当前性别侧重：</strong>${topicEsc(targetLabel)}</p><p><strong>本次重点宫位：</strong>${topicEsc(targetNames)}。${mode==='fixed'?'本盘当前使用固定宫位法，适合对照部分民间命盘口诀。':'本盘当前使用五行生克法，按自身宫地支五行为“我”推六亲。'}</p><p class="destiny-topic-muted">婚姻模块属于命运命盘子模块，不等于单独问“现在这段关系会怎样”。近期婚姻/关系问题仍建议用普通问事里的婚姻场景。</p></div>${targetCards}<div class="destiny-topic-mini"><h6>② 婚姻中的其它因素</h6><ul>${factorList.map(x=>`<li>${topicEsc(x)}</li>`).join('')}</ul></div><div class="destiny-topic-mini"><h6>③ 生活提醒</h6><ul>${topicMarriageKB.reminders.map(x=>`<li>${topicEsc(x)}</li>`).join('')}</ul><p class="destiny-topic-muted">若关系中存在暴力、长期控制、严重痛苦或安全风险，应优先寻求现实帮助与专业支持。</p></div><div class="destiny-topic-mini full"><h6>④ 婚姻口诀知识库</h6><div class="destiny-topic-table"><table><thead><tr><th>掌诀</th><th>婚姻倾向</th><th>优势</th><th>挑战</th></tr></thead><tbody>${PALACE_ORDER.map(p=>`<tr><td>${topicEsc(p)}</td><td>${topicEsc(topicMarriageKB.tendency[p])}</td><td>${topicEsc(topicMarriageKB.advantage[p])}</td><td>${topicEsc(topicMarriageKB.challenge[p])}</td></tr>`).join('')}</tbody></table></div></div></div></div>`;
+        }
+        function buildHealthTopicCard(){
+          const selfCell=ordered[0], ghostCells=ordered.filter(c=>c.kin==='官鬼'), ghost=ghostCells[0] || topicCellByKin('官鬼','小吉'), child=topicCellByKin('子孙','速喜');
+          const keyEls=[selfCell.branchEl, ghost.branchEl, child.branchEl].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
+          const ghostText=ghostCells.length ? ghostCells.map(g=>`${g.kin}·${g.palace}｜${g.branch}${g.branchEl}｜${g.spirit}｜${g.star}`).join('；') : '未见官鬼主位，按小吉/压力位辅助观察';
+          return `<div class="destiny-deep-card full destiny-topic-card" id="v1030DestinyHealth"><h5>🌿 体质与健康参考</h5><div class="destiny-topic-note"><strong>说明：</strong>这里看的是“命里的健康”——长期体质倾向、容易反复的薄弱系统和生活注意点，不是对当前疾病的医学诊断。若有持续疼痛、麻木、胸闷、呼吸困难、出血、长期失眠、体重异常变化等情况，请及时就医。</div><div class="destiny-topic-grid"><div class="destiny-topic-mini"><h6>① 自身体质倾向</h6>${topicPills(selfCell)}<p>${topicEsc(topicOrganLine(selfCell.branchEl))}</p><p><strong>掌诀：</strong>${topicEsc(selfCell.palace)}主${topicEsc(topicHealthByPalace[selfCell.palace]||'基础状态')} </p><p><strong>六神：</strong>${topicEsc(topicSpiritHealth[selfCell.spirit]||destinySixSpiritText(selfCell.spirit))}</p></div><div class="destiny-topic-mini"><h6>② 官鬼健康隐患</h6>${topicPills(ghost)}<p><strong>官鬼位置：</strong>${topicEsc(ghostText)}</p><p>官鬼在健康里可看病气、压力、疼痛、隐患和需要特别留意的症结。</p><p>${topicEsc(topicOrganLine(ghost.branchEl))}</p><p><strong>官鬼掌诀：</strong>${topicEsc(ghost.palace)}主${topicEsc(topicHealthByPalace[ghost.palace]||'病气表现')}</p></div><div class="destiny-topic-mini"><h6>③ 子孙与恢复力</h6>${topicPills(child)}<p>子孙宫可看释放、医药、调养、恢复力和让身体松开的方式。${['大安','速喜','小吉'].includes(child.palace)?'此处偏有助力，适合建立可持续的恢复节奏。':'此处偏受阻，调养要避免三天打鱼两天晒网。'}</p></div><div class="destiny-topic-mini"><h6>④ 六神表现形态</h6><p><strong>自身六神 ${topicEsc(selfCell.spirit)}：</strong>${topicEsc(topicSpiritHealth[selfCell.spirit]||destinySixSpiritText(selfCell.spirit))}</p><p><strong>官鬼六神 ${topicEsc(ghost.spirit)}：</strong>${topicEsc(topicSpiritHealth[ghost.spirit]||destinySixSpiritText(ghost.spirit))}</p><p class="destiny-topic-muted">青龙偏肝气筋眼；朱雀偏心火炎症；勾陈偏脾胃湿慢；腾蛇偏神经缠绕；白虎偏急痛外伤；玄武偏肾水隐疾。</p></div><div class="destiny-topic-mini"><h6>⑤ 生活调养提醒</h6><ul>${keyEls.map(el=>`<li><strong>${topicEsc(el)}：</strong>${topicEsc((topicElementOrgan[el]||{}).care||'保持稳定作息，结合现实身体情况调整。')}</li>`).join('')}</ul><p class="destiny-topic-muted">调养建议只做生活方式提醒，不涉及用药和治疗。现实身体不适，以医生检查和专业意见为准。</p></div><div class="destiny-topic-mini full"><h6>⑥ 五行身体对应速览</h6><div class="destiny-topic-table"><table><thead><tr><th>五行</th><th>五脏</th><th>六腑</th><th>身体部位</th><th>常见倾向</th></tr></thead><tbody>${['木','火','土','金','水'].map(el=>{const o=topicElementOrgan[el]; return `<tr><td>${el}</td><td>${o.zang}</td><td>${o.fu}</td><td>${o.parts}</td><td>${o.risk}</td></tr>`;}).join('')}</tbody></table></div></div></div></div>`;
+        }
         deep.innerHTML=`
           <div class="destiny-deep-card full" id="destinyReadOrder"><h5>📌 命盘阅读顺序</h5><p>先看 <strong>时宫/自身</strong>：${timePalace}、${timeBranch}、${selfEl}，再按六亲逐宫看人事主题。每一宫按四层信息合看：<strong>六亲 + 掌诀 + 地支六神 + 五星</strong>。</p><p>本盘三象主线为 <strong>${p0} → ${p1} → ${p2}</strong>，代表自身气象、关系助力与整体走向。</p></div>
           <div class="destiny-deep-card" id="destinySelfCard"><h5>👤 自身底色</h5><p>${selfCell.kin}落${selfCell.palace}，时支${selfCell.branch}，六神${selfCell.spirit}。${p0==='速喜'?'起势偏快，反应灵敏，遇事容易先动起来。':p0==='大安'?'性格底色偏稳，重安全感和秩序，适合长期积累。':p0==='留连'?'思虑较多，容易反复考虑，重感受和旧经验。':p0==='赤口'?'表达和边界感较强，遇事容易直接判断。':p0==='小吉'?'性格中有柔和、善意和求和的一面，适合小步推进。':'内在感受较强，容易对未确定的事情敏感。'}</p></div>
           <div class="destiny-deep-card" id="destinyPaceCard"><h5>⏱ 处事节奏</h5><p>${p0}起头，${p1}过渡，${p2}收尾。${heavy?'阻滞象较明显，做大事宜预留时间，先处理卡点，再谈推进。':good?'顺象较多，适合主动把握机会，但也要看末象是否真正落实。':'顺阻参半，适合先小步试行，边走边核实。'}</p></div>
           <div class="destiny-deep-card" id="destinyHelpCard"><h5>🧲 助力来源</h5><p>${help}。这些位置更适合积累资源、主动请教或先取小成果。</p></div>
           <div class="destiny-deep-card" id="destinyRiskCard"><h5>⚠️ 阻力来源</h5><p>${weak}。留连多拖延旧事，赤口多沟通规则，空亡多虚与未定；不是定坏，而是提醒要核实、复盘、落地。</p></div>
-          <div class="destiny-deep-card" id="v10523CareerBlock"><h5>💼 事业与规则</h5><p>重点看官鬼宫及其掌诀、六神、五星。官鬼偏顺，适合承接责任；官鬼受阻，要注意压力、制度、上司、合同与健康节奏。</p></div>
-          <div class="destiny-deep-card" id="destinyFinanceRelationBlock"><h5>💰 财务与关系资源</h5><p>重点看妻财宫。${gender==='male'?'男命可兼看妻子、女友与钱财资源。':gender==='female'?'女命主要看钱财资产和现实资源，不直接把妻财作为丈夫主位。':'未指定性别时，妻财按钱财、资源、现实经营来读。'}见空亡要防未到账，见赤口要防合同争议。</p></div>
-          <div class="destiny-deep-card" id="destinyMarriageBlock"><h5>💍 婚姻与伴侣参考</h5><p>婚姻与伴侣不只看单一宫位，要把自身、妻财/官鬼、兄弟竞争、父母文书长辈等一起看。男命可重点参考妻财与现实经营，女命可重点参考官鬼与规则压力；若未指定性别，则按伴侣关系、责任承诺和现实资源综合判断。</p></div>
-          <div class="destiny-deep-card" id="v1030DestinyHealth"><h5>🌿 健康与节奏参考</h5><p>命盘健康只作长期节奏提醒。留连、空亡多时注意拖延、睡眠和反复；赤口明显时注意急躁、炎症感和表达压力；大安、小吉多时适合建立稳定作息；速喜明显时注意节奏过快。</p></div>
+          ${buildCareerTopicCard()}
+          <div class="destiny-deep-card" id="destinyFinanceRelationBlock"><h5>💰 财务与关系资源</h5><p>重点看妻财宫。${gender==='male'?'男命可兼看妻子、女友与钱财资源。':gender==='female'?'女命主要看钱财资产和现实资源，不直接把妻财作为丈夫主位。':'未指定性别时，妻财按钱财、资源、现实经营来读。'}见空亡要防未到账，见赤口要防合同争议。</p><p>更详细的财富、收入和职业变现判断已经并入上方“事业与财富参考”专题卡片。</p></div>
+          ${buildMarriageTopicCard()}
+          ${buildHealthTopicCard()}
           <div class="destiny-deep-card" id="destinyEmotionBlock"><h5>🌙 情绪与自我观察</h5><p>留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p></div>
           <div class="destiny-deep-card full" id="destinyActionCard"><h5>🧭 行动建议</h5><p>命运盘更适合做长期提醒卡：若起势强，就学会稳住；若起势慢，就学会持续；若末象虚，就多核实承诺；若末象稳，就长期积累。遇到重大选择时回头看：我是不是又陷入拖延、急躁、空想或过度保守？</p></div>
         `;
@@ -3116,7 +3211,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.105',
+      source: 'mainline-v10.5.106',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4998,6 +5093,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.106 命盘专题内容主源码恢复版', items:[
+          '参考 v10.5.76 的命盘健康、婚姻与事业模块，把详细专题内容直接整合进 renderDestinyBoard 主源码，不再通过后置脚本插入。',
+          '命盘健康恢复为“体质与健康参考”：包含自身长期体质、官鬼健康隐患、子孙恢复力、六神表现、五行身体对应表和生活调养提醒。',
+          '命盘婚姻恢复为更详细的“婚姻与伴侣参考”：按男命/女命/未指定性别侧重，结合妻财、官鬼、父母、兄弟、子孙、掌诀优势挑战和生活提醒。',
+          '命盘事业恢复为“事业与财富参考”：按官鬼看事业规则、妻财看收入资源、父母看平台文书、子孙看输出成果，并加入行业五行、优势挑战与事业知识库速览。',
+          '继续保持首页/结果页分离、暗夜模式和历史记录主源码修复成果；本次不新增后置补丁、不恢复 boot-late/load-late。'
+        ]},
         { v:'v10.5.105 首页结果页分离主源码版', items:[
           '参考 v10.5.76 稳定逻辑，恢复占卜结果页与主页输入区独立显示。',
           '起课完成或从历史记录点“查看”后，进入结果页状态，只显示本次结果，不再混入场景、问事、起课和版本说明等主页模块。',
@@ -5567,7 +5669,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.105',
+      source: 'mainline-v10.5.106',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -5643,7 +5745,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.105',
+      source: 'mainline-v10.5.106',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyActionCard'],
@@ -6941,16 +7043,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.105'
+      source: 'mainline-v10.5.106'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.105） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.106） */
 /*
- * 小六壬 v10.5.105 Debug 主源码模块
+ * 小六壬 v10.5.106 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -6958,7 +7060,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.105 首页结果页分离主源码版';
+  const APP_VERSION = 'v10.5.106 命盘专题内容主源码恢复版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -7842,10 +7944,10 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
     if (!snapshot.versionInfo.meta.includes('10.5.102') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.105', snapshot.versionInfo.meta);
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.106', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.105'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.105', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.106'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.106', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -7897,8 +7999,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.105') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.105 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.106') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.106 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -7913,8 +8015,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.105') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.105 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.106') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.106 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -7932,8 +8034,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.105') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.105 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.106') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.106 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -7960,8 +8062,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.105') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.105 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.106') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.106 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -8020,22 +8122,22 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.105') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.106') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.105') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.106') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.105') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.106') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.105') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.106') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');

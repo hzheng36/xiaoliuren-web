@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.105 首页结果页分离主源码版",
-  "short_name": "小六壬 v10.5.105",
-  "description": "小六壬个人网页版 v10.5.105：参考 v10.5.76 稳定逻辑，恢复主页与占卜结果页独立显示。",
-  "start_url": "./index.html?v=10.5.105",
+  "name": "小六壬占卜 v10.5.106",
+  "short_name": "小六壬 v10.5.106",
+  "description": "小六壬个人网页版 v10.5.106 命盘专题内容主源码恢复版：在首页/结果页分离稳定基础上，参考 v10.5.76 的命盘健康、婚姻与事业专题，把详细内容直接收回 XLRDestinyCore 与 renderDestinyBoard 主源码，不新增后置补丁。",
+  "start_url": "./?v=10.5.106",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.105"
+  "version": "10.5.106"
 }

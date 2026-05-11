@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.105-result-page-separation-mainline';
+const CACHE_NAME = 'xiaoliuren-v10-5-106-destiny-topic-core';
 const APP_SHELL = [
   './',
   './index.html',
