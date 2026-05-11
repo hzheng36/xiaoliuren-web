@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.102 暗夜模式主源码修复版",
-  "short_name": "小六壬 v10.5.102",
-  "description": "小六壬个人网页版 v10.5.102：参考 v10.5.76 恢复稳定暗夜 CSS 主题，修复命盘自检误报、旧设置键残留和暗夜局部白块问题。",
-  "start_url": "./index.html?v=10.5.102",
+  "name": "小六壬占卜 v10.5.103 暗夜残留主源码清理版",
+  "short_name": "小六壬 v10.5.103",
+  "description": "小六壬个人网页版 v10.5.103：继续参考 v10.5.76 深色主题，补齐 A/B、设置、历史分析、模板、规则和命盘来源面板等暗夜残留浅色组件。",
+  "start_url": "./index.html?v=10.5.103",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.102"
+  "version": "10.5.103"
 }
