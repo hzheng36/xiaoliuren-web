@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.99-settings-source-cleanup';
+const CACHE_NAME = 'xiaoliuren-v10.5.100-destiny-core-mainline';
 const APP_SHELL = [
   './',
   './index.html',

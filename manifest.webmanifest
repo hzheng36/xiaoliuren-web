@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.99 设置主键归主线与缓存清理增强版",
-  "short_name": "小六壬 v10.5.99",
-  "description": "小六壬个人网页版 v10.5.99：将用户设置、上次选择、结果视图迁移到 source 主键，强化设置未保存提醒与 Debug 缓存自检。",
-  "start_url": "./index.html?v=10.5.99",
+  "name": "小六壬占卜 v10.5.100 命盘模块主源码归一版",
+  "short_name": "小六壬 v10.5.100",
+  "description": "小六壬个人网页版 v10.5.100：新增 XLRDestinyCore 命盘主命名空间，统一命盘状态、六亲、六神、五星与模板边界自检。",
+  "start_url": "./index.html?v=10.5.100",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.99"
+  "version": "10.5.100"
 }
