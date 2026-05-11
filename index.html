@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.92 源码导航恢复与命盘子导航版</title>
-<meta content="小六壬个人网页版 v10.5.92 源码导航恢复与命盘子导航版：恢复接近 v10.5.76 的章节卡点导航、顶部/底部位置设置、命运命盘子导航，并继续保持单一源码主线。" name="description"/>
+<title>小六壬占卜 · v10.5.93 Debug主源码恢复与一键自检版</title>
+<meta content="小六壬个人网页版 v10.5.93 Debug主源码恢复与一键自检版：在 v10.5.92 源码导航恢复版基础上，把 Debug 诊断写回主源码，并加入一键自检，用于检查版本、旧补丁残留、导航、折叠、设置与运行错误。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -983,23 +983,127 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码内建 Debug：主样式内置 */
-    .xlr-debug-fab{position:fixed;left:12px;bottom:max(18px,env(safe-area-inset-bottom));z-index:9998;border:0;border-radius:999px;padding:9px 13px;background:#1f1730;color:#fff;box-shadow:0 10px 28px rgba(31,23,48,.28);font-weight:850;font-size:12px;letter-spacing:.02em;display:flex;align-items:center;gap:6px;min-height:34px;}
-    .xlr-debug-dialog{width:min(760px,calc(100vw - 28px));max-height:min(82vh,760px);border:0;border-radius:20px;padding:0;box-shadow:0 24px 70px rgba(31,23,48,.32);background:#fffdfb;color:#241d33;}
-    .xlr-debug-dialog::backdrop{background:rgba(22,16,33,.42);backdrop-filter:blur(3px);}
-    .xlr-debug-head{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line,#eadfce);background:rgba(255,253,251,.96);}
-    .xlr-debug-head h3{margin:0;font-size:16px;}
-    .xlr-debug-head p{margin:5px 0 0;color:#6b617a;font-size:12px;line-height:1.6;}
-    .xlr-debug-body{padding:14px 16px 16px;display:grid;gap:12px;}
-    .xlr-debug-actions{display:flex;flex-wrap:wrap;gap:8px;}
-    .xlr-debug-actions button{width:auto;margin:0;border-radius:999px;border:1px solid rgba(188,133,65,.28);background:rgba(255,255,255,.86);color:#5a426d;padding:8px 12px;font-size:12px;font-weight:760;}
-    .xlr-debug-status{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;}
-    .xlr-debug-pill{border:1px solid rgba(188,133,65,.18);background:rgba(229,196,138,.10);border-radius:14px;padding:9px 10px;font-size:12px;line-height:1.55;}
-    .xlr-debug-pill b{display:block;color:#2d2540;font-size:13px;}
-    .xlr-debug-output{white-space:pre-wrap;word-break:break-word;max-height:48vh;overflow:auto;border:1px solid rgba(188,133,65,.20);border-radius:16px;background:#171321;color:#f8f3e8;padding:12px;font-size:11px;line-height:1.55;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;}
-    body.xlr-debug-hidden .xlr-debug-fab{display:none!important;}
+    /* 源码模块：Debug 主源码样式（v10.5.93） */
+/* 小六壬 v10.5.93 Debug 主源码样式 */
+#xlrDebugFab {
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: calc(76px + env(safe-area-inset-bottom));
+  z-index: 9998;
+  min-width: 86px;
+  height: 36px;
+  border: 1px solid rgba(103,83,165,.22);
+  border-radius: 999px;
+  background: rgba(255,255,255,.95);
+  color: #6753a5;
+  box-shadow: 0 12px 28px rgba(46,35,82,.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 13px/1 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#xlrDebugDialog {
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(860px, calc(100vh - 28px));
+  border: 1px solid rgba(103,83,165,.22);
+  border-radius: 22px;
+  padding: 0;
+  background: #fcfbff;
+  color: #302846;
+  box-shadow: 0 24px 80px rgba(27,18,58,.28);
+  overflow: hidden;
+  z-index: 2147483600;
+}
+#xlrDebugDialog::backdrop { background: rgba(26,18,50,.28); }
+.xlr-debug-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, #ffffff, #f5f2ff);
+  border-bottom: 1px solid rgba(103,83,165,.14);
+}
+.xlr-debug-head strong { display:block; font-size: 16px; }
+.xlr-debug-head small { display:block; margin-top: 4px; color: #827a95; line-height: 1.45; }
+.xlr-debug-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(103,83,165,.14);
+  background: #fff;
+  color: #6753a5;
+  font-size: 22px;
+  cursor: pointer;
+}
+.xlr-debug-body {
+  padding: 16px;
+  max-height: calc(min(860px, 100vh - 28px) - 64px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.xlr-debug-note {
+  margin: 0 0 12px;
+  color: #615875;
+  line-height: 1.7;
+  background: rgba(103,83,165,.06);
+  border: 1px solid rgba(103,83,165,.10);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+.xlr-debug-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.xlr-debug-toolbar button {
+  border: 1px solid rgba(103,83,165,.16);
+  border-radius: 14px;
+  background: #fff;
+  color: #6753a5;
+  padding: 9px 12px;
+  font: 700 13px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  cursor: pointer;
+}
+.xlr-debug-summary {
+  border: 1px solid rgba(103,83,165,.12);
+  border-radius: 16px;
+  background: #fff;
+  padding: 12px 14px;
+  line-height: 1.75;
+  color: #443b58;
+  margin-bottom: 12px;
+}
+.xlr-debug-summary.pass { background: rgba(45,138,86,.08); border-color: rgba(45,138,86,.20); }
+.xlr-debug-summary.warning { background: rgba(188,133,65,.10); border-color: rgba(188,133,65,.22); }
+.xlr-debug-summary.fail { background: rgba(190,74,74,.09); border-color: rgba(190,74,74,.22); }
+.xlr-debug-summary ul { margin: 8px 0 0; padding-left: 1.2em; }
+.xlr-debug-output {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 52vh;
+  overflow: auto;
+  background: #1f1b2d;
+  color: #f4f1ff;
+  border-radius: 16px;
+  padding: 14px;
+  font: 12px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (max-width: 720px) {
+  #xlrDebugFab { left: 12px; bottom: calc(72px + env(safe-area-inset-bottom)); height: 34px; min-width: 82px; }
+  .xlr-debug-toolbar { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .xlr-debug-toolbar button { width: 100%; }
+  .xlr-debug-output { max-height: 46vh; font-size: 11px; }
+}
 
-  
+body.xlr-debug-hidden #xlrDebugFab { display:none !important; }
 
 /* 源码主模块：阅读模式、UI显示、快捷按钮设置 */
 body.reading-theme-night {
@@ -1039,7 +1143,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航恢复主样式（v10.5.92 写入主 CSS，不再后置补丁） */
+/* 源码模块：导航恢复主样式（v10.5.93 继续保留在主 CSS，不再后置补丁） */
 html, body, #resultCard, #resultCard .block, #resultCard .collapsible-block { overflow-anchor:none; }
 #sectionJumpNav.section-jump-nav,
 #destinySubNav.destiny-sub-nav {
@@ -1164,7 +1268,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.92 源码导航恢复与命盘子导航版</h2>
+<h2>个人占卜台 · v10.5.93 Debug主源码恢复与一键自检版</h2>
 <p>本版继续加大“清补丁 + 恢复功能”的力度：旧缓存键清理范围扩大到历史补丁残留；命运场景恢复性别侧重、六亲排法选择、地支六神与五星参考，并全部写入源码主函数，不再靠后置补丁覆盖。</p>
 </div>
 <div class="actions">
@@ -4185,6 +4289,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.93 Debug主源码恢复与一键自检版', items:[
+          '优先恢复 Debug 主源码：统一为 window.XLRDebugCore，替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链。',
+          '新增一键自检：检查 title/meta/首页标题版本、重复 ID、旧 Debug DOM 残留、旧版本锁/延迟补丁、导航 target、折叠状态、快捷按钮和运行错误。',
+          'Debug 面板支持刷新快照、复制日志、保存 JSON 日志、清空错误；所有诊断只读页面状态，不修改占卜结果和导航逻辑。',
+          '继续保持 1 个主 style + 1 个主 script；Debug CSS 与 JS 均写入主源码，不新增后置补丁脚本。',
+          '自检报告分为通过/警告/错误，方便每次上传 GitHub 后快速判断是否还有补丁污染或版本抢占。'
+        ]},
         { v:'v10.5.92 源码导航恢复与命盘子导航版', items:[
           '加大清理力度：Debug 的“清理旧缓存键”改为白名单保留主数据，批量识别并清理旧补丁留下的 v9/v10、intent、snapshot、旧 Debug、旧字号、旧快捷按钮等缓存键。',
           '加大恢复力度：命运场景恢复性别侧重、六亲排法二选一，并使用源码主键保存，不再依赖 v1025/v10 旧补丁键。',
@@ -4830,6 +4941,8 @@ function buildContextOverallSentence(context, details) {
     function applyDebugVisibility(){
       let show=true; try{ show=localStorage.getItem(SOURCE_DEBUG_KEY)!=='0'; }catch(e){}
       document.body.classList.toggle('xlr-debug-hidden', !show);
+      const fab=document.getElementById('xlrDebugFab');
+      if(fab) fab.style.display=show?'flex':'none';
     }
     function bindSourceUiModules(){
       bindDestinySourcePanel();
@@ -5813,189 +5926,906 @@ function buildContextOverallSentence(context, details) {
 
 
 
-    /* 源码模块：Debug 诊断，只读状态，不改占卜逻辑 */
-    const XLR_SOURCE_VERSION = 'v10.5.92 源码导航恢复与命盘子导航版';
-    const XLR_DEBUG_LOG = [];
-    function xlrDebugPush(type, detail){
-      try{
-        XLR_DEBUG_LOG.push({ time:new Date().toLocaleTimeString(), type, detail:String(detail||'').slice(0,240), scrollY:Math.round(window.scrollY||0), bodyClass:document.body?.className||'' });
-        if(XLR_DEBUG_LOG.length>30) XLR_DEBUG_LOG.shift();
-      }catch(e){}
-    }
-    window.addEventListener('error', e=>xlrDebugPush('error', (e.message||'')+' @ '+(e.filename||'')+':'+(e.lineno||'')), true);
-    window.addEventListener('unhandledrejection', e=>xlrDebugPush('promise', e.reason && (e.reason.stack||e.reason.message||e.reason) || 'unhandled rejection'), true);
-    window.addEventListener('click', e=>{
-      const t=e.target && e.target.closest ? e.target.closest('button,[data-jump-target],[data-xlr-quick],summary,a') : null;
-      if(t) xlrDebugPush('click', (t.textContent||t.id||t.className||t.tagName||'').trim());
-    }, true);
-    function xlrDebugText(el){ return el ? (el.textContent||'').replace(/\s+/g,' ').trim().slice(0,180) : ''; }
-    function xlrDebugBox(selector){
-      const el=typeof selector==='string'?document.querySelector(selector):selector;
-      if(!el) return { exists:false };
-      const st=window.getComputedStyle?getComputedStyle(el):null;
-      const r=el.getBoundingClientRect?el.getBoundingClientRect():{top:0,left:0,width:0,height:0,bottom:0,right:0};
-      return { exists:true, id:el.id||'', tag:el.tagName||'', className:el.className||'', display:st?st.display:'', visibility:st?st.visibility:'', position:st?st.position:'', rect:{top:Math.round(r.top),left:Math.round(r.left),width:Math.round(r.width),height:Math.round(r.height),bottom:Math.round(r.bottom),right:Math.round(r.right)}, offsetHeight:el.offsetHeight||0, hiddenClass:!!(el.classList&&el.classList.contains('hidden')), text:xlrDebugText(el) };
-    }
-    function xlrDebugStorage(keys){
-      const out={ totalKeys:0, matchingKeys:[], known:{} };
-      try{
-        out.totalKeys=localStorage.length;
-        for(let i=0;i<localStorage.length;i++){
-          const key=localStorage.key(i);
-          if(/^xlr_|^xiaoliuren_/.test(key)) out.matchingKeys.push(key);
-        }
-        (keys||[]).forEach(key=>{
-          const raw=localStorage.getItem(key);
-          if(raw==null){ out.known[key]=null; return; }
-          try{ out.known[key]=JSON.parse(raw); }catch(e){ out.known[key]=raw; }
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.93） */
+/*
+ * 小六壬 v10.5.93 Debug 主源码模块
+ * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链。
+ * 用法：本段已合并进主源码 Debug 区域。
+ * 注意：本模块只读页面状态，不改占卜逻辑。
+ */
+(function () {
+  'use strict';
+
+  const APP_VERSION = 'v10.5.93 Debug主源码恢复与一键自检版';
+  const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
+  const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
+  const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
+  const MAX_ERROR_LOGS = 80;
+  const MAX_UI_LOGS = 80;
+
+  const LEGACY_ACTIVE_TOKENS = [
+    'v10514', 'v10546', 'v10556', 'v10574', 'v10581', 'v10582',
+    'versionLocked', 'runtimeVersion', 'boot-late', 'load-late', 'late2',
+    'hotfix', 'fallback', 'patch'
+  ];
+
+  const LEGACY_STORAGE_PREFIXES = [
+    'xiaoliuren_reading_text_size_v1063',
+    'xiaoliuren_reading_text_size_v1064',
+    'xiaoliuren_reading_text_size_v1065',
+    'xiaoliuren_reading_text_size_v1066',
+    'xiaoliuren_reading_text_size_v1067',
+    'xiaoliuren_quick_button_settings_v1064',
+    'xiaoliuren_quick_button_settings_v1070',
+    'xiaoliuren_quick_button_settings_v1071',
+    'xlr_view_mode_v8_2',
+    'xlr_view_mode_v8_6',
+    'xlr_debug_enabled_v10514'
+  ];
+
+  const CORE_FUNCTIONS = [
+    'init',
+    'renderResult',
+    'renderBoard',
+    'renderDestinyBoard',
+    'renderRadar',
+    'currentJumpTargets',
+    'renderSectionJumpNav',
+    'renderDestinySubNav',
+    'updateSectionJumpNav',
+    'applyReadingSettings',
+    'applyUISettings',
+    'getUserSettings',
+    'saveUserSettings',
+    'expandAllResultBlocks',
+    'collapseAllResultBlocks',
+    'renderQuickTools',
+    'syncExtraSettingsForm'
+  ];
+
+  const KNOWN_BLOCKS = [
+    ['resultCard', '结果卡片'],
+    ['v10510QuickGuideBlock', '快速导读'],
+    ['answerSummaryBlock', '答案摘要'],
+    ['sceneFocusBlock', '本场景判断重心'],
+    ['paipanBlock', '六宫排盘'],
+    ['destinyBoardBlock', '命运六亲参考盘'],
+    ['overallBlock', '综合判断'],
+    ['contextAnalysisBlock', '问事专项解读'],
+    ['v10518FormulaBlock', '口诀'],
+    ['triReadingBlock', '三象解读'],
+    ['singlePalaceBlock', '单宫断事解卦'],
+    ['doublePalaceBlock', '双宫断事解卦'],
+    ['symbolBlock', '象意补充'],
+    ['radarBlock', '雷达分析图'],
+    ['adviceBlock', '行动建议'],
+    ['v10510GlossaryBlock', '术语解释'],
+    ['v10536DestinyGlossaryBlock', '命运术语解释'],
+    ['v1030DestinyHealth', '命运健康'],
+    ['v1040MarriageBlock', '命运婚姻'],
+    ['v10523CareerBlock', '命运事业']
+  ];
+
+  const REQUIRED_HOME_NAV = [
+    ['homeTopSection', '顶部'],
+    ['sceneSection', '场景'],
+    ['questionSection', '问事'],
+    ['methodSection', '起课']
+  ];
+
+  const REQUIRED_RESULT_NAV = [
+    ['resultCard', '结果'],
+    ['v10510QuickGuideBlock', '导读'],
+    ['answerSummaryBlock', '答案'],
+    ['sceneFocusBlock', '重心'],
+    ['overallBlock', '综合'],
+    ['triReadingBlock', '三象'],
+    ['adviceBlock', '建议'],
+    ['v10510GlossaryBlock', '术语']
+  ];
+
+  const REQUIRED_DESTINY_EXTRA_NAV = [
+    ['destinyBoardBlock', '命盘'],
+    ['v1030DestinyHealth', '健康'],
+    ['v1040MarriageBlock', '婚姻'],
+    ['v10523CareerBlock', '事业']
+  ];
+
+  const state = {
+    errors: [],
+    uiEvents: [],
+    lastSnapshot: null,
+    lastSelfCheck: null,
+    openedAt: null
+  };
+
+  function nowText() {
+    try { return new Date().toLocaleTimeString(); } catch (err) { return String(Date.now()); }
+  }
+
+  function safeJsonParse(value, fallback) {
+    if (value == null || value === '') return fallback;
+    try { return JSON.parse(value); } catch (err) { return fallback; }
+  }
+
+  function safeLocalGet(key) {
+    try { return localStorage.getItem(key); } catch (err) { return null; }
+  }
+
+  function safeLocalSet(key, value) {
+    try { localStorage.setItem(key, value); return true; } catch (err) { return false; }
+  }
+
+  function pushLimited(list, item, max) {
+    list.push(item);
+    while (list.length > max) list.shift();
+  }
+
+  function logUiEvent(type, detail) {
+    pushLimited(state.uiEvents, {
+      time: nowText(),
+      type,
+      detail: String(detail || '').slice(0, 240),
+      scrollY: Math.round(window.scrollY || 0),
+      hash: window.location.hash || '',
+      bodyClass: document.body ? document.body.className : ''
+    }, MAX_UI_LOGS);
+  }
+
+  function captureError(type, payload) {
+    const entry = {
+      time: nowText(),
+      type,
+      message: payload && payload.message ? String(payload.message) : String(payload || ''),
+      source: payload && payload.filename ? payload.filename : '',
+      line: payload && payload.lineno ? payload.lineno : null,
+      column: payload && payload.colno ? payload.colno : null,
+      stack: payload && payload.error && payload.error.stack ? String(payload.error.stack).slice(0, 2000) : ''
+    };
+    pushLimited(state.errors, entry, MAX_ERROR_LOGS);
+  }
+
+  window.addEventListener('error', function (event) { captureError('error', event); });
+  window.addEventListener('unhandledrejection', function (event) {
+    const reason = event && event.reason;
+    captureError('unhandledrejection', {
+      message: reason && reason.message ? reason.message : reason,
+      error: reason
+    });
+  });
+
+  document.addEventListener('click', function (event) {
+    const target = event.target && event.target.closest ? event.target.closest('button, a, input, select, textarea, summary') : null;
+    if (!target) return;
+    const text = (target.innerText || target.value || target.getAttribute('aria-label') || target.id || target.tagName || '').trim();
+    logUiEvent('click', text || target.tagName);
+  }, true);
+
+  function isEnabled() {
+    const value = safeLocalGet(STORAGE_DEBUG_ENABLED);
+    if (value === '0') return false;
+    if (value === '1') return true;
+    return true; // v10.5.93 调试恢复期默认显示，后续稳定后可默认关闭。
+  }
+
+  function setEnabled(enabled) {
+    safeLocalSet(STORAGE_DEBUG_ENABLED, enabled ? '1' : '0');
+    try { document.body.classList.toggle('xlr-debug-hidden', !enabled); } catch (err) {}
+    syncFabVisible();
+    try { if (typeof syncExtraSettingsForm === 'function') syncExtraSettingsForm(); } catch (err) {}
+  }
+
+  function q(selector, root) {
+    try { return (root || document).querySelector(selector); } catch (err) { return null; }
+  }
+
+  function qa(selector, root) {
+    try { return Array.from((root || document).querySelectorAll(selector)); } catch (err) { return []; }
+  }
+
+  function textOf(el, max) {
+    if (!el) return '';
+    return (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, max || 260);
+  }
+
+  function styleOf(el) {
+    if (!el) return null;
+    const cs = getComputedStyle(el);
+    return {
+      display: cs.display,
+      visibility: cs.visibility,
+      position: cs.position,
+      fontSize: cs.fontSize,
+      lineHeight: cs.lineHeight,
+      zIndex: cs.zIndex,
+      opacity: cs.opacity,
+      overflowAnchor: cs.overflowAnchor || ''
+    };
+  }
+
+  function rectOf(el) {
+    if (!el || !el.getBoundingClientRect) return null;
+    const r = el.getBoundingClientRect();
+    return {
+      top: Math.round(r.top),
+      left: Math.round(r.left),
+      width: Math.round(r.width),
+      height: Math.round(r.height),
+      bottom: Math.round(r.bottom),
+      right: Math.round(r.right)
+    };
+  }
+
+  function visibleOf(el) {
+    if (!el) return false;
+    const cs = getComputedStyle(el);
+    const r = el.getBoundingClientRect();
+    return cs.display !== 'none' && cs.visibility !== 'hidden' && Number(cs.opacity || 1) !== 0 && r.width > 0 && r.height > 0;
+  }
+
+  function describeElement(el) {
+    if (!el) return { exists: false };
+    return {
+      exists: true,
+      tag: el.tagName,
+      id: el.id || '',
+      className: el.className || '',
+      display: getComputedStyle(el).display,
+      visibility: getComputedStyle(el).visibility,
+      inlineDisplay: el.style ? el.style.display : '',
+      rect: rectOf(el),
+      offsetHeight: el.offsetHeight || 0,
+      scrollHeight: el.scrollHeight || 0,
+      visible: visibleOf(el),
+      hiddenClass: el.classList ? el.classList.contains('hidden') : false,
+      collapsed: el.classList ? el.classList.contains('is-collapsed') : false,
+      ariaExpanded: el.getAttribute ? el.getAttribute('aria-expanded') : null,
+      textLength: textOf(el, 999999).length,
+      textStart: textOf(el, 180)
+    };
+  }
+
+  function getMetaDescription() {
+    const meta = q('meta[name="description"]');
+    return meta ? meta.getAttribute('content') || '' : '';
+  }
+
+  function getMainVersionHeadings() {
+    return qa('h1,h2,h3,.brand p,.hero h2,.version-log summary')
+      .map(el => textOf(el, 180))
+      .filter(txt => /v\d+\.\d+/.test(txt))
+      .slice(0, 80);
+  }
+
+  function getVersionOccurrences() {
+    const src = document.documentElement ? document.documentElement.innerText || '' : '';
+    const matches = src.match(/v\d+\.\d+(?:\.\d+)?[^\n\r<]{0,36}/g) || [];
+    const map = new Map();
+    matches.forEach(item => {
+      const key = item.replace(/\s+/g, ' ').trim();
+      map.set(key, (map.get(key) || 0) + 1);
+    });
+    return Array.from(map.entries())
+      .map(([version, count]) => ({ version, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 60);
+  }
+
+  function getDuplicateIds() {
+    const seen = new Map();
+    qa('[id]').forEach(el => {
+      const id = el.id;
+      if (!id) return;
+      if (!seen.has(id)) seen.set(id, []);
+      seen.get(id).push(el);
+    });
+    return Array.from(seen.entries())
+      .filter(([, nodes]) => nodes.length > 1)
+      .map(([id, nodes]) => ({
+        id,
+        count: nodes.length,
+        samples: nodes.slice(0, 4).map(el => ({ tag: el.tagName, className: el.className || '', text: textOf(el, 80) }))
+      }));
+  }
+
+  function getFunctionStatus() {
+    const out = {};
+    CORE_FUNCTIONS.forEach(name => { out[name] = typeof window[name]; });
+    return out;
+  }
+
+  function getNavInfo() {
+    const nav = q('#sectionJumpNav') || q('.section-jump-nav');
+    const sub = q('#destinySubNav') || q('#v1054DestinySubNav') || q('.destiny-sub-nav');
+    const buttons = qa('button[data-target], .jump-chip[data-target], [data-jump-target]', nav || document)
+      .concat(qa('#sectionJumpNav .jump-chip, .section-jump-nav .jump-chip'))
+      .filter((el, index, arr) => arr.indexOf(el) === index)
+      .map(el => {
+        const target = el.dataset ? (el.dataset.target || el.dataset.jumpTarget || '') : '';
+        const targetEl = target ? document.getElementById(target) : null;
+        return {
+          text: textOf(el, 40),
+          target,
+          className: el.className || '',
+          active: el.classList ? el.classList.contains('active') : false,
+          slotActive: el.classList ? el.classList.contains('slot-active') : false,
+          display: getComputedStyle(el).display,
+          visible: visibleOf(el),
+          rect: rectOf(el),
+          targetExists: !!targetEl,
+          targetVisible: targetEl ? visibleOf(targetEl) : false
+        };
+      });
+    const targets = buttons.map(b => b.target).filter(Boolean);
+    const dupTargets = targets.filter((target, index) => targets.indexOf(target) !== index).filter((target, index, arr) => arr.indexOf(target) === index);
+    return {
+      bodyNavPosition: document.body ? Array.from(document.body.classList).find(cls => cls.indexOf('xlr-nav-position-') === 0) || '' : '',
+      main: describeElement(nav),
+      sub: describeElement(sub),
+      itemCount: buttons.length,
+      activeCount: buttons.filter(b => b.active).length,
+      slotActiveCount: buttons.filter(b => b.slotActive).length,
+      items: buttons,
+      duplicateTargets: dupTargets
+    };
+  }
+
+  function getCollapsibleInfo() {
+    const byKnownId = KNOWN_BLOCKS.map(([id, label]) => {
+      const el = document.getElementById(id);
+      const info = describeElement(el);
+      info.label = label;
+      if (el) {
+        const toggle = q('.collapse-toggle, [data-collapse-toggle], button[aria-expanded]', el);
+        const contentCandidate = Array.from(el.children || []).find(child => child.tagName !== 'H4' && !child.classList.contains('collapse-toggle'));
+        info.hasToggle = !!toggle;
+        info.toggleText = toggle ? textOf(toggle, 40) : '';
+        info.content = contentCandidate ? describeElement(contentCandidate) : null;
+        info.possibleMismatch = Boolean(el.classList.contains('is-collapsed') && contentCandidate && getComputedStyle(contentCandidate).display !== 'none') ||
+          Boolean(!el.classList.contains('is-collapsed') && contentCandidate && getComputedStyle(contentCandidate).display === 'none' && visibleOf(el));
+      }
+      return info;
+    });
+    const all = qa('.collapsible-block');
+    return {
+      known: byKnownId,
+      allCount: all.length,
+      possibleMismatches: byKnownId.filter(item => item.possibleMismatch).map(item => ({ id: item.id, label: item.label }))
+    };
+  }
+
+  function getStorageInfo() {
+    const keys = [];
+    try {
+      for (let i = 0; i < localStorage.length; i += 1) keys.push(localStorage.key(i));
+    } catch (err) {}
+    const legacy = keys.filter(key => LEGACY_STORAGE_PREFIXES.some(prefix => key.indexOf(prefix) === 0));
+    const importantKeys = [
+      'xlr_user_settings_v9_1',
+      'xiaoliuren_ui_settings_v9916',
+      'xiaoliuren_reader_font_px',
+      'xiaoliuren_reader_font_px_v1068',
+      'xiaoliuren_reading_mode_source',
+      'xiaoliuren_reading_size_source',
+      'xiaoliuren_reading_mode_v1035',
+      'xlr_saved_choice_v9_1',
+      'xlr_view_mode_v9_1',
+      'xlr_history_v7',
+      STORAGE_DEBUG_ENABLED
+    ];
+    const important = {};
+    importantKeys.forEach(key => {
+      const raw = safeLocalGet(key);
+      if (raw == null) { important[key] = null; return; }
+      const parsed = safeJsonParse(raw, raw);
+      if (Array.isArray(parsed)) important[key] = { type: 'array', length: parsed.length, first: parsed.slice(0, 2) };
+      else if (parsed && typeof parsed === 'object') important[key] = { type: 'object', keys: Object.keys(parsed), value: JSON.stringify(parsed).slice(0, 500) };
+      else important[key] = String(parsed).slice(0, 500);
+    });
+    let approxChars = 0;
+    keys.forEach(key => { const value = safeLocalGet(key); approxChars += key.length + (value ? value.length : 0); });
+    return { totalKeys: keys.length, approxChars, keys, legacyKeys: legacy, important };
+  }
+
+  function getQuickButtonsInfo() {
+    const buttons = qa('.scroll-tool-btn, [data-quick]');
+    return {
+      count: buttons.length,
+      buttons: buttons.map((el, index) => ({
+        index,
+        text: textOf(el, 30),
+        quick: el.dataset ? el.dataset.quick || '' : '',
+        id: el.id || '',
+        className: el.className || '',
+        display: getComputedStyle(el).display,
+        visible: visibleOf(el),
+        rect: rectOf(el)
+      })).slice(0, 30)
+    };
+  }
+
+  function getLegacyResidues() {
+    const attrs = [];
+    qa('[id], [class]').forEach(el => {
+      const hay = `${el.id || ''} ${el.className || ''}`;
+      LEGACY_ACTIVE_TOKENS.forEach(token => {
+        if (hay.indexOf(token) !== -1) attrs.push({ token, tag: el.tagName, id: el.id || '', className: el.className || '', text: textOf(el, 80) });
+      });
+    });
+
+    const fnNames = [];
+    try {
+      Object.keys(window).forEach(name => {
+        LEGACY_ACTIVE_TOKENS.forEach(token => {
+          if (name.indexOf(token) !== -1) fnNames.push({ token, name });
         });
-      }catch(e){ out.error=String(e.message||e); }
-      return out;
-    }
-
-    function xlrSourceStorageKeepKeys(){
-      const keys=[STORAGE_KEY,LAST_VIEW_KEY,SETTINGS_KEY,SAVED_CHOICE_KEY,CUSTOM_TEMPLATE_KEY,TEMPLATE_META_KEY,'xlr_template_usage_stats_v1','xlr_favorite_templates_v1','xlr_view_mode_v9_1',SOURCE_UI_SETTINGS_KEY,SOURCE_READING_KEY,SOURCE_READING_SIZE_KEY,SOURCE_QUICK_KEY,SOURCE_DEBUG_KEY,'xiaoliuren_client_mode_source',DESTINY_GENDER_SOURCE_KEY,DESTINY_KINSHIP_SOURCE_KEY];
-      return new Set(keys.filter(Boolean));
-    }
-    function xlrDebugLegacyStorageKeys(){
-      migrateDestinySourcePreferences();
-      const keep=xlrSourceStorageKeepKeys();
-      const hits=[];
-      try{
-        for(let i=0;i<localStorage.length;i++){
-          const k=localStorage.key(i)||'';
-          if(!/^xlr_|^xiaoliuren_/.test(k)) continue;
-          if(keep.has(k)) continue;
-          if(/v\d|_intent$|snapshot|debug_enabled|reader_font|reading_text_size|quick_button_settings|ui_settings|mode_size|destiny_gender_v|destiny_kinship_mode_v/.test(k)) hits.push(k);
-        }
-      }catch(e){}
-      return Array.from(new Set(hits)).sort();
-    }
-    function xlrClearLegacyStorageKeys(){
-      const keys=xlrDebugLegacyStorageKeys();
-      try{ keys.forEach(k=>localStorage.removeItem(k)); }catch(e){}
-      return keys;
-    }
-
-    function xlrDebugDuplicateIds(){
-      const seen={}, dup=[];
-      document.querySelectorAll('[id]').forEach(el=>{
-        const id=el.id; seen[id]=(seen[id]||0)+1;
       });
-      Object.keys(seen).forEach(id=>{ if(seen[id]>1) dup.push({id,count:seen[id]}); });
-      return dup;
-    }
-    function xlrDebugVersionStrings(){
-      const meta=document.querySelector('meta[name="description"]');
-      const homeTitle=Array.from(document.querySelectorAll('h2')).map(x=>xlrDebugText(x)).filter(x=>x.includes('个人占卜台')).join(' | ');
-      const critical=[
-        ['XLR_SOURCE_VERSION', XLR_SOURCE_VERSION],
-        ['document.title', document.title],
-        ['meta.description', meta ? meta.content : ''],
-        ['home.title', homeTitle]
-      ];
-      const reg=/v\d+\.\d+(?:\.\d+)?[^<"\n]{0,34}/g;
-      return critical.map(([area,text])=>({ area, text, versions:(String(text).match(reg)||[]) }));
-    }
-    function xlrDebugCollect(reason){
-      const meta=document.querySelector('meta[name="description"]');
-      const scriptCount=document.querySelectorAll('script').length;
-      const styleCount=document.querySelectorAll('style').length;
-      const homeTitle=Array.from(document.querySelectorAll('h2')).map(x=>xlrDebugText(x)).filter(x=>x.includes('个人占卜台'));
-      const currentResultSafe = (typeof currentResult !== 'undefined' && currentResult) ? {
-        sceneKey:currentResult.sceneKey, sceneName:currentResult.sceneName, method:currentResult.method, numbers:currentResult.numbers, palaces:currentResult.palaces
-      } : null;
-      const blocks=['#resultCard','#xlrQuickGuideBlock','#answerSummaryBlock','#sceneFocusBlock','#paipanBlock','#destinyBoardBlock','#overallBlock','#triReadingBlock','#singlePalaceBlock','#doublePalaceBlock','#symbolBlock','#radarBlock','#adviceBlock','#xlrGlossaryBlock','#homeAboutRulesBlockWrap','#homeVersionUpdatesBlockWrap'];
+    } catch (err) {}
+
+    const styleScript = [];
+    qa('script, style').forEach(el => {
+      const text = el.textContent || '';
+      LEGACY_ACTIVE_TOKENS.forEach(token => {
+        const count = (text.match(new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+        if (count) styleScript.push({ token, tag: el.tagName, id: el.id || '', count, textStart: text.slice(0, 120).replace(/\s+/g, ' ') });
+      });
+    });
+
+    return {
+      activeAttrMatches: attrs.slice(0, 80),
+      functionNameMatches: fnNames.slice(0, 80),
+      scriptStyleMatches: styleScript.slice(0, 80)
+    };
+  }
+
+  function getFixedElements() {
+    return qa('body *').map(el => {
+      const cs = getComputedStyle(el);
+      if (cs.position !== 'fixed' && cs.position !== 'sticky') return null;
       return {
-        version:XLR_SOURCE_VERSION,
-        reason:reason||'manual',
-        generatedAt:new Date().toISOString(),
-        environment:{ url:location.href, title:document.title, metaDescription:meta?meta.content:'', userAgent:navigator.userAgent, language:navigator.language, online:navigator.onLine, serviceWorkerController:navigator.serviceWorker&&navigator.serviceWorker.controller?navigator.serviceWorker.controller.scriptURL:null },
-        viewport:{ inner:{width:innerWidth,height:innerHeight}, outer:{width:outerWidth,height:outerHeight}, screen:{width:screen.width,height:screen.height,availWidth:screen.availWidth,availHeight:screen.availHeight}, devicePixelRatio:devicePixelRatio||1, scroll:{x:Math.round(scrollX||0),y:Math.round(scrollY||0),docHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight}, visualViewport:window.visualViewport?{width:Math.round(visualViewport.width),height:Math.round(visualViewport.height),offsetTop:Math.round(visualViewport.offsetTop),scale:visualViewport.scale}:null },
-        versionAudit:{ expected:XLR_SOURCE_VERSION, title:document.title, meta:meta?meta.content:'', homeTitle, versionStrings:xlrDebugVersionStrings(), scriptCount, styleCount, duplicateIds:xlrDebugDuplicateIds(), legacyRuntimeTerms:{ delayedBootText:document.documentElement.innerHTML.includes('boot'+'-late')||document.documentElement.innerHTML.includes('load'+'-late'), versionLockResidue:document.documentElement.innerHTML.includes('version'+'Locked'), extraScriptCount:Math.max(0, scriptCount-1), legacyStorageKeys:xlrDebugLegacyStorageKeys() }, sourceRecovery:{ destinyGender:getDestinyGenderSource(), destinyKinship:getDestinyKinshipSource(), cleanupKeepKeys:Array.from(xlrSourceStorageKeepKeys()), renderDestinyBoard:typeof renderDestinyBoard } },
-        result:{ currentResult:currentResultSafe, bodyClass:document.body.className, resultPage:document.body.classList.contains('result-page'), resultDestiny:document.body.classList.contains('result-destiny'), scene:xlrDebugText(document.getElementById('resultScene')), title:xlrDebugText(document.getElementById('resultTitle')), method:xlrDebugText(document.getElementById('resultMethod')), hexNodeCount:document.querySelectorAll('.hex-node').length },
-        navigation:{ main:xlrDebugBox('#sectionJumpNav'), sub:xlrDebugBox('#destinySubNav'), items:Array.from(document.querySelectorAll('#sectionJumpNav [data-jump-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-jump-target'),className:btn.className,active:btn.classList.contains('active'),slotActive:btn.classList.contains('slot-active')})), subItems:Array.from(document.querySelectorAll('#destinySubNav [data-destiny-sub-target]')).map(btn=>({text:xlrDebugText(btn),target:btn.getAttribute('data-destiny-sub-target'),className:btn.className,active:btn.classList.contains('active'),slotActive:btn.classList.contains('slot-active')})), targets:(typeof currentJumpTargets==='function'?currentJumpTargets().map(t=>({id:t.id,label:t.label,exists:!!t.el,visible:!!(t.el&&sectionIsJumpVisible(t.el)), box:xlrDebugBox(t.el)})):[]), mode:(typeof getJumpMode==='function'?getJumpMode():'unknown') },
-        quickButtons:Array.from(document.querySelectorAll('[data-xlr-quick]')).map(btn=>({text:xlrDebugText(btn),quick:btn.getAttribute('data-xlr-quick'),className:btn.className,box:xlrDebugBox(btn)})),
-        blocks:Object.fromEntries(blocks.map(sel=>[sel.replace('#',''),xlrDebugBox(sel)])),
-        settings:{ userSettings: typeof getUserSettings==='function'?getUserSettings():null, savedChoice: typeof getSavedChoices==='function'?getSavedChoices():null, viewMode: (()=>{try{return localStorage.getItem('xlr_view_mode_v9_1')}catch(e){return null}})() },
-        storage:xlrDebugStorage([SETTINGS_KEY,SOURCE_UI_SETTINGS_KEY,SOURCE_READING_KEY,SOURCE_READING_SIZE_KEY,SOURCE_QUICK_KEY,SOURCE_DEBUG_KEY,DESTINY_GENDER_SOURCE_KEY,DESTINY_KINSHIP_SOURCE_KEY,'xlr_history_v7','xlr_saved_choice_v9_1','xlr_view_mode_v9_1']),
-        functions:{ renderResult:typeof renderResult, currentJumpTargets:typeof currentJumpTargets, renderBoard:typeof renderBoard, renderDestinyBoard:typeof renderDestinyBoard, renderRadar:typeof renderRadar, buildVersionUpdatesHTML:typeof buildVersionUpdatesHTML },
-        recentEvents:XLR_DEBUG_LOG.slice(-20)
+        tag: el.tagName,
+        id: el.id || '',
+        className: el.className || '',
+        position: cs.position,
+        zIndex: cs.zIndex,
+        display: cs.display,
+        rect: rectOf(el),
+        text: textOf(el, 80)
       };
+    }).filter(Boolean).slice(0, 80);
+  }
+
+  function getCurrentResultSummary() {
+    const result = window.currentResult || null;
+    if (!result || typeof result !== 'object') return null;
+    return {
+      id: result.id || '',
+      sceneKey: result.sceneKey || '',
+      sceneName: result.sceneName || '',
+      method: result.method || '',
+      numbers: result.numbers || [],
+      palaces: result.palaces || [],
+      hasMetrics: !!result.metrics,
+      adviceCount: Array.isArray(result.advice) ? result.advice.length : 0,
+      supplementCount: Array.isArray(result.supplement) ? result.supplement.length : 0
+    };
+  }
+
+  function collectSnapshot(reason) {
+    const snapshot = {
+      version: APP_VERSION,
+      reason: reason || 'manual',
+      generatedAt: new Date().toISOString(),
+      environment: {
+        url: location.href,
+        path: location.pathname,
+        title: document.title,
+        expectedTitle: APP_TITLE,
+        metaDescription: getMetaDescription(),
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        online: navigator.onLine,
+        visibilityState: document.visibilityState,
+        standalone: window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches,
+        serviceWorkerController: navigator.serviceWorker && navigator.serviceWorker.controller ? navigator.serviceWorker.controller.scriptURL : '',
+        manifestHref: q('link[rel="manifest"]') ? q('link[rel="manifest"]').href : ''
+      },
+      viewport: {
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        outerWidth: window.outerWidth,
+        outerHeight: window.outerHeight,
+        devicePixelRatio: window.devicePixelRatio,
+        screen: {
+          width: screen.width,
+          height: screen.height,
+          availWidth: screen.availWidth,
+          availHeight: screen.availHeight
+        },
+        scroll: {
+          x: Math.round(window.scrollX || 0),
+          y: Math.round(window.scrollY || 0),
+          docHeight: Math.max(document.body ? document.body.scrollHeight : 0, document.documentElement ? document.documentElement.scrollHeight : 0),
+          clientHeight: document.documentElement ? document.documentElement.clientHeight : 0
+        },
+        visualViewport: window.visualViewport ? {
+          width: Math.round(window.visualViewport.width),
+          height: Math.round(window.visualViewport.height),
+          offsetTop: Math.round(window.visualViewport.offsetTop),
+          offsetLeft: Math.round(window.visualViewport.offsetLeft),
+          scale: window.visualViewport.scale
+        } : null
+      },
+      performance: {
+        now: Math.round(performance.now()),
+        navigation: (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) ? {
+          type: performance.getEntriesByType('navigation')[0].type,
+          duration: Math.round(performance.getEntriesByType('navigation')[0].duration),
+          domContentLoaded: Math.round(performance.getEntriesByType('navigation')[0].domContentLoadedEventEnd),
+          loadEventEnd: Math.round(performance.getEntriesByType('navigation')[0].loadEventEnd),
+          transferSize: performance.getEntriesByType('navigation')[0].transferSize || 0
+        } : null,
+        memory: performance.memory ? {
+          jsHeapSizeLimit: performance.memory.jsHeapSizeLimit,
+          totalJSHeapSize: performance.memory.totalJSHeapSize,
+          usedJSHeapSize: performance.memory.usedJSHeapSize
+        } : null,
+        resourceCount: performance.getEntriesByType ? performance.getEntriesByType('resource').length : 0,
+        domCounts: {
+          all: qa('*').length,
+          scripts: qa('script').length,
+          styles: qa('style,link[rel="stylesheet"]').length,
+          dialogs: qa('dialog').length,
+          details: qa('details').length
+        }
+      },
+      versionInfo: {
+        expected: APP_VERSION,
+        title: document.title,
+        meta: getMetaDescription(),
+        headings: getMainVersionHeadings(),
+        occurrences: getVersionOccurrences()
+      },
+      page: {
+        bodyClass: document.body ? document.body.className : '',
+        resultCard: describeElement(document.getElementById('resultCard')),
+        currentResult: getCurrentResultSummary(),
+        isResultPage: document.body ? document.body.classList.contains('result-page') : false,
+        isDestinyPage: document.body ? (document.body.classList.contains('result-destiny') || document.body.classList.contains('destiny-scene')) : false,
+        sceneText: textOf(document.getElementById('resultScene'), 120),
+        titleText: textOf(document.getElementById('resultTitle'), 120),
+        methodText: textOf(document.getElementById('resultMethod'), 220)
+      },
+      functions: getFunctionStatus(),
+      navigation: getNavInfo(),
+      quickButtons: getQuickButtonsInfo(),
+      collapsible: getCollapsibleInfo(),
+      storage: getStorageInfo(),
+      duplicateIds: getDuplicateIds(),
+      legacyResidues: getLegacyResidues(),
+      fixedElements: getFixedElements(),
+      recentUiEvents: state.uiEvents.slice(-20),
+      recentErrors: state.errors.slice(-20)
+    };
+    state.lastSnapshot = snapshot;
+    return snapshot;
+  }
+
+  function addIssue(bucket, level, code, message, detail) {
+    bucket.push({ level, code, message, detail: detail == null ? null : detail });
+  }
+
+  function runSelfCheck() {
+    const snapshot = collectSnapshot('self-check');
+    const issues = [];
+
+    if (!document.title.includes(APP_VERSION)) {
+      addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    function xlrDebugCollectSafe(reason){
-      try{ return xlrDebugCollect(reason||'safe'); }
-      catch(err){
-        const msg = err && (err.stack || err.message) ? (err.stack || err.message) : String(err);
-        xlrDebugPush('debug-error', msg);
-        return { version:XLR_SOURCE_VERSION, reason:reason||'safe-error', generatedAt:new Date().toISOString(), error:msg, environment:{url:location.href,title:document.title,userAgent:navigator.userAgent}, recentEvents:XLR_DEBUG_LOG.slice(-20) };
+    if (!snapshot.versionInfo.meta.includes('10.5.93') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.93', snapshot.versionInfo.meta);
+    }
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.93'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.93', snapshot.versionInfo.headings.slice(0, 8));
+    }
+
+    if (snapshot.duplicateIds.length) {
+      addIssue(issues, 'error', 'DUPLICATE_IDS', '页面存在重复 ID，可能导致折叠/导航控制错对象', snapshot.duplicateIds.slice(0, 12));
+    }
+
+    const oldDebugAttrs = snapshot.legacyResidues.activeAttrMatches.filter(item => /v10514|v10546|v10574|v10581|v10582/.test(item.token));
+    if (oldDebugAttrs.length) {
+      addIssue(issues, 'error', 'OLD_DEBUG_DOM_RESIDUE', '发现旧 Debug DOM 残留，需要改回主源码 Debug', oldDebugAttrs.slice(0, 20));
+    }
+    const oldControlAttrs = snapshot.legacyResidues.activeAttrMatches.filter(item => /versionLocked|runtimeVersion|boot-late|load-late|late2/.test(item.token));
+    if (oldControlAttrs.length) {
+      addIssue(issues, 'error', 'OLD_RUNTIME_LOCK_RESIDUE', '发现旧版本锁/延迟补丁残留', oldControlAttrs.slice(0, 20));
+    }
+    const oldStorage = snapshot.storage.legacyKeys || [];
+    if (oldStorage.length) {
+      addIssue(issues, 'warning', 'LEGACY_STORAGE_KEYS', 'localStorage 里仍有旧设置 key，建议后续做安全迁移清理', oldStorage);
+    }
+
+    const missingFunctions = Object.entries(snapshot.functions).filter(([, type]) => type !== 'function').map(([name, type]) => ({ name, type }));
+    if (missingFunctions.length) {
+      addIssue(issues, 'warning', 'MISSING_CORE_FUNCTIONS', '部分核心函数未挂到 window，若功能正常可忽略；若恢复功能异常需检查', missingFunctions);
+    }
+
+    const isResult = snapshot.page.isResultPage || snapshot.page.resultCard.visible;
+    const isDestiny = snapshot.page.isDestinyPage || (snapshot.page.currentResult && snapshot.page.currentResult.sceneKey === 'destiny');
+    const requiredNav = isResult ? REQUIRED_RESULT_NAV.slice() : REQUIRED_HOME_NAV.slice();
+    if (isDestiny) requiredNav.push(...REQUIRED_DESTINY_EXTRA_NAV);
+    const navItems = snapshot.navigation.items || [];
+    requiredNav.forEach(([target, label]) => {
+      const targetEl = document.getElementById(target);
+      const hasButton = navItems.some(item => item.target === target || item.text === label);
+      if (!targetEl && isResult) {
+        addIssue(issues, label === '健康' || label === '婚姻' || label === '事业' ? 'warning' : 'error', 'NAV_TARGET_MISSING', `导航目标缺失：${label}`, { target });
+      } else if (!hasButton && targetEl && visibleOf(targetEl)) {
+        addIssue(issues, 'warning', 'NAV_BUTTON_MISSING', `可见模块没有对应导航：${label}`, { target });
       }
+    });
+    const brokenNav = navItems.filter(item => item.target && !item.targetExists);
+    if (brokenNav.length) {
+      addIssue(issues, 'error', 'BROKEN_NAV_TARGET', '存在导航按钮指向不存在的 target', brokenNav.slice(0, 15));
     }
-    function xlrDebugRender(reason){
-      const data=xlrDebugCollectSafe(reason||'render');
-      const out=document.getElementById('xlrDebugOutput');
-      const status=document.getElementById('xlrDebugStatus');
-      if(status){
-        const scriptStyle = data.versionAudit ? `${data.versionAudit.scriptCount} / ${data.versionAudit.styleCount}` : '采集失败';
-        const duplicateCount = data.versionAudit ? data.versionAudit.duplicateIds.length : '采集失败';
-        const extraScript = data.versionAudit ? data.versionAudit.legacyRuntimeTerms.extraScriptCount : '采集失败';
-        const legacyCount = data.versionAudit ? data.versionAudit.legacyRuntimeTerms.legacyStorageKeys.length : '采集失败';
-        const resultPage = data.result ? (data.result.resultPage?'是':'否') : '采集失败';
-        const sceneName = data.result && data.result.currentResult ? data.result.currentResult.sceneName : (data.error?'Debug采集报错':'无结果');
-        status.innerHTML=[
-          ['版本', data.version || XLR_SOURCE_VERSION], ['脚本/样式', scriptStyle], ['重复ID', duplicateCount], ['额外脚本', extraScript], ['旧缓存键', legacyCount], ['结果页', resultPage], ['当前场景', sceneName]
-        ].map(([k,v])=>`<div class="xlr-debug-pill"><b>${k}</b>${v}</div>`).join('');
-      }
-      if(out) out.textContent=JSON.stringify(data,null,2);
-      return data;
+    if (snapshot.navigation.duplicateTargets.length) {
+      addIssue(issues, 'warning', 'DUPLICATE_NAV_TARGET', '导航存在重复 target', snapshot.navigation.duplicateTargets);
     }
-    function xlrDebugOpenDialog(){
-      const dlg=document.getElementById('xlrDebugDialog');
-      if(!dlg) return;
-      try{
-        if(typeof dlg.showModal==='function' && !dlg.open) dlg.showModal();
-        else dlg.setAttribute('open','open');
-      }catch(err){
-        xlrDebugPush('debug-error', 'open dialog: '+(err && err.message ? err.message : err));
-        dlg.setAttribute('open','open');
-      }
+
+    if (snapshot.collapsible.possibleMismatches.length) {
+      addIssue(issues, 'error', 'COLLAPSE_STATE_MISMATCH', '折叠状态与内容显示不一致', snapshot.collapsible.possibleMismatches);
     }
-    function xlrDebugCloseDialog(){
-      const dlg=document.getElementById('xlrDebugDialog');
-      if(!dlg) return;
-      try{ if(typeof dlg.close==='function') dlg.close(); else dlg.removeAttribute('open'); }
-      catch(err){ dlg.removeAttribute('open'); }
+
+    if (!snapshot.quickButtons.count) {
+      addIssue(issues, 'warning', 'QUICK_BUTTONS_EMPTY', '未检测到右侧快捷按钮；若当前设置关闭则可忽略', null);
     }
-    function xlrDebugEnsureUi(){
-      if(document.getElementById('xlrDebugFab')) return;
-      const fab=document.createElement('button');
-      fab.id='xlrDebugFab'; fab.type='button'; fab.className='xlr-debug-fab'; fab.textContent='🧪 DEBUG';
-      const dlg=document.createElement('dialog');
-      dlg.id='xlrDebugDialog'; dlg.className='xlr-debug-dialog';
-      dlg.innerHTML=`<div class="xlr-debug-head"><div><h3>源码内建 Debug</h3><p>v10.5.92：恢复主章节导航、顶部/底部位置与命盘子导航审计；只读页面状态，不改占卜逻辑。</p></div><button class="icon-btn" type="button" id="xlrDebugCloseBtn">×</button></div><div class="xlr-debug-body"><div class="xlr-debug-actions"><button type="button" id="xlrDebugRefreshBtn">重新审计</button><button type="button" id="xlrDebugCopyBtn">复制日志</button><button type="button" id="xlrDebugClearLegacyBtn">清理旧缓存键</button><button type="button" id="xlrDebugHideBtn">隐藏 Debug</button></div><div class="xlr-debug-status" id="xlrDebugStatus"></div><pre class="xlr-debug-output" id="xlrDebugOutput"></pre></div>`;
-      document.body.appendChild(fab); document.body.appendChild(dlg);
-      fab.addEventListener('click',()=>{ xlrDebugPush('debug','open'); xlrDebugRender('open'); xlrDebugOpenDialog(); });
-      document.getElementById('xlrDebugCloseBtn')?.addEventListener('click',()=>xlrDebugCloseDialog());
-      document.getElementById('xlrDebugRefreshBtn')?.addEventListener('click',()=>xlrDebugRender('manual-audit'));
-      document.getElementById('xlrDebugClearLegacyBtn')?.addEventListener('click',()=>{ const keys=xlrClearLegacyStorageKeys(); xlrDebugPush('debug','clear legacy storage: '+keys.length); xlrDebugRender('clear-legacy-storage'); });
-      document.getElementById('xlrDebugCopyBtn')?.addEventListener('click',()=>{
-        const data=xlrDebugCollectSafe('copy-log');
-        const text=JSON.stringify(data,null,2);
-        const out=document.getElementById('xlrDebugOutput'); if(out) out.textContent=text;
-        const done=()=>{ const btn=document.getElementById('xlrDebugCopyBtn'); if(btn){ const old=btn.textContent; btn.textContent='已复制'; setTimeout(()=>btn.textContent=old,900); } };
-        if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(()=>{ prompt('复制下面的 Debug 日志', text); }); }
-        else prompt('复制下面的 Debug 日志', text);
+
+    if (snapshot.recentErrors.length) {
+      addIssue(issues, 'error', 'RUNTIME_ERRORS', '页面运行期间捕获到 JS 错误', snapshot.recentErrors);
+    }
+
+    const errors = issues.filter(item => item.level === 'error');
+    const warnings = issues.filter(item => item.level === 'warning');
+    const passes = [];
+    if (!errors.some(item => item.code === 'VERSION_TITLE_MISMATCH')) passes.push('页面 title 版本通过');
+    if (!snapshot.duplicateIds.length) passes.push('重复 ID 检查通过');
+    if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
+    if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
+    if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
+    if (!brokenNav.length) passes.push('导航 target 检查通过');
+
+    const report = {
+      version: APP_VERSION,
+      generatedAt: new Date().toISOString(),
+      status: errors.length ? 'fail' : (warnings.length ? 'warning' : 'pass'),
+      summary: {
+        errors: errors.length,
+        warnings: warnings.length,
+        passes: passes.length
+      },
+      passes,
+      issues,
+      snapshot
+    };
+    state.lastSelfCheck = report;
+    renderSelfCheck(report);
+    return report;
+  }
+
+  function buildDialogHtml() {
+    return `
+      <div class="xlr-debug-head">
+        <div>
+          <strong>🧪 Debug 诊断</strong>
+          <small>${APP_VERSION}</small>
+        </div>
+        <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
+      </div>
+      <div class="xlr-debug-body">
+        <p class="xlr-debug-note">主源码 Debug：只读取页面状态，不改变占卜逻辑。用于检查版本、旧补丁残留、导航、折叠、设置和运行错误。</p>
+        <div class="xlr-debug-toolbar">
+          <button type="button" data-debug-action="selfcheck">一键自检</button>
+          <button type="button" data-debug-action="snapshot">刷新快照</button>
+          <button type="button" data-debug-action="copy">复制日志</button>
+          <button type="button" data-debug-action="save">保存日志</button>
+          <button type="button" data-debug-action="clear">清空错误</button>
+        </div>
+        <div id="xlrDebugSummary" class="xlr-debug-summary">点击“一键自检”开始检查。</div>
+        <pre id="xlrDebugOutput" class="xlr-debug-output"></pre>
+      </div>
+    `;
+  }
+
+  function ensureDebugUi() {
+    if (!document.body) return;
+    if (!q('#xlrDebugFab')) {
+      const fab = document.createElement('button');
+      fab.id = 'xlrDebugFab';
+      fab.type = 'button';
+      fab.textContent = '🧪 DEBUG';
+      fab.setAttribute('aria-label', '打开 Debug 诊断');
+      fab.addEventListener('click', openDebug);
+      document.body.appendChild(fab);
+    }
+    if (!q('#xlrDebugDialog')) {
+      const dialog = document.createElement('dialog');
+      dialog.id = 'xlrDebugDialog';
+      dialog.innerHTML = buildDialogHtml();
+      dialog.addEventListener('click', function (event) {
+        const btn = event.target && event.target.closest ? event.target.closest('[data-debug-action]') : null;
+        if (!btn) return;
+        const action = btn.getAttribute('data-debug-action');
+        if (action === 'close') closeDebug();
+        else if (action === 'selfcheck') runSelfCheck();
+        else if (action === 'snapshot') renderSnapshot(collectSnapshot('manual-snapshot'));
+        else if (action === 'copy') copyReport();
+        else if (action === 'save') saveReport();
+        else if (action === 'clear') { state.errors = []; renderSnapshot(collectSnapshot('clear-errors')); }
       });
-      document.getElementById('xlrDebugHideBtn')?.addEventListener('click',()=>{ document.body.classList.add('xlr-debug-hidden'); try{localStorage.setItem(SOURCE_DEBUG_KEY,'0')}catch(e){}; xlrDebugCloseDialog(); });
-      try{ if(localStorage.getItem(SOURCE_DEBUG_KEY)==='0') document.body.classList.add('xlr-debug-hidden'); }catch(e){}
+      document.body.appendChild(dialog);
     }
-    function initSourceDebug(){ xlrDebugEnsureUi(); }
-    window.XLRDebug = { collect:xlrDebugCollectSafe, render:xlrDebugRender, show:()=>{ xlrDebugEnsureUi(); document.body.classList.remove('xlr-debug-hidden'); try{localStorage.setItem(SOURCE_DEBUG_KEY,'1')}catch(e){} xlrDebugRender('manual-show'); xlrDebugOpenDialog(); }, unhide:()=>{document.body.classList.remove('xlr-debug-hidden'); try{localStorage.setItem(SOURCE_DEBUG_KEY,'1')}catch(e){} } };
+    syncFabVisible();
+  }
+
+  function syncFabVisible() {
+    const enabled = isEnabled();
+    try { document.body.classList.toggle('xlr-debug-hidden', !enabled); } catch (err) {}
+    const fab = q('#xlrDebugFab');
+    if (!fab) return;
+    fab.style.display = enabled ? 'flex' : 'none';
+  }
+
+  function openDebug() {
+    ensureDebugUi();
+    state.openedAt = new Date().toISOString();
+    const dialog = q('#xlrDebugDialog');
+    if (!dialog) return;
+    if (dialog.showModal && !dialog.open) dialog.showModal();
+    else dialog.setAttribute('open', 'open');
+    renderSnapshot(collectSnapshot('open-debug'));
+  }
+
+  function closeDebug() {
+    const dialog = q('#xlrDebugDialog');
+    if (!dialog) return;
+    if (dialog.close) dialog.close();
+    else dialog.removeAttribute('open');
+  }
+
+  function renderSnapshot(snapshot) {
+    const summary = q('#xlrDebugSummary');
+    const output = q('#xlrDebugOutput');
+    if (summary) {
+      summary.className = 'xlr-debug-summary';
+      summary.innerHTML = `
+        <b>当前快照</b><br>
+        版本：${escapeHtml(APP_VERSION)}<br>
+        title：${escapeHtml(snapshot.environment.title)}<br>
+        错误数：${snapshot.recentErrors.length} ｜ 重复 ID：${snapshot.duplicateIds.length} ｜ 旧残留：${snapshot.legacyResidues.activeAttrMatches.length}
+      `;
+    }
+    if (output) output.textContent = JSON.stringify(snapshot, null, 2);
+  }
+
+  function renderSelfCheck(report) {
+    const summary = q('#xlrDebugSummary');
+    const output = q('#xlrDebugOutput');
+    if (summary) {
+      const statusText = report.status === 'pass' ? '✅ 通过' : report.status === 'warning' ? '⚠️ 有警告' : '❌ 有错误';
+      summary.className = `xlr-debug-summary ${report.status}`;
+      const issueHtml = report.issues.slice(0, 12).map(item => {
+        const icon = item.level === 'error' ? '❌' : '⚠️';
+        return `<li>${icon} <b>${escapeHtml(item.code)}</b>：${escapeHtml(item.message)}</li>`;
+      }).join('');
+      const passHtml = report.passes.slice(0, 8).map(item => `<li>✅ ${escapeHtml(item)}</li>`).join('');
+      summary.innerHTML = `
+        <b>${statusText}</b> ｜ 错误 ${report.summary.errors} ｜ 警告 ${report.summary.warnings} ｜ 通过 ${report.summary.passes}
+        <ul>${issueHtml || passHtml || '<li>✅ 暂未发现问题</li>'}</ul>
+      `;
+    }
+    if (output) output.textContent = JSON.stringify(report, null, 2);
+  }
+
+  function getReportForExport() {
+    return state.lastSelfCheck || state.lastSnapshot || collectSnapshot('export');
+  }
+
+  function copyReport() {
+    const report = getReportForExport();
+    const text = JSON.stringify(report, null, 2);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        flashSummary('✅ 日志已复制');
+      }).catch(function () {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', 'readonly');
+    area.style.position = 'fixed';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    try {
+      document.execCommand('copy');
+      flashSummary('✅ 日志已复制');
+    } catch (err) {
+      flashSummary('❌ 复制失败，请手动选择下方 JSON');
+    }
+    area.remove();
+  }
+
+  function saveReport() {
+    const report = getReportForExport();
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const safeVersion = APP_VERSION.replace(/[^a-zA-Z0-9._-]+/g, '-');
+    a.href = url;
+    a.download = `xiaoliuren-debug-${safeVersion}-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    flashSummary('✅ 日志已保存');
+  }
+
+  function flashSummary(message) {
+    const summary = q('#xlrDebugSummary');
+    if (!summary) return;
+    const old = summary.innerHTML;
+    summary.innerHTML = `<b>${escapeHtml(message)}</b><br>` + old;
+    setTimeout(function () { if (summary) summary.innerHTML = old; }, 1400);
+  }
+
+  function escapeHtml(text) {
+    return String(text == null ? '' : text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function boot() {
+    ensureDebugUi();
+    // 暴露统一主源码 Debug 接口。以后只允许使用这个对象，不再新增版本号 Debug 对象。
+    window.XLRDebugCore = {
+      version: APP_VERSION,
+      open: openDebug,
+      close: closeDebug,
+      collectSnapshot,
+      runSelfCheck,
+      copyReport,
+      saveReport,
+      setEnabled,
+      isEnabled,
+      getState: function () { return state; }
+    };
+  }
+
+  if (document.body) {
+    boot();
+  } else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot, { once: true });
+  } else {
+    boot();
+  }
+})();
+
+
 
 
     init();
     initSourceUiModules();
-    initSourceDebug();
     refreshSectionJumpNavSoon();
   </script>
 </body>
