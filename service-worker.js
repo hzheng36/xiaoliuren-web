@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-111-destiny-subnav-night-check';
+const CACHE_NAME = 'xiaoliuren-v10-5-112-result-scroll-reset';
 const APP_SHELL = [
   './',
   './index.html',
