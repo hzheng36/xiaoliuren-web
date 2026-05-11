@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-129-knowledge-prep';
+const CACHE_NAME = 'xiaoliuren-v10-5-130-knowledge-json';
 const APP_SHELL = [
   './',
   './index.html',

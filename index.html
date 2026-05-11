@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.129 知识库接入预备与规则索引版</title>
-<meta content="小六壬个人网页版 v10.5.129 知识库接入预备与规则索引版：在 v10.5.128 基础上，继续按原计划小步升级；新增 XLRKnowledgeCore 场景知识库预备层，把现有场景、专项规则、六宫断语、建议与调试校验整理成可审计的知识库接口，为 v10.5.130 稳定体验整合版接入新的 JSON 知识库做准备；不改变现有占卜算法、导航双模式、历史、命盘和复盘结构。" name="description"/>
+<title>小六壬占卜 · v10.5.130 稳定体验整合版</title>
+<meta content="小六壬个人网页版 v10.5.130 稳定体验整合版：在 v10.5.129 基础上，正式接入新的场景 JSON 知识库，合并 v1.0 通用库、v2.0 详细专项库和子女/父母/贵人/宠物/车辆交通扩展包；普通问事结果页优先读取 JSON 中的六宫专项断语、字段化建议、风险提示与免责声明，同时保留导航双模式、历史记录、命盘、复盘、Debug 自检和稳定主线。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -2324,8 +2324,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.129 知识库接入预备与规则索引版</h2>
-<p>本版继续按原计划小步升级，但不提前接入新的 JSON 内容：新增 XLRKnowledgeCore 场景知识库预备层，把现有场景、专项规则、六宫断语和建议整理成可审计接口，为 v10.5.130 稳定体验整合版接入新 JSON 知识库做准备。导航、历史、命盘、缓存与复盘结构保持稳定。</p>
+<h2>个人占卜台 · v10.5.130 稳定体验整合版</h2>
+<p>本版正式进入 v10.5.130 稳定体验整合：接入你提供的场景 JSON 知识库，把普通问事的专项断法、字段化建议、风险提示和免责声明纳入主源码读取；同时保持导航双模式、历史、命盘、复盘和 Debug 自检稳定。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -2808,7 +2808,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.129 知识库接入预备与规则索引版';
+    const XLR_SOURCE_VERSION = 'v10.5.130 稳定体验整合版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -2822,6 +2822,15 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
       { scene:'健康', icon:'🩺', note:'身体、情绪、睡眠、恢复', items:['这几天身体状态会不会好转？','这次复查结果会不会稳定？','我的睡眠状态能不能改善？','这段时间焦虑会不会缓解？','这个症状会不会反复？','我现在适不适合休息调整？','宠物身体状态会不会好转？','这件事是不是我想太多了？'] },
       { scene:'出行', icon:'✈️', note:'行程、天气影响、延误', items:['这次出行能不能顺利？','明天适不适合出门？','这趟行程会不会延误？','路上会不会遇到麻烦？','这次自驾顺不顺？','航班/火车会不会受影响？','周末适不适合户外活动？','这次旅行安排会不会有变动？'] },
       { scene:'合作', icon:'🤝', note:'合同、客户、谈判、分账', items:['这个合作能不能谈成？','对方靠不靠谱？','这个合同能不能签？','条款里有没有需要注意的风险？','这次谈判会不会顺利？','对方会不会按约定落实？','这笔分账会不会有争议？','这个合作后续有没有长期机会？'] },
+      { scene:'合同', icon:'📄', note:'合同、文书、签约、审批', items:['这个合同能不能签？','条款里有没有风险？','这个文件审批会不会通过？','对方会不会反悔？'] },
+      { scene:'投资', icon:'📈', note:'投资风险、收益、周期', items:['这次投资风险大不大？','这个项目能不能赚钱？','现在适不适合入场？','这笔投资多久能有结果？'] },
+      { scene:'官司', icon:'⚖️', note:'纠纷、证据、和解、胜负', items:['这个纠纷能不能解决？','官司有没有胜算？','对方会不会和解？','证据够不够有力？'] },
+      { scene:'朋友', icon:'👥', note:'朋友、人际、聚会、小人', items:['这个朋友靠不靠谱？','朋友之间的误会能不能解开？','这次聚会会不会顺利？','有没有小人说闲话？'] },
+      { scene:'中奖', icon:'🎲', note:'抽奖、彩票、小奖娱乐', items:['这次抽奖有没有小惊喜？','买彩票有没有小奖？','这次中奖机会大不大？','要不要只是娱乐一下？'] },
+      { scene:'子女', icon:'🌱', note:'子女、学习、健康、亲子', items:['孩子这段时间状态怎么样？','孩子学习会不会进步？','亲子沟通能不能变好？','孩子健康需要注意什么？'] },
+      { scene:'父母', icon:'👪', note:'父母、长辈、健康、家事', items:['父母身体状态怎么样？','这件家事能不能处理好？','和父母沟通会不会顺利？','长辈最近需要注意什么？'] },
+      { scene:'宠物', icon:'🐾', note:'宠物健康、走失、行为', items:['宠物状态会不会好转？','宠物会不会自己回来？','宠物这个行为需要注意吗？','要不要带宠物去检查？'] },
+      { scene:'车辆/交通', icon:'🚗', note:'购车、维修、事故、驾驶安全', items:['这辆车适不适合买？','车辆维修能不能修好？','这次开车路上安全吗？','这车有没有隐藏问题？'] },
       { scene:'消息等待', icon:'💬', note:'回复、通知、邮件、审批消息', items:['对方会不会回复我？','今天会不会有消息？','这个通知什么时候会来？','邮件会不会有结果？','审批结果会不会顺利下来？','offer 通知会不会来？','快递物流今天会不会更新？','这个消息是不是真的？'] },
       { scene:'天气', icon:'🌦️', note:'下雨、晴天、降温、风雨', items:['明天会不会下雨？','今天下午会不会有阵雨？','周末天气适不适合出门？','今晚会不会降温？','明天会不会刮风？','这场雨会不会很快停？','会不会出现大雨或雷雨？','户外活动会不会受天气影响？'] },
       { scene:'求职', icon:'🧭', note:'面试、offer、跳槽、入职', items:['这次面试能不能过？','这个 offer 有没有希望？','这个岗位适不适合我？','我现在要不要跳槽？','入职流程会不会顺利？','HR 什么时候会有反馈？','这个公司靠不靠谱？','这次谈薪能不能谈好？'] },
@@ -2836,7 +2845,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 
     const TEMPLATE_SCENE_TO_KEY = {
       '感情':'love', '事业':'career', '财运':'wealth', '考试':'exam', '失物':'lost', '健康':'health', '出行':'travel',
-      '合作':'cooperation', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '寻人':'people', '贵人':'noble', '运势':'fortune', '命运':'destiny', '其他':'other'
+      '合作':'cooperation', '合同':'contract', '投资':'investment', '官司':'lawsuit', '朋友':'friend', '中奖':'lottery', '子女':'children', '父母':'parents', '宠物':'pet', '车辆/交通':'vehicle', '消息等待':'message', '天气':'weather', '求职':'job', '家宅':'home', '选择':'choice', '寻人':'people', '贵人':'noble', '运势':'fortune', '命运':'destiny', '其他':'other'
     };
     function findTemplateSceneByText(text){
       const value=String(text || '');
@@ -3042,6 +3051,15 @@ function clearCustomTemplates(){
       { key: 'health', name: '健康', icon: '🩺', positions: ['当前状态', '调理过程', '恢复趋势'] },
       { key: 'travel', name: '出行', icon: '✈️', positions: ['出行基础', '途中变化', '结果安稳'] },
       { key: 'cooperation', name: '合作', icon: '🤝', positions: ['合作基础', '磨合过程', '合作结果'] },
+      { key: 'contract', name: '合同', icon: '📄', positions: ['合同基础', '审批修改', '签约结果'] },
+      { key: 'investment', name: '投资', icon: '📈', positions: ['投资机会', '风险过程', '收益落点'] },
+      { key: 'lawsuit', name: '官司', icon: '⚖️', positions: ['证据基础', '纠纷过程', '结果胜负'] },
+      { key: 'friend', name: '朋友', icon: '👥', positions: ['关系现状', '互动过程', '关系结果'] },
+      { key: 'lottery', name: '中奖', icon: '🎲', positions: ['运气起势', '过程变化', '中奖结果'] },
+      { key: 'children', name: '子女', icon: '🌱', positions: ['当前状态', '学习健康', '亲子结果'] },
+      { key: 'parents', name: '父母', icon: '👪', positions: ['长辈状态', '沟通照应', '家事结果'] },
+      { key: 'pet', name: '宠物', icon: '🐾', positions: ['宠物状态', '健康行为', '结果趋势'] },
+      { key: 'vehicle', name: '车辆/交通', icon: '🚗', positions: ['车辆状态', '维修路况', '安全结果'] },
       { key: 'message', name: '消息等待', icon: '💬', positions: ['对方/事件状态', '消息阻滞', '是否回应'] },
       { key: 'weather', name: '天气', icon: '🌦️', positions: ['天气起势', '过程变化', '最终天气'] },
       { key: 'job', name: '求职', icon: '🧑‍💼', positions: ['自身基础', '面试/流程', '结果趋势'] },
@@ -3771,7 +3789,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.129',
+      source: 'mainline-v10.5.130',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4349,6 +4367,8 @@ function calcMetricsByScene(sceneKey, palaces){
     };
     ['career','fortune','choice','cooperation','travel','people','noble','home','wealth','love','other','destiny'].forEach(function(k){ SCENE_PALACE_COPY[k] = PALACE_PLAIN_EFFECT; });
     function scenePalaceEffect(sceneKey, palaceName){
+      const knowledgeEffect = typeof getKnowledgePalaceEffect === 'function' ? getKnowledgePalaceEffect(sceneKey, palaceName) : null;
+      if (knowledgeEffect && knowledgeEffect.plain) return knowledgeEffect;
       const table = SCENE_PALACE_COPY[sceneKey] || PALACE_PLAIN_EFFECT;
       return (table && table[palaceName]) || PALACE_PLAIN_EFFECT[palaceName] || {plain:'需要结合前后变化判断。', risk:'不要只看单宫，要看三象递进。'};
     }
@@ -4368,7 +4388,14 @@ function calcMetricsByScene(sceneKey, palaces){
       home: { focus:'家宅居住', plainGoal:'看居住是否稳定、家中问题是否反复、是否适合处理。', quickLabels:['家宅倾向','变化快慢','隐患阻力','安稳程度','外部帮助','家宅气象'], lead:'家宅课重点看稳定性、旧问题和需要复查的隐患。', advice:['先处理现实隐患和旧问题。','见留连多主拖延反复，见赤口防邻里口舌或维修纠纷。'] },
       choice: { focus:'选择决策', plainGoal:'看是否适合现在决定，还是需要先核实条件。', quickLabels:['选择倾向','决策快慢','风险卡点','落地程度','助力信息','决策气象'], lead:'选择课重点看信息是否足够、末象是否落地。', advice:['信息不足时不要急定。','见小吉可先小步试，见空亡先核实，见留连可再等等。'] }
     });
-    function sceneInfo(sceneKey){ return SCENE_PLAIN_INFO[sceneKey] || SCENE_PLAIN_INFO.other; }
+    function sceneInfo(sceneKey){
+      if (SCENE_PLAIN_INFO[sceneKey]) return SCENE_PLAIN_INFO[sceneKey];
+      const scene = typeof getKnowledgeScene === 'function' ? getKnowledgeScene(sceneKey) : null;
+      if(scene){
+        return { focus:scene.name || '专项场景', plainGoal:scene.description || '按场景知识库判断重点。', quickLabels:knowledgeSceneFocus(sceneKey), lead:scene.description || '按 JSON 知识库专项判断。', advice:collectKnowledgeSceneAdvice(sceneKey).slice(0,3) };
+      }
+      return SCENE_PLAIN_INFO.other;
+    }
     function plainOutcomeByEnd(endPalace){
       return {
         '大安':'结果端偏稳，适合稳扎稳打，慢慢落实。',
@@ -4807,9 +4834,9 @@ function buildContextOverallSentence(context, details) {
       const start = details[0], middle = details[1], end = details[2];
       const notes = getContextSpecialNotes(context, details);
       const q = context.question || '这件事';
-      const startText = context.rule.palace[start.palaceName] || PALACE_PLAIN_EFFECT[start.palaceName].plain;
-      const middleText = context.rule.palace[middle.palaceName] || PALACE_PLAIN_EFFECT[middle.palaceName].plain;
-      const endText = context.rule.palace[end.palaceName] || PALACE_PLAIN_EFFECT[end.palaceName].plain;
+      const startText = knowledgePalmDetailLine(context.key, start.palaceName) || context.rule.palace[start.palaceName] || PALACE_PLAIN_EFFECT[start.palaceName].plain;
+      const middleText = knowledgePalmDetailLine(context.key, middle.palaceName) || context.rule.palace[middle.palaceName] || PALACE_PLAIN_EFFECT[middle.palaceName].plain;
+      const endText = knowledgePalmDetailLine(context.key, end.palaceName) || context.rule.palace[end.palaceName] || PALACE_PLAIN_EFFECT[end.palaceName].plain;
       const trend = buildDirectQuestionConclusion(context, details);
       return `你问的是「${q}」，系统按「${context.title}」来转译六宫。
 一句话看：${trend}
@@ -4840,9 +4867,12 @@ function buildContextOverallSentence(context, details) {
 
     function mergeContextAdvice(advice, context, details) {
       const notes = getContextSpecialNotes(context, details);
+      const knowledgeAdvice = collectKnowledgeSceneAdvice(context.key, details.map(d=>d.palaceName));
+      const endText = knowledgePalmDetailLine(context.key, details[2].palaceName) || context.rule.palace[details[2].palaceName];
       const extra = [
         `问事专项：本题按「${context.title}」断，重点看${context.focus.join('、')}。`,
-        `本课末象${details[2].palaceName}：${context.rule.palace[details[2].palaceName]}`,
+        `本课末象${details[2].palaceName}：${endText}`,
+        ...knowledgeAdvice,
         ...notes,
         ...context.advice
       ];
@@ -4967,7 +4997,7 @@ function buildContextOverallSentence(context, details) {
       const q = context.question || '这件事';
       const key = contextSceneKey(context, result);
       const cards = result.details.map(d => {
-        const palaceText = context.rule.palace[d.palaceName] || scenePalaceEffect(key, d.palaceName).plain || PALACE_PLAIN_EFFECT[d.palaceName].plain;
+        const palaceText = knowledgePalmDetailLine(key, d.palaceName) || context.rule.palace[d.palaceName] || scenePalaceEffect(key, d.palaceName).plain || PALACE_PLAIN_EFFECT[d.palaceName].plain;
         const direct = buildPalaceQuestionLinkText(context, d);
         const stageUse = contextStageUseText(context, result, d);
         const chips = [d.role || d.positionName, context.title, ...context.focus.slice(0,3), d.palaceName].filter(Boolean).slice(0,7);
@@ -5506,82 +5536,1186 @@ function buildContextOverallSentence(context, details) {
 
 
 
+
+    const XLR_JSON_KNOWLEDGE = {
+      "version": "2.0+extension",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库与新增专项扩展包。",
+      "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
+      "scenes": {
+            "命运": {
+                  "name": "命运",
+                  "description": "终身命盘，分析性格、六亲、健康、婚姻、事业等长期倾向。",
+                  "palms": {
+                        "大安": "命格安稳，平顺少波折，适合守成，不宜冒进。",
+                        "留连": "一生多牵连纠缠，凡事易拖延，需耐心经营。",
+                        "速喜": "反应快，喜事多，但易起伏，需抓住时机。",
+                        "赤口": "口舌是非多，易有官非，为人刚直但易得罪人。",
+                        "小吉": "奔波自由，小成不断，适合多行业体验。",
+                        "空亡": "志气高而难展，易落空，需踏实积累。"
+                  }
+            },
+            "婚姻": {
+                  "name": "婚姻",
+                  "description": "命盘婚姻倾向，包括配偶性格、相处模式、婚姻稳定性。",
+                  "palms": {
+                        "大安": "婚姻稳定，平淡是真，但缺少激情，适合相亲结缘。",
+                        "留连": "感情拖延反复，藕断丝连，需防分居。",
+                        "速喜": "闪婚或快速热恋，激情来得快去得也快。",
+                        "赤口": "争吵多，口舌是非，谨防家暴或官司。",
+                        "小吉": "聚少离多，各自自由，小别胜新婚。",
+                        "空亡": "感情空虚，有名无实，对方不负责。"
+                  }
+            },
+            "失物": {
+                  "name": "失物",
+                  "description": "失物能否找回、方位、找回时间、物品状态、寻找建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "失物在家中或常去之处，可找回，但比较慢。",
+                              "direction": "东、东北",
+                              "place": "家中、办公室、衣柜、抽屉、床附近",
+                              "time": "3-7天",
+                              "item_state": "被压住或被遮盖，未被移动",
+                              "advice": "仔细回忆最后使用地点，翻找积压物品。"
+                        },
+                        "留连": {
+                              "summary": "失物在隐蔽角落或旧物堆中，反复寻找才能找到。",
+                              "direction": "东南、中央",
+                              "place": "仓库、地下室、旧包、车辆后备箱、杂物间",
+                              "time": "拖延，10天以上",
+                              "item_state": "被遗忘或暂时被别人收起",
+                              "advice": "询问家人或同事，扩大寻找范围。"
+                        },
+                        "速喜": {
+                              "summary": "失物很快能找到，多在明亮处或最近去过的地方。",
+                              "direction": "南",
+                              "place": "客厅、桌面、阳台、车内前排、近期旅行的地点",
+                              "time": "1-3天",
+                              "item_state": "未被破坏，明显可见",
+                              "advice": "马上回想24小时内去过的地方，问热情的人。"
+                        },
+                        "赤口": {
+                              "summary": "失物难找回，可能被人拿走或损坏，甚至有纠纷。",
+                              "direction": "西、西北",
+                              "place": "公共场所、垃圾桶、他人手中、金属物件旁",
+                              "time": "不确定，或需通过警方",
+                              "item_state": "可能被破坏或已转手",
+                              "advice": "回想有无争执或陌生人在场，必要时报警调监控。"
+                        },
+                        "小吉": {
+                              "summary": "失物在交通工具或流动场所，有一定找回几率。",
+                              "direction": "北、东北",
+                              "place": "公交、出租车、地铁、车站、商场、流动摊位",
+                              "time": "5天左右",
+                              "item_state": "被好心人收起或留在原地",
+                              "advice": "联系失物招领处，打听工作人员。"
+                        },
+                        "空亡": {
+                              "summary": "失物已丢失或完全无头绪，找回希望渺茫。",
+                              "direction": "西北、虚无",
+                              "place": "垃圾处理厂、远距离、水中",
+                              "time": "基本无望",
+                              "item_state": "已消失或被销毁",
+                              "advice": "放弃寻找，或补办新证。"
+                        }
+                  },
+                  "six_spirit_modifier": {
+                        "青龙": "物品可能在高处或木制家具旁",
+                        "朱雀": "物品可能在火源附近或红色物品旁，或与口舌相关（如被孩子拿走）",
+                        "勾陈": "物品埋在杂物堆里，或与土有关（花盆、抽屉底层）",
+                        "腾蛇": "物品被奇怪的东西盖住，或卡在缝隙里",
+                        "白虎": "物品被硬物压住，或已损坏",
+                        "玄武": "物品可能被偷，或藏在隐蔽潮湿处"
+                  },
+                  "disclaimer": "传统占卜仅供参考，理性寻找，勿过度依赖。"
+            },
+            "健康": {
+                  "name": "健康",
+                  "description": "体质倾向、当前症状类型、恢复趋势、就医建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "小病无碍，慢性病恢复慢，整体安稳。",
+                              "symptom_tendency": "疲劳、消化不良、偶有头痛",
+                              "recovery_speed": "偏慢，但会逐渐好转",
+                              "urgency": "无需紧急就医，可观察",
+                              "advice": "规律作息，适当运动，不随意停药。"
+                        },
+                        "留连": {
+                              "summary": "慢性病反复，难断根，易因情绪或天气加重。",
+                              "symptom_tendency": "关节痛、胃溃疡、神经衰弱、湿气",
+                              "recovery_speed": "反复，需长期调理",
+                              "urgency": "建议定期复查",
+                              "advice": "坚持调理，避免寒湿，可尝试中医。"
+                        },
+                        "速喜": {
+                              "summary": "急性炎症或心脑血管问题，来得快去得快。",
+                              "symptom_tendency": "发烧、喉咙痛、心悸、血压升高",
+                              "recovery_speed": "快速，但易复发",
+                              "urgency": "若症状持续超过2天，建议就医",
+                              "advice": "多休息，多喝水，必要时使用速效药物。"
+                        },
+                        "赤口": {
+                              "summary": "急性疼痛、外伤、手术，需及时处理。",
+                              "symptom_tendency": "牙痛、外伤、骨折、急性腹痛",
+                              "recovery_speed": "取决于治疗，若不治疗会加重",
+                              "urgency": "强烈建议立即就医",
+                              "advice": "不要拖延，尽快去医院检查。"
+                        },
+                        "小吉": {
+                              "summary": "无大碍，自愈力强，但注意劳累过度。",
+                              "symptom_tendency": "轻微感冒、肌肉酸痛、疲劳",
+                              "recovery_speed": "一周内自愈",
+                              "urgency": "不严重，可先观察",
+                              "advice": "劳逸结合，多补充维生素。"
+                        },
+                        "空亡": {
+                              "summary": "查不出原因的虚病，或免疫力低下。",
+                              "symptom_tendency": "失眠、无故头晕、乏力、过敏",
+                              "recovery_speed": "难自愈，需全面检查或调理",
+                              "urgency": "若长期如此，建议做系统体检",
+                              "advice": "增强体质，注意心理压力，或找中医调理。"
+                        }
+                  },
+                  "six_spirit_modifier": {
+                        "青龙": "肝气郁结，眼睛不适，情绪问题",
+                        "朱雀": "心火旺，炎症，口腔溃疡",
+                        "勾陈": "脾胃虚弱，湿气重，慢性病",
+                        "腾蛇": "神经问题，莫名疼痛，心理疾病",
+                        "白虎": "外伤，急痛，手术后康复",
+                        "玄武": "肾虚，生殖系统问题，隐性病"
+                  },
+                  "disclaimer": "非医学诊断，身体不适请优先就医。"
+            },
+            "财运": {
+                  "name": "财运",
+                  "description": "求财方式、风险等级、回款时间、投资建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "正财稳定，收入有保障，但增长慢。",
+                              "income_type": "固定工资、稳定现金流",
+                              "risk_level": "低",
+                              "good_for": "储蓄、定期存款、长期投资",
+                              "bad_for": "投机、借贷",
+                              "time_to_get_paid": "月底或定期",
+                              "advice": "不要冒险投资，多存钱。"
+                        },
+                        "留连": {
+                              "summary": "财来财去，回款慢，易被套牢。",
+                              "income_type": "提成、应收账款、兼职",
+                              "risk_level": "中高",
+                              "good_for": "讨价还价、催款",
+                              "bad_for": "快速周转、短期炒股",
+                              "time_to_get_paid": "拖延，超30天",
+                              "advice": "催收要耐心，不要轻易续投。"
+                        },
+                        "速喜": {
+                              "summary": "偏财旺，快钱机会多，但波动大。",
+                              "income_type": "意外收入、奖金、二手交易",
+                              "risk_level": "中",
+                              "good_for": "短线、促销、兼职",
+                              "bad_for": "长期持有、重仓",
+                              "time_to_get_paid": "1-3天内",
+                              "advice": "见好就收，不要贪心。"
+                        },
+                        "赤口": {
+                              "summary": "因财惹是非，破财风险高。",
+                              "income_type": "辛苦钱、合同纠纷、赔偿",
+                              "risk_level": "高",
+                              "good_for": "诉讼追讨、谨慎讨债",
+                              "bad_for": "合伙、借款给别人",
+                              "time_to_get_paid": "不确定，或需要官司",
+                              "advice": "别乱签字，别信高利贷。"
+                        },
+                        "小吉": {
+                              "summary": "多劳多得，小财不断，适合副业。",
+                              "income_type": "多份兼职、灵活收益",
+                              "risk_level": "中低",
+                              "good_for": "跑腿、销售、零散项目",
+                              "bad_for": "一次性大额投资",
+                              "time_to_get_paid": "5-7天",
+                              "advice": "多做几份工作，量变到质变。"
+                        },
+                        "空亡": {
+                              "summary": "财虚，投资易亏，不宜借钱。",
+                              "income_type": "补贴、救济、少量收入",
+                              "risk_level": "很高",
+                              "good_for": "节流、减少开支",
+                              "bad_for": "任何形式的投资或借贷",
+                              "time_to_get_paid": "无望或很久",
+                              "advice": "开源节流，先稳住工作。"
+                        }
+                  },
+                  "disclaimer": "财运信息仅供参考，投资需谨慎。"
+            },
+            "事业": {
+                  "name": "事业",
+                  "description": "职场关系、项目推进、跳槽时机、升职可能。",
+                  "palms": {
+                        "大安": {
+                              "summary": "工作稳定，按部就班，升迁慢但安全。",
+                              "work_relationship": "同事和睦，上级信任",
+                              "project_progress": "缓慢但能完成",
+                              "job_hopping": "不宜，新机会也不快",
+                              "promotion": "需要熬资历",
+                              "advice": "积累经验，不要急功近利。"
+                        },
+                        "留连": {
+                              "summary": "事业停滞，被旧项目或人际关系拖累。",
+                              "work_relationship": "与某些同事纠缠不清",
+                              "project_progress": "反复修改，难推进",
+                              "job_hopping": "跳槽也难彻底解决",
+                              "promotion": "机会被压着",
+                              "advice": "先处理遗留问题，再求发展。"
+                        },
+                        "速喜": {
+                              "summary": "变动机会多，适合尝试新岗位或创业。",
+                              "work_relationship": "新交际活跃",
+                              "project_progress": "快速突破",
+                              "job_hopping": "是时候跳槽或转行",
+                              "promotion": "突然空降机会",
+                              "advice": "抓住最近一个月出现的机会。"
+                        },
+                        "赤口": {
+                              "summary": "职场争斗，小人多，谨防被陷害。",
+                              "work_relationship": "容易争执，有对手",
+                              "project_progress": "阻力大，易出错",
+                              "job_hopping": "跳槽前调查目标公司文化",
+                              "promotion": "争抢激烈，赢了也有后患",
+                              "advice": "低调行事，少说话多做事。"
+                        },
+                        "小吉": {
+                              "summary": "奔波自由，适合外勤、业务、自由职业。",
+                              "work_relationship": "客户为主，同事较少",
+                              "project_progress": "灵活推进，多线程",
+                              "job_hopping": "适合做副业或自由职业",
+                              "promotion": "没有固定路径，收入靠提成",
+                              "advice": "发展多个技能，别在一棵树上吊死。"
+                        },
+                        "空亡": {
+                              "summary": "公司不景气，或个人迷茫，需充电学习。",
+                              "work_relationship": "疏离，无支持",
+                              "project_progress": "项目被砍或拖延",
+                              "job_hopping": "骑驴找马，先不裸辞",
+                              "promotion": "基本无望",
+                              "advice": "学习新技能，准备转型。"
+                        }
+                  }
+            },
+            "感情": {
+                  "name": "感情",
+                  "description": "当前关系阶段、沟通方式、第三者风险、发展建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "感情稳定，但缺少激情，适合长久发展。",
+                              "stage": "平淡期、相亲、长期伴侣",
+                              "communication": "顺畅但不浪漫",
+                              "third_party_risk": "低",
+                              "trend": "慢热但持续",
+                              "advice": "定期制造小惊喜，防止冷淡。"
+                        },
+                        "留连": {
+                              "summary": "对方犹豫不决，关系胶着，需耐心。",
+                              "stage": "暧昧、分手后纠缠",
+                              "communication": "总是重复问题",
+                              "third_party_risk": "可能有旧情人干扰",
+                              "trend": "反复无常",
+                              "advice": "给对方时间，不要逼太紧。"
+                        },
+                        "速喜": {
+                              "summary": "快速热恋或复合，但来得快去得也快。",
+                              "stage": "热恋期、闪婚、突然表白",
+                              "communication": "频繁火热",
+                              "third_party_risk": "中，容易因小事变脸",
+                              "trend": "短期高涨后回落",
+                              "advice": "享受当下，但别太快同居或领证。"
+                        },
+                        "赤口": {
+                              "summary": "争吵多，误会多，谨防第三方介入或家暴。",
+                              "stage": "矛盾期、怀疑期",
+                              "communication": "以吵架为主",
+                              "third_party_risk": "高，可能有竞争对手",
+                              "trend": "若不调整，易分手",
+                              "advice": "冷静沟通，约法三章。"
+                        },
+                        "小吉": {
+                              "summary": "各自忙碌，但心里有对方，异地恋。",
+                              "stage": "异地、聚少离多",
+                              "communication": "通过手机，偶尔见面",
+                              "third_party_risk": "较低，但要注意冷落",
+                              "trend": "小别胜新婚",
+                              "advice": "定期视频，计划见面。"
+                        },
+                        "空亡": {
+                              "summary": "对方无意，或感情虚无，建议放手。",
+                              "stage": "单恋、失联、冷漠",
+                              "communication": "已断联或敷衍",
+                              "third_party_risk": "对方可能有新欢",
+                              "trend": "没有未来",
+                              "advice": "放过自己，开始新生活。"
+                        }
+                  },
+                  "disclaimer": "感情是复杂的，占卜结果仅作参考，关键还在于双方沟通。"
+            },
+            "合同": {
+                  "name": "合同",
+                  "description": "合同签订风险、条款陷阱、审批进度、法律建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "合同顺利，条款老旧但无大毛病。",
+                              "risk_level": "低",
+                              "hidden_trap": "可能存在模糊地带",
+                              "progress": "按流程走，较慢",
+                              "advice": "逐条阅读，尤其违约责任。"
+                        },
+                        "留连": {
+                              "summary": "反复修改，拖延签约，需防暗坑。",
+                              "risk_level": "中",
+                              "hidden_trap": "对方可能故意拖字诀，条款有漏洞",
+                              "progress": "一拖再拖，超预期",
+                              "advice": "设定最后期限，不签无限期草案。"
+                        },
+                        "速喜": {
+                              "summary": "快速通过，但要仔细审查再签。",
+                              "risk_level": "中低",
+                              "hidden_trap": "对己方不利细节可能被忽略",
+                              "progress": "很快，可能当天完成",
+                              "advice": "别因为急就盲目签字，找法律人士看一眼。"
+                        },
+                        "赤口": {
+                              "summary": "有争议条款，易引发官司，务必谨慎。",
+                              "risk_level": "高",
+                              "hidden_trap": "赔偿责任、管辖地不利",
+                              "progress": "卡在审核或对方反悔",
+                              "advice": "请律师修改，否则不签。"
+                        },
+                        "小吉": {
+                              "summary": "灵活可议，能做补充协议。",
+                              "risk_level": "中",
+                              "hidden_trap": "责任划分不明确",
+                              "progress": "可以商量修改",
+                              "advice": "把口头承诺写进附加条款。"
+                        },
+                        "空亡": {
+                              "summary": "文件易丢失或无效，合同可能被废弃。",
+                              "risk_level": "很高",
+                              "hidden_trap": "对方无签约诚意，或合同已过期",
+                              "progress": "毫无进展，或找不到人",
+                              "advice": "立即备份所有文件，用电子签。"
+                        }
+                  },
+                  "disclaimer": "重大合同请咨询专业律师，以上仅为趋势参考。"
+            },
+            "出行": {
+                  "name": "出行",
+                  "description": "旅途顺利程度、交通状况、延误风险、安全提示。",
+                  "palms": {
+                        "大安": {
+                              "summary": "行程顺利，无大延误，适合自驾。",
+                              "risk": "低",
+                              "delay": "较少或准时",
+                              "safety": "安全",
+                              "advice": "提前检查车况或票务。"
+                        },
+                        "留连": {
+                              "summary": "易堵车或班次延误，需预留时间。",
+                              "risk": "中",
+                              "delay": "容易晚点",
+                              "safety": "一般，注意慢行",
+                              "advice": "多留1-2小时缓冲。"
+                        },
+                        "速喜": {
+                              "summary": "快速到达，可能提前，但注意安全。",
+                              "risk": "中低",
+                              "delay": "可能提前",
+                              "safety": "注意超速风险",
+                              "advice": "别开太快，系好安全带。"
+                        },
+                        "赤口": {
+                              "summary": "事故或口舌纠纷，选择保险路线。",
+                              "risk": "高",
+                              "delay": "可能因意外停滞",
+                              "safety": "较低，小心路怒",
+                              "advice": "避开高峰，买好保险。"
+                        },
+                        "小吉": {
+                              "summary": "小延误但最终能到，行李多留意。",
+                              "risk": "中",
+                              "delay": "短时延误",
+                              "safety": "尚可",
+                              "advice": "轻装出行，保管好随身物品。"
+                        },
+                        "空亡": {
+                              "summary": "可能取消或迷路，改期更好。",
+                              "risk": "很高",
+                              "delay": "不确定或取消",
+                              "safety": "不建议出行",
+                              "advice": "考虑改期或更换交通工具。"
+                        }
+                  }
+            },
+            "考试": {
+                  "name": "考试",
+                  "description": "考试成绩、复习效率、通过概率、心态调整。",
+                  "palms": {
+                        "大安": {
+                              "summary": "平时成绩稳定，正常发挥可过。",
+                              "probability": "中等偏上",
+                              "review_efficiency": "一般，需持续",
+                              "advice": "按计划复习，不要临时抱佛脚。"
+                        },
+                        "留连": {
+                              "summary": "复习拖延，易发挥失常，需加把劲。",
+                              "probability": "中等",
+                              "review_efficiency": "低，易分心",
+                              "advice": "制定每日小目标，加强自律。"
+                        },
+                        "速喜": {
+                              "summary": "临时突击有效，成绩有惊喜。",
+                              "probability": "高",
+                              "review_efficiency": "高，但易忘",
+                              "advice": "考前3天集中复习，但还是要打基础。"
+                        },
+                        "赤口": {
+                              "summary": "粗心或紧张导致失误，可能差几分。",
+                              "probability": "中低",
+                              "review_efficiency": "受压影响",
+                              "advice": "做模拟题，训练答题节奏。"
+                        },
+                        "小吉": {
+                              "summary": "中等成绩，能通过，但不是优秀。",
+                              "probability": "中等",
+                              "review_efficiency": "尚可",
+                              "advice": "抓重点，放弃难题。"
+                        },
+                        "空亡": {
+                              "summary": "准备不足，大概率不及格。",
+                              "probability": "低",
+                              "review_efficiency": "无",
+                              "advice": "考虑缓考或重修补习。"
+                        }
+                  }
+            },
+            "寻人": {
+                  "name": "寻人",
+                  "description": "走失者安危、去向、能否联系上。",
+                  "palms": {
+                        "大安": {
+                              "summary": "在本地或熟悉的地方，平安，可自行归。",
+                              "safety": "安全",
+                              "where": "常去地点",
+                              "contact": "两天内可联系上"
+                        },
+                        "留连": {
+                              "summary": "在朋友或亲戚家，但走动不定，需多打听。",
+                              "safety": "一般",
+                              "where": "熟人处",
+                              "contact": "需通过中间人"
+                        },
+                        "速喜": {
+                              "summary": "已快速前往南方或热闹处，很快有消息。",
+                              "safety": "安全",
+                              "where": "热闹场所",
+                              "contact": "当天或次日"
+                        },
+                        "赤口": {
+                              "summary": "有争执或意外，建议报警。",
+                              "safety": "较低",
+                              "where": "不明",
+                              "contact": "难联系"
+                        },
+                        "小吉": {
+                              "summary": "在交通工具上或外地，有联系可能。",
+                              "safety": "可",
+                              "where": "流动中",
+                              "contact": "几天后有消息"
+                        },
+                        "空亡": {
+                              "summary": "音信全无，或避而不见。",
+                              "safety": "未知",
+                              "where": "虚无",
+                              "contact": "基本无"
+                        }
+                  }
+            },
+            "官司": {
+                  "name": "官司",
+                  "description": "诉讼胜负、和解机会、证据强弱。",
+                  "palms": {
+                        "大安": {
+                              "summary": "小事和解，对方无意纠缠。",
+                              "win_probability": "中等偏上",
+                              "settle_chance": "高",
+                              "advice": "私下调解，省时省力。"
+                        },
+                        "留连": {
+                              "summary": "拖延时间，证据模糊，建议调解。",
+                              "win_probability": "中等",
+                              "settle_chance": "中等",
+                              "advice": "收集证据，不要拖。"
+                        },
+                        "速喜": {
+                              "summary": "快速裁决，有利我方。",
+                              "win_probability": "高",
+                              "settle_chance": "较低",
+                              "advice": "抓紧时间起诉。"
+                        },
+                        "赤口": {
+                              "summary": "对方强势，易败诉，请律师。",
+                              "win_probability": "低",
+                              "settle_chance": "低",
+                              "advice": "聘请专业律师，准备充分。"
+                        },
+                        "小吉": {
+                              "summary": "小胜或部分和解。",
+                              "win_probability": "中等",
+                              "settle_chance": "中等",
+                              "advice": "争取和解，争取部分利益。"
+                        },
+                        "空亡": {
+                              "summary": "证据不足，或对方消失，不了了之。",
+                              "win_probability": "极低",
+                              "settle_chance": "无",
+                              "advice": "评估成本，考虑撤诉。"
+                        }
+                  }
+            },
+            "朋友": {
+                  "name": "朋友",
+                  "description": "朋友关系、贵人小人、聚会邀约。",
+                  "palms": {
+                        "大安": {
+                              "summary": "朋友可靠，值得深交。",
+                              "relationship": "稳定",
+                              "advice": "多聚会，维护感情。"
+                        },
+                        "留连": {
+                              "summary": "旧友联系，但易因钱生隙。",
+                              "relationship": "纠缠",
+                              "advice": "尽量避免金钱往来。"
+                        },
+                        "速喜": {
+                              "summary": "新朋友带来机会，但注意别太轻信。",
+                              "relationship": "热情",
+                              "advice": "先观察，别投入太多。"
+                        },
+                        "赤口": {
+                              "summary": "背后说闲话，小心小人。",
+                              "relationship": "紧张",
+                              "advice": "少谈私事，保持距离。"
+                        },
+                        "小吉": {
+                              "summary": "聚会愉快，能得帮助。",
+                              "relationship": "互助",
+                              "advice": "主动邀请朋友。"
+                        },
+                        "空亡": {
+                              "summary": "关系虚浮，酒肉朋友。",
+                              "relationship": "表面",
+                              "advice": "减少无效社交。"
+                        }
+                  }
+            },
+            "中奖": {
+                  "name": "中奖",
+                  "description": "随机运气、中奖概率、娱乐建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "小奖有机会，大奖难。",
+                              "chance": "低",
+                              "advice": "偶尔娱乐，不要沉迷。"
+                        },
+                        "留连": {
+                              "summary": "不中，或奖金被拖。",
+                              "chance": "极低",
+                              "advice": "不要买，买也难中。"
+                        },
+                        "速喜": {
+                              "summary": "突然中奖，数量不大。",
+                              "chance": "中",
+                              "advice": "小试即可，见好就收。"
+                        },
+                        "赤口": {
+                              "summary": "被骗或违规，远离博彩。",
+                              "chance": "负",
+                              "advice": "不要参与任何赌博。"
+                        },
+                        "小吉": {
+                              "summary": "零星中奖，纯属娱乐。",
+                              "chance": "低",
+                              "advice": "当好玩，别当真。"
+                        },
+                        "空亡": {
+                              "summary": "血本无归，切勿沉迷。",
+                              "chance": "零",
+                              "advice": "把钱存起来更安全。"
+                        }
+                  }
+            },
+            "家宅": {
+                  "name": "家宅",
+                  "description": "住宅风水、搬家、装修、邻里关系。",
+                  "palms": {
+                        "大安": {
+                              "summary": "家宅安稳，适合长期居住。",
+                              "energy": "安定",
+                              "advice": "保持整洁，利于运势。"
+                        },
+                        "留连": {
+                              "summary": "杂物堆积，容易潮湿，需要清理。",
+                              "energy": "停滞",
+                              "advice": "清理死角，通风除湿。"
+                        },
+                        "速喜": {
+                              "summary": "近期有变动，如搬家或装修。",
+                              "energy": "活跃",
+                              "advice": "趁势调整布局。"
+                        },
+                        "赤口": {
+                              "summary": "邻里口舌，小心火灾或漏水。",
+                              "energy": "冲突",
+                              "advice": "与邻居沟通，检查安全。"
+                        },
+                        "小吉": {
+                              "summary": "小调整带来顺遂，如换方位。",
+                              "energy": "改善",
+                              "advice": "移动家具或增加绿植。"
+                        },
+                        "空亡": {
+                              "summary": "房子风水不佳，或有不干净感觉。",
+                              "energy": "虚",
+                              "advice": "请专业人士勘察，或挂护身符。"
+                        }
+                  }
+            },
+            "天气": {
+                  "name": "天气",
+                  "description": "未来天气趋势，降雨概率。",
+                  "palms": {
+                        "大安": {
+                              "summary": "晴好，无雨，风力小。"
+                        },
+                        "留连": {
+                              "summary": "阴天，可能小雨，但难降透。"
+                        },
+                        "速喜": {
+                              "summary": "突然放晴，或雷阵雨来得快去得快。"
+                        },
+                        "赤口": {
+                              "summary": "大风、雷电、暴雨，需防恶劣天气。"
+                        },
+                        "小吉": {
+                              "summary": "多云转晴，局部小雨。"
+                        },
+                        "空亡": {
+                              "summary": "雾霾、无雨，或预报不准。"
+                        }
+                  }
+            },
+            "合作": {
+                  "name": "合作",
+                  "description": "合作意向、利益分配、信任度。",
+                  "palms": {
+                        "大安": {
+                              "summary": "合作基础稳定，宜长期。",
+                              "trust": "高",
+                              "profit": "分配合理",
+                              "advice": "写清楚书面协议。"
+                        },
+                        "留连": {
+                              "summary": "对方犹豫，反复沟通才能定。",
+                              "trust": "中",
+                              "profit": "可能扯皮",
+                              "advice": "不要压太急，给对方考虑时间。"
+                        },
+                        "速喜": {
+                              "summary": "一拍即合，但需写协议防变卦。",
+                              "trust": "中高",
+                              "profit": "快速见效",
+                              "advice": "先做小项目试水。"
+                        },
+                        "赤口": {
+                              "summary": "易因利益争吵，慎重选择伙伴。",
+                              "trust": "低",
+                              "profit": "纠纷多",
+                              "advice": "尽量不合作，或请中间人。"
+                        },
+                        "小吉": {
+                              "summary": "互补型合作，各有所得。",
+                              "trust": "中",
+                              "profit": "各取所需",
+                              "advice": "发挥各自优势，不要插手对方领域。"
+                        },
+                        "空亡": {
+                              "summary": "对方诚意不足，不了了之。",
+                              "trust": "无",
+                              "profit": "无",
+                              "advice": "及时止损，换合作方。"
+                        }
+                  }
+            },
+            "投资": {
+                  "name": "投资",
+                  "description": "投资收益、风险、周期。",
+                  "palms": {
+                        "大安": {
+                              "summary": "稳健型投资，回报慢但安全。",
+                              "risk": "低",
+                              "return": "稳定",
+                              "cycle": "长",
+                              "advice": "选国债、定期。"
+                        },
+                        "留连": {
+                              "summary": "资金被占，回本慢，不宜短期。",
+                              "risk": "中",
+                              "return": "不确定",
+                              "cycle": "长",
+                              "advice": "避免长期锁仓。"
+                        },
+                        "速喜": {
+                              "summary": "短期投机有赚，见好就收。",
+                              "risk": "中高",
+                              "return": "快",
+                              "cycle": "短",
+                              "advice": "设止盈点。"
+                        },
+                        "赤口": {
+                              "summary": "风险高，易亏损，谨防骗局。",
+                              "risk": "高",
+                              "return": "负",
+                              "cycle": "无",
+                              "advice": "不要投。"
+                        },
+                        "小吉": {
+                              "summary": "小额尝试，可有小赚。",
+                              "risk": "中低",
+                              "return": "小",
+                              "cycle": "中",
+                              "advice": "分散投资。"
+                        },
+                        "空亡": {
+                              "summary": "血本无归，切勿入场。",
+                              "risk": "极高",
+                              "return": "零",
+                              "cycle": "无",
+                              "advice": "远离任何投资。"
+                        }
+                  }
+            },
+            "求职": {
+                  "name": "求职",
+                  "description": "面试顺利程度、offer可能性、公司选择。",
+                  "palms": {
+                        "大安": {
+                              "summary": "有稳定机会，面试顺利，但流程慢。",
+                              "offer": "较大概率",
+                              "speed": "慢",
+                              "advice": "耐心等待，同时看其他机会。"
+                        },
+                        "留连": {
+                              "summary": "多次投递无回音，需耐心等待。",
+                              "offer": "较低",
+                              "speed": "拖延",
+                              "advice": "优化简历，多投几家。"
+                        },
+                        "速喜": {
+                              "summary": "很快接到面试通知，可快速入职。",
+                              "offer": "高",
+                              "speed": "快",
+                              "advice": "准备好自我介绍，抓住机会。"
+                        },
+                        "赤口": {
+                              "summary": "竞争激烈，易被拒绝，注意言行。",
+                              "offer": "中低",
+                              "speed": "波折",
+                              "advice": "面试时避免争论，表现谦虚。"
+                        },
+                        "小吉": {
+                              "summary": "有多个小机会，选适合的长久。",
+                              "offer": "中等",
+                              "speed": "中等",
+                              "advice": "比较福利，选稳定一些的。"
+                        },
+                        "空亡": {
+                              "summary": "希望渺茫，建议提升技能再投。",
+                              "offer": "极低",
+                              "speed": "无",
+                              "advice": "学习考证，再求职。"
+                        }
+                  }
+            },
+            "子女": {
+                  "name": "子女",
+                  "description": "子女学业、健康、亲子关系、升学、情绪状态。",
+                  "palms": {
+                        "大安": {
+                              "summary": "子女乖巧听话，学业或工作稳定，健康无大碍。",
+                              "study": "成绩中等偏上，需鼓励而非施压",
+                              "health": "小感冒或生长痛，无大碍",
+                              "relationship": "融洽，愿意沟通",
+                              "advice": "多陪伴，少批评，培养独立性。"
+                        },
+                        "留连": {
+                              "summary": "子女情绪反复，学习或生活上有拖延习惯，需耐心引导。",
+                              "study": "成绩波动，作业拖拉，注意力不集中",
+                              "health": "易有过敏或肠胃问题",
+                              "relationship": "时而亲近时而疏远，需多倾听",
+                              "advice": "制定规律作息，减少电子产品。"
+                        },
+                        "速喜": {
+                              "summary": "子女近期有喜事（获奖、升学、结交好友），进步明显。",
+                              "study": "成绩突然提升，或获得表扬",
+                              "health": "精力旺盛，小心运动损伤",
+                              "relationship": "主动分享快乐事",
+                              "advice": "趁机鼓励，培养一项特长。"
+                        },
+                        "赤口": {
+                              "summary": "子女易与同学争执，或身体有急性小伤，需关注情绪。",
+                              "study": "与老师或同学矛盾，影响学习",
+                              "health": "磕碰、发烧、急性炎症",
+                              "relationship": "较叛逆，顶嘴多",
+                              "advice": "冷静沟通，避免责骂，检查身体。"
+                        },
+                        "小吉": {
+                              "summary": "子女多才多艺，喜欢外出活动，社交广泛。",
+                              "study": "成绩中游，偏科但兴趣广泛",
+                              "health": "良好，偶尔疲劳",
+                              "relationship": "朋友多，与家人稍疏",
+                              "advice": "支持兴趣发展，约定学习时间。"
+                        },
+                        "空亡": {
+                              "summary": "子女心思不在学习上，或身体虚弱，需要更多关怀。",
+                              "study": "无心上学，成绩下滑",
+                              "health": "免疫力低，易生病",
+                              "relationship": "不愿交流，沉迷网络",
+                              "advice": "寻找心理老师或增加户外活动。"
+                        }
+                  }
+            },
+            "父母": {
+                  "name": "父母",
+                  "description": "父母长辈健康、沟通、赡养安排、家宅事务。",
+                  "palms": {
+                        "大安": {
+                              "summary": "父母身体安稳，家庭和睦，无重大操心之事。",
+                              "health": "慢性病稳定，注意常规体检",
+                              "communication": "顺畅，彼此尊重",
+                              "finance": "经济自足，无需补贴",
+                              "advice": "常打电话，节假日回家看看。"
+                        },
+                        "留连": {
+                              "summary": "父母有旧疾反复，或某件事拖延未决，需耐心关照。",
+                              "health": "关节、胃肠、失眠问题反复",
+                              "communication": "易唠叨同一件事，需倾听",
+                              "finance": "可能有财务纠纷或被拖欠",
+                              "advice": "主动帮处理棘手事务，带去看中医。"
+                        },
+                        "速喜": {
+                              "summary": "父母近期有喜事（康复、乔迁、收礼），心情愉悦。",
+                              "health": "急性病快速好转",
+                              "communication": "主动分享好消息",
+                              "finance": "有意外收入或礼物",
+                              "advice": "趁热打铁，组织家庭聚会。"
+                        },
+                        "赤口": {
+                              "summary": "父母易与人争执（邻里、亲戚），或健康有突发状况。",
+                              "health": "跌倒、血压高、急性疼痛",
+                              "communication": "脾气急，容易生气",
+                              "finance": "可能被骗或损失钱财",
+                              "advice": "立即关心身体，调解矛盾，必要时报警。"
+                        },
+                        "小吉": {
+                              "summary": "父母喜欢外出走动，生活充实，但需防劳累。",
+                              "health": "一般，容易疲劳",
+                              "communication": "开朗，爱聊往事",
+                              "finance": "开销较大，但无大忧",
+                              "advice": "提醒适度休息，安排体检。"
+                        },
+                        "空亡": {
+                              "summary": "父母精神空虚或身体虚弱，子女需多陪伴。",
+                              "health": "查不出原因的乏力、失眠",
+                              "communication": "沉默寡言，不愿出门",
+                              "finance": "可能被保健品推销",
+                              "advice": "多回家吃饭，带去做全面检查。"
+                        }
+                  }
+            },
+            "贵人": {
+                  "name": "贵人",
+                  "description": "求助、提携、人脉、合作意向、关键时刻的助力。",
+                  "palms": {
+                        "大安": {
+                              "summary": "贵人在本地或熟悉圈子，可靠稳定，但需主动联系。",
+                              "direction": "东、东北",
+                              "type": "长辈、领导、老同学",
+                              "time": "3-7天内",
+                              "advice": "主动约饭或请教，对方会愿意帮忙。"
+                        },
+                        "留连": {
+                              "summary": "贵人反复犹豫，或旧人回头，但效率不高。",
+                              "direction": "东南、中央",
+                              "type": "前任同事、中间人",
+                              "time": "拖延，需多次催",
+                              "advice": "提供明确需求，别让对方猜测。"
+                        },
+                        "速喜": {
+                              "summary": "贵人突然出现，带来快速机会，注意抓住。",
+                              "direction": "南",
+                              "type": "新认识的朋友、年轻女性",
+                              "time": "1-3天",
+                              "advice": "马上回应，不要犹豫。"
+                        },
+                        "赤口": {
+                              "summary": "贵人可能带有条件或竞争关系，需谨慎接受帮助。",
+                              "direction": "西、西北",
+                              "type": "同行、律师、中间人",
+                              "time": "有纠纷风险",
+                              "advice": "把条件写清楚，避免人情报复。"
+                        },
+                        "小吉": {
+                              "summary": "贵人乐于助人，但能力有限，可解决小问题。",
+                              "direction": "北、东北",
+                              "type": "朋友、年轻同事",
+                              "time": "5天内",
+                              "advice": "请对方吃饭，维持关系。"
+                        },
+                        "空亡": {
+                              "summary": "表面应承，实际帮不上忙，或对方消失。",
+                              "direction": "西北",
+                              "type": "虚伪的人",
+                              "time": "无",
+                              "advice": "不要抱期望，自己想办法。"
+                        }
+                  }
+            },
+            "宠物": {
+                  "name": "宠物",
+                  "description": "宠物健康、走失找回、行为问题、养护建议。",
+                  "palms": {
+                        "大安": {
+                              "summary": "宠物健康稳定，性格乖巧，不易走失。",
+                              "health": "良好，注意定期驱虫",
+                              "behavior": "听话，能训练",
+                              "lost_found": "基本不会丢",
+                              "advice": "定期打疫苗，多互动。"
+                        },
+                        "留连": {
+                              "summary": "宠物有慢性小病（皮肤病、肠胃弱），或喜欢藏角落。",
+                              "health": "反复皮癣、软便",
+                              "behavior": "爱躲藏，不爱理人",
+                              "lost_found": "在隔壁或杂物堆找到",
+                              "advice": "调理饮食，多陪伴。"
+                        },
+                        "速喜": {
+                              "summary": "宠物精力旺盛，活泼好动，注意跑丢或受伤。",
+                              "health": "健康，但易磕碰",
+                              "behavior": "兴奋，拆家可能",
+                              "lost_found": "在热闹处能找到",
+                              "advice": "出门牵绳，增加运动量。"
+                        },
+                        "赤口": {
+                              "summary": "宠物易生病或受伤，或有攻击行为，需警惕。",
+                              "health": "急性腹泻、外伤",
+                              "behavior": "暴躁，伤人可能",
+                              "lost_found": "难找回，或被别人带走",
+                              "advice": "尽快就医，加强看管。"
+                        },
+                        "小吉": {
+                              "summary": "宠物喜欢外出，社交好，但容易走散。",
+                              "health": "不错，注意寄生虫",
+                              "behavior": "友好，爱跑动",
+                              "lost_found": "在小区或公园能找到",
+                              "advice": "戴定位器，别让离开视线。"
+                        },
+                        "空亡": {
+                              "summary": "宠物体质弱，或已丢失难找回，需多费心。",
+                              "health": "反复生病，查不出原因",
+                              "behavior": "萎靡，不爱动",
+                              "lost_found": "希望渺茫",
+                              "advice": "增加营养，考虑看兽医专家。"
+                        }
+                  }
+            },
+            "车辆/交通": {
+                  "name": "车辆/交通",
+                  "description": "购车、维修、事故风险、年检、驾驶安全。",
+                  "palms": {
+                        "大安": {
+                              "summary": "车辆状态良好，适合长途，交易顺利。",
+                              "buy_sell": "价格合适，无隐病",
+                              "repair": "小保养即可",
+                              "accident_risk": "低",
+                              "advice": "按时年检，平稳驾驶。"
+                        },
+                        "留连": {
+                              "summary": "车辆有老毛病反复修，或交易拖延。",
+                              "buy_sell": "对方犹豫，价格谈不拢",
+                              "repair": "同一故障多次修",
+                              "accident_risk": "中等，注意剐蹭",
+                              "advice": "找第三方检测，不心急。"
+                        },
+                        "速喜": {
+                              "summary": "快速成交或维修快捷，但要小心隐藏问题。",
+                              "buy_sell": "当天过户，但检查不细",
+                              "repair": "很快弄好，可能不彻底",
+                              "accident_risk": "中低，但别开太快",
+                              "advice": "试车要充分，检查底盘。"
+                        },
+                        "赤口": {
+                              "summary": "易有交通事故、违章纠纷或被宰。",
+                              "buy_sell": "可能事故车或调表车",
+                              "repair": "可能被多收费",
+                              "accident_risk": "高，注意追尾",
+                              "advice": "请懂行的人陪同，买足保险。"
+                        },
+                        "小吉": {
+                              "summary": "车辆灵活好用，适合跑业务，但小毛病不断。",
+                              "buy_sell": "性价比尚可",
+                              "repair": "小问题自己可处理",
+                              "accident_risk": "中等，注意轮胎",
+                              "advice": "常检查胎压和机油。"
+                        },
+                        "空亡": {
+                              "summary": "车辆可能被偷、报废或交易被骗。",
+                              "buy_sell": "合同有诈或车况极差",
+                              "repair": "修了也白修",
+                              "accident_risk": "极高",
+                              "advice": "暂不买卖，打车更安全。"
+                        }
+                  }
+            }
+      }
+};
+    const XLR_KNOWLEDGE_SCENE_KEY_MAP = {
+      love:'感情', marriage:'婚姻', career:'事业', wealth:'财运', money:'财运', market:'投资', investment:'投资',
+      exam:'考试', lost:'失物', health:'健康', travel:'出行', cooperation:'合作', contract:'合同', legal:'官司', lawsuit:'官司',
+      message:'消息等待', weather:'天气', job:'求职', home:'家宅', people:'寻人', noble:'贵人', friend:'朋友', social:'朋友',
+      lottery:'中奖', children:'子女', parents:'父母', pet:'宠物', vehicle:'车辆/交通', destiny:'命运', fortune:'命运'
+    };
+    const XLR_KNOWLEDGE_FIELD_LABELS = {
+      direction:'方位', place:'地点', time:'时间', item_state:'物品状态', symptom_tendency:'症状倾向', recovery_speed:'恢复速度', urgency:'就医紧急度', income_type:'收入类型', risk_level:'风险等级', good_for:'适合', bad_for:'不适合', time_to_get_paid:'回款时间', work_relationship:'职场关系', project_progress:'项目推进', job_hopping:'跳槽时机', promotion:'升职可能', stage:'关系阶段', communication:'沟通方式', third_party_risk:'第三方风险', trend:'趋势', hidden_trap:'隐藏风险', progress:'进度', risk:'风险', delay:'延误', safety:'安全', probability:'概率', review_efficiency:'复习效率', where:'位置', contact:'联系', win_probability:'胜算', settle_chance:'和解机会', relationship:'关系', chance:'中奖概率', energy:'家宅气场', trust:'信任度', profit:'利益分配', return:'回报', cycle:'周期', offer:'Offer 概率', speed:'速度', study:'学习', finance:'财务', type:'人物类型', lost_found:'走失/找回', behavior:'行为', buy_sell:'买卖', repair:'维修', accident_risk:'事故风险', advice:'建议', summary:'摘要'
+    };
     function normalizeKnowledgeSceneKey(key){
-      const map = { wealth:'money', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', weather:'weather', destiny:'destiny', fortune:'fortune', people:'people', noble:'noble', other:'message' };
+      const map = { wealth:'money', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', contract:'contract', legal:'legal', lawsuit:'lawsuit', investment:'investment', message:'message', weather:'weather', destiny:'destiny', fortune:'fortune', people:'people', noble:'noble', friend:'friend', social:'friend', lottery:'lottery', children:'children', parents:'parents', pet:'pet', vehicle:'vehicle', other:'message' };
       return map[key] || key || 'message';
     }
+    function getKnowledgeSceneName(sceneKey){
+      const normalized = normalizeKnowledgeSceneKey(sceneKey);
+      return XLR_KNOWLEDGE_SCENE_KEY_MAP[normalized] || XLR_KNOWLEDGE_SCENE_KEY_MAP[sceneKey] || '';
+    }
+    function getKnowledgeScene(sceneKey){
+      const name = getKnowledgeSceneName(sceneKey);
+      return name && XLR_JSON_KNOWLEDGE && XLR_JSON_KNOWLEDGE.scenes ? XLR_JSON_KNOWLEDGE.scenes[name] : null;
+    }
+    function getKnowledgePalmRaw(sceneKey, palaceName){
+      const scene = getKnowledgeScene(sceneKey);
+      return scene && scene.palms ? scene.palms[palaceName] : null;
+    }
+    function knowledgeFieldLabel(key){ return XLR_KNOWLEDGE_FIELD_LABELS[key] || key; }
+    function knowledgePalmToEffect(raw, sceneKey, palaceName){
+      if(!raw) return null;
+      if(typeof raw === 'string') return { plain:raw, risk:'按该场景专项断语复核现实条件。', advice:'结合现实证据处理。', fields:{summary:raw}, detailText:'', source:'json-v2' };
+      const summary = raw.summary || raw.plain || raw.description || '';
+      const detailPairs = Object.keys(raw).filter(k=>!['summary','advice'].includes(k) && raw[k] !== undefined && raw[k] !== null && String(raw[k]).trim()).map(k=>`${knowledgeFieldLabel(k)}：${raw[k]}`);
+      const risk = raw.advice || raw.urgency || raw.risk_level || raw.risk || raw.accident_risk || '按该场景专项字段复核风险。';
+      return { plain:summary, risk:risk, advice:raw.advice || '', fields:raw, detailText:detailPairs.join('；'), source:'json-v2', sceneKey:sceneKey, palaceName:palaceName };
+    }
+    function getKnowledgePalaceEffect(sceneKey, palaceName){ return knowledgePalmToEffect(getKnowledgePalmRaw(sceneKey, palaceName), sceneKey, palaceName); }
+    function knowledgePalmSummary(sceneKey, palaceName){ const eff=getKnowledgePalaceEffect(sceneKey, palaceName); return eff && eff.plain ? eff.plain : ''; }
+    function knowledgePalmDetailLine(sceneKey, palaceName){ const eff=getKnowledgePalaceEffect(sceneKey, palaceName); if(!eff) return ''; return eff.detailText ? `${eff.plain}（${eff.detailText}）` : eff.plain; }
+    function collectKnowledgeSceneAdvice(sceneKey, palaces){
+      const scene = getKnowledgeScene(sceneKey); if(!scene) return [];
+      const list=[]; (palaces && palaces.length ? palaces : PALACE_ORDER).forEach(function(p){ const eff=getKnowledgePalaceEffect(sceneKey,p); if(eff && eff.advice) list.push(eff.advice); });
+      if(scene.disclaimer) list.push(scene.disclaimer); else if(XLR_JSON_KNOWLEDGE.disclaimer) list.push(XLR_JSON_KNOWLEDGE.disclaimer);
+      return [...new Set(list.filter(Boolean))];
+    }
+    function knowledgeSceneFocus(sceneKey){
+      const scene=getKnowledgeScene(sceneKey); if(!scene) return [];
+      const sample = scene.palms && Object.values(scene.palms).find(v=>v && typeof v === 'object');
+      const fields = sample && typeof sample === 'object' ? Object.keys(sample).filter(k=>k !== 'summary' && k !== 'advice').map(knowledgeFieldLabel).slice(0,5) : [];
+      return fields.length ? fields : ['六宫专项断语','场景摘要','行动建议','风险提示'];
+    }
+
+
     function buildKnowledgePack(sceneKey){
       const key = sceneKey || 'other';
       const scene = (typeof SCENES !== 'undefined' && Array.isArray(SCENES)) ? SCENES.find(s=>s.key===key) : null;
-      const intentKey = normalizeKnowledgeSceneKey(key);
-      const rawIntent = (typeof CONTEXT_INTENTS !== 'undefined' && CONTEXT_INTENTS) ? (CONTEXT_INTENTS[intentKey] || CONTEXT_INTENTS[key] || null) : null;
-      const plainInfo = (typeof sceneInfo === 'function') ? sceneInfo(key) : null;
-      const fallbackIntent = scene ? { title:(plainInfo && plainInfo.title) || scene.name, keys:[], focus:(scene.positions || []).slice(), advice: plainInfo && plainInfo.lead ? [plainInfo.lead] : [], palace:(typeof SCENE_PALACE_COPY !== 'undefined' && (SCENE_PALACE_COPY[key] || SCENE_PALACE_COPY.other)) || PALACE_PLAIN_EFFECT, summary:(plainInfo && plainInfo.lead) || '' } : null;
-      const intent = rawIntent || fallbackIntent;
-      const palaceSource = intent && intent.palace ? intent.palace : PALACE_PLAIN_EFFECT;
-      const palaces = {};
-      PALACES.forEach(function(name){
-        const raw = palaceSource && palaceSource[name];
-        palaces[name] = typeof raw === 'string' ? raw : (raw && raw.plain) || (PALACE_PLAIN_EFFECT[name] && PALACE_PLAIN_EFFECT[name].plain) || '';
+      const jsonScene = getKnowledgeScene(key);
+      const jsonName = getKnowledgeSceneName(key);
+      const fallbackIntent = (typeof CONTEXT_INTENTS !== 'undefined' && CONTEXT_INTENTS) ? (CONTEXT_INTENTS[normalizeKnowledgeSceneKey(key)] || CONTEXT_INTENTS[key] || null) : null;
+      const palace = {};
+      const palaceSummary = {};
+      PALACE_ORDER.forEach(function(name){
+        const raw = jsonScene && jsonScene.palms ? jsonScene.palms[name] : null;
+        palace[name] = raw || (fallbackIntent && fallbackIntent.palace ? fallbackIntent.palace[name] : null) || (PALACE_PLAIN_EFFECT[name] && PALACE_PLAIN_EFFECT[name].plain) || '';
+        palaceSummary[name] = knowledgePalmSummary(key, name) || (typeof palace[name] === 'string' ? palace[name] : (palace[name] && palace[name].summary) || '');
       });
       return {
-        schema:'scene-json-v1',
-        version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.129',
+        schema:'scene-json-v2.0+extension',
+        version:XLR_JSON_KNOWLEDGE.version,
+        source:'mainline-v10.5.130',
         sceneKey:key,
-        sceneName:scene ? scene.name : key,
+        sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
-        intentKey:intentKey,
-        title:intent ? intent.title : (scene ? scene.name : '通用场景'),
+        jsonSceneName:jsonName,
+        title:(jsonScene && (jsonScene.name || jsonName)) || (fallbackIntent && fallbackIntent.title) || (scene ? scene.name : '通用场景'),
+        description:(jsonScene && jsonScene.description) || (fallbackIntent && fallbackIntent.summary) || '',
         positions:scene && Array.isArray(scene.positions) ? scene.positions.slice() : ['起因状态','过程变化','最终趋势'],
-        keys:intent && Array.isArray(intent.keys) ? intent.keys.slice() : [],
-        focus:intent && Array.isArray(intent.focus) ? intent.focus.slice() : [],
-        advice:intent && Array.isArray(intent.advice) ? intent.advice.slice() : [],
-        palace:palaces,
-        summary:intent ? intent.summary : '',
+        focus:knowledgeSceneFocus(key),
+        advice:collectKnowledgeSceneAdvice(key),
+        palace:palace,
+        palaceSummary:palaceSummary,
+        sixSpiritModifier:(jsonScene && jsonScene.six_spirit_modifier) || null,
+        disclaimer:(jsonScene && jsonScene.disclaimer) || XLR_JSON_KNOWLEDGE.disclaimer || '',
         hasScene:!!scene,
-        hasIntent:!!(rawIntent || fallbackIntent)
+        hasJsonScene:!!jsonScene,
+        hasIntent:!!fallbackIntent
       };
     }
     function validateKnowledgePack(pack){
       const required = ['大安','留连','速喜','赤口','小吉','空亡'];
-      const missingPalaces = required.filter(name => !pack || !pack.palace || !pack.palace[name]);
+      const missingPalaces = required.filter(name => !pack || !pack.palaceSummary || !pack.palaceSummary[name]);
       return {
-        ok:!!(pack && pack.schema === 'scene-json-v1' && pack.hasScene && pack.hasIntent && !missingPalaces.length),
+        ok:!!(pack && pack.schema === 'scene-json-v2.0+extension' && (pack.hasJsonScene || pack.hasIntent) && !missingPalaces.length),
         missingPalaces,
+        hasJsonScene:!!(pack && pack.hasJsonScene),
         hasFocus:!!(pack && pack.focus && pack.focus.length),
-        hasAdvice:!!(pack && pack.advice && pack.advice.length)
+        hasAdvice:!!(pack && pack.advice && pack.advice.length),
+        hasDisclaimer:!!(pack && pack.disclaimer)
       };
     }
     function getKnowledgeSummary(){
       const sceneKeys = (typeof SCENES !== 'undefined' && Array.isArray(SCENES)) ? SCENES.map(s=>s.key) : [];
-      const intentKeys = (typeof CONTEXT_INTENTS !== 'undefined' && CONTEXT_INTENTS) ? Object.keys(CONTEXT_INTENTS) : [];
-      const samples = ['health','weather','lost','cooperation','choice','destiny'].map(buildKnowledgePack);
+      const jsonNames = XLR_JSON_KNOWLEDGE && XLR_JSON_KNOWLEDGE.scenes ? Object.keys(XLR_JSON_KNOWLEDGE.scenes) : [];
+      const samples = ['health','lost','wealth','career','contract','travel','children','parents','pet','vehicle','noble'].map(buildKnowledgePack);
       const checks = samples.map(validateKnowledgePack);
       return {
         exists:true,
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.129',
-        schema:'scene-json-v1',
+        knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
+        source:'mainline-v10.5.130',
+        schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
-        intentCount:intentKeys.length,
+        jsonSceneCount:jsonNames.length,
+        jsonSceneNames:jsonNames,
         sampleKeys:samples.map(p=>p.sceneKey),
-        ready:checks.every(c=>c.ok),
+        ready:checks.every(c=>c.ok) && jsonNames.length >= 24,
         missingPalaces:[...new Set(checks.flatMap(c=>c.missingPalaces))],
-        samples:samples.map(p=>({sceneKey:p.sceneKey,title:p.title,hasScene:p.hasScene,hasIntent:p.hasIntent,focusCount:p.focus.length,adviceCount:p.advice.length,palaceCount:Object.keys(p.palace||{}).length}))
+        samples:samples.map(p=>({sceneKey:p.sceneKey,jsonSceneName:p.jsonSceneName,title:p.title,hasScene:p.hasScene,hasJsonScene:p.hasJsonScene,focusCount:p.focus.length,adviceCount:p.advice.length,palaceCount:Object.keys(p.palaceSummary||{}).length,hasSixSpirit:!!p.sixSpiritModifier,hasDisclaimer:!!p.disclaimer}))
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.129') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.130') return false;
       const summary = window.XLRKnowledgeCore.summary();
+      const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
-      const weather = window.XLRKnowledgeCore.getScenePack('weather');
-      return !!(summary && summary.ready && summary.sceneCount >= 18 && summary.intentCount >= 18 && health && health.palace && health.palace['速喜'] && weather && weather.palace && weather.palace['空亡']);
+      const vehicle = window.XLRKnowledgeCore.getScenePack('vehicle');
+      return !!(summary && summary.ready && summary.jsonSceneCount >= 24 && lost && lost.palaceSummary && lost.palaceSummary['大安'] && health && health.sixSpiritModifier && vehicle && vehicle.palaceSummary && vehicle.palaceSummary['赤口']);
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.129',
-      schema:'scene-json-v1',
+      source:'mainline-v10.5.130',
+      schema:'scene-json-v2.0+extension',
+      raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
       validatePack:validateKnowledgePack,
       summary:getKnowledgeSummary,
@@ -5829,7 +6963,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.129',
+        source: 'mainline-v10.5.130',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -5845,7 +6979,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.129',
+      source: 'mainline-v10.5.130',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -5933,6 +7067,15 @@ function buildContextOverallSentence(context, details) {
         },
         summary: '本课按文书纠纷断，重点看证据、条款、责任边界和最终是否落实。'
       },
+
+      contract: { title:'合同 / 文书', keys:['合同','文书','签约','条款','协议','审批','文件','签字','盖章'], focus:['合同风险','条款陷阱','审批进度','法律建议'], advice:['重大合同请咨询专业律师。','重点看条款、证据、责任边界和签约诚意。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('contract', p) || scenePalaceEffect('contract',p).plain])), summary:'本课按合同/文书断。' },
+      investment: { title:'投资 / 风险', keys:['投资','入场','收益','回本','止盈','亏损','骗局','锁仓','本金'], focus:['收益机会','风险等级','投资周期','退出条件'], advice:['投资需谨慎，本工具不构成投资建议。','重点看本金安全、退出条件和是否有虚假承诺。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('investment', p) || scenePalaceEffect('investment',p).plain])), summary:'本课按投资风险断。' },
+      lawsuit: { title:'官司 / 纠纷', keys:['官司','诉讼','纠纷','律师','证据','和解','调解','仲裁','赔偿','败诉','胜诉'], focus:['证据强弱','和解机会','胜负概率','成本风险'], advice:['法律问题请咨询专业律师。','重点看证据、成本、对方态度和和解可能。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('lawsuit', p) || scenePalaceEffect('lawsuit',p).plain])), summary:'本课按官司/纠纷断。' },
+      friend: { title:'朋友 / 人际', keys:['朋友','同学','同事','聚会','小人','闲话','误会','社交','人际'], focus:['关系状态','贵人小人','沟通边界','聚会邀约'], advice:['人际关系看实际行动和长期相处，不只看一时态度。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('friend', p) || scenePalaceEffect('friend',p).plain])), summary:'本课按朋友/人际断。' },
+      lottery: { title:'彩票 / 中奖娱乐', keys:['彩票','抽奖','中奖','奖券','刮刮乐','号码','小奖','大奖'], focus:['随机运气','中奖概率','娱乐边界','风险提示'], advice:['只作娱乐参考，不给号码、不承诺中奖、不建议加注追投。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('lottery', p) || scenePalaceEffect('lottery',p).plain])), summary:'本课按彩票/中奖娱乐断。' },
+      children: { title:'子女 / 学业健康', keys:['子女','孩子','小孩','宝宝','亲子','升学','作业','儿童'], focus:['学业状态','健康状态','亲子沟通','情绪变化'], advice:['涉及孩子健康和安全时，以现实照护和专业意见优先。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('children', p) || scenePalaceEffect('children',p).plain])), summary:'本课按子女场景断。' },
+      parents: { title:'父母 / 长辈', keys:['父母','爸爸','妈妈','长辈','老人','赡养','家事'], focus:['长辈健康','沟通状态','财务家事','照应安排'], advice:['长辈健康和财务安全应优先用现实检查与防诈骗提醒。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('parents', p) || scenePalaceEffect('parents',p).plain])), summary:'本课按父母/长辈场景断。' },
+      vehicle: { title:'车辆 / 交通', keys:['车辆','汽车','车','买车','卖车','维修','事故','年检','驾驶','追尾','违章','轮胎','底盘'], focus:['车况交易','维修进度','事故风险','驾驶安全'], advice:['车辆交易和维修要结合检测、合同和保险。'], palace:Object.fromEntries(PALACE_ORDER.map(p=>[p, knowledgePalmDetailLine('vehicle', p) || scenePalaceEffect('vehicle',p).plain])), summary:'本课按车辆/交通断。' },
       choice: {
         title: '选择 / 决策 / 取舍',
         keys: ['选择','决定','要不要','该不该','是否','还是','哪个','取舍','犹豫','方案','方向','路线'],
@@ -5976,7 +7119,7 @@ function buildContextOverallSentence(context, details) {
     };
 
     const CONTEXT_OPTIONS = [
-      ['auto','自动识别'],['weather','天气 / 降雨'],['market','价格 / 行情 / 涨跌'],['message','消息 / 联系'],['love','感情 / 复合'],['money','财运 / 投资'],['lost','失物 / 找东西'],['career','事业 / 工作'],['job','求职 / 面试'],['cooperation','合作 / 合同'],['exam','考试 / 申请'],['travel','出行 / 行程'],['health','健康 / 调理'],['home','家宅 / 居住'],['legal','文书 / 纠纷'],['choice','选择 / 决策']
+      ['auto','自动识别'],['weather','天气 / 降雨'],['market','价格 / 行情 / 涨跌'],['message','消息 / 联系'],['love','感情 / 复合'],['money','财运 / 投资'],['lost','失物 / 找东西'],['career','事业 / 工作'],['job','求职 / 面试'],['cooperation','合作'],['contract','合同 / 文书'],['investment','投资 / 风险'],['lawsuit','官司 / 纠纷'],['friend','朋友 / 人际'],['lottery','彩票 / 中奖'],['children','子女'],['parents','父母'],['pet','宠物'],['vehicle','车辆 / 交通'],['exam','考试 / 申请'],['travel','出行 / 行程'],['health','健康 / 调理'],['home','家宅 / 居住'],['legal','文书 / 纠纷'],['choice','选择 / 决策']
     ];
     function getSelectedContextType(){ const el=document.getElementById('contextTypeSelect'); return el ? el.value : 'auto'; }
     function updateContextTypeAuto(){
@@ -5989,7 +7132,7 @@ function buildContextOverallSentence(context, details) {
       const q = (question || '').trim();
       if (!q) return null;
       const selected = forceAuto ? 'auto' : getSelectedContextType();
-      const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', message:'message', other:'message' };
+      const sceneMap = { weather:'weather', job:'job', home:'home', choice:'choice', lost:'lost', love:'love', marriage:'marriage', wealth:'money', career:'career', exam:'exam', travel:'travel', health:'health', cooperation:'cooperation', contract:'contract', investment:'investment', lawsuit:'lawsuit', friend:'friend', lottery:'lottery', children:'children', parents:'parents', pet:'pet', vehicle:'vehicle', message:'message', other:'message' };
       const explicitSceneKey = sceneMap[sceneKey] || 'message';
 
       function has(words){ return contextMatched(q, words); }
@@ -6032,6 +7175,12 @@ function buildContextOverallSentence(context, details) {
         procedure:['签证','证件','审批','审核','报销','申请','材料','盖章','表格','文件提交','手续'],
         shopping:['买不买','值得买','网购','二手','质量','售后','退货','降价','保修','订单'],
         pet:['宠物','猫','狗','走失','跑丢','宠物医院','兽医','回来'],
+        contract:['合同','文书','签约','条款','协议','审批','文件','签字','盖章'],
+        investment:['投资','入场','收益','回本','止盈','亏损','本金','锁仓'],
+        lawsuit:['官司','诉讼','纠纷','律师','证据','和解','调解','仲裁','赔偿','胜诉','败诉'],
+        vehicle:['车辆','汽车','买车','卖车','维修','事故','年检','驾驶','违章','轮胎','底盘'],
+        children:['子女','孩子','小孩','宝宝','亲子','升学','作业','儿童'],
+        parents:['父母','爸爸','妈妈','长辈','老人','赡养','家事'],
         social:['朋友','同学','同事关系','亲戚','邻里','社交','聚会','误会','解释','和好'],
         family:['父母','家人','长辈','孩子','子女','亲子','家庭','老婆','老公'],
         emotion:['焦虑','压力','心情','情绪','内耗','想太多','睡不好','失眠','烦','难受','不安'],
@@ -6097,6 +7246,18 @@ function buildContextOverallSentence(context, details) {
         if (key === 'cooperation') {
           if (has(['合同','协议']) && has(['合作','客户','订单','合伙','签约'])) score += 25;
         }
+        if (key === 'contract') {
+          if (has(['合同','文书','签约','条款','协议','审批','文件'])) score += 35;
+        }
+        if (key === 'investment') {
+          if (has(['投资','本金','收益','回本','止盈','亏损','锁仓'])) score += 35;
+        }
+        if (key === 'vehicle') {
+          if (has(['车辆','汽车','买车','卖车','维修','事故','年检','驾驶','轮胎','底盘'])) score += 35;
+        }
+        if (key === 'children' || key === 'parents') {
+          if (has(strong[key] || [])) score += 25;
+        }
         if (key === 'choice') {
           // “会不会/能不能/是否”太通用，不单独触发选择类；必须有明确取舍词。
           if (!has(['选择','决定','要不要','该不该','哪个','取舍','犹豫','方案','方向','路线'])) score -= 25;
@@ -6116,7 +7277,7 @@ function buildContextOverallSentence(context, details) {
         if (!bestHits.length) bestHits = ['手动指定'];
       } else {
         // 优先级从“强专门领域”到“较通用领域”，降低泛化误判。
-        const priority = ['lottery','market','weather','lost','device','procedure','shopping','legal','job','exam','love','attitude','social','family','emotion','health','pet','money','career','cooperation','message','travel','home','learning','creation','competition','dream','timing','active_wait','yesno','risk','location','choice'];
+        const priority = ['lottery','market','investment','weather','lost','vehicle','pet','children','parents','device','procedure','shopping','contract','lawsuit','legal','job','exam','love','attitude','social','family','emotion','health','pet','money','career','cooperation','message','travel','home','learning','creation','competition','dream','timing','active_wait','yesno','risk','location','choice'];
         priority.forEach(key => {
           const hits = getHitsFor(key);
           const score = scoreContext(key, hits);
@@ -6401,11 +7562,20 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.130 稳定体验整合版', items:[
+          '正式接入新的场景 JSON 知识库：合并 v1.0 通用库、v2.0 详细专项库，以及子女、父母、贵人、宠物、车辆/交通扩展包。',
+          '新增 JSON 场景映射层：普通问事会优先按 sceneKey 读取对应中文场景，并兼容财运/投资、合作/合同、官司/纠纷、朋友/人际、中奖娱乐等细分主题。',
+          '普通问事结果页的三象摘要、专项解读、行动建议和术语解释会优先引用 JSON 里的 summary、risk、recovery、place、time、advice 等结构化字段。',
+          '新增场景按钮：合同、投资、官司、朋友、中奖、子女、父母、宠物、车辆/交通，方便后续继续扩展专属知识库。',
+          'Debug knowledge 快照升级为 scene-json-v2.0+extension，可检查已加载场景数、映射结果、六宫完整性、six_spirit_modifier 与免责声明。',
+          '保留 v10.5.129 的知识库审计层、v10.5.128 反向验证、v10.5.127 三步行动、v10.5.126 落地检查清单；不插入复盘编辑功能，复盘升级仍放在 JSON 接入之后。',
+          '同步更新首页版本、版本内容更新、README、manifest 与 service-worker，继续检查旧版本跳动和旧补丁残留。'
+        ]},
         { v:'v10.5.129 知识库接入预备与规则索引版', items:[
           '新增 XLRKnowledgeCore 场景知识库预备层：把现有 SCENES、CONTEXT_INTENTS、六宫断语、focus、advice 统一整理成可审计的知识库接口。',
           '新增知识库包校验：检查场景是否存在、专项规则是否存在、六宫断语是否完整、建议与重点是否可读取，为后续 JSON 知识库接入做准备。',
           'Debug 快照新增 knowledge 字段，可看到 schema、sceneCount、intentCount、sampleKeys、missingPalaces、ready 等状态。',
-          'Debug 发版体检表新增“知识库预备层可用”，一键自检通过时会显示“知识库接入预备层检查通过”。',
+          'Debug 发版体检表新增“知识库预备层可用”，一键自检通过时会显示“JSON 知识库主线检查通过”。',
           '本版不改变现有占卜算法、不打乱导航双模式、不插入复盘编辑、不提前接入新的 JSON 内容；阅读字号大小疑似失效问题继续记录，后续统一修复。',
           '下一版 v10.5.130 将作为稳定体验整合版，到时需要暂停并接入新的 JSON 知识库。'
         ]},
@@ -7155,7 +8325,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.129',
+      source: 'mainline-v10.5.130',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -7233,7 +8403,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.129',
+      source: 'mainline-v10.5.130',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -8601,7 +9771,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.129'
+      source: 'mainline-v10.5.130'
     };
 
     initExtendedContextRules();
@@ -8618,7 +9788,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.129 知识库接入预备与规则索引版';
+  const APP_VERSION = 'v10.5.130 稳定体验整合版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -9574,7 +10744,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.129', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.129') },
+      { id:'nav-core', label:'导航主源码为 v10.5.130', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.130') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -9584,7 +10754,7 @@ function buildContextOverallSentence(context, details) {
       { id:'reality-check-v126', label:'现实验证清单可用', ok: typeof answerRealityChecklistReady === 'function' && answerRealityChecklistReady() },
       { id:'step-plan-v127', label:'三步行动方案可用', ok: typeof answerStepPlanReady === 'function' && answerStepPlanReady() },
       { id:'counter-check-v128', label:'反向验证提示可用', ok: typeof answerCounterCheckReady === 'function' && answerCounterCheckReady() },
-      { id:'knowledge-core-v129', label:'知识库预备层可用', ok: typeof knowledgeCoreReady === 'function' && knowledgeCoreReady() },
+      { id:'knowledge-core-v130', label:'JSON 知识库主线可用', ok: typeof knowledgeCoreReady === 'function' && knowledgeCoreReady() },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
       { id:'normal-boundary', label:'普通问事不显示六宫排盘/命盘', ok: !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.normalShowingPaipan || snapshot.destiny.boundary.normalShowingDestinyBoard)) },
       { id:'destiny-boundary', label:'命运页保留六宫排盘/命盘', ok: !isDestiny || !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.destinyMissingPaipan || snapshot.destiny.boundary.destinyMissingBoard)) },
@@ -9653,7 +10823,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.129' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.130' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -9668,8 +10838,8 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.129' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
-      addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', '知识库接入预备层未就绪，v10.5.130 接入 JSON 前需要先修复', snapshot.knowledge);
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.130' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+      addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
     const sourceSettingKeys = snapshot.storage.important || {};
@@ -9698,7 +10868,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.129') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.130') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -9714,7 +10884,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.129') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.130') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -9733,7 +10903,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.129') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.130') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.129 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -9767,7 +10937,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.129') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.130') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -9836,27 +11006,27 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.129' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.130' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.129') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.130') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.129') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.130') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.129') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.130') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.129') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.130') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -9869,7 +11039,7 @@ function buildContextOverallSentence(context, details) {
     if (typeof answerRealityChecklistReady === 'function' && answerRealityChecklistReady()) passes.push('现实验证清单检查通过');
     if (typeof answerStepPlanReady === 'function' && answerStepPlanReady()) passes.push('三步行动方案检查通过');
     if (typeof answerCounterCheckReady === 'function' && answerCounterCheckReady()) passes.push('反向验证提示检查通过');
-    if (typeof knowledgeCoreReady === 'function' && knowledgeCoreReady()) passes.push('知识库接入预备层检查通过');
+    if (typeof knowledgeCoreReady === 'function' && knowledgeCoreReady()) passes.push('JSON 知识库主线检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.status === 'pass') passes.push('发布前体检表检查通过');
     if (snapshot.sourceAudit && !snapshot.sourceAudit.strictHitCount) passes.push('严格旧补丁源码关键词检查通过');
