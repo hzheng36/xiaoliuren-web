@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-122-context-dialogue';
+const CACHE_NAME = 'xiaoliuren-v10-5-123-plain-answer';
 const APP_SHELL = [
   './',
   './index.html',
