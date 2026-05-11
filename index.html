@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.95 导航完整恢复与自检增强版</title>
-<meta content="小六壬个人网页版 v10.5.95 导航完整恢复与自检增强版：在 v10.5.94 清补丁源码基础上，完整恢复首页、结果页、命运页主导航与命盘子导航，并增强导航自检。" name="description"/>
+<title>小六壬占卜 · v10.5.96 导航随动自动居中修正版</title>
+<meta content="小六壬个人网页版 v10.5.96 导航随动自动居中修正版：在 v10.5.95 导航恢复主源码基础上，修复章节导航不随页面滚动自动左右居中的问题，恢复固定中槽式随动导航。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -983,8 +983,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.95，含导航自检与旧键安全清理） */
-/* 小六壬 v10.5.95 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.96，含导航随动自检与旧键安全清理） */
+/* 小六壬 v10.5.96 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1143,7 +1143,12 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航完整恢复主样式（v10.5.95，主 CSS 内建，不再后置补丁） */
+/* 源码模块：导航随动自动居中主样式（v10.5.96，主 CSS 内建，不再后置补丁） */
+:root {
+  --xlr-nav-slot-width:82px;
+  --xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));
+  --xlr-subnav-bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px));
+}
 html, body, #resultCard, #resultCard .block, #resultCard .collapsible-block { overflow-anchor:none; }
 #sectionJumpNav.section-jump-nav,
 #destinySubNav.destiny-sub-nav {
@@ -1151,79 +1156,119 @@ html, body, #resultCard, #resultCard .block, #resultCard .collapsible-block { ov
   left:50%;
   right:auto;
   top:auto;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:var(--xlr-nav-bottom);
   transform:translateX(-50%);
   z-index:58;
   display:flex;
   flex-direction:row;
+  flex-wrap:nowrap;
   align-items:center;
+  justify-content:flex-start;
   gap:6px;
-  width:auto;
-  max-width:calc(100vw - 92px);
-  overflow-x:auto;
-  overflow-y:hidden;
-  padding:4px;
+  width:min(720px, calc(100vw - 72px));
+  max-width:calc(100vw - 72px);
+  min-height:44px;
+  box-sizing:border-box;
+  padding:4px calc((100% - var(--xlr-nav-slot-width)) / 2);
   border-radius:999px;
   background:rgba(255,255,255,.76);
-  border:1px solid rgba(103,83,165,.10);
+  border:1px solid rgba(103,83,165,.13);
   box-shadow:0 12px 28px rgba(66,49,109,.12);
   -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-behavior:auto;
   scrollbar-width:none;
+  touch-action:pan-x;
   backdrop-filter:none;
+  isolation:isolate;
 }
+#destinySubNav.destiny-sub-nav {
+  z-index:59;
+  display:none;
+  bottom:var(--xlr-subnav-bottom);
+  width:min(560px, calc(100vw - 72px));
+  max-width:calc(100vw - 72px);
+  background:rgba(255,255,255,.88);
+  box-shadow:0 12px 28px rgba(66,49,109,.13);
+}
+#destinySubNav.destiny-sub-nav.show { display:flex; }
 #sectionJumpNav.section-jump-nav::-webkit-scrollbar,
 #destinySubNav.destiny-sub-nav::-webkit-scrollbar { display:none; }
 #sectionJumpNav .jump-chip,
 #destinySubNav .jump-chip {
+  position:relative;
+  z-index:1;
   flex:0 0 auto;
+  white-space:nowrap;
   padding:8px 10px;
+  min-height:34px;
   font-size:.78rem;
+  font-weight:750;
   line-height:1;
+  text-align:left;
+  border:1px solid rgba(103,83,165,.16);
+  border-radius:999px;
+  background:rgba(255,255,255,.92);
+  color:var(--primary);
   box-shadow:none;
-  opacity:.76;
+  opacity:.72;
   transform:none;
+  transition:opacity .14s ease,color .14s ease,background .14s ease,border-color .14s ease,box-shadow .14s ease;
 }
+#destinySubNav .jump-chip { font-size:.72rem; padding:7px 9px; }
 #sectionJumpNav .jump-chip:hover,
 #destinySubNav .jump-chip:hover { transform:none; opacity:1; }
 #sectionJumpNav .jump-chip.active,
-#destinySubNav .jump-chip.active {
-  opacity:1;
+#destinySubNav .jump-chip.active { opacity:.72; }
+#sectionJumpNav .jump-chip.active:not(.slot-active),
+#destinySubNav .jump-chip.active:not(.slot-active) {
+  color:var(--primary);
+  background:rgba(255,255,255,.92);
+  border-color:rgba(103,83,165,.16);
+  box-shadow:none;
 }
 #sectionJumpNav .jump-chip.slot-active,
 #destinySubNav .jump-chip.slot-active {
   opacity:1;
   color:#fff;
-  border-color:rgba(103,83,165,.36);
+  border-color:rgba(103,83,165,.35);
   background:linear-gradient(135deg, var(--primary), var(--primary-2));
-  box-shadow:0 10px 22px rgba(66,49,109,.16);
+  box-shadow:0 14px 28px rgba(66,49,109,.18);
+  font-weight:900;
 }
-#sectionJumpNav .jump-chip.active:not(.slot-active),
-#destinySubNav .jump-chip.active:not(.slot-active) {
-  color:var(--primary);
-  background:rgba(255,255,255,.92);
-  border-color:rgba(103,83,165,.18);
-}
-#destinySubNav.destiny-sub-nav { z-index:59; display:none; bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px)); }
-#destinySubNav.destiny-sub-nav.show { display:flex; }
+#sectionJumpNav .jump-chip .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:middle;opacity:.78;}
+#sectionJumpNav .jump-chip.slot-active .dot{background:currentColor;opacity:.9;}
 body.xlr-nav-position-top #sectionJumpNav.section-jump-nav { top:max(14px, env(safe-area-inset-top)); bottom:auto; }
 body.xlr-nav-position-top #destinySubNav.destiny-sub-nav { top:max(70px, calc(env(safe-area-inset-top) + 70px)); bottom:auto; }
-body.xlr-nav-position-bottom #sectionJumpNav.section-jump-nav { bottom:max(14px, env(safe-area-inset-bottom)); top:auto; }
-body.xlr-nav-position-bottom #destinySubNav.destiny-sub-nav { bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px)); top:auto; }
+body.xlr-nav-position-bottom #sectionJumpNav.section-jump-nav { bottom:var(--xlr-nav-bottom); top:auto; }
+body.xlr-nav-position-bottom #destinySubNav.destiny-sub-nav { bottom:var(--xlr-subnav-bottom); top:auto; }
 body.xlr-hide-section-nav #sectionJumpNav,
 body.xlr-hide-section-nav #destinySubNav,
 body.xlr-hide-section-nav #destinySubNav.show { display:none!important; }
 body.reading-theme-night #sectionJumpNav.section-jump-nav,
-body.reading-theme-night #destinySubNav.destiny-sub-nav { background:rgba(28,25,41,.78); border-color:rgba(255,255,255,.12); box-shadow:0 14px 30px rgba(0,0,0,.28); }
+body.reading-theme-night #destinySubNav.destiny-sub-nav { background:rgba(28,25,41,.86); border-color:rgba(255,255,255,.13); box-shadow:0 14px 30px rgba(0,0,0,.28); }
 body.reading-theme-night #sectionJumpNav .jump-chip,
-body.reading-theme-night #destinySubNav .jump-chip { background:rgba(36,31,52,.82); color:var(--text); border-color:rgba(255,255,255,.12); }
+body.reading-theme-night #destinySubNav .jump-chip { background:rgba(36,31,52,.72); color:var(--text); border-color:rgba(255,255,255,.13); }
 body.reading-theme-night #sectionJumpNav .jump-chip.slot-active,
-body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:linear-gradient(135deg,#7357c8,#8a72dc); color:#fff; }
+body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:linear-gradient(135deg,#7357c8,#8a72dc); color:#fff; border-color:rgba(158,132,255,.36); }
 @media(max-width:760px){
+  :root{--xlr-nav-slot-width:78px;--xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));--xlr-subnav-bottom:max(70px, calc(env(safe-area-inset-bottom) + 70px));}
   #sectionJumpNav.section-jump-nav,
-  #destinySubNav.destiny-sub-nav { max-width:calc(100vw - 76px); }
-  #sectionJumpNav .jump-chip,
-  #destinySubNav .jump-chip { padding:7px 9px; font-size:.76rem; }
+  #destinySubNav.destiny-sub-nav { width:calc(100vw - 72px); max-width:calc(100vw - 72px); }
+  #sectionJumpNav .jump-chip { padding:7px 9px; font-size:.78rem; }
+  #destinySubNav .jump-chip { padding:7px 9px; font-size:.72rem; }
 }
+@media(max-width:430px){
+  #sectionJumpNav.section-jump-nav,
+  #destinySubNav.destiny-sub-nav { width:calc(100vw - 72px); max-width:calc(100vw - 72px); }
+}
+@media(min-width:1241px){
+  #sectionJumpNav.section-jump-nav{bottom:24px;}
+  body.xlr-nav-position-bottom #destinySubNav.destiny-sub-nav{bottom:82px;}
+}
+
 
 .settings-mini-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
 @media(max-width:760px){ .settings-mini-grid { grid-template-columns:1fr; } }
@@ -1268,7 +1313,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.95 导航完整恢复与自检增强版</h2>
+<h2>个人占卜台 · v10.5.96 导航随动自动居中修正版</h2>
 <p>本版继续加大“清补丁 + 恢复功能”的力度：在 v10.5.93 Debug 主源码可用的基础上，增强自检项目，加入旧缓存键安全清理入口，并继续检查源码结构、版本显示、导航、折叠、设置与运行错误，后续功能继续直接写回主函数。</p>
 </div>
 <div class="actions">
@@ -1748,7 +1793,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.95 导航完整恢复与自检增强版';
+    const XLR_SOURCE_VERSION = 'v10.5.96 导航随动自动居中修正版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -4291,6 +4336,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.96 导航随动自动居中修正版', items:[
+          '修复 v10.5.95 中主导航只高亮、不随页面上下滚动自动左右滚动的问题，恢复固定中槽式导航体验。',
+          '主导航与命盘子导航改为固定可滚动宽度，并加入左右安全留白，让当前模块可以自动滚到中间槽位。',
+          '导航滚动同步逻辑写入 XLRNavCore 主源码：页面滚动时计算当前模块，active 变化后立即居中对应按钮，不再靠旧导航补丁。',
+          'Debug 自检新增导航随动自动居中检查，日志里可看到 scrollLeft、scrollWidth、clientWidth 与 currentTarget。',
+          '继续保持 1 个主 style + 1 个主 script；没有新增后置补丁、boot-late/load-late 或版本抢写。'
+        ]},
         { v:'v10.5.95 导航完整恢复与自检增强版', items:[
           '导航恢复进入主源码完整阶段：首页、结果页、普通问事结果页、命运结果页分别按当前状态生成主导航，不再依赖旧 v10546/v10556 等导航补丁。',
           '结果页导航补齐导读、答案、重心、选择、排盘、命盘、综合、专项、三象、单宫、双宫、象意、雷达、建议、术语等可见模块；隐藏模块不会硬显示到导航里。',
@@ -5669,7 +5721,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    // 源码模块：智能章节卡点导航（v10.5.95 导航完整恢复主线版）
+    // 源码模块：智能章节卡点导航（v10.5.96 导航随动自动居中主线版）
     const XLR_NAV_LOCK = { until:0, main:'', sub:'' };
     function xlrNav$(id){ return document.getElementById(id); }
     function applyNavPositionClass(){
@@ -5763,9 +5815,10 @@ function buildContextOverallSentence(context, details) {
     function xlrNavCurrentId(items){
       if(!items.length) return '';
       const pos=applyNavPositionClass();
-      const marker = pos==='top' ? Math.max(92, (window.innerHeight||700)*0.18) : (window.innerHeight||700)*0.32;
+      const marker = pos==='top' ? Math.max(104, (window.innerHeight||700)*0.22) : (window.innerHeight||700)*0.42;
       let active=items[0].id;
       items.forEach(t=>{
+        if(!t.el) return;
         const top=t.el.getBoundingClientRect().top;
         if(top <= marker) active=t.id;
       });
@@ -5774,26 +5827,37 @@ function buildContextOverallSentence(context, details) {
     function bindNavManualScroll(nav){
       if(!nav || nav.dataset.navManualBound==='1') return;
       nav.dataset.navManualBound='1';
-      const mark=()=>{ if(nav.dataset.navSyncing!=='1') nav.__manualUntil=Date.now()+900; };
+      const mark=()=>{ if(nav.dataset.navSyncing!=='1') nav.__manualUntil=Date.now()+700; };
       nav.addEventListener('pointerdown', mark, {passive:true});
       nav.addEventListener('touchstart', mark, {passive:true});
       nav.addEventListener('wheel', mark, {passive:true});
       nav.addEventListener('scroll', ()=>xlrNavUpdateSlot(nav), {passive:true});
     }
+    function xlrNavClampScroll(nav, value){
+      const max=Math.max(0, Math.round((nav.scrollWidth||0) - (nav.clientWidth||0)));
+      return Math.max(0, Math.min(max, Math.round(value||0)));
+    }
     function xlrNavSyncToActive(nav, selector, id, force){
       if(!nav || !id) return;
       bindNavManualScroll(nav);
       if(!force && nav.__manualUntil && Date.now() < nav.__manualUntil) return;
-      const attr = selector.indexOf('destiny-sub') >= 0 ? 'data-destiny-sub-target' : 'data-jump-target';
+      const attr = nav.id === 'destinySubNav' ? 'data-destiny-sub-target' : 'data-jump-target';
       const esc = window.CSS && CSS.escape ? CSS.escape(id) : String(id).replace(/\\/g,'\\\\').replace(/"/g,'\\"');
       const btn = nav.querySelector('['+attr+'="'+esc+'"]');
       if(!btn) return;
-      const target = Math.max(0, Math.round(btn.offsetLeft + btn.offsetWidth/2 - nav.clientWidth/2));
-      if(Math.abs((nav.scrollLeft||0)-target) < 2) return;
+      const target = xlrNavClampScroll(nav, btn.offsetLeft + btn.offsetWidth/2 - nav.clientWidth/2);
+      const current = Math.round(nav.scrollLeft || 0);
+      nav.dataset.currentTarget = id;
+      if(!force && Math.abs(current-target) < 1){ xlrNavUpdateSlot(nav); return; }
       nav.dataset.navSyncing='1';
-      try{ nav.scrollTo({left:target, behavior:'auto'}); }catch(e){ nav.scrollLeft=target; }
+      try{ nav.scrollLeft=target; }catch(e){}
+      try{ nav.scrollTo({left:target, behavior:'auto'}); }catch(e){ try{ nav.scrollLeft=target; }catch(_){} }
+      requestAnimationFrame(()=>{
+        try{ nav.scrollLeft=target; }catch(e){}
+        xlrNavUpdateSlot(nav);
+      });
       clearTimeout(nav.__syncTimer);
-      nav.__syncTimer=setTimeout(()=>{ nav.dataset.navSyncing='0'; xlrNavUpdateSlot(nav); }, 80);
+      nav.__syncTimer=setTimeout(()=>{ nav.dataset.navSyncing='0'; xlrNavUpdateSlot(nav); }, 120);
     }
     function xlrNavUpdateSlot(nav){
       if(!nav) return;
@@ -5809,6 +5873,10 @@ function buildContextOverallSentence(context, details) {
         const d=Math.abs((r.left+r.right)/2-center);
         if(d<dist){ dist=d; best=btn; }
       });
+      if(!best){
+        const currentTarget=nav.dataset.currentTarget || '';
+        best = currentTarget ? nav.querySelector((nav.id==='destinySubNav'?'[data-destiny-sub-target="':'[data-jump-target="') + currentTarget.replace(/"/g,'\\"') + '"]') : null;
+      }
       buttons.forEach(btn=>btn.classList.toggle('slot-active', btn===best));
     }
     function renderSectionJumpNav(){
@@ -5825,12 +5893,14 @@ function buildContextOverallSentence(context, details) {
       }
       const locked=XLR_NAV_LOCK.main && Date.now()<XLR_NAV_LOCK.until && items.some(t=>t.id===XLR_NAV_LOCK.main);
       const activeId=locked ? XLR_NAV_LOCK.main : xlrNavCurrentId(items);
+      const activeChanged = nav.dataset.currentTarget !== activeId;
+      nav.dataset.currentTarget = activeId;
       nav.querySelectorAll('[data-jump-target]').forEach(btn=>{
         const active=btn.getAttribute('data-jump-target')===activeId;
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-current', active ? 'true' : 'false');
       });
-      xlrNavSyncToActive(nav, '[data-jump-target]', activeId, false);
+      xlrNavSyncToActive(nav, '[data-jump-target]', activeId, activeChanged);
       xlrNavUpdateSlot(nav);
     }
     function destinyBoardInRange(){
@@ -5863,12 +5933,14 @@ function buildContextOverallSentence(context, details) {
       nav.classList.add('show');
       const locked=XLR_NAV_LOCK.sub && Date.now()<XLR_NAV_LOCK.until && items.some(t=>t.id===XLR_NAV_LOCK.sub);
       const activeId=locked ? XLR_NAV_LOCK.sub : xlrNavCurrentId(items);
+      const activeChanged = nav.dataset.currentTarget !== activeId;
+      nav.dataset.currentTarget = activeId;
       nav.querySelectorAll('[data-destiny-sub-target]').forEach(btn=>{
         const active=btn.getAttribute('data-destiny-sub-target')===activeId;
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-current', active ? 'true' : 'false');
       });
-      xlrNavSyncToActive(nav, '[data-destiny-sub-target]', activeId, false);
+      xlrNavSyncToActive(nav, '[data-destiny-sub-target]', activeId, activeChanged);
       xlrNavUpdateSlot(nav);
     }
     function xlrNavTopOffset(){
@@ -5948,17 +6020,18 @@ function buildContextOverallSentence(context, details) {
       getMainTargets: currentJumpTargets,
       getDestinySubTargets: currentDestinySubTargets,
       refresh: updateSectionJumpNav,
+      centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.95'
+      source: 'mainline-v10.5.96'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.95） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.96） */
 /*
- * 小六壬 v10.5.95 Debug 主源码模块
+ * 小六壬 v10.5.96 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并恢复导航自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -5966,7 +6039,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.95 导航完整恢复与自检增强版';
+  const APP_VERSION = 'v10.5.96 导航随动自动居中修正版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -6379,8 +6452,8 @@ function buildContextOverallSentence(context, details) {
     try { coreSubTargets = window.XLRNavCore && typeof window.XLRNavCore.getDestinySubTargets === 'function' ? window.XLRNavCore.getDestinySubTargets().map(t => ({ id:t.id, label:t.label, visible:!!(t.el && visibleOf(t.el)) })) : []; } catch (err) {}
     return {
       bodyNavPosition: document.body ? Array.from(document.body.classList).find(cls => cls.indexOf('xlr-nav-position-') === 0) || '' : '',
-      main: describeElement(nav),
-      sub: describeElement(sub),
+      main: Object.assign(describeElement(nav), nav ? { scrollLeft: nav.scrollLeft || 0, scrollWidth: nav.scrollWidth || 0, clientWidth: nav.clientWidth || 0, currentTarget: nav.dataset ? nav.dataset.currentTarget || '' : '' } : {}),
+      sub: Object.assign(describeElement(sub), sub ? { scrollLeft: sub.scrollLeft || 0, scrollWidth: sub.scrollWidth || 0, clientWidth: sub.clientWidth || 0, currentTarget: sub.dataset ? sub.dataset.currentTarget || '' : '' } : {}),
       itemCount: buttons.length,
       subItemCount: subButtons.length,
       activeCount: allButtons.filter(b => b.active).length,
@@ -6393,6 +6466,7 @@ function buildContextOverallSentence(context, details) {
         version: window.XLRNavCore ? window.XLRNavCore.version : '',
         source: window.XLRNavCore ? window.XLRNavCore.source : '',
         mode: window.XLRNavCore && typeof window.XLRNavCore.getMode === 'function' ? window.XLRNavCore.getMode() : '',
+        canCenterActive: !!(window.XLRNavCore && typeof window.XLRNavCore.centerActive === 'function'),
         mainTargets: coreTargets,
         subTargets: coreSubTargets
       },
@@ -6701,11 +6775,11 @@ function buildContextOverallSentence(context, details) {
     if (!document.title.includes(APP_VERSION)) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    if (!snapshot.versionInfo.meta.includes('10.5.95') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.95', snapshot.versionInfo.meta);
+    if (!snapshot.versionInfo.meta.includes('10.5.96') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.96', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.95'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.95', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.96'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.96', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -6755,11 +6829,14 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.95') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.95 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.96') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.96 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
+    }
+    if (!snapshot.navigation.core.canCenterActive) {
+      addIssue(issues, 'error', 'NAV_CENTER_SYNC_MISSING', '导航随动自动居中函数未挂载', snapshot.navigation.core);
     }
     requiredNav.forEach(([target, label]) => {
       const targetEl = document.getElementById(target);
@@ -6813,7 +6890,8 @@ function buildContextOverallSentence(context, details) {
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.95') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.96') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
 
     const report = {
