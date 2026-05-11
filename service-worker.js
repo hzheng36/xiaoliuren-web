@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.98-analytics-review-core';
+const CACHE_NAME = 'xiaoliuren-v10.5.99-settings-source-cleanup';
 const APP_SHELL = [
   './',
   './index.html',

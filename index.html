@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.98 历史分析与复盘主源码恢复版</title>
-<meta content="小六壬个人网页版 v10.5.98 历史分析与复盘主源码恢复版：在历史记录主源码恢复后继续恢复历史分析、复盘统计、复盘明细、分析导出与 Debug 分析自检，修正多条复盘统计只看最新记录的问题。" name="description"/>
+<title>小六壬占卜 · v10.5.99 设置主键归主线与缓存清理增强版</title>
+<meta content="小六壬个人网页版 v10.5.99 设置主键归主线与缓存清理增强版：继续执行补丁回源码计划，将用户设置、上次选择、结果视图等旧 v9_1 主键迁移到 source 主键，减少旧缓存残留，并强化设置未保存提醒与 Debug 自检。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -983,8 +983,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.98，含历史分析与复盘自检） */
-/* 小六壬 v10.5.98 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.99，含设置主键与缓存自检） */
+/* 小六壬 v10.5.99 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1143,7 +1143,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航随动自动居中主样式（v10.5.98，主 CSS 内建，不再后置补丁） */
+/* 源码模块：导航随动自动居中主样式（v10.5.99，主 CSS 内建，不再后置补丁） */
 :root {
   --xlr-nav-slot-width:82px;
   --xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));
@@ -1313,8 +1313,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.98 历史分析与复盘主源码恢复版</h2>
-<p>本版继续执行“补丁回源码计划”：在 v10.5.97 历史记录主源码稳定的基础上，重点恢复历史分析与复盘统计主源码，包括统计卡片、分布图、历史明细、复盘明细、分析导出与 Debug 分析自检。</p>
+<h2>个人占卜台 · v10.5.99 设置主键归主线与缓存清理增强版</h2>
+<p>本版继续执行“补丁回源码计划”：在 v10.5.98 历史分析稳定的基础上，继续清理旧设置主键，把用户设置、上次选择和结果视图迁移到 source 主键，降低旧缓存残留导致的新旧跳动与误判。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1793,7 +1793,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.98 历史分析与复盘主源码恢复版';
+    const XLR_SOURCE_VERSION = 'v10.5.99 设置主键归主线与缓存清理增强版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -2561,7 +2561,7 @@ function buildPaipanExplanation(result){
     }
 
     
-    /* 源码模块：历史记录主源码恢复（v10.5.98）
+    /* 源码模块：历史记录主源码恢复（v10.5.99）
        目标：把保存、读取、收藏、筛选、导入导出、复盘刷新全部归入主源码，不再依赖旧补丁或后置兜底。 */
     const HISTORY_MAX_ITEMS = 160;
     function safeHistoryArray(value){ return Array.isArray(value) ? value.filter(Boolean) : []; }
@@ -2649,7 +2649,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.98',
+      source: 'mainline-v10.5.99',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4219,11 +4219,11 @@ function buildContextOverallSentence(context, details) {
       const d=document.getElementById('detailViewBtn'), s=document.getElementById('simpleViewBtn');
       if(d) d.classList.toggle('active', mode !== 'simple');
       if(s) s.classList.toggle('active', mode === 'simple');
-      try { localStorage.setItem('xlr_view_mode_v9_1', mode); } catch(e) {}
+      try { localStorage.setItem(VIEW_MODE_KEY, mode); } catch(e) {}
     }
     function restoreResultViewMode(){
       try {
-        const saved = localStorage.getItem('xlr_view_mode_v9_1');
+        const saved = (localStorage.getItem(VIEW_MODE_KEY) || localStorage.getItem(LEGACY_VIEW_MODE_KEY));
         if(saved) return setResultViewMode(saved);
         const settings = getUserSettings();
         return setResultViewMode(settings.defaultView || 'detail');
@@ -4367,11 +4367,12 @@ function buildContextOverallSentence(context, details) {
     }
 
     function getBackupPayload(){
+      migrateCoreSettingsStorage();
       let history = getHistory();
       let settings = null, savedChoices = null, viewMode = null, lastView = null;
       try { settings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null'); } catch(e) { settings = null; }
       try { savedChoices = JSON.parse(localStorage.getItem(SAVED_CHOICE_KEY) || 'null'); } catch(e) { savedChoices = null; }
-      try { viewMode = localStorage.getItem('xlr_view_mode_v9_1') || null; } catch(e) { viewMode = null; }
+      try { viewMode = (localStorage.getItem(VIEW_MODE_KEY) || localStorage.getItem(LEGACY_VIEW_MODE_KEY)) || null; } catch(e) { viewMode = null; }
       try { lastView = JSON.parse(localStorage.getItem(LAST_VIEW_KEY) || 'null'); } catch(e) { lastView = null; }
       return {
         app: 'xiaoliuren-web',
@@ -4383,7 +4384,7 @@ function buildContextOverallSentence(context, details) {
           history: STORAGE_KEY,
           settings: SETTINGS_KEY,
           savedChoices: SAVED_CHOICE_KEY,
-          viewMode: 'xlr_view_mode_v9_1',
+          viewMode: VIEW_MODE_KEY,
           lastView: LAST_VIEW_KEY
         },
         history: history,
@@ -4447,7 +4448,7 @@ function buildContextOverallSentence(context, details) {
           const nextHistory = normalizedMode === 'replace' ? setHistory(importedHistory, {keepAll:true}) : setHistory(mergeHistoryRecords(current, importedHistory), {keepAll:true});
           if(data.settings && typeof data.settings === 'object') localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, data.settings)));
           if(data.savedChoices && typeof data.savedChoices === 'object') localStorage.setItem(SAVED_CHOICE_KEY, JSON.stringify(data.savedChoices));
-          if(data.viewMode) localStorage.setItem('xlr_view_mode_v9_1', data.viewMode);
+          if(data.viewMode) localStorage.setItem(VIEW_MODE_KEY, data.viewMode);
           if(data.lastView && typeof data.lastView === 'object') localStorage.setItem(LAST_VIEW_KEY, JSON.stringify(data.lastView));
           if(Array.isArray(data.customTemplates) || Array.isArray(data.templates)){
             const importedTemplates = Array.isArray(data.customTemplates) ? data.customTemplates : data.templates;
@@ -4480,6 +4481,12 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.99 设置主键归主线与缓存清理增强版', items:[
+          '继续清理旧缓存残留：用户设置、上次选择、结果简洁/详细视图迁移到 source 主键，旧 v9_1 键只作为一次性迁移来源，不再作为运行主键。',
+          '强化设置未保存提醒：打开设置时立即建立快照，不再依赖延迟计时器，关闭设置时能更稳定识别未保存变动。',
+          'Debug 自检新增 source 设置主键检查，清理旧缓存时可安全移除已经迁移的 v9_1 设置键，减少旧补丁误判。',
+          '继续保持单一主 style + 单一主 script，没有新增后置脚本、版本抢写或 boot-late / load-late。'
+        ]},
         { v:'v10.5.98 历史分析与复盘主源码恢复版', items:[
           '历史分析进入主源码阶段：新增 window.XLRAnalyticsCore 主命名空间，统一管理统计、图表、复盘明细、分析刷新与导出入口。',
           '复盘统计从“只看最新 review”改为“统计全部 reviews 时间线”，多次复盘不会再被分析页漏算。',
@@ -4574,13 +4581,18 @@ function buildContextOverallSentence(context, details) {
           '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复第八步：在历史记录主源码稳定后，继续把历史分析与复盘统计写回主函数，让统计、图表、复盘明细和导出都走同一套干净数据源。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复第九步：在历史分析与复盘统计稳定后，继续把旧 v9_1 设置主键迁回 source 主键，减少旧缓存残留和 Debug 误判。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
     /* 源码模块：阅读设置与折叠模块 */
-    const SETTINGS_KEY = 'xlr_user_settings_v9_1';
-    const SAVED_CHOICE_KEY = 'xlr_saved_choice_v9_1';
+    const SETTINGS_KEY = 'xiaoliuren_user_settings_source';
+    const SAVED_CHOICE_KEY = 'xiaoliuren_saved_choice_source';
+    const VIEW_MODE_KEY = 'xiaoliuren_view_mode_source';
+    const LEGACY_SETTINGS_KEY = 'xlr_user_settings_v9_1';
+    const LEGACY_SAVED_CHOICE_KEY = 'xlr_saved_choice_v9_1';
+    const LEGACY_VIEW_MODE_KEY = 'xlr_view_mode_v9_1';
+    let coreSettingsMigrated = false;
     const DEFAULT_SETTINGS = {
       defaultView: 'detail',
       collapseDetails: true,
@@ -4591,11 +4603,29 @@ function buildContextOverallSentence(context, details) {
       rememberMethod: false,
       navPosition: 'bottom'
     };
+    function migrateCoreSettingsStorage(){
+      if(coreSettingsMigrated) return;
+      coreSettingsMigrated = true;
+      try{
+        const migrateIfMissing = (nextKey, oldKey) => {
+          if(localStorage.getItem(nextKey) != null) return;
+          const oldValue = localStorage.getItem(oldKey);
+          if(oldValue != null) localStorage.setItem(nextKey, oldValue);
+        };
+        migrateIfMissing(SETTINGS_KEY, LEGACY_SETTINGS_KEY);
+        migrateIfMissing(SAVED_CHOICE_KEY, LEGACY_SAVED_CHOICE_KEY);
+        migrateIfMissing(VIEW_MODE_KEY, LEGACY_VIEW_MODE_KEY);
+        if(localStorage.getItem(SETTINGS_KEY) == null) localStorage.setItem(SETTINGS_KEY, JSON.stringify(DEFAULT_SETTINGS));
+        if(localStorage.getItem(SAVED_CHOICE_KEY) == null) localStorage.setItem(SAVED_CHOICE_KEY, '{}');
+        if(localStorage.getItem(VIEW_MODE_KEY) == null) localStorage.setItem(VIEW_MODE_KEY, DEFAULT_SETTINGS.defaultView || 'detail');
+      }catch(e){}
+    }
     function getUserSettings(){
+      migrateCoreSettingsStorage();
       try { return Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
       catch(e){ return Object.assign({}, DEFAULT_SETTINGS); }
     }
-    function saveUserSettings(settings){ try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, settings || {}))); } catch(e){} }
+    function saveUserSettings(settings){ migrateCoreSettingsStorage(); try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, settings || {}))); } catch(e){} }
     let settingsDirty = false;
     let settingsSnapshot = '';
     function readSettingsDialogSnapshot(){
@@ -4620,16 +4650,15 @@ function buildContextOverallSentence(context, details) {
       dlg.dataset.dirtyWatcher='1';
       dlg.addEventListener('input', markSettingsDirty, true);
       dlg.addEventListener('change', markSettingsDirty, true);
-      dlg.addEventListener('click', function(e){ if(e.target.closest('[data-quick-move], #quickButtonsDefaultBtn, #quickButtonsAllBtn')) setTimeout(markSettingsDirty,0); }, true);
     }
     function openSettingsDialog(){
       fillSettingsDialog();
       syncExtraSettingsForm();
       bindSettingsDirtyWatcher();
-      setTimeout(refreshSettingsSnapshot, 0);
       const dlg=document.getElementById('settingsDialog');
       if(dlg && typeof dlg.showModal === 'function') dlg.showModal();
       else if(dlg) dlg.setAttribute('open','open');
+      refreshSettingsSnapshot();
     }
     function closeSettingsDialog(){
       const dlg=document.getElementById('settingsDialog');
@@ -4683,15 +4712,15 @@ function buildContextOverallSentence(context, details) {
     function resetUserSettings(){
       saveUserSettings(DEFAULT_SETTINGS);
       resetExtraSettings();
-      try { localStorage.removeItem(SAVED_CHOICE_KEY); localStorage.removeItem('xlr_view_mode_v9_1'); } catch(e) {}
+      try { localStorage.removeItem(SAVED_CHOICE_KEY); localStorage.removeItem(LEGACY_SETTINGS_KEY); localStorage.removeItem(LEGACY_SAVED_CHOICE_KEY); localStorage.removeItem(VIEW_MODE_KEY); localStorage.removeItem(LEGACY_VIEW_MODE_KEY); } catch(e) {}
       fillSettingsDialog();
       refreshSettingsSnapshot();
       applyUserSettingsToPage();
       restoreResultViewMode();
       alert('已恢复默认设置。');
     }
-    function getSavedChoices(){ try { return JSON.parse(localStorage.getItem(SAVED_CHOICE_KEY) || '{}'); } catch(e){ return {}; } }
-    function setSavedChoices(obj){ try { localStorage.setItem(SAVED_CHOICE_KEY, JSON.stringify(obj || {})); } catch(e){} }
+    function getSavedChoices(){ migrateCoreSettingsStorage(); try { return JSON.parse(localStorage.getItem(SAVED_CHOICE_KEY) || '{}'); } catch(e){ return {}; } }
+    function setSavedChoices(obj){ migrateCoreSettingsStorage(); try { localStorage.setItem(SAVED_CHOICE_KEY, JSON.stringify(obj || {})); } catch(e){} }
     function persistChoiceIfNeeded(type, value){
       const settings=getUserSettings();
       if((type === 'scene' && settings.rememberScene) || (type === 'method' && settings.rememberMethod)){
@@ -4746,7 +4775,7 @@ function buildContextOverallSentence(context, details) {
         }
         updateCollapseButton(block);
       });
-      setTimeout(updatePageProgress, 30);
+      requestAnimationFrame(updatePageProgress);
     }
     function toggleBlockCollapsed(block){ block.classList.toggle('is-collapsed'); updateCollapseButton(block); }
     function updateCollapseButton(block){
@@ -4788,7 +4817,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    /* 源码模块：历史分析与复盘主源码恢复（v10.5.98）
+    /* 源码模块：历史分析与复盘主源码恢复（v10.5.99）
        目标：把历史统计、复盘统计、明细表和分析导出统一归入主源码，不再沿用旧 v8.3 零散分析逻辑。 */
     const analyticsDialog = document.getElementById('analyticsDialog');
     function openAnalyticsDialog(){
@@ -4976,7 +5005,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.98',
+      source: 'mainline-v10.5.99',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -5278,7 +5307,7 @@ function buildContextOverallSentence(context, details) {
     window.addEventListener('scroll', updatePageProgress, { passive:true });
     window.addEventListener('resize', updatePageProgress);
     window.addEventListener('load', updatePageProgress);
-    setTimeout(updatePageProgress, 50);
+    requestAnimationFrame(updatePageProgress);
 
 
     /* 源码模块：扩展场景规则与横向断法 */
@@ -6256,16 +6285,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.98'
+      source: 'mainline-v10.5.99'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.98） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.99） */
 /*
- * 小六壬 v10.5.98 Debug 主源码模块
+ * 小六壬 v10.5.99 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并恢复导航自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -6273,7 +6302,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.98 历史分析与复盘主源码恢复版';
+  const APP_VERSION = 'v10.5.99 设置主键归主线与缓存清理增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -6308,6 +6337,9 @@ function buildContextOverallSentence(context, details) {
     'xlr_view_mode_v8_2',
     'xlr_view_mode_v8_6',
     'xlr_debug_enabled_v10514',
+    'xlr_user_settings_v9_1',
+    'xlr_saved_choice_v9_1',
+    'xlr_view_mode_v9_1',
     'xlr_destiny_gender_v1025',
     'xlr_destiny_kinship_mode_v10'
   ];
@@ -6315,9 +6347,9 @@ function buildContextOverallSentence(context, details) {
   const PROTECTED_STORAGE_KEYS = [
     'xlr_history_v7',
     'xlr_last_view_v7',
-    'xlr_user_settings_v9_1',
-    'xlr_saved_choice_v9_1',
-    'xlr_view_mode_v9_1',
+    'xiaoliuren_user_settings_source',
+    'xiaoliuren_saved_choice_source',
+    'xiaoliuren_view_mode_source',
     'xlr_custom_question_templates_v1',
     'xlr_question_template_meta_v9_8',
     'xlr_template_usage_stats_v1',
@@ -6822,9 +6854,9 @@ function buildContextOverallSentence(context, details) {
     const legacy = keys.filter(key => LEGACY_STORAGE_PREFIXES.some(prefix => key.indexOf(prefix) === 0));
     const cleanupCandidates = legacy.filter(key => PROTECTED_STORAGE_KEYS.indexOf(key) === -1);
     const importantKeys = [
-      'xlr_user_settings_v9_1',
-      'xlr_saved_choice_v9_1',
-      'xlr_view_mode_v9_1',
+      'xiaoliuren_user_settings_source',
+      'xiaoliuren_saved_choice_source',
+      'xiaoliuren_view_mode_source',
       'xlr_history_v7',
       'xlr_last_view_v7',
       'xiaoliuren_ui_settings_source',
@@ -6869,7 +6901,7 @@ function buildContextOverallSentence(context, details) {
       renderSnapshot(report);
       return report;
     }
-    const ok = confirm('发现 ' + keys.length + ' 个旧缓存键。将只清理旧字号/快捷按钮/旧 Debug/旧 intent/snapshot/旧命运偏好等补丁残留，不会删除历史记录、设置、模板和复盘数据。是否继续？');
+    const ok = confirm('发现 ' + keys.length + ' 个旧缓存键。将只清理旧字号/快捷按钮/旧 Debug/旧 intent/snapshot/旧命运偏好等补丁残留，不会删除历史记录、当前 source 设置、模板和复盘数据。是否继续？');
     if (!ok) return null;
     const removed = [];
     const failed = [];
@@ -7093,11 +7125,11 @@ function buildContextOverallSentence(context, details) {
     if (!document.title.includes(APP_VERSION)) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    if (!snapshot.versionInfo.meta.includes('10.5.98') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.98', snapshot.versionInfo.meta);
+    if (!snapshot.versionInfo.meta.includes('10.5.99') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.99', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.98'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.98', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.99'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.99', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -7116,6 +7148,13 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
+
+    const sourceSettingKeys = snapshot.storage.important || {};
+    ['xiaoliuren_user_settings_source','xiaoliuren_saved_choice_source','xiaoliuren_view_mode_source'].forEach(key => {
+      if (!Object.prototype.hasOwnProperty.call(sourceSettingKeys, key)) {
+        addIssue(issues, 'warning', 'SOURCE_SETTING_KEY_MISSING', 'source 设置主键尚未生成；保存一次设置或切换一次视图后会自动生成', key);
+      }
+    });
 
     const oldDebugAttrs = snapshot.legacyResidues.activeAttrMatches.filter(item => /v10514|v10546|v10574|v10581|v10582/.test(item.token));
     if (oldDebugAttrs.length) {
@@ -7136,8 +7175,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.98') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.98 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.99') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.99 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -7152,8 +7191,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.98') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.98 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.99') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.99 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -7183,8 +7222,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.98') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.98 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.99') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.99 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -7241,19 +7280,20 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.98') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.99') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.98') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.99') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.98') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.99') passes.push('导航主命名空间检查通过');
+    if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
 
