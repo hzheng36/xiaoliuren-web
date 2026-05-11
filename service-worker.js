@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.103-night-residue-mainline-clean';
+const CACHE_NAME = 'xiaoliuren-v10.5.104-night-history-mainline-fix';
 const APP_SHELL = [
   './',
   './index.html',
