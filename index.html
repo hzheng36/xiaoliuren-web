@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.124 追问建议与复盘引导版</title>
-<meta content="小六壬个人网页版 v10.5.124 追问建议与复盘引导版：在 v10.5.123 白话答案二次增强基础上，继续升级普通问事答案摘要；新增“接下来观察什么”和“可以怎么追问”两组卡片，把占卜结果转成后续复盘点、现实核实点和下一课追问方向，同时补强财运/婚姻等场景的白话匹配，保持导航、历史、命盘和缓存主结构稳定。" name="description"/>
+<title>小六壬占卜 · v10.5.125 白话答案场景深化版</title>
+<meta content="小六壬个人网页版 v10.5.125 白话答案场景深化版：在 v10.5.124 基础上，继续深化普通问事的日常对话感；补强选择、合作、出行、家宅、寻人、贵人、阶段运势等场景的直接答案和行动建议，让答案摘要更像“先说结论、再讲过程、最后给下一步”的真人解释；保持导航双模式、历史、命盘、缓存和复盘结构稳定。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1532,8 +1532,8 @@ body .palace-card h5 {
   }
 }
 
-    /* 源码模块：Debug 主源码样式（v10.5.124，含发版体检、补丁审计、场景白话覆盖、专项串联覆盖、追问复盘建议、白话答案质量检查、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
-/* 小六壬 v10.5.124 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.125，含发版体检、补丁审计、场景白话覆盖、专项串联覆盖、追问复盘建议、白话答案质量检查、场景深化、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
+/* 小六壬 v10.5.125 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -2324,7 +2324,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.124 追问建议与复盘引导版</h2>
+<h2>个人占卜台 · v10.5.125 白话答案场景深化版</h2>
 <p>本版继续执行“补丁回源码计划”：在保留导航模式可切换的基础上，微调一级与二级导航之间的距离，让底部双层导航更紧凑，同时继续全部写回主源码。</p>
 </div>
 <div class="actions">
@@ -2808,7 +2808,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.124 追问建议与复盘引导版';
+    const XLR_SOURCE_VERSION = 'v10.5.125 白话答案场景深化版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3771,7 +3771,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.124',
+      source: 'mainline-v10.5.125',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5062,6 +5062,84 @@ function buildContextOverallSentence(context, details) {
     function plainAnswerQualityReady(){
       return typeof detectAnswerIntent === 'function' && typeof compressedStagePlain === 'function' && typeof answerTimingPhrase === 'function' && typeof answerFollowupReady === 'function' && answerFollowupReady();
     }
+    function sceneDeepAnswerV125(result, ctx, key, intent, end, seq, stageText, q){
+      const focus = (ctx && ctx.title) || (sceneInfo(key) && sceneInfo(key).focus) || '这件事';
+      const endLine = endFocusSentence(key, end);
+      if(key === 'choice') {
+        if(intent === 'action' || intent === 'yesno') return `${q}，这课更像是在提醒：先别只凭感觉选，要看哪个选项更能落地。${stageText}。${endLine}如果信息还不够，先小步试、补条件，再做最终决定。`;
+        return `${q}，核心不是“哪个看起来更好”，而是哪个条件更真实、风险更可控。${endLine}`;
+      }
+      if(key === 'cooperation') {
+        if(end === '赤口') return `${q}，合作上最要防的是沟通、条款和责任边界起争议。三象是 ${seq}，可以谈，但关键内容最好白纸黑字。`;
+        if(end === '空亡') return `${q}，这次合作别只看口头热度，最后可能还没真正落地。先核实对方资源、权限、合同和时间节点。`;
+        if(end === '留连') return `${q}，合作有牵扯和反复，推进不会特别干脆。先拆清条件、责任和退出机制，再继续谈。`;
+        return `${q}，合作可以看，但要从“小范围试合作”开始。${stageText}。${endLine}`;
+      }
+      if(key === 'travel') {
+        if(intent === 'timing') return `${q}，行程时间上看：${answerTimingPhrase(key, end)}三象是 ${seq}，建议提前确认路线、天气、票证和备用方案。`;
+        if(end === '留连') return `${q}，路上更像有等待、绕路、拖延或反复确认，适合预留时间。`;
+        if(end === '赤口') return `${q}，出行要注意急躁、规则、证件、交通沟通和短时突发，不宜赶得太紧。`;
+        if(end === '空亡') return `${q}，计划有临时变化或白跑的风险，出发前一定复核时间、地点和对方确认。`;
+        return `${q}，整体要看能不能按计划顺利走完。${endLine}`;
+      }
+      if(key === 'home') {
+        if(end === '留连') return `${q}，家宅/居住问题更像旧问题反复，维修、合同、邻里或隐患不要拖。先把最现实的一个点处理掉。`;
+        if(end === '赤口') return `${q}，重点防沟通争议、邻里口舌、维修责任或合同条款。能写清楚就不要只口头说。`;
+        if(end === '空亡') return `${q}，现在信息可能不完整，建议先检查证据、照片、合同、账单或实际隐患，再下结论。`;
+        return `${q}，家宅类重点是稳定和安全感。${stageText}。${endLine}`;
+      }
+      if(key === 'people') {
+        if(end === '速喜' || end === '小吉') return `${q}，线索不是完全没有，短期可能有消息或小进展，但要看信息是否可靠。`;
+        if(end === '留连') return `${q}，联系或寻找过程会拖，可能要反复问、回头查旧线索。`;
+        if(end === '赤口') return `${q}，找人或联系时要防误会、急躁、口头信息不准，最好确认来源。`;
+        return `${q}，线索偏虚，先别只靠猜，优先联系现实中可靠的人和渠道。`;
+      }
+      if(key === 'noble') {
+        if(end === '大安' || end === '小吉') return `${q}，有帮助，但更像稳定的小助力，不一定是突然的大贵人。你需要把请求说清楚、资料准备好。`;
+        if(end === '速喜') return `${q}，短期可能有人回应或出现机会，但要看这个帮助能不能持续。`;
+        if(end === '留连') return `${q}，贵人助力会慢，可能需要多次沟通或等对方有空。`;
+        if(end === '赤口') return `${q}，求助时注意表达方式和边界，别因为着急把话说硬。`;
+        return `${q}，这次帮助未必能马上落地，先核实谁真的有权限、有能力帮。`;
+      }
+      if(key === 'fortune') {
+        return `${q}，这课更适合看阶段提醒，不要当成绝对定论。三象是 ${seq}，说明近期先看当前气势，再看中途起伏，最后重点落在${end}：${scenePalaceEffect(key,end).plain}`;
+      }
+      if(key === 'destiny') {
+        return `${q}，命运盘不要断成一件事的“吉凶”。它更像长期观察：看自身起势、关系资源、事业压力、财务模式和反复出现的卡点。${endLine}`;
+      }
+      if(key === 'shopping') {
+        return `${q}，重点不是想买不买，而是到手是否符合预期、售后是否顺、价格是否真实。${endLine}`;
+      }
+      if(key === 'device') {
+        return `${q}，设备类重点查现实故障点：电源、线路、接口、账号、信号、报错记录。${endLine}`;
+      }
+      if(key === 'procedure') {
+        return `${q}，手续类重点看材料是否齐、窗口/审批是否卡、结果是否正式落地。${endLine}`;
+      }
+      return '';
+    }
+    function sceneDeepActionHintsV125(ctx, key, end){
+      const listMap = {
+        choice:['先列出 A/B 两边各自已经确认的条件，不要只凭感觉。','能小步试行就先小步试，不要一次把选择做死。','末象不稳时，先补信息、补证据、补预算或补时间表。'],
+        cooperation:['把合作范围、金额、责任、交付时间和退出机制写清楚。','先小单或试运行，不要一上来压太大资源。','重要承诺保留文字记录，避免之后各说各话。'],
+        travel:['出发前复核时间、路线、证件、票据、天气和备用方案。','给路上留缓冲时间，尤其是末象留连或赤口时。','涉及开车或公共交通时，安全和规则优先。'],
+        home:['先处理最现实的隐患：维修、合同、账单、邻里沟通或安全问题。','保留照片、收据、聊天记录和合同条款。','旧问题反复时，不要只靠口头承诺，最好有明确时间节点。'],
+        people:['先从可靠联系人、最后出现地点、常用联系方式和共同朋友查起。','信息不确定时不要扩散猜测，先核实来源。','情况紧急或涉及安全时，优先走现实求助渠道。'],
+        noble:['把你需要别人帮什么、什么时候要、需要什么资料说清楚。','先找最可能有权限或资源的人，不要泛泛求助。','别人回应后要看有没有实际行动，不只看口头答应。'],
+        fortune:['把近期机会和风险各列三条，先做最能落地的一件事。','不要把阶段运势当绝对结果，具体事项仍按具体场景判断。','末象不稳时，先守住基本盘。'],
+        shopping:['先看价格、退换政策、评价和到手时间。','贵重物品不要只看宣传，最好留订单和聊天记录。','末象空亡或赤口时，尤其防不符预期或售后争议。'],
+        device:['先记录报错、时间、线路、接口和重启后是否复现。','从最简单的电源、线材、网络、账号权限开始排查。','不要反复乱改设置，每次只改一项方便回滚。'],
+        procedure:['先检查材料清单、截止时间、窗口要求和证明文件。','能提前预约或预审就先做，减少白跑。','末象赤口时，沟通口径和材料版本要特别统一。']
+      };
+      const base = listMap[key] ? listMap[key].slice() : [];
+      if(end === '空亡') base.push('末象空亡：所有关键点都要再核实一次，别把“以为可以”当成“已经落实”。');
+      if(end === '赤口') base.push('末象赤口：把容易争议的地方写清楚，少靠口头默契。');
+      if(end === '留连') base.push('末象留连：预留反复和等待时间，别催到节奏失控。');
+      return polishAnswerList(base).slice(0,4);
+    }
+    function scenePlainDeepeningReady(){
+      return typeof sceneDeepAnswerV125 === 'function' && typeof sceneDeepActionHintsV125 === 'function' && !!sceneDeepActionHintsV125(null,'cooperation','赤口').length && !!sceneDeepActionHintsV125(null,'travel','留连').length;
+    }
     function answerDirectByContext(result) {
       const ctx = result.context || analyzeQuestionContext(result.question, result.sceneKey);
       const palaces = result.palaces || [];
@@ -5073,6 +5151,8 @@ function buildContextOverallSentence(context, details) {
       const intent = detectAnswerIntent(result);
       const seq = palaces.join(' → ');
       const stageText = compressedStagePlain(key, result.details || []);
+      const sceneDeepLine = sceneDeepAnswerV125(result, ctx, key, intent, end, seq, stageText, q);
+      if (sceneDeepLine) return sceneDeepLine;
       if (key === 'health') {
         if (intent === 'timing') return `${q}，这课更像“先有变化，后面还要观察”的节奏。${answerTimingPhrase(key, end)}三象是 ${seq}，所以不要只看一时舒服没舒服，要看是否持续好转、有没有反复。`;
         if (intent === 'yesno') return `${q}，不能只按“好或不好”断。${endFocusSentence(key, end)}身体问题仍以现实症状和医生建议为准。`;
@@ -5226,9 +5306,12 @@ function buildContextOverallSentence(context, details) {
       const d = result.details || [];
       if (d.length < 3) return '本课需要结合三象顺序判断。';
       const key = (result.context && result.context.key) || result.sceneKey || 'other';
-      const stageRoles = `本象看${d[0].role || '起点'}，中象看${d[1].role || '过程'}，末象看${d[2].role || '结果'}`;
-      const stageText = compressedStagePlain(key, d);
-      return `这课按“三象过程”看：${stageRoles}。${stageText}。所以它不是把三个宫孤立地判断吉凶，而是看事情从起点怎么走到结果；最后要重点看末象${d[2].palaceName}，因为它决定落点是否稳定、是否拖延、是否有争执或是否落空。`;
+      const a=d[0], b=d[1], c=d[2];
+      const startPlain = cleanPlainSentence(scenePalaceEffect(key, a.palaceName).plain || palaceTrendWord(a.palaceName));
+      const midPlain = cleanPlainSentence(scenePalaceEffect(key, b.palaceName).plain || palaceTrendWord(b.palaceName));
+      const endPlain = cleanPlainSentence(scenePalaceEffect(key, c.palaceName).plain || palaceTrendWord(c.palaceName));
+      const roleLine = `本象看${a.role || '起点'}，中象看${b.role || '过程'}，末象看${c.role || '结果'}`;
+      return `我会把它当成一个过程看，而不是只看某一个宫。${roleLine}。现在的走向是：一开始偏“${startPlain}”，中间变成“${midPlain}”，最后落到“${endPlain}”。所以判断重点要放在末象${c.palaceName}：它说明这件事最后更容易以什么方式落地，也提醒你下一步最该防什么。`;
     }
     function polishAnswerList(list){
       const seen = new Set();
@@ -5249,6 +5332,7 @@ function buildContextOverallSentence(context, details) {
       else if (ctx && ctx.key === 'lost') list = ['从最后一次使用或看到的位置开始找。', '按“桌面/抽屉/包袋夹层/旧盒旧包装/金属小物或票据卡片附近”的顺序找。', '不要一次全部翻乱，找完一处就复原，避免越找越乱。'];
       else if (ctx && (ctx.key === 'love' || ctx.key === 'marriage')) list = ['先看对方有没有实际行动，不要只解读语气和想象。', '沟通时少逼问，多确认对方真实态度。', '若末象见赤口或空亡，先稳住情绪，不宜急着摊牌。'];
       else if (ctx && (ctx.key === 'job' || ctx.key === 'career' || ctx.key === 'exam')) list = ['把材料、表达、时间节点和关键条件先确认清楚。', '可以适度跟进，但不要催得过急。', '若末象见空亡，要等正式通知或明确证据。'];
+      else if (ctx && sceneDeepActionHintsV125(ctx, ctx.key, end).length) list = sceneDeepActionHintsV125(ctx, ctx.key, end);
       else list = (result.advice || []).slice(0,3);
       if (end === '空亡') list.push('末象空亡时，最重要的是复核信息，避免把“有影子”当成“已落实”。');
       if (end === '赤口') list.push('末象赤口时，注意沟通、规则、合同、口舌和短线反复。');
@@ -5501,7 +5585,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.124',
+        source: 'mainline-v10.5.125',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -5517,7 +5601,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.124',
+      source: 'mainline-v10.5.125',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -6073,6 +6157,14 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.125 白话答案场景深化版', items:[
+          '继续升级普通问事“答案摘要”：把更多场景改成先给结论、再讲三象过程、最后给现实下一步，减少模板感。',
+          '新增 v10.5.125 场景深化层：选择决策、合作合同、出行、家宅、寻人、贵人、阶段运势等场景会获得更贴近日常对话的直接答案。',
+          '行动建议进一步场景化：选择看信息是否足够，合作看条款和责任，出行看路线证件天气，家宅看维修合同隐患，寻人看联系方式和可靠线索。',
+          '“为什么这么看”改得更像解释过程：先讲本象是起点、中象是过程、末象是落点，再说明为什么末象更需要重视。',
+          'Debug 发版体检表新增“场景深化白话答案可用”，一键自检通过时会显示“场景深化白话答案检查通过”。',
+          '保持导航双模式、历史记录、复盘、命盘六亲参考盘、结果页顶部复位、暗夜主题和缓存主结构稳定。'
+        ]},
         { v:'v10.5.124 追问建议与复盘引导版', items:[
           '在“答案摘要”底部新增“接下来观察什么”：把卦象转成可复盘的现实观察点，例如健康看症状是否反复，天气看临近预报，消息看回复是否明确。',
           '新增“可以怎么追问”：按场景给出下一课可问方向，帮助用户从一次结果自然延伸到更具体的问题。',
@@ -6787,7 +6879,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.124',
+      source: 'mainline-v10.5.125',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -6865,7 +6957,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.124',
+      source: 'mainline-v10.5.125',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -8049,7 +8141,7 @@ function buildContextOverallSentence(context, details) {
       if(!nav) return;
       const overflow = (nav.scrollWidth || 0) > (nav.clientWidth || 0) + 2;
       const mode = getNavFollowMode();
-      nav.dataset.navAdaptive = (mode === 'fixed' ? 'fixed-pointer-v10.5.124' : 'adaptive-reveal-v10.5.124');
+      nav.dataset.navAdaptive = (mode === 'fixed' ? 'fixed-pointer-v10.5.125' : 'adaptive-reveal-v10.5.125');
       nav.dataset.navMode = mode;
       nav.dataset.navOverflow = overflow ? '1' : '0';
     }
@@ -8233,16 +8325,16 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.124'
+      source: 'mainline-v10.5.125'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.124） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.125） */
 /*
- * 小六壬 v10.5.124 Debug 主源码模块
+ * 小六壬 v10.5.125 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -8250,7 +8342,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.124 追问建议与复盘引导版';
+  const APP_VERSION = 'v10.5.125 白话答案场景深化版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -9183,17 +9275,18 @@ function buildContextOverallSentence(context, details) {
       { id:'version-title', label:'页面 title 已更新到当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.title && snapshot.versionInfo.title.includes(APP_VERSION)) },
       { id:'version-meta', label:'meta description 已更新到当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.meta && snapshot.versionInfo.meta.includes(APP_VERSION)) },
       { id:'version-heading', label:'首页/主标题已更新到当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.headings && snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION))) },
-      { id:'version-log', label:'版本内容更新包含当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.headings && snapshot.versionInfo.headings.some(text => text.includes('v10.5.124'))) },
+      { id:'version-log', label:'版本内容更新包含当前版本', ok: !!(snapshot.versionInfo && snapshot.versionInfo.headings && snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION))) },
       { id:'source-structure', label:'源码结构保持 1 个主 style + 1 个主 script', ok: !!(snapshot.sourceStructure && snapshot.sourceStructure.ok) },
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.124', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.124') },
+      { id:'nav-core', label:'导航主源码为 v10.5.125', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.125') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
       { id:'plain-answer-v124', label:'白话答案二次增强可用', ok: typeof plainAnswerQualityReady === 'function' && plainAnswerQualityReady() },
       { id:'answer-followup-v124', label:'追问建议与复盘引导可用', ok: typeof answerFollowupReady === 'function' && answerFollowupReady() },
+      { id:'scene-deep-v125', label:'场景深化白话答案可用', ok: typeof scenePlainDeepeningReady === 'function' && scenePlainDeepeningReady() },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
       { id:'normal-boundary', label:'普通问事不显示六宫排盘/命盘', ok: !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.normalShowingPaipan || snapshot.destiny.boundary.normalShowingDestinyBoard)) },
       { id:'destiny-boundary', label:'命运页保留六宫排盘/命盘', ok: !isDestiny || !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.destinyMissingPaipan || snapshot.destiny.boundary.destinyMissingBoard)) },
@@ -9262,7 +9355,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.124' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.125' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -9304,7 +9397,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.124') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.125') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -9320,7 +9413,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.124') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.125') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -9339,8 +9432,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.124') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.124 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.125') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.125 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -9373,8 +9466,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.124') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.124 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.125') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.125 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -9442,27 +9535,27 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.124' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.125' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.124') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.125') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.124') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.125') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.124') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.125') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.124') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.125') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -9471,6 +9564,7 @@ function buildContextOverallSentence(context, details) {
     if (typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function') passes.push('专项解读白话串联检查通过');
     if (typeof plainAnswerQualityReady === 'function' && plainAnswerQualityReady()) passes.push('白话答案质量检查通过');
     if (typeof answerFollowupReady === 'function' && answerFollowupReady()) passes.push('追问复盘建议检查通过');
+    if (typeof scenePlainDeepeningReady === 'function' && scenePlainDeepeningReady()) passes.push('场景深化白话答案检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.status === 'pass') passes.push('发布前体检表检查通过');
     if (snapshot.sourceAudit && !snapshot.sourceAudit.strictHitCount) passes.push('严格旧补丁源码关键词检查通过');
