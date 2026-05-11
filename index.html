@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.104 暗夜历史修复主源码版</title>
-<meta content="小六壬个人网页版 v10.5.104 暗夜历史修复主源码版：继续参考 v10.5.76 稳定深色主题，修复历史弹窗头部浅色残留，并增强非命运历史记录回看兼容，继续保持主源码修复。" name="description"/>
+<title>小六壬占卜 · v10.5.105 首页结果页分离主源码版</title>
+<meta content="小六壬个人网页版 v10.5.105 首页结果页分离主源码版：参考 v10.5.76 稳定逻辑，恢复主页与占卜结果页独立显示，修复起课和历史查看后主页输入区混入结果页的问题。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -871,6 +871,36 @@ body.result-page.force-desktop-mode .shell {
 }
 body.result-page.force-desktop-mode .sidebar { display: none !important; }
 
+
+/* 源码主模块：首页与占卜结果页分离（v10.5.105）
+   目标：参考 v10.5.76 稳定逻辑，进入结果页后只显示结果卡片；返回主页/重新占卜后再显示主页输入区。 */
+body.result-page .sidebar,
+body.result-page #homeTopSection,
+body.result-page #sceneSection,
+body.result-page #questionSection,
+body.result-page #methodSection,
+body.result-page #homeInfoBlocks,
+body.result-page #homeAboutRulesBlockWrap,
+body.result-page #homeVersionUpdatesBlockWrap {
+  display: none !important;
+}
+body.result-page .shell {
+  display: block !important;
+  max-width: 1180px !important;
+  width: min(1180px, calc(100% - 24px)) !important;
+  margin: 0 auto !important;
+}
+body.result-page .main {
+  display: block !important;
+  width: 100% !important;
+}
+body.result-page #resultCard {
+  display: block !important;
+}
+body:not(.result-page) #resultCard.hidden {
+  display: none !important;
+}
+
 /* 更新记录样式 */
 
 
@@ -983,8 +1013,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.104，含命盘、暗夜主题与历史回看自检） */
-/* 小六壬 v10.5.104 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.105，含命盘、暗夜主题、历史回看与结果页分离自检） */
+/* 小六壬 v10.5.105 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1324,7 +1354,7 @@ body.reading-theme-night canvas,
 body.reading-theme-night img,
 body.reading-theme-night svg { filter:none !important; }
 
-/* 源码主模块：暗夜主题关键残留清理（v10.5.104） */
+/* 源码主模块：暗夜主题关键残留清理（v10.5.105） */
 body.reading-theme-night .feature-item,
 body.reading-theme-night .ab-choice-panel,
 body.reading-theme-night .ab-toggle,
@@ -1467,7 +1497,7 @@ body.reading-theme-night ::-webkit-scrollbar-thumb {
 
 
 
-/* 源码主模块：暗夜弹窗与历史残留最终清理（v10.5.104） */
+/* 源码主模块：暗夜弹窗与历史残留最终清理（v10.5.105） */
 body.reading-theme-night dialog,
 body.reading-theme-night #historyDialog,
 body.reading-theme-night #settingsDialog,
@@ -1757,7 +1787,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.104 暗夜历史修复主源码版</h2>
+<h2>个人占卜台 · v10.5.105 首页结果页分离主源码版</h2>
 <p>本版继续执行“补丁回源码计划”：在 v10.5.98 历史分析稳定的基础上，继续清理旧设置主键，把用户设置、上次选择和结果视图迁移到 source 主键，降低旧缓存残留导致的新旧跳动与误判。</p>
 </div>
 <div class="actions">
@@ -2237,7 +2267,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.104 暗夜历史修复主源码版';
+    const XLR_SOURCE_VERSION = 'v10.5.105 首页结果页分离主源码版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -3086,7 +3116,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.104',
+      source: 'mainline-v10.5.105',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -3249,6 +3279,8 @@ function buildPaipanExplanation(result){
       try { localStorage.removeItem(LAST_VIEW_KEY); } catch(e) {}
       const card=document.getElementById('resultCard'); if(card) card.classList.add('hidden');
       try { document.body.classList.remove('result-page','result-destiny','destiny-scene'); } catch(e) {}
+      const top=document.getElementById('homeTopSection')||document.body;
+      try { top.scrollIntoView({behavior:'smooth',block:'start'}); } catch(e) { window.scrollTo(0,0); }
       refreshSectionJumpNavSoon();
     }
     function saveLastView(result){ localStorage.setItem(LAST_VIEW_KEY, JSON.stringify(result)); }
@@ -4966,6 +4998,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.105 首页结果页分离主源码版', items:[
+          '参考 v10.5.76 稳定逻辑，恢复占卜结果页与主页输入区独立显示。',
+          '起课完成或从历史记录点“查看”后，进入结果页状态，只显示本次结果，不再混入场景、问事、起课和版本说明等主页模块。',
+          '点击右侧快捷按钮“主页”或“重占”后，会退出结果页状态、隐藏结果卡片、恢复首页输入区，并回到顶部。',
+          '新增结果页分离 CSS 主源码覆盖与 Debug 自检，检查 #homeTopSection、#sceneSection、#questionSection、#methodSection、.sidebar 等关键主页模块是否被结果页正确隔离。',
+          '继续保持 1 个主 style + 1 个主 script，不新增后置补丁。'
+        ]},
         { v:'v10.5.104 暗夜历史修复主源码版', items:[
           '继续参考 v10.5.76 稳定暗夜模式，补齐历史弹窗头部、弹窗工具栏、完整备份折叠区、历史列表容器等最后浅色残留，不使用 invert/filter 反色方案。',
           '修复非命运历史记录回看兼容：历史记录查看前会先做主源码级记录修复，缺少 details、metrics、distribution、rule 或 scene 信息的旧记录会自动补齐后再渲染。',
@@ -5099,7 +5138,7 @@ function buildContextOverallSentence(context, details) {
           '每次发版继续检查：JS 语法、版本统一、旧后置残留、首页版本跳动、README / manifest / service-worker。'
         ]}
       ];
-      return `<div class="version-log-note">当前进入源码功能恢复修复线：优先按 v10.5.76 稳定暗夜模式恢复深色 CSS 主题，同时修复命盘自检误报与旧设置键残留，继续清补丁、归主线。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
+      return `<div class="version-log-note">当前进入源码功能恢复修复线：继续参考 v10.5.76 稳定逻辑，把暗夜模式、历史回看、首页/结果页分离等功能收回主源码，继续清补丁、归主线。</div>` + versions.map(group => `<details><summary>${group.v}</summary><ul>${group.items.map(item => `<li>${item}</li>`).join('')}</ul></details>`).join('');
     }
 
 
@@ -5528,7 +5567,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.104',
+      source: 'mainline-v10.5.105',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -5604,7 +5643,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.104',
+      source: 'mainline-v10.5.105',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyActionCard'],
@@ -6902,16 +6941,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.104'
+      source: 'mainline-v10.5.105'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.104） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.105） */
 /*
- * 小六壬 v10.5.104 Debug 主源码模块
+ * 小六壬 v10.5.105 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并加入命盘主线自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -6919,7 +6958,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.104 暗夜历史修复主源码版';
+  const APP_VERSION = 'v10.5.105 首页结果页分离主源码版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -7308,6 +7347,23 @@ function buildContextOverallSentence(context, details) {
     '#historyDialog .history-list'
     ];
     const missing = required.filter(sel => !styleText.includes('body.reading-theme-night ' + sel));
+    return { required, missing, ok: missing.length === 0 };
+  }
+
+
+  function getResultPageSeparationCoverageInfo() {
+    const styleText = qa('style').map(el => el.textContent || '').join('\n');
+    const required = [
+      'body.result-page #homeTopSection',
+      'body.result-page #sceneSection',
+      'body.result-page #questionSection',
+      'body.result-page #methodSection',
+      'body.result-page .sidebar',
+      'body.result-page #homeInfoBlocks',
+      'body.result-page #resultCard',
+      'body:not(.result-page) #resultCard.hidden'
+    ];
+    const missing = required.filter(sel => !styleText.includes(sel));
     return { required, missing, ok: missing.length === 0 };
   }
 
@@ -7762,6 +7818,7 @@ function buildContextOverallSentence(context, details) {
       duplicateIds: getDuplicateIds(),
       sourceStructure: getSourceStructureInfo(),
       nightThemeCoverage: getNightThemeCoverageInfo(),
+      resultPageSeparationCoverage: getResultPageSeparationCoverageInfo(),
       versionSummaryDuplicates: getVersionSummaryDuplicates(),
       duplicateFunctionNames: getDuplicateFunctionNames(),
       legacyResidues: getLegacyResidues(),
@@ -7785,10 +7842,10 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
     if (!snapshot.versionInfo.meta.includes('10.5.102') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.104', snapshot.versionInfo.meta);
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.105', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.104'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.104', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.105'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.105', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -7800,6 +7857,9 @@ function buildContextOverallSentence(context, details) {
     }
     if (!snapshot.nightThemeCoverage || !snapshot.nightThemeCoverage.ok) {
       addIssue(issues, 'warning', 'NIGHT_THEME_COVERAGE_MISSING', '暗夜主题关键覆盖选择器不完整，可能出现局部浅色残留', snapshot.nightThemeCoverage);
+    }
+    if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
+      addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
     if (snapshot.versionSummaryDuplicates.length) {
       addIssue(issues, 'warning', 'VERSION_SUMMARY_DUPLICATE', '版本记录存在重复 summary，建议清理版本内容更新', snapshot.versionSummaryDuplicates);
@@ -7837,8 +7897,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.104') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.104 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.105') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.105 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -7853,8 +7913,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.104') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.104 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.105') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.105 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -7872,8 +7932,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.104') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.104 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.105') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.105 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -7900,8 +7960,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.104') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.104 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.105') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.105 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -7956,25 +8016,26 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.duplicateIds.length) passes.push('重复 ID 检查通过');
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
+    if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.104') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.105') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.104') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.105') passes.push('历史分析主命名空间检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.104') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.105') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.104') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.105') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');

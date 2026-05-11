@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.104-night-history-mainline-fix';
+const CACHE_NAME = 'xiaoliuren-v10.5.105-result-page-separation-mainline';
 const APP_SHELL = [
   './',
   './index.html',
