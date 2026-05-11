@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.94 源码清补丁与功能恢复增强版</title>
-<meta content="小六壬个人网页版 v10.5.94 源码清补丁与功能恢复增强版：在 v10.5.93 Debug 主源码基础上，继续增强一键自检、旧缓存安全清理、源码结构检查和版本一致性检查，继续按主源码恢复功能。" name="description"/>
+<title>小六壬占卜 · v10.5.95 导航完整恢复与自检增强版</title>
+<meta content="小六壬个人网页版 v10.5.95 导航完整恢复与自检增强版：在 v10.5.94 清补丁源码基础上，完整恢复首页、结果页、命运页主导航与命盘子导航，并增强导航自检。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -983,8 +983,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.94，含旧键安全清理） */
-/* 小六壬 v10.5.94 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.95，含导航自检与旧键安全清理） */
+/* 小六壬 v10.5.95 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1143,7 +1143,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航恢复主样式（v10.5.94 继续保留在主 CSS，不再后置补丁） */
+/* 源码模块：导航完整恢复主样式（v10.5.95，主 CSS 内建，不再后置补丁） */
 html, body, #resultCard, #resultCard .block, #resultCard .collapsible-block { overflow-anchor:none; }
 #sectionJumpNav.section-jump-nav,
 #destinySubNav.destiny-sub-nav {
@@ -1268,7 +1268,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.94 源码清补丁与功能恢复增强版</h2>
+<h2>个人占卜台 · v10.5.95 导航完整恢复与自检增强版</h2>
 <p>本版继续加大“清补丁 + 恢复功能”的力度：在 v10.5.93 Debug 主源码可用的基础上，增强自检项目，加入旧缓存键安全清理入口，并继续检查源码结构、版本显示、导航、折叠、设置与运行错误，后续功能继续直接写回主函数。</p>
 </div>
 <div class="actions">
@@ -1748,6 +1748,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
+    const XLR_SOURCE_VERSION = 'v10.5.95 导航完整恢复与自检增强版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -2346,6 +2347,7 @@ function buildPaipanExplanation(result){
           <div class="destiny-deep-card" id="destinyRiskCard"><h5>⚠️ 阻力来源</h5><p>${weak}。留连多拖延旧事，赤口多沟通规则，空亡多虚与未定；不是定坏，而是提醒要核实、复盘、落地。</p></div>
           <div class="destiny-deep-card" id="v10523CareerBlock"><h5>💼 事业与规则</h5><p>重点看官鬼宫及其掌诀、六神、五星。官鬼偏顺，适合承接责任；官鬼受阻，要注意压力、制度、上司、合同与健康节奏。</p></div>
           <div class="destiny-deep-card" id="destinyFinanceRelationBlock"><h5>💰 财务与关系资源</h5><p>重点看妻财宫。${gender==='male'?'男命可兼看妻子、女友与钱财资源。':gender==='female'?'女命主要看钱财资产和现实资源，不直接把妻财作为丈夫主位。':'未指定性别时，妻财按钱财、资源、现实经营来读。'}见空亡要防未到账，见赤口要防合同争议。</p></div>
+          <div class="destiny-deep-card" id="destinyMarriageBlock"><h5>💍 婚姻与伴侣参考</h5><p>婚姻与伴侣不只看单一宫位，要把自身、妻财/官鬼、兄弟竞争、父母文书长辈等一起看。男命可重点参考妻财与现实经营，女命可重点参考官鬼与规则压力；若未指定性别，则按伴侣关系、责任承诺和现实资源综合判断。</p></div>
           <div class="destiny-deep-card" id="v1030DestinyHealth"><h5>🌿 健康与节奏参考</h5><p>命盘健康只作长期节奏提醒。留连、空亡多时注意拖延、睡眠和反复；赤口明显时注意急躁、炎症感和表达压力；大安、小吉多时适合建立稳定作息；速喜明显时注意节奏过快。</p></div>
           <div class="destiny-deep-card" id="destinyEmotionBlock"><h5>🌙 情绪与自我观察</h5><p>留连、空亡多时，容易反复想、担心未发生的事；赤口明显时，要留意急躁和表达方式；大安、小吉多时，适合建立稳定节奏；速喜明显时，情绪容易被消息和变化带动。</p></div>
           <div class="destiny-deep-card full" id="destinyActionCard"><h5>🧭 行动建议</h5><p>命运盘更适合做长期提醒卡：若起势强，就学会稳住；若起势慢，就学会持续；若末象虚，就多核实承诺；若末象稳，就长期积累。遇到重大选择时回头看：我是不是又陷入拖延、急躁、空想或过度保守？</p></div>
@@ -4289,6 +4291,14 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.95 导航完整恢复与自检增强版', items:[
+          '导航恢复进入主源码完整阶段：首页、结果页、普通问事结果页、命运结果页分别按当前状态生成主导航，不再依赖旧 v10546/v10556 等导航补丁。',
+          '结果页导航补齐导读、答案、重心、选择、排盘、命盘、综合、专项、三象、单宫、双宫、象意、雷达、建议、术语等可见模块；隐藏模块不会硬显示到导航里。',
+          '命运页恢复命盘子导航：进入命盘区域时显示起盘、六宫、顺序、自身、事业、财务、婚姻、健康、情绪、建议，并跟随当前滚动位置高亮。',
+          '新增 window.XLRNavCore 主命名空间，暴露导航模式、主导航目标、命盘子目标、刷新与跳转函数，方便 Debug 自检直接判断导航是否走主源码。',
+          'Debug 一键自检增强：新增导航主命名空间、主导航根节点、命盘子导航根节点、导航目标数组、重复 target、旧导航 DOM 残留检查。',
+          '继续保持 1 个主 style + 1 个主 script；没有新增后置补丁、版本锁、boot-late/load-late 或重复事件覆盖。'
+        ]},
         { v:'v10.5.94 源码清补丁与功能恢复增强版', items:[
           '在 v10.5.93 Debug 主源码可用基础上继续增强：一键自检新增源码结构检查、版本记录重复检查、Debug 命名空间检查和旧缓存键清理提示。',
           'Debug 面板新增“清理旧缓存”入口，只清理旧字号、旧快捷按钮、旧 Debug、旧 intent/snapshot、旧命运偏好等补丁残留键，不删除历史记录、设置、模板和复盘数据。',
@@ -5659,7 +5669,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    // 源码模块：智能章节卡点导航（v10.5.92 主线恢复版）
+    // 源码模块：智能章节卡点导航（v10.5.95 导航完整恢复主线版）
     const XLR_NAV_LOCK = { until:0, main:'', sub:'' };
     function xlrNav$(id){ return document.getElementById(id); }
     function applyNavPositionClass(){
@@ -5699,9 +5709,10 @@ function buildContextOverallSentence(context, details) {
         { id:'xlrQuickGuideBlock', label:'导读' },
         { id:'answerSummaryBlock', label:'答案' },
         { id:'sceneFocusBlock', label:'重心' },
+        { id:'abChoiceResultBlock', label:'选择' },
+        { id:'paipanBlock', label:'排盘' },
         { id:'overallBlock', label:'综合' },
         { id:'contextAnalysisBlock', label:'专项' },
-        { id:'paipanBlock', label:'排盘' },
         { id:'triReadingBlock', label:'三象' },
         { id:'singlePalaceBlock', label:'单宫' },
         { id:'doublePalaceBlock', label:'双宫' },
@@ -5727,9 +5738,11 @@ function buildContextOverallSentence(context, details) {
     const DESTINY_SUB_TARGETS = [
       { id:'destinyBoardIntro', label:'起盘' },
       { id:'destinyBoardGrid', label:'六宫' },
-      { id:'destinyDeepContent', label:'深读' },
+      { id:'destinyReadOrder', label:'顺序' },
+      { id:'destinySelfCard', label:'自身' },
       { id:'v10523CareerBlock', label:'事业' },
       { id:'destinyFinanceRelationBlock', label:'财务' },
+      { id:'destinyMarriageBlock', label:'婚姻' },
       { id:'v1030DestinyHealth', label:'健康' },
       { id:'destinyEmotionBlock', label:'情绪' },
       { id:'destinyActionCard', label:'建议' }
@@ -5929,21 +5942,31 @@ function buildContextOverallSentence(context, details) {
       }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','open']});
     }catch(e){}
 
+    window.XLRNavCore = {
+      version: XLR_SOURCE_VERSION,
+      getMode: getJumpMode,
+      getMainTargets: currentJumpTargets,
+      getDestinySubTargets: currentDestinySubTargets,
+      refresh: updateSectionJumpNav,
+      jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
+      source: 'mainline-v10.5.95'
+    };
+
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.94） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.95） */
 /*
- * 小六壬 v10.5.94 Debug 主源码模块
- * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链。
+ * 小六壬 v10.5.95 Debug 主源码模块
+ * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并恢复导航自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
  */
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.94 源码清补丁与功能恢复增强版';
+  const APP_VERSION = 'v10.5.95 导航完整恢复与自检增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -6024,25 +6047,32 @@ function buildContextOverallSentence(context, details) {
 
   const KNOWN_BLOCKS = [
     ['resultCard', '结果卡片'],
-    ['v10510QuickGuideBlock', '快速导读'],
+    ['xlrQuickGuideBlock', '快速导读'],
     ['answerSummaryBlock', '答案摘要'],
     ['sceneFocusBlock', '本场景判断重心'],
+    ['abChoiceResultBlock', 'A/B 选择对比'],
     ['paipanBlock', '六宫排盘'],
     ['destinyBoardBlock', '命运六亲参考盘'],
     ['overallBlock', '综合判断'],
     ['contextAnalysisBlock', '问事专项解读'],
-    ['v10518FormulaBlock', '口诀'],
     ['triReadingBlock', '三象解读'],
     ['singlePalaceBlock', '单宫断事解卦'],
     ['doublePalaceBlock', '双宫断事解卦'],
     ['symbolBlock', '象意补充'],
     ['radarBlock', '雷达分析图'],
     ['adviceBlock', '行动建议'],
-    ['v10510GlossaryBlock', '术语解释'],
-    ['v10536DestinyGlossaryBlock', '命运术语解释'],
+    ['xlrGlossaryBlock', '术语解释'],
+    ['destinyBoardIntro', '命盘起盘说明'],
+    ['destinyBoardGrid', '命盘六宫'],
+    ['destinyDeepContent', '命盘深读'],
+    ['destinyReadOrder', '命盘阅读顺序'],
+    ['destinySelfCard', '命盘自身'],
+    ['v10523CareerBlock', '命运事业'],
+    ['destinyFinanceRelationBlock', '命运财务'],
+    ['destinyMarriageBlock', '命运婚姻'],
     ['v1030DestinyHealth', '命运健康'],
-    ['v1040MarriageBlock', '命运婚姻'],
-    ['v10523CareerBlock', '命运事业']
+    ['destinyEmotionBlock', '命运情绪'],
+    ['destinyActionCard', '命运行动建议']
   ];
 
   const REQUIRED_HOME_NAV = [
@@ -6054,20 +6084,31 @@ function buildContextOverallSentence(context, details) {
 
   const REQUIRED_RESULT_NAV = [
     ['resultCard', '结果'],
-    ['v10510QuickGuideBlock', '导读'],
+    ['xlrQuickGuideBlock', '导读'],
     ['answerSummaryBlock', '答案'],
     ['sceneFocusBlock', '重心'],
+    ['paipanBlock', '排盘'],
     ['overallBlock', '综合'],
     ['triReadingBlock', '三象'],
     ['adviceBlock', '建议'],
-    ['v10510GlossaryBlock', '术语']
+    ['xlrGlossaryBlock', '术语']
   ];
 
   const REQUIRED_DESTINY_EXTRA_NAV = [
-    ['destinyBoardBlock', '命盘'],
+    ['destinyBoardBlock', '命盘']
+  ];
+
+  const REQUIRED_DESTINY_SUB_NAV = [
+    ['destinyBoardIntro', '起盘'],
+    ['destinyBoardGrid', '六宫'],
+    ['destinyReadOrder', '顺序'],
+    ['destinySelfCard', '自身'],
+    ['v10523CareerBlock', '事业'],
+    ['destinyFinanceRelationBlock', '财务'],
+    ['destinyMarriageBlock', '婚姻'],
     ['v1030DestinyHealth', '健康'],
-    ['v1040MarriageBlock', '婚姻'],
-    ['v10523CareerBlock', '事业']
+    ['destinyEmotionBlock', '情绪'],
+    ['destinyActionCard', '建议']
   ];
 
   const state = {
@@ -6304,39 +6345,58 @@ function buildContextOverallSentence(context, details) {
     return out;
   }
 
+  function mapNavButtons(root, selector) {
+    if (!root) return [];
+    return qa(selector, root).filter((el, index, arr) => arr.indexOf(el) === index).map(el => {
+      const target = el.dataset ? (el.dataset.target || el.dataset.jumpTarget || el.dataset.destinySubTarget || '') : '';
+      const targetEl = target ? document.getElementById(target) : null;
+      return {
+        text: textOf(el, 40),
+        target,
+        className: el.className || '',
+        active: el.classList ? el.classList.contains('active') : false,
+        slotActive: el.classList ? el.classList.contains('slot-active') : false,
+        display: getComputedStyle(el).display,
+        visible: visibleOf(el),
+        rect: rectOf(el),
+        targetExists: !!targetEl,
+        targetVisible: targetEl ? visibleOf(targetEl) : false
+      };
+    });
+  }
+
   function getNavInfo() {
     const nav = q('#sectionJumpNav') || q('.section-jump-nav');
     const sub = q('#destinySubNav') || q('#v1054DestinySubNav') || q('.destiny-sub-nav');
-    const buttons = qa('button[data-target], .jump-chip[data-target], [data-jump-target]', nav || document)
-      .concat(qa('#sectionJumpNav .jump-chip, .section-jump-nav .jump-chip'))
-      .filter((el, index, arr) => arr.indexOf(el) === index)
-      .map(el => {
-        const target = el.dataset ? (el.dataset.target || el.dataset.jumpTarget || '') : '';
-        const targetEl = target ? document.getElementById(target) : null;
-        return {
-          text: textOf(el, 40),
-          target,
-          className: el.className || '',
-          active: el.classList ? el.classList.contains('active') : false,
-          slotActive: el.classList ? el.classList.contains('slot-active') : false,
-          display: getComputedStyle(el).display,
-          visible: visibleOf(el),
-          rect: rectOf(el),
-          targetExists: !!targetEl,
-          targetVisible: targetEl ? visibleOf(targetEl) : false
-        };
-      });
-    const targets = buttons.map(b => b.target).filter(Boolean);
+    const buttons = mapNavButtons(nav, 'button[data-target], .jump-chip[data-target], [data-jump-target], #sectionJumpNav .jump-chip');
+    const subButtons = mapNavButtons(sub, '[data-destiny-sub-target], #destinySubNav .jump-chip, #v1054DestinySubNav .jump-chip');
+    const allButtons = buttons.concat(subButtons);
+    const targets = allButtons.map(b => b.target).filter(Boolean);
     const dupTargets = targets.filter((target, index) => targets.indexOf(target) !== index).filter((target, index, arr) => arr.indexOf(target) === index);
+    let coreTargets = [];
+    let coreSubTargets = [];
+    try { coreTargets = window.XLRNavCore && typeof window.XLRNavCore.getMainTargets === 'function' ? window.XLRNavCore.getMainTargets().map(t => ({ id:t.id, label:t.label, visible:!!(t.el && visibleOf(t.el)) })) : []; } catch (err) {}
+    try { coreSubTargets = window.XLRNavCore && typeof window.XLRNavCore.getDestinySubTargets === 'function' ? window.XLRNavCore.getDestinySubTargets().map(t => ({ id:t.id, label:t.label, visible:!!(t.el && visibleOf(t.el)) })) : []; } catch (err) {}
     return {
       bodyNavPosition: document.body ? Array.from(document.body.classList).find(cls => cls.indexOf('xlr-nav-position-') === 0) || '' : '',
       main: describeElement(nav),
       sub: describeElement(sub),
       itemCount: buttons.length,
-      activeCount: buttons.filter(b => b.active).length,
-      slotActiveCount: buttons.filter(b => b.slotActive).length,
+      subItemCount: subButtons.length,
+      activeCount: allButtons.filter(b => b.active).length,
+      slotActiveCount: allButtons.filter(b => b.slotActive).length,
       items: buttons,
-      duplicateTargets: dupTargets
+      subItems: subButtons,
+      duplicateTargets: dupTargets,
+      core: {
+        exists: !!window.XLRNavCore,
+        version: window.XLRNavCore ? window.XLRNavCore.version : '',
+        source: window.XLRNavCore ? window.XLRNavCore.source : '',
+        mode: window.XLRNavCore && typeof window.XLRNavCore.getMode === 'function' ? window.XLRNavCore.getMode() : '',
+        mainTargets: coreTargets,
+        subTargets: coreSubTargets
+      },
+      legacyNavNodes: qa('#v1054DestinySubNav, .bottom-nav, .jump-nav').map(el => describeElement(el))
     };
   }
 
@@ -6641,11 +6701,11 @@ function buildContextOverallSentence(context, details) {
     if (!document.title.includes(APP_VERSION)) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    if (!snapshot.versionInfo.meta.includes('10.5.94') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.94', snapshot.versionInfo.meta);
+    if (!snapshot.versionInfo.meta.includes('10.5.95') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.95', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.94'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.94', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.95'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.95', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -6688,16 +6748,40 @@ function buildContextOverallSentence(context, details) {
     const requiredNav = isResult ? REQUIRED_RESULT_NAV.slice() : REQUIRED_HOME_NAV.slice();
     if (isDestiny) requiredNav.push(...REQUIRED_DESTINY_EXTRA_NAV);
     const navItems = snapshot.navigation.items || [];
+    const subNavItems = snapshot.navigation.subItems || [];
+    if (!snapshot.navigation.main.exists) {
+      addIssue(issues, 'error', 'MAIN_NAV_MISSING', '主导航根节点 #sectionJumpNav 不存在', null);
+    }
+    if (!snapshot.navigation.sub.exists) {
+      addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
+    }
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.95') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.95 主源码导航', snapshot.navigation.core);
+    }
+    if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
+      addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
+    }
     requiredNav.forEach(([target, label]) => {
       const targetEl = document.getElementById(target);
       const hasButton = navItems.some(item => item.target === target || item.text === label);
       if (!targetEl && isResult) {
-        addIssue(issues, label === '健康' || label === '婚姻' || label === '事业' ? 'warning' : 'error', 'NAV_TARGET_MISSING', `导航目标缺失：${label}`, { target });
+        addIssue(issues, 'error', 'NAV_TARGET_MISSING', `导航目标缺失：${label}`, { target });
       } else if (!hasButton && targetEl && visibleOf(targetEl)) {
         addIssue(issues, 'warning', 'NAV_BUTTON_MISSING', `可见模块没有对应导航：${label}`, { target });
       }
     });
-    const brokenNav = navItems.filter(item => item.target && !item.targetExists);
+    if (isDestiny && visibleOf(document.getElementById('destinyBoardBlock'))) {
+      REQUIRED_DESTINY_SUB_NAV.forEach(([target, label]) => {
+        const targetEl = document.getElementById(target);
+        const hasButton = subNavItems.some(item => item.target === target || item.text === label);
+        if (!targetEl) {
+          addIssue(issues, label === '婚姻' ? 'warning' : 'error', 'DESTINY_SUB_TARGET_MISSING', `命盘子导航目标缺失：${label}`, { target });
+        } else if (!hasButton && targetEl && visibleOf(targetEl) && subNavItems.length) {
+          addIssue(issues, 'warning', 'DESTINY_SUB_BUTTON_MISSING', `命盘可见子模块没有对应子导航：${label}`, { target });
+        }
+      });
+    }
+    const brokenNav = navItems.concat(subNavItems).filter(item => item.target && !item.targetExists);
     if (brokenNav.length) {
       addIssue(issues, 'error', 'BROKEN_NAV_TARGET', '存在导航按钮指向不存在的 target', brokenNav.slice(0, 15));
     }
@@ -6729,6 +6813,7 @@ function buildContextOverallSentence(context, details) {
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.95') passes.push('导航主命名空间检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
 
     const report = {
@@ -6759,7 +6844,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航、折叠、设置和运行错误。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、命盘子导航、折叠、设置和运行错误。</p>
         <div class="xlr-debug-toolbar">
           <button type="button" data-debug-action="selfcheck">一键自检</button>
           <button type="button" data-debug-action="snapshot">刷新快照</button>

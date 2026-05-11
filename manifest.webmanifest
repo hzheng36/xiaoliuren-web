@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.94 源码清补丁与功能恢复增强版",
-  "short_name": "小六壬 v10.5.94",
-  "description": "小六壬个人网页版 v10.5.94：在 v10.5.93 Debug 主源码基础上增强自检、旧缓存安全清理和源码结构检查，继续保持单一源码主线。",
-  "start_url": "./?v=10.5.94",
+  "name": "小六壬占卜 v10.5.95 导航完整恢复与自检增强版",
+  "short_name": "小六壬 v10.5.95",
+  "description": "小六壬个人网页版 v10.5.95：完整恢复首页、结果页、命运页主导航与命盘子导航，并增强 Debug 导航自检。",
+  "start_url": "./index.html?v=10.5.95",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.94"
+  "version": "10.5.95"
 }
