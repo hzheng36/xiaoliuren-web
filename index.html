@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.96 导航随动自动居中修正版</title>
-<meta content="小六壬个人网页版 v10.5.96 导航随动自动居中修正版：在 v10.5.95 导航恢复主源码基础上，修复章节导航不随页面滚动自动左右居中的问题，恢复固定中槽式随动导航。" name="description"/>
+<title>小六壬占卜 · v10.5.97 历史记录主源码恢复版</title>
+<meta content="小六壬个人网页版 v10.5.97 历史记录主源码恢复版：在导航稳定后继续清补丁，把历史列表、收藏、删除、搜索筛选、TXT/JSON 导出导入、复盘时间线与历史自检写回主源码。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -983,8 +983,8 @@ body.result-page.force-desktop-mode .sidebar { display: none !important; }
     .destiny-gender-note strong{color:var(--text);}
     @media(max-width:760px){.destiny-source-grid{grid-template-columns:1fr}.destiny-kinship-options{grid-template-columns:1fr}.destiny-kinship-options label{padding:11px 12px}}
 
-    /* 源码模块：Debug 主源码样式（v10.5.96，含导航随动自检与旧键安全清理） */
-/* 小六壬 v10.5.96 Debug 主源码样式 */
+    /* 源码模块：Debug 主源码样式（v10.5.97，含历史记录自检与旧键安全清理） */
+/* 小六壬 v10.5.97 Debug 主源码样式 */
 #xlrDebugFab {
   position: fixed;
   left: max(12px, env(safe-area-inset-left));
@@ -1143,7 +1143,7 @@ body.xlr-debug-hidden .xlr-debug-fab { display:none !important; }
     body.reading-theme-night .xlr-guide-card span,body.reading-theme-night .xlr-term-card p{color:#dfd3c6;}
 
 
-/* 源码模块：导航随动自动居中主样式（v10.5.96，主 CSS 内建，不再后置补丁） */
+/* 源码模块：导航随动自动居中主样式（v10.5.97，主 CSS 内建，不再后置补丁） */
 :root {
   --xlr-nav-slot-width:82px;
   --xlr-nav-bottom:max(14px, env(safe-area-inset-bottom));
@@ -1313,8 +1313,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.96 导航随动自动居中修正版</h2>
-<p>本版继续加大“清补丁 + 恢复功能”的力度：在 v10.5.93 Debug 主源码可用的基础上，增强自检项目，加入旧缓存键安全清理入口，并继续检查源码结构、版本显示、导航、折叠、设置与运行错误，后续功能继续直接写回主函数。</p>
+<h2>个人占卜台 · v10.5.97 历史记录主源码恢复版</h2>
+<p>本版继续执行“补丁回源码计划”：在 v10.5.96 导航稳定的基础上，重点恢复历史记录主源码，包括历史查看、收藏、删除、搜索筛选、日期筛选、TXT/JSON 导出导入、完整备份、复盘时间线与 Debug 历史自检。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -1793,7 +1793,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.96 导航随动自动居中修正版';
+    const XLR_SOURCE_VERSION = 'v10.5.97 历史记录主源码恢复版';
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
 
@@ -2560,8 +2560,108 @@ function buildPaipanExplanation(result){
       });
     }
 
-    function saveCurrentResult() { if(!currentResult) return alert('请先占卜。'); ensureRuleInfo(currentResult); const list=getHistory(); const exists=list.find(item=>item.id===currentResult.id); if(!exists) list.unshift({...currentResult}); else Object.assign(exists,currentResult); localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0,80))); alert('已保存到历史记录。'); }
-    function toggleCurrentFavorite() { if(!currentResult) return alert('请先占卜。'); ensureRuleInfo(currentResult); currentResult.favorite=!currentResult.favorite; document.getElementById('favBtn').textContent=currentResult.favorite?'已收藏':'收藏'; const list=getHistory(); const found=list.find(item=>item.id===currentResult.id); if(found) found.favorite=currentResult.favorite; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+    
+    /* 源码模块：历史记录主源码恢复（v10.5.97）
+       目标：把保存、读取、收藏、筛选、导入导出、复盘刷新全部归入主源码，不再依赖旧补丁或后置兜底。 */
+    const HISTORY_MAX_ITEMS = 160;
+    function safeHistoryArray(value){ return Array.isArray(value) ? value.filter(Boolean) : []; }
+    function normalizeHistoryRecord(item){
+      if(!item || typeof item !== 'object') return null;
+      const copy = Object.assign({}, item);
+      if(!copy.id) copy.id = 'r_' + Date.now() + '_' + Math.random().toString(16).slice(2);
+      if(!copy.createdAt) copy.createdAt = new Date().toISOString();
+      if(!Array.isArray(copy.numbers)) copy.numbers = [];
+      if(!Array.isArray(copy.palaces)) copy.palaces = [];
+      if(!copy.sceneKey) copy.sceneKey = 'other';
+      if(!copy.sceneName) copy.sceneName = '其他';
+      if(!copy.sceneIcon) {
+        const scene = (typeof SCENES !== 'undefined' && Array.isArray(SCENES)) ? SCENES.find(s => s.key === copy.sceneKey || s.name === copy.sceneName) : null;
+        copy.sceneIcon = scene ? scene.icon : '';
+      }
+      copy.favorite = !!copy.favorite;
+      if(copy.review && !Array.isArray(copy.reviews)) copy.reviews = [Object.assign({}, copy.review)];
+      if(Array.isArray(copy.reviews)) {
+        copy.reviews = copy.reviews.filter(Boolean).map(r => Object.assign({accuracy:'pending', actual:'', note:'', reviewedAt:''}, r));
+        if(copy.reviews.length) copy.review = copy.reviews[copy.reviews.length - 1];
+        else delete copy.review;
+      }
+      return copy;
+    }
+    function normalizeHistoryList(list){
+      return safeHistoryArray(list).map(normalizeHistoryRecord).filter(Boolean).sort(function(a,b){
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+      });
+    }
+    function setHistory(list, options){
+      const normalized = normalizeHistoryList(list).slice(0, (options && options.keepAll) ? 1000 : HISTORY_MAX_ITEMS);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+      return normalized;
+    }
+    function getHistory(){
+      try { return normalizeHistoryList(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); }
+      catch(e) { return []; }
+    }
+    function updateCurrentFavoriteButton(){
+      const btn=document.getElementById('favBtn');
+      if(btn && currentResult) btn.textContent = currentResult.favorite ? '已收藏' : '收藏';
+    }
+    function refreshHistoryDependents(){
+      try { renderHistorySceneFilter(); } catch(e) {}
+      try { renderHistory(); } catch(e) {}
+      try { if(typeof renderAnalytics === 'function') renderAnalytics(); } catch(e) {}
+    }
+    function saveCurrentResult(){
+      if(!currentResult) return alert('请先占卜。');
+      ensureRuleInfo(currentResult);
+      const record = normalizeHistoryRecord(Object.assign({}, currentResult));
+      const list = getHistory();
+      const index = list.findIndex(item => item.id === record.id);
+      if(index >= 0) list[index] = Object.assign({}, list[index], record);
+      else list.unshift(record);
+      setHistory(list);
+      refreshHistoryDependents();
+      alert('已保存到历史记录。');
+    }
+    function toggleCurrentFavorite(){
+      if(!currentResult) return alert('请先占卜。');
+      ensureRuleInfo(currentResult);
+      currentResult.favorite = !currentResult.favorite;
+      updateCurrentFavoriteButton();
+      const list = getHistory();
+      const found = list.find(item => item.id === currentResult.id);
+      if(found) found.favorite = currentResult.favorite;
+      else list.unshift(normalizeHistoryRecord(Object.assign({}, currentResult)));
+      setHistory(list);
+      refreshHistoryDependents();
+    }
+    function toggleHistoryFavorite(id){
+      const list = getHistory();
+      const item = list.find(x => x.id === id);
+      if(!item) return alert('没有找到这条历史记录。');
+      item.favorite = !item.favorite;
+      if(currentResult && currentResult.id === id) {
+        currentResult.favorite = item.favorite;
+        updateCurrentFavoriteButton();
+      }
+      setHistory(list);
+      renderHistory();
+      try { if(typeof renderAnalytics === 'function') renderAnalytics(); } catch(e) {}
+    }
+    window.XLRHistoryCore = {
+      version: XLR_SOURCE_VERSION,
+      source: 'mainline-v10.5.97',
+      key: STORAGE_KEY,
+      maxItems: HISTORY_MAX_ITEMS,
+      get: getHistory,
+      set: setHistory,
+      normalizeRecord: normalizeHistoryRecord,
+      normalizeList: normalizeHistoryList,
+      saveCurrent: saveCurrentResult,
+      toggleCurrentFavorite: toggleCurrentFavorite,
+      toggleFavorite: toggleHistoryFavorite,
+      refresh: refreshHistoryDependents
+    };
+    
     function normalizeDateString(value){
       const raw = String(value || '').trim();
       if (!raw) return '';
@@ -2628,34 +2728,74 @@ function buildPaipanExplanation(result){
     function renderDateScopeLabel(dateValue){
       return dateValue ? `日期：${dateValue}` : '全部日期';
     }
+    
     function renderHistory() {
-      var list = getHistory();
-      var qEl = document.getElementById('historySearchInput');
-      var sceneEl = document.getElementById('historySceneFilter');
-      var dateEl = document.getElementById('historyDateInput');
-      var keyword = qEl ? String(qEl.value || '').trim() : '';
-      var sceneFilter = sceneEl ? sceneEl.value : 'all';
-      var dateFilter = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
-      var filtered = filterHistoryByDate(list, dateFilter).filter(function(item){
+      const list = getHistory();
+      const qEl = document.getElementById('historySearchInput');
+      const sceneEl = document.getElementById('historySceneFilter');
+      const dateEl = document.getElementById('historyDateInput');
+      const keyword = qEl ? String(qEl.value || '').trim().toLowerCase() : '';
+      const sceneFilter = sceneEl ? sceneEl.value : 'all';
+      const dateFilter = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
+      const filtered = filterHistoryByDate(list, dateFilter).filter(function(item){
         if (historyFilter === 'fav' && !item.favorite) return false;
         if (sceneFilter !== 'all' && item.sceneKey !== sceneFilter) return false;
         if (keyword) {
-          var hay = [item.sceneName, item.question, item.methodNote, (item.palaces||[]).join(' / '), item.overallText].join(' ');
+          const hay = [
+            item.sceneName, item.sceneKey, item.question, item.methodNote,
+            (item.numbers||[]).join(' / '), (item.palaces||[]).join(' / '),
+            item.overallText, item.extraInfo, reviewTimelineSummaryText(item)
+          ].join(' ').toLowerCase();
           if (hay.indexOf(keyword) === -1) return false;
         }
         return true;
       });
-      var container = document.getElementById('historyList');
-      if(!filtered.length){ container.innerHTML = '<div class="history-empty">暂无记录' + (dateFilter ? '：' + dateFilter : '') + '</div>'; return; }
-      container.innerHTML = filtered.map(function(item){
-        var q = item.question ? '<div style="margin-top:6px;color:var(--muted);">问：' + escapeHTML(item.question).slice(0,80) + '</div>' : '';
-        var review = reviewTimelineSummary(item);
-        return '<div class="history-item"><div class="history-row"><strong>' + (item.sceneIcon || '') + ' ' + item.sceneName + '</strong><span style="color:var(--muted);font-size:.93rem;">' + formatISO(item.createdAt) + (item.favorite ? ' ★ 已收藏' : '') + '</span></div>' + q + '<div class="history-meta"><span>' + item.methodNote + '</span><span>规则：' + ((item.rule && item.rule.name) || DIVINATION_RULE.name) + '</span><span>' + item.palaces.join(' / ') + '</span></div>' + review + '<div class="history-actions"><button class="ghost-btn" type="button" onclick="viewHistoryItem(\'' + item.id + '\')">查看</button><button class="ghost-btn" type="button" onclick="openReviewDialog(\'' + item.id + '\')">复盘</button><button class="danger-btn" type="button" onclick="deleteHistoryItem(\'' + item.id + '\')">删除</button></div></div>';
+      const container = document.getElementById('historyList');
+      if(!container) return;
+      const totalText = list.length ? '共 ' + list.length + ' 条，当前显示 ' + filtered.length + ' 条' : '暂无历史记录';
+      if(!filtered.length){ container.innerHTML = '<div class="history-empty">' + totalText + (dateFilter ? '：' + dateFilter : '') + '</div>'; return; }
+      container.innerHTML = '<div class="history-empty" style="margin-bottom:10px;">' + totalText + (historyFilter === 'fav' ? '｜只看收藏' : '') + '</div>' + filtered.map(function(raw){
+        const item = normalizeHistoryRecord(raw) || raw;
+        const rawId = String(item.id || '');
+        const id = escapeAttr(rawId);
+        const jsId = escapeAttr(JSON.stringify(rawId));
+        const q = item.question ? '<div style="margin-top:6px;color:var(--muted);">问：' + escapeHTML(item.question).slice(0,100) + '</div>' : '';
+        const review = reviewTimelineSummary(item);
+        const ruleName = (item.rule && item.rule.name) || DIVINATION_RULE.name;
+        const palaces = Array.isArray(item.palaces) && item.palaces.length ? item.palaces.join(' / ') : '未记录落宫';
+        const method = item.methodNote || item.method || '未记录起课方式';
+        const favText = item.favorite ? '取消收藏' : '收藏';
+        const favBadge = item.favorite ? ' ★ 已收藏' : '';
+        return '<div class="history-item" data-history-id="' + id + '">' +
+          '<div class="history-row"><strong>' + escapeHTML((item.sceneIcon || '') + ' ' + (item.sceneName || '其他')) + '</strong><span style="color:var(--muted);font-size:.93rem;">' + escapeHTML(formatISO(item.createdAt)) + favBadge + '</span></div>' +
+          q +
+          '<div class="history-meta"><span>' + escapeHTML(method) + '</span><span>规则：' + escapeHTML(ruleName) + '</span><span>' + escapeHTML(palaces) + '</span></div>' +
+          review +
+          '<div class="history-actions">' +
+            '<button class="ghost-btn" type="button" onclick="viewHistoryItem(' + jsId + ')">查看</button>' +
+            '<button class="ghost-btn" type="button" onclick="toggleHistoryFavorite(' + jsId + ')">' + favText + '</button>' +
+            '<button class="ghost-btn" type="button" onclick="openReviewDialog(' + jsId + ')">复盘</button>' +
+            '<button class="danger-btn" type="button" onclick="deleteHistoryItem(' + jsId + ')">删除</button>' +
+          '</div></div>';
       }).join('');
     }
-    function handleHistoryActions(e) { const viewId=e.target.closest('[data-view]')?.dataset.view; if(viewId){ const item=getHistory().find(x=>x.id===viewId); if(item){ currentResult=item; renderResult(item); historyDialog.close(); } return; } const delId=e.target.closest('[data-delete]')?.dataset.delete; if(delId){ if(!confirm('确定删除这条历史记录吗？')) return; const list=getHistory().filter(x=>x.id!==delId); localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); renderHistory(); } }
-    function clearHistory(){ if(!confirm('确定清空所有历史记录吗？')) return; localStorage.removeItem(STORAGE_KEY); renderHistory(); }
-    function getHistory(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
+    function reviewTimelineSummaryText(item){
+      return getReviewEntries(item).map(function(r){ return [reviewAccuracyLabel(r.accuracy), r.actual, r.note].join(' '); }).join(' ');
+    }
+    function handleHistoryActions(e) {
+      const viewId=e.target.closest('[data-view]')?.dataset.view;
+      if(viewId){ viewHistoryItem(viewId); return; }
+      const favId=e.target.closest('[data-fav]')?.dataset.fav;
+      if(favId){ toggleHistoryFavorite(favId); return; }
+      const delId=e.target.closest('[data-delete]')?.dataset.delete;
+      if(delId){ deleteHistoryItem(delId); }
+    }
+    function clearHistory(){
+      if(!confirm('确定清空所有历史记录吗？此操作不会删除阅读设置和问题模板。')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      refreshHistoryDependents();
+    }
+    
     function resetForm(){
       ['num1','num2','num3'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
       const q=document.getElementById('questionInput'); if(q) q.value='';
@@ -2687,8 +2827,10 @@ function buildPaipanExplanation(result){
     function formatLunarFull(text, dt){ const raw=String(text || '').replace(/^\d{2,4}年\s*/,'').replace(/^农历/,'').replace(/^\s+/,'').replace(/\s+/g,''); return `${dt.getFullYear()}年 农历${raw}`; }
     function formatISO(iso){ return formatDateTimeCN(new Date(iso)); }
 
+    
     function openHistoryDialog(){
       historyFilter = 'all';
+      renderHistorySceneFilter();
       renderHistory();
       if (historyDialog && typeof historyDialog.showModal === 'function') { historyDialog.showModal(); }
       else if (historyDialog) { historyDialog.setAttribute('open','open'); }
@@ -2700,16 +2842,19 @@ function buildPaipanExplanation(result){
     function showAllHistory(){ historyFilter = 'all'; renderHistory(); }
     function showFavHistory(){ historyFilter = 'fav'; renderHistory(); }
     function viewHistoryItem(id){
-      var list = getHistory();
-      var item = null;
-      for (var i = 0; i < list.length; i++) { if (list[i].id === id) { item = list[i]; break; } }
-      if (item) { currentResult = item; renderResult(item); closeHistoryDialog(); }
+      const item = getHistory().find(function(x){ return x.id === id; });
+      if(!item) return alert('没有找到这条历史记录。');
+      currentResult = normalizeHistoryRecord(item) || item;
+      try { window.currentResult = currentResult; } catch(e) {}
+      renderResult(currentResult);
+      closeHistoryDialog();
     }
     function deleteHistoryItem(id){
       if(!confirm('确定删除这条历史记录吗？')) return;
-      var list = getHistory().filter(function(x){ return x.id !== id; });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-      renderHistory();
+      const list = getHistory().filter(function(x){ return x.id !== id; });
+      setHistory(list);
+      if(currentResult && currentResult.id === id) { currentResult = null; try { window.currentResult=null; } catch(e) {} }
+      refreshHistoryDependents();
     }
 
     let currentReviewId = null;
@@ -2788,7 +2933,7 @@ function buildPaipanExplanation(result){
       ensureReviewTimeline(item);
       item.reviews.push(entry);
       item.review = entry;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      setHistory(list);
       document.getElementById('reviewAccuracy').value = 'pending';
       document.getElementById('reviewActual').value = '';
       document.getElementById('reviewNote').value = '';
@@ -2802,13 +2947,14 @@ function buildPaipanExplanation(result){
       if(!confirm('确定清空这条记录的复盘内容吗？')) return;
       const list = getHistory();
       const item = list.find(function(x){ return x.id === currentReviewId; });
-      if(item) delete item.review;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      if(item) { delete item.review; item.reviews = []; }
+      setHistory(list);
       document.getElementById('reviewAccuracy').value = 'pending';
       document.getElementById('reviewActual').value = '';
       document.getElementById('reviewNote').value = '';
       renderHistory();
-      renderAnalytics();
+      if(typeof renderAnalytics === 'function') renderAnalytics();
+      renderReviewTimeline(item || null);
       alert('复盘已清空。');
     }
 
@@ -4152,14 +4298,13 @@ function buildContextOverallSentence(context, details) {
       const reader = new FileReader();
       reader.onload = function(){
         try{
-          const importedHistory = normalizeImportedHistoryData(JSON.parse(reader.result));
+          const importedHistory = normalizeHistoryList(normalizeImportedHistoryData(JSON.parse(reader.result)));
           const mode = prompt('请选择历史导入方式：\n输入 merge：与当前历史合并\n输入 replace：覆盖当前历史\n输入 cancel：取消导入','merge');
           if(!mode || mode.toLowerCase() === 'cancel') return;
           const normalizedMode = mode.toLowerCase().trim();
           if(normalizedMode !== 'merge' && normalizedMode !== 'replace') return alert('未识别的导入方式，已取消。');
           const current = getHistory();
-          const nextHistory = normalizedMode === 'replace' ? importedHistory : mergeHistoryRecords(current, importedHistory);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(nextHistory));
+          const nextHistory = normalizedMode === 'replace' ? setHistory(importedHistory, {keepAll:true}) : setHistory(mergeHistoryRecords(current, importedHistory), {keepAll:true});
           renderHistorySceneFilter();
           renderHistory();
           if(typeof renderAnalytics === 'function') renderAnalytics();
@@ -4299,8 +4444,7 @@ function buildContextOverallSentence(context, details) {
           const normalizedMode = mode.toLowerCase().trim();
           if(normalizedMode !== 'merge' && normalizedMode !== 'replace') return alert('未识别的导入方式，已取消。');
           const current = getHistory();
-          const nextHistory = normalizedMode === 'replace' ? importedHistory : mergeHistoryRecords(current, importedHistory);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(nextHistory));
+          const nextHistory = normalizedMode === 'replace' ? setHistory(importedHistory, {keepAll:true}) : setHistory(mergeHistoryRecords(current, importedHistory), {keepAll:true});
           if(data.settings && typeof data.settings === 'object') localStorage.setItem(SETTINGS_KEY, JSON.stringify(Object.assign({}, DEFAULT_SETTINGS, data.settings)));
           if(data.savedChoices && typeof data.savedChoices === 'object') localStorage.setItem(SAVED_CHOICE_KEY, JSON.stringify(data.savedChoices));
           if(data.viewMode) localStorage.setItem('xlr_view_mode_v9_1', data.viewMode);
@@ -4336,6 +4480,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.97 历史记录主源码恢复版', items:[
+          '历史记录恢复进入主源码阶段：新增 window.XLRHistoryCore 主命名空间，统一管理保存、读取、排序、收藏、删除、清空、筛选、导入与导出。',
+          '历史列表增强：支持场景、日期、关键词、只看收藏筛选；每条记录恢复查看、收藏/取消收藏、复盘、删除按钮，并保留复盘摘要。',
+          '修复复盘清空只删旧 review、不删 reviews 时间线的问题；现在清空复盘会同步清掉所有复盘记录，并刷新历史与分析。',
+          'JSON 导入增强：导入前会规范记录结构，合并模式按 id 去重并保留最新内容，replace 模式会规范后再覆盖；导入后刷新历史、筛选和分析。',
+          'Debug 自检新增历史主命名空间、历史 DOM、历史导入控件、历史函数、历史数据结构检查；继续保持 1 个主 style + 1 个主 script，不新增后置补丁。'
+        ]},
         { v:'v10.5.96 导航随动自动居中修正版', items:[
           '修复 v10.5.95 中主导航只高亮、不随页面上下滚动自动左右滚动的问题，恢复固定中槽式导航体验。',
           '主导航与命盘子导航改为固定可滚动宽度，并加入左右安全留白，让当前模块可以自动滚到中间槽位。',
@@ -5721,7 +5872,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    // 源码模块：智能章节卡点导航（v10.5.96 导航随动自动居中主线版）
+    // 源码模块：智能章节卡点导航（v10.5.97 导航随动自动居中主线版）
     const XLR_NAV_LOCK = { until:0, main:'', sub:'' };
     function xlrNav$(id){ return document.getElementById(id); }
     function applyNavPositionClass(){
@@ -6022,16 +6173,16 @@ function buildContextOverallSentence(context, details) {
       refresh: updateSectionJumpNav,
       centerActive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); if(main) xlrNavSyncToActive(main,'[data-jump-target]', main.dataset.currentTarget || xlrNavCurrentId(currentJumpTargets()), true); if(sub) xlrNavSyncToActive(sub,'[data-destiny-sub-target]', sub.dataset.currentTarget || xlrNavCurrentId(currentDestinySubTargets()), true); },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.96'
+      source: 'mainline-v10.5.97'
     };
 
     initExtendedContextRules();
 
 
 
-    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.96） */
+    /* 源码模块：Debug 主源码恢复与一键自检（v10.5.97） */
 /*
- * 小六壬 v10.5.96 Debug 主源码模块
+ * 小六壬 v10.5.97 Debug 主源码模块
  * 目标：替代旧 v10514/v10546/v10574/v10581/v10582 Debug 补丁链，并恢复导航自检。
  * 用法：本段已合并进主源码 Debug 区域。
  * 注意：自检只读页面状态；“清理旧缓存”只删除旧补丁本地键，不改变占卜逻辑。
@@ -6039,7 +6190,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.96 导航随动自动居中修正版';
+  const APP_VERSION = 'v10.5.97 历史记录主源码恢复版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -6115,7 +6266,17 @@ function buildContextOverallSentence(context, details) {
     'expandAllResultBlocks',
     'collapseAllResultBlocks',
     'renderQuickTools',
-    'syncExtraSettingsForm'
+    'syncExtraSettingsForm',
+    'getHistory',
+    'renderHistory',
+    'openHistoryDialog',
+    'saveCurrentResult',
+    'toggleCurrentFavorite',
+    'toggleHistoryFavorite',
+    'exportHistory',
+    'exportHistoryJSON',
+    'triggerImportHistory',
+    'handleImportHistoryFile'
   ];
 
   const KNOWN_BLOCKS = [
@@ -6498,6 +6659,41 @@ function buildContextOverallSentence(context, details) {
     };
   }
 
+
+  function getHistoryInfo() {
+    let list = [];
+    try { list = typeof window.getHistory === 'function' ? window.getHistory() : []; } catch (err) { list = []; }
+    const sample = Array.isArray(list) ? list.slice(0, 3).map(item => ({
+      id: item && item.id || '',
+      sceneKey: item && item.sceneKey || '',
+      sceneName: item && item.sceneName || '',
+      createdAt: item && item.createdAt || '',
+      favorite: !!(item && item.favorite),
+      hasReviews: !!(item && Array.isArray(item.reviews) && item.reviews.length),
+      palaces: item && Array.isArray(item.palaces) ? item.palaces : []
+    })) : [];
+    const malformed = Array.isArray(list) ? list.filter(item => !item || !item.id || !item.createdAt || !Array.isArray(item.numbers) || !Array.isArray(item.palaces)).length : 0;
+    return {
+      core: {
+        exists: !!window.XLRHistoryCore,
+        version: window.XLRHistoryCore ? window.XLRHistoryCore.version : '',
+        source: window.XLRHistoryCore ? window.XLRHistoryCore.source : '',
+        key: window.XLRHistoryCore ? window.XLRHistoryCore.key : '',
+        maxItems: window.XLRHistoryCore ? window.XLRHistoryCore.maxItems : null
+      },
+      count: Array.isArray(list) ? list.length : 0,
+      malformed,
+      hasDialog: !!document.getElementById('historyDialog'),
+      hasList: !!document.getElementById('historyList'),
+      hasSearch: !!document.getElementById('historySearchInput'),
+      hasSceneFilter: !!document.getElementById('historySceneFilter'),
+      hasDateFilter: !!document.getElementById('historyDateInput'),
+      hasHistoryImport: !!document.getElementById('historyImportInput'),
+      hasBackupImport: !!document.getElementById('backupImportInput'),
+      sample
+    };
+  }
+
   function getStorageInfo() {
     const keys = [];
     try {
@@ -6747,6 +6943,7 @@ function buildContextOverallSentence(context, details) {
         methodText: textOf(document.getElementById('resultMethod'), 220)
       },
       functions: getFunctionStatus(),
+      history: getHistoryInfo(),
       navigation: getNavInfo(),
       quickButtons: getQuickButtonsInfo(),
       collapsible: getCollapsibleInfo(),
@@ -6775,11 +6972,11 @@ function buildContextOverallSentence(context, details) {
     if (!document.title.includes(APP_VERSION)) {
       addIssue(issues, 'error', 'VERSION_TITLE_MISMATCH', '页面 title 没有显示当前版本', { title: document.title, expected: APP_VERSION });
     }
-    if (!snapshot.versionInfo.meta.includes('10.5.96') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
-      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.96', snapshot.versionInfo.meta);
+    if (!snapshot.versionInfo.meta.includes('10.5.97') && !snapshot.versionInfo.meta.includes(APP_VERSION)) {
+      addIssue(issues, 'warning', 'VERSION_META_MISMATCH', 'meta description 未更新到 v10.5.97', snapshot.versionInfo.meta);
     }
-    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.96'))) {
-      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.96', snapshot.versionInfo.headings.slice(0, 8));
+    if (!snapshot.versionInfo.headings.some(text => text.includes(APP_VERSION) || text.includes('v10.5.97'))) {
+      addIssue(issues, 'error', 'VERSION_HEADING_MISSING', '首页/主标题没有显示 v10.5.97', snapshot.versionInfo.headings.slice(0, 8));
     }
 
     if (snapshot.duplicateIds.length) {
@@ -6817,6 +7014,23 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'MISSING_CORE_FUNCTIONS', '部分核心函数未挂到 window，若功能正常可忽略；若恢复功能异常需检查', missingFunctions);
     }
 
+
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.97') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.97 主源码历史模块', snapshot.history.core);
+    }
+    if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
+      addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
+    }
+    if (!snapshot.history.hasSearch || !snapshot.history.hasSceneFilter || !snapshot.history.hasDateFilter) {
+      addIssue(issues, 'warning', 'HISTORY_FILTER_DOM_MISSING', '历史搜索/场景/日期筛选控件不完整', snapshot.history);
+    }
+    if (!snapshot.history.hasHistoryImport || !snapshot.history.hasBackupImport) {
+      addIssue(issues, 'warning', 'HISTORY_IMPORT_DOM_MISSING', '历史 JSON 或完整备份导入控件缺失', snapshot.history);
+    }
+    if (snapshot.history.malformed) {
+      addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
+    }
+
     const isResult = snapshot.page.isResultPage || snapshot.page.resultCard.visible;
     const isDestiny = snapshot.page.isDestinyPage || (snapshot.page.currentResult && snapshot.page.currentResult.sceneKey === 'destiny');
     const requiredNav = isResult ? REQUIRED_RESULT_NAV.slice() : REQUIRED_HOME_NAV.slice();
@@ -6829,8 +7043,8 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.96') {
-      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.96 主源码导航', snapshot.navigation.core);
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.97') {
+      addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.97 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
       addIssue(issues, 'warning', 'LEGACY_NAV_NODE_RESIDUE', '发现旧导航 DOM 节点残留', snapshot.navigation.legacyNavNodes);
@@ -6887,10 +7101,14 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.97') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
+    if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
+    if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.96') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.97') passes.push('导航主命名空间检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (!brokenNav.length) passes.push('导航 target 检查通过');
 
@@ -6922,7 +7140,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、命盘子导航、折叠、设置和运行错误。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、旧补丁残留、导航主源码、历史记录主源码、命盘子导航、折叠、设置和运行错误。</p>
         <div class="xlr-debug-toolbar">
           <button type="button" data-debug-action="selfcheck">一键自检</button>
           <button type="button" data-debug-action="snapshot">刷新快照</button>

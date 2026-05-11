@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.96 导航随动自动居中修正版",
-  "short_name": "小六壬 v10.5.96",
-  "description": "小六壬个人网页版 v10.5.96：修复导航不会随着内容上下滚动而左右自动居中的问题，恢复固定中槽式随动导航，并增强 Debug 自检。",
-  "start_url": "./index.html?v=10.5.96",
+  "name": "小六壬占卜 v10.5.97 历史记录主源码恢复版",
+  "short_name": "小六壬 v10.5.97",
+  "description": "小六壬个人网页版 v10.5.97：恢复历史记录主源码，包含保存、查看、收藏、搜索筛选、导出导入、完整备份、复盘时间线与 Debug 历史自检。",
+  "start_url": "./index.html?v=10.5.97",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f7f3ee",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.96"
+  "version": "10.5.97"
 }

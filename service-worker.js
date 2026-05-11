@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.96-nav-follow-center';
+const CACHE_NAME = 'xiaoliuren-v10.5.97-history-core';
 const APP_SHELL = [
   './',
   './index.html',
