@@ -1,12 +1,12 @@
 {
-  "name": "小六壬占卜 v10.5.101 清补丁与阅读模式修复版",
-  "short_name": "小六壬 v10.5.101",
-  "description": "小六壬个人网页版 v10.5.101：修复默认简洁版失效、Debug 命盘边界误报和暗夜模式配色，并继续清理旧补丁残留。",
-  "start_url": "./index.html?v=10.5.101",
+  "name": "小六壬占卜 v10.5.102 暗夜模式主源码修复版",
+  "short_name": "小六壬 v10.5.102",
+  "description": "小六壬个人网页版 v10.5.102：参考 v10.5.76 恢复稳定暗夜 CSS 主题，修复命盘自检误报、旧设置键残留和暗夜局部白块问题。",
+  "start_url": "./index.html?v=10.5.102",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f7f3ee",
-  "theme_color": "#6753a5",
+  "background_color": "#11121a",
+  "theme_color": "#745ac5",
   "icons": [
     {
       "src": "icon-192.png",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.101"
+  "version": "10.5.102"
 }
