@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.148",
-  "short_name": "小六壬 v10.5.148",
-  "description": "小六壬个人网页版 v10.5.148 Debug 灵敏度与误报降级版",
-  "start_url": "./?v=10.5.148",
+  "name": "小六壬占卜 · v10.5.149",
+  "short_name": "小六壬 v10.5.149",
+  "description": "小六壬个人网页版 v10.5.149 Debug 阻塞分级与说明完善版",
+  "start_url": "./?v=10.5.149",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.148"
+  "version": "10.5.149"
 }
