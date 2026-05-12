@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.138 历史回看 Debug 误报与暗夜标签对比度修正版</title>
-<meta content="小六壬个人网页版 v10.5.138 历史回看 Debug 误报与暗夜标签对比度修正版：基于 v10.5.137 修正历史回看后一键自检中的暗夜标签低对比误报、透明背景对比度计算、雷达 Canvas 空模块误判与深度逻辑巡检发版体检失败。" name="description"/>
+<title>小六壬占卜 · v10.5.139 历史分析暗夜与 Debug 置顶修正版</title>
+<meta content="小六壬个人网页版 v10.5.139 历史分析暗夜与 Debug 置顶修正版：基于 v10.5.138 修复历史分析暗夜模式统计卡片白底/浅字问题，并提升 Debug 浮动按钮、弹窗快捷入口与 Debug 面板层级，避免历史记录/历史分析弹窗遮挡 Debug。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1762,6 +1762,58 @@ body.result-page .destiny-sub-nav .jump-chip {
   .xlr-debug-output { max-height: 46vh; font-size: 11px; }
 }
 
+
+
+/* v10.5.139：历史分析暗夜统计卡片与 Debug 置顶层级修复 */
+body.reading-theme-night .analysis-card,
+body.xlr-debug-night-audit .analysis-card {
+  background:#1b1b28 !important;
+  background-image:none !important;
+  color:var(--text) !important;
+  border-color:rgba(194,176,230,.26) !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.24) !important;
+}
+body.reading-theme-night .analysis-card span,
+body.xlr-debug-night-audit .analysis-card span {
+  color:#b9b0cf !important;
+}
+body.reading-theme-night .analysis-card b,
+body.xlr-debug-night-audit .analysis-card b {
+  color:#d8ccff !important;
+}
+#xlrDebugFab {
+  z-index:2147483646 !important;
+}
+#xlrDebugDialog {
+  z-index:2147483647 !important;
+  position:fixed !important;
+  isolation:isolate !important;
+}
+.xlr-dialog-debug-shortcut {
+  flex:0 0 auto;
+  margin-left:auto;
+  min-width:76px;
+  height:36px;
+  border-radius:999px;
+  border:1px solid rgba(217,182,119,.38);
+  background:linear-gradient(135deg,rgba(103,83,165,.12),rgba(217,182,119,.12));
+  color:#6753a5;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:.02em;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(46,35,82,.10);
+  -webkit-tap-highlight-color:transparent;
+}
+body.reading-theme-night .xlr-dialog-debug-shortcut {
+  background:#27203a !important;
+  background-image:linear-gradient(135deg,#33264b,#3a3126) !important;
+  color:#ffe3aa !important;
+  border-color:rgba(255,214,148,.46) !important;
+  box-shadow:0 10px 22px rgba(0,0,0,.28) !important;
+}
+body.xlr-debug-hidden .xlr-dialog-debug-shortcut { display:none !important; }
+
 body.xlr-debug-hidden #xlrDebugFab { display:none !important; }
 
 /* 源码主模块：阅读模式、UI显示、快捷按钮设置 */
@@ -1988,7 +2040,7 @@ body.reading-theme-night svg { filter:none !important; }
 /* v10.5.136-137 暗夜 CSS 全量体检兜底：新增模块/场景/弹窗/卡片 */
 body.reading-theme-night .main :is(details, summary, article, section),
 body.reading-theme-night :is(.scene-panel,.scene-more-panel,.scene-category,.scene-more-groups,.scene-more-body,.scene-group,.scene-group-title,.scene-subtitle,.scene-panel-note),
-body.reading-theme-night :is(.analytics-pro-card,.analytics-section,.analysis-block,.analysis-chart,.analysis-kpi-note,.chart-row,.analysis-table-wrap),
+body.reading-theme-night :is(.analysis-card,.analytics-pro-card,.analytics-section,.analysis-block,.analysis-chart,.analysis-kpi-note,.chart-row,.analysis-table-wrap),
 body.reading-theme-night :is(.review-target,.review-entry,.review-form,.review-list,.review-score-card,.review-edit-panel,.review-unit-card),
 body.reading-theme-night :is(.knowledge-card,.knowledge-pack-card,.knowledge-audit-card,.debug-card,.debug-section,.audit-card),
 body.reading-theme-night :is(.history-item,.history-detail,.history-meta,.tool-folder,.tool-folder-body,.dialog-body,.dialog-panel) {
@@ -2003,10 +2055,10 @@ body.reading-theme-night .main :is([class*="scene-"],[class*="analysis-"],[class
 body.reading-theme-night .main :is([class*="scene-"],[class*="analysis-"],[class*="analytics-"],[class*="review-"],[class*="history-"],[class*="template-"],[class*="rule-"],[class*="knowledge-"],[class*="context-"],[class*="focus-"],[class*="answer-"]) :is(p,li,td,th,label,span,small) {
   color:inherit;
 }
-body.reading-theme-night .main :is(.scene-panel-note,.scene-group-title small,.analytics-pro-card small,.analysis-kpi-note,.chart-label,.review-meta,.history-meta,.knowledge-note,.debug-note) {
+body.reading-theme-night .main :is(.scene-panel-note,.scene-group-title small,.analysis-card span,.analytics-pro-card small,.analysis-kpi-note,.chart-label,.review-meta,.history-meta,.knowledge-note,.debug-note) {
   color:var(--muted) !important;
 }
-body.reading-theme-night .main :is(summary,h3,h4,h5,h6,.scene-group-title,.scene-subtitle,.analytics-pro-card strong,.analysis-title,.review-title,.history-title,.knowledge-title) {
+body.reading-theme-night .main :is(summary,h3,h4,h5,h6,.scene-group-title,.scene-subtitle,.analysis-card b,.analytics-pro-card strong,.analysis-title,.review-title,.history-title,.knowledge-title) {
   color:#f3edff !important;
 }
 body.reading-theme-night .main :is(.scene-grid,.scene-grid-compact,.analysis-grid,.review-grid,.history-grid,.knowledge-grid) {
@@ -2080,6 +2132,7 @@ body.reading-theme-night .scene-grid.scene-grid-compact .scene-btn.active {
 body.reading-theme-night .analysis-chart .chart-row > div:last-child {
   color:#f3edff !important;
 }
+body.reading-theme-night .analysis-card,
 body.reading-theme-night .analytics-pro-card,
 body.reading-theme-night .analysis-table-wrap {
   background:#1b1b28 !important;
@@ -2603,7 +2656,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.138 历史回看 Debug 误报与暗夜标签对比度修正版</h2>
+<h2>个人占卜台 · v10.5.139 历史分析暗夜与 Debug 置顶修正版</h2>
 <p>本版继续加固暗夜模式 CSS 全量体检：新增模块、场景、弹窗、卡片都纳入运行时扫描，重点排查白底、浅字、低对比和边框不协调。</p>
 </div>
 <div class="actions">
@@ -3089,7 +3142,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.138 历史回看 Debug 误报与暗夜标签对比度修正版';
+    const XLR_SOURCE_VERSION = 'v10.5.139 历史分析暗夜与 Debug 置顶修正版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4121,7 +4174,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.138',
+      source: 'mainline-v10.5.139',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5942,8 +5995,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.138",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检。",
+      "version": "2.0+extension+family-life-v10.5.139",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7321,7 +7374,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.138',
+        source:'mainline-v10.5.139',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -7399,7 +7452,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.138',
+        source:'mainline-v10.5.139',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -7412,7 +7465,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.138') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.139') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -7421,7 +7474,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.138',
+      source:'mainline-v10.5.139',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -7672,7 +7725,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.138',
+        source: 'mainline-v10.5.139',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -7688,7 +7741,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.138',
+      source: 'mainline-v10.5.139',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -8271,6 +8324,12 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.139 历史分析暗夜与 Debug 置顶修正版', items:[
+          '修复历史分析弹窗统计卡片 .analysis-card 在暗夜模式下仍出现白底、浅字、低对比的问题，并把统计卡片纳入暗夜运行时体检清单。',
+          '提升 Debug 浮动按钮、Debug 弹窗和弹窗内 Debug 快捷入口层级；历史记录、历史分析、复盘、设置等弹窗打开时，也能从标题栏进入 Debug。',
+          '打开 Debug 时会临时挂起已打开的普通弹窗，关闭 Debug 后自动恢复，避免历史记录/历史分析遮挡 Debug 面板。',
+          '继续同步 title、meta、首页版本、版本内容更新、README、manifest 与 service-worker，并把主命名空间来源推进到 mainline-v10.5.139。'
+        ]},
         { v:'v10.5.138 历史回看 Debug 误报与暗夜标签对比度修正版', items:[
           '修复历史记录中点击“查看”回到结果页后，Debug 一键自检把 .rule-badge / .keyword-chip / .pill 等透明金色标签误判为低对比的问题。',
           '升级暗夜运行时体检的有效背景色算法：对 rgba() 透明背景按父级暗夜背景进行合成后再计算对比度，避免只拿半透明颜色本身计算造成误报。',
@@ -9172,7 +9231,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.138',
+      source: 'mainline-v10.5.139',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -9250,7 +9309,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.138',
+      source: 'mainline-v10.5.139',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -10618,7 +10677,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.138'
+      source: 'mainline-v10.5.139'
     };
 
     initExtendedContextRules();
@@ -10635,7 +10694,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.138 历史回看 Debug 误报与暗夜标签对比度修正版';
+  const APP_VERSION = 'v10.5.139 历史分析暗夜与 Debug 置顶修正版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -10812,7 +10871,8 @@ function buildContextOverallSentence(context, details) {
     uiEvents: [],
     lastSnapshot: null,
     lastSelfCheck: null,
-    openedAt: null
+    openedAt: null,
+    suspendedDialogs: []
   };
 
   function nowText() {
@@ -11024,7 +11084,7 @@ function buildContextOverallSentence(context, details) {
     const required = [
       '.ab-choice-panel', '.ab-toggle', '.ab-option-card', '.ab-score div', '.about-rules details',
       '.version-log details', '.feature-item', '.custom-template-box', '.template-quick-section',
-      '.analysis-table-wrap', '.analytics-pro-card', '.analytics-section', '.analysis-block', '.analysis-chart', '.chart-row', '.analysis-kpi-note',
+      '.analysis-card', '.analysis-table-wrap', '.analytics-pro-card', '.analytics-section', '.analysis-block', '.analysis-chart', '.chart-row', '.analysis-kpi-note',
       '.review-target', '.review-entry', '.review-form', '.review-list', '.review-score-card', '.review-edit-panel',
       '.date-display-btn', '.hex-node', '.v105107-paipan-cell', '.v105107-paipan-cell.is-hit',
       '.radar-metric-pill', '.destiny-source-panel', '.destiny-formula', '.destiny-source-formula',
@@ -11081,9 +11141,9 @@ function buildContextOverallSentence(context, details) {
     const scanned = new Set();
     const targetedSelectors = [
       '.scene-more-groups', '.scene-more-groups > summary', '.scene-more-body', '.scene-group', '.scene-group-title', '.scene-subtitle', '.scene-panel-note',
-      '.scene-grid.scene-grid-compact', '.scene-grid.scene-grid-compact .scene-btn', '.analytics-pro-card', '.analytics-section', '.analysis-block', '.analysis-chart',
+      '.scene-grid.scene-grid-compact', '.scene-grid.scene-grid-compact .scene-btn', '.analysis-card', '.analytics-pro-card', '.analytics-section', '.analysis-block', '.analysis-chart',
       '.chart-row', '.analysis-kpi-note', '.analysis-table-wrap', '.review-target', '.review-entry', '.review-form', '.review-list', '.review-score-card',
-      '.knowledge-card', '.knowledge-pack-card', '.knowledge-audit-card', '.debug-card', '.audit-card', '.dialog-body', '.tool-folder', '.history-item'
+      '.knowledge-card', '.knowledge-pack-card', '.knowledge-audit-card', '.debug-card', '.audit-card', '.dialog-body', '.xlr-dialog-debug-shortcut', '.tool-folder', '.history-item'
     ];
     function rgbParts(value){
       const m = String(value || '').match(/rgba?\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)(?:,\s*(\d?(?:\.\d+)?))?/i);
@@ -11211,7 +11271,7 @@ function buildContextOverallSentence(context, details) {
       broadCandidateCount:broadCandidates.length,
       riskCount:risks.length,
       risks:risks.slice(0, 40),
-      note:'v10.5.138 起：Debug 会对 rgba() 透明背景进行父级背景合成后再计算对比度，并过滤 Canvas 等非文本结构，减少历史回看后的低对比/空模块误报。'
+      note:'v10.5.139 起：Debug 同时覆盖历史分析统计卡片与弹窗内 Debug 快捷入口，并继续对 rgba() 透明背景进行父级背景合成后再计算对比度。'
     };
   }
 
@@ -11843,7 +11903,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.138', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.138') },
+      { id:'nav-core', label:'导航主源码为 v10.5.139', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.139') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -11925,7 +11985,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.138' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.139' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -11940,7 +12000,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.138' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.139' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -11970,7 +12030,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.138') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.139') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -11986,7 +12046,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.138') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.139') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -12017,7 +12077,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.138') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.139') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.129 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -12051,7 +12111,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.138') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.139') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -12121,30 +12181,30 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.138' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.139' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.138') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.139') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.138') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.139') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.138') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.139') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.138') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.139') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -12245,13 +12305,113 @@ function buildContextOverallSentence(context, details) {
     fab.style.display = enabled ? 'flex' : 'none';
   }
 
+
+
+  function bringDebugLayerToTop() {
+    const fab = q('#xlrDebugFab');
+    const dialog = q('#xlrDebugDialog');
+    try {
+      if (fab && fab.parentElement !== document.body) document.body.appendChild(fab);
+      if (dialog && dialog.parentElement !== document.body) document.body.appendChild(dialog);
+    } catch (err) {}
+    if (fab) {
+      fab.style.zIndex = '2147483646';
+      fab.setAttribute('data-layer', 'debug-top');
+    }
+    if (dialog) {
+      dialog.style.zIndex = '2147483647';
+      dialog.setAttribute('data-layer', 'debug-top');
+    }
+  }
+
+  function getOpenNonDebugDialogs() {
+    return qa('dialog[open]').filter(function (dlg) {
+      return dlg && dlg.id !== 'xlrDebugDialog' && !dlg.closest('#xlrDebugDialog');
+    });
+  }
+
+  function suspendOpenDialogsForDebug() {
+    const openDialogs = getOpenNonDebugDialogs();
+    state.suspendedDialogs = openDialogs.map(function (dlg) { return dlg.id || ''; }).filter(Boolean);
+    openDialogs.forEach(function (dlg) {
+      try {
+        if (typeof dlg.close === 'function') dlg.close();
+        else dlg.removeAttribute('open');
+      } catch (err) {
+        try { dlg.removeAttribute('open'); } catch (err2) {}
+      }
+    });
+  }
+
+  function restoreSuspendedDialogs() {
+    const ids = Array.isArray(state.suspendedDialogs) ? state.suspendedDialogs.slice() : [];
+    state.suspendedDialogs = [];
+    if (!ids.length) return;
+    const id = ids[ids.length - 1];
+    const dlg = document.getElementById(id);
+    if (!dlg || dlg.open) return;
+    try {
+      if (id === 'analyticsDialog' && typeof renderAnalytics === 'function') renderAnalytics();
+      if (id === 'historyDialog' && typeof renderHistory === 'function') renderHistory();
+    } catch (err) {}
+    try {
+      if (typeof dlg.showModal === 'function') dlg.showModal();
+      else dlg.setAttribute('open', 'open');
+    } catch (err) {
+      try { dlg.setAttribute('open', 'open'); } catch (err2) {}
+    }
+    setTimeout(installDialogDebugShortcuts, 0);
+  }
+
+  function installDialogDebugShortcuts() {
+    if (!document.body) return;
+    qa('dialog').forEach(function (dlg) {
+      if (!dlg || dlg.id === 'xlrDebugDialog') return;
+      const head = q('.dialog-head', dlg);
+      if (!head || q('.xlr-dialog-debug-shortcut', head)) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'xlr-dialog-debug-shortcut';
+      btn.textContent = 'DEBUG';
+      btn.setAttribute('aria-label', '打开 Debug 诊断');
+      btn.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openDebug();
+      });
+      const closeBtn = Array.from(head.querySelectorAll('button')).find(function (node) {
+        return node !== btn && (node.classList.contains('icon-btn') || /×|关闭|close/i.test(node.textContent || node.getAttribute('aria-label') || ''));
+      });
+      try { head.insertBefore(btn, closeBtn || null); } catch (err) { head.appendChild(btn); }
+    });
+    bringDebugLayerToTop();
+  }
+
+  function startDialogShortcutObserver() {
+    if (!document.body || state.dialogShortcutObserver) return;
+    try {
+      state.dialogShortcutObserver = new MutationObserver(function () {
+        installDialogDebugShortcuts();
+        bringDebugLayerToTop();
+      });
+      state.dialogShortcutObserver.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['open'] });
+    } catch (err) {}
+  }
+
   function openDebug() {
     ensureDebugUi();
+    suspendOpenDialogsForDebug();
+    bringDebugLayerToTop();
     state.openedAt = new Date().toISOString();
     const dialog = q('#xlrDebugDialog');
     if (!dialog) return;
-    if (dialog.showModal && !dialog.open) dialog.showModal();
-    else dialog.setAttribute('open', 'open');
+    try {
+      if (dialog.showModal && !dialog.open) dialog.showModal();
+      else dialog.setAttribute('open', 'open');
+    } catch (err) {
+      try { dialog.setAttribute('open', 'open'); } catch (err2) {}
+    }
+    bringDebugLayerToTop();
     renderSnapshot(collectSnapshot('open-debug'));
   }
 
@@ -12260,6 +12420,7 @@ function buildContextOverallSentence(context, details) {
     if (!dialog) return;
     if (dialog.close) dialog.close();
     else dialog.removeAttribute('open');
+    setTimeout(restoreSuspendedDialogs, 0);
   }
 
   function renderSnapshot(snapshot) {
@@ -12378,6 +12539,9 @@ function buildContextOverallSentence(context, details) {
 
   function boot() {
     ensureDebugUi();
+    installDialogDebugShortcuts();
+    startDialogShortcutObserver();
+    bringDebugLayerToTop();
     // 暴露统一主源码 Debug 接口。以后只允许使用这个对象，不再新增版本号 Debug 对象。
     window.XLRDebugCore = {
       version: APP_VERSION,
@@ -12388,6 +12552,8 @@ function buildContextOverallSentence(context, details) {
       cleanupLegacyStorage,
       copyReport,
       saveReport,
+      bringToTop: bringDebugLayerToTop,
+      installDialogDebugShortcuts,
       setEnabled,
       isEnabled,
       getState: function () { return state; }
