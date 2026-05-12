@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.151 显示完整性总审计与场景重心主线化加强版</title>
-<meta content="小六壬个人网页版 v10.5.151 显示完整性总审计与场景重心主线化加强版：新增结果页显示完整性总审计，检查空模块、截断、undefined、导航目标和场景重心内容，并把本场景判断重心接入知识库主线。" name="description"/>
+<title>小六壬占卜 · v10.5.152 一键修复与 Debug 警告名单基础版</title>
+<meta content="小六壬个人网页版 v10.5.152 一键修复与 Debug 警告名单基础版：新增一键安全修复、安全模式基础能力，并加入 Debug 警告白名单/黑名单；黑名单警告默认忽略，白名单可强制显示，避免已确认误报反复干扰。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -1802,6 +1802,68 @@ body.result-page .destiny-sub-nav .jump-chip {
 .xlr-debug-summary.fail { background: rgba(190,74,74,.09); border-color: rgba(190,74,74,.22); }
 .xlr-debug-summary ul { margin: 8px 0 0; padding-left: 1.2em; }
 .xlr-debug-release { margin-top: 6px; font-weight: 800; color: #5d4aa4; }
+.xlr-debug-list-panel {
+  margin: 0 0 12px;
+  border: 1px solid rgba(103,83,165,.12);
+  border-radius: 16px;
+  background: rgba(103,83,165,.04);
+  padding: 10px 12px;
+  color: #443b58;
+}
+.xlr-debug-list-panel summary {
+  cursor: pointer;
+  font-weight: 900;
+  color: #5d4aa4;
+}
+.xlr-debug-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.xlr-debug-list-grid label {
+  display: grid;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 13px;
+}
+.xlr-debug-list-grid textarea {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid rgba(103,83,165,.16);
+  border-radius: 12px;
+  padding: 8px 10px;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: #fff;
+  color: #443b58;
+}
+.xlr-debug-list-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.xlr-debug-list-actions button {
+  border: 1px solid rgba(103,83,165,.16);
+  border-radius: 12px;
+  background: #fff;
+  color: #6753a5;
+  padding: 8px 10px;
+  font-weight: 800;
+}
+.xlr-debug-list-status {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #706680;
+  line-height: 1.55;
+}
+body.xlr-safe-mode .page-progress { display:none !important; }
+body.xlr-safe-mode #sectionJumpNav,
+body.xlr-safe-mode #destinySubNav { max-width: calc(100vw - 72px) !important; }
+@media (max-width: 560px) {
+  .xlr-debug-list-grid { grid-template-columns: 1fr; }
+}
 .xlr-debug-output {
   margin: 0;
   white-space: pre-wrap;
@@ -2088,6 +2150,11 @@ body.reading-theme-night .xlr-debug-note,
 body.reading-theme-night .xlr-debug-summary { background:#202033 !important; color:var(--text) !important; border-color:var(--border) !important; }
 body.reading-theme-night .xlr-debug-release { color:#d8ccff !important; }
 body.reading-theme-night .xlr-debug-head small { color:var(--muted) !important; }
+body.reading-theme-night .xlr-debug-list-panel { background:#202033 !important; color:var(--text) !important; border-color:var(--border) !important; }
+body.reading-theme-night .xlr-debug-list-panel summary { color:#d8ccff !important; }
+body.reading-theme-night .xlr-debug-list-grid textarea { background:#181827 !important; color:#eee9fb !important; border-color:rgba(194,176,230,.28) !important; }
+body.reading-theme-night .xlr-debug-list-actions button { background:#202033 !important; color:#eee9fb !important; border-color:rgba(194,176,230,.28) !important; }
+body.reading-theme-night .xlr-debug-list-status { color:var(--muted) !important; }
 body.reading-theme-night .xlr-debug-close,
 body.reading-theme-night .xlr-debug-toolbar button { background:#202033 !important; color:#eee9fb !important; border-color:rgba(194,176,230,.28) !important; }
 body.reading-theme-night .art { background:linear-gradient(180deg, rgba(38,33,54,.84), rgba(25,23,36,.96)) !important; border-color:var(--line) !important; }
@@ -2860,8 +2927,8 @@ body.reading-theme-night .debug-sensitivity-help summary { color: #d9d0ff; }
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.151 显示完整性总审计与场景重心主线化加强版</h2>
-<p>本版继续完善 Debug 灵敏度：新增“阻塞/非阻塞”分级说明与 issueGroups 分组。严格模式仍原样显示全部 warning，但已知 iOS Safari 视觉审计小偏差会标为“非阻塞”，不再被统计成阻断发布项。</p>
+<h2>个人占卜台 · v10.5.152 一键修复与 Debug 警告名单基础版</h2>
+<p>本版继续按主线升级：新增一键安全修复、安全模式基础能力，并加入 Debug 警告白名单/黑名单。已确认误报可放入黑名单不再提示；需要重新观察的项目可加入白名单强制显示。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -3348,7 +3415,7 @@ body.reading-theme-night .debug-sensitivity-help summary { color: #d9d0ff; }
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.151 显示完整性总审计与场景重心主线化加强版';
+    const XLR_SOURCE_VERSION = 'v10.5.152 一键修复与 Debug 警告名单基础版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4380,7 +4447,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.151',
+      source: 'mainline-v10.5.152',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -6208,8 +6275,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.151",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动。",
+      "version": "2.0+extension+family-life-v10.5.152",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7634,7 +7701,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.151',
+        source:'mainline-v10.5.152',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -7712,7 +7779,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.151',
+        source:'mainline-v10.5.152',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -7725,7 +7792,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.151') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.152') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -7734,7 +7801,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.151',
+      source:'mainline-v10.5.152',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -7801,7 +7868,7 @@ function buildContextOverallSentence(context, details) {
       const adviceSource = (pack && Array.isArray(pack.advice) ? pack.advice : []);
       const advice = adviceSource.map(function(x){ return xlrSafeText(x,''); }).filter(Boolean).slice(0,3);
       const tip = advice[0] || description || '先把问题落到现实动作上：该核实的核实，该等待的等待，该写清楚的写清楚。';
-      return { key:key, title:title, description:description, focus:focus, tip:tip, hasPack:!!pack, hasJsonScene:!!(pack && pack.hasJsonScene), source: pack ? pack.source : 'scene-fallback-v10.5.151' };
+      return { key:key, title:title, description:description, focus:focus, tip:tip, hasPack:!!pack, hasJsonScene:!!(pack && pack.hasJsonScene), source: pack ? pack.source : 'scene-fallback-v10.5.152' };
     }
     function buildSceneFocusHTML(result){
       result = result || {};
@@ -8007,7 +8074,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.151',
+        source: 'mainline-v10.5.152',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -8023,7 +8090,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.151',
+      source: 'mainline-v10.5.152',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -8606,6 +8673,14 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.152 一键修复与 Debug 警告名单基础版', items:[
+          '新增 Debug 警告黑名单/白名单：黑名单中的 warning 默认进入 ignoredIssues，不再反复提示；白名单优先级高于黑名单，可强制恢复显示。',
+          '默认把已确认的 NIGHT_THEME_COVERAGE_MISSING 导航按钮视觉审计偏差放入 Debug 黑名单，仍保留 rawIssues 备查。',
+          'Debug 面板新增“警告名单”管理区，可保存名单、恢复默认、把当前非错误问题加入黑名单。',
+          '新增一键安全修复基础版：修复前自动备份本地 source 设置，清理旧补丁缓存，恢复安全阅读/导航/快捷按钮设置，并刷新导航与结果页显示。',
+          '新增安全模式基础开关：只调整显示、缓存和本地设置，不改变小六壬核心起课/占卜逻辑，不删除历史、模板和复盘数据。',
+          '同步更新 README、manifest、service-worker、版本记录与知识库版本说明，继续保持 1 个主 style + 1 个主 script。'
+        ]},
         { v:'v10.5.151 显示完整性总审计与场景重心主线化加强版', items:[
           '新增结果页显示完整性总审计：统一检查空模块、截断/裁切、undefined/null/NaN、导航目标缺失和可见内容异常。',
           '本场景判断重心改为知识库主线驱动：优先读取 JSON 场景包、专项 focus、场景说明与兜底提示，减少新增场景落回“一般事项”。',
@@ -9678,7 +9753,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.151',
+      source: 'mainline-v10.5.152',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -9759,7 +9834,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.151',
+      source: 'mainline-v10.5.152',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -11140,7 +11215,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.151'
+      source: 'mainline-v10.5.152'
     };
 
     initExtendedContextRules();
@@ -11157,10 +11232,14 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.151 显示完整性总审计与场景重心主线化加强版';
+  const APP_VERSION = 'v10.5.152 一键修复与 Debug 警告名单基础版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
+  const STORAGE_DEBUG_ISSUE_BLACKLIST = 'xiaoliuren_debug_issue_blacklist_source';
+  const STORAGE_DEBUG_ISSUE_WHITELIST = 'xiaoliuren_debug_issue_whitelist_source';
+  const STORAGE_SAFE_MODE = 'xiaoliuren_safe_mode_source';
+  const STORAGE_REPAIR_BACKUP = 'xiaoliuren_repair_backup_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
   const MAX_ERROR_LOGS = 80;
   const MAX_UI_LOGS = 80;
@@ -11217,6 +11296,10 @@ function buildContextOverallSentence(context, details) {
     'xiaoliuren_client_mode_source',
     'xiaoliuren_debug_visible_source',
     'xiaoliuren_debug_sensitivity_source',
+    'xiaoliuren_debug_issue_blacklist_source',
+    'xiaoliuren_debug_issue_whitelist_source',
+    'xiaoliuren_safe_mode_source',
+    'xiaoliuren_repair_backup_source',
     'xlr_destiny_gender_source',
     'xlr_destiny_kinship_source'
   ];
@@ -11474,6 +11557,19 @@ function buildContextOverallSentence(context, details) {
     'RELEASE_CHECKLIST_REVIEW'
   ]);
 
+  const DEFAULT_DEBUG_ISSUE_BLACKLIST = [
+    'NIGHT_THEME_COVERAGE_MISSING'
+  ];
+  const DEFAULT_DEBUG_ISSUE_WHITELIST = [];
+  const SAFE_REPAIR_SETTINGS = {
+    user: { defaultView:'detail', collapseDetails:false, showRadar:true, showAbout:false, showVersionUpdates:true, rememberScene:false, rememberMethod:false, navPosition:'bottom', navMode:'adaptive' },
+    ui: { showQuickButtons:true, showSectionNav:true, showProgressBar:true, defaultClientMode:'auto' },
+    reading: { mode:'day', bg:'default', custom:'#f7f3ee', autoStart:'19:00', autoEnd:'07:00', showToggle:true },
+    viewMode: 'detail',
+    readingSize: 'normal',
+    clientMode: 'auto'
+  };
+
   function normalizeDebugSensitivity(value) {
     return Object.prototype.hasOwnProperty.call(DEBUG_SENSITIVITY_PROFILES, value) ? value : 'standard';
   }
@@ -11485,6 +11581,105 @@ function buildContextOverallSentence(context, details) {
   function setDebugSensitivity(value) {
     safeLocalSet(STORAGE_DEBUG_SENSITIVITY, normalizeDebugSensitivity(value));
     try { if (typeof syncExtraSettingsForm === 'function') syncExtraSettingsForm(); } catch (err) {}
+  }
+
+
+  function normalizeDebugIssueCode(code) {
+    return String(code || '').trim().toUpperCase().replace(/[^A-Z0-9_:-]+/g, '_').replace(/^_+|_+$/g, '');
+  }
+
+  function parseDebugIssueList(value) {
+    let raw = value;
+    if (raw == null || raw === '') return [];
+    if (typeof raw === 'string') {
+      const parsed = safeJsonParse(raw, null);
+      raw = Array.isArray(parsed) ? parsed : raw.split(/[\n,;，；\s]+/);
+    }
+    if (!Array.isArray(raw)) return [];
+    const seen = new Set();
+    const list = [];
+    raw.forEach(function (item) {
+      const code = normalizeDebugIssueCode(item);
+      if (!code || seen.has(code)) return;
+      seen.add(code);
+      list.push(code);
+    });
+    return list;
+  }
+
+  function readDebugIssueList(key, defaults) {
+    const raw = safeLocalGet(key);
+    if (raw == null) return (defaults || []).slice();
+    const list = parseDebugIssueList(raw);
+    return list;
+  }
+
+  function saveDebugIssueList(key, list) {
+    safeLocalSet(key, JSON.stringify(parseDebugIssueList(list)));
+  }
+
+  function getDebugIssueLists() {
+    const blacklist = readDebugIssueList(STORAGE_DEBUG_ISSUE_BLACKLIST, DEFAULT_DEBUG_ISSUE_BLACKLIST);
+    const whitelist = readDebugIssueList(STORAGE_DEBUG_ISSUE_WHITELIST, DEFAULT_DEBUG_ISSUE_WHITELIST);
+    return {
+      blacklist,
+      whitelist,
+      blacklistDefault: DEFAULT_DEBUG_ISSUE_BLACKLIST.slice(),
+      whitelistDefault: DEFAULT_DEBUG_ISSUE_WHITELIST.slice(),
+      note: '白名单优先级高于黑名单：加入白名单后，即使同一 code 仍在黑名单，也会按原始级别显示。'
+    };
+  }
+
+  function setDebugIssueLists(blacklist, whitelist) {
+    saveDebugIssueList(STORAGE_DEBUG_ISSUE_BLACKLIST, blacklist);
+    saveDebugIssueList(STORAGE_DEBUG_ISSUE_WHITELIST, whitelist);
+    syncIssueListForm();
+  }
+
+  function resetDebugIssueLists() {
+    setDebugIssueLists(DEFAULT_DEBUG_ISSUE_BLACKLIST, DEFAULT_DEBUG_ISSUE_WHITELIST);
+  }
+
+  function getDebugIssueListDisposition(issue) {
+    const code = normalizeDebugIssueCode(issue && issue.code);
+    const lists = getDebugIssueLists();
+    const whitelisted = !!(code && lists.whitelist.indexOf(code) !== -1);
+    const blacklisted = !!(code && lists.blacklist.indexOf(code) !== -1 && !whitelisted);
+    return { code, whitelisted, blacklisted, lists };
+  }
+
+  function syncIssueListForm() {
+    const lists = getDebugIssueLists();
+    const blackInput = q('#xlrDebugBlacklistInput');
+    const whiteInput = q('#xlrDebugWhitelistInput');
+    const status = q('#xlrDebugListStatus');
+    if (blackInput) blackInput.value = lists.blacklist.join('\n');
+    if (whiteInput) whiteInput.value = lists.whitelist.join('\n');
+    if (status) status.textContent = '当前黑名单 ' + lists.blacklist.length + ' 项，白名单 ' + lists.whitelist.length + ' 项。黑名单会让对应 warning 进入 ignoredIssues；白名单优先于黑名单。';
+  }
+
+  function saveIssueListsFromForm() {
+    const blackInput = q('#xlrDebugBlacklistInput');
+    const whiteInput = q('#xlrDebugWhitelistInput');
+    setDebugIssueLists(blackInput ? blackInput.value : [], whiteInput ? whiteInput.value : []);
+    flashSummary('✅ Debug 警告名单已保存');
+    return getDebugIssueLists();
+  }
+
+  function blacklistCurrentIssues() {
+    const source = state.lastSelfCheck || state.lastSnapshot || null;
+    const rawIssues = Array.isArray(source && source.rawIssues) ? source.rawIssues : (Array.isArray(source && source.issues) ? source.issues : []);
+    const codes = rawIssues.filter(function (item) { return item && item.level !== 'error'; }).map(function (item) { return normalizeDebugIssueCode(item.code); }).filter(Boolean);
+    if (!codes.length) {
+      flashSummary('ℹ️ 当前没有可加入黑名单的非错误问题');
+      return getDebugIssueLists();
+    }
+    const lists = getDebugIssueLists();
+    const next = parseDebugIssueList(lists.blacklist.concat(codes));
+    setDebugIssueLists(next, lists.whitelist);
+    flashSummary('✅ 已把当前非错误问题加入黑名单');
+    try { runSelfCheck(); } catch (err) {}
+    return getDebugIssueLists();
   }
 
   function shouldTreatIssueAsKnownSafariNoise(issue) {
@@ -11520,9 +11715,16 @@ function buildContextOverallSentence(context, details) {
 
   function classifyIssueForSensitivity(issue, mode) {
     if (!issue) return { level:'error', disposition:'blocking', blocking:true, reason:'核心错误始终保留。' };
+    const listDisposition = getDebugIssueListDisposition(issue);
     const knownNoise = shouldTreatIssueAsKnownSafariNoise(issue);
     const rawBlocking = isBlockingRawIssue(issue);
     if (issue.level === 'error') return { level:'error', disposition:'blocking', blocking:true, reason:'核心错误始终保留。' };
+    if (listDisposition.whitelisted) {
+      return { level:issue.level, disposition:'whitelisted', blocking:rawBlocking && !knownNoise, reason:'Debug 白名单：该 code 强制按原始级别显示，白名单优先于黑名单。' };
+    }
+    if (listDisposition.blacklisted) {
+      return { level:'ignored', disposition:'blacklisted', blocking:false, reason:'Debug 黑名单：该 code 已忽略，不再继续警告；可从黑名单移出或加入白名单恢复显示。' };
+    }
     if (mode === 'strict') {
       return {
         level: issue.level,
@@ -11569,7 +11771,7 @@ function buildContextOverallSentence(context, details) {
         blockingReason: getIssueBlockingReason(item, !!result.blocking),
         sensitivityReason: result.reason
       });
-      if (result.disposition === 'ignored' || result.level === 'ignored') ignored.push(next);
+      if (result.disposition === 'ignored' || result.disposition === 'blacklisted' || result.level === 'ignored') ignored.push(next);
       else effective.push(next);
     });
     const errors = effective.filter(item => item.level === 'error');
@@ -11578,6 +11780,9 @@ function buildContextOverallSentence(context, details) {
     const blockers = effective.filter(item => item.blocking);
     const nonBlockingWarnings = warnings.filter(item => !item.blocking);
     const downgraded = effective.filter(item => item.disposition === 'downgraded');
+    const blacklisted = ignored.filter(item => item.disposition === 'blacklisted');
+    const whitelisted = effective.filter(item => item.disposition === 'whitelisted');
+    const lists = getDebugIssueLists();
     const groups = {
       blockers,
       warnings: nonBlockingWarnings,
@@ -11599,6 +11804,9 @@ function buildContextOverallSentence(context, details) {
       blockers,
       nonBlockingWarnings,
       downgradedIssues: downgraded,
+      blacklistedIssues: blacklisted,
+      whitelistedIssues: whitelisted,
+      debugIssueLists: lists,
       issueGroups: groups,
       stats: {
         rawIssues: raw.length,
@@ -11608,6 +11816,8 @@ function buildContextOverallSentence(context, details) {
         infos: infos.length,
         downgradedIssues: downgraded.length,
         ignoredIssues: ignored.length,
+        blacklistedIssues: blacklisted.length,
+        whitelistedIssues: whitelisted.length,
         blockingIssues: blockers.length,
         blockerIssues: blockers.length,
         nonBlockingWarnings: nonBlockingWarnings.length,
@@ -12188,6 +12398,10 @@ function buildContextOverallSentence(context, details) {
       'xiaoliuren_client_mode_source',
       STORAGE_DEBUG_ENABLED,
       STORAGE_DEBUG_SENSITIVITY,
+      STORAGE_DEBUG_ISSUE_BLACKLIST,
+      STORAGE_DEBUG_ISSUE_WHITELIST,
+      STORAGE_SAFE_MODE,
+      STORAGE_REPAIR_BACKUP,
       'xlr_destiny_gender_source',
       'xlr_destiny_kinship_source',
       'xlr_custom_question_templates_v1',
@@ -12245,6 +12459,123 @@ function buildContextOverallSentence(context, details) {
     state.lastSelfCheck = report;
     renderSnapshot(report);
     return report;
+  }
+
+
+  function createRepairBackup(reason) {
+    const keys = PROTECTED_STORAGE_KEYS.concat([
+      'xiaoliuren_user_settings_source',
+      'xiaoliuren_ui_settings_source',
+      'xiaoliuren_reading_mode_source',
+      'xiaoliuren_reading_size_source',
+      'xiaoliuren_client_mode_source',
+      'xiaoliuren_quick_button_settings_source'
+    ]);
+    const seen = new Set();
+    const values = {};
+    keys.forEach(function (key) {
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      const value = safeLocalGet(key);
+      if (value != null) values[key] = value;
+    });
+    const backup = { version:APP_VERSION, generatedAt:new Date().toISOString(), reason:reason || 'safe-repair', values:values };
+    safeLocalSet(STORAGE_REPAIR_BACKUP, JSON.stringify(backup));
+    return backup;
+  }
+
+  function applySafeModeFlag() {
+    const on = safeLocalGet(STORAGE_SAFE_MODE) === '1';
+    try { if (document.body) document.body.classList.toggle('xlr-safe-mode', on); } catch (err) {}
+    return on;
+  }
+
+  function refreshAfterRepair() {
+    try { if (typeof applyReadingSettings === 'function') applyReadingSettings(); } catch (err) {}
+    try { if (typeof applyUISettings === 'function') applyUISettings(); } catch (err) {}
+    try { if (typeof renderQuickTools === 'function') renderQuickTools(); } catch (err) {}
+    try { if (typeof updateSectionJumpNav === 'function') updateSectionJumpNav(); } catch (err) {}
+    try { if (window.XLRNavCore && typeof window.XLRNavCore.refresh === 'function') window.XLRNavCore.refresh(); } catch (err) {}
+    try { if (window.XLRResultPageCore && typeof window.XLRResultPageCore.resetScroll === 'function') window.XLRResultPageCore.resetScroll('repair'); } catch (err) {}
+    try { installDialogDebugShortcuts(); bringDebugLayerToTop(); } catch (err) {}
+  }
+
+  function writeSafeDisplaySettings() {
+    safeLocalSet('xiaoliuren_user_settings_source', JSON.stringify(SAFE_REPAIR_SETTINGS.user));
+    safeLocalSet('xiaoliuren_ui_settings_source', JSON.stringify(SAFE_REPAIR_SETTINGS.ui));
+    safeLocalSet('xiaoliuren_reading_mode_source', JSON.stringify(SAFE_REPAIR_SETTINGS.reading));
+    safeLocalSet('xiaoliuren_reading_size_source', SAFE_REPAIR_SETTINGS.readingSize);
+    safeLocalSet('xiaoliuren_client_mode_source', SAFE_REPAIR_SETTINGS.clientMode);
+    safeLocalSet('xiaoliuren_view_mode_source', SAFE_REPAIR_SETTINGS.viewMode);
+  }
+
+  function runSafeRepair() {
+    const ok = confirm('一键安全修复只处理显示、缓存和本地设置：会先自动备份 source 设置，再清理旧补丁缓存、恢复安全阅读/导航/快捷按钮设置并刷新页面状态。不会删除历史、模板、复盘数据，也不会改小六壬核心起课/占卜逻辑。是否继续？');
+    if (!ok) return null;
+    const backup = createRepairBackup('one-click-safe-repair');
+    const before = getStorageInfo();
+    const removed = [];
+    const failed = [];
+    (before.cleanupCandidates || []).forEach(function (key) {
+      try { localStorage.removeItem(key); removed.push(key); }
+      catch (err) { failed.push({ key:key, message:err && err.message ? err.message : String(err) }); }
+    });
+    writeSafeDisplaySettings();
+    applySafeModeFlag();
+    refreshAfterRepair();
+    const after = getStorageInfo();
+    const report = {
+      version: APP_VERSION,
+      generatedAt: new Date().toISOString(),
+      type: 'one-click-safe-repair',
+      message: '一键安全修复已完成：已备份设置、清理旧补丁缓存、恢复安全显示设置并刷新导航/结果页。',
+      removed,
+      failed,
+      backup: { key:STORAGE_REPAIR_BACKUP, generatedAt:backup.generatedAt, savedKeys:Object.keys(backup.values || {}).length },
+      before: { totalKeys: before.totalKeys, cleanupCandidates: before.cleanupCandidates },
+      after: { totalKeys: after.totalKeys, cleanupCandidates: after.cleanupCandidates },
+      repairStatus: getRepairStatus()
+    };
+    state.lastSelfCheck = report;
+    renderSnapshot(report);
+    return report;
+  }
+
+  function toggleSafeMode() {
+    const on = safeLocalGet(STORAGE_SAFE_MODE) === '1';
+    if (on) {
+      safeLocalSet(STORAGE_SAFE_MODE, '0');
+      applySafeModeFlag();
+      refreshAfterRepair();
+      const report = { version:APP_VERSION, generatedAt:new Date().toISOString(), type:'safe-mode', message:'安全模式已关闭。', repairStatus:getRepairStatus() };
+      state.lastSelfCheck = report;
+      renderSnapshot(report);
+      return report;
+    }
+    const ok = confirm('开启安全模式会先备份当前 source 设置，然后恢复安全阅读/导航/快捷按钮显示。不会删除历史、模板和复盘数据，也不会改占卜逻辑。是否开启？');
+    if (!ok) return null;
+    createRepairBackup('enter-safe-mode');
+    safeLocalSet(STORAGE_SAFE_MODE, '1');
+    writeSafeDisplaySettings();
+    applySafeModeFlag();
+    refreshAfterRepair();
+    const report = { version:APP_VERSION, generatedAt:new Date().toISOString(), type:'safe-mode', message:'安全模式已开启。', repairStatus:getRepairStatus() };
+    state.lastSelfCheck = report;
+    renderSnapshot(report);
+    return report;
+  }
+
+  function getRepairStatus() {
+    const backup = safeJsonParse(safeLocalGet(STORAGE_REPAIR_BACKUP), null);
+    return {
+      version: APP_VERSION,
+      source: 'mainline-v10.5.152',
+      safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
+      backupExists: !!backup,
+      backupAt: backup && backup.generatedAt || '',
+      backupKeys: backup && backup.values ? Object.keys(backup.values).length : 0,
+      note: '一键修复/安全模式只处理显示、缓存和本地 source 设置，不删除历史、模板、复盘数据，不改变占卜核心逻辑。'
+    };
   }
 
   function getQuickButtonsInfo() {
@@ -12392,7 +12723,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.151', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.152', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -12413,7 +12744,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.151', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.152', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -12453,7 +12784,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.151', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.152', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -12485,7 +12816,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.151',
+      source: 'mainline-v10.5.152',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -12610,7 +12941,9 @@ function buildContextOverallSentence(context, details) {
       fixedElements: getFixedElements(),
       recentUiEvents: state.uiEvents.slice(-20),
       recentErrors: state.errors.slice(-20),
-      debugSensitivity: { mode:getDebugSensitivity(), profile: DEBUG_SENSITIVITY_PROFILES[getDebugSensitivity()] || DEBUG_SENSITIVITY_PROFILES.standard }
+      debugSensitivity: { mode:getDebugSensitivity(), profile: DEBUG_SENSITIVITY_PROFILES[getDebugSensitivity()] || DEBUG_SENSITIVITY_PROFILES.standard },
+      debugIssueLists: getDebugIssueLists(),
+      repairStatus: getRepairStatus()
     };
     snapshot.releaseChecklist = getReleaseChecklistInfo(snapshot);
     state.lastSnapshot = snapshot;
@@ -12684,7 +13017,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.151', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.151') },
+      { id:'nav-core', label:'导航主源码为 v10.5.152', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.152') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -12702,6 +13035,8 @@ function buildContextOverallSentence(context, details) {
       { id:'summary-labels-v150', label:'结果摘要标签完整无 undefined', ok: !!(snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) },
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
+      { id:'debug-issue-lists-v152', label:'Debug 警告白名单/黑名单可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist)) },
+      { id:'safe-repair-v152', label:'一键安全修复/安全模式基础能力可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.152') },
       { id:'bottom-clearance-v143', label:'底部导航遮挡安全留白可用', ok: !!(snapshot.bottomClearance && snapshot.bottomClearance.ok) },
       { id:'deep-logic-audit-v132', label:'Debug 深度逻辑巡检可用', ok: !!(snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok !== false) },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
@@ -12772,7 +13107,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.151' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.152' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -12787,7 +13122,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.151' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.152' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -12817,8 +13152,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.151') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.151 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.152') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.152 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -12833,8 +13168,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.151') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.151 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.152') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.152 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -12876,8 +13211,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.151') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.151 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.152') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.152 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -12910,7 +13245,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.151') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.152') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -12988,16 +13323,16 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.151' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.152' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.151') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.152') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.151') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.152') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -13009,15 +13344,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) passes.push('结果摘要标签完整性检查通过');
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
+    if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist)) passes.push('Debug 警告名单检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.152') passes.push('一键安全修复基础检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.151') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.152') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.151') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.152') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -13041,6 +13378,8 @@ function buildContextOverallSentence(context, details) {
       generatedAt: new Date().toISOString(),
       status: errors.length ? 'fail' : (warnings.length ? 'warning' : 'pass'),
       debugSensitivity: { mode:sensitivity.mode, label:sensitivity.label, description:sensitivity.description },
+      debugIssueLists: sensitivity.debugIssueLists,
+      repairStatus: snapshot.repairStatus,
       issueStats: sensitivity.stats,
       issueGroups: sensitivity.issueGroups,
       summary: {
@@ -13049,6 +13388,8 @@ function buildContextOverallSentence(context, details) {
         nonBlockingWarnings: nonBlockingWarnings.length,
         infos: infos.length,
         ignored: sensitivity.ignoredIssues.length,
+        blacklisted: sensitivity.stats.blacklistedIssues || 0,
+        whitelisted: sensitivity.stats.whitelistedIssues || 0,
         rawIssues: sensitivity.rawIssues.length,
         downgraded: sensitivity.stats.downgradedIssues,
         blocking: blockers.length,
@@ -13060,6 +13401,8 @@ function buildContextOverallSentence(context, details) {
       blockers,
       nonBlockingWarnings,
       downgradedIssues: sensitivity.downgradedIssues,
+      blacklistedIssues: sensitivity.blacklistedIssues || [],
+      whitelistedIssues: sensitivity.whitelistedIssues || [],
       ignoredIssues: sensitivity.ignoredIssues,
       rawIssues: sensitivity.rawIssues,
       snapshot
@@ -13079,10 +13422,25 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.152 起支持警告黑名单/白名单：黑名单不再提示，白名单强制显示。</p>
+        <details class="xlr-debug-list-panel">
+          <summary>警告名单（黑名单忽略，白名单强制显示）</summary>
+          <div class="xlr-debug-list-grid">
+            <label>黑名单 / 不再警告<textarea id="xlrDebugBlacklistInput" spellcheck="false" placeholder="例如：NIGHT_THEME_COVERAGE_MISSING"></textarea></label>
+            <label>白名单 / 强制显示<textarea id="xlrDebugWhitelistInput" spellcheck="false" placeholder="加入这里会覆盖黑名单"></textarea></label>
+          </div>
+          <div class="xlr-debug-list-actions">
+            <button type="button" data-debug-action="saveIssueLists">保存名单</button>
+            <button type="button" data-debug-action="resetIssueLists">恢复默认</button>
+            <button type="button" data-debug-action="blacklistCurrentIssues">当前非错误加入黑名单</button>
+          </div>
+          <div id="xlrDebugListStatus" class="xlr-debug-list-status"></div>
+        </details>
         <div class="xlr-debug-toolbar">
           <button type="button" data-debug-action="selfcheck">一键自检</button>
           <button type="button" data-debug-action="snapshot">刷新快照</button>
+          <button type="button" data-debug-action="runSafeRepair">一键修复</button>
+          <button type="button" data-debug-action="toggleSafeMode">安全模式</button>
           <button type="button" data-debug-action="copy">复制日志</button>
           <button type="button" data-debug-action="save">保存日志</button>
           <button type="button" data-debug-action="cleanupLegacyStorage">清理旧缓存</button>
@@ -13119,11 +13477,17 @@ function buildContextOverallSentence(context, details) {
         else if (action === 'copy') copyReport();
         else if (action === 'save') saveReport();
         else if (action === 'cleanupLegacyStorage') cleanupLegacyStorage();
+        else if (action === 'runSafeRepair') runSafeRepair();
+        else if (action === 'toggleSafeMode') toggleSafeMode();
+        else if (action === 'saveIssueLists') saveIssueListsFromForm();
+        else if (action === 'resetIssueLists') { resetDebugIssueLists(); flashSummary('✅ Debug 警告名单已恢复默认'); }
+        else if (action === 'blacklistCurrentIssues') blacklistCurrentIssues();
         else if (action === 'clear') { state.errors = []; renderSnapshot(collectSnapshot('clear-errors')); }
       });
       document.body.appendChild(dialog);
     }
     syncFabVisible();
+    syncIssueListForm();
   }
 
   function syncFabVisible() {
@@ -13273,6 +13637,7 @@ function buildContextOverallSentence(context, details) {
         错误数：${recentErrors.length} ｜ 重复 ID：${duplicateIds.length} ｜ 旧残留：${legacyMatches.length}<br>
         显示完整性：${safeSnapshot.displayIntegrityAudit ? (safeSnapshot.displayIntegrityAudit.ok ? '通过' : '待查 ' + ((safeSnapshot.displayIntegrityAudit.invalid || []).length)) : '未生成'} ｜ 场景重心：${safeSnapshot.sceneFocusAudit ? (safeSnapshot.sceneFocusAudit.ok ? '通过' : '待查 ' + ((safeSnapshot.sceneFocusAudit.invalid || []).length)) : '未生成'}<br>
         Debug 灵敏度：${escapeHtml((safeSnapshot.debugSensitivity && safeSnapshot.debugSensitivity.profile && safeSnapshot.debugSensitivity.profile.label) || (DEBUG_SENSITIVITY_PROFILES[getDebugSensitivity()] && DEBUG_SENSITIVITY_PROFILES[getDebugSensitivity()].label) || '标准模式')}<br>
+        警告名单：黑 ${((safeSnapshot.debugIssueLists && safeSnapshot.debugIssueLists.blacklist) || []).length} ｜ 白 ${((safeSnapshot.debugIssueLists && safeSnapshot.debugIssueLists.whitelist) || []).length} ｜ 安全模式：${safeSnapshot.repairStatus && safeSnapshot.repairStatus.safeMode ? '开启' : '关闭'}<br>
         发版体检：${checklistText}
       `;
     }
@@ -13300,7 +13665,7 @@ function buildContextOverallSentence(context, details) {
       const stats = report.issueStats || {};
       summary.innerHTML = `
         <b>${statusText}</b> ｜ 错误 ${report.summary.errors} ｜ 警告 ${report.summary.warnings} ｜ 提示 ${report.summary.infos || 0} ｜ 忽略 ${report.summary.ignored || 0} ｜ 通过 ${report.summary.passes}
-        <div class="xlr-debug-release">灵敏度：${escapeHtml(sense.label || '')} ｜ 原始问题 ${stats.rawIssues || 0} ｜ 已降级 ${stats.downgradedIssues || 0} ｜ 非阻塞警告 ${stats.nonBlockingWarnings || 0} ｜ 阻断发布项 ${stats.blockingIssues || 0}</div>
+        <div class="xlr-debug-release">灵敏度：${escapeHtml(sense.label || '')} ｜ 原始问题 ${stats.rawIssues || 0} ｜ 已降级 ${stats.downgradedIssues || 0} ｜ 黑名单忽略 ${stats.blacklistedIssues || 0} ｜ 白名单显示 ${stats.whitelistedIssues || 0} ｜ 非阻塞警告 ${stats.nonBlockingWarnings || 0} ｜ 阻断发布项 ${stats.blockingIssues || 0}</div>
         ${checklistHtml}
         <ul>${issueHtml || passHtml || '<li>✅ 暂未发现阻断发布项</li>'}</ul>
       `;
@@ -13380,6 +13745,8 @@ function buildContextOverallSentence(context, details) {
     installDialogDebugShortcuts();
     startDialogShortcutObserver();
     bringDebugLayerToTop();
+    applySafeModeFlag();
+    syncIssueListForm();
     // 暴露统一主源码 Debug 接口。以后只允许使用这个对象，不再新增版本号 Debug 对象。
     window.XLRDebugCore = {
       version: APP_VERSION,
@@ -13390,12 +13757,18 @@ function buildContextOverallSentence(context, details) {
       cleanupLegacyStorage,
       copyReport,
       saveReport,
+      runSafeRepair,
+      toggleSafeMode,
+      getRepairStatus,
       bringToTop: bringDebugLayerToTop,
       installDialogDebugShortcuts,
       setEnabled,
       isEnabled,
       getDebugSensitivity,
       setDebugSensitivity,
+      getDebugIssueLists,
+      setDebugIssueLists,
+      resetDebugIssueLists,
       getState: function () { return state; }
     };
   }
