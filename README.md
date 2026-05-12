@@ -1,3 +1,39 @@
+### v10.5.148 暗夜导航审计主线修正版
+
+## v10.5.148 暗夜导航审计主线修正版
+
+本版继续按“清补丁、归主线”处理 v10.5.147 仍剩的 1 个 `NIGHT_THEME_COVERAGE_MISSING` 警告。定位结果是：iOS Safari 在 Debug 暗夜运行时体检里刚切换 `reading-theme-night / xlr-debug-night-audit` 后，底部章节导航 `jump-chip` 仍处在白天背景的过渡起点，`getComputedStyle()` 会立刻读到 `rgba(255,255,255,.92)`，从而被判定为暗夜白块风险。
+
+### 本版处理
+
+1. 把 Debug 暗夜审计态的 `jump-chip` 过渡统一禁用，避免 Safari 立即扫描时读到白天过渡起点。
+2. `jump-chip` 暗夜/审计态改为 `background` 简写 + `background-color` 双写，直接进入主 CSS。
+3. 同步给场景按钮审计态禁用过渡，避免同类问题以后又出现在 `scene-btn`。
+4. 更新 Debug 运行时体检说明，不再写入 inline style，仍通过主 CSS 类名完成审计。
+5. 同步更新版本记录、README、manifest、service-worker 缓存名，避免旧缓存抢回。
+
+### 上传文件
+
+请把 zip 内全部 8 个文件上传到 GitHub 仓库根目录：
+
+- `index.html`
+- `README.md`
+- `manifest.webmanifest`
+- `service-worker.js`
+- `icon-192.png`
+- `icon-512.png`
+- `apple-touch-icon.png`
+- `home-poster-v10.5.144.webp`
+
+### 测试建议
+
+1. 上传全部文件后，Safari 强制刷新。
+2. 打开 Debug → 清理旧缓存 → 再刷新一次。
+3. 打开 Debug → 一键自检。
+4. 重点确认：错误 0、警告 0；尤其确认 `NIGHT_THEME_COVERAGE_MISSING` 不再出现。
+
+### 上一版记录
+
 ### v10.5.147 源码清补丁与样式主线收口版
 
 ## v10.5.147 源码清补丁与样式主线收口版
