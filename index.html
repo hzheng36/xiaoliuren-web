@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.149 Debug 阻塞分级与说明完善版</title>
-<meta content="小六壬个人网页版 v10.5.149 Debug 阻塞分级与说明完善版：完善 Debug 灵敏度与阻塞定义，把已知 iOS Safari 视觉审计误报标为非阻塞，并按 blockers/warnings/tips/ignored 分组输出。" name="description"/>
+<title>小六壬占卜 · v10.5.150 专项摘要标签完整修正版</title>
+<meta content="小六壬个人网页版 v10.5.150 专项摘要标签完整修正版：修复 JSON 专项场景在结果摘要中出现 undefined 标签的问题，完善摘要标签兜底与 Debug 可见标签审计。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -2860,7 +2860,7 @@ body.reading-theme-night .debug-sensitivity-help summary { color: #d9d0ff; }
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.149 Debug 阻塞分级与说明完善版</h2>
+<h2>个人占卜台 · v10.5.150 专项摘要标签完整修正版</h2>
 <p>本版继续完善 Debug 灵敏度：新增“阻塞/非阻塞”分级说明与 issueGroups 分组。严格模式仍原样显示全部 warning，但已知 iOS Safari 视觉审计小偏差会标为“非阻塞”，不再被统计成阻断发布项。</p>
 </div>
 <div class="actions">
@@ -3348,7 +3348,7 @@ body.reading-theme-night .debug-sensitivity-help summary { color: #d9d0ff; }
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.149 Debug 阻塞分级与说明完善版';
+    const XLR_SOURCE_VERSION = 'v10.5.150 专项摘要标签完整修正版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4380,7 +4380,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.149',
+      source: 'mainline-v10.5.150',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5055,9 +5055,11 @@ function calcMetricsByScene(sceneKey, palaces){
       if (SCENE_PLAIN_INFO[sceneKey]) return SCENE_PLAIN_INFO[sceneKey];
       const scene = typeof getKnowledgeScene === 'function' ? getKnowledgeScene(sceneKey) : null;
       if(scene){
-        return { focus:scene.name || '专项场景', plainGoal:scene.description || '按场景知识库判断重点。', quickLabels:knowledgeSceneFocus(sceneKey), lead:scene.description || '按 JSON 知识库专项判断。', advice:collectKnowledgeSceneAdvice(sceneKey).slice(0,3) };
+        return { focus:scene.name || '专项场景', plainGoal:scene.description || '按场景知识库判断重点。', quickLabels:normalizeQuickLabels(knowledgeSceneFocus(sceneKey), sceneKey), lead:scene.description || '按 JSON 知识库专项判断。', advice:collectKnowledgeSceneAdvice(sceneKey).slice(0,3) };
       }
-      return SCENE_PLAIN_INFO.other;
+      const fallback = Object.assign({}, SCENE_PLAIN_INFO.other);
+      fallback.quickLabels = normalizeQuickLabels(fallback.quickLabels, sceneKey);
+      return fallback;
     }
     function plainOutcomeByEnd(endPalace){
       return {
@@ -5077,9 +5079,14 @@ function calcMetricsByScene(sceneKey, palaces){
       return `白话结论：这是一个关于${info.focus}的课，重点是${info.plainGoal} ${stageText}。最后落在${c.palaceName}，所以${endText}`;
     }
     function sceneLabel(sceneKey, genericLabel){
-      if(sceneKey === 'lost') return SCENE_PLAIN_INFO.lost.quickLabels[['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'].indexOf(genericLabel)] || genericLabel;
-      const idx = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'].indexOf(genericLabel);
-      return idx >= 0 ? sceneInfo(sceneKey).quickLabels[idx] : genericLabel;
+      const genericLabels = ['吉凶','快慢','阻力','成事倾向','贵人助力','五行气象'];
+      const idx = genericLabels.indexOf(genericLabel);
+      if(idx < 0) return genericLabel;
+      const info = sceneInfo(sceneKey) || SCENE_PLAIN_INFO.other || {};
+      const quick = normalizeQuickLabels(info.quickLabels, sceneKey);
+      const label = quick[idx] || genericLabel;
+      const text = String(label == null ? '' : label).trim();
+      return (!text || text === 'undefined' || text === 'null') ? genericLabel : text;
     }
     function sceneMetricValue(sceneKey, key, result){
       if(sceneKey === 'lost'){
@@ -6201,8 +6208,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.149",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明。",
+      "version": "2.0+extension+family-life-v10.5.150",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7556,11 +7563,58 @@ function buildContextOverallSentence(context, details) {
       if(scene.disclaimer) list.push(scene.disclaimer); else if(XLR_JSON_KNOWLEDGE.disclaimer) list.push(XLR_JSON_KNOWLEDGE.disclaimer);
       return [...new Set(list.filter(Boolean))];
     }
+    const XLR_GENERIC_SUMMARY_LABELS = ['整体倾向','推进速度','主要阻力','结果落地','助力情况','场景气象'];
+    const XLR_SCENE_SUMMARY_LABELS = {
+      contract:['签约倾向','推进速度','条款风险','结果落实','协助资源','合同气象'],
+      investment:['收益倾向','周期快慢','风险等级','回报落实','资源助力','投资气象'],
+      lawsuit:['胜算倾向','推进速度','证据阻力','结果落点','和解助力','纠纷气象'],
+      friend:['关系倾向','互动速度','主要卡点','关系落点','朋友助力','人际气象'],
+      lottery:['中奖倾向','兑票节奏','冲动风险','结果落点','助力情况','娱乐气象'],
+      children:['子女倾向','变化节奏','主要卡点','结果落地','家庭助力','子女气象'],
+      parents:['父母状态','沟通节奏','主要担忧','结果落点','家庭助力','父母气象'],
+      noble:['贵人倾向','出现快慢','主要卡点','助力落点','贵人资源','助力气象'],
+      pet:['宠物状态','变化速度','风险卡点','结果落地','照护助力','宠物气象'],
+      vehicle:['车辆倾向','处理速度','事故/维修风险','结果落地','外部助力','交通气象'],
+      people:['寻人倾向','消息快慢','寻找难点','相见落点','外部帮助','线索气象'],
+      shopping:['购买倾向','决策速度','消费风险','结果落实','外部建议','消费气象'],
+      inlaw:['关系倾向','沟通节奏','主要矛盾','关系落点','家庭助力','家庭气象'],
+      couple:['关系倾向','相处节奏','主要矛盾','关系落点','沟通助力','夫妻气象'],
+      parentchild:['关系倾向','沟通节奏','主要矛盾','结果落点','家庭助力','亲子气象'],
+      workplace:['人际倾向','互动节奏','主要阻力','结果落点','同事助力','职场气象'],
+      moveRent:['搬租倾向','推进速度','隐患阻力','落地程度','外部助力','居住气象'],
+      renovation:['维修倾向','推进速度','隐患阻力','结果落点','师傅助力','维修气象'],
+      loan:['借贷倾向','回款速度','风险卡点','落实程度','资源助力','财务气象'],
+      arbitration:['胜算倾向','流程速度','证据阻力','结果落点','和解助力','纠纷气象'],
+      examMindset:['心态倾向','调整速度','失分卡点','结果稳定','外部助力','考试气象'],
+      fitness:['状态倾向','变化速度','执行阻力','结果稳定','外部帮助','调理气象'],
+      vacation:['出行倾向','行程速度','路上阻力','结果落点','同行助力','旅行气象'],
+      schoolChoice:['择校倾向','推进速度','主要卡点','结果落地','家庭助力','升学气象'],
+      salaryOffer:['录用倾向','反馈快慢','谈薪卡点','Offer落实','资源助力','求职气象'],
+      startup:['开店倾向','推进速度','经营风险','结果落地','资源助力','创业气象'],
+      studyCert:['通过倾向','学习速度','主要卡点','结果稳定','外部助力','学习气象'],
+      mentalHealth:['状态倾向','调整速度','压力卡点','恢复稳定','外部帮助','情绪气象'],
+      sleep:['睡眠倾向','恢复速度','失眠卡点','结果稳定','调理助力','睡眠气象'],
+      trafficTicket:['处理倾向','流程速度','规则风险','结果落点','协助资源','交通气象'],
+      ecommerce:['收货倾向','物流速度','卡点风险','结果落实','客服助力','网购气象'],
+      roommate:['关系倾向','沟通节奏','主要矛盾','结果落点','外部助力','合住气象']
+    };
+    function normalizeQuickLabels(labels, sceneKey){
+      const normalizedKey = typeof normalizeKnowledgeSceneKey === 'function' ? normalizeKnowledgeSceneKey(sceneKey || '') : (sceneKey || '');
+      const fallback = (XLR_SCENE_SUMMARY_LABELS[sceneKey] || XLR_SCENE_SUMMARY_LABELS[normalizedKey] || XLR_GENERIC_SUMMARY_LABELS);
+      const source = Array.isArray(labels) ? labels.slice(0, 6) : [];
+      const merged = XLR_GENERIC_SUMMARY_LABELS.map(function(generic, idx){
+        const candidate = source[idx] || fallback[idx] || generic;
+        const text = String(candidate == null ? '' : candidate).trim();
+        return (!text || text === 'undefined' || text === 'null') ? (fallback[idx] || generic) : text;
+      });
+      return merged;
+    }
     function knowledgeSceneFocus(sceneKey){
-      const scene=getKnowledgeScene(sceneKey); if(!scene) return [];
-      const sample = scene.palms && Object.values(scene.palms).find(v=>v && typeof v === 'object');
-      const fields = sample && typeof sample === 'object' ? Object.keys(sample).filter(k=>k !== 'summary' && k !== 'advice').map(knowledgeFieldLabel).slice(0,5) : [];
-      return fields.length ? fields : ['六宫专项断语','场景摘要','行动建议','风险提示'];
+      const scene=getKnowledgeScene(sceneKey);
+      const labels = XLR_SCENE_SUMMARY_LABELS[sceneKey] || XLR_SCENE_SUMMARY_LABELS[typeof normalizeKnowledgeSceneKey === 'function' ? normalizeKnowledgeSceneKey(sceneKey || '') : sceneKey];
+      if(labels) return normalizeQuickLabels(labels, sceneKey);
+      if(!scene) return normalizeQuickLabels([], sceneKey);
+      return normalizeQuickLabels([], sceneKey);
     }
 
 
@@ -7580,7 +7634,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.149',
+        source:'mainline-v10.5.150',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -7658,7 +7712,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.149',
+        source:'mainline-v10.5.150',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -7671,7 +7725,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.149') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.150') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -7680,7 +7734,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.149',
+      source:'mainline-v10.5.150',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -7931,7 +7985,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.149',
+        source: 'mainline-v10.5.150',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -7947,7 +8001,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.149',
+      source: 'mainline-v10.5.150',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -8530,6 +8584,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.150 专项摘要标签完整修正版', items:[
+          '修复 JSON 专项场景（例如中奖、合同、投资、父母、子女、宠物、车辆/交通等）在结果摘要六宫指标中出现 undefined 标签的问题。',
+          '新增 normalizeQuickLabels / 场景摘要标签兜底：不足 6 个标签时自动补齐，不再把知识库字段名直接错位当成摘要指标。',
+          '为中奖等新增专项摘要标签，使“中奖倾向、兑票节奏、冲动风险、结果落点、助力情况、娱乐气象”与对应指标匹配。',
+          'Debug 新增结果摘要标签审计，能检查 summaryGrid 是否存在空标签、undefined、null 或空值，避免类似显示不完整问题漏过自检。',
+          '同步更新 README、manifest、service-worker、版本记录与知识库版本说明，继续保持 1 个主 style + 1 个主 script。'
+        ]},
         { v:'v10.5.149 Debug 阻塞分级与说明完善版', items:[
           '完善 Debug 对“阻塞”的定义：阻塞只指会影响核心功能、数据安全、版本可靠性或发布可信度的问题。',
           '一键自检新增 issueGroups 分组输出：blockers、warnings、tips、downgraded、ignored、raw，方便区分真正阻断发布项和普通提示。',
@@ -9589,7 +9650,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.149',
+      source: 'mainline-v10.5.150',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -9670,7 +9731,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.149',
+      source: 'mainline-v10.5.150',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -11051,7 +11112,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.149'
+      source: 'mainline-v10.5.150'
     };
 
     initExtendedContextRules();
@@ -11068,7 +11129,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.149 Debug 阻塞分级与说明完善版';
+  const APP_VERSION = 'v10.5.150 专项摘要标签完整修正版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -12291,6 +12352,21 @@ function buildContextOverallSentence(context, details) {
       latest: rows.slice(-3).map(row => ({ scene:row.item && row.item.sceneName, accuracy:row.review && row.review.accuracy, unit: typeof reviewAccuracyUnitLabel === 'function' ? reviewAccuracyUnitLabel(row.review && row.review.accuracy) : '', updatedAt:row.review && row.review.updatedAt }))
     };
   }
+  function getResultSummaryLabelAuditInfo(){
+    const items = qa('#summaryGrid .summary-item').map(function(el, index){
+      const labelEl = el.querySelector ? el.querySelector('span') : null;
+      const valueEl = el.querySelector ? el.querySelector('b') : null;
+      const label = (labelEl && labelEl.textContent ? labelEl.textContent : '').trim();
+      const value = (valueEl && valueEl.textContent ? valueEl.textContent : '').trim();
+      const badLabel = !label || /^(undefined|null)$/i.test(label);
+      const badValue = !value || /^(undefined|null)$/i.test(value);
+      return { index:index, label:label, value:value, badLabel:badLabel, badValue:badValue };
+    });
+    const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
+    const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
+    return { version:APP_VERSION, source:'mainline-v10.5.150', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+  }
+
   function getDeepLogicAuditInfo(){
     const visibleBlocks = qa('#resultCard .block, #resultCard article, #resultCard [id]').filter(visibleOf).map(el => ({ tag:el.tagName || '', id:el.id || '', className:el.className || '', textLength:(el.textContent||'').trim().length })).filter(x => x.id || x.textLength < 8);
     const emptyVisible = visibleBlocks.filter(x => x.id && x.textLength < 2 && !/^(CANVAS|SVG|IMG|INPUT|TEXTAREA|SELECT)$/i.test(x.tag || '') && x.id !== 'radarCanvas');
@@ -12320,7 +12396,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.149',
+      source: 'mainline-v10.5.150',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -12433,6 +12509,7 @@ function buildContextOverallSentence(context, details) {
       bottomClearance: getBottomClearanceInfo(),
       readingFontAudit: getReadingFontAuditInfo(),
       reviewSystem: getReviewSystemInfo(),
+      resultSummaryLabelAudit: getResultSummaryLabelAuditInfo(),
       deepLogicAudit: getDeepLogicAuditInfo(),
       knowledge: getKnowledgeInfo(),
       versionSummaryDuplicates: getVersionSummaryDuplicates(),
@@ -12516,7 +12593,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.149', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.149') },
+      { id:'nav-core', label:'导航主源码为 v10.5.150', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.150') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -12531,6 +12608,7 @@ function buildContextOverallSentence(context, details) {
       { id:'review-edit-v132', label:'复盘编辑/删除与准确率单位可用', ok: !!(snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete && snapshot.reviewSystem.core.hasScore) },
       { id:'review-insight-v141', label:'复盘洞察主线可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReviewInsights && snapshot.analytics.metrics && snapshot.analytics.metrics.reviewInsightReady) },
       { id:'review-detail-mobile-v142', label:'复盘明细移动端卡片可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReviewDetailCards) },
+      { id:'summary-labels-v150', label:'结果摘要标签完整无 undefined', ok: !!(snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) },
       { id:'bottom-clearance-v143', label:'底部导航遮挡安全留白可用', ok: !!(snapshot.bottomClearance && snapshot.bottomClearance.ok) },
       { id:'deep-logic-audit-v132', label:'Debug 深度逻辑巡检可用', ok: !!(snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok !== false) },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
@@ -12601,7 +12679,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.149' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.150' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -12616,7 +12694,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.149' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.150' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -12646,8 +12724,8 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.149') {
-      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.149 主源码历史模块', snapshot.history.core);
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.150') {
+      addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.150 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
       addIssue(issues, 'error', 'HISTORY_DOM_MISSING', '历史记录弹窗或列表容器缺失', snapshot.history);
@@ -12662,8 +12740,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.149') {
-      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.149 主源码分析模块', snapshot.analytics.core);
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.150') {
+      addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.150 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
       addIssue(issues, 'error', 'ANALYTICS_DOM_MISSING', '历史分析弹窗或内容容器缺失', snapshot.analytics);
@@ -12689,6 +12767,9 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.reviewSystem || !(snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete)) {
       addIssue(issues, 'warning', 'REVIEW_EDIT_SYSTEM_MISSING', '复盘编辑/删除能力未完整挂载', snapshot.reviewSystem);
     }
+    if (snapshot.resultSummaryLabelAudit && !snapshot.resultSummaryLabelAudit.ok) {
+      addIssue(issues, 'error', 'RESULT_SUMMARY_LABEL_INCOMPLETE', '结果摘要指标存在空标签、undefined 或空值', snapshot.resultSummaryLabelAudit.invalid || snapshot.resultSummaryLabelAudit);
+    }
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.emptyVisible && snapshot.deepLogicAudit.emptyVisible.length) {
       addIssue(issues, 'warning', 'VISIBLE_EMPTY_BLOCKS', '发现可见但几乎无内容的模块，建议人工检查', snapshot.deepLogicAudit.emptyVisible.slice(0,20));
     }
@@ -12696,8 +12777,8 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.149') {
-      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.149 命盘主源码模块', snapshot.destiny.core);
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.150') {
+      addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.150 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
       addIssue(issues, 'error', 'DESTINY_CORE_FUNCTION_MISSING', '命盘主源码状态构建或模板边界检查函数缺失', snapshot.destiny.core);
@@ -12730,7 +12811,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.149') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.150') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -12808,16 +12889,16 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.149' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.150' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.149') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.150') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.149') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.150') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -12826,15 +12907,16 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
     if (snapshot.analytics.core.hasReviewInsights && snapshot.analytics.metrics && snapshot.analytics.metrics.reviewInsightReady) passes.push('复盘洞察主线检查通过');
     if (snapshot.analytics.core.hasReviewDetailCards) passes.push('复盘明细移动端卡片检查通过');
+    if (snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) passes.push('结果摘要标签完整性检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.149') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.150') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.149') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.150') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
