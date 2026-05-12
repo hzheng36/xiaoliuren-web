@@ -1,3 +1,23 @@
+### v10.5.145 暗夜场景按钮体检修正版
+
+## v10.5.145 暗夜场景按钮体检修正版
+
+本版基于 v10.5.144，专门修复 Debug 一键自检中的 `NIGHT_THEME_COVERAGE_MISSING` 警告。问题集中在首页场景按钮 `scene-btn` 和底部章节导航 `jump-chip`：真实暗夜样式与 Debug 临时夜间审计样式没有完全统一，导致运行时体检仍能捕捉到浅色背景、透明渐变背景或 active 状态深色文字残留。
+
+- 补强 `reading-theme-night` 与 `xlr-debug-night-audit` 两套状态下的 `scene-btn` 暗夜样式。
+- 补强底部章节导航 `#sectionJumpNav .jump-chip` 与命盘子导航 `#destinySubNav .jump-chip` 的暗夜/审计样式。
+- active 状态改用 `background-color` 与 `background-image` 分开写，避免 Debug 只读取 `backgroundColor` 时把渐变误判为透明背景。
+- 按钮内部 `emoji / span / dot` 统一继承父按钮文字色，避免暗夜体检出现深色文字残留。
+- 保留 v10.5.144 首页主题海报和 v10.5.143 底部安全留白，不回退已有修复。
+
+## 这版重点测试
+
+1. 上传全部文件后强制刷新，确认首页显示 v10.5.145。
+2. 打开 Debug → 一键自检，确认不再出现 `NIGHT_THEME_COVERAGE_MISSING`。
+3. 切换暗夜模式，检查首页常用场景按钮、更多细分场景按钮是否不再白底。
+4. 检查底部章节导航“顶部 / 场景 / 问事 / 起课”的普通状态和高亮状态是否对比清楚。
+5. 确认首页海报仍正常显示，手机端底部导航遮挡修复没有回退。
+
 ### v10.5.144 首页视觉海报整合版
 
 ## v10.5.144 首页视觉海报整合版
