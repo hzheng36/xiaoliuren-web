@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.131 JSON知识库稳定校验与场景映射增强版</title>
-<meta content="小六壬个人网页版 v10.5.131 JSON知识库稳定校验与场景映射增强版：在 v10.5.130 基础上，继续加固场景 JSON 知识库主线，增强中文场景名、英文 sceneKey 与别名映射，补强不同字段结构的安全渲染兜底，并在 Debug 中加入场景映射、JSON/Intent 覆盖、六宫完整性、six_spirit_modifier 与免责声明的稳定校验。" name="description"/>
+<title>小六壬占卜 · v10.5.132 阅读字号与复盘编辑增强版</title>
+<meta content="小六壬个人网页版 v10.5.132 阅读字号与复盘编辑增强版：在 v10.5.131 基础上，集中修复阅读字号设置对结果页正文、快速导读、术语解释、命盘深读等模块不生效或反向变小的问题；升级 Debug 深度巡检，新增字号变量、可见模块、导航目标、复盘结构、统计口径、知识库映射等细节检查；同时升级复盘系统，支持编辑、删除单条复盘，并在分析页显示有效复盘准确率、按场景准确率与复盘明细。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -326,6 +326,9 @@
     .review-empty { color:var(--muted); border:1px dashed var(--line); border-radius:16px; padding:12px 14px; background:rgba(103,83,165,.04); line-height:1.6; }
 
     .review-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .review-entry-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:10px; }
+    .review-entry-actions button { padding:7px 10px; border-radius:999px; font-size:.86rem; }
+    .review-editing-note { color:var(--primary); font-weight:800; }
 
     .about-rules { display:grid; gap:12px; }
     .about-rules details { background:rgba(255,255,255,.72); border:1px solid var(--line); border-radius:16px; padding:12px 14px; }
@@ -1532,6 +1535,78 @@ body .palace-card h5 {
   }
 }
 
+
+
+/* 源码主模块：v10.5.132 阅读字号统一修复
+   目标：设置里的小/中/大/特大真正作用到结果页正文、快速导读、术语解释、命盘深读和复盘内容；避免导读卡片被 13px/14px 固定字号压小。 */
+body.reading-size-small { --xlr-font-body: 15px; --xlr-font-small: 13.5px; --xlr-font-note: 14px; --xlr-font-head: 16.5px; --xlr-font-title: 18px; --xlr-reading-scale: .94; }
+body.reading-size-normal { --xlr-font-body: 16px; --xlr-font-small: 14px; --xlr-font-note: 15px; --xlr-font-head: 17px; --xlr-font-title: 19px; --xlr-reading-scale: 1; }
+body.reading-size-large { --xlr-font-body: 18px; --xlr-font-small: 16px; --xlr-font-note: 16.5px; --xlr-font-head: 20px; --xlr-font-title: 22px; --xlr-reading-scale: 1.12; }
+body.reading-size-xlarge { --xlr-font-body: 20px; --xlr-font-small: 17.5px; --xlr-font-note: 18px; --xlr-font-head: 22px; --xlr-font-title: 24px; --xlr-reading-scale: 1.24; }
+@media(max-width:430px){
+  body.reading-size-large { --xlr-font-body: 18px; --xlr-font-small: 16px; --xlr-font-note: 16.5px; --xlr-font-head: 20px; --xlr-font-title: 22px; --xlr-reading-scale: 1.12; }
+  body.reading-size-xlarge { --xlr-font-body: 20px; --xlr-font-small: 17.5px; --xlr-font-note: 18px; --xlr-font-head: 22px; --xlr-font-title: 24px; --xlr-reading-scale: 1.24; }
+}
+body.result-page #resultCard,
+body.result-page #resultCard .block,
+body.result-page #resultCard .answer-summary,
+body.result-page #resultCard .focus-grid,
+body.result-page #resultCard .context-analysis,
+body.result-page #resultCard .overall-rich,
+body.result-page #resultCard .symbol-table,
+body.result-page #resultCard .tri-reading,
+body.result-page #resultCard .gua-reading,
+body.result-page #resultCard .destiny-summary,
+body.result-page #resultCard .destiny-cell,
+body.result-page #resultCard .destiny-deep,
+body.result-page #resultCard .destiny-deep-card,
+body.result-page #resultCard .review-summary,
+body.result-page #resultCard .xlr-guide-card,
+body.result-page #resultCard .xlr-term-card {
+  font-size: var(--xlr-font-body) !important;
+  line-height: 1.78 !important;
+}
+body.result-page #resultCard p,
+body.result-page #resultCard li,
+body.result-page #resultCard span,
+body.result-page #resultCard .xlr-guide-card span,
+body.result-page #resultCard .xlr-term-card p,
+body.result-page #resultCard .review-entry-body,
+body.result-page #resultCard .context-card p,
+body.result-page #resultCard .answer-card p,
+body.result-page #resultCard .destiny-deep-card p,
+body.result-page #resultCard .destiny-cell p {
+  font-size: var(--xlr-font-body) !important;
+  line-height: 1.78 !important;
+}
+body.result-page #resultCard small,
+body.result-page #resultCard .muted,
+body.result-page #resultCard .subtle,
+body.result-page #resultCard .palace-meta,
+body.result-page #resultCard .v105107-paipan-meta,
+body.result-page #resultCard .destiny-topic-muted,
+body.result-page #resultCard .destiny-topic-pill {
+  font-size: var(--xlr-font-note) !important;
+  line-height: 1.66 !important;
+}
+body.result-page #resultCard h4,
+body.result-page #resultCard h5,
+body.result-page #resultCard .xlr-guide-card b,
+body.result-page #resultCard .xlr-term-card h5 {
+  font-size: var(--xlr-font-head) !important;
+  line-height: 1.42 !important;
+}
+body.result-page #resultCard .result-header h3,
+body.result-page #resultCard .section-title h3 {
+  font-size: var(--xlr-font-title) !important;
+  line-height: 1.35 !important;
+}
+body.result-page .scroll-tools .scroll-tool-btn,
+body.result-page .section-jump-nav .jump-chip,
+body.result-page .destiny-sub-nav .jump-chip {
+  font-size: inherit;
+}
+
     /* 源码模块：Debug 主源码样式（v10.5.129，含发版体检、补丁审计、场景白话覆盖、专项串联覆盖、追问复盘建议、白话答案质量检查、场景深化、现实验证清单、三步行动方案、反向验证提示、命盘、暗夜主题、历史回看、结果页顶部复位与结果页分离自检） */
 /* 小六壬 v10.5.129 Debug 主源码样式 */
 #xlrDebugFab {
@@ -2324,8 +2399,8 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.131 JSON知识库稳定校验与场景映射增强版</h2>
-<p>本版在 v10.5.130 已完成 JSON 知识库接入的基础上，继续做稳定校验与场景映射增强：统一 sceneKey / 中文场景名 / 常用别名，补强结构化字段兜底显示，并让 Debug 更清楚地检查知识库覆盖情况。</p>
+<h2>个人占卜台 · v10.5.132 阅读字号与复盘编辑增强版</h2>
+<p>本版集中修复阅读字号设置不生效的问题，并升级 Debug 深度巡检与复盘编辑/准确率统计，让结果页阅读、问题排查和长期复盘更稳定。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -2800,15 +2875,17 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <label>复盘备注
         <textarea id="reviewNote" maxlength="500" placeholder="可以记录哪些地方应验、哪些地方偏差、应期是否提前或延后、下次要注意什么。"></textarea>
 </label>
+<input id="reviewEditIndex" type="hidden" value="">
+<div class="review-editing-note hidden" id="reviewEditingNote">正在编辑一条旧复盘，保存后会覆盖原内容。</div>
 <div class="review-actions">
-<button class="primary-btn" onclick="saveReview()" style="width:auto;margin-top:0;" type="button">添加复盘</button>
+<button class="primary-btn" id="saveReviewBtn" onclick="saveReview()" style="width:auto;margin-top:0;" type="button">添加复盘</button>
 <button class="ghost-btn" onclick="clearReviewForm()" type="button">清空复盘</button>
 </div>
 </div>
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.131 JSON知识库稳定校验与场景映射增强版';
+    const XLR_SOURCE_VERSION = 'v10.5.132 阅读字号与复盘编辑增强版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3789,7 +3866,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.131',
+      source: 'mainline-v10.5.132',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4009,6 +4086,35 @@ function buildPaipanExplanation(result){
       return map[value] || '未复盘';
     }
 
+    function reviewAccuracyScore(value){
+      if(value === 'accurate') return 1;
+      if(value === 'partial') return .5;
+      if(value === 'miss' || value === 'inaccurate') return 0;
+      return null;
+    }
+    function reviewAccuracyUnitLabel(value){
+      const score = reviewAccuracyScore(value);
+      return score == null ? '待验证' : (score === 1 ? '1 单位' : (score === .5 ? '0.5 单位' : '0 单位'));
+    }
+    function resetReviewEditForm(){
+      const idx=document.getElementById('reviewEditIndex'); if(idx) idx.value='';
+      const note=document.getElementById('reviewEditingNote'); if(note) note.classList.add('hidden');
+      const btn=document.getElementById('saveReviewBtn'); if(btn) btn.textContent='添加复盘';
+    }
+    function setReviewFormValues(entry, idx){
+      const acc=document.getElementById('reviewAccuracy');
+      const actual=document.getElementById('reviewActual');
+      const note=document.getElementById('reviewNote');
+      const edit=document.getElementById('reviewEditIndex');
+      if(acc) acc.value=(entry && entry.accuracy) || 'pending';
+      if(actual) actual.value=(entry && entry.actual) || '';
+      if(note) note.value=(entry && entry.note) || '';
+      if(edit) edit.value=String(idx);
+      const flag=document.getElementById('reviewEditingNote'); if(flag) flag.classList.remove('hidden');
+      const btn=document.getElementById('saveReviewBtn'); if(btn) btn.textContent='保存编辑';
+      try{ document.getElementById('reviewActual').focus(); }catch(e){}
+    }
+
     function getReviewEntries(item){
       if(!item) return [];
       if(Array.isArray(item.reviews)) return item.reviews.filter(Boolean);
@@ -4032,9 +4138,11 @@ function buildPaipanExplanation(result){
       if(!list.length){ box.innerHTML='<div class="review-empty">暂无复盘。可以在下方添加第一条复盘。</div>'; return; }
       box.innerHTML=list.map(function(r,idx){
         const time=formatISO(r.reviewedAt || r.updatedAt || r.createdAt || '');
+        const updated=r.updatedAt ? '<div><b>更新时间：</b>'+escapeHTML(formatISO(r.updatedAt))+'</div>' : '';
         const actual=r.actual ? '<div><b>实际结果：</b>'+escapeHTML(r.actual)+'</div>' : '<div><b>实际结果：</b>未填写</div>';
         const note=r.note ? '<div><b>复盘备注：</b>'+escapeHTML(r.note)+'</div>' : '';
-        return '<div class="review-entry"><div class="review-entry-head"><span>#'+(idx+1)+' '+reviewAccuracyLabel(r.accuracy)+'</span><span>'+escapeHTML(time)+'</span></div><div class="review-entry-body">'+actual+note+'</div></div>';
+        const unit='<div><b>准确单位：</b>'+escapeHTML(reviewAccuracyUnitLabel(r.accuracy))+'</div>';
+        return '<div class="review-entry"><div class="review-entry-head"><span>#'+(idx+1)+' '+reviewAccuracyLabel(r.accuracy)+'</span><span>'+escapeHTML(time)+'</span></div><div class="review-entry-body">'+actual+note+unit+updated+'</div><div class="review-entry-actions"><button class="ghost-btn" type="button" onclick="editReviewEntry('+idx+')">编辑</button><button class="ghost-btn" type="button" onclick="deleteReviewEntry('+idx+')">删除</button></div></div>';
       }).join('');
     }
     function reviewTimelineSummary(item){
@@ -4056,6 +4164,7 @@ function buildPaipanExplanation(result){
       document.getElementById('reviewAccuracy').value = 'pending';
       document.getElementById('reviewActual').value = '';
       document.getElementById('reviewNote').value = '';
+      resetReviewEditForm();
       const dialog = document.getElementById('reviewDialog');
       if(dialog && typeof dialog.showModal === 'function') dialog.showModal();
       else if(dialog) dialog.setAttribute('open','open');
@@ -4070,23 +4179,62 @@ function buildPaipanExplanation(result){
       const list = getHistory();
       const item = list.find(function(x){ return x.id === currentReviewId; });
       if(!item) return alert('没有找到这条历史记录。');
+      const editEl=document.getElementById('reviewEditIndex');
+      const editIndex = editEl && editEl.value !== '' ? Number(editEl.value) : -1;
+      const now = new Date().toISOString();
       const entry = {
         accuracy: document.getElementById('reviewAccuracy').value || 'pending',
         actual: document.getElementById('reviewActual').value.trim(),
         note: document.getElementById('reviewNote').value.trim(),
-        reviewedAt: new Date().toISOString()
+        reviewedAt: now
       };
       ensureReviewTimeline(item);
-      item.reviews.push(entry);
-      item.review = entry;
+      if(Number.isInteger(editIndex) && editIndex >= 0 && editIndex < item.reviews.length){
+        const old = item.reviews[editIndex] || {};
+        entry.reviewedAt = old.reviewedAt || old.createdAt || now;
+        entry.createdAt = old.createdAt || old.reviewedAt || now;
+        entry.updatedAt = now;
+        item.reviews[editIndex] = Object.assign({}, old, entry);
+      } else {
+        entry.createdAt = now;
+        item.reviews.push(entry);
+      }
+      item.review = item.reviews[item.reviews.length - 1];
       setHistory(list);
       document.getElementById('reviewAccuracy').value = 'pending';
       document.getElementById('reviewActual').value = '';
       document.getElementById('reviewNote').value = '';
+      resetReviewEditForm();
       renderReviewTimeline(item);
       renderHistory();
       if(typeof renderAnalytics === 'function') renderAnalytics();
-      alert('已添加一条复盘。');
+      alert(editIndex >= 0 ? '复盘已更新。' : '已添加一条复盘。');
+    }
+    function editReviewEntry(index){
+      if(!currentReviewId) return;
+      const item = getHistory().find(function(x){ return x.id === currentReviewId; });
+      if(!item) return alert('没有找到这条历史记录。');
+      const list = ensureReviewTimeline(item);
+      const entry = list[index];
+      if(!entry) return alert('没有找到这条复盘。');
+      setReviewFormValues(entry, index);
+    }
+    function deleteReviewEntry(index){
+      if(!currentReviewId) return;
+      const list = getHistory();
+      const item = list.find(function(x){ return x.id === currentReviewId; });
+      if(!item) return alert('没有找到这条历史记录。');
+      ensureReviewTimeline(item);
+      if(!item.reviews[index]) return alert('没有找到这条复盘。');
+      if(!confirm('确定删除这条复盘吗？')) return;
+      item.reviews.splice(index,1);
+      if(item.reviews.length) item.review = item.reviews[item.reviews.length - 1];
+      else delete item.review;
+      setHistory(list);
+      resetReviewEditForm();
+      renderReviewTimeline(item);
+      renderHistory();
+      if(typeof renderAnalytics === 'function') renderAnalytics();
     }
     function clearReviewForm(){
       if(!currentReviewId) return;
@@ -4098,6 +4246,7 @@ function buildPaipanExplanation(result){
       document.getElementById('reviewAccuracy').value = 'pending';
       document.getElementById('reviewActual').value = '';
       document.getElementById('reviewNote').value = '';
+      resetReviewEditForm();
       renderHistory();
       if(typeof renderAnalytics === 'function') renderAnalytics();
       renderReviewTimeline(item || null);
@@ -6671,7 +6820,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.131',
+        source:'mainline-v10.5.132',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -6728,7 +6877,7 @@ function buildContextOverallSentence(context, details) {
         return { alias, normalized, jsonSceneName:name, hasJsonScene:!!getKnowledgeScene(alias) };
       });
       return {
-        schema:'mapping-audit-v10.5.131',
+        schema:'review-font-audit-v10.5.132',
         total:rows.length,
         jsonMapped:rows.filter(r=>r.hasJsonScene).length,
         intentFallback:rows.filter(r=>!r.hasJsonScene && r.hasIntent).length,
@@ -6749,7 +6898,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.131',
+        source:'mainline-v10.5.132',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -6762,7 +6911,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.131') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.132') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -6771,7 +6920,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.131',
+      source:'mainline-v10.5.132',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -7022,7 +7171,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.131',
+        source: 'mainline-v10.5.132',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -7038,7 +7187,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.131',
+      source: 'mainline-v10.5.132',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -7621,6 +7770,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.132 阅读字号与复盘编辑增强版', items:[
+          '修复阅读字号设置：小/中/大/特大现在统一作用到结果页正文、快速导读、术语解释、问事专项、命盘深读、复盘摘要等模块，避免快速导读在放大后反而变小。',
+          'Debug 深度巡检升级：新增字号变量检查、可见文本字号采样、导航目标与可见模块一致性、复盘结构、复盘统计口径、知识库映射和潜在隐藏空容器检查。',
+          '复盘系统升级：历史记录中的每条复盘现在可单独编辑、删除；保存编辑会保留原创建时间并写入更新时间。',
+          '分析页新增有效复盘准确率、按场景准确率、已验证单位数等指标，复盘明细表显示编辑时间，方便长期统计占卜准确性。',
+          '继续更新 title、meta、首页版本、版本内容更新、README、manifest 与 service-worker，并保留发布前体检与旧补丁审计。'
+        ]},
         { v:'v10.5.131 JSON知识库稳定校验与场景映射增强版', items:[
           '在 v10.5.130 稳定体验整合版基础上，继续加固场景 JSON 知识库主线，不改变起课算法与结果页大结构。',
           '增强 sceneKey / 中文场景名 / 常用别名映射，重点检查感情、财运、求职、家宅、寻人、贵人、子女、父母、宠物、车辆/交通等场景是否能正确命中 JSON。',
@@ -8278,13 +8434,29 @@ function buildContextOverallSentence(context, details) {
       });
       return rows;
     }
-    function reviewRateTextFromRows(rows){
-      const judged = (rows || []).filter(row => row.review && row.review.accuracy && row.review.accuracy !== 'pending');
-      if(!judged.length) return '暂无';
-      const good = judged.filter(row => row.review.accuracy === 'accurate' || row.review.accuracy === 'partial').length;
-      return Math.round(good / judged.length * 100) + '%';
+    function reviewAccuracyStatsFromRows(rows){
+      const judged = (rows || []).filter(row => row.review && reviewAccuracyScore(row.review.accuracy) != null);
+      const unit = judged.reduce((sum,row)=> sum + (reviewAccuracyScore(row.review.accuracy) || 0), 0);
+      return { judgedCount: judged.length, accurateUnit: unit, rate: judged.length ? Math.round(unit / judged.length * 100) + '%' : '暂无' };
     }
+    function reviewRateTextFromRows(rows){ return reviewAccuracyStatsFromRows(rows).rate; }
     function reviewRateText(list){ return reviewRateTextFromRows(getReviewEntryRows(list)); }
+    function sceneAccuracyEntriesFromRows(rows){
+      const map = new Map();
+      (rows || []).forEach(row => {
+        const score = row.review ? reviewAccuracyScore(row.review.accuracy) : null;
+        if(score == null) return;
+        const scene = row.item && row.item.sceneName || '未记录';
+        const cur = map.get(scene) || { scene, judged:0, unit:0 };
+        cur.judged += 1; cur.unit += score; map.set(scene, cur);
+      });
+      return Array.from(map.values()).sort((a,b)=> (b.unit/b.judged) - (a.unit/a.judged) || b.judged - a.judged);
+    }
+    function renderSceneAccuracyTable(rows){
+      const entries = sceneAccuracyEntriesFromRows(rows);
+      if(!entries.length) return '<div class="analysis-empty">暂无可计算准确率的复盘记录。</div>';
+      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>场景</th><th>已验证条目</th><th>准确单位</th><th>准确率</th></tr></thead><tbody>` + entries.map(item => `<tr><td>${escapeHTML(item.scene)}</td><td>${item.judged}</td><td>${item.unit}</td><td>${Math.round(item.unit / item.judged * 100)}%</td></tr>`).join('') + '</tbody></table></div>';
+    }
     function buildAnalyticsMetrics(list){
       const normalized = Array.isArray(list) ? list : [];
       const reviewRows = getReviewEntryRows(normalized);
@@ -8296,6 +8468,8 @@ function buildContextOverallSentence(context, details) {
       const reviewedRecords = normalized.filter(item => analyticsReviewEntries(item).length);
       const reviewAccEntries = countBy(reviewRows, row => reviewAccuracyLabel(row.review && row.review.accuracy));
       const reviewedSceneEntries = countBy(reviewRows, row => row.item && row.item.sceneName || '未记录');
+      const accuracyStats = reviewAccuracyStatsFromRows(reviewRows);
+      const sceneAccuracyEntries = sceneAccuracyEntriesFromRows(reviewRows);
       return {
         total: normalized.length,
         favoriteCount: normalized.filter(item => item.favorite).length,
@@ -8305,7 +8479,10 @@ function buildContextOverallSentence(context, details) {
         partialCount: reviewRows.filter(row => row.review && row.review.accuracy === 'partial').length,
         missCount: reviewRows.filter(row => row.review && (row.review.accuracy === 'miss' || row.review.accuracy === 'inaccurate')).length,
         pendingCount: reviewRows.filter(row => row.review && row.review.accuracy === 'pending').length,
-        reviewRate: reviewRateTextFromRows(reviewRows),
+        reviewRate: accuracyStats.rate,
+        judgedReviewCount: accuracyStats.judgedCount,
+        accurateUnit: accuracyStats.accurateUnit,
+        sceneAccuracyEntries,
         sceneEntries,
         methodEntries,
         palaceEntries,
@@ -8338,10 +8515,10 @@ function buildContextOverallSentence(context, details) {
     function renderReviewAnalyticsTable(list){
       const rows = getReviewEntryRows(list);
       if (!rows.length) return '<div class="analysis-empty">当前范围内还没有复盘记录。你可以在“历史记录”中点击“复盘”补充实际结果。</div>';
-      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>占卜时间</th><th>场景</th><th>占问事项</th><th>落宫</th><th>复盘序号</th><th>准确度</th><th>复盘时间</th><th>实际结果</th><th>复盘备注</th></tr></thead><tbody>` + rows.map(row => {
+      return `<div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>占卜时间</th><th>场景</th><th>占问事项</th><th>落宫</th><th>复盘序号</th><th>准确度</th><th>准确单位</th><th>复盘时间</th><th>更新时间</th><th>实际结果</th><th>复盘备注</th></tr></thead><tbody>` + rows.map(row => {
         const item = row.item || {};
         const review = row.review || {};
-        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${row.index}/${row.total}</td><td>${escapeHTML(reviewAccuracyLabel(review.accuracy))}</td><td>${escapeHTML(formatISO(review.reviewedAt || review.updatedAt || review.createdAt || ''))}</td><td>${escapeHTML(review.actual || '—')}</td><td>${escapeHTML(review.note || '—')}</td></tr>`;
+        return `<tr><td>${formatISO(item.createdAt)}</td><td>${escapeHTML(item.sceneName || '未记录')}</td><td>${escapeHTML(item.question || '—')}</td><td>${escapeHTML((item.palaces || []).join(' / '))}</td><td>${row.index}/${row.total}</td><td>${escapeHTML(reviewAccuracyLabel(review.accuracy))}</td><td>${escapeHTML(reviewAccuracyUnitLabel(review.accuracy))}</td><td>${escapeHTML(formatISO(review.reviewedAt || review.createdAt || ''))}</td><td>${escapeHTML(formatISO(review.updatedAt || ''))}</td><td>${escapeHTML(review.actual || '—')}</td><td>${escapeHTML(review.note || '—')}</td></tr>`;
       }).join('') + '</tbody></table></div>';
     }
     function renderAnalytics(){
@@ -8371,7 +8548,9 @@ function buildContextOverallSentence(context, details) {
           <div class="analysis-card"><span>复盘条目</span><b>${metrics.reviewEntryCount}</b></div>
           <div class="analysis-card"><span>复盘准/部分准</span><b>${metrics.accurateCount}/${metrics.partialCount}</b></div>
           <div class="analysis-card"><span>复盘不准/待验证</span><b>${metrics.missCount}/${metrics.pendingCount}</b></div>
-          <div class="analysis-card"><span>复盘参考率</span><b>${metrics.reviewRate}</b></div>
+          <div class="analysis-card"><span>有效复盘准确率</span><b>${metrics.reviewRate}</b></div>
+          <div class="analysis-card"><span>已验证条目</span><b>${metrics.judgedReviewCount}</b></div>
+          <div class="analysis-card"><span>准确单位</span><b>${metrics.accurateUnit}</b></div>
           <div class="analysis-card"><span>最近一次</span><b>${metrics.latestTime}</b></div>
           <div class="analysis-card"><span>最常问场景</span><b>${escapeHTML(topName(metrics.sceneEntries))}</b></div>
           <div class="analysis-card"><span>最常用起课</span><b>${escapeHTML(topName(metrics.methodEntries))}</b></div>
@@ -8385,13 +8564,14 @@ function buildContextOverallSentence(context, details) {
         <div class="analysis-section"><h4>识别类型分布</h4>${renderBarChart(metrics.contextEntries, 10)}</div>
         <div class="analysis-section"><h4>复盘准确度分布</h4>${renderBarChart(metrics.reviewAccEntries, 6)}</div>
         <div class="analysis-section"><h4>已复盘场景分布</h4>${renderBarChart(metrics.reviewedSceneEntries, 10)}</div>
+        <div class="analysis-section"><h4>按场景准确率</h4>${renderSceneAccuracyTable(metrics.reviewRows)}</div>
         <div class="analysis-section"><h4>历史明细表</h4>${renderAnalyticsTable(list)}</div>
         <div class="analysis-section"><h4>复盘明细表</h4>${renderReviewAnalyticsTable(list)}</div>
         <div style="height:24px"></div>`;
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.131',
+      source: 'mainline-v10.5.132',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -8469,7 +8649,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.131',
+      source: 'mainline-v10.5.132',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -9837,7 +10017,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.131'
+      source: 'mainline-v10.5.132'
     };
 
     initExtendedContextRules();
@@ -9854,7 +10034,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.131 JSON知识库稳定校验与场景映射增强版';
+  const APP_VERSION = 'v10.5.132 阅读字号与复盘编辑增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -10630,6 +10810,70 @@ function buildContextOverallSentence(context, details) {
     };
   }
 
+
+
+  function pxNumber(value){
+    const n = parseFloat(String(value || '').replace('px',''));
+    return isNaN(n) ? null : Math.round(n * 100) / 100;
+  }
+  function getReadingFontAuditInfo(){
+    const body = document.body || document.documentElement;
+    const cs = getComputedStyle(body);
+    const selectors = [
+      ['resultCard', '#resultCard'],
+      ['quickGuideCard', '#xlrQuickGuideContent .xlr-guide-card'],
+      ['quickGuideTitle', '#xlrQuickGuideContent .xlr-guide-card b'],
+      ['quickGuideText', '#xlrQuickGuideContent .xlr-guide-card span'],
+      ['answerSummary', '#answerSummaryContent'],
+      ['sceneFocus', '#sceneFocusContent'],
+      ['overall', '#overallText'],
+      ['glossaryText', '#xlrGlossaryContent .xlr-term-card p'],
+      ['destinyDeep', '#destinyDeepContent .destiny-deep-card'],
+      ['reviewEntry', '.review-entry-body']
+    ];
+    const samples = selectors.map(([name, selector]) => {
+      const el = q(selector);
+      if(!el) return { name, selector, exists:false };
+      const st = getComputedStyle(el);
+      return { name, selector, exists:true, visible:visibleOf(el), fontSize:pxNumber(st.fontSize), lineHeight:st.lineHeight, display:st.display, textLength:(el.textContent || '').trim().length };
+    });
+    const vars = {
+      bodyClass: body.className || '',
+      readingSize: ['reading-size-small','reading-size-normal','reading-size-large','reading-size-xlarge'].find(c => body.classList && body.classList.contains(c)) || '',
+      fontBody: cs.getPropertyValue('--xlr-font-body').trim(),
+      fontNote: cs.getPropertyValue('--xlr-font-note').trim(),
+      fontHead: cs.getPropertyValue('--xlr-font-head').trim(),
+      fontTitle: cs.getPropertyValue('--xlr-font-title').trim(),
+      readingScale: cs.getPropertyValue('--xlr-reading-scale').trim()
+    };
+    const guide = samples.find(x => x.name === 'quickGuideText');
+    const bodyFont = pxNumber(vars.fontBody);
+    const guideOk = !guide || !guide.exists || !bodyFont || !guide.fontSize || guide.fontSize >= bodyFont - 1;
+    return { version:APP_VERSION, vars, samples, guideOk, ok:guideOk };
+  }
+  function getReviewSystemInfo(){
+    let list = [];
+    try{ list = typeof getHistory === 'function' ? getHistory() : []; }catch(e){ list=[]; }
+    let rows=[];
+    try{ rows = typeof getReviewEntryRows === 'function' ? getReviewEntryRows(list) : []; }catch(e){ rows=[]; }
+    const stats = typeof reviewAccuracyStatsFromRows === 'function' ? reviewAccuracyStatsFromRows(rows) : { judgedCount:0, accurateUnit:0, rate:'暂无' };
+    return {
+      core:{ hasEdit: typeof editReviewEntry === 'function', hasDelete: typeof deleteReviewEntry === 'function', hasScore: typeof reviewAccuracyScore === 'function', hasSceneAccuracy: typeof sceneAccuracyEntriesFromRows === 'function' },
+      dom:{ dialog:!!q('#reviewDialog'), timeline:!!q('#reviewTimelineList'), editIndex:!!q('#reviewEditIndex'), editingNote:!!q('#reviewEditingNote'), saveButton:!!q('#saveReviewBtn') },
+      metrics:{ historyCount:list.length, reviewRows:rows.length, judgedCount:stats.judgedCount, accurateUnit:stats.accurateUnit, reviewRate:stats.rate, sceneAccuracyCount: typeof sceneAccuracyEntriesFromRows === 'function' ? sceneAccuracyEntriesFromRows(rows).length : 0 },
+      latest: rows.slice(-3).map(row => ({ scene:row.item && row.item.sceneName, accuracy:row.review && row.review.accuracy, unit: typeof reviewAccuracyUnitLabel === 'function' ? reviewAccuracyUnitLabel(row.review && row.review.accuracy) : '', updatedAt:row.review && row.review.updatedAt }))
+    };
+  }
+  function getDeepLogicAuditInfo(){
+    const visibleBlocks = qa('#resultCard .block, #resultCard article, #resultCard [id]').filter(visibleOf).map(el => ({ id:el.id || '', className:el.className || '', textLength:(el.textContent||'').trim().length })).filter(x => x.id || x.textLength < 8);
+    const emptyVisible = visibleBlocks.filter(x => x.id && x.textLength < 2);
+    const hiddenWithLargeText = qa('#resultCard .hidden, #resultCard [style*="display: none"]').map(el => ({ id:el.id || '', className:el.className || '', textLength:(el.textContent||'').trim().length })).filter(x => x.textLength > 300);
+    const navTargets = qa('#sectionJumpNav [data-target], #destinySubNav [data-target]').map(el => el.dataset && el.dataset.target).filter(Boolean);
+    const brokenTargets = navTargets.filter(id => !document.getElementById(id));
+    const visibleNoNav = qa('#resultCard .block[id], #resultCard .destiny-deep-card[id]').filter(visibleOf).map(el => el.id).filter(id => navTargets.indexOf(id) < 0 && !/Content|Grid|Intro/.test(id));
+    return { emptyVisible, hiddenWithLargeText:hiddenWithLargeText.slice(0,20), brokenTargets, visibleNoNav:visibleNoNav.slice(0,25), ok: !emptyVisible.length && !brokenTargets.length };
+  }
+
   function collectSnapshot(reason) {
     const snapshot = {
       version: APP_VERSION,
@@ -10729,6 +10973,9 @@ function buildContextOverallSentence(context, details) {
       nightThemeCoverage: getNightThemeCoverageInfo(),
       resultPageSeparationCoverage: getResultPageSeparationCoverageInfo(),
       resultPageScroll: getResultPageScrollInfo(),
+      readingFontAudit: getReadingFontAuditInfo(),
+      reviewSystem: getReviewSystemInfo(),
+      deepLogicAudit: getDeepLogicAuditInfo(),
       knowledge: getKnowledgeInfo(),
       versionSummaryDuplicates: getVersionSummaryDuplicates(),
       duplicateFunctionNames: getDuplicateFunctionNames(),
@@ -10810,7 +11057,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.131', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.131') },
+      { id:'nav-core', label:'导航主源码为 v10.5.132', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.132') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -10820,7 +11067,10 @@ function buildContextOverallSentence(context, details) {
       { id:'reality-check-v126', label:'现实验证清单可用', ok: typeof answerRealityChecklistReady === 'function' && answerRealityChecklistReady() },
       { id:'step-plan-v127', label:'三步行动方案可用', ok: typeof answerStepPlanReady === 'function' && answerStepPlanReady() },
       { id:'counter-check-v128', label:'反向验证提示可用', ok: typeof answerCounterCheckReady === 'function' && answerCounterCheckReady() },
-      { id:'knowledge-core-v131', label:'JSON 知识库主线与映射审计可用', ok: typeof knowledgeCoreReady === 'function' && knowledgeCoreReady() },
+      { id:'knowledge-core-v132', label:'JSON 知识库主线与映射审计可用', ok: typeof knowledgeCoreReady === 'function' && knowledgeCoreReady() },
+      { id:'reading-font-v132', label:'阅读字号审计可用且导读不再反向变小', ok: !!(snapshot.readingFontAudit && snapshot.readingFontAudit.ok) },
+      { id:'review-edit-v132', label:'复盘编辑/删除与准确率单位可用', ok: !!(snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete && snapshot.reviewSystem.core.hasScore) },
+      { id:'deep-logic-audit-v132', label:'Debug 深度逻辑巡检可用', ok: !!(snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok !== false) },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
       { id:'normal-boundary', label:'普通问事不显示六宫排盘/命盘', ok: !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.normalShowingPaipan || snapshot.destiny.boundary.normalShowingDestinyBoard)) },
       { id:'destiny-boundary', label:'命运页保留六宫排盘/命盘', ok: !isDestiny || !(snapshot.destiny && snapshot.destiny.boundary && (snapshot.destiny.boundary.destinyMissingPaipan || snapshot.destiny.boundary.destinyMissingBoard)) },
@@ -10889,7 +11139,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.131' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.132' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -10904,7 +11154,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.131' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.132' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -10934,7 +11184,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.131') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.132') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -10950,7 +11200,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.131') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.132') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -10968,8 +11218,20 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.analytics.metrics && snapshot.analytics.metrics.error) {
       addIssue(issues, 'error', 'ANALYTICS_METRIC_ERROR', '历史分析指标计算出现错误', snapshot.analytics.metrics.error);
     }
+    if (!snapshot.readingFontAudit || !snapshot.readingFontAudit.ok) {
+      addIssue(issues, 'warning', 'READING_FONT_AUDIT_WARNING', '阅读字号审计发现导读或正文字号可能没有跟随设置', snapshot.readingFontAudit);
+    }
+    if (!snapshot.reviewSystem || !(snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete)) {
+      addIssue(issues, 'warning', 'REVIEW_EDIT_SYSTEM_MISSING', '复盘编辑/删除能力未完整挂载', snapshot.reviewSystem);
+    }
+    if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.emptyVisible && snapshot.deepLogicAudit.emptyVisible.length) {
+      addIssue(issues, 'warning', 'VISIBLE_EMPTY_BLOCKS', '发现可见但几乎无内容的模块，建议人工检查', snapshot.deepLogicAudit.emptyVisible.slice(0,20));
+    }
+    if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.brokenTargets && snapshot.deepLogicAudit.brokenTargets.length) {
+      addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
+    }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.131') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.132') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.129 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -11003,7 +11265,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.131') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.132') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -11072,27 +11334,30 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.131' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.132' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.131') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.132') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.131') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.132') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
+    if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
+    if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.131') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.132') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.131') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.132') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
