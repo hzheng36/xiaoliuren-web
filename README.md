@@ -1,3 +1,14 @@
+### v10.5.137 暗夜运行时体检修正版
+
+## v10.5.137 暗夜运行时体检修正版
+
+本版基于 v10.5.136，专门修复用户 Debug 报告中暴露的两个问题：
+
+- 修复「清理旧缓存」在没有旧缓存可清理时调用 `renderSnapshot(report)` 导致 `snapshot.environment.title` 为空并触发 TypeError 的问题。
+- 增强暗夜运行时体检：扫描前临时移除白天/护眼主题类名，加入 `reading-theme-night` 与 `xlr-debug-night-audit`，并强制触发样式回流，减少白天模式残留造成的误报。
+- 补强 `scene-btn`、`jump-chip`、`method-tab` 等按钮在暗夜模式和 Debug 夜间体检中的背景、文字、边框、active 状态颜色。
+- 已同步更新 index title / meta / 首页版本、版本内容更新、manifest、service-worker 缓存名。
+
 ### v10.5.136 暗夜 CSS 全量体检增强版
 
 ## v10.5.136 暗夜 CSS 全量体检增强版

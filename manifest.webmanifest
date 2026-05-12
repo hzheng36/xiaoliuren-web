@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.136",
-  "short_name": "小六壬 v10.5.136",
-  "description": "小六壬个人网页版 v10.5.136 暗夜 CSS 全量体检增强版",
-  "start_url": "./?v=10.5.136",
+  "name": "小六壬占卜 · v10.5.137",
+  "short_name": "小六壬 v10.5.137",
+  "description": "小六壬个人网页版 v10.5.137 暗夜运行时体检修正版",
+  "start_url": "./?v=10.5.137",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.136"
+  "version": "10.5.137"
 }
