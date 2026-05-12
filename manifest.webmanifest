@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.140",
-  "short_name": "小六壬 v10.5.140",
-  "description": "小六壬个人网页版 v10.5.140 命盘暗夜标签对比度修正版",
-  "start_url": "./?v=10.5.140",
+  "name": "小六壬占卜 · v10.5.141",
+  "short_name": "小六壬 v10.5.141",
+  "description": "小六壬个人网页版 v10.5.141 复盘洞察主线增强版",
+  "start_url": "./?v=10.5.141",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.140"
+  "version": "10.5.141"
 }
