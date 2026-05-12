@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.152",
-  "short_name": "小六壬 v10.5.152",
-  "description": "小六壬个人网页版 v10.5.152 一键修复与 Debug 警告名单基础版",
-  "start_url": "./?v=10.5.152",
+  "name": "小六壬占卜 · v10.5.153",
+  "short_name": "小六壬 v10.5.153",
+  "description": "小六壬个人网页版 v10.5.153 Debug 名单增强与安全修复回滚版",
+  "start_url": "./?v=10.5.153",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.152"
+  "version": "10.5.153"
 }
