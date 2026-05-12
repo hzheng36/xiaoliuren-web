@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10-5-133-analytics-scenes';
+const CACHE_NAME = 'xiaoliuren-v10.5.134';
 const APP_SHELL = [
   './',
   './index.html',

@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.133 历史分析专业化与场景分组版</title>
-<meta content="小六壬个人网页版 v10.5.133 历史分析专业化与场景分组版：在 v10.5.132 基础上，修复历史分析弹窗中长文字被截断、图表标签显示不完整的问题；增强历史分析为专业化统计看板，新增趋势导读、稳定/风险结构、时间分布、场景集中度、末象风险提示与复盘质量指标；同时把首页“选择场景”改为常用场景优先展示、更多场景折叠分组，避免主页被过多场景按钮撑满。" name="description"/>
+<title>小六壬占卜 · v10.5.134 细分场景知识库扩展版</title>
+<meta content="小六壬个人网页版 v10.5.134 细分场景知识库扩展版：在 v10.5.132 基础上，修复历史分析弹窗中长文字被截断、图表标签显示不完整的问题；增强历史分析为专业化统计看板，新增趋势导读、稳定/风险结构、时间分布、场景集中度、末象风险提示与复盘质量指标；同时把首页“选择场景”改为常用场景优先展示、更多场景折叠分组，避免主页被过多场景按钮撑满。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -2433,7 +2433,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.133 历史分析专业化与场景分组版</h2>
+<h2>个人占卜台 · v10.5.134 细分场景知识库扩展版</h2>
 <p>本版集中修复阅读字号设置不生效的问题，并升级 Debug 深度巡检与复盘编辑/准确率统计，让结果页阅读、问题排查和长期复盘更稳定。</p>
 </div>
 <div class="actions">
@@ -2919,7 +2919,7 @@ body.reading-theme-night #destinySubNav .jump-chip.slot-active { background:line
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.133 历史分析专业化与场景分组版';
+    const XLR_SOURCE_VERSION = 'v10.5.134 细分场景知识库扩展版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3179,6 +3179,28 @@ function clearCustomTemplates(){
       { key: 'people', name: '寻人', icon: '🧭', positions: ['线索状态', '寻找过程', '能否相见'] },
       { key: 'noble', name: '贵人', icon: '🤲', positions: ['助力来源', '帮助过程', '最终助力'] },
       { key: 'fortune', name: '运势', icon: '🌟', positions: ['当前气势', '阶段起伏', '近期走向'] },
+
+      { key: 'inlaw', name: '婆媳关系', icon: '🧶', positions: ['当前关系', '矛盾过程', '改善趋势'] },
+      { key: 'couple', name: '夫妻关系', icon: '💞', positions: ['感情现状', '沟通过程', '关系结果'] },
+      { key: 'parentchild', name: '亲子关系', icon: '👨‍👩‍👧', positions: ['亲子现状', '教育沟通', '关系趋势'] },
+      { key: 'workplace', name: '职场人际关系', icon: '🏢', positions: ['人际基础', '合作摩擦', '最终氛围'] },
+      { key: 'moveRent', name: '搬家/租房', icon: '📦', positions: ['房源基础', '搬迁过程', '居住结果'] },
+      { key: 'renovation', name: '装修/维修', icon: '🛠️', positions: ['工程基础', '施工过程', '维修结果'] },
+      { key: 'loan', name: '贷款/借贷', icon: '🏦', positions: ['资金需求', '审批过程', '还款结果'] },
+      { key: 'arbitration', name: '诉讼/仲裁', icon: '🧾', positions: ['证据基础', '程序过程', '裁决结果'] },
+      { key: 'examMindset', name: '考试/面试心态', icon: '🧠', positions: ['当前心态', '临场发挥', '结果预期'] },
+      { key: 'fitness', name: '减肥/健身', icon: '🏃', positions: ['身体基础', '坚持过程', '效果趋势'] },
+      { key: 'shopping', name: '购物/消费', icon: '🛒', positions: ['商品基础', '购买过程', '售后结果'] },
+      { key: 'vacation', name: '旅行/度假', icon: '🏖️', positions: ['行程基础', '旅途过程', '体验结果'] },
+      { key: 'schoolChoice', name: '子女升学/选校', icon: '🎓', positions: ['孩子基础', '申请考试', '录取结果'] },
+      { key: 'salaryOffer', name: '求职面试/谈薪', icon: '💼', positions: ['岗位基础', '谈判过程', '录用薪资'] },
+      { key: 'startup', name: '创业/开店', icon: '🏪', positions: ['准备基础', '经营过程', '盈利趋势'] },
+      { key: 'studyCert', name: '学习/考证', icon: '📚', positions: ['学习基础', '复习过程', '通过趋势'] },
+      { key: 'mentalHealth', name: '心理健康/抑郁', icon: '🌙', positions: ['情绪状态', '压力过程', '改善趋势'] },
+      { key: 'sleep', name: '睡眠/失眠', icon: '🛌', positions: ['睡眠基础', '夜间状态', '恢复结果'] },
+      { key: 'trafficTicket', name: '出行/交通罚单', icon: '🚦', positions: ['违章基础', '处理过程', '申诉结果'] },
+      { key: 'ecommerce', name: '网购/快递', icon: '📦', positions: ['订单基础', '物流过程', '收货结果'] },
+      { key: 'roommate', name: '租房/室友关系', icon: '🛋️', positions: ['合租基础', '相处过程', '居住结果'] },
       { key: 'destiny', name: '命运', icon: '🪷', positions: ['自身气象', '关系与助力', '整体走向'] },
       { key: 'other', name: '其他', icon: '✨', positions: ['起因状态', '过程变化', '最终趋势'] },
     ];
@@ -3207,10 +3229,11 @@ function clearCustomTemplates(){
       return `<button type="button" class="scene-btn ${scene.key === currentScene ? 'active' : ''}" data-scene="${scene.key}"><span class="emoji">${scene.icon}</span><span>${scene.name}</span></button>`;
     }
     const SCENE_HOME_GROUPS = [
-      { title:'常用场景', note:'首页优先显示，适合日常快速起课', keys:['love','marriage','career','wealth','health','lost','exam','job','travel','contract','destiny','other'] },
-      { title:'家庭与生活', keys:['home','parents','children','pet','vehicle','weather'] },
-      { title:'人际与关系', keys:['cooperation','friend','noble','people','message','choice'] },
-      { title:'风险与决策', keys:['investment','lawsuit','lottery','fortune'] }
+      { title:'常用场景', note:'首页优先显示，适合日常快速起课', keys:['love','marriage','couple','career','wealth','health','lost','exam','job','travel','contract','destiny','other'] },
+      { title:'家庭与生活', keys:['home','parents','children','parentchild','inlaw','moveRent','roommate','renovation','pet','vehicle','weather'] },
+      { title:'人际与关系', keys:['cooperation','friend','workplace','noble','people','message','choice'] },
+      { title:'学习成长与身心', keys:['schoolChoice','studyCert','examMindset','fitness','mentalHealth','sleep'] },
+      { title:'消费出行与风险', keys:['shopping','ecommerce','vacation','trafficTicket','loan','arbitration','investment','lawsuit','salaryOffer','startup','lottery','fortune'] }
     ];
     function scenesByKeys(keys){ return (keys || []).map(key => SCENES.find(s=>s.key===key)).filter(Boolean); }
     function renderSceneButtonGrid(keys){ return `<div class="scene-grid scene-grid-compact">${scenesByKeys(keys).map(sceneButtonHTML).join('')}</div>`; }
@@ -3928,7 +3951,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.133',
+      source: 'mainline-v10.5.134',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5749,8 +5772,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库与新增专项扩展包。",
+      "version": "2.0+extension+family-life-v10.5.134",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包与 v10.5.134 细分生活场景。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -6793,6 +6816,237 @@ function buildContextOverallSentence(context, details) {
                               "advice": "暂不买卖，打车更安全。"
                         }
                   }
+            },
+            "婆媳关系": {
+                  "description": "婆媳相处、矛盾趋势、沟通方式、改善建议。",
+                  "palms": {
+                        "大安": "关系稳定，彼此客气，但缺少亲密感，适合分开居住。",
+                        "留连": "常因琐事反复争执，旧问题反复提，需要中间人调解。",
+                        "速喜": "突然改善，如送礼或主动示好，但需防表面功夫。",
+                        "赤口": "口舌不断，互相指责，第三方容易激化矛盾，建议保持距离。",
+                        "小吉": "各自忙碌，见面少反而客气，偶尔互助。",
+                        "空亡": "关系冷漠，互不关心，或一方长期回避。"
+                  }
+            },
+            "夫妻关系": {
+                  "description": "夫妻感情、沟通质量、信任度、矛盾点。",
+                  "palms": {
+                        "大安": "感情平稳，生活规律，但缺浪漫，适合共同培养兴趣。",
+                        "留连": "一方拖延或回避问题，冷战频发，需打破僵局。",
+                        "速喜": "关系升温快，可能有惊喜或和解，但要防三分钟热度。",
+                        "赤口": "争吵不断，财务或子女问题引发冲突，谨防动手。",
+                        "小吉": "各有空间，互相支持，小别胜新婚。",
+                        "空亡": "感情空虚，同床异梦，或已无交流，建议认真谈一次。"
+                  }
+            },
+            "亲子关系": {
+                  "description": "父母与子女的沟通、代沟、教育方式、青春期问题。",
+                  "palms": {
+                        "大安": "亲子关系和谐，孩子听话，但可能过于依赖。",
+                        "留连": "孩子拖延、叛逆，反反复复，需耐心约定。",
+                        "速喜": "孩子突然懂事或取得好成绩，亲子互动增加。",
+                        "赤口": "顶嘴、摔东西、离家出走倾向，警惕暴力沟通。",
+                        "小吉": "各自独立，互相尊重，适合朋友式相处。",
+                        "空亡": "孩子沉迷网络，不愿交流，家长需反思教育方式。"
+                  }
+            },
+            "职场人际关系": {
+                  "description": "同事相处、上级态度、办公室政治、合作氛围。",
+                  "palms": {
+                        "大安": "同事关系稳定，但晋升慢，适合踏实做事。",
+                        "留连": "办公室流言多，站队问题反复，明哲保身。",
+                        "速喜": "新同事带来活力，项目合作愉快。",
+                        "赤口": "争吵或甩锅，谨防小人打小报告。",
+                        "小吉": "团队互助，氛围轻松，适合团建。",
+                        "空亡": "人际关系冷漠，孤立无援，考虑换环境。"
+                  }
+            },
+            "搬家/租房": {
+                  "description": "搬家顺利度、租房合同、房源质量、邻里环境。",
+                  "palms": {
+                        "大安": "搬家顺利，房源稳定，适合长租。",
+                        "留连": "搬家拖延，东西遗漏，或中介反复改时间。",
+                        "速喜": "快速找到房源，搬家一天完成。",
+                        "赤口": "合同有陷阱，押金难退，邻里噪音大。",
+                        "小吉": "位置方便，小缺陷可接受，与房东沟通好。",
+                        "空亡": "房子有隐患（甲醛、漏水），或被骗定金。"
+                  }
+            },
+            "装修/维修": {
+                  "description": "装修进度、增项陷阱、施工质量、维修结果。",
+                  "palms": {
+                        "大安": "进度正常，质量尚可，但风格保守。",
+                        "留连": "工期反复拖延，工人爱答不理，需盯紧。",
+                        "速喜": "突击施工，提前完成，但要检查细节。",
+                        "赤口": "增项多，吵架，材料以次充好。",
+                        "小吉": "小修小补自己搞定，大项目需监工。",
+                        "空亡": "装修公司跑路，或维修后仍坏。"
+                  }
+            },
+            "贷款/借贷": {
+                  "description": "贷款审批、还款压力、民间借贷风险。",
+                  "palms": {
+                        "大安": "审批顺利，利率合适，按时还无压力。",
+                        "留连": "审核慢，资料反复补，或有逾期记录。",
+                        "速喜": "快速放款，但利息较高，适合短期周转。",
+                        "赤口": "被拒或高利贷，谨防暴力催收。",
+                        "小吉": "小额借贷容易，朋友借钱可商量。",
+                        "空亡": "贷款成空，或被套牢，勿借高利贷。"
+                  }
+            },
+            "诉讼/仲裁": {
+                  "description": "官司输赢、和解可能、律师选择、证据效力。",
+                  "palms": {
+                        "大安": "小事和解，对方不愿纠缠。",
+                        "留连": "拖久不决，证据两可，建议调解。",
+                        "速喜": "快速裁决，有利我方。",
+                        "赤口": "对方强势，可能败诉，请好律师。",
+                        "小吉": "部分胜诉，或庭前和解。",
+                        "空亡": "证据不足，撤诉或败诉。"
+                  }
+            },
+            "考试/面试心态": {
+                  "description": "考前焦虑、临场发挥、面试表现、结果预期。",
+                  "palms": {
+                        "大安": "心态平稳，正常发挥。",
+                        "留连": "紧张易忘，发挥打折扣，深呼吸。",
+                        "速喜": "超常发挥，灵感爆棚。",
+                        "赤口": "粗心失误，时间不够，注意审题。",
+                        "小吉": "轻松应对，及格没问题。",
+                        "空亡": "大脑空白，准备不足，建议缓考。"
+                  }
+            },
+            "减肥/健身": {
+                  "description": "减肥效果、坚持难度、平台期、健康风险。",
+                  "palms": {
+                        "大安": "效果慢但稳定，适合清淡饮食。",
+                        "留连": "断断续续，反弹反复，需要打卡监督。",
+                        "速喜": "快速掉秤，但易反弹，注意肌肉流失。",
+                        "赤口": "运动受伤，或节食致胃病，别激进。",
+                        "小吉": "小有成效，适合慢跑、瑜伽。",
+                        "空亡": "毫无变化，或越减越胖，换方法。"
+                  }
+            },
+            "购物/消费": {
+                  "description": "商品质量、价格水分、退换货、消费决策。",
+                  "palms": {
+                        "大安": "质量可靠，价格合理，不冲动。",
+                        "留连": "犹豫不决，易买后悔，多看测评。",
+                        "速喜": "限时折扣，快速下单，注意退换条款。",
+                        "赤口": "买到假货或纠纷，留好凭证。",
+                        "小吉": "性价比高，小确幸。",
+                        "空亡": "货不对板，快递丢失，不建议买。"
+                  }
+            },
+            "旅行/度假": {
+                  "description": "行程安排、天气、安全、体验满意度。",
+                  "palms": {
+                        "大安": "行程顺利，景点人不多，舒适。",
+                        "留连": "飞机延误，排队久，带好充电宝。",
+                        "速喜": "临时决定，玩得尽兴，注意预算。",
+                        "赤口": "吵架、被盗、突发疾病，买保险。",
+                        "小吉": "自由行愉快，结识新朋友。",
+                        "空亡": "取消或扫兴而归，改期。"
+                  }
+            },
+            "子女升学/选校": {
+                  "description": "升学考试、择校、专业选择、录取概率。",
+                  "palms": {
+                        "大安": "稳上目标校，但非顶尖。",
+                        "留连": "压线或调剂，反复填志愿。",
+                        "速喜": "惊喜录取，运气好。",
+                        "赤口": "竞争激烈，可能落榜，备选方案。",
+                        "小吉": "普通学校，但专业适合。",
+                        "空亡": "滑档或放弃，复读或就业。"
+                  }
+            },
+            "求职面试/谈薪": {
+                  "description": "薪资谈判、福利、录取后抉择。",
+                  "palms": {
+                        "大安": "薪资合理，福利稳定，接受。",
+                        "留连": "HR拖延回复，薪资难谈，骑驴找马。",
+                        "速喜": "快速发offer，薪资可商量。",
+                        "赤口": "压价严重，或承诺不兑现，谨慎。",
+                        "小吉": "多家选择，取平衡。",
+                        "空亡": "口头offer作废，继续找。"
+                  }
+            },
+            "创业/开店": {
+                  "description": "前期准备、选址、经营风险、盈利周期。",
+                  "palms": {
+                        "大安": "稳扎稳打，回本慢但存活率高。",
+                        "留连": "证件拖延，合伙人犹豫，先小额试。",
+                        "速喜": "快速开业，客流火爆，注意现金流。",
+                        "赤口": "竞争激烈，易被投诉或罚款。",
+                        "小吉": "小本经营，赚辛苦钱。",
+                        "空亡": "选址失败，或关门大吉，再调研。"
+                  }
+            },
+            "学习/考证": {
+                  "description": "学习效率、通过率、复习策略。",
+                  "palms": {
+                        "大安": "按计划学，稳过。",
+                        "留连": "拖延症，需找人监督。",
+                        "速喜": "短期冲刺有效，适合突击。",
+                        "赤口": "时间不够，重点抓错，换方法。",
+                        "小吉": "边工作边学，能过。",
+                        "空亡": "太难放弃，或报名失败。"
+                  }
+            },
+            "心理健康/抑郁": {
+                  "description": "情绪状态、压力源、求助信号、自我调节。",
+                  "palms": {
+                        "大安": "情绪平稳，有些小压力，能自愈。",
+                        "留连": "长期压抑，反复噩梦，建议倾诉。",
+                        "速喜": "突然好转，兴趣恢复。",
+                        "赤口": "暴躁易怒，自伤倾向，立即求助。",
+                        "小吉": "多运动，社交能改善。",
+                        "空亡": "空虚麻木，需要专业心理师。"
+                  }
+            },
+            "睡眠/失眠": {
+                  "description": "入睡困难、多梦、睡眠质量、改善方法。",
+                  "palms": {
+                        "大安": "作息规律，偶尔失眠。",
+                        "留连": "思虑多，整夜做梦，喝温牛奶。",
+                        "速喜": "太兴奋睡不着，听白噪音。",
+                        "赤口": "焦虑不眠，心悸，就医。",
+                        "小吉": "劳累了能睡好。",
+                        "空亡": "彻夜难眠，药物依赖，调整。"
+                  }
+            },
+            "出行/交通罚单": {
+                  "description": "违章风险、处理流程、申诉可能。",
+                  "palms": {
+                        "大安": "无新罚单，旧单处理顺利。",
+                        "留连": "罚单拖延未缴，滞纳金。",
+                        "速喜": "快速办理，线上搞定。",
+                        "赤口": "争议罚单，申诉麻烦。",
+                        "小吉": "学习教育可减分。",
+                        "空亡": "重复罚款，或证照问题。"
+                  }
+            },
+            "网购/快递": {
+                  "description": "发货速度、物流状态、商品完好度、客服响应。",
+                  "palms": {
+                        "大安": "准时到，包装好。",
+                        "留连": "卡在途中，物流慢。",
+                        "速喜": "次日达，惊喜。",
+                        "赤口": "破损或发错，退货麻烦。",
+                        "小吉": "驿站自取，方便。",
+                        "空亡": "丢件或无货，退款。"
+                  }
+            },
+            "租房/室友关系": {
+                  "description": "室友矛盾、合租氛围、押金退还。",
+                  "palms": {
+                        "大安": "室友安静，分摊明确。",
+                        "留连": "带人留宿，卫生问题反复。",
+                        "速喜": "新室友聊得来。",
+                        "赤口": "吵架，丢东西，尽早搬。",
+                        "小吉": "互不干扰，偶尔聚餐。",
+                        "空亡": "室友消失，欠租。"
+                  }
             }
       }
 };
@@ -6800,7 +7054,11 @@ function buildContextOverallSentence(context, details) {
       love:'感情', marriage:'婚姻', career:'事业', wealth:'财运', money:'财运', market:'投资', investment:'投资',
       exam:'考试', lost:'失物', health:'健康', travel:'出行', cooperation:'合作', contract:'合同', legal:'官司', lawsuit:'官司',
       message:'消息等待', weather:'天气', job:'求职', home:'家宅', people:'寻人', noble:'贵人', friend:'朋友', social:'朋友',
-      lottery:'中奖', children:'子女', parents:'父母', pet:'宠物', vehicle:'车辆/交通', destiny:'命运', fortune:'命运'
+      lottery:'中奖', children:'子女', parents:'父母', pet:'宠物', vehicle:'车辆/交通', destiny:'命运', fortune:'命运',
+      inlaw:'婆媳关系', couple:'夫妻关系', parentchild:'亲子关系', workplace:'职场人际关系', moveRent:'搬家/租房', renovation:'装修/维修',
+      loan:'贷款/借贷', arbitration:'诉讼/仲裁', examMindset:'考试/面试心态', fitness:'减肥/健身', shopping:'购物/消费', vacation:'旅行/度假',
+      schoolChoice:'子女升学/选校', salaryOffer:'求职面试/谈薪', startup:'创业/开店', studyCert:'学习/考证', mentalHealth:'心理健康/抑郁', sleep:'睡眠/失眠',
+      trafficTicket:'出行/交通罚单', ecommerce:'网购/快递', roommate:'租房/室友关系'
     };
     const XLR_KNOWLEDGE_FIELD_LABELS = {
       direction:'方位', place:'地点', time:'时间', item_state:'物品状态', symptom_tendency:'症状倾向', recovery_speed:'恢复速度', urgency:'就医紧急度', income_type:'收入类型', risk_level:'风险等级', good_for:'适合', bad_for:'不适合', time_to_get_paid:'回款时间', work_relationship:'职场关系', project_progress:'项目推进', job_hopping:'跳槽时机', promotion:'升职可能', stage:'关系阶段', communication:'沟通方式', third_party_risk:'第三方风险', trend:'趋势', hidden_trap:'隐藏风险', progress:'进度', risk:'风险', delay:'延误', safety:'安全', probability:'概率', review_efficiency:'复习效率', where:'位置', contact:'联系', win_probability:'胜算', settle_chance:'和解机会', relationship:'关系', chance:'中奖概率', energy:'家宅气场', trust:'信任度', profit:'利益分配', return:'回报', cycle:'周期', offer:'Offer 概率', speed:'速度', study:'学习', finance:'财务', type:'人物类型', lost_found:'走失/找回', behavior:'行为', buy_sell:'买卖', repair:'维修', accident_risk:'事故风险', advice:'建议', summary:'摘要'
@@ -6818,7 +7076,18 @@ function buildContextOverallSentence(context, details) {
         destiny:'destiny', 命运:'destiny', fortune:'fortune', 运势:'fortune', people:'people', 寻人:'people', 失联:'people',
         noble:'noble', 贵人:'noble', friend:'friend', social:'friend', 朋友:'friend', 人际:'friend', lottery:'lottery', 中奖:'lottery', 彩票:'lottery',
         children:'children', 子女:'children', 孩子:'children', parents:'parents', 父母:'parents', 长辈:'parents',
-        pet:'pet', 宠物:'pet', vehicle:'vehicle', 车辆:'vehicle', 交通:'vehicle', '车辆/交通':'vehicle', other:'message', 其他:'message'
+        pet:'pet', 宠物:'pet', vehicle:'vehicle', 车辆:'vehicle', 交通:'vehicle', '车辆/交通':'vehicle',
+        inlaw:'inlaw', 婆媳:'inlaw', 婆媳关系:'inlaw', couple:'couple', 夫妻:'couple', 夫妻关系:'couple', parentchild:'parentchild', 亲子:'parentchild', 亲子关系:'parentchild',
+        workplace:'workplace', 职场人际:'workplace', 职场人际关系:'workplace', moveRent:'moveRent', 搬家:'moveRent', 租房:'moveRent', '搬家/租房':'moveRent',
+        renovation:'renovation', 装修:'renovation', 维修:'renovation', '装修/维修':'renovation', loan:'loan', 贷款:'loan', 借贷:'loan', '贷款/借贷':'loan',
+        arbitration:'arbitration', 诉讼:'arbitration', 仲裁:'arbitration', '诉讼/仲裁':'arbitration', examMindset:'examMindset', 考试心态:'examMindset', 面试心态:'examMindset', '考试/面试心态':'examMindset',
+        fitness:'fitness', 减肥:'fitness', 健身:'fitness', '减肥/健身':'fitness', shopping:'shopping', 购物:'shopping', 消费:'shopping', '购物/消费':'shopping',
+        vacation:'vacation', 旅行:'vacation', 度假:'vacation', '旅行/度假':'vacation', schoolChoice:'schoolChoice', 升学:'schoolChoice', 选校:'schoolChoice', '子女升学/选校':'schoolChoice',
+        salaryOffer:'salaryOffer', 谈薪:'salaryOffer', '求职面试/谈薪':'salaryOffer', startup:'startup', 创业:'startup', 开店:'startup', '创业/开店':'startup',
+        studyCert:'studyCert', 学习:'studyCert', 考证:'studyCert', '学习/考证':'studyCert', mentalHealth:'mentalHealth', 心理健康:'mentalHealth', 抑郁:'mentalHealth', '心理健康/抑郁':'mentalHealth',
+        sleep:'sleep', 睡眠:'sleep', 失眠:'sleep', '睡眠/失眠':'sleep', trafficTicket:'trafficTicket', 交通罚单:'trafficTicket', 罚单:'trafficTicket', '出行/交通罚单':'trafficTicket',
+        ecommerce:'ecommerce', 网购:'ecommerce', 快递:'ecommerce', '网购/快递':'ecommerce', roommate:'roommate', 室友:'roommate', 合租:'roommate', '租房/室友关系':'roommate',
+        other:'message', 其他:'message'
       };
       return map[rawKey] || map[rawKey.toLowerCase()] || rawKey || 'message';
     }
@@ -6882,7 +7151,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.133',
+        source:'mainline-v10.5.134',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -6960,7 +7229,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.133',
+        source:'mainline-v10.5.134',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -6973,7 +7242,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.133') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.134') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -6982,7 +7251,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.133',
+      source:'mainline-v10.5.134',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -7233,7 +7502,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.133',
+        source: 'mainline-v10.5.134',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -7249,7 +7518,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.133',
+      source: 'mainline-v10.5.134',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -7832,7 +8101,7 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.133 历史分析专业化与场景分组版', items:[
+        { v:'v10.5.134 细分场景知识库扩展版', items:[
           '修复历史分析弹窗中部分文字被遮挡或被省略号截断的问题：图表标签现在允许换行，长文字表格也能完整显示。',
           '历史分析升级为专业化统计看板：新增专业化分析摘要、样本结构、末象风险、复盘质量、按月份分布、按星期分布等模块。',
           '首页“选择场景”改为常用场景优先展示，家庭与生活、人际与关系、风险与决策等更多细分场景折叠收纳，避免主页被全部场景撑满。',
@@ -8706,7 +8975,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.133',
+      source: 'mainline-v10.5.134',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -8784,7 +9053,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.133',
+      source: 'mainline-v10.5.134',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -10152,7 +10421,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.133'
+      source: 'mainline-v10.5.134'
     };
 
     initExtendedContextRules();
@@ -10169,7 +10438,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.133 历史分析专业化与场景分组版';
+  const APP_VERSION = 'v10.5.134 细分场景知识库扩展版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -11192,7 +11461,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.133', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.133') },
+      { id:'nav-core', label:'导航主源码为 v10.5.133', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.134') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -11274,7 +11543,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.133' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.134' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -11289,7 +11558,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.133' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.134' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -11319,7 +11588,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.133') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.134') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -11335,7 +11604,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.133') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.134') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -11366,7 +11635,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.133') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.134') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.129 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -11400,7 +11669,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.133') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.134') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -11469,30 +11738,30 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sourceStructure.ok) passes.push('源码结构检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.133' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.134' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.133') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.134') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.133') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.134') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
     if (snapshot.analytics.hasDialog && snapshot.analytics.hasContent) passes.push('历史分析 DOM 检查通过');
     if (snapshot.analytics.hasDateInput && snapshot.analytics.hasDatePicker) passes.push('历史分析日期控件检查通过');
     if (snapshot.analytics.core.hasMetrics && snapshot.analytics.core.hasReviewRows) passes.push('复盘统计函数检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.133') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.134') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.133') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.134') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
