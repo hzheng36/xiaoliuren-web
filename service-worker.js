@@ -1,4 +1,4 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.149';
+const CACHE_NAME = 'xiaoliuren-v10.5.148';
 const APP_SHELL = [
   './',
   './index.html',
@@ -9,36 +9,43 @@ const APP_SHELL = [
   './home-poster-v10.5.144.webp'
 ];
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
-  );
+self.addEventListener('install', (event) => {
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL).catch(() => undefined)));
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.map(key => {
-      if (key !== CACHE_NAME) return caches.delete(key);
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.map((key) => {
+      if (key !== CACHE_NAME && key.indexOf('xiaoliuren') !== -1) return caches.delete(key);
       return Promise.resolve();
-    }))).then(() => self.clients.claim())
-  );
+    }));
+    await self.clients.claim();
+  })());
 });
 
-self.addEventListener('fetch', event => {
-  const request = event.request;
-  if (request.method !== 'GET') return;
-  const url = new URL(request.url);
-  if (url.origin !== location.origin) return;
-  event.respondWith(
-    caches.match(request).then(cached => {
-      const fetchPromise = fetch(request).then(response => {
-        if (response && response.status === 200) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy)).catch(() => {});
-        }
-        return response;
-      }).catch(() => cached);
-      return cached || fetchPromise;
-    })
-  );
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
+
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const accept = req.headers.get('accept') || '';
+  const url = new URL(req.url);
+  const isHTML = req.mode === 'navigate' || accept.includes('text/html') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/');
+  if (isHTML) {
+    event.respondWith(fetch(req, { cache: 'no-store' }).then((res) => {
+      const copy = res.clone();
+      caches.open(CACHE_NAME).then((cache) => cache.put('./index.html', copy)).catch(() => undefined);
+      return res;
+    }).catch(() => caches.match('./index.html').then((res) => res || caches.match('./'))));
+    return;
+  }
+  event.respondWith(fetch(req).then((res) => {
+    const copy = res.clone();
+    caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => undefined);
+    return res;
+  }).catch(() => caches.match(req)));
 });
