@@ -1,7 +1,7 @@
 {
   "name": "小六壬占卜 · v10.5.134",
   "short_name": "小六壬 v10.5.134",
-  "description": "小六壬个人网页版 v10.5.134 细分场景知识库扩展版",
+  "description": "小六壬个人网页版 v10.5.135 暗夜CSS渲染覆盖修正版",
   "start_url": "./?v=10.5.133",
   "scope": "./",
   "display": "standalone",
