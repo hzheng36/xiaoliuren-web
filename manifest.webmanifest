@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.145",
-  "short_name": "小六壬 v10.5.145",
-  "description": "小六壬个人网页版 v10.5.145 暗夜场景按钮体检修正版",
+  "name": "小六壬占卜 · v10.5.146",
+  "short_name": "小六壬 v10.5.146",
+  "description": "小六壬个人网页版 v10.5.146 暗夜体检与导读字号收口版",
   "start_url": "./?v=10.5.145",
   "scope": "./",
   "display": "standalone",
