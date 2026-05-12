@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.143",
-  "short_name": "小六壬 v10.5.143",
-  "description": "小六壬个人网页版 v10.5.143 底部导航遮挡修正版",
+  "name": "小六壬占卜 · v10.5.144",
+  "short_name": "小六壬 v10.5.144",
+  "description": "小六壬个人网页版 v10.5.144 首页视觉海报整合版",
   "start_url": "./?v=10.5.143",
   "scope": "./",
   "display": "standalone",

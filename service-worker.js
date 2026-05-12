@@ -1,11 +1,12 @@
-const CACHE_NAME = 'xiaoliuren-v10.5.143';
+const CACHE_NAME = 'xiaoliuren-v10.5.144';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icon-192.png',
   './icon-512.png',
-  './apple-touch-icon.png'
+  './apple-touch-icon.png',
+  './home-poster-v10.5.144.webp'
 ];
 
 self.addEventListener('install', (event) => {

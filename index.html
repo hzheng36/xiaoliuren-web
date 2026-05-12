@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.143 底部导航遮挡修正版</title>
-<meta content="小六壬个人网页版 v10.5.143 底部导航遮挡修正版：基于 v10.5.142 修复 iOS Safari / 手机端滚动到底部时固定底部导航、快捷按钮或浏览器工具栏遮挡最后内容的问题，增加页面与弹窗底部安全留白并纳入 Debug 检查。" name="description"/>
+<title>小六壬占卜 · v10.5.144 首页视觉海报整合版</title>
+<meta content="小六壬个人网页版 v10.5.144 首页视觉海报整合版：基于 v10.5.143 延续底部安全区与弹窗留白主线，新增轻量化小六壬主题海报资源并整合进首页视觉区域，控制图片体积，继续同步 README、manifest 与 service-worker。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -503,6 +503,38 @@
     .art.theme-illustration { background: linear-gradient(180deg, #fdf8f2, #f8f3ee); }
     .art.theme-illustration::before, .art.theme-illustration::after { display:none; }
     .art.theme-illustration svg { position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+    .art.poster-art {
+      height: auto;
+      min-height: 0;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(253,248,242,.98), rgba(246,239,230,.96));
+    }
+    .art.poster-art::before,
+    .art.poster-art::after { display:none; }
+    .poster-image {
+      display:block;
+      width:min(100%, 320px);
+      max-width:100%;
+      height:auto;
+      aspect-ratio: 1055 / 1491;
+      object-fit: cover;
+      border-radius: 20px;
+      border:1px solid rgba(123,98,56,.16);
+      box-shadow: 0 18px 34px rgba(48,35,23,.15);
+      background:#f8f3ee;
+    }
+    .poster-caption {
+      margin:0 auto;
+      max-width:320px;
+      text-align:center;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:.92rem;
+    }
     @media (max-width: 900px) {
       .template-toolbar { grid-template-columns: 1fr; }
       .template-bulk-tools { display:grid; grid-template-columns:1fr; }
@@ -925,6 +957,7 @@ body.force-desktop-mode .top-results { grid-template-columns: 1fr 1.15fr !import
 body.force-desktop-mode .history-search-row,
 body.force-desktop-mode .context-controls { grid-template-columns: 1.4fr .8fr !important; }
 body.force-desktop-mode .art.theme-illustration { height: 240px !important; }
+body.force-desktop-mode .art.poster-art { height: auto !important; }
 
 /* 结果页中启用桌面模式时仍保持“只看结果”，但使用桌面宽度。 */
 body.result-page.force-desktop-mode .shell {
@@ -2058,6 +2091,9 @@ body.reading-theme-night .xlr-debug-head small { color:var(--muted) !important; 
 body.reading-theme-night .xlr-debug-close,
 body.reading-theme-night .xlr-debug-toolbar button { background:#202033 !important; color:#eee9fb !important; border-color:rgba(194,176,230,.28) !important; }
 body.reading-theme-night .art { background:linear-gradient(180deg, rgba(38,33,54,.84), rgba(25,23,36,.96)) !important; border-color:var(--line) !important; }
+body.reading-theme-night .art.poster-art { background:linear-gradient(180deg, rgba(41,36,58,.95), rgba(22,20,32,.98)) !important; }
+body.reading-theme-night .poster-image { border-color: rgba(216,198,154,.18); box-shadow: 0 16px 30px rgba(0,0,0,.34); }
+body.reading-theme-night .poster-caption { color: var(--muted); }
 body.reading-theme-night canvas,
 body.reading-theme-night img,
 body.reading-theme-night svg { filter:none !important; }
@@ -2754,33 +2790,21 @@ html { scroll-padding-bottom: var(--xlr-bottom-nav-reserve); }
 <p>三数知吉凶，事事有指引</p>
 </div>
 </div>
-<div aria-hidden="true" class="art theme-illustration"><svg preserveaspectratio="xMidYMid meet" viewbox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<lineargradient id="bg" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#fdf8f2"></stop><stop offset="100%" stop-color="#f8f3ee"></stop></lineargradient>
-<lineargradient id="mount" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#cbc0e5" stop-opacity="0.92"></stop><stop offset="100%" stop-color="#b7a9d7" stop-opacity="0.35"></stop></lineargradient>
-<lineargradient id="sun" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f8e9cc"></stop><stop offset="100%" stop-color="#eed7aa"></stop></lineargradient>
-</defs>
-<rect fill="url(#bg)" height="520" width="1200"></rect>
-<circle cx="920" cy="110" fill="url(#sun)" opacity=".92" r="78"></circle>
-<g fill="#eee4d2" opacity=".78"><path d="M980 132c22-22 48-20 67-5 13-10 30-10 42 0 21-9 47 5 48 28-20-2-34-1-45 6-23-4-52-5-77 0-16 3-35 4-51 10-4-15 0-29 16-39z"></path><path d="M120 178c22-20 48-19 67-5 12-8 29-8 40 0 18-8 41 1 47 19-18 2-34 4-48 10-35-8-68-5-101 12-8-12-10-25-5-36z" opacity=".55"></path></g>
-<g fill="url(#mount)" opacity=".58"><path d="M-30 334c70-46 112-98 154-145 61 51 76 122 140 146 72 27 178 4 280-49 99 57 172 83 246 77 86-7 128-53 197-104 43 55 76 102 163 130v70H-30z"></path><path d="M26 356c48-23 78-60 112-101 33 31 45 74 96 93 52 19 112 9 178-17 51 33 113 44 180 38 56-5 110-31 169-73 30 41 57 78 116 100v76H26z" opacity=".8"></path></g>
-<g fill="none" opacity=".24" stroke="#ebd7b6"><circle cx="604" cy="258" r="150" stroke-width="2"></circle><circle cx="604" cy="258" r="104" stroke-width="2"></circle><circle cx="604" cy="258" r="60" stroke-width="2"></circle><path d="M604 108V408M454 258H754M497 151L711 365M497 365L711 151"></path></g>
-<g fill="#9b7a58" font-family="PingFang SC, Microsoft YaHei, sans-serif" text-anchor="middle"><text font-size="28" font-weight="700" x="604" y="168">大安</text><text font-size="28" font-weight="700" x="760" y="222">留连</text><text font-size="28" font-weight="700" x="760" y="333">速喜</text><text font-size="28" font-weight="700" x="604" y="390">赤口</text><text font-size="28" font-weight="700" x="452" y="332">小吉</text><text font-size="28" font-weight="700" x="450" y="220">空亡</text></g>
-<g transform="translate(604 258)"><circle fill="#f5e8d5" r="68" stroke="#e8d3b2" stroke-width="2"></circle><path d="M0-42a42 42 0 1 1 0 84a21 21 0 1 0 0-42a21 21 0 1 1 0-42" fill="#9a8ad0"></path><path d="M0-42a42 42 0 1 0 0 84a21 21 0 1 1 0-42a21 21 0 1 0 0-42" fill="#f6f1e6"></path><circle cx="0" cy="-21" fill="#f7f4ee" r="6"></circle><circle cx="0" cy="21" fill="#9a8ad0" r="6"></circle></g>
-<g fill="none" opacity=".55" stroke="#b8a9d8" stroke-width="4"><path d="M470 92h28M466 104h36M470 116h28"></path><path d="M831 92h28M827 104h36M831 116h28"></path><path d="M466 390h36M470 402h28M466 414h36"></path></g>
-<g fill="#dfbfd0" opacity=".85"><path d="M201 233c4-2 11 3 14 7-8 4-15 2-14-7z"></path><path d="M302 307c5-4 12 1 15 6-8 5-15 5-15-6z"></path><path d="M903 286c5-4 12 1 15 6-8 5-15 5-15-6z"></path><path d="M785 349c4-2 11 3 14 7-8 4-15 2-14-7z"></path></g>
-</svg></div>
+<figure class="art poster-art" id="homePosterCard">
+<img alt="小六壬主题海报：六宫轮盘与山水风格视觉" class="poster-image" decoding="async" fetchpriority="low" loading="lazy" src="./home-poster-v10.5.144.webp?v=10.5.144"/>
+<figcaption class="poster-caption">新版首页加入小六壬主题海报，采用压缩 WebP 资源并控制展示尺寸，既增强项目辨识度，也尽量减少页面体积。</figcaption>
+</figure>
 <div class="feature-list">
 <div class="feature-item"><strong>三法起课</strong><small>数字、时辰、事件三种起课方式，适配不同使用情境。</small></div>
 <div class="feature-item"><strong>六宫排盘</strong><small>把三象直接落入六宫，直观看到本象、中象、末象的分布关系。</small></div>
-<div class="feature-item"><strong>增强解读</strong><small>增加关键词、方位、颜色、五行、物象、地点和应期参考。</small></div>
+<div class="feature-item"><strong>增强解读</strong><small>增加关键词、方位、颜色、五行、物象、地点和应期参考，并继续接入场景 JSON 专项知识库。</small></div>
 </div>
 </aside>
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.143 底部导航遮挡修正版</h2>
-<p>本版继续收口暗夜模式低对比问题：重点修复命运/命盘结果页的六宫标记、吉宫分布标签和 Debug 暗夜体检误报，避免深色背景上残留偏暗金色文字。</p>
+<h2>个人占卜台 · v10.5.144 首页视觉海报整合版</h2>
+<p>本版基于 v10.5.143 继续升级：首页正式加入轻量化“小六壬”主题海报，作为项目视觉封面展示；同时保留底部安全区主线，不回退 Safari / 手机端的滚动留白修复。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -3265,7 +3289,7 @@ html { scroll-padding-bottom: var(--xlr-bottom-nav-reserve); }
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.143 底部导航遮挡修正版';
+    const XLR_SOURCE_VERSION = 'v10.5.144 首页视觉海报整合版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4297,7 +4321,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.143',
+      source: 'mainline-v10.5.144',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -6118,8 +6142,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.143",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容。",
+      "version": "2.0+extension+family-life-v10.5.144",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7497,7 +7521,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.143',
+        source:'mainline-v10.5.144',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -7575,7 +7599,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.143',
+        source:'mainline-v10.5.144',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -7588,7 +7612,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.143') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.144') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -7597,7 +7621,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.143',
+      source:'mainline-v10.5.144',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -7848,7 +7872,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.143',
+        source: 'mainline-v10.5.144',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -7864,7 +7888,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.143',
+      source: 'mainline-v10.5.144',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -8447,6 +8471,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.144 首页视觉海报整合版', items:[
+          '基于 v10.5.143 继续升级：首页把本对话生成的“小六壬”主题海报正式整合进侧边视觉区，作为项目封面展示。',
+          '新增轻量化海报资源 home-poster-v10.5.144.webp，压缩后控制在较小体积，兼顾加载速度与清晰度。',
+          '重做首页视觉卡片：原示意插画替换为海报展示，增加海报说明文案，并为桌面/手机/暗夜模式补齐样式。',
+          '继续保留 v10.5.143 的底部安全区与弹窗安全留白主线，不回退 Safari / 手机端滚动到底部的遮挡修复。',
+          '同步更新 title、meta、首页版本、版本内容更新、README、manifest、service-worker 与缓存资源列表。'
+        ]},
         { v:'v10.5.143 底部导航遮挡修正版', items:[
           '修复手机端滚动到页面或弹窗最底部时，底部章节导航、快捷按钮或 iOS Safari 工具栏遮挡最后一段内容的问题。',
           '新增全局底部安全留白变量 --xlr-bottom-nav-reserve，让主页、结果页和长内容区域在底部固定导航上方留出可滚动空间。',
@@ -9464,7 +9495,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.143',
+      source: 'mainline-v10.5.144',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -9545,7 +9576,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.143',
+      source: 'mainline-v10.5.144',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -10913,7 +10944,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.143'
+      source: 'mainline-v10.5.144'
     };
 
     initExtendedContextRules();
@@ -10930,7 +10961,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.143 底部导航遮挡修正版';
+  const APP_VERSION = 'v10.5.144 首页视觉海报整合版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_LOGS = 'xlr_debug_logs';
@@ -11509,7 +11540,7 @@ function buildContextOverallSentence(context, details) {
       broadCandidateCount:broadCandidates.length,
       riskCount:risks.length,
       risks:risks.slice(0, 40),
-      note:'v10.5.143 起：Debug 同时覆盖命盘标签、吉宫分布标签、历史分析统计卡片、复盘明细移动卡片、底部安全留白与弹窗内 Debug 快捷入口，并继续对 rgba() 透明背景进行父级背景合成后再计算对比度。'
+      note:'v10.5.144 起：Debug 在保留命盘标签、吉宫分布标签、历史分析统计卡片、复盘明细移动卡片、底部安全留白检查的基础上，继续纳入首页主题海报区域的主源码版本巡检。'
     };
   }
 
@@ -11977,7 +12008,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.143',
+      source: 'mainline-v10.5.144',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -12172,7 +12203,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.143', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.143') },
+      { id:'nav-core', label:'导航主源码为 v10.5.144', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.144') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -12257,7 +12288,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.143' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.144' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -12272,7 +12303,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.143' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.144' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -12302,7 +12333,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.143') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.144') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.114 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -12318,7 +12349,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.143') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.144') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.114 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -12352,7 +12383,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.143') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.144') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.129 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -12386,7 +12417,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.143') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.144') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -12459,16 +12490,16 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.143' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.144' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.143') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.144') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.143') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.144') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -12478,14 +12509,14 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.analytics.core.hasReviewInsights && snapshot.analytics.metrics && snapshot.analytics.metrics.reviewInsightReady) passes.push('复盘洞察主线检查通过');
     if (snapshot.analytics.core.hasReviewDetailCards) passes.push('复盘明细移动端卡片检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.143') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.144') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.143') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.144') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
