@@ -1,3 +1,23 @@
+### v10.5.140 命盘暗夜标签对比度修正版
+
+## v10.5.140 命盘暗夜标签对比度修正版
+
+本版基于 v10.5.139，专门修复命运场景结果页在暗夜模式下的命盘标签低对比问题：
+
+- 修复命盘六宫标记 `.destiny-cell.v10-cell .mark` 在暗夜模式下文字偏暗的问题，包括速喜、玄武、火星、赤口、青龙、空亡等标签。
+- 修复六宫排盘顶部 `#distributionTag` / `.tag` 在暗夜模式下被 Debug 报 `dark-text-on-dark` 的问题。
+- 把 `.tag`、`#distributionTag`、`#destinyBoardGrid .mark`、`.destiny-cell.v10-cell .mark` 纳入暗夜 CSS 覆盖清单和运行时体检目标。
+- 保留 v10.5.139 的 Debug 最高层级和历史分析暗夜修复，不回退历史记录/历史分析弹窗层级逻辑。
+- 已同步更新 index title / meta / 首页版本、版本内容更新、manifest、service-worker 缓存名。
+
+## 这版重点测试
+
+1. 上传 7 个文件后强制刷新，确认首页显示 v10.5.140。
+2. 切到暗夜模式，进入命运场景结果页，确认命盘六宫里的速喜、玄武、火星等小标签清晰可见。
+3. 打开 Debug → 一键自检，确认不再出现 `#distributionTag`、`#destinyBoardGrid .mark` 的低对比或 dark-text-on-dark 警告。
+4. 再打开历史分析，确认 v10.5.139 修复过的白底统计卡片没有回退。
+5. 在历史记录/历史分析弹窗中打开 Debug，确认 Debug 仍然在最上层。
+
 ### v10.5.139 历史分析暗夜与 Debug 置顶修正版
 
 ## v10.5.139 历史分析暗夜与 Debug 置顶修正版
