@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.158 Debug 报告导出增强版</title>
-<meta content="小六壬个人网页版 v10.5.158 Debug 报告导出增强版：新增 Debug 报告导出中心，支持导出 JSON、导出 TXT 和复制排查摘要，方便后续集中排查与发版留档。" name="description"/>
+<title>小六壬占卜 · v10.5.159 历史记录导出增强版</title>
+<meta content="小六壬个人网页版 v10.5.159 历史记录导出增强版：新增历史 CSV 与复盘 CSV 导出，提供 Excel 友好的结构化报表基础，并纳入 Debug 自检与发版体检。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -3058,7 +3058,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.158 Debug 报告导出增强版</h2>
+<h2>个人占卜台 · v10.5.159 历史记录导出增强版</h2>
 <p>本版继续按主线升级：首页动态时间增加“刷新”和“同步到时辰起课”，普通问事可快速把当前公历/农历/时辰带入时辰起课；命运场景继续支持占问事项留空，并加强出生时间提示。</p>
 </div>
 <div class="actions">
@@ -3413,7 +3413,9 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <div class="tool-folder-body">
 <button class="ghost-btn" id="exportReviewBtn" onclick="exportReviews()" type="button">导出复盘 TXT</button>
 <button class="ghost-btn" onclick="exportHistory()" type="button">导出历史 TXT</button>
-<span class="tool-folder-note">分析页导出以阅读与复盘为主；完整迁移请到“历史记录 → 完整备份”。</span>
+<button class="ghost-btn" onclick="exportHistoryCSV()" type="button">导出历史 CSV</button>
+<button class="ghost-btn" onclick="exportReviewsCSV()" type="button">导出复盘 CSV</button>
+<span class="tool-folder-note">分析页导出以阅读、复盘和 CSV 结构化数据为主；完整迁移请到“历史记录 → 完整备份”。</span>
 </div>
 </details>
 <span class="hint" id="analyticsDateHint">不选日期时统计全部历史。</span>
@@ -3510,11 +3512,13 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <summary>历史记录</summary>
 <div class="tool-folder-body">
 <button class="ghost-btn" id="exportHistoryBtn" onclick="exportHistory()">导出历史 TXT</button>
+<button class="ghost-btn" id="exportHistoryCsvBtn" onclick="exportHistoryCSV()">导出历史 CSV</button>
+<button class="ghost-btn" id="exportReviewCsvBtn" onclick="exportReviewsCSV()">导出复盘 CSV</button>
 <button class="ghost-btn" id="exportHistoryJsonBtn" onclick="exportHistoryJSON()">导出历史 JSON</button>
 <button class="ghost-btn" id="importHistoryJsonBtn" onclick="triggerImportHistory()">导入历史 JSON</button>
 <button class="ghost-btn" id="exportReviewHistoryBtn" onclick="exportReviews()">导出复盘 TXT</button>
 <button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button>
-<span class="tool-folder-note">TXT 用于阅读；历史 JSON 只迁移历史记录、收藏、复盘与 A/B 数据，不影响模板和阅读设置。</span>
+<span class="tool-folder-note">TXT 用于阅读；CSV 适合 Excel/Numbers/Power BI 结构化分析；历史 JSON 只迁移历史记录、收藏、复盘与 A/B 数据，不影响模板和阅读设置。</span>
 </div>
 </details>
 <details class="tool-folder">
@@ -3567,7 +3571,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.158 Debug 报告导出增强版';
+    const XLR_SOURCE_VERSION = 'v10.5.159 历史记录导出增强版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4601,7 +4605,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4611,6 +4615,10 @@ function buildPaipanExplanation(result){
       saveCurrent: saveCurrentResult,
       toggleCurrentFavorite: toggleCurrentFavorite,
       toggleFavorite: toggleHistoryFavorite,
+      exportHistoryCSV: exportHistoryCSV,
+      exportReviewsCSV: exportReviewsCSV,
+      buildHistoryCsvRows: historyCsvRows,
+      buildReviewCsvRows: reviewCsvRows,
       refresh: refreshHistoryDependents
     };
     
@@ -4783,7 +4791,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.158' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.159' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -6502,8 +6510,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.158",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检。",
+      "version": "2.0+extension+family-life-v10.5.159",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7928,7 +7936,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.158',
+        source:'mainline-v10.5.159',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -8006,7 +8014,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.158',
+        source:'mainline-v10.5.159',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -8019,7 +8027,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.158') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.159') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -8028,7 +8036,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.158',
+      source:'mainline-v10.5.159',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -8242,7 +8250,7 @@ function buildContextOverallSentence(context, details) {
       if(actualResultDestiny !== expectedResultDestiny) mismatches.push({ className:'result-destiny', actual:actualResultDestiny, expected:expectedResultDestiny, reason:'结果页命盘状态应只由 currentResult.sceneKey / sceneName 判定' });
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.158',
+        source:'mainline-v10.5.159',
         isResultPage,
         isDestinyResultPage,
         isHomeDestinySelected,
@@ -8269,7 +8277,7 @@ function buildContextOverallSentence(context, details) {
       after.changed = before.mismatches && before.mismatches.length ? before.mismatches : [];
       return after;
     }
-    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.158', getState:getCanonicalPageState, sync:syncCanonicalPageState };
+    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.159', getState:getCanonicalPageState, sync:syncCanonicalPageState };
     const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock'];
     const NORMAL_RESULT_HIDDEN_BLOCK_IDS = ['paipanBlock','destinyBoardBlock'];
     function setResultBlockHidden(id, shouldHide){
@@ -8361,7 +8369,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.158',
+        source: 'mainline-v10.5.159',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -8377,7 +8385,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -8764,6 +8772,110 @@ function buildContextOverallSentence(context, details) {
       };
       downloadJSONFile(payload, 'xiaoliuren_history_records_' + new Date().toISOString().slice(0,10) + '.json');
     }
+
+    function downloadHistoryExportFile(filename, content, mime){
+      const blob = new Blob([content], {type:mime || 'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url; a.download=filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    }
+    function protectCsvCell(value){
+      let text = String(value == null ? '' : value).replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+      if (/^[=+\-@]/.test(text)) text = "'" + text;
+      return '"' + text.replace(/"/g, '""') + '"';
+    }
+    function buildCsv(headers, rows){
+      const lines = [headers.map(protectCsvCell).join(',')];
+      (rows || []).forEach(row => lines.push(headers.map(h => protectCsvCell(row[h])).join(',')));
+      return '\ufeff' + lines.join('\r\n');
+    }
+    function latestReviewEntry(item){
+      const reviews = getReviewEntries(item);
+      return reviews.length ? reviews[reviews.length - 1] : null;
+    }
+    function historyCsvRows(list){
+      return (list || []).map(function(item, index){
+        const reviews = getReviewEntries(item);
+        const latest = latestReviewEntry(item) || {};
+        const palaces = Array.isArray(item.palaces) ? item.palaces : [];
+        const details = Array.isArray(item.details) ? item.details : [];
+        return {
+          '序号': index + 1,
+          '记录ID': item.id || '',
+          '收藏': item.favorite ? '是' : '否',
+          '占卜时间': formatISO(item.createdAt || ''),
+          '场景': item.sceneName || item.sceneKey || '',
+          '场景Key': item.sceneKey || '',
+          '识别类型': item.issueLabel || item.detectedIssueLabel || (item.context && item.context.title) || '',
+          '起课方式': methodLabel(item),
+          '起课说明': item.methodNote || '',
+          '占问事项': getQuestionDisplay(item) || '',
+          '三数': (item.numbers || []).join(' / '),
+          '落宫': palaces.join(' / '),
+          '本象': palaces[0] || '',
+          '中象': palaces[1] || '',
+          '末象': palaces[2] || '',
+          '末象宫位': palaces.length ? palaces[palaces.length - 1] : '',
+          '综合判断': item.overallText || '',
+          '直接答案': item.answerSummary && item.answerSummary.direct ? item.answerSummary.direct : '',
+          '建议条数': Array.isArray(item.advice) ? item.advice.length : 0,
+          '复盘条数': reviews.length,
+          '最新复盘准确度': latest.accuracy ? reviewAccuracyLabel(latest.accuracy) : '',
+          '最新准确单位': latest.accuracy ? reviewAccuracyUnitLabel(latest.accuracy) : '',
+          '最新实际结果': latest.actual || '',
+          '最新复盘备注': latest.note || '',
+          '最新复盘时间': formatISO(latest.reviewedAt || latest.updatedAt || ''),
+          '本象摘要': details[0] && details[0].summary ? details[0].summary : '',
+          '中象摘要': details[1] && details[1].summary ? details[1].summary : '',
+          '末象摘要': details[2] && details[2].summary ? details[2].summary : ''
+        };
+      });
+    }
+    function reviewCsvRows(list){
+      const rows = [];
+      (list || []).forEach(function(item, itemIndex){
+        const reviews = getReviewEntries(item);
+        const palaces = Array.isArray(item.palaces) ? item.palaces : [];
+        reviews.forEach(function(review, reviewIndex){
+          rows.push({
+            '历史序号': itemIndex + 1,
+            '记录ID': item.id || '',
+            '复盘序号': reviewIndex + 1,
+            '占卜时间': formatISO(item.createdAt || ''),
+            '场景': item.sceneName || item.sceneKey || '',
+            '识别类型': item.issueLabel || item.detectedIssueLabel || (item.context && item.context.title) || '',
+            '起课方式': methodLabel(item),
+            '占问事项': getQuestionDisplay(item) || '',
+            '三数': (item.numbers || []).join(' / '),
+            '落宫': palaces.join(' / '),
+            '末象宫位': palaces.length ? palaces[palaces.length - 1] : '',
+            '准确度': reviewAccuracyLabel(review.accuracy),
+            '准确单位': reviewAccuracyUnitLabel(review.accuracy),
+            '实际结果': review.actual || '',
+            '复盘备注': review.note || '',
+            '复盘时间': formatISO(review.reviewedAt || ''),
+            '更新时间': formatISO(review.updatedAt || '')
+          });
+        });
+      });
+      return rows;
+    }
+    function exportHistoryCSV(){
+      const list=getHistory();
+      if(!list.length) return alert('暂无历史记录可导出。');
+      const rows=historyCsvRows(list);
+      const headers=['序号','记录ID','收藏','占卜时间','场景','场景Key','识别类型','起课方式','起课说明','占问事项','三数','落宫','本象','中象','末象','末象宫位','综合判断','直接答案','建议条数','复盘条数','最新复盘准确度','最新准确单位','最新实际结果','最新复盘备注','最新复盘时间','本象摘要','中象摘要','末象摘要'];
+      downloadHistoryExportFile('xiaoliuren_history_' + new Date().toISOString().slice(0,10) + '.csv', buildCsv(headers, rows), 'text/csv;charset=utf-8');
+    }
+    function exportReviewsCSV(){
+      const list=getHistory().filter(item=>getReviewEntries(item).length);
+      if(!list.length) return alert('暂无复盘内容可导出。');
+      const rows=reviewCsvRows(list);
+      const headers=['历史序号','记录ID','复盘序号','占卜时间','场景','识别类型','起课方式','占问事项','三数','落宫','末象宫位','准确度','准确单位','实际结果','复盘备注','复盘时间','更新时间'];
+      downloadHistoryExportFile('xiaoliuren_reviews_' + new Date().toISOString().slice(0,10) + '.csv', buildCsv(headers, rows), 'text/csv;charset=utf-8');
+    }
     function triggerImportHistory(){
       const input = document.getElementById('historyImportInput');
       if(!input) return alert('历史导入控件未找到。');
@@ -8966,6 +9078,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.159 历史记录导出增强版', items:[
+          '历史记录弹窗新增“导出历史 CSV”和“导出复盘 CSV”，面向 Excel/Numbers/Power BI 等结构化分析场景。',
+          '历史 CSV 按一条占卜一行输出：时间、场景、识别类型、起课方式、三数、落宫、综合判断、复盘条数和最新复盘状态等字段。',
+          '复盘 CSV 按一条复盘一行输出：关联历史记录、复盘序号、准确度、准确单位、实际结果、备注、复盘时间和更新时间。',
+          'CSV 导出自动加入 UTF-8 BOM 并做公式注入保护，尽量避免中文乱码和表格软件误识别公式。',
+          '新增 historyExport 快照、HISTORY_EXPORT_CSV_MISSING 自检项和发版体检项，为后续 Excel 报表与 PDF 图表报告打基础。'
+        ]},
         { v:'v10.5.158 Debug 报告导出增强版', items:[
           '新增 Debug 报告导出中心：一键自检或刷新快照后，可直接导出 JSON、导出 TXT，并复制适合排查的摘要文本。',
           'TXT 报告会自动整理版本、状态、错误/警告统计、主要问题、页面状态、发版体检、修复中心状态与建议动作，比完整 JSON 更适合快速阅读。',
@@ -10090,7 +10209,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -10171,7 +10290,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -11562,7 +11681,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.158'
+      source: 'mainline-v10.5.159'
     };
 
     initExtendedContextRules();
@@ -11579,7 +11698,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.158 Debug 报告导出增强版';
+  const APP_VERSION = 'v10.5.159 历史记录导出增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -11683,6 +11802,8 @@ function buildContextOverallSentence(context, details) {
     'toggleCurrentFavorite',
     'toggleHistoryFavorite',
     'exportHistory',
+    'exportHistoryCSV',
+    'exportReviewsCSV',
     'exportHistoryJSON',
     'triggerImportHistory',
     'handleImportHistoryFile',
@@ -11887,6 +12008,7 @@ function buildContextOverallSentence(context, details) {
     'HISTORY_FILTER_DOM_MISSING',
     'HISTORY_IMPORT_DOM_MISSING',
     'ANALYTICS_EXPORT_DOM_MISSING',
+    'HISTORY_EXPORT_CSV_MISSING',
     'ANALYTICS_REVIEW_INSIGHT_MISSING',
     'READING_FONT_AUDIT_WARNING',
     'REVIEW_EDIT_SYSTEM_MISSING',
@@ -12711,6 +12833,29 @@ function buildContextOverallSentence(context, details) {
   }
 
 
+  function getHistoryExportInfo() {
+    const historyCsvBtn = document.getElementById('exportHistoryCsvBtn');
+    const reviewCsvBtn = document.getElementById('exportReviewCsvBtn');
+    return {
+      version:APP_VERSION,
+      source:'mainline-v10.5.159',
+      hasHistoryCsvButton:!!historyCsvBtn,
+      hasReviewCsvButton:!!reviewCsvBtn,
+      hasAnalyticsHistoryCsvButton:qa('button').some(btn => textOf(btn, 40) === '导出历史 CSV'),
+      hasAnalyticsReviewCsvButton:qa('button').some(btn => textOf(btn, 40) === '导出复盘 CSV'),
+      functions:{
+        exportHistoryCSV:typeof window.exportHistoryCSV === 'function',
+        exportReviewsCSV:typeof window.exportReviewsCSV === 'function',
+        buildCsv:typeof window.buildCsv === 'function' || typeof buildCsv === 'function',
+        historyCsvRows:typeof window.historyCsvRows === 'function' || typeof historyCsvRows === 'function',
+        reviewCsvRows:typeof window.reviewCsvRows === 'function' || typeof reviewCsvRows === 'function'
+      },
+      formats:['history-csv','review-csv'],
+      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；JSON 仍用于完整备份迁移。',
+      ok:!!(historyCsvBtn && reviewCsvBtn && typeof window.exportHistoryCSV === 'function' && typeof window.exportReviewsCSV === 'function')
+    };
+  }
+
   function getHistoryInfo() {
     let list = [];
     try { list = typeof window.getHistory === 'function' ? window.getHistory() : []; } catch (err) { list = []; }
@@ -12786,7 +12931,7 @@ function buildContextOverallSentence(context, details) {
     try {
       if (window.XLRPageStateCore && typeof window.XLRPageStateCore.getState === 'function') return window.XLRPageStateCore.getState();
     } catch (err) {
-      return { version:APP_VERSION, source:'mainline-v10.5.158', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
+      return { version:APP_VERSION, source:'mainline-v10.5.159', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
     }
     const body=document.body;
     const result=window.currentResult || null;
@@ -12797,7 +12942,7 @@ function buildContextOverallSentence(context, details) {
     const resultSceneKey=result && result.sceneKey ? String(result.sceneKey) : '';
     const currentSceneKey=typeof currentScene !== 'undefined' ? String(currentScene || '') : '';
     const isDestinyResultPage=!!(isResultPage && result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
-    return { version:APP_VERSION, source:'fallback-debug-v10.5.158', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
+    return { version:APP_VERSION, source:'fallback-debug-v10.5.159', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
   }
 
   function getDestinyInfo() {
@@ -13072,7 +13217,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -13146,7 +13291,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -13155,7 +13300,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.158'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.159'
     };
   }
 
@@ -13336,7 +13481,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.158', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.159', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -13357,7 +13502,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.158', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.159', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -13397,7 +13542,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.158', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.159', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -13440,7 +13585,7 @@ function buildContextOverallSentence(context, details) {
         syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
       }
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.158', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
+    return { version:APP_VERSION, source:'mainline-v10.5.159', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -13449,7 +13594,7 @@ function buildContextOverallSentence(context, details) {
     const pageState = getPageStateInfo();
     const isDestiny = !(pageState && pageState.isResultPage) && currentScene === 'destiny';
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.158', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.159', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -13464,7 +13609,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -13485,7 +13630,7 @@ function buildContextOverallSentence(context, details) {
     const last = safeJsonParse(raw, null);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.158',
+      source: 'mainline-v10.5.159',
       title: 'Debug 报告导出中心',
       formats: ['json','txt','prompt-summary'],
       actions,
@@ -13595,6 +13740,7 @@ function buildContextOverallSentence(context, details) {
       },
       functions: getFunctionStatus(),
       history: getHistoryInfo(),
+      historyExport: getHistoryExportInfo(),
       analytics: getAnalyticsInfo(),
       destiny: getDestinyInfo(),
       navigation: getNavInfo(),
@@ -13702,7 +13848,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
       { id:'page-state-v157', label:'页面状态统一审计通过', ok: !!(snapshot.pageState && snapshot.pageState.ok) },
-      { id:'nav-core', label:'导航主源码为 v10.5.158', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.158') },
+      { id:'nav-core', label:'导航主源码为 v10.5.159', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.159') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -13721,9 +13867,10 @@ function buildContextOverallSentence(context, details) {
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.158' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.158' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.159' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.159' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'debug-report-export-v158', label:'Debug 报告导出中心可用', ok: !!(snapshot.reportExport && snapshot.reportExport.ok) },
+      { id:'history-csv-export-v159', label:'历史记录 CSV / 复盘 CSV 导出可用', ok: !!(snapshot.historyExport && snapshot.historyExport.ok) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
       { id:'home-dynamic-time-v155', label:'首页公历/农历/时辰动态时间可用', ok: !!(snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) },
       { id:'home-time-actions-v156', label:'首页时间刷新/同步到时辰起课可用', ok: !!(snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.refresh && snapshot.homeDynamicTime.actions.syncToTimeMethod && snapshot.homeDynamicTime.actions.hasStatus) },
@@ -13800,7 +13947,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.158' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.159' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -13815,7 +13962,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.158' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.159' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -13845,7 +13992,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.158') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.159') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.153 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -13857,11 +14004,14 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.history.hasHistoryImport || !snapshot.history.hasBackupImport) {
       addIssue(issues, 'warning', 'HISTORY_IMPORT_DOM_MISSING', '历史 JSON 或完整备份导入控件缺失', snapshot.history);
     }
+    if (!snapshot.historyExport || !snapshot.historyExport.ok) {
+      addIssue(issues, 'warning', 'HISTORY_EXPORT_CSV_MISSING', '历史 CSV 或复盘 CSV 导出入口未完整挂载', snapshot.historyExport);
+    }
     if (snapshot.history.malformed) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.158') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.159') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.153 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -13904,7 +14054,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.158') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.159') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -13938,7 +14088,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.158') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.159') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -14019,16 +14169,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.158' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.159' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.158') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.159') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
+    if (snapshot.historyExport && snapshot.historyExport.ok) passes.push('历史 CSV / 复盘 CSV 导出检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.158') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.159') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -14041,21 +14192,21 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.158' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.158' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.159' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.159' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.reportExport && snapshot.reportExport.ok) passes.push('Debug 报告导出中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.158') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.159') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.158') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.159') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -14124,7 +14275,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.157 起加入页面状态一致性审计；v10.5.158 起加入报告导出中心。黑名单不再提示，白名单强制显示。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.157 起加入页面状态一致性审计；v10.5.158 起加入报告导出中心；v10.5.159 起加入历史 CSV 导出审计。黑名单不再提示，白名单强制显示。</p>
         <details class="xlr-debug-list-panel">
           <summary>警告名单（黑名单忽略，白名单强制显示）</summary>
           <div class="xlr-debug-list-grid">
@@ -14368,7 +14519,7 @@ function buildContextOverallSentence(context, details) {
         警告名单：黑 ${((safeSnapshot.debugIssueLists && safeSnapshot.debugIssueLists.blacklist) || []).length} ｜ 白 ${((safeSnapshot.debugIssueLists && safeSnapshot.debugIssueLists.whitelist) || []).length} ｜ 通配符：${safeSnapshot.debugIssueLists && safeSnapshot.debugIssueLists.wildcardSupport ? '支持' : '未启用'} ｜ 安全模式：${safeSnapshot.repairStatus && safeSnapshot.repairStatus.safeMode ? '开启' : '关闭'} ｜ 可回滚：${safeSnapshot.repairStatus && safeSnapshot.repairStatus.restoreAvailable ? '是' : '否'}<br>
         发版体检：${checklistText}<br>
         修复中心：${safeSnapshot.repairCenter && safeSnapshot.repairCenter.ok ? '已就绪' : '未生成'} ｜ 建议数：${safeSnapshot.repairCenter && safeSnapshot.repairCenter.suggestions ? safeSnapshot.repairCenter.suggestions.length : 0}<br>
-        报告导出：${safeSnapshot.reportExport && safeSnapshot.reportExport.ok ? 'JSON/TXT/摘要可用' : '未完整挂载'}${safeSnapshot.reportExport && safeSnapshot.reportExport.lastExport ? ' ｜ 上次：' + escapeHtml(safeSnapshot.reportExport.lastExport.type || '') : ''}
+        报告导出：${safeSnapshot.reportExport && safeSnapshot.reportExport.ok ? 'JSON/TXT/摘要可用' : '未完整挂载'}｜历史导出：${safeSnapshot.historyExport && safeSnapshot.historyExport.ok ? 'CSV 可用' : 'CSV 未完整挂载'}${safeSnapshot.reportExport && safeSnapshot.reportExport.lastExport ? ' ｜ 上次：' + escapeHtml(safeSnapshot.reportExport.lastExport.type || '') : ''}
       `;
     }
     if (output) output.textContent = JSON.stringify(safeSnapshot, null, 2);
@@ -14443,7 +14594,7 @@ function buildContextOverallSentence(context, details) {
     try {
       safeLocalSet(STORAGE_DEBUG_EXPORT_LAST, JSON.stringify({
         version: APP_VERSION,
-        source: 'mainline-v10.5.158',
+        source: 'mainline-v10.5.159',
         type: type,
         ok: !!ok,
         at: new Date().toISOString(),
