@@ -1,7 +1,7 @@
 {
-  "name": "小六壬占卜 · v10.5.163",
-  "short_name": "小六壬 v10.5.163",
-  "description": "小六壬个人网页版 v10.5.163 XLSX 原生图表修正版",
+  "name": "小六壬占卜 · v10.5.164",
+  "short_name": "小六壬 v10.5.164",
+  "description": "小六壬个人网页版 v10.5.164 XLSX 专业图表美化版",
   "start_url": "./?v=10.5.163",
   "scope": "./",
   "display": "standalone",
