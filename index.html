@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.155 命运免填与首页动态时间版</title>
-<meta content="小六壬个人网页版 v10.5.155 命运免填与首页动态时间版：命运场景不再要求填写占问事项，首页新增公历/农历/时辰动态时间模块，并可在设置中开关；继续保持 Debug 修复中心、安全模式和黑白名单主线能力。" name="description"/>
+<title>小六壬占卜 · v10.5.156 首页时间联动起课增强版</title>
+<meta content="小六壬个人网页版 v10.5.156 首页时间联动起课增强版：在首页动态时间模块中新增刷新与一键同步到时辰起课能力，补强命运场景免填后的时间起盘提示，并继续接入 Debug 自检、暗夜模式与发版体检。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -2949,7 +2949,7 @@ body.reading-theme-night .debug-sensitivity-help { background: rgba(38,34,54,.74
 body.reading-theme-night .debug-sensitivity-help summary { color: #d9d0ff; }
 
 
-/* v10.5.155：首页动态时间与命运免填提示 */
+/* v10.5.156：首页动态时间与命运免填提示 */
 .home-time-card {
   display: grid;
   gap: 12px;
@@ -2987,6 +2987,22 @@ body.reading-theme-night .debug-sensitivity-help summary { color: #d9d0ff; }
   line-height: 1.65;
   margin: 0;
 }
+.home-time-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.home-time-actions .ghost-btn {
+  padding: 9px 12px;
+  border-radius: 14px;
+}
+.home-time-status {
+  min-height: 1.6em;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.6;
+}
 body.xlr-hide-home-time #homeDynamicTimeBlock { display: none !important; }
 body.destiny-scene #questionSection .context-controls,
 body.destiny-scene #questionSection .question-tip,
@@ -3008,6 +3024,7 @@ body.reading-theme-night .home-time-item {
 body.reading-theme-night .home-time-value { color: #f3edff; }
 body.reading-theme-night .home-time-label,
 body.reading-theme-night .home-time-note,
+body.reading-theme-night .home-time-status,
 body.reading-theme-night #questionSection .question-panel label::after { color: rgba(232,225,255,.78); }
 @media (max-width: 720px) {
   .home-time-grid { grid-template-columns: 1fr; }
@@ -3041,8 +3058,8 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.155 命运免填与首页动态时间版</h2>
-<p>本版继续按主线升级：命运场景可不填写占问事项，直接按出生时间起命盘；首页新增公历、农历与当前时辰动态时间模块，并可在设置中打开或关闭。</p>
+<h2>个人占卜台 · v10.5.156 首页时间联动起课增强版</h2>
+<p>本版继续按主线升级：首页动态时间增加“刷新”和“同步到时辰起课”，普通问事可快速把当前公历/农历/时辰带入时辰起课；命运场景继续支持占问事项留空，并加强出生时间提示。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -3064,6 +3081,11 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <div class="home-time-item"><span class="home-time-label">公历时间</span><div class="home-time-value" id="homeSolarTime">—</div></div>
 <div class="home-time-item"><span class="home-time-label">农历时间</span><div class="home-time-value" id="homeLunarTime">—</div></div>
 <div class="home-time-item"><span class="home-time-label">当前时辰</span><div class="home-time-value" id="homeShichenTime">—</div></div>
+</div>
+<div class="home-time-actions">
+<button class="ghost-btn" id="homeTimeRefreshBtn" type="button">刷新时间</button>
+<button class="ghost-btn" id="homeTimeUseBtn" type="button">同步到时辰起课</button>
+<span class="home-time-status" id="homeTimeActionStatus">普通问事可一键带入当前时间；命运场景请改为真实出生时间。</span>
 </div>
 <p class="home-time-note" id="homeDynamicTimeNote">动态时间只用于页面显示和时辰参考；真正起课仍以你选择的起课方式为准。</p>
 </section>
@@ -3545,7 +3567,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.155 命运免填与首页动态时间版';
+    const XLR_SOURCE_VERSION = 'v10.5.156 首页时间联动起课增强版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3932,6 +3954,8 @@ function clearCustomTemplates(){
       document.getElementById('saveBtn').addEventListener('click', saveCurrentResult);
       document.getElementById('favBtn').addEventListener('click', toggleCurrentFavorite);
       document.getElementById('nowBtn').addEventListener('click', setNow);
+      const homeTimeRefreshBtn = document.getElementById('homeTimeRefreshBtn'); if (homeTimeRefreshBtn) homeTimeRefreshBtn.addEventListener('click', refreshHomeTimeManually);
+      const homeTimeUseBtn = document.getElementById('homeTimeUseBtn'); if (homeTimeUseBtn) homeTimeUseBtn.addEventListener('click', syncCurrentTimeToTimeMethod);
       document.getElementById('timeInput').addEventListener('change', updateTimeInfo);
       const questionInput = document.getElementById('questionInput');
       const clearQuestionBtn = document.getElementById('clearQuestionBtn');
@@ -4577,7 +4601,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4759,7 +4783,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.155' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.156' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -4803,6 +4827,31 @@ function buildPaipanExplanation(result){
       if(homeDynamicTimeTimer) clearInterval(homeDynamicTimeTimer);
       homeDynamicTimeTimer=setInterval(updateHomeDynamicTime, 30000);
     }
+    function setHomeTimeStatus(text){
+      const el=document.getElementById('homeTimeActionStatus');
+      if(el) el.textContent = text || '';
+    }
+    function syncCurrentTimeToTimeMethod(){
+      setNow();
+      currentMethod = 'time';
+      applyMethodPanel('time');
+      persistChoiceIfNeeded('method', currentMethod);
+      const val=document.getElementById('timeInput') ? document.getElementById('timeInput').value : '';
+      const dt=val ? new Date(val) : new Date();
+      let msg = '已同步到时辰起课：' + formatDateTimeCN(dt) + '。';
+      if(currentScene === 'destiny') msg += ' 命运场景建议改成真实出生年月日和出生时辰后再起盘。';
+      else msg += ' 检查时间无误后，可点击“开始占卜”。';
+      setHomeTimeStatus(msg);
+      const methodSection=document.getElementById('methodSection');
+      if(methodSection){ try{ methodSection.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){ methodSection.scrollIntoView(); } }
+      updateHomeDynamicTime();
+    }
+    function refreshHomeTimeManually(){
+      updateHomeDynamicTime();
+      const now=new Date();
+      setHomeTimeStatus('已刷新首页时间：' + formatDateTimeCN(now) + '。');
+    }
+    try { window.refreshHomeTimeManually = refreshHomeTimeManually; window.syncCurrentTimeToTimeMethod = syncCurrentTimeToTimeMethod; } catch(e) {}
 
     
     function openHistoryDialog(){
@@ -6453,8 +6502,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.155",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块。",
+      "version": "2.0+extension+family-life-v10.5.156",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7879,7 +7928,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.155',
+        source:'mainline-v10.5.156',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -7957,7 +8006,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.155',
+        source:'mainline-v10.5.156',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -7970,7 +8019,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.155') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.156') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -7979,7 +8028,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.155',
+      source:'mainline-v10.5.156',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -8253,7 +8302,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.155',
+        source: 'mainline-v10.5.156',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -8269,7 +8318,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -8852,6 +8901,12 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.156 首页时间联动起课增强版', items:[
+          '首页动态时间模块新增“刷新时间”和“同步到时辰起课”按钮，普通问事可快速把当前时间带入时辰起课。',
+          '同步到时辰起课后自动切换到时辰起课面板，并给出状态提示；命运场景会提醒改为真实出生时间。',
+          '首页时间联动继续纳入暗夜模式样式、Debug 快照和发版体检，避免新增交互只做显示不进自检。',
+          '同步更新首页版本、版本记录、README、manifest、service-worker 与知识库版本说明。'
+        ]},
         { v:'v10.5.155 命运免填与首页动态时间版', items:[
           '命运场景不再需要填写占问事项；留空时历史、复制和 Debug 会显示“命运命盘 / 未填写占问事项”，避免和普通问事混淆。',
           '首页新增公历时间、农历日期与当前时辰动态模块，并提供设置开关；默认开启，关闭后首页更简洁。',
@@ -9514,6 +9569,9 @@ function buildContextOverallSentence(context, details) {
       if(timeSmall) timeSmall.textContent = isDestiny ? '按出生时间起盘' : '按时间取三象';
       if(typeof syncDestinySourcePanel === 'function') syncDestinySourcePanel();
       syncQuestionSectionForScene();
+      if(typeof setHomeTimeStatus === 'function'){
+        setHomeTimeStatus(isDestiny ? '命运场景可留空占问事项；时间栏请使用真实出生年月日和出生时辰。' : '普通问事可一键带入当前时间；命运场景请改为真实出生时间。');
+      }
       if(isDestiny && currentMethod !== 'time') currentMethod='time';
       const numberPanel=document.getElementById('numberPanel'), singlePanel=document.getElementById('singlePanel'), timePanel=document.getElementById('timePanel'), eventPanel=document.getElementById('eventPanel');
       if(isDestiny){
@@ -9953,7 +10011,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -10034,7 +10092,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -11418,7 +11476,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.155'
+      source: 'mainline-v10.5.156'
     };
 
     initExtendedContextRules();
@@ -11435,7 +11493,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.155 命运免填与首页动态时间版';
+  const APP_VERSION = 'v10.5.156 首页时间联动起课增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -12905,7 +12963,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -12979,7 +13037,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -12988,7 +13046,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.155'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.156'
     };
   }
 
@@ -13169,7 +13227,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.155', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.156', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -13190,7 +13248,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.155', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.156', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -13230,7 +13288,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.155', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.156', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -13255,12 +13313,25 @@ function buildContextOverallSentence(context, details) {
     const block = document.getElementById('homeDynamicTimeBlock');
     const ui = (typeof readUISettings === 'function') ? readUISettings() : {};
     const styleText = qa('style').map(el => el.textContent || '').join('\n');
+    const refreshBtn = document.getElementById('homeTimeRefreshBtn');
+    const useBtn = document.getElementById('homeTimeUseBtn');
+    const status = document.getElementById('homeTimeActionStatus');
     const values = {
       solar: textOf(document.getElementById('homeSolarTime'), 120),
       lunar: textOf(document.getElementById('homeLunarTime'), 120),
-      shichen: textOf(document.getElementById('homeShichenTime'), 120)
+      shichen: textOf(document.getElementById('homeShichenTime'), 120),
+      status: textOf(status, 160)
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.155', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen };
+    const actions = {
+      refresh: !!refreshBtn,
+      syncToTimeMethod: !!useBtn,
+      hasStatus: !!status,
+      functions: {
+        refreshHomeTimeManually: typeof window.refreshHomeTimeManually === 'function' || typeof refreshHomeTimeManually === 'function',
+        syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
+      }
+    };
+    return { version:APP_VERSION, source:'mainline-v10.5.156', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -13268,7 +13339,7 @@ function buildContextOverallSentence(context, details) {
     const desc=document.getElementById('questionSectionDesc');
     const isDestiny = currentScene === 'destiny' || (document.body && document.body.classList.contains('destiny-scene'));
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.155', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.156', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -13283,7 +13354,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.155',
+      source: 'mainline-v10.5.156',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -13487,7 +13558,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-id', label:'无重复 ID', ok: !(snapshot.duplicateIds && snapshot.duplicateIds.length) },
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
-      { id:'nav-core', label:'导航主源码为 v10.5.155', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.155') },
+      { id:'nav-core', label:'导航主源码为 v10.5.156', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.156') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -13506,10 +13577,11 @@ function buildContextOverallSentence(context, details) {
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.155' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.155' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.156' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.156' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
       { id:'home-dynamic-time-v155', label:'首页公历/农历/时辰动态时间可用', ok: !!(snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) },
+      { id:'home-time-actions-v156', label:'首页时间刷新/同步到时辰起课可用', ok: !!(snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.refresh && snapshot.homeDynamicTime.actions.syncToTimeMethod && snapshot.homeDynamicTime.actions.hasStatus) },
       { id:'bottom-clearance-v143', label:'底部导航遮挡安全留白可用', ok: !!(snapshot.bottomClearance && snapshot.bottomClearance.ok) },
       { id:'deep-logic-audit-v132', label:'Debug 深度逻辑巡检可用', ok: !!(snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok !== false) },
       { id:'nav-active', label:'一级导航 active 数量正常', ok: !snapshot.navigation || !snapshot.navigation.itemCount || snapshot.navigation.activeCount >= 0 },
@@ -13580,7 +13652,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.155' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.156' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -13595,7 +13667,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.155' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.156' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -13625,7 +13697,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.155') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.156') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.153 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -13641,7 +13713,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.155') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.156') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.153 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -13684,7 +13756,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.155') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.156') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -13718,7 +13790,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.155') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.156') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -13796,16 +13868,16 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.155' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.156' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.155') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.156') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.155') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.156') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -13818,19 +13890,20 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.155' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.155' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.156' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.156' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
+    if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.155') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.156') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.155') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.156') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -13898,7 +13971,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计。黑名单不再提示，白名单强制显示。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.156 起加入首页时间联动起课审计。黑名单不再提示，白名单强制显示。</p>
         <details class="xlr-debug-list-panel">
           <summary>警告名单（黑名单忽略，白名单强制显示）</summary>
           <div class="xlr-debug-list-grid">

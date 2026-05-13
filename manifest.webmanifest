@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.155",
-  "short_name": "小六壬 v10.5.155",
-  "description": "小六壬个人网页版 v10.5.155 命运免填与首页动态时间版",
-  "start_url": "./?v=10.5.155",
+  "name": "小六壬占卜 · v10.5.156",
+  "short_name": "小六壬 v10.5.156",
+  "description": "小六壬个人网页版 v10.5.156 首页时间联动起课增强版",
+  "start_url": "./?v=10.5.156",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -12,5 +12,5 @@
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
     { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
   ],
-  "version": "10.5.155"
+  "version": "10.5.156"
 }
