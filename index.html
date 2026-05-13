@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.164 XLSX 专业图表美化版</title>
-<meta content="小六壬个人网页版 v10.5.164 XLSX 专业图表美化版：在原生 Excel 图表基础上继续做专业化美化，历史分析 Excel 报表升级为更像仪表盘的 .xlsx 图表报表，包含总览、历史明细、复盘明细、统计表与更专业的图表总览。" name="description"/>
+<title>小六壬占卜 · v10.5.166 PDF 图表报告基础版</title>
+<meta content="小六壬个人网页版 v10.5.166 PDF 图表报告基础版：历史分析新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、复盘质量、场景排行、末象落点、所有主要分布图表与历史/复盘明细预览；继续保留 XLSX 原生图表报表。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -576,7 +576,7 @@
     .analytics-pro-card { background:rgba(255,255,255,.94); border:1px solid var(--line); border-radius:18px; padding:14px 15px; box-shadow:var(--shadow-sm); color:#433b58; line-height:1.7; }
     .analytics-pro-card strong { display:block; color:var(--primary); margin-bottom:4px; }
     .analytics-pro-card small { display:block; color:var(--muted); margin-top:5px; line-height:1.55; }
-    /* v10.5.160-v10.5.164 历史分析报表预览与 Excel 报表导出 */
+    /* v10.5.160-v10.5.166 历史分析报表预览、Excel 与 PDF 图表报告导出 */
     .analytics-report-section { padding-top:18px; }
     .analytics-report-preview { margin:0; border:1px solid rgba(103,83,165,.16); border-radius:24px; background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(247,243,238,.92)); box-shadow:var(--shadow-sm); overflow:hidden; color:var(--text); }
     .analytics-report-cover { padding:18px 18px 14px; display:grid; gap:14px; border-bottom:1px solid rgba(103,83,165,.10); }
@@ -3094,7 +3094,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.164 XLSX 专业图表美化版</h2>
+<h2>个人占卜台 · v10.5.166 PDF 图表报告基础版</h2>
 <p>本版继续按主线升级：首页动态时间增加“刷新”和“同步到时辰起课”，普通问事可快速把当前公历/农历/时辰带入时辰起课；命运场景继续支持占问事项留空，并加强出生时间提示。</p>
 </div>
 <div class="actions">
@@ -3452,7 +3452,8 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <button class="ghost-btn" onclick="exportHistoryCSV()" type="button">导出历史 CSV</button>
 <button class="ghost-btn" onclick="exportReviewsCSV()" type="button">导出复盘 CSV</button>
 <button class="ghost-btn" id="exportAnalyticsExcelBtn" onclick="exportAnalyticsExcelReport()" type="button">导出 Excel 报表</button>
-<span class="tool-folder-note">分析页导出以阅读、复盘、CSV 和 Excel 图表报表（.xlsx）为主；完整迁移请到“历史记录 → 完整备份”。</span>
+<button class="ghost-btn" id="exportAnalyticsPdfBtn" onclick="exportAnalyticsPdfReport()" type="button">导出 PDF 报告</button>
+<span class="tool-folder-note">分析页导出以阅读、复盘、CSV、Excel 图表报表（.xlsx）和可打印 PDF 图表报告为主；完整迁移请到“历史记录 → 完整备份”。</span>
 </div>
 </details>
 <span class="hint" id="analyticsDateHint">不选日期时统计全部历史。</span>
@@ -3552,11 +3553,12 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <button class="ghost-btn" id="exportHistoryCsvBtn" onclick="exportHistoryCSV()">导出历史 CSV</button>
 <button class="ghost-btn" id="exportReviewCsvBtn" onclick="exportReviewsCSV()">导出复盘 CSV</button>
 <button class="ghost-btn" id="exportAnalyticsExcelHistoryBtn" onclick="exportAnalyticsExcelReport()">导出 Excel 报表</button>
+<button class="ghost-btn" id="exportAnalyticsPdfHistoryBtn" onclick="exportAnalyticsPdfReport()">导出 PDF 报告</button>
 <button class="ghost-btn" id="exportHistoryJsonBtn" onclick="exportHistoryJSON()">导出历史 JSON</button>
 <button class="ghost-btn" id="importHistoryJsonBtn" onclick="triggerImportHistory()">导入历史 JSON</button>
 <button class="ghost-btn" id="exportReviewHistoryBtn" onclick="exportReviews()">导出复盘 TXT</button>
 <button class="danger-btn" id="clearHistoryBtn" onclick="clearHistory()">清空历史</button>
-<span class="tool-folder-note">TXT 用于阅读；CSV 适合 Excel/Numbers/Power BI 结构化分析；Excel 报表用于多工作表汇总查看；历史 JSON 只迁移历史记录、收藏、复盘与 A/B 数据，不影响模板和阅读设置。</span>
+<span class="tool-folder-note">TXT 用于阅读；CSV 适合 Excel/Numbers/Power BI 结构化分析；Excel 报表用于多工作表汇总查看；PDF 报告用于打印、归档和手机阅读；历史 JSON 只迁移历史记录、收藏、复盘与 A/B 数据，不影响模板和阅读设置。</span>
 </div>
 </details>
 <details class="tool-folder">
@@ -3609,7 +3611,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.164 XLSX 专业图表美化版';
+    const XLR_SOURCE_VERSION = 'v10.5.166 PDF 图表报告基础版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4643,7 +4645,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4656,7 +4658,9 @@ function buildPaipanExplanation(result){
       exportHistoryCSV: exportHistoryCSV,
       exportReviewsCSV: exportReviewsCSV,
       exportAnalyticsExcelReport: exportAnalyticsExcelReport,
+      exportAnalyticsPdfReport: exportAnalyticsPdfReport,
       buildAnalyticsExcelWorkbook: buildAnalyticsExcelWorkbook,
+      buildAnalyticsPdfReportHTML: buildAnalyticsPdfReportHTML,
       buildHistoryCsvRows: historyCsvRows,
       buildReviewCsvRows: reviewCsvRows,
       refresh: refreshHistoryDependents
@@ -4831,7 +4835,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.164' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.166' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -6550,8 +6554,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.164",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 修正上一版只有表没有图的问题，XLSX 报表改为原生 Excel 图表对象，输出总览、历史明细、复盘明细、统计表与图表总览。",
+      "version": "2.0+extension+family-life-v10.5.166",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -7976,7 +7980,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.164',
+        source:'mainline-v10.5.166',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -8054,7 +8058,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.164',
+        source:'mainline-v10.5.166',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -8067,7 +8071,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.164') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.166') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -8076,7 +8080,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.164',
+      source:'mainline-v10.5.166',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -8290,7 +8294,7 @@ function buildContextOverallSentence(context, details) {
       if(actualResultDestiny !== expectedResultDestiny) mismatches.push({ className:'result-destiny', actual:actualResultDestiny, expected:expectedResultDestiny, reason:'结果页命盘状态应只由 currentResult.sceneKey / sceneName 判定' });
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.164',
+        source:'mainline-v10.5.166',
         isResultPage,
         isDestinyResultPage,
         isHomeDestinySelected,
@@ -8317,7 +8321,7 @@ function buildContextOverallSentence(context, details) {
       after.changed = before.mismatches && before.mismatches.length ? before.mismatches : [];
       return after;
     }
-    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.164', getState:getCanonicalPageState, sync:syncCanonicalPageState };
+    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.166', getState:getCanonicalPageState, sync:syncCanonicalPageState };
     const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock'];
     const NORMAL_RESULT_HIDDEN_BLOCK_IDS = ['paipanBlock','destinyBoardBlock'];
     function setResultBlockHidden(id, shouldHide){
@@ -8409,7 +8413,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.164',
+        source: 'mainline-v10.5.166',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -8425,7 +8429,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -9183,16 +9187,16 @@ function buildContextOverallSentence(context, details) {
     function buildAnalyticsChartSpecs(metrics){
       const total = metrics.total || 0;
       return [
-        { title:'按月份分布', subtitle:'按当前筛选范围统计的历史记录月份分布', rows:buildChartRowsFromEntries(metrics.monthEntries, total, 12), chartType:'column', color:'6D5BD0', lineColor:'5645B6' },
-        { title:'按星期分布', subtitle:'一周七天的历史记录分布', rows:buildChartRowsFromEntries(metrics.weekdayEntries, total, 7), chartType:'column', color:'4E79D9', lineColor:'2D5FC7' },
-        { title:'场景分布', subtitle:'最常问的场景排行', rows:buildChartRowsFromEntries(metrics.sceneEntries, total, 10), chartType:'bar', color:'7B61FF', lineColor:'6047E6' },
-        { title:'起课方式分布', subtitle:'数字起课 / 时辰起课 / 事件起课等方式分布', rows:buildChartRowsFromEntries(metrics.methodEntries, total, 6), chartType:'column', color:'5C8DF6', lineColor:'3D72E7' },
-        { title:'六宫出现频率', subtitle:'六宫在整体记录中的出现频率', rows:buildChartRowsFromEntries(metrics.palaceEntries, total, 6), chartType:'column', color:'8A63D2', lineColor:'724CB8' },
-        { title:'末象落点分布', subtitle:'末象宫位落点分布', rows:buildChartRowsFromEntries(metrics.endingEntries, total, 6), chartType:'column', color:'A55EEA', lineColor:'8F43D7' },
-        { title:'识别类型分布', subtitle:'与分析页中“识别类型分布”一致，包含图片里看到的内容', rows:buildChartRowsFromEntries(metrics.contextEntries, total, 10), chartType:'bar', color:'6A7BFF', lineColor:'5061E6' },
-        { title:'复盘准确度分布', subtitle:'与分析页中“复盘准确度分布”一致', rows:buildChartRowsFromEntries(metrics.reviewAccEntries, Math.max(1, metrics.reviewEntryCount || 0), 6), chartType:'column', color:'3FB6A8', lineColor:'289989' },
-        { title:'已复盘场景分布', subtitle:'已经写过复盘的场景分布', rows:buildChartRowsFromEntries(metrics.reviewedSceneEntries, Math.max(1, metrics.reviewEntryCount || 0), 10), chartType:'bar', color:'5F9BFF', lineColor:'3A81F1' },
-        { title:'按场景准确率', subtitle:'按场景统计的有效复盘准确率（百分比）', rows:buildSceneAccuracyChartRows(metrics.sceneAccuracyEntries, 10), valueSuffix:'%', chartType:'bar', color:'38B67A', lineColor:'24985F' }
+        { title:'按月份分布', subtitle:'按当前筛选范围统计的历史记录月份分布', rows:buildChartRowsFromEntries(metrics.monthEntries, total, 12) },
+        { title:'按星期分布', subtitle:'一周七天的历史记录分布', rows:buildChartRowsFromEntries(metrics.weekdayEntries, total, 7) },
+        { title:'场景分布', subtitle:'最常问的场景排行', rows:buildChartRowsFromEntries(metrics.sceneEntries, total, 10) },
+        { title:'起课方式分布', subtitle:'数字起课 / 时辰起课 / 事件起课等方式分布', rows:buildChartRowsFromEntries(metrics.methodEntries, total, 6) },
+        { title:'六宫出现频率', subtitle:'六宫在整体记录中的出现频率', rows:buildChartRowsFromEntries(metrics.palaceEntries, total, 6) },
+        { title:'末象落点分布', subtitle:'末象宫位落点分布', rows:buildChartRowsFromEntries(metrics.endingEntries, total, 6) },
+        { title:'识别类型分布', subtitle:'与分析页中“识别类型分布”一致，包含图片里看到的内容', rows:buildChartRowsFromEntries(metrics.contextEntries, total, 10) },
+        { title:'复盘准确度分布', subtitle:'与分析页中“复盘准确度分布”一致', rows:buildChartRowsFromEntries(metrics.reviewAccEntries, Math.max(1, metrics.reviewEntryCount || 0), 6) },
+        { title:'已复盘场景分布', subtitle:'已经写过复盘的场景分布', rows:buildChartRowsFromEntries(metrics.reviewedSceneEntries, Math.max(1, metrics.reviewEntryCount || 0), 10) },
+        { title:'按场景准确率', subtitle:'按场景统计的有效复盘准确率（百分比）', rows:buildSceneAccuracyChartRows(metrics.sceneAccuracyEntries, 10), valueSuffix:'%' }
       ].filter(function(spec){ return spec.rows && spec.rows.length; });
     }
     function renderAnalyticsChartPng(spec){
@@ -9291,74 +9295,48 @@ function buildContextOverallSentence(context, details) {
       }).join('');
       return '<c:numLit><c:formatCode>General</c:formatCode><c:ptCount val="' + (values || []).length + '"/>' + pts + '</c:numLit>';
     }
-    function chartSeriesSpPrXml(fillHex, lineHex){
-      const fill = (fillHex || '7B61FF').replace('#','').toUpperCase();
-      const line = (lineHex || fill).replace('#','').toUpperCase();
-      return '<c:spPr><a:solidFill><a:srgbClr val="' + fill + '"/></a:solidFill><a:ln w="12700"><a:solidFill><a:srgbClr val="' + line + '"/></a:solidFill></a:ln></c:spPr>';
-    }
-    function chartAxisTextXml(){
-      return '<c:txPr><a:bodyPr rot="0" vert="horz"/><a:lstStyle/><a:p><a:pPr algn="ctr"/><a:defRPr sz="1100" b="0"><a:solidFill><a:srgbClr val="5A5670"/></a:solidFill></a:defRPr><a:endParaRPr lang="zh-CN"/></a:p></c:txPr>';
-    }
-    function chartNumFmtXml(spec){
-      if(spec && spec.valueSuffix === '%') return '<c:numFmt formatCode="0%" sourceLinked="0"/>';
-      return '<c:numFmt formatCode="General" sourceLinked="1"/>';
-    }
-    function buildNativeChartXml(spec, index){
+    function buildNativeBarChartXml(spec, index){
       const rows = Array.isArray(spec && spec.rows) && spec.rows.length ? spec.rows.slice(0, 12) : [{ label:'暂无数据', value:0 }];
       const labels = rows.map(function(row){ return row.label || ''; });
       const values = rows.map(function(row){ return Number(row.value) || 0; });
       const catAxisId = 120000 + index * 10 + 1;
       const valAxisId = 120000 + index * 10 + 2;
       const seriesName = spec && spec.valueSuffix === '%' ? '百分比' : '数量';
-      const isColumn = spec && spec.chartType === 'column';
-      const barDir = isColumn ? 'col' : 'bar';
-      const catPos = isColumn ? 'b' : 'l';
-      const valPos = isColumn ? 'l' : 'b';
-      const crossBetween = isColumn ? '<c:crossBetween val="between"/>' : '<c:crossBetween val="between"/>';
-      const dLblPos = isColumn ? '<c:dLblPos val="outEnd"/>' : '<c:dLblPos val="outEnd"/>';
       return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
         '<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-        '<c:date1904 val="0"/><c:lang val="zh-CN"/><c:roundedCorners val="1"/><c:style val="10"/>' +
+        '<c:date1904 val="0"/><c:lang val="zh-CN"/><c:roundedCorners val="0"/>' +
         '<c:chart>' +
         chartRichTitleXml(spec && spec.title || '分析图表') +
         '<c:autoTitleDeleted val="0"/><c:plotArea><c:layout/>' +
-        '<c:barChart><c:barDir val="' + barDir + '"/><c:grouping val="clustered"/><c:varyColors val="0"/>' +
+        '<c:barChart><c:barDir val="bar"/><c:grouping val="clustered"/><c:varyColors val="1"/>' +
         '<c:ser><c:idx val="0"/><c:order val="0"/><c:tx><c:v>' + xlsxXmlEscape(seriesName) + '</c:v></c:tx>' +
-        chartSeriesSpPrXml(spec && spec.color, spec && spec.lineColor) +
         '<c:cat>' + chartLiteralStringXml(labels) + '</c:cat>' +
         '<c:val>' + chartLiteralNumberXml(values) + '</c:val>' +
         '<c:invertIfNegative val="0"/></c:ser>' +
-        '<c:dLbls><c:showLegendKey val="0"/>' + dLblPos + '<c:showVal val="1"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls>' +
-        '<c:gapWidth val="58"/><c:overlap val="0"/><c:axId val="' + catAxisId + '"/><c:axId val="' + valAxisId + '"/></c:barChart>' +
-        '<c:catAx><c:axId val="' + catAxisId + '"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="' + catPos + '"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="' + valAxisId + '"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/>' + chartAxisTextXml() + '</c:catAx>' +
-        '<c:valAx><c:axId val="' + valAxisId + '"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="' + valPos + '"/><c:majorGridlines/>' + chartNumFmtXml(spec) + '<c:majorTickMark val="out"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="' + catAxisId + '"/><c:crosses val="autoZero"/>' + crossBetween + chartAxisTextXml() + '</c:valAx>' +
+        '<c:dLbls><c:showLegendKey val="0"/><c:showVal val="1"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls>' +
+        '<c:gapWidth val="80"/><c:axId val="' + catAxisId + '"/><c:axId val="' + valAxisId + '"/></c:barChart>' +
+        '<c:catAx><c:axId val="' + catAxisId + '"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="l"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="' + valAxisId + '"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>' +
+        '<c:valAx><c:axId val="' + valAxisId + '"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="b"/><c:majorGridlines/><c:numFmt formatCode="General" sourceLinked="1"/><c:majorTickMark val="out"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="' + catAxisId + '"/><c:crosses val="autoZero"/><c:crossBetween val="between"/></c:valAx>' +
         '</c:plotArea>' +
-        '<c:legend><c:delete val="1"/></c:legend><c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/><c:showDLblsOverMax val="0"/>' +
+        '<c:legend><c:legendPos val="r"/><c:layout/></c:legend><c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/><c:showDLblsOverMax val="0"/>' +
         '</c:chart>' +
-        '<c:spPr><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill><a:ln w="9525"><a:solidFill><a:srgbClr val="E5E7F3"/></a:solidFill></a:ln></c:spPr>' +
-        '<c:printSettings><c:headerFooter/><c:pageMargins l="0.5" r="0.5" t="0.6" b="0.6" header="0.3" footer="0.3"/><c:pageSetup/></c:printSettings>' +
+        '<c:printSettings><c:headerFooter/><c:pageMargins l="0.7" r="0.7" t="0.75" b="0.75" header="0.3" footer="0.3"/><c:pageSetup/></c:printSettings>' +
         '</c:chartSpace>';
     }
     function buildNativeChartDrawingXml(chartSpecs){
       const specs = Array.isArray(chartSpecs) ? chartSpecs : [];
       const anchors = [];
       const rels = [];
-      const leftFrom = 0, leftTo = 7, rightFrom = 8, rightTo = 15;
-      const startRow = 8;
-      const rowSpan = 17;
-      const rowGap = 2;
+      let currentRow = 5;
       specs.forEach(function(spec, index){
         const relId = 'rId' + (index + 1);
-        const rowGroup = Math.floor(index / 2);
-        const isRight = index % 2 === 1;
-        const fromCol = isRight ? rightFrom : leftFrom;
-        const toCol = isRight ? rightTo : leftTo;
-        const fromRow = startRow + rowGroup * (rowSpan + rowGap);
-        const toRow = fromRow + rowSpan;
+        const rowSpan = 18;
+        const fromRow = currentRow;
+        const toRow = currentRow + rowSpan;
         anchors.push(
           '<xdr:twoCellAnchor editAs="oneCell">' +
-            '<xdr:from><xdr:col>' + fromCol + '</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>' + fromRow + '</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from>' +
-            '<xdr:to><xdr:col>' + toCol + '</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>' + toRow + '</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to>' +
+            '<xdr:from><xdr:col>0</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>' + fromRow + '</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from>' +
+            '<xdr:to><xdr:col>10</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>' + toRow + '</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to>' +
             '<xdr:graphicFrame macro="">' +
               '<xdr:nvGraphicFramePr><xdr:cNvPr id="' + (index + 1) + '" name="' + xlsxXmlEscape(spec.title || ('Chart ' + (index + 1))) + '"/><xdr:cNvGraphicFramePr/></xdr:nvGraphicFramePr>' +
               '<xdr:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></xdr:xfrm>' +
@@ -9368,6 +9346,7 @@ function buildContextOverallSentence(context, details) {
           '</xdr:twoCellAnchor>'
         );
         rels.push('<Relationship Id="' + relId + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="../charts/chart' + (index + 1) + '.xml"/>');
+        currentRow = toRow + 2;
       });
       return {
         drawingXml:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' + '<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart">' + anchors.join('') + '</xdr:wsDr>',
@@ -9423,12 +9402,11 @@ function buildContextOverallSentence(context, details) {
         const chartSpecs = buildAnalyticsChartSpecs(safeMetrics);
         const drawingBundle = buildNativeChartDrawingXml(chartSpecs);
         const chartSheetRows = [
-          { values:['历史分析图表仪表盘'], styleId:3 },
+          { values:['历史分析图表总览'], styleId:3 },
           { values:['统计范围', report.scope, '导出时间', nowLabel], styleId:2 },
-          { values:['图表风格', '本工作表已升级为更专业的 Excel 仪表盘布局：双列排版、原生图表对象、统一配色与数据标签。'], styleId:2 },
+          { values:['图表说明', '本工作表回归上一版图表总览样式：单列纵向原生 Excel 图表，顺序清楚，方便从上到下查看。'], styleId:2 },
           { values:['包含图表', chartSpecs.map(function(spec){ return spec.title; }).join('、')], styleId:2 },
-          { values:['说明', '可在 Excel / Numbers / WPS 中查看；推荐使用 Excel 查看最佳视觉效果。'], styleId:2 },
-          { values:['下方图表已按时间趋势、结构分布、复盘质量三类进行总览展示。'], styleId:2 }
+          { values:['下方为原生 Excel 图表，可在 Excel / Numbers / WPS 中查看和编辑。'], styleId:2 }
         ];
         const sheets = [
           { name:'总览', rowDefs:overviewRowDefs, widths:[18,42,18,18] },
@@ -9444,7 +9422,7 @@ function buildContextOverallSentence(context, details) {
           { name:'复盘准确度', headers:['复盘准确度','条数','占比'], rows:reviewAccRows },
           { name:'已复盘场景', headers:['已复盘场景','条数','占比'], rows:reviewedSceneRows },
           { name:'场景准确率', headers:['场景','已验证条目','准确单位','准确率'], rows:accuracyRows },
-          { name:'图表总览', rowDefs:chartSheetRows, widths:[12,12,12,12,12,12,12,12,4,12,12,12,12,12,12,12], drawingRid:'rId1' }
+          { name:'图表总览', rowDefs:chartSheetRows, widths:[16,52,16,22], drawingRid:'rId1' }
         ];
         const workbookSheetsXml = sheets.map(function(sheet, idx){
           return '<sheet name="' + xlsxXmlEscape(xlsxWorksheetName(sheet.name)) + '" sheetId="' + (idx + 1) + '" r:id="rId' + (idx + 1) + '"/>';
@@ -9478,13 +9456,13 @@ function buildContextOverallSentence(context, details) {
           files.push({ name:'xl/drawings/drawing1.xml', data:drawingBundle.drawingXml });
           files.push({ name:'xl/drawings/_rels/drawing1.xml.rels', data:drawingBundle.relsXml });
           files.push({ name:'xl/worksheets/_rels/sheet' + sheets.length + '.xml.rels', data:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing1.xml"/></Relationships>' });
-          chartSpecs.forEach(function(spec, idx){ files.push({ name:'xl/charts/chart' + (idx + 1) + '.xml', data:buildNativeChartXml(spec, idx + 1) }); });
+          chartSpecs.forEach(function(spec, idx){ files.push({ name:'xl/charts/chart' + (idx + 1) + '.xml', data:buildNativeBarChartXml(spec, idx + 1) }); });
         }
         const preview = options && options.preview;
         const zipBytes = buildStoredZip(files);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.164',
+          source:'mainline-v10.5.166',
           ready:true,
           format:'OOXML-xlsx-with-native-excel-charts',
           sheetCount:sheets.length,
@@ -9495,7 +9473,7 @@ function buildContextOverallSentence(context, details) {
           content: preview ? new Uint8Array(0) : zipBytes
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.164', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.166', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
       }
     }
     function exportAnalyticsExcelReport(){
@@ -9510,6 +9488,79 @@ function buildContextOverallSentence(context, details) {
       if(!workbook || !workbook.ready) return alert('XLSX 报表生成失败：' + (workbook && workbook.error ? workbook.error : '未知错误'));
       const filenameDate = selectedDate || new Date().toISOString().slice(0,10);
       downloadHistoryExportFile('xiaoliuren_analytics_report_' + filenameDate + '.xlsx', workbook.content, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    }
+    function analyticsPdfReportStyles(){
+      return `<style>
+        :root{color-scheme:light;--primary:#6753a5;--ink:#211a33;--muted:#6f667f;--line:#ddd5ec;--bg:#f7f3ee;--card:#ffffff;--soft:#f1ebfb;--accent:#b89bf3;}
+        *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;line-height:1.6;}
+        .pdf-page{max-width:1040px;margin:0 auto;padding:32px 28px 48px}.pdf-cover{background:linear-gradient(135deg,#fff,#f2ecfb);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:0 16px 40px rgba(54,39,94,.12);}
+        .eyebrow{margin:0 0 8px;color:var(--primary);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:12px}.title{margin:0;font-size:30px;line-height:1.25;color:var(--ink)}.desc{margin:12px 0 0;color:var(--muted)}
+        .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 14px}.kpi span{display:block;font-size:12px;color:var(--muted)}.kpi b{display:block;margin-top:3px;color:var(--primary);font-size:18px;overflow-wrap:anywhere}
+        .section{background:var(--card);border:1px solid var(--line);border-radius:22px;margin-top:18px;padding:20px;page-break-inside:avoid}.section h2{margin:0 0 12px;font-size:20px;color:var(--primary)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.note{color:var(--muted);font-size:13px}.list{margin:0;padding-left:20px}.list li{margin:6px 0}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{display:inline-flex;gap:6px;border:1px solid var(--line);background:var(--soft);border-radius:999px;padding:7px 11px;font-size:13px}.chip b{color:var(--primary)}
+        .chart{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff;page-break-inside:avoid}.chart h3{margin:0;color:var(--ink);font-size:17px}.chart p{margin:2px 0 12px;color:var(--muted);font-size:12px}.bar-row{display:grid;grid-template-columns:170px 1fr 58px;gap:10px;align-items:center;margin:9px 0}.bar-label{font-size:13px;overflow-wrap:anywhere}.bar-track{height:18px;background:#eee8fb;border-radius:999px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,#cbb7fa,#a989f1);border-radius:999px}.bar-value{text-align:right;font-weight:800;color:var(--primary)}.bar-meta{grid-column:2/4;color:var(--muted);font-size:11px;margin-top:-6px}.table-wrap{overflow:auto}.pdf-table{width:100%;border-collapse:collapse;font-size:11px}.pdf-table th,.pdf-table td{border:1px solid var(--line);padding:6px 7px;vertical-align:top;text-align:left}.pdf-table th{background:var(--soft);color:var(--primary)}.footer{margin-top:18px;text-align:center;color:var(--muted);font-size:12px}.print-tip{margin:14px 0 0;color:var(--muted);font-size:13px}
+        @media print{body{background:#fff}.pdf-page{max-width:none;padding:14mm}.pdf-cover,.section,.chart{box-shadow:none}.no-print{display:none!important}.section{page-break-inside:avoid}.chart{break-inside:avoid}.table-wrap{overflow:visible}.pdf-table{font-size:9px}.title{font-size:25px}.kpis{grid-template-columns:repeat(4,1fr)}}
+        @media(max-width:760px){.pdf-page{padding:18px 14px 36px}.kpis,.grid2{grid-template-columns:1fr 1fr}.bar-row{grid-template-columns:120px 1fr 46px}.title{font-size:24px}}
+      </style>`;
+    }
+    function analyticsPdfChartHTML(spec){
+      const rows = Array.isArray(spec.rows) && spec.rows.length ? spec.rows : [];
+      const maxValue = Math.max(1, rows.reduce(function(max,item){ return Math.max(max, Number(item.value) || 0); }, 0));
+      return `<div class="chart"><h3>${escapeHTML(spec.title || '图表')}</h3><p>${escapeHTML(spec.subtitle || '')}</p>` + rows.map(function(item){
+        const value = Number(item.value) || 0;
+        const width = Math.max(3, Math.round(value / maxValue * 100));
+        const suffix = spec.valueSuffix || '';
+        return `<div class="bar-row"><div class="bar-label">${escapeHTML(item.label || '未记录')}</div><div class="bar-track"><div class="bar-fill" style="width:${width}%"></div></div><div class="bar-value">${escapeHTML(String(value) + suffix)}</div>${item.meta ? `<div class="bar-meta">${escapeHTML(item.meta)}</div>` : ''}</div>`;
+      }).join('') + `</div>`;
+    }
+    function analyticsPdfSimpleTableHTML(title, headers, rows, emptyText){
+      const safeRows = Array.isArray(rows) ? rows : [];
+      if(!safeRows.length) return `<div class="section"><h2>${escapeHTML(title)}</h2><p class="note">${escapeHTML(emptyText || '暂无数据')}</p></div>`;
+      return `<div class="section"><h2>${escapeHTML(title)}</h2><div class="table-wrap"><table class="pdf-table"><thead><tr>${headers.map(h=>`<th>${escapeHTML(h)}</th>`).join('')}</tr></thead><tbody>` +
+        safeRows.map(row => `<tr>${headers.map(h=>`<td>${escapeHTML(row[h] == null ? '' : row[h])}</td>`).join('')}</tr>`).join('') +
+        `</tbody></table></div></div>`;
+    }
+    function buildAnalyticsPdfReportHTML(metrics, list, selectedDate){
+      const safeList = Array.isArray(list) ? list : [];
+      const safeMetrics = metrics && typeof metrics.total === 'number' ? metrics : buildAnalyticsMetrics(safeList);
+      const report = buildAnalyticsReportPreview(safeMetrics, safeList, selectedDate || '');
+      const chartSpecs = buildAnalyticsChartSpecs(safeMetrics);
+      const sceneChips = report.topScenes.length ? report.topScenes.map(row => `<span class="chip"><b>${escapeHTML(row[0])}</b>${row[1]} 条</span>`).join('') : '<span class="chip">暂无场景数据</span>';
+      const endChips = report.topEndings.length ? report.topEndings.map(row => `<span class="chip"><b>${escapeHTML(row[0])}</b>${row[1]} 次</span>`).join('') : '<span class="chip">暂无末象数据</span>';
+      const accuracyChips = report.topAccuracy.length ? report.topAccuracy.map(item => `<span class="chip"><b>${escapeHTML(item.scene)}</b>${escapeHTML(item.rate)} / ${item.judged} 条</span>`).join('') : '<span class="chip">暂无足够复盘准确率样本</span>';
+      const historyRows = historyCsvRows(safeList).map(function(row){ return {
+        '时间': row['占卜时间'], '场景': row['场景'], '识别类型': row['识别类型'], '起课方式': row['起课方式'], '占问事项': row['占问事项'], '三数': row['三数'], '落宫': row['落宫'], '复盘': row['复盘条数'] ? (row['复盘条数'] + ' 条｜' + (row['最新复盘准确度'] || '')) : '—'
+      }; });
+      const reviewRows = reviewCsvRows(safeList).map(function(row){ return {
+        '占卜时间': row['占卜时间'], '场景': row['场景'], '占问事项': row['占问事项'], '落宫': row['落宫'], '准确度': row['准确度'], '准确单位': row['准确单位'], '实际结果': row['实际结果'], '复盘时间': row['复盘时间']
+      }; });
+      return `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>小六壬历史分析 PDF 图表报告</title>${analyticsPdfReportStyles()}</head><body><main class="pdf-page">
+        <section class="pdf-cover"><p class="eyebrow">PDF Report · v10.5.166</p><h1 class="title">小六壬历史分析图表报告</h1><p class="desc">本报告基于当前浏览器本地历史记录生成，不联网、不上传数据；用于打印、归档和复盘分析，不改变占卜核心逻辑。</p><p class="print-tip no-print">提示：系统会打开浏览器打印窗口；在打印选项中选择“保存为 PDF”即可导出 PDF 文件。</p><div class="kpis">
+          <div class="kpi"><span>统计范围</span><b>${escapeHTML(report.scope)}</b></div><div class="kpi"><span>历史记录</span><b>${report.total} 条</b></div><div class="kpi"><span>复盘覆盖</span><b>${escapeHTML(report.reviewCoverage)}</b></div><div class="kpi"><span>有效准确率</span><b>${escapeHTML(report.reviewRate)}</b></div>
+          <div class="kpi"><span>最常问场景</span><b>${escapeHTML(report.topScene)}</b></div><div class="kpi"><span>最常见末象</span><b>${escapeHTML(report.topEnd)}</b></div><div class="kpi"><span>末象风险宫</span><b>${escapeHTML(report.riskRate)}</b></div><div class="kpi"><span>末象顺势宫</span><b>${escapeHTML(report.supportRate)}</b></div>
+        </div></section>
+        <section class="section"><div class="grid2"><div><h2>关键发现</h2><ol class="list">${report.findings.map(item=>`<li>${escapeHTML(item)}</li>`).join('')}</ol></div><div><h2>复盘质量</h2><p class="note">${escapeHTML(report.qualityNote)}</p><div class="chips">${accuracyChips}</div></div></div></section>
+        <section class="section"><div class="grid2"><div><h2>场景排行</h2><div class="chips">${sceneChips}</div></div><div><h2>末象落点</h2><div class="chips">${endChips}</div></div></div></section>
+        <section class="section"><h2>下一步建议</h2><ul class="list">${report.nextActions.map(item=>`<li>${escapeHTML(item)}</li>`).join('')}</ul></section>
+        <section class="section"><h2>图表总览</h2><p class="note">包含月份、星期、场景、起课方式、六宫、末象、识别类型、复盘准确度、已复盘场景和按场景准确率等主要图表。</p>${chartSpecs.map(analyticsPdfChartHTML).join('')}</section>
+        ${analyticsPdfSimpleTableHTML('历史明细预览', ['时间','场景','识别类型','起课方式','占问事项','三数','落宫','复盘'], historyRows, '暂无历史记录')}
+        ${analyticsPdfSimpleTableHTML('复盘明细预览', ['占卜时间','场景','占问事项','落宫','准确度','准确单位','实际结果','复盘时间'], reviewRows, '暂无复盘记录')}
+        <p class="footer">生成版本：${escapeHTML(XLR_SOURCE_VERSION)} ｜ 生成时间：${escapeHTML(new Date().toLocaleString('zh-CN'))}</p>
+      </main><script>setTimeout(function(){ try{ window.focus(); window.print(); }catch(e){} }, 500);<\/script></body></html>`;
+    }
+    function exportAnalyticsPdfReport(){
+      const rawList = getHistory();
+      if(!rawList.length) return alert('暂无历史记录可导出。');
+      const dateEl = document.getElementById('analyticsDateInput');
+      const selectedDate = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
+      const list = filterHistoryByDate(rawList, selectedDate);
+      if(!list.length) return alert(selectedDate ? '这一天暂无历史记录：' + selectedDate : '暂无历史记录可导出。');
+      const metrics = buildAnalyticsMetrics(list);
+      const html = buildAnalyticsPdfReportHTML(metrics, list, selectedDate);
+      const win = window.open('', '_blank');
+      if(!win){ return alert('浏览器阻止了 PDF 报告窗口。请允许弹出窗口后重试，或先导出 Excel 报表。'); }
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
     }
     function triggerImportHistory(){
       const input = document.getElementById('historyImportInput');
@@ -9713,6 +9764,20 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.166 PDF 图表报告基础版', items:[
+          '历史分析和历史记录弹窗新增“导出 PDF 报告”按钮，用于打印、归档和手机阅读。',
+          'PDF 报告采用浏览器打印/保存为 PDF 方式生成，不引入外部库，不上传数据，不改变历史记录和占卜核心逻辑。',
+          'PDF 报告包含封面摘要、KPI、关键发现、复盘质量、场景排行、末象落点、图表总览、历史明细预览与复盘明细预览。',
+          '图表总览覆盖月份、星期、场景、起课方式、六宫、末象、识别类型、复盘准确度、已复盘场景与按场景准确率。',
+          'Debug 快照、历史导出审计、历史分析审计与发版体检新增 PDF 报告导出检查。'
+        ]},
+        { v:'v10.5.165 图表总览回归与 PDF 报告预备版', items:[
+          '按用户反馈，将“图表总览”回归 v10.5.163 上一版的单列纵向原生 Excel 图表样式。',
+          '保留 .xlsx 原生图表对象与所有统计表，不回退历史明细、复盘明细、统计口径和导出能力。',
+          '图表总览说明改为“从上到下查看”的长报表样式，避免双列仪表盘带来的阅读不习惯。',
+          '补充 PDF 图表报告预备说明，下一版可继续基于当前报表口径生成可打印 PDF 报告。',
+          '继续同步更新 title、meta、README、manifest、service-worker 与发版体检信息。'
+        ]},
         { v:'v10.5.164 XLSX 专业图表美化版', items:[
           '在 v10.5.163 的原生图表基础上继续美化，Excel 报表升级为更专业的图表仪表盘。',
           '图表总览由单列长列表改为双列仪表盘排版，整体更紧凑、更像正式分析报表。',
@@ -10778,11 +10843,11 @@ function buildContextOverallSentence(context, details) {
       const nextActions = [
         reviewInsight.reviewPriority,
         reviewInsight.partialOrMissCount ? '把部分准/不准记录单独回看，区分是场景识别、应期、现实条件还是问题表述导致偏差。' : '继续记录实际结果，等样本增加后再看偏差模式。',
-        'XLSX 报表已升级为专业化 Excel 图表仪表盘；后续 PDF 导出时，可继续复用本预览里的封面摘要、KPI、场景排行、末象风险、图表和复盘质量字段。'
+        'PDF 图表报告已加入基础版；建议 PDF 用于打印/归档，XLSX 用于继续编辑图表和明细数据。'
       ];
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.164',
+        source:'mainline-v10.5.166',
         ready:true,
         scope,
         total:safeMetrics.total,
@@ -10805,9 +10870,9 @@ function buildContextOverallSentence(context, details) {
       const accuracyChips = report.topAccuracy.length ? report.topAccuracy.map(item => `<span class="analytics-report-chip"><b>${escapeHTML(item.scene)}</b> ${escapeHTML(item.rate)} / ${item.judged} 条</span>`).join('') : '<span class="analytics-report-chip">暂无足够复盘准确率样本</span>';
       return `<div class="analysis-section analytics-report-section"><div class="analytics-report-preview" id="analyticsReportPreview">
         <div class="analytics-report-cover">
-          <p class="analytics-report-eyebrow">Pro XLSX Charts · v10.5.164</p>
+          <p class="analytics-report-eyebrow">XLSX + PDF Charts · v10.5.166</p>
           <h4 class="analytics-report-title">历史分析报表预览</h4>
-          <p class="analytics-report-desc">这是后续 XLSX 专业图表报表 / PDF 图表报告的页面内预览版，先确认汇总口径、KPI 字段、关键发现和复盘质量说明，不改变任何历史数据与断卦逻辑。</p>
+          <p class="analytics-report-desc">这是 XLSX 图表报表 / PDF 图表报告共用的页面内预览版，用于确认汇总口径、KPI 字段、关键发现和复盘质量说明，不改变任何历史数据与断卦逻辑。</p>
           <div class="analytics-report-kpis">
             <div class="analytics-report-kpi"><span>统计范围</span><b>${escapeHTML(report.scope)}</b></div>
             <div class="analytics-report-kpi"><span>历史记录</span><b>${report.total} 条</b></div>
@@ -10938,7 +11003,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -10947,11 +11012,14 @@ function buildContextOverallSentence(context, details) {
       buildReportPreview: buildAnalyticsReportPreview,
       renderReportPreview: renderAnalyticsReportPreview,
       buildExcelWorkbook: buildAnalyticsExcelWorkbook,
+      buildPdfReportHTML: buildAnalyticsPdfReportHTML,
       exportExcelReport: exportAnalyticsExcelReport,
+      exportPdfReport: exportAnalyticsPdfReport,
       hasReviewInsights: true,
       hasReviewDetailCards: true,
       hasReportPreview: true,
       hasExcelExport: true,
+      hasPdfExport: true,
       getReviewEntries: analyticsReviewEntries,
       getReviewRows: getReviewEntryRows,
       reviewRateText: reviewRateText,
@@ -11025,7 +11093,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -12416,7 +12484,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.164'
+      source: 'mainline-v10.5.166'
     };
 
     initExtendedContextRules();
@@ -12433,7 +12501,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.164 XLSX 专业图表美化版';
+  const APP_VERSION = 'v10.5.166 PDF 图表报告基础版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -13575,27 +13643,33 @@ function buildContextOverallSentence(context, details) {
     const reviewCsvBtn = document.getElementById('exportReviewCsvBtn');
     const analyticsExcelBtn = document.getElementById('exportAnalyticsExcelBtn');
     const historyExcelBtn = document.getElementById('exportAnalyticsExcelHistoryBtn');
+    const analyticsPdfBtn = document.getElementById('exportAnalyticsPdfBtn');
+    const historyPdfBtn = document.getElementById('exportAnalyticsPdfHistoryBtn');
     return {
       version:APP_VERSION,
-      source:'mainline-v10.5.164',
+      source:'mainline-v10.5.166',
       hasHistoryCsvButton:!!historyCsvBtn,
       hasReviewCsvButton:!!reviewCsvBtn,
       hasAnalyticsExcelButton:!!analyticsExcelBtn,
       hasHistoryExcelButton:!!historyExcelBtn,
+      hasAnalyticsPdfButton:!!analyticsPdfBtn,
+      hasHistoryPdfButton:!!historyPdfBtn,
       hasAnalyticsHistoryCsvButton:qa('button').some(btn => textOf(btn, 40) === '导出历史 CSV'),
       hasAnalyticsReviewCsvButton:qa('button').some(btn => textOf(btn, 40) === '导出复盘 CSV'),
       functions:{
         exportHistoryCSV:typeof window.exportHistoryCSV === 'function',
         exportReviewsCSV:typeof window.exportReviewsCSV === 'function',
         exportAnalyticsExcelReport:typeof window.exportAnalyticsExcelReport === 'function',
+        exportAnalyticsPdfReport:typeof window.exportAnalyticsPdfReport === 'function',
         buildAnalyticsExcelWorkbook:typeof window.buildAnalyticsExcelWorkbook === 'function' || typeof buildAnalyticsExcelWorkbook === 'function',
+        buildAnalyticsPdfReportHTML:typeof window.buildAnalyticsPdfReportHTML === 'function' || typeof buildAnalyticsPdfReportHTML === 'function',
         buildCsv:typeof window.buildCsv === 'function' || typeof buildCsv === 'function',
         historyCsvRows:typeof window.historyCsvRows === 'function' || typeof historyCsvRows === 'function',
         reviewCsvRows:typeof window.reviewCsvRows === 'function' || typeof reviewCsvRows === 'function'
       },
-      formats:['history-csv','review-csv','analytics-xlsx-native-charts'],
-      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；JSON 仍用于完整备份迁移。',
-      ok:!!(historyCsvBtn && reviewCsvBtn && analyticsExcelBtn && typeof window.exportHistoryCSV === 'function' && typeof window.exportReviewsCSV === 'function' && typeof window.exportAnalyticsExcelReport === 'function')
+      formats:['history-csv','review-csv','analytics-xlsx-native-charts','analytics-pdf-print-report'],
+      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告用于打印、归档和手机阅读；JSON 仍用于完整备份迁移。',
+      ok:!!(historyCsvBtn && reviewCsvBtn && analyticsExcelBtn && historyExcelBtn && analyticsPdfBtn && historyPdfBtn && typeof window.exportHistoryCSV === 'function' && typeof window.exportReviewsCSV === 'function' && typeof window.exportAnalyticsExcelReport === 'function' && typeof window.exportAnalyticsPdfReport === 'function')
     };
   }
 
@@ -13639,11 +13713,13 @@ function buildContextOverallSentence(context, details) {
     let reviewInsights = null;
     let reportPreview = null;
     let excelReport = null;
+    let pdfReport = null;
     try { list = typeof window.getHistory === 'function' ? window.getHistory() : []; } catch (err) { list = []; }
     try { metrics = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildMetrics === 'function' ? window.XLRAnalyticsCore.buildMetrics(list) : null; } catch (err) { metrics = { error: String(err && err.message || err) }; }
     try { reviewInsights = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildReviewInsights === 'function' ? window.XLRAnalyticsCore.buildReviewInsights(metrics, list) : null; } catch (err) { reviewInsights = { error: String(err && err.message || err) }; }
     try { reportPreview = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildReportPreview === 'function' ? window.XLRAnalyticsCore.buildReportPreview(metrics, list, '') : null; } catch (err) { reportPreview = { error: String(err && err.message || err) }; }
     try { excelReport = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildExcelWorkbook === 'function' ? window.XLRAnalyticsCore.buildExcelWorkbook(metrics, list, '', {preview:true}) : null; } catch (err) { excelReport = { error: String(err && err.message || err) }; }
+    try { pdfReport = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildPdfReportHTML === 'function' ? window.XLRAnalyticsCore.buildPdfReportHTML(metrics, list, '') : null; } catch (err) { pdfReport = { error: String(err && err.message || err) }; }
     return {
       core: {
         exists: !!window.XLRAnalyticsCore,
@@ -13655,7 +13731,8 @@ function buildContextOverallSentence(context, details) {
         hasReviewInsights: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildReviewInsights === 'function' && window.XLRAnalyticsCore.hasReviewInsights === true),
         hasReviewDetailCards: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasReviewDetailCards === true),
         hasReportPreview: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildReportPreview === 'function' && typeof window.XLRAnalyticsCore.renderReportPreview === 'function' && window.XLRAnalyticsCore.hasReportPreview === true),
-        hasExcelExport: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildExcelWorkbook === 'function' && typeof window.XLRAnalyticsCore.exportExcelReport === 'function' && window.XLRAnalyticsCore.hasExcelExport === true)
+        hasExcelExport: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildExcelWorkbook === 'function' && typeof window.XLRAnalyticsCore.exportExcelReport === 'function' && window.XLRAnalyticsCore.hasExcelExport === true),
+        hasPdfExport: !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildPdfReportHTML === 'function' && typeof window.XLRAnalyticsCore.exportPdfReport === 'function' && window.XLRAnalyticsCore.hasPdfExport === true)
       },
       hasDialog: !!document.getElementById('analyticsDialog'),
       hasContent: !!document.getElementById('analyticsContent'),
@@ -13676,6 +13753,9 @@ function buildContextOverallSentence(context, details) {
         excelReportReady: !!(excelReport && excelReport.ready),
         excelChartCount: excelReport && excelReport.chartCount ? excelReport.chartCount : 0,
         excelReportError: excelReport && excelReport.error ? excelReport.error : null,
+        pdfReportReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('PDF Report · v10.5.166') !== -1),
+        pdfReportLength: typeof pdfReport === 'string' ? pdfReport.length : 0,
+        pdfReportError: pdfReport && pdfReport.error ? pdfReport.error : null,
         error: metrics.error || null
       } : null
     };
@@ -13685,7 +13765,7 @@ function buildContextOverallSentence(context, details) {
     try {
       if (window.XLRPageStateCore && typeof window.XLRPageStateCore.getState === 'function') return window.XLRPageStateCore.getState();
     } catch (err) {
-      return { version:APP_VERSION, source:'mainline-v10.5.164', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
+      return { version:APP_VERSION, source:'mainline-v10.5.166', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
     }
     const body=document.body;
     const result=window.currentResult || null;
@@ -13696,7 +13776,7 @@ function buildContextOverallSentence(context, details) {
     const resultSceneKey=result && result.sceneKey ? String(result.sceneKey) : '';
     const currentSceneKey=typeof currentScene !== 'undefined' ? String(currentScene || '') : '';
     const isDestinyResultPage=!!(isResultPage && result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
-    return { version:APP_VERSION, source:'fallback-debug-v10.5.164', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
+    return { version:APP_VERSION, source:'fallback-debug-v10.5.166', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
   }
 
   function getDestinyInfo() {
@@ -13971,7 +14051,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -14045,7 +14125,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -14054,7 +14134,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.164'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.166'
     };
   }
 
@@ -14235,7 +14315,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.164', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.166', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -14256,7 +14336,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.164', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.166', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -14296,7 +14376,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.164', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.166', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -14339,7 +14419,7 @@ function buildContextOverallSentence(context, details) {
         syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
       }
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.164', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
+    return { version:APP_VERSION, source:'mainline-v10.5.166', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -14348,7 +14428,7 @@ function buildContextOverallSentence(context, details) {
     const pageState = getPageStateInfo();
     const isDestiny = !(pageState && pageState.isResultPage) && currentScene === 'destiny';
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.164', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.166', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -14363,7 +14443,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -14384,7 +14464,7 @@ function buildContextOverallSentence(context, details) {
     const last = safeJsonParse(raw, null);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.164',
+      source: 'mainline-v10.5.166',
       title: 'Debug 报告导出中心',
       formats: ['json','txt','prompt-summary'],
       actions,
@@ -14602,7 +14682,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
       { id:'page-state-v157', label:'页面状态统一审计通过', ok: !!(snapshot.pageState && snapshot.pageState.ok) },
-      { id:'nav-core', label:'导航主源码为 v10.5.164', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.164') },
+      { id:'nav-core', label:'导航主源码为 v10.5.166', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.166') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -14618,13 +14698,14 @@ function buildContextOverallSentence(context, details) {
       { id:'review-insight-v141', label:'复盘洞察主线可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReviewInsights && snapshot.analytics.metrics && snapshot.analytics.metrics.reviewInsightReady) },
       { id:'review-detail-mobile-v142', label:'复盘明细移动端卡片可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReviewDetailCards) },
       { id:'analytics-report-preview-v160', label:'历史分析报表预览可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReportPreview && snapshot.analytics.metrics && snapshot.analytics.metrics.reportPreviewReady) },
-      { id:'analytics-excel-export-v161', label:'XLSX 专业图表报表导出可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasExcelExport && snapshot.analytics.metrics && snapshot.analytics.metrics.excelReportReady && snapshot.analytics.metrics.excelChartCount >= 8 && snapshot.historyExport && snapshot.historyExport.hasAnalyticsExcelButton) },
+      { id:'analytics-excel-export-v161', label:'XLSX 图表报表导出可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasExcelExport && snapshot.analytics.metrics && snapshot.analytics.metrics.excelReportReady && snapshot.analytics.metrics.excelChartCount >= 8 && snapshot.historyExport && snapshot.historyExport.hasAnalyticsExcelButton) },
+      { id:'analytics-pdf-export-v166', label:'PDF 图表报告导出可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasPdfExport && snapshot.analytics.metrics && snapshot.analytics.metrics.pdfReportReady && snapshot.historyExport && snapshot.historyExport.hasAnalyticsPdfButton && snapshot.historyExport.hasHistoryPdfButton) },
       { id:'summary-labels-v150', label:'结果摘要标签完整无 undefined', ok: !!(snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) },
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.164' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.164' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.166' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.166' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'debug-report-export-v158', label:'Debug 报告导出中心可用', ok: !!(snapshot.reportExport && snapshot.reportExport.ok) },
       { id:'history-csv-export-v159', label:'历史记录 CSV / 复盘 CSV 导出可用', ok: !!(snapshot.historyExport && snapshot.historyExport.ok) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
@@ -14703,7 +14784,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.164' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.166' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -14718,7 +14799,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.164' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.166' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -14748,7 +14829,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.164') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.166') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.164 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -14770,7 +14851,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.164') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.166') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.164 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -14813,7 +14894,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.164') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.166') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -14847,7 +14928,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.164') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.166') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -14910,6 +14991,9 @@ function buildContextOverallSentence(context, details) {
     if (!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReportPreview && snapshot.analytics.metrics && snapshot.analytics.metrics.reportPreviewReady)) {
       addIssue(issues, 'warning', 'ANALYTICS_REPORT_PREVIEW_MISSING', '历史分析报表预览未完整挂载，可能影响后续 Excel/PDF 报表字段确认', snapshot.analytics);
     }
+    if (!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasPdfExport && snapshot.analytics.metrics && snapshot.analytics.metrics.pdfReportReady && snapshot.historyExport && snapshot.historyExport.hasAnalyticsPdfButton && snapshot.historyExport.hasHistoryPdfButton)) {
+      addIssue(issues, 'warning', 'ANALYTICS_PDF_REPORT_MISSING', 'PDF 图表报告未完整挂载，可能无法打开可打印 PDF 报告', {analytics:snapshot.analytics, historyExport:snapshot.historyExport});
+    }
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.failed) {
       addIssue(issues, 'warning', 'RELEASE_CHECKLIST_REVIEW', '发版体检表存在需要复核的项目', snapshot.releaseChecklist.items.filter(item => !item.ok));
     }
@@ -14931,17 +15015,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.164' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.166' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.164') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.166') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (snapshot.historyExport && snapshot.historyExport.ok) passes.push('历史 CSV / 复盘 CSV 导出检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.164') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.166') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -14951,26 +15035,27 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.analytics.core.hasReviewInsights && snapshot.analytics.metrics && snapshot.analytics.metrics.reviewInsightReady) passes.push('复盘洞察主线检查通过');
     if (snapshot.analytics.core.hasReviewDetailCards) passes.push('复盘明细移动端卡片检查通过');
     if (snapshot.analytics.core.hasReportPreview && snapshot.analytics.metrics && snapshot.analytics.metrics.reportPreviewReady) passes.push('历史分析报表预览检查通过');
-    if (snapshot.analytics.core.hasExcelExport && snapshot.analytics.metrics && snapshot.analytics.metrics.excelReportReady && snapshot.analytics.metrics.excelChartCount >= 8 && snapshot.historyExport && snapshot.historyExport.hasAnalyticsExcelButton) passes.push('XLSX 专业图表报表导出检查通过');
+    if (snapshot.analytics.core.hasExcelExport && snapshot.analytics.metrics && snapshot.analytics.metrics.excelReportReady && snapshot.analytics.metrics.excelChartCount >= 8 && snapshot.historyExport && snapshot.historyExport.hasAnalyticsExcelButton) passes.push('XLSX 图表报表导出检查通过');
+    if (snapshot.analytics.core.hasPdfExport && snapshot.analytics.metrics && snapshot.analytics.metrics.pdfReportReady && snapshot.historyExport && snapshot.historyExport.hasAnalyticsPdfButton && snapshot.historyExport.hasHistoryPdfButton) passes.push('PDF 图表报告导出检查通过');
     if (snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) passes.push('结果摘要标签完整性检查通过');
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.164' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.164' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.166' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.166' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.reportExport && snapshot.reportExport.ok) passes.push('Debug 报告导出中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.164') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.166') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.164') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.166') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -15039,7 +15124,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.157 起加入页面状态一致性审计；v10.5.158 起加入报告导出中心；v10.5.159 起加入历史 CSV 导出审计；v10.5.160 起加入历史分析报表预览审计；v10.5.164 起加入 XLSX 原生图表报表审计。黑名单不再提示，白名单强制显示。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.157 起加入页面状态一致性审计；v10.5.158 起加入报告导出中心；v10.5.159 起加入历史 CSV 导出审计；v10.5.160 起加入历史分析报表预览审计；v10.5.164 起加入 XLSX 原生图表报表审计；v10.5.165 起回归上一版图表总览样式；v10.5.166 起加入可打印 PDF 图表报告基础版。黑名单不再提示，白名单强制显示。</p>
         <details class="xlr-debug-list-panel">
           <summary>警告名单（黑名单忽略，白名单强制显示）</summary>
           <div class="xlr-debug-list-grid">
@@ -15358,7 +15443,7 @@ function buildContextOverallSentence(context, details) {
     try {
       safeLocalSet(STORAGE_DEBUG_EXPORT_LAST, JSON.stringify({
         version: APP_VERSION,
-        source: 'mainline-v10.5.164',
+        source: 'mainline-v10.5.166',
         type: type,
         ok: !!ok,
         at: new Date().toISOString(),
