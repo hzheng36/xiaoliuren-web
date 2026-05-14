@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.173 PDF 明细体检与导出范围预览版</title>
-<meta content="小六壬个人网页版 v10.5.173 PDF 明细体检与导出范围预览版：在历史分析与历史记录导出中心新增导出前范围预览，显示当前筛选范围、历史记录数、复盘明细数、收藏数与场景数，并把导出范围确认纳入 Debug 和发版体检。" name="description"/>
+<title>小六壬占卜 · v10.5.174 PDF 明细审计误报收口版</title>
+<meta content="小六壬个人网页版 v10.5.174 PDF 明细审计误报收口版：最后一次收口 PDF 明细模式 Debug 审计误报，把明细 PDF 检查从全文关键词判断改为去除 style/script 后的正文结构判断，避免 CSS 中的 chart-section 或封面省略说明误触发；不改导出功能、不改历史数据、不改起课断卦逻辑。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -595,7 +595,7 @@
     .analytics-pro-card { background:rgba(255,255,255,.94); border:1px solid var(--line); border-radius:18px; padding:14px 15px; box-shadow:var(--shadow-sm); color:#433b58; line-height:1.7; }
     .analytics-pro-card strong { display:block; color:var(--primary); margin-bottom:4px; }
     .analytics-pro-card small { display:block; color:var(--muted); margin-top:5px; line-height:1.55; }
-    /* v10.5.160-v10.5.173 历史分析报表预览、Excel / PDF 图表报告与导出中心 */
+    /* v10.5.160-v10.5.174 历史分析报表预览、Excel / PDF 图表报告与导出中心 */
     .analytics-report-section { padding-top:18px; }
     .analytics-report-preview { margin:0; border:1px solid rgba(103,83,165,.16); border-radius:24px; background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(247,243,238,.92)); box-shadow:var(--shadow-sm); overflow:hidden; color:var(--text); }
     .analytics-report-cover { padding:18px 18px 14px; display:grid; gap:14px; border-bottom:1px solid rgba(103,83,165,.10); }
@@ -3127,8 +3127,8 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.173 PDF 明细体检与导出范围预览版</h2>
-<p>本版先修复 v10.5.172 暴露的 PDF 明细模式体检误报：只导出明细模式本身可以生成，但旧 Debug 用“不能出现图表总览”作为硬判断，遇到封面“省略内容”说明时会误判。本版统一改为按模式、长度、无错误和明细结构正向判断；同时在历史分析和历史记录导出区保留“导出前范围预览”。</p>
+<h2>个人占卜台 · v10.5.174 PDF 明细审计误报收口版</h2>
+<p>本版作为 PDF 明细模式误报的最后一次收口：不再继续改 PDF 生成逻辑，而是把 Debug 体检改为“去除 style/script 后检查正文结构”。明细模式允许封面说明写“省略图表总览”，也不会因为 CSS 里保留 chart-section 样式而误报；只在正文真的出现图表章节时才拦截。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -3640,7 +3640,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.173 PDF 明细体检与导出范围预览版';
+    const XLR_SOURCE_VERSION = 'v10.5.174 PDF 明细审计误报收口版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -4674,7 +4674,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4816,7 +4816,7 @@ function buildPaipanExplanation(result){
       }
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.173',
+        source:'mainline-v10.5.174',
         center:center || '',
         scopeText,
         historyCount:list.length,
@@ -4954,7 +4954,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.173' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.174' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -6673,8 +6673,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.173",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览；v10.5.167 将 PDF 历史明细和复盘明细改为舒展卡片式布局，优化长文本换行和分页阅读；v10.5.168 新增 PDF 完整报告/只导出图表/只导出明细三种导出模式，并补强封面元信息和 Debug 导出选项审计；v10.5.169 增强 PDF 章节分页、标题/卡片防断页、打印页眉页脚与报告标题/备注预留结构；v10.5.170 跳过自定义标题输入，继续舒展 PDF 历史明细与复盘明细，优化打印分页和手机阅读可读性，并加入明细拥挤 Debug 检查；v10.5.171 新增 PDF 导出前确认摘要、明细模式封面摘要与导出审计收口；v10.5.172 整合 PDF/Excel/TXT/CSV/JSON 导出中心与格式用途说明；v10.5.173 修正 PDF 明细模式 Debug 体检口径，避免明细模式因封面省略内容提到图表总览而误报；同时在导出中心增加导出前范围预览、记录/复盘数量核对与 Debug 范围确认审计。",
+      "version": "2.0+extension+family-life-v10.5.174",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览；v10.5.167 将 PDF 历史明细和复盘明细改为舒展卡片式布局，优化长文本换行和分页阅读；v10.5.168 新增 PDF 完整报告/只导出图表/只导出明细三种导出模式，并补强封面元信息和 Debug 导出选项审计；v10.5.169 增强 PDF 章节分页、标题/卡片防断页、打印页眉页脚与报告标题/备注预留结构；v10.5.170 跳过自定义标题输入，继续舒展 PDF 历史明细与复盘明细，优化打印分页和手机阅读可读性，并加入明细拥挤 Debug 检查；v10.5.171 新增 PDF 导出前确认摘要、明细模式封面摘要与导出审计收口；v10.5.172 整合 PDF/Excel/TXT/CSV/JSON 导出中心与格式用途说明；v10.5.173 修正 PDF 明细模式 Debug 体检口径，避免明细模式因封面省略内容提到图表总览而误报；同时在导出中心增加导出前范围预览、记录/复盘数量核对与 Debug 范围确认审计；v10.5.174 最后一次收口明细审计误报，把 PDF 模式检查改为去除 style/script 后的正文结构判断，避免 CSS 中的 chart-section 误触发。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -8099,7 +8099,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.173',
+        source:'mainline-v10.5.174',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -8177,7 +8177,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.173',
+        source:'mainline-v10.5.174',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -8190,7 +8190,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.173') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.174') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -8199,7 +8199,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.173',
+      source:'mainline-v10.5.174',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -8413,7 +8413,7 @@ function buildContextOverallSentence(context, details) {
       if(actualResultDestiny !== expectedResultDestiny) mismatches.push({ className:'result-destiny', actual:actualResultDestiny, expected:expectedResultDestiny, reason:'结果页命盘状态应只由 currentResult.sceneKey / sceneName 判定' });
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.173',
+        source:'mainline-v10.5.174',
         isResultPage,
         isDestinyResultPage,
         isHomeDestinySelected,
@@ -8440,7 +8440,7 @@ function buildContextOverallSentence(context, details) {
       after.changed = before.mismatches && before.mismatches.length ? before.mismatches : [];
       return after;
     }
-    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.173', getState:getCanonicalPageState, sync:syncCanonicalPageState };
+    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.174', getState:getCanonicalPageState, sync:syncCanonicalPageState };
     const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock'];
     const NORMAL_RESULT_HIDDEN_BLOCK_IDS = ['paipanBlock','destinyBoardBlock'];
     function setResultBlockHidden(id, shouldHide){
@@ -8532,7 +8532,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.173',
+        source: 'mainline-v10.5.174',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -8548,7 +8548,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -9581,7 +9581,7 @@ function buildContextOverallSentence(context, details) {
         const zipBytes = buildStoredZip(files);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.173',
+          source:'mainline-v10.5.174',
           ready:true,
           format:'OOXML-xlsx-with-native-excel-charts',
           sheetCount:sheets.length,
@@ -9592,7 +9592,7 @@ function buildContextOverallSentence(context, details) {
           content: preview ? new Uint8Array(0) : zipBytes
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.173', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.174', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
       }
     }
     function exportAnalyticsExcelReport(){
@@ -9720,10 +9720,10 @@ function buildContextOverallSentence(context, details) {
     }
     function analyticsPdfDetailCardsHTML(title, rows, kind, emptyText){
       const safeRows = Array.isArray(rows) ? rows : [];
-      if(!safeRows.length) return `<section class="section detail-section chapter-section pdf-detail-comfort-v10.5.173"><h2>${escapeHTML(title)}</h2><p class="detail-density-note">明细舒展策略：卡片之间加大间距，长文本单独成组，短字段用标签归纳；打印时保留章节换页、标题防落单和卡片防断页。</p><p class="note">${escapeHTML(emptyText || '暂无数据')}</p></section>`;
+      if(!safeRows.length) return `<section class="section detail-section chapter-section pdf-detail-comfort-v10.5.174"><h2>${escapeHTML(title)}</h2><p class="detail-density-note">明细舒展策略：卡片之间加大间距，长文本单独成组，短字段用标签归纳；打印时保留章节换页、标题防落单和卡片防断页。</p><p class="note">${escapeHTML(emptyText || '暂无数据')}</p></section>`;
       const lead = kind === 'review' ? '复盘明细采用舒展卡片和分区字段，实际结果、备注、准确度与时间线分开阅读，打印时尽量不切断卡片。' : '历史明细采用舒展卡片和分区字段，问题、答案、综合判断、三象摘要与复盘跟进分开阅读，避免长文本挤在同一块。';
       const cards = safeRows.map(function(row, index){ return kind === 'review' ? analyticsPdfReviewCardHTML(row, index) : analyticsPdfHistoryCardHTML(row, index); }).join('');
-      return `<section class="section detail-section chapter-section pdf-detail-comfort-v10.5.173"><h2>${escapeHTML(title)}</h2><p class="detail-lead">${escapeHTML(lead)}</p><p class="detail-density-note">明细舒展策略：卡片之间加大间距，长文本单独成组，短字段用标签归纳；打印时保留章节换页、标题防落单和卡片防断页。</p><div class="detail-list">${cards}</div></section>`;
+      return `<section class="section detail-section chapter-section pdf-detail-comfort-v10.5.174"><h2>${escapeHTML(title)}</h2><p class="detail-lead">${escapeHTML(lead)}</p><p class="detail-density-note">明细舒展策略：卡片之间加大间距，长文本单独成组，短字段用标签归纳；打印时保留章节换页、标题防落单和卡片防断页。</p><div class="detail-list">${cards}</div></section>`;
     }
     function normalizeAnalyticsPdfMode(mode){
       mode = String(mode || 'full').trim().toLowerCase();
@@ -9780,7 +9780,7 @@ function buildContextOverallSentence(context, details) {
       const includeDetails = pdfMode === 'full' || pdfMode === 'details';
       return {
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.173',
+        source: 'mainline-v10.5.174',
         ready: true,
         mode: pdfMode,
         modeLabel: analyticsPdfModeLabel(pdfMode),
@@ -9819,7 +9819,7 @@ function buildContextOverallSentence(context, details) {
     }
     function analyticsPdfExportSummaryHTML(preview){
       const info = preview && preview.ready ? preview : buildAnalyticsPdfExportPreview(null, [], '', 'full');
-      return `<div class="export-preview pdf-export-confirm-v10.5.173"><h3>PDF 导出确认摘要</h3><div class="export-preview-grid"><div class="export-preview-item"><span>导出模式</span><b>${escapeHTML(info.modeLabel)}</b></div><div class="export-preview-item"><span>筛选范围</span><b>${escapeHTML(info.scopeText)}</b></div><div class="export-preview-item"><span>历史记录</span><b>${escapeHTML(String(info.historyCount))} 条</b></div><div class="export-preview-item"><span>复盘明细</span><b>${escapeHTML(String(info.reviewCount))} 条</b></div><div class="export-preview-item"><span>包含内容</span><b>${escapeHTML(info.includeText)}</b></div><div class="export-preview-item"><span>省略内容</span><b>${escapeHTML(info.omitText)}</b></div></div></div>`;
+      return `<div class="export-preview pdf-export-confirm-v10.5.174"><h3>PDF 导出确认摘要</h3><div class="export-preview-grid"><div class="export-preview-item"><span>导出模式</span><b>${escapeHTML(info.modeLabel)}</b></div><div class="export-preview-item"><span>筛选范围</span><b>${escapeHTML(info.scopeText)}</b></div><div class="export-preview-item"><span>历史记录</span><b>${escapeHTML(String(info.historyCount))} 条</b></div><div class="export-preview-item"><span>复盘明细</span><b>${escapeHTML(String(info.reviewCount))} 条</b></div><div class="export-preview-item"><span>包含内容</span><b>${escapeHTML(info.includeText)}</b></div><div class="export-preview-item"><span>省略内容</span><b>${escapeHTML(info.omitText)}</b></div></div></div>`;
     }
     function buildAnalyticsPdfReportHTML(metrics, list, selectedDate, mode, options){
       const pdfMode = normalizeAnalyticsPdfMode(mode);
@@ -9846,10 +9846,10 @@ function buildContextOverallSentence(context, details) {
       const summarySections = includeSummary ? `
         <section class="section"><div class="grid2"><div><h2>关键发现</h2><ol class="list">${report.findings.map(item=>`<li>${escapeHTML(item)}</li>`).join('')}</ol></div><div><h2>复盘质量</h2><p class="note">${escapeHTML(report.qualityNote)}</p><div class="chips">${accuracyChips}</div></div></div></section>
         <section class="section"><div class="grid2"><div><h2>场景排行</h2><div class="chips">${sceneChips}</div></div><div><h2>末象落点</h2><div class="chips">${endChips}</div></div></div></section>
-        <section class="section"><h2>下一步建议</h2><ul class="list">${report.nextActions.map(item=>`<li>${escapeHTML(item)}</li>`).join('')}</ul></section>` : `<section class="section detail-export-summary pdf-export-confirm-v10.5.173"><h2>明细导出摘要</h2><p class="note">当前为“${escapeHTML(modeLabel)}”模式，已省略图表模块和部分摘要模块，只保留逐条历史与复盘明细。统计范围、导出条数和省略内容已写入封面与下方确认摘要，方便归档核对。</p>${coverExportSummary}</section>`;
+        <section class="section"><h2>下一步建议</h2><ul class="list">${report.nextActions.map(item=>`<li>${escapeHTML(item)}</li>`).join('')}</ul></section>` : `<section class="section detail-export-summary pdf-export-confirm-v10.5.174"><h2>明细导出摘要</h2><p class="note">当前为“${escapeHTML(modeLabel)}”模式，已省略图表模块和部分摘要模块，只保留逐条历史与复盘明细。统计范围、导出条数和省略内容已写入封面与下方确认摘要，方便归档核对。</p>${coverExportSummary}</section>`;
       const chartSection = includeCharts ? `<section class="section chart-section chapter-section"><h2>图表总览</h2><p class="note">包含月份、星期、场景、起课方式、六宫、末象、识别类型、复盘准确度、已复盘场景和按场景准确率等主要图表。</p>${chartSpecs.map(analyticsPdfChartHTML).join('')}</section>` : '';
       return `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHTML(reportOptions.title)}</title>${analyticsPdfReportStyles()}</head><body><div class="pdf-print-header"><span><b>${escapeHTML(reportOptions.title)}</b></span><span>${escapeHTML(report.scope)} · ${escapeHTML(modeLabel)}</span></div><div class="pdf-print-footer"><span>小六壬个人网页版 · 本地生成 · 不联网不上传</span><span class="page-no">${escapeHTML(nowLabel)} · </span></div><main class="pdf-page">
-        <section class="pdf-cover"><p class="eyebrow">PDF Report · v10.5.173</p><h1 class="title">${escapeHTML(reportOptions.title)}</h1><span class="mode-badge">${escapeHTML(modeLabel)}</span><p class="desc">${escapeHTML(analyticsPdfCoverDescription(pdfMode))}</p><div class="cover-meta"><div class="cover-meta-item"><span>导出范围</span><b>${escapeHTML(report.scope)}</b></div><div class="cover-meta-item"><span>筛选说明</span><b>${escapeHTML(selectedDate ? '仅导出 ' + selectedDate + ' 当天记录' : '未筛选日期，导出全部历史')}</b></div><div class="cover-meta-item"><span>导出模式</span><b>${escapeHTML(modeLabel)}</b></div><div class="cover-meta-item"><span>封面日期</span><b>${escapeHTML(nowLabel)}</b></div><div class="cover-meta-item"><span>明细版式</span><b>舒展卡片</b></div><div class="cover-meta-item"><span>打印优化</span><b>分页防断</b></div><div class="cover-meta-item"><span>历史记录</span><b>${escapeHTML(String(exportPreview.historyCount))} 条</b></div><div class="cover-meta-item"><span>复盘明细</span><b>${escapeHTML(String(exportPreview.reviewCount))} 条</b></div></div><div class="cover-note"><b>报告说明</b>${escapeHTML(reportOptions.remark)}${coverExportSummary}</div><p class="print-tip no-print">提示：系统会打开浏览器打印窗口；在打印选项中选择“保存为 PDF”即可导出 PDF 文件。页码可在浏览器打印设置中打开“页眉和页脚”；本版同时提供报告内页眉页脚，方便手机端保存后阅读。</p><p class="print-tip">${escapeHTML(modeDesc)}</p><div class="kpis">
+        <section class="pdf-cover"><p class="eyebrow">PDF Report · v10.5.174</p><h1 class="title">${escapeHTML(reportOptions.title)}</h1><span class="mode-badge">${escapeHTML(modeLabel)}</span><p class="desc">${escapeHTML(analyticsPdfCoverDescription(pdfMode))}</p><div class="cover-meta"><div class="cover-meta-item"><span>导出范围</span><b>${escapeHTML(report.scope)}</b></div><div class="cover-meta-item"><span>筛选说明</span><b>${escapeHTML(selectedDate ? '仅导出 ' + selectedDate + ' 当天记录' : '未筛选日期，导出全部历史')}</b></div><div class="cover-meta-item"><span>导出模式</span><b>${escapeHTML(modeLabel)}</b></div><div class="cover-meta-item"><span>封面日期</span><b>${escapeHTML(nowLabel)}</b></div><div class="cover-meta-item"><span>明细版式</span><b>舒展卡片</b></div><div class="cover-meta-item"><span>打印优化</span><b>分页防断</b></div><div class="cover-meta-item"><span>历史记录</span><b>${escapeHTML(String(exportPreview.historyCount))} 条</b></div><div class="cover-meta-item"><span>复盘明细</span><b>${escapeHTML(String(exportPreview.reviewCount))} 条</b></div></div><div class="cover-note"><b>报告说明</b>${escapeHTML(reportOptions.remark)}${coverExportSummary}</div><p class="print-tip no-print">提示：系统会打开浏览器打印窗口；在打印选项中选择“保存为 PDF”即可导出 PDF 文件。页码可在浏览器打印设置中打开“页眉和页脚”；本版同时提供报告内页眉页脚，方便手机端保存后阅读。</p><p class="print-tip">${escapeHTML(modeDesc)}</p><div class="kpis">
           <div class="kpi"><span>统计范围</span><b>${escapeHTML(report.scope)}</b></div><div class="kpi"><span>历史记录</span><b>${report.total} 条</b></div><div class="kpi"><span>复盘覆盖</span><b>${escapeHTML(report.reviewCoverage)}</b></div><div class="kpi"><span>有效准确率</span><b>${escapeHTML(report.reviewRate)}</b></div>
           <div class="kpi"><span>最常问场景</span><b>${escapeHTML(report.topScene)}</b></div><div class="kpi"><span>最常见末象</span><b>${escapeHTML(report.topEnd)}</b></div><div class="kpi"><span>末象风险宫</span><b>${escapeHTML(report.riskRate)}</b></div><div class="kpi"><span>末象顺势宫</span><b>${escapeHTML(report.supportRate)}</b></div>
         </div></section>
@@ -9906,11 +9906,11 @@ function buildContextOverallSentence(context, details) {
       }));
       const scopePreview = { history: buildExportScopePreview('history'), analytics: buildExportScopePreview('analytics') };
       const scopeReady = scopePanels.length >= 2 && scopePanels.every(panel=>panel.ready);
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.173', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.174', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
     }
     window.XLRExportCenterCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.173',
+      source:'mainline-v10.5.174',
       module:'export-center',
       formatKeys:EXPORT_CENTER_FORMATS.map(item=>item.key),
       formats:getExportCenterFormats,
@@ -10121,6 +10121,17 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.174 PDF 明细审计误报收口版', items:[
+          '最后一次收口 PDF 明细模式 Debug 误报：不改 PDF 生成逻辑，只改审计口径。',
+          '明细 PDF 审计改为先去除 style/script，再检查正文是否真正存在图表章节；CSS 中保留 chart-section 样式不再误判。',
+          '明细模式允许封面/导出确认中出现“省略图表总览”等说明文字，只禁止正文真的混入图表总览 section。',
+          '发版体检继续绑定 PDF 完整/图表/明细三模式结构审计；若本版后仍误报，可将 ANALYTICS_PDF_EXPORT_OPTIONS_MISSING 按已知误报降级处理，不再继续反复修导出功能。'
+        ]},
+        { v:'v10.5.173 PDF 明细体检与导出范围预览版', items:[
+          '修正 PDF 明细模式 Debug 体检口径：只导出明细模式改为按模式标签、明细结构、报告长度和无错误正向判断，不再因封面“省略图表总览”的说明文字误报。',
+          '新增导出前范围预览：历史分析和历史记录导出中心顶部会显示当前筛选范围、历史记录数、复盘明细数、收藏数和涉及场景数。',
+          '新增 XLRExportCenterCore 范围预览审计与发版体检项，确认导出中心不仅按钮完整，也能在导出前给出可核对的范围摘要。'
+        ]},
         { v:'v10.5.172 PDF/Excel 导出中心整合版', items:[
           '新增“导出中心”界面：在历史分析和历史记录里统一整理 TXT、CSV、XLSX、PDF、JSON、完整备份等导出入口。',
           '新增格式用途卡片：说明 TXT 适合阅读、CSV 适合结构化分析、XLSX 适合图表报表、PDF 适合打印归档、JSON/完整备份适合迁移和备份。',
@@ -11242,7 +11253,7 @@ function buildContextOverallSentence(context, details) {
       ];
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.173',
+        source:'mainline-v10.5.174',
         ready:true,
         scope,
         total:safeMetrics.total,
@@ -11265,7 +11276,7 @@ function buildContextOverallSentence(context, details) {
       const accuracyChips = report.topAccuracy.length ? report.topAccuracy.map(item => `<span class="analytics-report-chip"><b>${escapeHTML(item.scene)}</b> ${escapeHTML(item.rate)} / ${item.judged} 条</span>`).join('') : '<span class="analytics-report-chip">暂无足够复盘准确率样本</span>';
       return `<div class="analysis-section analytics-report-section"><div class="analytics-report-preview" id="analyticsReportPreview">
         <div class="analytics-report-cover">
-          <p class="analytics-report-eyebrow">XLSX + PDF Export Center · v10.5.173</p>
+          <p class="analytics-report-eyebrow">XLSX + PDF Export Center · v10.5.174</p>
           <h4 class="analytics-report-title">历史分析报表预览</h4>
           <p class="analytics-report-desc">这是 XLSX 图表报表 / PDF 图表报告共用的页面内预览版，用于确认汇总口径、KPI 字段、关键发现和复盘质量说明；PDF 支持完整报告、只导出图表、只导出明细三种模式；明细继续采用舒展卡片式布局，并增强打印分页、页眉页脚和章节防断页，不改变任何历史数据与断卦逻辑。</p>
           <div class="analytics-report-kpis">
@@ -11399,7 +11410,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -11505,7 +11516,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -12896,7 +12907,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.173'
+      source: 'mainline-v10.5.174'
     };
 
     initExtendedContextRules();
@@ -12913,7 +12924,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.173 PDF 明细体检与导出范围预览版';
+  const APP_VERSION = 'v10.5.174 PDF 明细审计误报收口版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -14063,7 +14074,7 @@ function buildContextOverallSentence(context, details) {
     const historyPdfDetailsBtn = document.getElementById('exportAnalyticsPdfDetailsHistoryBtn');
     return {
       version:APP_VERSION,
-      source:'mainline-v10.5.173',
+      source:'mainline-v10.5.174',
       hasHistoryCsvButton:!!historyCsvBtn,
       hasReviewCsvButton:!!reviewCsvBtn,
       hasAnalyticsExcelButton:!!analyticsExcelBtn,
@@ -14099,7 +14110,7 @@ function buildContextOverallSentence(context, details) {
         refreshExportScopeSummaries:typeof window.refreshExportScopeSummaries === 'function' || typeof refreshExportScopeSummaries === 'function'
       },
       formats:['history-csv','review-csv','analytics-xlsx-native-charts','analytics-pdf-full-report','analytics-pdf-charts-only','analytics-pdf-details-only','analytics-pdf-print-layout','analytics-pdf-export-confirm','export-center-unified','export-scope-preview'],
-      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告支持完整、图表、明细三种打印模式，并增强导出确认、章节分页与页眉页脚；JSON 用于历史迁移，完整备份 JSON 用于换设备或清缓存前保存；v10.5.172 起统一通过导出中心说明各格式用途；v10.5.173 起新增导出前范围预览与范围确认审计。',
+      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告支持完整、图表、明细三种打印模式，并增强导出确认、章节分页与页眉页脚；JSON 用于历史迁移，完整备份 JSON 用于换设备或清缓存前保存；v10.5.172 起统一通过导出中心说明各格式用途；v10.5.173 起新增导出前范围预览与范围确认审计；v10.5.174 起收口 PDF 明细模式审计误报，改为去除 style/script 后的正文结构判断。',
       ok:!!(historyCsvBtn && reviewCsvBtn && analyticsExcelBtn && historyExcelBtn && analyticsPdfBtn && historyPdfBtn && analyticsPdfChartsBtn && analyticsPdfDetailsBtn && historyPdfChartsBtn && historyPdfDetailsBtn && typeof window.exportHistoryCSV === 'function' && typeof window.exportReviewsCSV === 'function' && typeof window.exportAnalyticsExcelReport === 'function' && typeof window.exportAnalyticsPdfReport === 'function')
     };
   }
@@ -14157,6 +14168,46 @@ function buildContextOverallSentence(context, details) {
     try { pdfChartsReport = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildPdfReportHTML === 'function' ? window.XLRAnalyticsCore.buildPdfReportHTML(metrics, list, '', 'charts') : null; } catch (err) { pdfChartsReport = { error: String(err && err.message || err) }; }
     try { pdfDetailsReport = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildPdfReportHTML === 'function' ? window.XLRAnalyticsCore.buildPdfReportHTML(metrics, list, '', 'details') : null; } catch (err) { pdfDetailsReport = { error: String(err && err.message || err) }; }
     try { pdfExportPreview = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildPdfExportPreview === 'function' ? window.XLRAnalyticsCore.buildPdfExportPreview(metrics, list, '', 'details') : null; } catch (err) { pdfExportPreview = { error: String(err && err.message || err) }; }
+    function pdfAuditBodyHTML(html){
+      if (typeof html !== 'string') return '';
+      return html
+        .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
+        .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    }
+    function pdfAuditHasChartBody(html){
+      const body = pdfAuditBodyHTML(html);
+      return /<section\b[^>]*class=["'][^"']*\bchart-section\b[^"']*["'][^>]*>/i.test(body)
+        || /<div\b[^>]*class=["'][^"']*\bchart\b[^"']*["'][^>]*>/i.test(body)
+        || /<h2[^>]*>\s*图表总览\s*<\/h2>/i.test(body);
+    }
+    function pdfAuditHasDetailBody(html){
+      const body = pdfAuditBodyHTML(html);
+      return /<section\b[^>]*class=["'][^"']*\bdetail-section\b[^"']*["'][^>]*>/i.test(body)
+        || body.indexOf('历史明细（舒展版）') !== -1
+        || body.indexOf('复盘明细（舒展版）') !== -1
+        || /<div\b[^>]*class=["'][^"']*\bdetail-card\b[^"']*["'][^>]*>/i.test(body);
+    }
+    const pdfModeAudit = {
+      full: {
+        ok: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('完整报告') !== -1 && pdfAuditHasChartBody(pdfReport) && pdfAuditHasDetailBody(pdfReport)),
+        length: typeof pdfReport === 'string' ? pdfReport.length : 0,
+        chartBody: pdfAuditHasChartBody(pdfReport),
+        detailBody: pdfAuditHasDetailBody(pdfReport)
+      },
+      charts: {
+        ok: !!(pdfChartsReport && typeof pdfChartsReport === 'string' && pdfChartsReport.indexOf('只导出图表') !== -1 && pdfAuditHasChartBody(pdfChartsReport) && !pdfAuditHasDetailBody(pdfChartsReport)),
+        length: typeof pdfChartsReport === 'string' ? pdfChartsReport.length : 0,
+        chartBody: pdfAuditHasChartBody(pdfChartsReport),
+        detailBody: pdfAuditHasDetailBody(pdfChartsReport)
+      },
+      details: {
+        ok: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.length > 1200 && pdfDetailsReport.indexOf('只导出明细') !== -1 && pdfAuditHasDetailBody(pdfDetailsReport) && !pdfAuditHasChartBody(pdfDetailsReport)),
+        length: typeof pdfDetailsReport === 'string' ? pdfDetailsReport.length : 0,
+        chartBody: pdfAuditHasChartBody(pdfDetailsReport),
+        detailBody: pdfAuditHasDetailBody(pdfDetailsReport),
+        reason: 'v10.5.174：先去除 style/script 再查正文结构；允许封面/省略说明提到图表总览，也允许 CSS 中存在 chart-section 样式。'
+      }
+    };
     return {
       core: {
         exists: !!window.XLRAnalyticsCore,
@@ -14200,28 +14251,24 @@ function buildContextOverallSentence(context, details) {
         excelReportReady: !!(excelReport && excelReport.ready),
         excelChartCount: excelReport && excelReport.chartCount ? excelReport.chartCount : 0,
         excelReportError: excelReport && excelReport.error ? excelReport.error : null,
-        pdfReportReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('PDF Report · v10.5.173') !== -1),
+        pdfReportReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('PDF Report · v10.5.174') !== -1),
         pdfDetailCardsReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('detail-card') !== -1 && pdfReport.indexOf('历史明细（舒展版）') !== -1 && pdfReport.indexOf('复盘明细（舒展版）') !== -1),
-        pdfChartsOnlyReady: !!(pdfChartsReport && typeof pdfChartsReport === 'string' && pdfChartsReport.indexOf('只导出图表') !== -1 && pdfChartsReport.indexOf('图表总览') !== -1 && !(pdfChartsReport.indexOf('detail-section chapter-section') !== -1 && pdfChartsReport.indexOf('历史明细（舒展版）') !== -1)),
-        pdfDetailsOnlyReady: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.length > 1200 && pdfDetailsReport.indexOf('只导出明细') !== -1 && (pdfDetailsReport.indexOf('历史明细（舒展版）') !== -1 || pdfDetailsReport.indexOf('复盘明细（舒展版）') !== -1 || pdfDetailsReport.indexOf('detail-section') !== -1) && !(pdfDetailsReport.indexOf('<h2>图表总览</h2>') !== -1 || pdfDetailsReport.indexOf('chart-section') !== -1)),
+        pdfChartsOnlyReady: !!(pdfModeAudit.charts && pdfModeAudit.charts.ok),
+        pdfDetailsOnlyReady: !!(pdfModeAudit.details && pdfModeAudit.details.ok),
         pdfExportModesReady: !!(pdfReport && pdfChartsReport && pdfDetailsReport && typeof pdfReport === 'string' && typeof pdfChartsReport === 'string' && typeof pdfDetailsReport === 'string' && pdfReport.indexOf('完整报告') !== -1 && pdfChartsReport.indexOf('只导出图表') !== -1 && pdfDetailsReport.indexOf('只导出明细') !== -1),
         pdfPrintLayoutReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-print-header') !== -1 && pdfReport.indexOf('pdf-print-footer') !== -1 && pdfReport.indexOf('chapter-section') !== -1 && pdfReport.indexOf('break-after:avoid') !== -1),
         pdfReportOptionsReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('报告说明') !== -1 && pdfReport.indexOf('明细版式') !== -1 && pdfReport.indexOf('打印优化') !== -1),
-        pdfDetailComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-detail-comfort-v10.5.173') !== -1 && pdfReport.indexOf('detail-density-note') !== -1 && pdfReport.indexOf('明细舒展策略') !== -1),
+        pdfDetailComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-detail-comfort-v10.5.174') !== -1 && pdfReport.indexOf('detail-density-note') !== -1 && pdfReport.indexOf('明细舒展策略') !== -1),
         pdfPrintComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('detail-card{margin-bottom:7mm') !== -1 && pdfReport.indexOf('detail-group') !== -1 && pdfReport.indexOf('page-break-inside:avoid') !== -1),
-        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.173' && pdfExportPreview.modeLabel === '只导出明细'),
-        pdfExportConfirmReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-export-confirm-v10.5.173') !== -1 && pdfReport.indexOf('PDF 导出确认摘要') !== -1 && pdfReport.indexOf('导出确认：已生成摘要') !== -1),
+        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.174' && pdfExportPreview.modeLabel === '只导出明细'),
+        pdfExportConfirmReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-export-confirm-v10.5.174') !== -1 && pdfReport.indexOf('PDF 导出确认摘要') !== -1 && pdfReport.indexOf('导出确认：已生成摘要') !== -1),
         pdfDetailsCoverSummaryReady: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.indexOf('明细导出摘要') !== -1 && pdfDetailsReport.indexOf('省略内容') !== -1 && pdfDetailsReport.indexOf('复盘明细') !== -1),
         exportCenterReady: !!(window.XLRExportCenterCore && typeof window.XLRExportCenterCore.getDomStatus === 'function' && window.XLRExportCenterCore.getDomStatus().ok),
         exportScopePreviewReady: !!(window.XLRExportCenterCore && typeof window.XLRExportCenterCore.getDomStatus === 'function' && window.XLRExportCenterCore.getDomStatus().scopeReady),
         pdfReportLength: typeof pdfReport === 'string' ? pdfReport.length : 0,
         pdfChartsReportLength: typeof pdfChartsReport === 'string' ? pdfChartsReport.length : 0,
         pdfDetailsReportLength: typeof pdfDetailsReport === 'string' ? pdfDetailsReport.length : 0,
-        pdfModeAudit: {
-          full: { ok: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('完整报告') !== -1 && pdfReport.indexOf('图表总览') !== -1 && pdfReport.indexOf('历史明细（舒展版）') !== -1), length: typeof pdfReport === 'string' ? pdfReport.length : 0 },
-          charts: { ok: !!(pdfChartsReport && typeof pdfChartsReport === 'string' && pdfChartsReport.indexOf('只导出图表') !== -1 && pdfChartsReport.indexOf('图表总览') !== -1 && !(pdfChartsReport.indexOf('detail-section chapter-section') !== -1 && pdfChartsReport.indexOf('历史明细（舒展版）') !== -1)), length: typeof pdfChartsReport === 'string' ? pdfChartsReport.length : 0 },
-          details: { ok: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.length > 1200 && pdfDetailsReport.indexOf('只导出明细') !== -1 && (pdfDetailsReport.indexOf('历史明细（舒展版）') !== -1 || pdfDetailsReport.indexOf('复盘明细（舒展版）') !== -1 || pdfDetailsReport.indexOf('detail-section') !== -1) && !(pdfDetailsReport.indexOf('<h2>图表总览</h2>') !== -1 || pdfDetailsReport.indexOf('chart-section') !== -1)), length: typeof pdfDetailsReport === 'string' ? pdfDetailsReport.length : 0, reason: 'v10.5.173 起：明细模式允许封面省略说明提到“图表总览”，只禁止正文图表章节。' }
-        },
+        pdfModeAudit: pdfModeAudit,
         pdfExportPreview: pdfExportPreview && pdfExportPreview.ready ? { modeLabel:pdfExportPreview.modeLabel, historyCount:pdfExportPreview.historyCount, reviewCount:pdfExportPreview.reviewCount, includeText:pdfExportPreview.includeText, omitText:pdfExportPreview.omitText } : null,
         pdfReportError: pdfReport && pdfReport.error ? pdfReport.error : null,
         pdfChartsReportError: pdfChartsReport && pdfChartsReport.error ? pdfChartsReport.error : null,
@@ -14235,7 +14282,7 @@ function buildContextOverallSentence(context, details) {
     try {
       if (window.XLRPageStateCore && typeof window.XLRPageStateCore.getState === 'function') return window.XLRPageStateCore.getState();
     } catch (err) {
-      return { version:APP_VERSION, source:'mainline-v10.5.173', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
+      return { version:APP_VERSION, source:'mainline-v10.5.174', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
     }
     const body=document.body;
     const result=window.currentResult || null;
@@ -14246,7 +14293,7 @@ function buildContextOverallSentence(context, details) {
     const resultSceneKey=result && result.sceneKey ? String(result.sceneKey) : '';
     const currentSceneKey=typeof currentScene !== 'undefined' ? String(currentScene || '') : '';
     const isDestinyResultPage=!!(isResultPage && result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
-    return { version:APP_VERSION, source:'fallback-debug-v10.5.173', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
+    return { version:APP_VERSION, source:'fallback-debug-v10.5.174', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
   }
 
   function getDestinyInfo() {
@@ -14521,7 +14568,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -14595,7 +14642,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -14604,7 +14651,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.173'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.174'
     };
   }
 
@@ -14785,7 +14832,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.173', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.174', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -14806,7 +14853,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.173', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.174', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -14846,7 +14893,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.173', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.174', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -14889,7 +14936,7 @@ function buildContextOverallSentence(context, details) {
         syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
       }
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.173', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
+    return { version:APP_VERSION, source:'mainline-v10.5.174', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -14898,7 +14945,7 @@ function buildContextOverallSentence(context, details) {
     const pageState = getPageStateInfo();
     const isDestiny = !(pageState && pageState.isResultPage) && currentScene === 'destiny';
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.173', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.174', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -14913,7 +14960,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -14934,7 +14981,7 @@ function buildContextOverallSentence(context, details) {
     const last = safeJsonParse(raw, null);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.173',
+      source: 'mainline-v10.5.174',
       title: 'Debug 报告导出中心',
       formats: ['json','txt','prompt-summary'],
       actions,
@@ -15152,7 +15199,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
       { id:'page-state-v157', label:'页面状态统一审计通过', ok: !!(snapshot.pageState && snapshot.pageState.ok) },
-      { id:'nav-core', label:'导航主源码为 v10.5.173', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.173') },
+      { id:'nav-core', label:'导航主源码为 v10.5.174', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.174') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -15181,8 +15228,8 @@ function buildContextOverallSentence(context, details) {
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.173' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.173' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.174' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.174' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'debug-report-export-v158', label:'Debug 报告导出中心可用', ok: !!(snapshot.reportExport && snapshot.reportExport.ok) },
       { id:'history-csv-export-v159', label:'历史记录 CSV / 复盘 CSV 导出可用', ok: !!(snapshot.historyExport && snapshot.historyExport.ok) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
@@ -15261,7 +15308,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.173' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.174' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -15276,7 +15323,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.173' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.174' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -15306,7 +15353,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.173') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.174') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.164 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -15334,7 +15381,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.173') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.174') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.164 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -15377,7 +15424,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.173') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.174') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -15411,7 +15458,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.173') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.174') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -15513,17 +15560,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.173' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.174' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.173') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.174') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (snapshot.historyExport && snapshot.historyExport.ok) passes.push('历史 CSV / 复盘 CSV 导出检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.173') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.174') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -15546,21 +15593,21 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.173' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.173' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.174' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.174' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.reportExport && snapshot.reportExport.ok) passes.push('Debug 报告导出中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.173') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.174') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.173') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.174') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -15629,7 +15676,7 @@ function buildContextOverallSentence(context, details) {
         <button type="button" class="xlr-debug-close" data-debug-action="close">×</button>
       </div>
       <div class="xlr-debug-body">
-        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.157 起加入页面状态一致性审计；v10.5.158 起加入报告导出中心；v10.5.159 起加入历史 CSV 导出审计；v10.5.160 起加入历史分析报表预览审计；v10.5.164 起加入 XLSX 原生图表报表审计；v10.5.165 起回归上一版图表总览样式；v10.5.166 起加入可打印 PDF 图表报告基础版；v10.5.167 起加入 PDF 明细舒展与分页优化；v10.5.168 起加入 PDF 导出选项模式审计；v10.5.170 起加入 PDF 明细舒展与打印体验审计；v10.5.171 起加入 PDF 导出确认摘要与明细模式封面摘要审计；v10.5.173 起修正 PDF 明细模式体检口径，并加入导出中心范围预览审计。黑名单不再提示，白名单强制显示。</p>
+        <p class="xlr-debug-note">主源码 Debug：默认只读取页面状态，不改变占卜逻辑；“清理旧缓存”只删除旧补丁本地键。用于检查版本、发版体检、旧补丁残留、知识库预备层、导航主源码、一级/二级导航双模式、历史记录主源码、历史分析主源码、复盘洞察主线、命盘子导航、折叠、设置和运行错误。灵敏度可在“设置 → 界面显示 → Debug 灵敏度”调整。v10.5.154 起加入修复中心；v10.5.155 起加入命运免填与首页动态时间审计；v10.5.157 起加入页面状态一致性审计；v10.5.158 起加入报告导出中心；v10.5.159 起加入历史 CSV 导出审计；v10.5.160 起加入历史分析报表预览审计；v10.5.164 起加入 XLSX 原生图表报表审计；v10.5.165 起回归上一版图表总览样式；v10.5.166 起加入可打印 PDF 图表报告基础版；v10.5.167 起加入 PDF 明细舒展与分页优化；v10.5.168 起加入 PDF 导出选项模式审计；v10.5.170 起加入 PDF 明细舒展与打印体验审计；v10.5.171 起加入 PDF 导出确认摘要与明细模式封面摘要审计；v10.5.173 起修正 PDF 明细模式体检口径，并加入导出中心范围预览审计；v10.5.174 起将明细 PDF 审计收口为去除 style/script 后的正文结构判断。黑名单不再提示，白名单强制显示。</p>
         <details class="xlr-debug-list-panel">
           <summary>警告名单（黑名单忽略，白名单强制显示）</summary>
           <div class="xlr-debug-list-grid">
@@ -15948,7 +15995,7 @@ function buildContextOverallSentence(context, details) {
     try {
       safeLocalSet(STORAGE_DEBUG_EXPORT_LAST, JSON.stringify({
         version: APP_VERSION,
-        source: 'mainline-v10.5.173',
+        source: 'mainline-v10.5.174',
         type: type,
         ok: !!ok,
         at: new Date().toISOString(),
