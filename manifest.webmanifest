@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.167",
-  "short_name": "小六壬 v10.5.167",
-  "description": "小六壬个人网页版 v10.5.167 PDF 明细舒展与分页优化版",
-  "start_url": "./?v=10.5.167",
+  "name": "小六壬占卜 · v10.5.168",
+  "short_name": "小六壬 v10.5.168",
+  "description": "小六壬个人网页版 v10.5.168 PDF 导出选项增强版",
+  "start_url": "./?v=10.5.168",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.167"
+  "version": "10.5.168"
 }
