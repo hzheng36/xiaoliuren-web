@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.171",
-  "short_name": "小六壬 v10.5.171",
-  "description": "小六壬个人网页版 v10.5.171 PDF 导出确认与明细收口版",
-  "start_url": "./?v=10.5.171",
+  "name": "小六壬占卜 · v10.5.172",
+  "short_name": "小六壬 v10.5.172",
+  "description": "小六壬个人网页版 v10.5.172 PDF/Excel 导出中心整合版",
+  "start_url": "./?v=10.5.172",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.171"
+  "version": "10.5.172"
 }
