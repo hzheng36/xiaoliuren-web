@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.183",
-  "short_name": "小六壬 v10.5.183",
-  "description": "小六壬个人网页版 v10.5.183 导出报告联动增强版：TXT/CSV/XLSX/PDF 跟随当前案例库筛选范围导出，JSON/完整备份保留全量安全导出。",
-  "start_url": "./?v=10.5.183",
+  "name": "小六壬占卜 v10.5.184",
+  "short_name": "小六壬 v10.5.184",
+  "description": "小六壬个人网页版 v10.5.184 复盘编辑与案例学习增强版：复盘支持原因归类、学习标签、案例学习要点，并接入历史搜索、CSV 导出和学习洞察。",
+  "start_url": "./?v=10.5.184",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.183"
+  "version": "10.5.184"
 }
