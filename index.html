@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.188 复盘建议模板与案例经验沉淀版</title>
-<meta content="小六壬个人网页版 v10.5.188 复盘建议模板与案例经验沉淀版：新增复盘建议模板与案例经验沉淀面板，根据待复盘、低分、应期偏差、未归类、待补学习和高分样本自动给出复盘填写提示、经验沉淀建议、批量选中与高价值标记；继续强化新增内容暗夜/阅读模式体检。" name="description"/>
+<title>小六壬占卜 · v10.5.189 复盘模板应用与经验库筛选版</title>
+<meta content="小六壬个人网页版 v10.5.189 复盘模板应用与经验库筛选版：把复盘建议模板升级为可应用草稿，支持一键带入复盘备注与学习要点、统计模板使用次数；新增案例经验库筛选面板，按高分、低分、应期、学习要点和高价值经验快速回看；继续同步修复新增内容暗夜/阅读模式样式。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -495,6 +495,20 @@
     .history-review-template-card ul { margin:0; padding-left:18px; color:var(--muted); line-height:1.55; font-size:.86rem; }
     .history-review-template-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
     .history-review-template-note { border:1px dashed rgba(103,83,165,.18); background:rgba(103,83,165,.05); border-radius:16px; padding:10px 12px; color:var(--muted); line-height:1.65; font-size:.9rem; }
+    .history-experience-library-panel .history-case-body { gap:14px; }
+    .history-experience-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; border:1px dashed rgba(103,83,165,.18); background:rgba(103,83,165,.05); border-radius:16px; padding:10px; }
+    .history-experience-toolbar .ghost-btn.active { background:linear-gradient(135deg,var(--primary),#8c73d6); color:#fff; border-color:transparent; box-shadow:0 8px 18px rgba(103,83,165,.16); }
+    .history-experience-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .history-experience-card { border:1px solid rgba(103,83,165,.12); background:rgba(255,255,255,.82); border-radius:17px; padding:12px 13px; color:var(--text); display:grid; gap:8px; box-shadow:0 4px 14px rgba(39,31,62,.05); min-width:0; }
+    .history-experience-card.is-strong { border-color:rgba(60,128,92,.22); box-shadow:0 8px 18px rgba(60,128,92,.07); }
+    .history-experience-card.is-review { border-color:rgba(191,92,42,.22); box-shadow:0 8px 18px rgba(191,92,42,.07); }
+    .history-experience-card strong { color:var(--primary); overflow-wrap:anywhere; }
+    .history-experience-meta { color:var(--muted); font-size:.84rem; line-height:1.55; }
+    .history-experience-card p { margin:0; color:var(--muted); line-height:1.55; font-size:.88rem; overflow-wrap:anywhere; }
+    .history-experience-tags { display:flex; flex-wrap:wrap; gap:6px; }
+    .history-experience-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
+    .history-experience-note { border:1px dashed rgba(103,83,165,.18); background:rgba(103,83,165,.05); border-radius:16px; padding:10px 12px; color:var(--muted); line-height:1.65; font-size:.9rem; }
+    .review-template-usage-pill { display:inline-flex; align-items:center; gap:4px; border:1px solid rgba(103,83,165,.16); background:rgba(103,83,165,.06); color:var(--muted); border-radius:999px; padding:4px 8px; font-size:.78rem; font-weight:800; }
 
 
     .history-bulk-tools { padding: 12px 24px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
@@ -3413,6 +3427,9 @@ body.reading-theme-night .history-theme-audit-card,
 body.reading-theme-night .history-review-template-toolbar,
 body.reading-theme-night .history-review-template-card,
 body.reading-theme-night .history-review-template-note,
+body.reading-theme-night .history-experience-toolbar,
+body.reading-theme-night .history-experience-card,
+body.reading-theme-night .history-experience-note,
 body.reading-theme-night .export-scope-summary,
 body.reading-theme-night .export-scope-item,
 body.reading-theme-night .export-format-card {
@@ -3427,6 +3444,7 @@ body.reading-theme-night .history-quick-review-card strong,
 body.reading-theme-night .history-review-loop-card strong,
 body.reading-theme-night .history-theme-audit-card b,
 body.reading-theme-night .history-review-template-card strong,
+body.reading-theme-night .history-experience-card strong,
 body.reading-theme-night .export-scope-title,
 body.reading-theme-night .export-scope-item b,
 body.reading-theme-night .export-format-card strong { color:#ede9fe !important; }
@@ -3439,6 +3457,9 @@ body.reading-theme-night .history-theme-audit-card span,
 body.reading-theme-night .history-review-template-card p,
 body.reading-theme-night .history-review-template-card ul,
 body.reading-theme-night .history-review-template-note,
+body.reading-theme-night .history-experience-card p,
+body.reading-theme-night .history-experience-meta,
+body.reading-theme-night .history-experience-note,
 body.reading-theme-night .export-scope-title small,
 body.reading-theme-night .export-scope-item span,
 body.reading-theme-night .export-scope-note,
@@ -3448,7 +3469,8 @@ body.reading-theme-night .history-case-badge.featured,
 body.reading-theme-night .case-score-pill,
 body.reading-theme-night .review-learning-tag,
 body.reading-theme-night .quick-review-reason,
-body.reading-theme-night .history-org-badge {
+body.reading-theme-night .history-org-badge,
+body.reading-theme-night .review-template-usage-pill {
   background:rgba(129,140,248,.18) !important;
   color:#ddd6fe !important;
   border-color:rgba(167,139,250,.28) !important;
@@ -3464,11 +3486,13 @@ body.reading-theme-night .history-tag-meter.warn { background:rgba(251,146,60,.1
 body.reading-theme-night .quick-review-reason.good { background:rgba(52,211,153,.16) !important; color:#bbf7d0 !important; border-color:rgba(52,211,153,.28) !important; }
 body.reading-theme-night .history-quick-review-toolbar .ghost-btn.active,
 body.reading-theme-night .history-review-loop-toolbar .ghost-btn.active,
-body.reading-theme-night .history-review-template-toolbar .ghost-btn.active { background:#745ac5 !important; color:#fff !important; border-color:#8b74d9 !important; }
+body.reading-theme-night .history-review-template-toolbar .ghost-btn.active,
+body.reading-theme-night .history-experience-toolbar .ghost-btn.active { background:#745ac5 !important; color:#fff !important; border-color:#8b74d9 !important; }
 body.reading-theme-night .history-item.is-featured,
 body.reading-theme-night .history-quick-review-card.is-priority,
 body.reading-theme-night .history-review-loop-card.is-urgent,
-body.reading-theme-night .history-review-template-card.is-action { border-color:rgba(251,191,36,.34) !important; }
+body.reading-theme-night .history-review-template-card.is-action,
+body.reading-theme-night .history-experience-card.is-review { border-color:rgba(251,191,36,.34) !important; }
 body.reading-theme-night .history-note-preview { color:#cbd5e1 !important; border-left-color:rgba(167,139,250,.36) !important; }
 
 @media (max-width: 760px) {
@@ -3479,6 +3503,7 @@ body.reading-theme-night .history-note-preview { color:#cbd5e1 !important; borde
   .history-quick-review-grid { grid-template-columns:1fr; }
   .history-review-loop-grid { grid-template-columns:1fr; }
   .history-review-template-grid { grid-template-columns:1fr; }
+  .history-experience-grid { grid-template-columns:1fr; }
   .history-theme-audit-grid { grid-template-columns:1fr; }
   .history-tag-grid { grid-template-columns:1fr; }
 }
@@ -3511,7 +3536,7 @@ body.reading-theme-night .history-note-preview { color:#cbd5e1 !important; borde
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.188 复盘建议模板与案例经验沉淀版</h2>
+<h2>个人占卜台 · v10.5.189 复盘模板应用与经验库筛选版</h2>
 <p>本版把历史案例库继续接入导出中心：TXT、CSV、XLSX、PDF 会跟随当前案例筛选、高价值、标签、归档、待复盘和排序范围生成；JSON/完整备份仍保留全量安全导出，避免误把筛选当成备份。</p>
 </div>
 <div class="actions">
@@ -3999,6 +4024,10 @@ body.reading-theme-night .history-note-preview { color:#cbd5e1 !important; borde
 <summary><div class="history-insight-summary"><b>复盘建议模板与案例经验沉淀</b><span id="historyReviewTemplateSummary">按偏差原因自动生成复盘填写提示和经验沉淀模板。</span></div><button class="ghost-btn" id="historyReviewTemplateRefreshBtn" type="button">刷新模板建议</button></summary>
 <div class="history-case-body"><div class="history-case-kpis" id="historyReviewTemplateKpis"></div><div class="history-review-template-toolbar" id="historyReviewTemplateToolbar"><button class="ghost-btn active" data-review-template-filter="all" type="button">全部模板</button><button class="ghost-btn" data-review-template-filter="pending" type="button">待复盘模板</button><button class="ghost-btn" data-review-template-filter="lowScore" type="button">低分复查</button><button class="ghost-btn" data-review-template-filter="timing" type="button">应期偏差</button><button class="ghost-btn" data-review-template-filter="missingReason" type="button">补原因</button><button class="ghost-btn" data-review-template-filter="missingLearning" type="button">补学习</button><button class="ghost-btn" data-review-template-filter="stable" type="button">高分沉淀</button></div><div class="history-review-template-grid" id="historyReviewTemplateList"></div><p class="history-review-template-note" id="historyReviewTemplateNote">模板只用于辅助你复盘填写和沉淀经验，不会自动修改原始结果、准确率、落宫或知识库判断。新增模板卡片已同步纳入暗夜/阅读模式体检。</p></div>
 </details>
+<details class="history-case-panel history-experience-library-panel" id="historyExperienceLibraryPanel" open="">
+<summary><div class="history-insight-summary"><b>案例经验库筛选</b><span id="historyExperienceLibrarySummary">按高分、低分、应期、学习要点和高价值经验快速回看。</span></div><button class="ghost-btn" id="historyExperienceLibraryRefreshBtn" type="button">刷新经验库</button></summary>
+<div class="history-case-body"><div class="history-case-kpis" id="historyExperienceLibraryKpis"></div><div class="history-experience-toolbar" id="historyExperienceLibraryToolbar"><button class="ghost-btn active" data-experience-filter="all" type="button">全部经验</button><button class="ghost-btn" data-experience-filter="highScore" type="button">高分经验</button><button class="ghost-btn" data-experience-filter="lowScore" type="button">低分边界</button><button class="ghost-btn" data-experience-filter="timing" type="button">应期经验</button><button class="ghost-btn" data-experience-filter="learning" type="button">有学习要点</button><button class="ghost-btn" data-experience-filter="featured" type="button">高价值经验</button></div><div class="history-experience-grid" id="historyExperienceLibraryList"></div><p class="history-experience-note" id="historyExperienceLibraryNote">经验库只用于回看与学习，不会修改原始起课、断卦结果或复盘准确率。新增经验库面板已同步纳入暗夜/阅读模式体检。</p></div>
+</details>
 <div class="history-bulk-tools" id="historyBulkTools"><span class="history-bulk-status" id="historyBulkStatus">批量管理：当前未选择历史记录。</span><button class="ghost-btn" id="selectVisibleHistoryBtn" type="button">全选当前</button><button class="ghost-btn" id="clearHistorySelectionBtn" type="button">取消选择</button><button class="ghost-btn" id="batchFavoriteHistoryBtn" type="button">批量收藏</button><button class="ghost-btn" id="batchUnfavoriteHistoryBtn" type="button">取消收藏</button><button class="ghost-btn" id="batchFeatureHistoryBtn" type="button">标记高价值</button><button class="ghost-btn" id="batchUnfeatureHistoryBtn" type="button">取消高价值</button><button class="ghost-btn" id="batchAddTagHistoryBtn" type="button">加标签</button><button class="ghost-btn" id="batchRemoveTagHistoryBtn" type="button">移除标签</button><button class="ghost-btn" id="batchArchiveHistoryBtn" type="button">批量归档</button><button class="ghost-btn" id="batchUnarchiveHistoryBtn" type="button">取消归档</button><button class="ghost-btn" id="exportSelectedHistoryJsonBtn" type="button">选中 JSON</button><button class="ghost-btn" id="exportSelectedHistoryCsvBtn" type="button">选中 CSV</button><button class="ghost-btn" id="undoHistoryBatchBtn" type="button">撤销上次</button><button class="danger-btn" id="batchDeleteHistoryBtn" type="button">删除选中</button></div>
 <div class="tool-folder-row">
 <details class="tool-folder" open="">
@@ -4080,9 +4109,10 @@ body.reading-theme-night .history-note-preview { color:#cbd5e1 !important; borde
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.188 复盘建议模板与案例经验沉淀版';
+    const XLR_SOURCE_VERSION = 'v10.5.189 复盘模板应用与经验库筛选版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
+    const REVIEW_TEMPLATE_USAGE_KEY = 'xlr_review_template_usage_v1';
     let selectedCustomTemplateIds = new Set();
 
     const QUESTION_TEMPLATES = [
@@ -4488,7 +4518,9 @@ function clearCustomTemplates(){
       const historyReviewLoopRefreshBtn = document.getElementById('historyReviewLoopRefreshBtn'); if (historyReviewLoopRefreshBtn) historyReviewLoopRefreshBtn.addEventListener('click', function(e){ e.preventDefault(); renderHistoryReviewLoopPanel(getHistoryDialogFilteredList(getHistory())); });
       const historyReviewLoopPanel = document.getElementById('historyReviewLoopPanel'); if (historyReviewLoopPanel) historyReviewLoopPanel.addEventListener('click', function(e){ const filter=e.target && e.target.closest ? e.target.closest('[data-review-loop-filter]') : null; if(filter){ e.preventDefault(); setHistoryReviewLoopFilter(filter.getAttribute('data-review-loop-filter') || 'all'); return; } const quick=e.target && e.target.closest ? e.target.closest('[data-review-loop-quick]') : null; if(quick){ e.preventDefault(); setHistoryQuickReviewFilter(quick.getAttribute('data-review-loop-quick') || 'all'); return; } const search=e.target && e.target.closest ? e.target.closest('[data-review-loop-search]') : null; if(search){ e.preventDefault(); applyHistoryReviewLoopSearch(search.getAttribute('data-review-loop-search') || ''); return; } const select=e.target && e.target.closest ? e.target.closest('[data-review-loop-select]') : null; if(select){ e.preventDefault(); selectHistoryReviewLoopBucket(select.getAttribute('data-review-loop-select') || 'all'); return; } const feature=e.target && e.target.closest ? e.target.closest('[data-review-loop-feature]') : null; if(feature){ e.preventDefault(); markHistoryReviewLoopBucketFeatured(feature.getAttribute('data-review-loop-feature') || 'all'); } });
       const historyReviewTemplateRefreshBtn = document.getElementById('historyReviewTemplateRefreshBtn'); if (historyReviewTemplateRefreshBtn) historyReviewTemplateRefreshBtn.addEventListener('click', function(e){ e.preventDefault(); renderHistoryReviewTemplatePanel(getHistoryDialogFilteredList(getHistory())); });
-      const historyReviewTemplatePanel = document.getElementById('historyReviewTemplatePanel'); if (historyReviewTemplatePanel) historyReviewTemplatePanel.addEventListener('click', function(e){ const filter=e.target && e.target.closest ? e.target.closest('[data-review-template-filter]') : null; if(filter){ e.preventDefault(); setHistoryReviewTemplateFilter(filter.getAttribute('data-review-template-filter') || 'all'); return; } const quick=e.target && e.target.closest ? e.target.closest('[data-review-template-quick]') : null; if(quick){ e.preventDefault(); setHistoryQuickReviewFilter(quick.getAttribute('data-review-template-quick') || 'all'); return; } const search=e.target && e.target.closest ? e.target.closest('[data-review-template-search]') : null; if(search){ e.preventDefault(); applyHistoryReviewTemplateSearch(search.getAttribute('data-review-template-search') || ''); return; } const select=e.target && e.target.closest ? e.target.closest('[data-review-template-select]') : null; if(select){ e.preventDefault(); selectHistoryReviewTemplateBucket(select.getAttribute('data-review-template-select') || 'all'); return; } const feature=e.target && e.target.closest ? e.target.closest('[data-review-template-feature]') : null; if(feature){ e.preventDefault(); markHistoryReviewTemplateBucketFeatured(feature.getAttribute('data-review-template-feature') || 'all'); return; } const copy=e.target && e.target.closest ? e.target.closest('[data-review-template-copy]') : null; if(copy){ e.preventDefault(); copyHistoryReviewTemplate(copy.getAttribute('data-review-template-copy') || 'all'); } });
+      const historyReviewTemplatePanel = document.getElementById('historyReviewTemplatePanel'); if (historyReviewTemplatePanel) historyReviewTemplatePanel.addEventListener('click', function(e){ const filter=e.target && e.target.closest ? e.target.closest('[data-review-template-filter]') : null; if(filter){ e.preventDefault(); setHistoryReviewTemplateFilter(filter.getAttribute('data-review-template-filter') || 'all'); return; } const apply=e.target && e.target.closest ? e.target.closest('[data-review-template-apply]') : null; if(apply){ e.preventDefault(); applyHistoryReviewTemplateDraft(apply.getAttribute('data-review-template-apply') || 'pending'); return; } const quick=e.target && e.target.closest ? e.target.closest('[data-review-template-quick]') : null; if(quick){ e.preventDefault(); setHistoryQuickReviewFilter(quick.getAttribute('data-review-template-quick') || 'all'); return; } const search=e.target && e.target.closest ? e.target.closest('[data-review-template-search]') : null; if(search){ e.preventDefault(); applyHistoryReviewTemplateSearch(search.getAttribute('data-review-template-search') || ''); return; } const select=e.target && e.target.closest ? e.target.closest('[data-review-template-select]') : null; if(select){ e.preventDefault(); selectHistoryReviewTemplateBucket(select.getAttribute('data-review-template-select') || 'all'); return; } const feature=e.target && e.target.closest ? e.target.closest('[data-review-template-feature]') : null; if(feature){ e.preventDefault(); markHistoryReviewTemplateBucketFeatured(feature.getAttribute('data-review-template-feature') || 'all'); return; } const copy=e.target && e.target.closest ? e.target.closest('[data-review-template-copy]') : null; if(copy){ e.preventDefault(); copyHistoryReviewTemplate(copy.getAttribute('data-review-template-copy') || 'all'); } });
+      const historyExperienceLibraryRefreshBtn = document.getElementById('historyExperienceLibraryRefreshBtn'); if (historyExperienceLibraryRefreshBtn) historyExperienceLibraryRefreshBtn.addEventListener('click', function(e){ e.preventDefault(); renderHistoryExperienceLibraryPanel(getHistoryDialogFilteredList(getHistory())); });
+      const historyExperienceLibraryPanel = document.getElementById('historyExperienceLibraryPanel'); if (historyExperienceLibraryPanel) historyExperienceLibraryPanel.addEventListener('click', function(e){ const filter=e.target && e.target.closest ? e.target.closest('[data-experience-filter]') : null; if(filter){ e.preventDefault(); setHistoryExperienceFilter(filter.getAttribute('data-experience-filter') || 'all'); return; } const view=e.target && e.target.closest ? e.target.closest('[data-experience-view]') : null; if(view){ e.preventDefault(); viewHistoryItem(view.getAttribute('data-experience-view') || ''); return; } const review=e.target && e.target.closest ? e.target.closest('[data-experience-review]') : null; if(review){ e.preventDefault(); openReviewDialog(review.getAttribute('data-experience-review') || ''); return; } const copy=e.target && e.target.closest ? e.target.closest('[data-experience-copy]') : null; if(copy){ e.preventDefault(); copyHistoryExperienceByIndex(copy.getAttribute('data-experience-copy') || '0'); return; } const search=e.target && e.target.closest ? e.target.closest('[data-experience-search]') : null; if(search){ e.preventDefault(); applyHistoryExperienceSearch(search.getAttribute('data-experience-search') || ''); } });
       document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
       document.getElementById('historyList').addEventListener('click', handleHistoryActions);
       document.getElementById('historyList').addEventListener('change', handleHistorySelectionChange);
@@ -5215,7 +5247,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -5262,7 +5294,10 @@ function buildPaipanExplanation(result){
       getReviewLoopAudit: getHistoryReviewLoopAudit,
       buildReviewTemplateInsights: buildHistoryReviewTemplateInsights,
       renderReviewTemplatePanel: renderHistoryReviewTemplatePanel,
-      getReviewTemplateAudit: getHistoryReviewTemplateAudit
+      getReviewTemplateAudit: getHistoryReviewTemplateAudit,
+      buildExperienceLibraryInsights: buildHistoryExperienceLibraryInsights,
+      renderExperienceLibraryPanel: renderHistoryExperienceLibraryPanel,
+      getExperienceLibraryAudit: getHistoryExperienceLibraryAudit
     };
     
     function normalizeDateString(value){
@@ -5363,7 +5398,7 @@ function buildPaipanExplanation(result){
       const date = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         date,
         scene: sceneEl ? (sceneEl.value || 'all') : 'all',
         sceneLabel: analyticsSelectLabel('analyticsSceneFilter', '全部场景'),
@@ -5647,7 +5682,7 @@ function buildPaipanExplanation(result){
       const pendingTag = tagRows.filter(function(row){ return row.pending > 0; }).sort(function(a,b){ return b.pending - a.pending || b.count - a.count; })[0] || null;
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         total:rows.length,
         tagCount:tagRows.length,
         taggedRecords:taggedRecords,
@@ -5712,7 +5747,7 @@ function buildPaipanExplanation(result){
       try { info = buildHistoryTagInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         hasPanel:!!document.getElementById('historyTagInsightPanel'),
         hasSummary:!!document.getElementById('historyTagInsightSummary'),
         hasKpis:!!document.getElementById('historyTagInsightKpis'),
@@ -5809,7 +5844,7 @@ function buildPaipanExplanation(result){
         return (historyCaseFeatured(b) - historyCaseFeatured(a)) || (historyCaseReviewed(b) - historyCaseReviewed(a)) || (new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
       }).slice(0,6);
       const avg = scored.length ? Math.round(scored.reduce(function(sum,row){ return sum + row.score; }, 0) / scored.length * 100) : null;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', total:rows.length, featuredCount:featured.length, reviewedCount:reviewed.length, pendingCount:pending.length, averageAccuracy:avg, selected:selected, best:scored.length ? scored[0].item : null, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', total:rows.length, featuredCount:featured.length, reviewedCount:reviewed.length, pendingCount:pending.length, averageAccuracy:avg, selected:selected, best:scored.length ? scored[0].item : null, ok:true };
     }
     function renderHistoryCaseLibraryPanel(filtered){
       const panel = document.getElementById('historyCaseLibraryPanel');
@@ -5854,7 +5889,7 @@ function buildPaipanExplanation(result){
     function getHistoryCaseLibraryAudit(){
       let info = null;
       try { info = buildHistoryCaseLibraryInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', hasToolbar:!!document.getElementById('historyCaseToolbar'), hasPanel:!!document.getElementById('historyCaseLibraryPanel'), hasKpis:!!document.getElementById('historyCaseLibraryKpis'), hasList:!!document.getElementById('historyCaseLibraryList'), hasSort:!!document.getElementById('historyCaseSortMode'), hasBatchFeature:!!document.getElementById('batchFeatureHistoryBtn'), hasBatchUnfeature:!!document.getElementById('batchUnfeatureHistoryBtn'), filter:historyCaseQuickFilter, sort:historyCaseSortMode, featuredCount:info && info.featuredCount || 0, functions:{ render:typeof renderHistoryCaseLibraryPanel === 'function', build:typeof buildHistoryCaseLibraryInsights === 'function', toggle:typeof toggleHistoryCaseFeatured === 'function', batch:typeof batchSetHistoryCaseFeatured === 'function' }, ok:!!(document.getElementById('historyCaseToolbar') && document.getElementById('historyCaseLibraryPanel') && document.getElementById('historyCaseLibraryKpis') && document.getElementById('historyCaseLibraryList') && document.getElementById('historyCaseSortMode') && typeof buildHistoryCaseLibraryInsights === 'function' && typeof renderHistoryCaseLibraryPanel === 'function' && typeof toggleHistoryCaseFeatured === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasToolbar:!!document.getElementById('historyCaseToolbar'), hasPanel:!!document.getElementById('historyCaseLibraryPanel'), hasKpis:!!document.getElementById('historyCaseLibraryKpis'), hasList:!!document.getElementById('historyCaseLibraryList'), hasSort:!!document.getElementById('historyCaseSortMode'), hasBatchFeature:!!document.getElementById('batchFeatureHistoryBtn'), hasBatchUnfeature:!!document.getElementById('batchUnfeatureHistoryBtn'), filter:historyCaseQuickFilter, sort:historyCaseSortMode, featuredCount:info && info.featuredCount || 0, functions:{ render:typeof renderHistoryCaseLibraryPanel === 'function', build:typeof buildHistoryCaseLibraryInsights === 'function', toggle:typeof toggleHistoryCaseFeatured === 'function', batch:typeof batchSetHistoryCaseFeatured === 'function' }, ok:!!(document.getElementById('historyCaseToolbar') && document.getElementById('historyCaseLibraryPanel') && document.getElementById('historyCaseLibraryKpis') && document.getElementById('historyCaseLibraryList') && document.getElementById('historyCaseSortMode') && typeof buildHistoryCaseLibraryInsights === 'function' && typeof renderHistoryCaseLibraryPanel === 'function' && typeof toggleHistoryCaseFeatured === 'function') };
     }
     try { window.setHistoryCaseFilter = setHistoryCaseFilter; window.setHistoryCaseSort = setHistoryCaseSort; window.buildHistoryCaseLibraryInsights = buildHistoryCaseLibraryInsights; window.renderHistoryCaseLibraryPanel = renderHistoryCaseLibraryPanel; window.toggleHistoryCaseFeatured = toggleHistoryCaseFeatured; window.batchSetHistoryCaseFeatured = batchSetHistoryCaseFeatured; window.getHistoryCaseLibraryAudit = getHistoryCaseLibraryAudit; } catch(e) {}
 
@@ -5907,7 +5942,7 @@ function buildPaipanExplanation(result){
         const reason = Array.from(row.reasons.entries()).sort(function(a,b){ return b[1]-a[1]; })[0];
         return Object.assign({}, row, { scene: scene ? scene[0] : '未记录', reason: reason ? reason[0] : '未归类' });
       });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, issueReviewCount:issueReviewCount, learningNoteCount:learningNoteCount, taggedReviewCount:taggedReviewCount, reasonCount:reasonMap.size, learningTagCount:tagMap.size, topReasons:topReasons, topTags:topTags, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, issueReviewCount:issueReviewCount, learningNoteCount:learningNoteCount, taggedReviewCount:taggedReviewCount, reasonCount:reasonMap.size, learningTagCount:tagMap.size, topReasons:topReasons, topTags:topTags, ok:true };
     }
     function renderHistoryReviewLearningPanel(filtered){
       const panel = document.getElementById('historyReviewLearningPanel');
@@ -5938,7 +5973,7 @@ function buildPaipanExplanation(result){
     function getHistoryReviewLearningAudit(){
       let info = null;
       try { info = buildHistoryReviewLearningInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', hasPanel:!!document.getElementById('historyReviewLearningPanel'), hasKpis:!!document.getElementById('historyReviewLearningKpis'), hasList:!!document.getElementById('historyReviewLearningList'), hasRefresh:!!document.getElementById('historyReviewLearningRefreshBtn'), reasonCount:info && info.reasonCount || 0, learningTagCount:info && info.learningTagCount || 0, functions:{ build:typeof buildHistoryReviewLearningInsights === 'function', render:typeof renderHistoryReviewLearningPanel === 'function', search:typeof applyHistoryReviewLearningSearch === 'function' }, ok:!!(document.getElementById('historyReviewLearningPanel') && document.getElementById('historyReviewLearningKpis') && document.getElementById('historyReviewLearningList') && typeof buildHistoryReviewLearningInsights === 'function' && typeof renderHistoryReviewLearningPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasPanel:!!document.getElementById('historyReviewLearningPanel'), hasKpis:!!document.getElementById('historyReviewLearningKpis'), hasList:!!document.getElementById('historyReviewLearningList'), hasRefresh:!!document.getElementById('historyReviewLearningRefreshBtn'), reasonCount:info && info.reasonCount || 0, learningTagCount:info && info.learningTagCount || 0, functions:{ build:typeof buildHistoryReviewLearningInsights === 'function', render:typeof renderHistoryReviewLearningPanel === 'function', search:typeof applyHistoryReviewLearningSearch === 'function' }, ok:!!(document.getElementById('historyReviewLearningPanel') && document.getElementById('historyReviewLearningKpis') && document.getElementById('historyReviewLearningList') && typeof buildHistoryReviewLearningInsights === 'function' && typeof renderHistoryReviewLearningPanel === 'function') };
     }
     try { window.buildHistoryReviewLearningInsights = buildHistoryReviewLearningInsights; window.renderHistoryReviewLearningPanel = renderHistoryReviewLearningPanel; window.applyHistoryReviewLearningSearch = applyHistoryReviewLearningSearch; window.getHistoryReviewLearningAudit = getHistoryReviewLearningAudit; } catch(e) {}
 
@@ -6022,7 +6057,7 @@ function buildPaipanExplanation(result){
       const scoredCases = rows.map(function(item){ return { item:item, score:historyCaseLearningScore(item) }; }).sort(function(a,b){ return (b.score.score || 0) - (a.score.score || 0) || new Date(b.item && b.item.createdAt || 0) - new Date(a.item && a.item.createdAt || 0); }).slice(0,6);
       const avgAccuracy = judgedCount ? Math.round(scoreUnit / judgedCount * 100) : null;
       const highScoreCount = rows.filter(function(item){ return historyCaseLearningScore(item).score >= 70; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, averageAccuracy:avgAccuracy, timingEarly:timingEarly, timingLate:timingLate, matched:matched, missOrPartial:missOrPartial, timingDeviation:timingEarly + timingLate, monthRows:monthRows, sceneRows:sceneRows, scoredCases:scoredCases, highScoreCount:highScoreCount, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, averageAccuracy:avgAccuracy, timingEarly:timingEarly, timingLate:timingLate, matched:matched, missOrPartial:missOrPartial, timingDeviation:timingEarly + timingLate, monthRows:monthRows, sceneRows:sceneRows, scoredCases:scoredCases, highScoreCount:highScoreCount, ok:true };
     }
     function renderHistoryReviewTrendPanel(filtered){
       const panel = document.getElementById('historyReviewTrendPanel');
@@ -6054,7 +6089,7 @@ function buildPaipanExplanation(result){
     function getHistoryReviewTrendAudit(){
       let info = null;
       try { info = buildHistoryReviewTrendInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', hasPanel:!!document.getElementById('historyReviewTrendPanel'), hasKpis:!!document.getElementById('historyReviewTrendKpis'), hasList:!!document.getElementById('historyReviewTrendList'), hasRefresh:!!document.getElementById('historyReviewTrendRefreshBtn'), reviewCount:info && info.reviewCount || 0, timingDeviation:info && info.timingDeviation || 0, highScoreCount:info && info.highScoreCount || 0, functions:{ build:typeof buildHistoryReviewTrendInsights === 'function', render:typeof renderHistoryReviewTrendPanel === 'function', score:typeof historyCaseLearningScore === 'function', search:typeof applyHistoryReviewTrendSearch === 'function' }, ok:!!(document.getElementById('historyReviewTrendPanel') && document.getElementById('historyReviewTrendKpis') && document.getElementById('historyReviewTrendList') && typeof buildHistoryReviewTrendInsights === 'function' && typeof renderHistoryReviewTrendPanel === 'function' && typeof historyCaseLearningScore === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasPanel:!!document.getElementById('historyReviewTrendPanel'), hasKpis:!!document.getElementById('historyReviewTrendKpis'), hasList:!!document.getElementById('historyReviewTrendList'), hasRefresh:!!document.getElementById('historyReviewTrendRefreshBtn'), reviewCount:info && info.reviewCount || 0, timingDeviation:info && info.timingDeviation || 0, highScoreCount:info && info.highScoreCount || 0, functions:{ build:typeof buildHistoryReviewTrendInsights === 'function', render:typeof renderHistoryReviewTrendPanel === 'function', score:typeof historyCaseLearningScore === 'function', search:typeof applyHistoryReviewTrendSearch === 'function' }, ok:!!(document.getElementById('historyReviewTrendPanel') && document.getElementById('historyReviewTrendKpis') && document.getElementById('historyReviewTrendList') && typeof buildHistoryReviewTrendInsights === 'function' && typeof renderHistoryReviewTrendPanel === 'function' && typeof historyCaseLearningScore === 'function') };
     }
     try { window.historyCaseLearningScore = historyCaseLearningScore; window.historyCaseLearningScoreText = historyCaseLearningScoreText; window.buildHistoryReviewTrendInsights = buildHistoryReviewTrendInsights; window.renderHistoryReviewTrendPanel = renderHistoryReviewTrendPanel; window.applyHistoryReviewTrendSearch = applyHistoryReviewTrendSearch; window.getHistoryReviewTrendAudit = getHistoryReviewTrendAudit; } catch(e) {}
 
@@ -6100,7 +6135,7 @@ function buildPaipanExplanation(result){
       const missingLearning = rows.filter(function(item){ return historyQuickReviewReasonList(item).some(function(r){ return r.type === 'missingLearning'; }); });
       const pending = rows.filter(function(item){ return historyQuickReviewReasonList(item).some(function(r){ return r.type === 'pending'; }); });
       const selected = rows.filter(function(item){ return historyQuickReviewMatch(item, historyQuickReviewFilter); }).sort(function(a,b){ return historyQuickReviewPriority(b) - historyQuickReviewPriority(a) || new Date(b && b.createdAt || 0) - new Date(a && a.createdAt || 0); });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', totalRecords:rows.length, reviewCount:allReview.length, lowScoreCount:lowScore.length, timingCount:timing.length, missingReasonCount:missingReason.length, missingLearningCount:missingLearning.length, pendingCount:pending.length, selected:selected.slice(0,8), filter:historyQuickReviewFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', totalRecords:rows.length, reviewCount:allReview.length, lowScoreCount:lowScore.length, timingCount:timing.length, missingReasonCount:missingReason.length, missingLearningCount:missingLearning.length, pendingCount:pending.length, selected:selected.slice(0,8), filter:historyQuickReviewFilter, ok:true };
     }
     function historyQuickReviewFilterLabel(value){
       const map = { all:'全部复查', lowScore:'低分案例', timing:'应期偏差', missingReason:'未归类', missingLearning:'待补学习要点', pending:'待复盘' };
@@ -6188,7 +6223,7 @@ function buildPaipanExplanation(result){
       const pending = actionRows.find(function(x){ return x.type === 'pending'; }) || { count:0 };
       const loopCount = historyReviewLoopBucketRows(rows, 'all').length;
       const completed = rows.filter(function(item){ return getReviewEntries(item).length && !historyQuickReviewReasonList(item).some(function(r){ return r.type !== 'stable'; }); }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', totalRecords:rows.length, loopCount:loopCount, completedCount:completed, lowScoreCount:lowScore.count, timingCount:timing.count, missingReasonCount:missingReason.count, missingLearningCount:missingLearning.count, pendingCount:pending.count, actionRows:actionRows, selected:selected, filter:historyReviewLoopFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', totalRecords:rows.length, loopCount:loopCount, completedCount:completed, lowScoreCount:lowScore.count, timingCount:timing.count, missingReasonCount:missingReason.count, missingLearningCount:missingLearning.count, pendingCount:pending.count, actionRows:actionRows, selected:selected, filter:historyReviewLoopFilter, ok:true };
     }
     function updateHistoryReviewLoopButtons(){
       const toolbar = document.getElementById('historyReviewLoopToolbar');
@@ -6259,9 +6294,32 @@ function buildPaipanExplanation(result){
     function getHistoryReviewLoopAudit(){
       let info = null;
       try { info = buildHistoryReviewLoopInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', hasPanel:!!document.getElementById('historyReviewLoopPanel'), hasKpis:!!document.getElementById('historyReviewLoopKpis'), hasToolbar:!!document.getElementById('historyReviewLoopToolbar'), hasList:!!document.getElementById('historyReviewLoopList'), hasThemeAuditList:!!document.getElementById('historyThemeAuditList'), hasRefresh:!!document.getElementById('historyReviewLoopRefreshBtn'), loopCount:info && info.loopCount || 0, pendingCount:info && info.pendingCount || 0, filter:historyReviewLoopFilter, functions:{ build:typeof buildHistoryReviewLoopInsights === 'function', render:typeof renderHistoryReviewLoopPanel === 'function', select:typeof selectHistoryReviewLoopBucket === 'function', feature:typeof markHistoryReviewLoopBucketFeatured === 'function', search:typeof applyHistoryReviewLoopSearch === 'function' }, ok:!!(document.getElementById('historyReviewLoopPanel') && document.getElementById('historyReviewLoopKpis') && document.getElementById('historyReviewLoopToolbar') && document.getElementById('historyReviewLoopList') && document.getElementById('historyThemeAuditList') && typeof buildHistoryReviewLoopInsights === 'function' && typeof renderHistoryReviewLoopPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasPanel:!!document.getElementById('historyReviewLoopPanel'), hasKpis:!!document.getElementById('historyReviewLoopKpis'), hasToolbar:!!document.getElementById('historyReviewLoopToolbar'), hasList:!!document.getElementById('historyReviewLoopList'), hasThemeAuditList:!!document.getElementById('historyThemeAuditList'), hasRefresh:!!document.getElementById('historyReviewLoopRefreshBtn'), loopCount:info && info.loopCount || 0, pendingCount:info && info.pendingCount || 0, filter:historyReviewLoopFilter, functions:{ build:typeof buildHistoryReviewLoopInsights === 'function', render:typeof renderHistoryReviewLoopPanel === 'function', select:typeof selectHistoryReviewLoopBucket === 'function', feature:typeof markHistoryReviewLoopBucketFeatured === 'function', search:typeof applyHistoryReviewLoopSearch === 'function' }, ok:!!(document.getElementById('historyReviewLoopPanel') && document.getElementById('historyReviewLoopKpis') && document.getElementById('historyReviewLoopToolbar') && document.getElementById('historyReviewLoopList') && document.getElementById('historyThemeAuditList') && typeof buildHistoryReviewLoopInsights === 'function' && typeof renderHistoryReviewLoopPanel === 'function') };
     }
     let historyReviewTemplateFilter = 'all';
+    let historyExperienceFilter = 'all';
+    function getReviewTemplateUsage(){
+      try { return JSON.parse(localStorage.getItem(REVIEW_TEMPLATE_USAGE_KEY) || '{}') || {}; }
+      catch(e) { return {}; }
+    }
+    function setReviewTemplateUsage(data){
+      try { localStorage.setItem(REVIEW_TEMPLATE_USAGE_KEY, JSON.stringify(data || {})); } catch(e) {}
+      return data || {};
+    }
+    function incrementReviewTemplateUsage(type){
+      const key = String(type || 'all');
+      const data = getReviewTemplateUsage();
+      const row = data[key] || { count:0, lastUsed:'' };
+      row.count = Number(row.count || 0) + 1;
+      row.lastUsed = new Date().toISOString();
+      data[key] = row;
+      setReviewTemplateUsage(data);
+      return row;
+    }
+    function getReviewTemplateUsageCount(type){
+      const row = getReviewTemplateUsage()[String(type || 'all')] || {};
+      return Number(row.count || 0);
+    }
     function historyReviewTemplateDefinitions(){
       return [
         { type:'pending', title:'待复盘填写模板', search:'待复盘', quick:'pending', tone:'action', prompts:['先写清楚实际发生了什么，以及事情是否已经完全结束。','如果结果还没发生，记录预计观察窗口或下一次回看日期。','准确率先保留“待验证”，不要提前算成准或不准。'], experience:'待复盘案例先补“实际结果”，再补准确率，避免长期样本被误当成无效或偏差。' },
@@ -6302,13 +6360,14 @@ function buildPaipanExplanation(result){
         const bucket = historyReviewTemplateBucketRows(rows, def.type);
         const avg = bucket.length ? Math.round(bucket.reduce(function(sum,item){ return sum + (historyCaseLearningScore(item).score || 0); },0) / bucket.length) : 0;
         const sample = bucket[0] || null;
-        return Object.assign({}, def, { count:bucket.length, avgScore:avg, sample:sample ? (getQuestionDisplay(sample) || sample.sceneName || sample.sceneKey || '') : '', hasAction:bucket.length > 0 && def.type !== 'stable' });
+        return Object.assign({}, def, { count:bucket.length, avgScore:avg, sample:sample ? (getQuestionDisplay(sample) || sample.sceneName || sample.sceneKey || '') : '', hasAction:bucket.length > 0 && def.type !== 'stable', usageCount:getReviewTemplateUsageCount(def.type) });
       });
       const actionCount = cards.filter(function(c){ return c.type !== 'stable'; }).reduce(function(sum,c){ return sum + c.count; }, 0);
       const stableCount = cards.filter(function(c){ return c.type === 'stable'; }).reduce(function(sum,c){ return sum + c.count; }, 0);
       const selected = historyReviewTemplateFilter === 'all' ? cards : cards.filter(function(c){ return c.type === historyReviewTemplateFilter; });
       const recommended = cards.filter(function(c){ return c.count > 0; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', totalRecords:rows.length, templateCount:cards.length, actionCount:actionCount, stableCount:stableCount, recommendedCount:recommended, selected:selected, filter:historyReviewTemplateFilter, ok:true };
+      const usageTotal = cards.reduce(function(sum,c){ return sum + Number(c.usageCount || 0); }, 0);
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', totalRecords:rows.length, templateCount:cards.length, actionCount:actionCount, stableCount:stableCount, recommendedCount:recommended, usageTotal:usageTotal, selected:selected, filter:historyReviewTemplateFilter, ok:true };
     }
     function historyReviewTemplateText(row){
       if(!row) return '';
@@ -6326,16 +6385,16 @@ function buildPaipanExplanation(result){
       updateHistoryReviewTemplateButtons();
       if(summary) summary.textContent = '当前范围 ' + info.totalRecords + ' 条｜建议处理 ' + info.actionCount + ' 条｜高分沉淀 ' + info.stableCount + ' 条｜模板 ' + info.templateCount + ' 组。';
       if(kpis) kpis.innerHTML = [
-        ['建议模板', info.templateCount + ' 组'], ['需处理样本', info.actionCount + ' 条'], ['高分沉淀', info.stableCount + ' 条'], ['命中模板', info.recommendedCount + ' 组']
+        ['建议模板', info.templateCount + ' 组'], ['需处理样本', info.actionCount + ' 条'], ['高分沉淀', info.stableCount + ' 条'], ['模板使用', (info.usageTotal || 0) + ' 次']
       ].map(function(row){ return '<div class="history-case-kpi"><span>' + escapeHTML(row[0]) + '</span><b>' + escapeHTML(row[1]) + '</b></div>'; }).join('');
       if(grid){
         grid.innerHTML = info.selected.length ? info.selected.map(function(row){
           const cls = row.type === 'stable' ? 'is-stable' : (row.count ? 'is-action' : '');
           const prompts = (row.prompts || []).map(function(t){ return '<li>' + escapeHTML(t) + '</li>'; }).join('');
-          return '<article class="history-review-template-card ' + cls + '"><span class="case-score-pill' + (row.type === 'stable' ? ' strong' : '') + '">' + escapeHTML((row.count || 0) + ' 条 · 均分 ' + (row.avgScore || 0)) + '</span><strong>' + escapeHTML(row.title) + '</strong><p>' + escapeHTML(row.experience || '') + '</p><ul>' + prompts + '</ul><div class="history-review-template-actions"><button class="ghost-btn" type="button" data-review-template-copy="' + escapeAttr(row.type) + '">复制模板</button><button class="ghost-btn" type="button" data-review-template-quick="' + escapeAttr(row.quick || 'all') + '">定位复查</button><button class="ghost-btn" type="button" data-review-template-select="' + escapeAttr(row.type) + '">批量选中</button><button class="ghost-btn" type="button" data-review-template-feature="' + escapeAttr(row.type) + '">标高价值</button><button class="ghost-btn" type="button" data-review-template-search="' + escapeAttr(row.search || row.title) + '">联动搜索</button></div></article>';
+          return '<article class="history-review-template-card ' + cls + '"><span class="case-score-pill' + (row.type === 'stable' ? ' strong' : '') + '">' + escapeHTML((row.count || 0) + ' 条 · 均分 ' + (row.avgScore || 0)) + '</span><strong>' + escapeHTML(row.title) + '</strong><span class="review-template-usage-pill">已用 ' + escapeHTML(String(row.usageCount || 0)) + ' 次</span><p>' + escapeHTML(row.experience || '') + '</p><ul>' + prompts + '</ul><div class="history-review-template-actions"><button class="ghost-btn" type="button" data-review-template-apply="' + escapeAttr(row.type) + '">应用草稿</button><button class="ghost-btn" type="button" data-review-template-copy="' + escapeAttr(row.type) + '">复制模板</button><button class="ghost-btn" type="button" data-review-template-quick="' + escapeAttr(row.quick || 'all') + '">定位复查</button><button class="ghost-btn" type="button" data-review-template-select="' + escapeAttr(row.type) + '">批量选中</button><button class="ghost-btn" type="button" data-review-template-feature="' + escapeAttr(row.type) + '">标高价值</button><button class="ghost-btn" type="button" data-review-template-search="' + escapeAttr(row.search || row.title) + '">联动搜索</button></div></article>';
         }).join('') : '<div class="history-empty">当前筛选范围暂无可生成的复盘建议模板。</div>';
       }
-      if(note) note.textContent = '当前模板类型：' + historyReviewTemplateFilterLabel(historyReviewTemplateFilter) + '。建议先补实际结果和原因归类，再把高分/低分案例沉淀成可复用经验。新增模板面板已加入暗夜/阅读模式体检。';
+      if(note) note.textContent = '当前模板类型：' + historyReviewTemplateFilterLabel(historyReviewTemplateFilter) + '。可用“应用草稿”把模板带入复盘备注与学习要点；模板使用次数会本地统计。新增模板/经验库面板已加入暗夜/阅读模式体检。';
       return info;
     }
     function applyHistoryReviewTemplateSearch(keyword){
@@ -6371,23 +6430,183 @@ function buildPaipanExplanation(result){
       else if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(function(){ alert('复制失败，请手动复制模板文本。'); }); }
       else { alert(text); }
     }
+    function fillReviewFormWithTemplate(type, row){
+      const def = row || historyReviewTemplateDefinitions().find(function(item){ return item.type === type; }) || historyReviewTemplateDefinitions()[0];
+      if(!def) return false;
+      const noteEl = document.getElementById('reviewNote');
+      const learningEl = document.getElementById('reviewLearning');
+      const tagsEl = document.getElementById('reviewLearningTags');
+      const reasonEl = document.getElementById('reviewReason');
+      const noteText = '【模板草稿｜' + def.title + '】\n' + (def.prompts || []).map(function(t,i){ return (i+1) + '. ' + t; }).join('\n');
+      const learningText = def.experience || '';
+      if(noteEl) noteEl.value = noteEl.value ? (noteEl.value + '\n\n' + noteText) : noteText;
+      if(learningEl) learningEl.value = learningEl.value ? (learningEl.value + '\n' + learningText) : learningText;
+      if(tagsEl){
+        const autoTags = normalizeReviewLearningTags([historyReviewTemplateFilterLabel(def.type), def.type === 'timing' ? '应期' : '', def.type === 'stable' ? '高分经验' : '', def.type === 'lowScore' ? '低分复查' : ''].filter(Boolean));
+        const merged = normalizeReviewLearningTags((tagsEl.value || '').split(/[,，、\s]+/).concat(autoTags));
+        tagsEl.value = merged.join('、');
+      }
+      if(reasonEl && !reasonEl.value){
+        if(def.type === 'timing') reasonEl.value = 'timing_late';
+        if(def.type === 'stable') reasonEl.value = 'matched';
+        if(def.type === 'missingLearning') reasonEl.value = 'sample_unclear';
+      }
+      const actualEl = document.getElementById('reviewActual');
+      if(actualEl && !actualEl.value && def.type === 'pending') actualEl.placeholder = '先写实际发生了什么；如果还没发生，先记录观察窗口或下次回看日期。';
+      try { if(noteEl) noteEl.focus(); } catch(e) {}
+      return true;
+    }
+    function applyHistoryReviewTemplateDraft(type){
+      const targetType = type === 'all' ? 'pending' : (type || 'pending');
+      const info = buildHistoryReviewTemplateInsights(getHistoryDialogFilteredList(getHistory()));
+      const row = (info.selected || []).find(function(item){ return item.type === targetType; }) || historyReviewTemplateDefinitions().find(function(item){ return item.type === targetType; }) || null;
+      const candidates = historyReviewTemplateBucketRows(getHistoryDialogFilteredList(getHistory()), targetType);
+      const target = candidates[0] || (currentReviewId ? getHistory().find(function(item){ return item && item.id === currentReviewId; }) : null);
+      if(!target || !target.id) return alert('当前范围没有可应用“' + historyReviewTemplateFilterLabel(targetType) + '”模板的案例。可以先切换到对应模板或打开一条复盘记录。');
+      incrementReviewTemplateUsage(targetType);
+      closeHistoryDialog();
+      setTimeout(function(){
+        openReviewDialog(target.id);
+        setTimeout(function(){
+          fillReviewFormWithTemplate(targetType, row);
+          renderHistoryReviewTemplatePanel(getHistoryDialogFilteredList(getHistory()));
+          alert('已把“' + historyReviewTemplateFilterLabel(targetType) + '”带入复盘草稿。请检查后再保存，不会自动写入历史。');
+        }, 30);
+      }, 0);
+    }
     function getHistoryReviewTemplateAudit(){
       let info = null;
       try { info = buildHistoryReviewTemplateInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', hasPanel:!!document.getElementById('historyReviewTemplatePanel'), hasKpis:!!document.getElementById('historyReviewTemplateKpis'), hasToolbar:!!document.getElementById('historyReviewTemplateToolbar'), hasList:!!document.getElementById('historyReviewTemplateList'), hasRefresh:!!document.getElementById('historyReviewTemplateRefreshBtn'), templateCount:info && info.templateCount || 0, actionCount:info && info.actionCount || 0, stableCount:info && info.stableCount || 0, filter:historyReviewTemplateFilter, functions:{ build:typeof buildHistoryReviewTemplateInsights === 'function', render:typeof renderHistoryReviewTemplatePanel === 'function', search:typeof applyHistoryReviewTemplateSearch === 'function', copy:typeof copyHistoryReviewTemplate === 'function', select:typeof selectHistoryReviewTemplateBucket === 'function' }, ok:!!(document.getElementById('historyReviewTemplatePanel') && document.getElementById('historyReviewTemplateKpis') && document.getElementById('historyReviewTemplateToolbar') && document.getElementById('historyReviewTemplateList') && typeof buildHistoryReviewTemplateInsights === 'function' && typeof renderHistoryReviewTemplatePanel === 'function' && typeof copyHistoryReviewTemplate === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasPanel:!!document.getElementById('historyReviewTemplatePanel'), hasKpis:!!document.getElementById('historyReviewTemplateKpis'), hasToolbar:!!document.getElementById('historyReviewTemplateToolbar'), hasList:!!document.getElementById('historyReviewTemplateList'), hasRefresh:!!document.getElementById('historyReviewTemplateRefreshBtn'), templateCount:info && info.templateCount || 0, actionCount:info && info.actionCount || 0, stableCount:info && info.stableCount || 0, filter:historyReviewTemplateFilter, usageTotal:info && info.usageTotal || 0, functions:{ build:typeof buildHistoryReviewTemplateInsights === 'function', render:typeof renderHistoryReviewTemplatePanel === 'function', search:typeof applyHistoryReviewTemplateSearch === 'function', copy:typeof copyHistoryReviewTemplate === 'function', apply:typeof applyHistoryReviewTemplateDraft === 'function', usage:typeof incrementReviewTemplateUsage === 'function', select:typeof selectHistoryReviewTemplateBucket === 'function' }, ok:!!(document.getElementById('historyReviewTemplatePanel') && document.getElementById('historyReviewTemplateKpis') && document.getElementById('historyReviewTemplateToolbar') && document.getElementById('historyReviewTemplateList') && typeof buildHistoryReviewTemplateInsights === 'function' && typeof renderHistoryReviewTemplatePanel === 'function' && typeof copyHistoryReviewTemplate === 'function' && typeof applyHistoryReviewTemplateDraft === 'function') };
     }
-    try { window.buildHistoryReviewTemplateInsights = buildHistoryReviewTemplateInsights; window.renderHistoryReviewTemplatePanel = renderHistoryReviewTemplatePanel; window.applyHistoryReviewTemplateSearch = applyHistoryReviewTemplateSearch; window.copyHistoryReviewTemplate = copyHistoryReviewTemplate; window.selectHistoryReviewTemplateBucket = selectHistoryReviewTemplateBucket; window.markHistoryReviewTemplateBucketFeatured = markHistoryReviewTemplateBucketFeatured; window.getHistoryReviewTemplateAudit = getHistoryReviewTemplateAudit; } catch(e) {}
+    try { window.buildHistoryReviewTemplateInsights = buildHistoryReviewTemplateInsights; window.renderHistoryReviewTemplatePanel = renderHistoryReviewTemplatePanel; window.applyHistoryReviewTemplateSearch = applyHistoryReviewTemplateSearch; window.copyHistoryReviewTemplate = copyHistoryReviewTemplate; window.applyHistoryReviewTemplateDraft = applyHistoryReviewTemplateDraft; window.fillReviewFormWithTemplate = fillReviewFormWithTemplate; window.selectHistoryReviewTemplateBucket = selectHistoryReviewTemplateBucket; window.markHistoryReviewTemplateBucketFeatured = markHistoryReviewTemplateBucketFeatured; window.getHistoryReviewTemplateAudit = getHistoryReviewTemplateAudit; } catch(e) {}
+
+    function historyExperienceFilterLabel(value){
+      const map = { all:'全部经验', highScore:'高分经验', lowScore:'低分边界', timing:'应期经验', learning:'有学习要点', featured:'高价值经验' };
+      return map[value] || map.all;
+    }
+    function setHistoryExperienceFilter(value){
+      historyExperienceFilter = ['all','highScore','lowScore','timing','learning','featured'].indexOf(value) >= 0 ? value : 'all';
+      renderHistoryExperienceLibraryPanel(getHistoryDialogFilteredList(getHistory()));
+    }
+    function updateHistoryExperienceButtons(){
+      const toolbar = document.getElementById('historyExperienceLibraryToolbar');
+      if(!toolbar) return;
+      Array.from(toolbar.querySelectorAll('[data-experience-filter]')).forEach(function(btn){ btn.classList.toggle('active', (btn.getAttribute('data-experience-filter') || 'all') === historyExperienceFilter); });
+    }
+    function buildHistoryExperienceRows(list){
+      const rows = [];
+      (Array.isArray(list) ? list : []).forEach(function(item){
+        const reviews = getReviewEntries(item);
+        const scoreObj = historyCaseLearningScore(item);
+        const score = scoreObj && Number(scoreObj.score || 0) || 0;
+        const level = scoreObj && scoreObj.level || '待复盘';
+        reviews.forEach(function(r,idx){
+          const tags = normalizeReviewLearningTags(r && r.learningTags);
+          const text = [r && r.learning, r && r.note, r && r.actual, reviewReasonLabel(r && r.reason), tags.join(' ')].join(' ');
+          const hasLearning = !!((r && r.learning) || tags.length);
+          const timing = !!(r && (r.reason === 'timing_early' || r.reason === 'timing_late' || String(text).indexOf('应期') >= 0));
+          const highScore = score >= 80 && !historyPendingReview(item);
+          const lowScore = score > 0 && score < 70;
+          const featured = !!(item && item.caseFeatured);
+          if(hasLearning || timing || highScore || lowScore || featured){
+            rows.push({ item:item, review:r || {}, index:idx, score:score, level:level, tags:tags, text:text, hasLearning:hasLearning, timing:timing, highScore:highScore, lowScore:lowScore, featured:featured });
+          }
+        });
+        if(!reviews.length && item && item.caseFeatured){
+          rows.push({ item:item, review:{}, index:-1, score:score, level:level, tags:normalizeHistoryTags(item.tags || []), text:getQuestionDisplay(item) || '', hasLearning:false, timing:false, highScore:score >= 80, lowScore:false, featured:true });
+        }
+      });
+      return rows.sort(function(a,b){ return (b.score || 0) - (a.score || 0) || new Date((b.review && (b.review.updatedAt || b.review.reviewedAt)) || (b.item && b.item.createdAt) || 0) - new Date((a.review && (a.review.updatedAt || a.review.reviewedAt)) || (a.item && a.item.createdAt) || 0); });
+    }
+    function filterHistoryExperienceRows(rows, filter){
+      if(filter === 'highScore') return rows.filter(function(row){ return row.highScore; });
+      if(filter === 'lowScore') return rows.filter(function(row){ return row.lowScore; });
+      if(filter === 'timing') return rows.filter(function(row){ return row.timing; });
+      if(filter === 'learning') return rows.filter(function(row){ return row.hasLearning; });
+      if(filter === 'featured') return rows.filter(function(row){ return row.featured; });
+      return rows;
+    }
+    function buildHistoryExperienceLibraryInsights(list){
+      const rows = buildHistoryExperienceRows(list);
+      const selected = filterHistoryExperienceRows(rows, historyExperienceFilter).slice(0,12);
+      const highScore = rows.filter(function(row){ return row.highScore; }).length;
+      const lowScore = rows.filter(function(row){ return row.lowScore; }).length;
+      const timing = rows.filter(function(row){ return row.timing; }).length;
+      const learning = rows.filter(function(row){ return row.hasLearning; }).length;
+      const featured = rows.filter(function(row){ return row.featured; }).length;
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', totalRows:rows.length, selected:selected, selectedCount:filterHistoryExperienceRows(rows, historyExperienceFilter).length, highScore:highScore, lowScore:lowScore, timing:timing, learning:learning, featured:featured, filter:historyExperienceFilter, ok:true };
+    }
+    function experienceRowTitle(row){
+      const item = row && row.item || {};
+      return (item.sceneName || item.sceneKey || '未记录') + '｜' + (getQuestionDisplay(item) || '未填写问题');
+    }
+    function historyExperienceText(row){
+      if(!row) return '';
+      const item = row.item || {};
+      const r = row.review || {};
+      return '【案例经验】\n场景：' + (item.sceneName || item.sceneKey || '未记录') + '\n日期：' + formatISO(item.createdAt || '') + '\n问题：' + (getQuestionDisplay(item) || '—') + '\n落宫：' + ((item.palaces || []).join(' / ') || '—') + '\n评分：' + (row.score || 0) + '｜' + (row.level || '') + '\n原因：' + (r.reason ? reviewReasonLabel(r.reason) : '—') + '\n学习标签：' + (reviewLearningTagsText(r) || '—') + '\n学习要点：' + (r.learning || '—') + '\n复盘备注：' + (r.note || '—');
+    }
+    function renderHistoryExperienceLibraryPanel(filtered){
+      const panel = document.getElementById('historyExperienceLibraryPanel');
+      if(!panel) return null;
+      const list = Array.isArray(filtered) ? filtered : getHistoryDialogFilteredList(getHistory());
+      const info = buildHistoryExperienceLibraryInsights(list);
+      const summary = document.getElementById('historyExperienceLibrarySummary');
+      const kpis = document.getElementById('historyExperienceLibraryKpis');
+      const grid = document.getElementById('historyExperienceLibraryList');
+      const note = document.getElementById('historyExperienceLibraryNote');
+      updateHistoryExperienceButtons();
+      if(summary) summary.textContent = '经验样本 ' + info.totalRows + ' 条｜高分 ' + info.highScore + '｜低分边界 ' + info.lowScore + '｜应期 ' + info.timing + '｜当前 ' + info.selectedCount + ' 条。';
+      if(kpis) kpis.innerHTML = [
+        ['经验样本', info.totalRows + ' 条'], ['高分经验', info.highScore + ' 条'], ['应期经验', info.timing + ' 条'], ['高价值', info.featured + ' 条']
+      ].map(function(row){ return '<div class="history-case-kpi"><span>' + escapeHTML(row[0]) + '</span><b>' + escapeHTML(row[1]) + '</b></div>'; }).join('');
+      if(grid){
+        grid.innerHTML = info.selected.length ? info.selected.map(function(row,idx){
+          const r = row.review || {};
+          const item = row.item || {};
+          const tags = (row.tags || []).map(function(t){ return '<span class="review-learning-tag">#' + escapeHTML(t) + '</span>'; }).join('');
+          const reason = r.reason ? '<span class="quick-review-reason">' + escapeHTML(reviewReasonLabel(r.reason)) + '</span>' : '';
+          const cls = row.highScore ? 'is-strong' : (row.lowScore || row.timing ? 'is-review' : '');
+          const learning = r.learning || r.note || r.actual || '暂无详细学习要点，可打开复盘补全。';
+          return '<article class="history-experience-card ' + cls + '"><span class="case-score-pill' + (row.highScore ? ' strong' : '') + '">' + escapeHTML((row.score || 0) + ' 分 · ' + (row.level || '待复盘')) + '</span><strong>' + escapeHTML(experienceRowTitle(row)) + '</strong><div class="history-experience-meta">' + escapeHTML(formatISO(item.createdAt || '')) + '｜落宫：' + escapeHTML((item.palaces || []).join(' / ') || '—') + '</div><div class="history-experience-tags">' + reason + tags + '</div><p>' + escapeHTML(learning) + '</p><div class="history-experience-actions"><button class="ghost-btn" type="button" data-experience-view="' + escapeAttr(item.id || '') + '">查看案例</button><button class="ghost-btn" type="button" data-experience-review="' + escapeAttr(item.id || '') + '">打开复盘</button><button class="ghost-btn" type="button" data-experience-copy="' + escapeAttr(String(idx)) + '">复制经验</button><button class="ghost-btn" type="button" data-experience-search="' + escapeAttr((row.tags && row.tags[0]) || reviewReasonLabel(r.reason) || item.sceneName || '') + '">联动搜索</button></div></article>';
+        }).join('') : '<div class="history-empty">当前筛选范围暂无可展示的案例经验。可以先补复盘学习要点或标记高价值案例。</div>';
+      }
+      if(note) note.textContent = '当前经验筛选：' + historyExperienceFilterLabel(historyExperienceFilter) + '。经验库用于长期回看高分路径、低分边界和应期偏差，不反向修改占卜结果。';
+      return info;
+    }
+    function applyHistoryExperienceSearch(keyword){
+      const input = document.getElementById('historySearchInput');
+      if(input) input.value = keyword || '';
+      renderHistory();
+    }
+    function copyHistoryExperienceByIndex(index){
+      const info = buildHistoryExperienceLibraryInsights(getHistoryDialogFilteredList(getHistory()));
+      const row = (info.selected || [])[Number(index) || 0];
+      const text = historyExperienceText(row);
+      if(!text) return alert('没有可复制的经验。');
+      function done(){ alert('已复制案例经验。'); }
+      if(typeof copyTextToClipboard === 'function'){ copyTextToClipboard(text).then(done).catch(function(){ alert('复制失败，请手动复制。'); }); }
+      else if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(function(){ alert('复制失败，请手动复制。'); }); }
+      else { alert(text); }
+    }
+    function getHistoryExperienceLibraryAudit(){
+      let info = null;
+      try { info = buildHistoryExperienceLibraryInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasPanel:!!document.getElementById('historyExperienceLibraryPanel'), hasKpis:!!document.getElementById('historyExperienceLibraryKpis'), hasToolbar:!!document.getElementById('historyExperienceLibraryToolbar'), hasList:!!document.getElementById('historyExperienceLibraryList'), hasRefresh:!!document.getElementById('historyExperienceLibraryRefreshBtn'), totalRows:info && info.totalRows || 0, highScore:info && info.highScore || 0, timing:info && info.timing || 0, filter:historyExperienceFilter, functions:{ build:typeof buildHistoryExperienceLibraryInsights === 'function', render:typeof renderHistoryExperienceLibraryPanel === 'function', search:typeof applyHistoryExperienceSearch === 'function', copy:typeof copyHistoryExperienceByIndex === 'function' }, ok:!!(document.getElementById('historyExperienceLibraryPanel') && document.getElementById('historyExperienceLibraryKpis') && document.getElementById('historyExperienceLibraryToolbar') && document.getElementById('historyExperienceLibraryList') && typeof buildHistoryExperienceLibraryInsights === 'function' && typeof renderHistoryExperienceLibraryPanel === 'function') };
+    }
+    try { window.buildHistoryExperienceLibraryInsights = buildHistoryExperienceLibraryInsights; window.renderHistoryExperienceLibraryPanel = renderHistoryExperienceLibraryPanel; window.setHistoryExperienceFilter = setHistoryExperienceFilter; window.applyHistoryExperienceSearch = applyHistoryExperienceSearch; window.copyHistoryExperienceByIndex = copyHistoryExperienceByIndex; window.getHistoryExperienceLibraryAudit = getHistoryExperienceLibraryAudit; } catch(e) {}
 
     function getHistoryQuickReviewAudit(){
       let info = null;
       try { info = buildHistoryQuickReviewInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', hasPanel:!!document.getElementById('historyQuickReviewPanel'), hasKpis:!!document.getElementById('historyQuickReviewKpis'), hasToolbar:!!document.getElementById('historyQuickReviewToolbar'), hasList:!!document.getElementById('historyQuickReviewList'), hasRefresh:!!document.getElementById('historyQuickReviewRefreshBtn'), reviewCount:info && info.reviewCount || 0, lowScoreCount:info && info.lowScoreCount || 0, filter:historyQuickReviewFilter, functions:{ build:typeof buildHistoryQuickReviewInsights === 'function', render:typeof renderHistoryQuickReviewPanel === 'function', search:typeof applyHistoryQuickReviewSearch === 'function' }, ok:!!(document.getElementById('historyQuickReviewPanel') && document.getElementById('historyQuickReviewKpis') && document.getElementById('historyQuickReviewToolbar') && document.getElementById('historyQuickReviewList') && typeof buildHistoryQuickReviewInsights === 'function' && typeof renderHistoryQuickReviewPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', hasPanel:!!document.getElementById('historyQuickReviewPanel'), hasKpis:!!document.getElementById('historyQuickReviewKpis'), hasToolbar:!!document.getElementById('historyQuickReviewToolbar'), hasList:!!document.getElementById('historyQuickReviewList'), hasRefresh:!!document.getElementById('historyQuickReviewRefreshBtn'), reviewCount:info && info.reviewCount || 0, lowScoreCount:info && info.lowScoreCount || 0, filter:historyQuickReviewFilter, functions:{ build:typeof buildHistoryQuickReviewInsights === 'function', render:typeof renderHistoryQuickReviewPanel === 'function', search:typeof applyHistoryQuickReviewSearch === 'function' }, ok:!!(document.getElementById('historyQuickReviewPanel') && document.getElementById('historyQuickReviewKpis') && document.getElementById('historyQuickReviewToolbar') && document.getElementById('historyQuickReviewList') && typeof buildHistoryQuickReviewInsights === 'function' && typeof renderHistoryQuickReviewPanel === 'function') };
     }
     function getNewContentNightThemeAudit(){
       const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
-      const required = ['.history-review-learning-card','.history-review-trend-card','.history-quick-review-card','.history-quick-review-toolbar','.history-review-loop-card','.history-review-loop-toolbar','.history-theme-audit-card','.history-review-template-card','.history-review-template-toolbar','.history-review-template-note','.case-score-pill','.history-case-badge','.review-learning-tag','.quick-review-reason','.export-scope-summary','.export-format-card'];
+      const required = ['.history-review-learning-card','.history-review-trend-card','.history-quick-review-card','.history-quick-review-toolbar','.history-review-loop-card','.history-review-loop-toolbar','.history-theme-audit-card','.history-review-template-card','.history-review-template-toolbar','.history-review-template-note','.history-experience-card','.history-experience-toolbar','.history-experience-note','.review-template-usage-pill','.case-score-pill','.history-case-badge','.review-learning-tag','.quick-review-reason','.export-scope-summary','.export-format-card'];
       const missing = required.filter(function(sel){ return styleText.indexOf('body.reading-theme-night ' + sel) < 0; });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', required:required, missing:missing, hasQuickReviewPanel:!!document.getElementById('historyQuickReviewPanel'), hasReviewLoopPanel:!!document.getElementById('historyReviewLoopPanel'), hasReviewTemplatePanel:!!document.getElementById('historyReviewTemplatePanel'), hasTrendCardCss:styleText.indexOf('body.reading-theme-night .history-review-trend-card') >= 0, hasLearningCardCss:styleText.indexOf('body.reading-theme-night .history-review-learning-card') >= 0, hasCaseScoreCss:styleText.indexOf('body.reading-theme-night .case-score-pill') >= 0, hasLoopCardCss:styleText.indexOf('body.reading-theme-night .history-review-loop-card') >= 0, hasTemplateCardCss:styleText.indexOf('body.reading-theme-night .history-review-template-card') >= 0, note:'以后新增模块、卡片、弹窗、统计面板和导出预览必须同步加入暗夜模式与阅读模式覆盖，并进入 Debug 发版体检。', ok:missing.length === 0 && !!document.getElementById('historyQuickReviewPanel') && !!document.getElementById('historyReviewLoopPanel') && !!document.getElementById('historyReviewTemplatePanel') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', required:required, missing:missing, hasQuickReviewPanel:!!document.getElementById('historyQuickReviewPanel'), hasReviewLoopPanel:!!document.getElementById('historyReviewLoopPanel'), hasReviewTemplatePanel:!!document.getElementById('historyReviewTemplatePanel'), hasExperiencePanel:!!document.getElementById('historyExperienceLibraryPanel'), hasTrendCardCss:styleText.indexOf('body.reading-theme-night .history-review-trend-card') >= 0, hasLearningCardCss:styleText.indexOf('body.reading-theme-night .history-review-learning-card') >= 0, hasCaseScoreCss:styleText.indexOf('body.reading-theme-night .case-score-pill') >= 0, hasLoopCardCss:styleText.indexOf('body.reading-theme-night .history-review-loop-card') >= 0, hasTemplateCardCss:styleText.indexOf('body.reading-theme-night .history-review-template-card') >= 0, hasExperienceCardCss:styleText.indexOf('body.reading-theme-night .history-experience-card') >= 0, note:'以后新增模块、卡片、弹窗、统计面板和导出预览必须同步加入暗夜模式与阅读模式覆盖，并进入 Debug 发版体检。', ok:missing.length === 0 && !!document.getElementById('historyQuickReviewPanel') && !!document.getElementById('historyReviewLoopPanel') && !!document.getElementById('historyReviewTemplatePanel') && !!document.getElementById('historyExperienceLibraryPanel') };
     }
     try { window.buildHistoryQuickReviewInsights = buildHistoryQuickReviewInsights; window.renderHistoryQuickReviewPanel = renderHistoryQuickReviewPanel; window.applyHistoryQuickReviewSearch = applyHistoryQuickReviewSearch; window.getHistoryQuickReviewAudit = getHistoryQuickReviewAudit; window.buildHistoryReviewLoopInsights = buildHistoryReviewLoopInsights; window.renderHistoryReviewLoopPanel = renderHistoryReviewLoopPanel; window.applyHistoryReviewLoopSearch = applyHistoryReviewLoopSearch; window.selectHistoryReviewLoopBucket = selectHistoryReviewLoopBucket; window.markHistoryReviewLoopBucketFeatured = markHistoryReviewLoopBucketFeatured; window.getHistoryReviewLoopAudit = getHistoryReviewLoopAudit; window.getNewContentNightThemeAudit = getNewContentNightThemeAudit; } catch(e) {}
 
@@ -6468,7 +6687,7 @@ function buildPaipanExplanation(result){
     function getHistoryTimelineAudit(){
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         hasModeTools:!!document.getElementById('historyModeTools'),
         hasListButton:!!document.getElementById('historyListModeBtn'),
         hasTimelineButton:!!document.getElementById('historyTimelineModeBtn'),
@@ -6549,7 +6768,7 @@ function buildPaipanExplanation(result){
       }
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         center:center || '',
         scopeText,
         historyCount:list.length,
@@ -6656,7 +6875,7 @@ function buildPaipanExplanation(result){
       try {
         localStorage.setItem(HISTORY_BATCH_BACKUP_KEY, JSON.stringify({
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.188',
+          source:'mainline-v10.5.189',
           action:action || 'batch',
           ids:ids || [],
           count:(ids || []).length,
@@ -6788,7 +7007,7 @@ function buildPaipanExplanation(result){
       const hasBackup = historyBatchBackupExists();
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         hasToolbar:!!document.getElementById('historyBulkTools'),
         hasStatus:!!document.getElementById('historyBulkStatus'),
         hasSelectVisible:!!document.getElementById('selectVisibleHistoryBtn'),
@@ -6844,6 +7063,7 @@ function buildPaipanExplanation(result){
       renderHistoryQuickReviewPanel(filtered);
       renderHistoryReviewLoopPanel(filtered);
       renderHistoryReviewTemplatePanel(filtered);
+      renderHistoryExperienceLibraryPanel(filtered);
       renderExportScopeSummary('history');
       renderHistoryBatchStatus(filtered);
       const container = document.getElementById('historyList');
@@ -6922,7 +7142,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.188' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.189' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -8665,7 +8885,7 @@ function buildContextOverallSentence(context, details) {
 
     const XLR_JSON_KNOWLEDGE = {
       "version": "2.0+extension+family-life-v10.5.179",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览；v10.5.167 将 PDF 历史明细和复盘明细改为舒展卡片式布局，优化长文本换行和分页阅读；v10.5.168 新增 PDF 完整报告/只导出图表/只导出明细三种导出模式，并补强封面元信息和 Debug 导出选项审计；v10.5.169 增强 PDF 章节分页、标题/卡片防断页、打印页眉页脚与报告标题/备注预留结构；v10.5.170 跳过自定义标题输入，继续舒展 PDF 历史明细与复盘明细，优化打印分页和手机阅读可读性，并加入明细拥挤 Debug 检查；v10.5.171 新增 PDF 导出前确认摘要、明细模式封面摘要与导出审计收口；v10.5.172 整合 PDF/Excel/TXT/CSV/JSON 导出中心与格式用途说明；v10.5.173 修正 PDF 明细模式 Debug 体检口径，避免明细模式因封面省略内容提到图表总览而误报；同时在导出中心增加导出前范围预览、记录/复盘数量核对与 Debug 范围确认审计；v10.5.174 最后一次收口明细审计误报，把 PDF 模式检查改为去除 style/script 后的正文结构判断，避免 CSS 中的 chart-section 误触发；v10.5.175 新增历史分析筛选联动，按场景、起课方式、收藏状态和复盘准确度统一驱动页面统计、图表、明细、XLSX、PDF 与导出前范围预览；v10.5.176 修复 iPad Safari 下 Excel 导出体检误报，把 XLSX 检查拆成核心导出、多工作表、图表数据与原生图表兼容四层；v10.5.177 新增历史分析图表点击钻取，联动当前明细、复盘明细、XLSX、PDF、TXT/CSV 导出范围；v10.5.178 新增历史记录批量选择、收藏/取消收藏、删除、选中导出与撤销保护；v10.5.179 新增历史标签、备注、归档状态和整理筛选；v10.5.180 新增历史复盘时间线、待复盘入口、复盘搜索增强，并清理 PDF 旧版本硬编码；v10.5.181 新增标签统计、标签复盘准确率和标签洞察联动筛选；v10.5.182 新增历史案例库摘要、高价值案例标记、案例筛选与排序；v10.5.183 新增导出报告联动增强，让历史记录导出中心 TXT/CSV/XLSX/PDF 跟随当前案例库筛选范围，JSON/完整备份仍保留全量导出；v10.5.184 新增复盘原因归类、学习标签、案例学习要点和偏差原因统计洞察；v10.5.185 新增复盘偏差趋势、场景偏差排行、应期偏差统计和自动案例学习评分；v10.5.186 新增案例库快捷复查与学习清单，并统一修复新增历史/案例/复盘/评分模块暗夜低对比问题；v10.5.187 新增复盘学习闭环、批量选中/高价值处理入口，并强化新增内容暗夜/阅读模式体检；v10.5.188 新增复盘建议模板、复制模板、案例经验沉淀和模板面板暗夜体检。",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览；v10.5.167 将 PDF 历史明细和复盘明细改为舒展卡片式布局，优化长文本换行和分页阅读；v10.5.168 新增 PDF 完整报告/只导出图表/只导出明细三种导出模式，并补强封面元信息和 Debug 导出选项审计；v10.5.169 增强 PDF 章节分页、标题/卡片防断页、打印页眉页脚与报告标题/备注预留结构；v10.5.170 跳过自定义标题输入，继续舒展 PDF 历史明细与复盘明细，优化打印分页和手机阅读可读性，并加入明细拥挤 Debug 检查；v10.5.171 新增 PDF 导出前确认摘要、明细模式封面摘要与导出审计收口；v10.5.172 整合 PDF/Excel/TXT/CSV/JSON 导出中心与格式用途说明；v10.5.173 修正 PDF 明细模式 Debug 体检口径，避免明细模式因封面省略内容提到图表总览而误报；同时在导出中心增加导出前范围预览、记录/复盘数量核对与 Debug 范围确认审计；v10.5.174 最后一次收口明细审计误报，把 PDF 模式检查改为去除 style/script 后的正文结构判断，避免 CSS 中的 chart-section 误触发；v10.5.175 新增历史分析筛选联动，按场景、起课方式、收藏状态和复盘准确度统一驱动页面统计、图表、明细、XLSX、PDF 与导出前范围预览；v10.5.176 修复 iPad Safari 下 Excel 导出体检误报，把 XLSX 检查拆成核心导出、多工作表、图表数据与原生图表兼容四层；v10.5.177 新增历史分析图表点击钻取，联动当前明细、复盘明细、XLSX、PDF、TXT/CSV 导出范围；v10.5.178 新增历史记录批量选择、收藏/取消收藏、删除、选中导出与撤销保护；v10.5.179 新增历史标签、备注、归档状态和整理筛选；v10.5.180 新增历史复盘时间线、待复盘入口、复盘搜索增强，并清理 PDF 旧版本硬编码；v10.5.181 新增标签统计、标签复盘准确率和标签洞察联动筛选；v10.5.182 新增历史案例库摘要、高价值案例标记、案例筛选与排序；v10.5.183 新增导出报告联动增强，让历史记录导出中心 TXT/CSV/XLSX/PDF 跟随当前案例库筛选范围，JSON/完整备份仍保留全量导出；v10.5.184 新增复盘原因归类、学习标签、案例学习要点和偏差原因统计洞察；v10.5.185 新增复盘偏差趋势、场景偏差排行、应期偏差统计和自动案例学习评分；v10.5.186 新增案例库快捷复查与学习清单，并统一修复新增历史/案例/复盘/评分模块暗夜低对比问题；v10.5.187 新增复盘学习闭环、批量选中/高价值处理入口，并强化新增内容暗夜/阅读模式体检；v10.5.188 新增复盘建议模板、复制模板、案例经验沉淀和模板面板暗夜体检；v10.5.189 新增复盘模板应用草稿、模板使用次数统计和案例经验库筛选。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -10090,7 +10310,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -10168,7 +10388,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -10181,7 +10401,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.188') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.189') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -10190,7 +10410,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.188',
+      source:'mainline-v10.5.189',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -10404,7 +10624,7 @@ function buildContextOverallSentence(context, details) {
       if(actualResultDestiny !== expectedResultDestiny) mismatches.push({ className:'result-destiny', actual:actualResultDestiny, expected:expectedResultDestiny, reason:'结果页命盘状态应只由 currentResult.sceneKey / sceneName 判定' });
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         isResultPage,
         isDestinyResultPage,
         isHomeDestinySelected,
@@ -10431,7 +10651,7 @@ function buildContextOverallSentence(context, details) {
       after.changed = before.mismatches && before.mismatches.length ? before.mismatches : [];
       return after;
     }
-    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', getState:getCanonicalPageState, sync:syncCanonicalPageState };
+    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', getState:getCanonicalPageState, sync:syncCanonicalPageState };
     const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock'];
     const NORMAL_RESULT_HIDDEN_BLOCK_IDS = ['paipanBlock','destinyBoardBlock'];
     function setResultBlockHidden(id, shouldHide){
@@ -10523,7 +10743,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.188',
+        source: 'mainline-v10.5.189',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -10539,7 +10759,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -11662,7 +11882,7 @@ function buildContextOverallSentence(context, details) {
         const zipBytes = buildStoredZip(files);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.188',
+          source:'mainline-v10.5.189',
           ready:true,
           format:chartSpecs.length ? 'OOXML-xlsx-with-native-excel-charts' : 'OOXML-xlsx-multi-sheet-chart-data-fallback',
           nativeChartReady: chartSpecs.length > 0,
@@ -11679,7 +11899,7 @@ function buildContextOverallSentence(context, details) {
           content: preview ? new Uint8Array(0) : zipBytes
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
       }
     }
     function auditAnalyticsExcelWorkbook(metrics, list, selectedDate, options){
@@ -11718,7 +11938,7 @@ function buildContextOverallSentence(context, details) {
         const blockingReady = !!(coreReady && multiSheetReady && chartDataReady);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.188',
+          source:'mainline-v10.5.189',
           ready:blockingReady,
           blockingReady:blockingReady,
           coreReady:coreReady,
@@ -11736,7 +11956,7 @@ function buildContextOverallSentence(context, details) {
           error:nativeChartError
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', ready:false, blockingReady:false, coreReady:false, multiSheetReady:false, chartDataReady:false, nativeChartReady:false, nativeChartOptional:true, sheetCount:0, chartCount:0, error:String(err && err.message || err) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', ready:false, blockingReady:false, coreReady:false, multiSheetReady:false, chartDataReady:false, nativeChartReady:false, nativeChartOptional:true, sheetCount:0, chartCount:0, error:String(err && err.message || err) };
       }
     }
     function exportAnalyticsExcelReport(){
@@ -11934,7 +12154,7 @@ function buildContextOverallSentence(context, details) {
       const includeDetails = pdfMode === 'full' || pdfMode === 'details';
       return {
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.188',
+        source: 'mainline-v10.5.189',
         ready: true,
         mode: pdfMode,
         modeLabel: analyticsPdfModeLabel(pdfMode),
@@ -12086,11 +12306,11 @@ function buildContextOverallSentence(context, details) {
       }));
       const scopePreview = { history: buildExportScopePreview('history'), analytics: buildExportScopePreview('analytics') };
       const scopeReady = scopePanels.length >= 2 && scopePanels.every(panel=>panel.ready);
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.188', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.189', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
     }
     window.XLRExportCenterCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.188',
+      source:'mainline-v10.5.189',
       module:'export-center',
       formatKeys:EXPORT_CENTER_FORMATS.map(item=>item.key),
       formats:getExportCenterFormats,
@@ -12214,7 +12434,8 @@ function buildContextOverallSentence(context, details) {
         viewMode: viewMode,
         lastView: lastView,
         customTemplates: getCustomTemplates(),
-        templateMeta: getTemplateMeta()
+        templateMeta: getTemplateMeta(),
+        reviewTemplateUsage: getReviewTemplateUsage()
       };
     }
     function exportBackupJSON(){
@@ -12277,6 +12498,7 @@ function buildContextOverallSentence(context, details) {
             saveCustomTemplates(nextTemplates);
           }
           if(data.templateMeta && typeof data.templateMeta === 'object') saveTemplateMeta(data.templateMeta);
+          if(data.reviewTemplateUsage && typeof data.reviewTemplateUsage === 'object') setReviewTemplateUsage(data.reviewTemplateUsage);
           renderHistorySceneFilter();
           renderHistory();
           if(typeof renderAnalytics === 'function') renderAnalytics();
@@ -12302,6 +12524,12 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.189 复盘模板应用与经验库筛选版', items:[
+          '复盘模板卡片新增“应用草稿”，可一键把模板提示带入复盘备注与案例学习要点，保存前仍需人工确认。',
+          '新增复盘模板使用次数统计，本地记录各类模板使用次数，方便观察哪些复盘模板最常用。',
+          '新增“案例经验库筛选”面板，支持全部经验、高分经验、低分边界、应期经验、有学习要点和高价值经验快速回看。',
+          '新增 history-review-application-v189、history-experience-library-v189 与 new-content-night-theme-v189 Debug 发版体检项，并同步补齐新增经验库暗夜/阅读模式样式。'
+        ]},
         { v:'v10.5.188 复盘建议模板与案例经验沉淀版', items:[
           '新增“复盘建议模板与案例经验沉淀”面板，根据待复盘、低分、应期偏差、未归类、待补学习和高分样本自动生成复盘填写提示。',
           '模板卡片支持复制模板、定位复查清单、联动历史搜索、批量选中当前案例范围，并可把对应范围标记为高价值案例。',
@@ -13534,7 +13762,7 @@ function buildContextOverallSentence(context, details) {
       ];
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.188',
+        source:'mainline-v10.5.189',
         ready:true,
         scope,
         total:safeMetrics.total,
@@ -13704,7 +13932,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -13841,7 +14069,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -15232,7 +15460,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.188'
+      source: 'mainline-v10.5.189'
     };
 
     initExtendedContextRules();
@@ -15249,7 +15477,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.188 复盘建议模板与案例经验沉淀版';
+  const APP_VERSION = 'v10.5.189 复盘模板应用与经验库筛选版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -16257,7 +16485,7 @@ function buildContextOverallSentence(context, details) {
       broadCandidateCount:broadCandidates.length,
       riskCount,
       risks:riskSlice,
-      note:'v10.5.188 起：Debug 暗夜运行时体检继续只切换 reading-theme-night / xlr-debug-night-audit 类名，并把新增历史/案例/复盘/评分/闭环/模板模块纳入固定扫描；新增内容必须同步通过暗夜与阅读模式体检。'
+      note:'v10.5.189 起：Debug 暗夜运行时体检继续只切换 reading-theme-night / xlr-debug-night-audit 类名，并把新增历史/案例/复盘/评分/闭环/模板/经验库模块纳入固定扫描；新增内容必须同步通过暗夜与阅读模式体检。'
     };
   }
 
@@ -16400,7 +16628,7 @@ function buildContextOverallSentence(context, details) {
     const historyPdfDetailsBtn = document.getElementById('exportAnalyticsPdfDetailsHistoryBtn');
     return {
       version:APP_VERSION,
-      source:'mainline-v10.5.188',
+      source:'mainline-v10.5.189',
       hasHistoryCsvButton:!!historyCsvBtn,
       hasReviewCsvButton:!!reviewCsvBtn,
       hasAnalyticsExcelButton:!!analyticsExcelBtn,
@@ -16451,8 +16679,8 @@ function buildContextOverallSentence(context, details) {
         toggleHistoryCaseFeatured:typeof window.toggleHistoryCaseFeatured === 'function' || typeof toggleHistoryCaseFeatured === 'function',
         batchSetHistoryCaseFeatured:typeof window.batchSetHistoryCaseFeatured === 'function' || typeof batchSetHistoryCaseFeatured === 'function'
       },
-      formats:['history-csv','review-csv','analytics-xlsx-native-charts','analytics-pdf-full-report','analytics-pdf-charts-only','analytics-pdf-details-only','analytics-pdf-print-layout','analytics-pdf-export-confirm','export-center-unified','export-scope-preview','analytics-filter-linkage','history-batch-manager','history-tags-archive','history-timeline','pending-review-entry','version-source-cleanup','history-tag-insights','tag-review-accuracy','history-case-library','high-value-case','case-sort-filter','history-scope-xlsx','history-scope-pdf','case-scope-export-linkage','quick-review-list','review-loop','new-content-night-theme','new-content-reading-theme'],
-      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告支持完整、图表、明细三种打印模式，并增强导出确认、章节分页与页眉页脚；JSON 用于历史迁移，完整备份 JSON 用于换设备或清缓存前保存；v10.5.172 起统一通过导出中心说明各格式用途；v10.5.173 起新增导出前范围预览与范围确认审计；v10.5.174 起收口 PDF 明细模式审计误报，改为去除 style/script 后的正文结构判断；v10.5.175 起历史分析筛选条件联动 KPI、图表、明细、XLSX、PDF 和导出范围预览；v10.5.176 起 Excel 导出体检分层，iPad 原生图表兼容差异不再阻断发布；v10.5.177 起图表点击钻取会联动当前明细和导出范围；v10.5.178 起历史记录中心支持批量选择、批量收藏/取消收藏、批量删除、选中导出和撤销保护；v10.5.179 起历史记录支持标签、备注、归档和整理筛选；v10.5.180 起新增历史复盘时间线、待复盘入口、复盘搜索增强，并清理 PDF 报告旧版本硬编码；v10.5.181 起新增标签统计、标签复盘准确率、待复盘标签排行和点击标签联动筛选；v10.5.182 起新增历史案例库摘要、高价值案例标记、案例快捷筛选和案例排序；v10.5.183 起历史记录导出中心的 TXT/CSV/XLSX/PDF 跟随当前案例库筛选范围，JSON/完整备份保留全量安全导出；v10.5.184 起复盘记录支持原因归类、学习标签、案例学习要点，并加入偏差原因统计洞察；v10.5.185 起新增复盘偏差趋势、场景偏差排行、应期偏差统计和自动案例学习评分；v10.5.186 起新增案例库快捷复查与学习清单，并把新增内容暗夜主题覆盖固定纳入 Debug 发版体检；v10.5.187 起新增复盘学习闭环、批量选中/高价值处理入口，并强化新增内容暗夜/阅读模式体检；v10.5.188 起新增复盘建议模板、复制模板、案例经验沉淀和模板面板暗夜体检。',
+      formats:['history-csv','review-csv','analytics-xlsx-native-charts','analytics-pdf-full-report','analytics-pdf-charts-only','analytics-pdf-details-only','analytics-pdf-print-layout','analytics-pdf-export-confirm','export-center-unified','export-scope-preview','analytics-filter-linkage','history-batch-manager','history-tags-archive','history-timeline','pending-review-entry','version-source-cleanup','history-tag-insights','tag-review-accuracy','history-case-library','high-value-case','case-sort-filter','history-scope-xlsx','history-scope-pdf','case-scope-export-linkage','quick-review-list','review-loop','new-content-night-theme','new-content-reading-theme','review-template-application','experience-library-filter'],
+      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告支持完整、图表、明细三种打印模式，并增强导出确认、章节分页与页眉页脚；JSON 用于历史迁移，完整备份 JSON 用于换设备或清缓存前保存；v10.5.172 起统一通过导出中心说明各格式用途；v10.5.173 起新增导出前范围预览与范围确认审计；v10.5.174 起收口 PDF 明细模式审计误报，改为去除 style/script 后的正文结构判断；v10.5.175 起历史分析筛选条件联动 KPI、图表、明细、XLSX、PDF 和导出范围预览；v10.5.176 起 Excel 导出体检分层，iPad 原生图表兼容差异不再阻断发布；v10.5.177 起图表点击钻取会联动当前明细和导出范围；v10.5.178 起历史记录中心支持批量选择、批量收藏/取消收藏、批量删除、选中导出和撤销保护；v10.5.179 起历史记录支持标签、备注、归档和整理筛选；v10.5.180 起新增历史复盘时间线、待复盘入口、复盘搜索增强，并清理 PDF 报告旧版本硬编码；v10.5.181 起新增标签统计、标签复盘准确率、待复盘标签排行和点击标签联动筛选；v10.5.182 起新增历史案例库摘要、高价值案例标记、案例快捷筛选和案例排序；v10.5.183 起历史记录导出中心的 TXT/CSV/XLSX/PDF 跟随当前案例库筛选范围，JSON/完整备份保留全量安全导出；v10.5.184 起复盘记录支持原因归类、学习标签、案例学习要点，并加入偏差原因统计洞察；v10.5.185 起新增复盘偏差趋势、场景偏差排行、应期偏差统计和自动案例学习评分；v10.5.186 起新增案例库快捷复查与学习清单，并把新增内容暗夜主题覆盖固定纳入 Debug 发版体检；v10.5.187 起新增复盘学习闭环、批量选中/高价值处理入口，并强化新增内容暗夜/阅读模式体检；v10.5.188 起新增复盘建议模板、复制模板、案例经验沉淀和模板面板暗夜体检；v10.5.189 起新增复盘模板应用草稿、模板使用次数统计和案例经验库筛选。',
       ok:!!(historyCsvBtn && reviewCsvBtn && analyticsExcelBtn && historyExcelBtn && analyticsPdfBtn && historyPdfBtn && analyticsPdfChartsBtn && analyticsPdfDetailsBtn && historyPdfChartsBtn && historyPdfDetailsBtn && typeof window.exportHistoryCSV === 'function' && typeof window.exportReviewsCSV === 'function' && (typeof window.exportAnalyticsExcelReport === 'function' || !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.exportExcelReport === 'function')) && (typeof window.exportAnalyticsPdfReport === 'function' || !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.exportPdfReport === 'function')) && typeof window.exportHistoryScopeExcelReport === 'function' && typeof window.exportHistoryScopePdfReport === 'function')
     };
   }
@@ -16505,6 +16733,7 @@ function buildContextOverallSentence(context, details) {
       quickReviewAudit: typeof getHistoryQuickReviewAudit === 'function' ? getHistoryQuickReviewAudit() : null,
       reviewLoopAudit: typeof getHistoryReviewLoopAudit === 'function' ? getHistoryReviewLoopAudit() : null,
       reviewTemplateAudit: typeof getHistoryReviewTemplateAudit === 'function' ? getHistoryReviewTemplateAudit() : null,
+      experienceLibraryAudit: typeof getHistoryExperienceLibraryAudit === 'function' ? getHistoryExperienceLibraryAudit() : null,
       newContentNightThemeAudit: typeof getNewContentNightThemeAudit === 'function' ? getNewContentNightThemeAudit() : null,
       sample
     };
@@ -16540,7 +16769,7 @@ function buildContextOverallSentence(context, details) {
     try { filteredMetrics = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildMetrics === 'function' ? window.XLRAnalyticsCore.buildMetrics(filteredList, { reviewFilter: filterState && filterState.review || 'all', drilldown:currentDrilldown }) : null; } catch (err) { filteredMetrics = { error:String(err && err.message || err) }; }
     const analyticsFilterAudit = {
       version:APP_VERSION,
-      source:'mainline-v10.5.188',
+      source:'mainline-v10.5.189',
       hasControls: !!(document.getElementById('analyticsSceneFilter') && document.getElementById('analyticsMethodFilter') && document.getElementById('analyticsFavoriteFilter') && document.getElementById('analyticsReviewFilter') && document.getElementById('resetAnalyticsFiltersBtn')),
       hasCore: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasFilterLinkage === true && typeof window.XLRAnalyticsCore.getFilters === 'function' && typeof window.XLRAnalyticsCore.getFilteredList === 'function'),
       rawCount: Array.isArray(list) ? list.length : 0,
@@ -16555,7 +16784,7 @@ function buildContextOverallSentence(context, details) {
     try { sampleChartDrilldownHTML = typeof renderBarChart === 'function' ? renderBarChart((metrics && metrics.sceneEntries) || [['样例',1]], 1, 'scene') : ''; } catch(e) { sampleChartDrilldownHTML = ''; }
     const chartDrilldownAudit = {
       version:APP_VERSION,
-      source:'mainline-v10.5.188',
+      source:'mainline-v10.5.189',
       hasCore: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasChartDrilldown === true && typeof window.XLRAnalyticsCore.getDrilldown === 'function' && typeof window.XLRAnalyticsCore.getFilteredList === 'function'),
       clickableRows: document.querySelectorAll('#analyticsContent [data-analytics-drill-type]').length,
       sampleClickableReady: sampleChartDrilldownHTML.indexOf('data-analytics-drill-type') !== -1,
@@ -16676,7 +16905,7 @@ function buildContextOverallSentence(context, details) {
         pdfReportOptionsReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('报告说明') !== -1 && pdfReport.indexOf('明细版式') !== -1 && pdfReport.indexOf('打印优化') !== -1),
         pdfDetailComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-detail-comfort-v10.5.177') !== -1 && pdfReport.indexOf('detail-density-note') !== -1 && pdfReport.indexOf('明细舒展策略') !== -1),
         pdfPrintComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('detail-card{margin-bottom:7mm') !== -1 && pdfReport.indexOf('detail-group') !== -1 && pdfReport.indexOf('page-break-inside:avoid') !== -1),
-        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.188' && pdfExportPreview.modeLabel === '只导出明细'),
+        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.189' && pdfExportPreview.modeLabel === '只导出明细'),
         pdfExportConfirmReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-export-confirm-v10.5.177') !== -1 && pdfReport.indexOf('PDF 导出确认摘要') !== -1 && pdfReport.indexOf('导出确认：已生成摘要') !== -1),
         pdfDetailsCoverSummaryReady: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.indexOf('明细导出摘要') !== -1 && pdfDetailsReport.indexOf('省略内容') !== -1 && pdfDetailsReport.indexOf('复盘明细') !== -1),
         exportCenterReady: !!(window.XLRExportCenterCore && typeof window.XLRExportCenterCore.getDomStatus === 'function' && window.XLRExportCenterCore.getDomStatus().ok),
@@ -16702,7 +16931,7 @@ function buildContextOverallSentence(context, details) {
     try {
       if (window.XLRPageStateCore && typeof window.XLRPageStateCore.getState === 'function') return window.XLRPageStateCore.getState();
     } catch (err) {
-      return { version:APP_VERSION, source:'mainline-v10.5.188', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
+      return { version:APP_VERSION, source:'mainline-v10.5.189', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
     }
     const body=document.body;
     const result=window.currentResult || null;
@@ -16713,7 +16942,7 @@ function buildContextOverallSentence(context, details) {
     const resultSceneKey=result && result.sceneKey ? String(result.sceneKey) : '';
     const currentSceneKey=typeof currentScene !== 'undefined' ? String(currentScene || '') : '';
     const isDestinyResultPage=!!(isResultPage && result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
-    return { version:APP_VERSION, source:'fallback-debug-v10.5.188', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
+    return { version:APP_VERSION, source:'fallback-debug-v10.5.189', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
   }
 
   function getDestinyInfo() {
@@ -16989,7 +17218,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -17063,7 +17292,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -17072,7 +17301,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.188'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.189'
     };
   }
 
@@ -17253,7 +17482,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.188', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.189', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -17274,7 +17503,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.188', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.189', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -17314,7 +17543,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.188', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.189', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -17357,7 +17586,7 @@ function buildContextOverallSentence(context, details) {
         syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
       }
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.188', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
+    return { version:APP_VERSION, source:'mainline-v10.5.189', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -17366,7 +17595,7 @@ function buildContextOverallSentence(context, details) {
     const pageState = getPageStateInfo();
     const isDestiny = !(pageState && pageState.isResultPage) && currentScene === 'destiny';
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.188', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.189', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -17381,7 +17610,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -17402,7 +17631,7 @@ function buildContextOverallSentence(context, details) {
     const last = safeJsonParse(raw, null);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.188',
+      source: 'mainline-v10.5.189',
       title: 'Debug 报告导出中心',
       formats: ['json','txt','prompt-summary'],
       actions,
@@ -17620,7 +17849,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
       { id:'page-state-v157', label:'页面状态统一审计通过', ok: !!(snapshot.pageState && snapshot.pageState.ok) },
-      { id:'nav-core', label:'导航主源码为 v10.5.188', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.188') },
+      { id:'nav-core', label:'导航主源码为 v10.5.188', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.189') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -17649,7 +17878,7 @@ function buildContextOverallSentence(context, details) {
       { id:'export-scope-preview-v173', label:'导出中心范围预览与确认可用', ok: !!(snapshot.historyExport && snapshot.historyExport.hasExportScopePreview && snapshot.historyExport.exportCenter && snapshot.historyExport.exportCenter.scopeReady && snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasExportScopePreview && snapshot.analytics.metrics && snapshot.analytics.metrics.exportScopePreviewReady) },
       { id:'analytics-filter-linkage-v175', label:'历史分析筛选联动可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasFilterLinkage && snapshot.analytics.filterAudit && snapshot.analytics.filterAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.filterLinkageReady) },
       { id:'analytics-chart-drilldown-v177', label:'历史分析图表钻取与明细联动可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasChartDrilldown && snapshot.analytics.chartDrilldownAudit && snapshot.analytics.chartDrilldownAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.chartDrilldownReady) },
-      { id:'history-batch-manager-v178', label:'历史记录批量管理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.core && snapshot.history.core.source === 'mainline-v10.5.188') },
+      { id:'history-batch-manager-v178', label:'历史记录批量管理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.core && snapshot.history.core.source === 'mainline-v10.5.189') },
       { id:'history-tags-archive-v179', label:'历史标签/备注/归档整理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.batchAudit.hasTagFilter && snapshot.history.batchAudit.hasArchiveFilter && snapshot.history.batchAudit.hasBatchAddTag && snapshot.history.batchAudit.hasBatchArchive && snapshot.history.hasTagFilter && snapshot.history.hasArchiveFilter) },
       { id:'history-timeline-v180', label:'历史复盘时间线与待复盘入口可用', ok: !!(snapshot.history && snapshot.history.timelineAudit && snapshot.history.timelineAudit.ok) },
       { id:'history-tag-insight-v181', label:'标签统计与复盘洞察可用', ok: !!(snapshot.history && snapshot.history.tagInsightAudit && snapshot.history.tagInsightAudit.ok) },
@@ -17659,6 +17888,9 @@ function buildContextOverallSentence(context, details) {
       { id:'history-review-trend-v185', label:'复盘偏差趋势与案例学习评分可用', ok: !!(snapshot.history && snapshot.history.reviewTrendAudit && snapshot.history.reviewTrendAudit.ok) },
       { id:'history-quick-review-v186', label:'案例库快捷复查与学习清单可用', ok: !!(snapshot.history && snapshot.history.quickReviewAudit && snapshot.history.quickReviewAudit.ok) },
       { id:'history-review-loop-v187', label:'复盘学习闭环与批量处理入口可用', ok: !!(snapshot.history && snapshot.history.reviewLoopAudit && snapshot.history.reviewLoopAudit.ok) },
+      { id:'history-review-application-v189', label:'复盘模板应用草稿与使用次数统计可用', ok: !!(snapshot.history && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.ok && snapshot.history.reviewTemplateAudit.functions && snapshot.history.reviewTemplateAudit.functions.apply && snapshot.history.reviewTemplateAudit.functions.usage) },
+      { id:'history-experience-library-v189', label:'案例经验库筛选与快速回看可用', ok: !!(snapshot.history && snapshot.history.experienceLibraryAudit && snapshot.history.experienceLibraryAudit.ok) },
+      { id:'new-content-night-theme-v189', label:'新增模板应用与经验库面板暗夜/阅读模式体检可用', ok: !!(snapshot.history && snapshot.history.newContentNightThemeAudit && snapshot.history.newContentNightThemeAudit.ok && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.ok && snapshot.history.experienceLibraryAudit && snapshot.history.experienceLibraryAudit.ok) },
       { id:'history-review-template-v188', label:'复盘建议模板与案例经验沉淀可用', ok: !!(snapshot.history && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.ok) },
       { id:'new-content-night-theme-v188', label:'新增复盘模板面板暗夜与阅读模式体检可用', ok: !!(snapshot.history && snapshot.history.newContentNightThemeAudit && snapshot.history.newContentNightThemeAudit.ok && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.ok) },
       { id:'new-content-night-theme-v187', label:'新增历史/案例模块暗夜与阅读模式体检可用', ok: !!(snapshot.history && snapshot.history.newContentNightThemeAudit && snapshot.history.newContentNightThemeAudit.ok) },
@@ -17666,8 +17898,8 @@ function buildContextOverallSentence(context, details) {
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.188' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.188' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.189' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.189' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'debug-report-export-v158', label:'Debug 报告导出中心可用', ok: !!(snapshot.reportExport && snapshot.reportExport.ok) },
       { id:'history-csv-export-v159', label:'历史记录 CSV / 复盘 CSV 导出可用', ok: !!(snapshot.historyExport && snapshot.historyExport.ok) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
@@ -17746,7 +17978,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.188' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.189' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -17761,7 +17993,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.188' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.189' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -17791,7 +18023,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.188') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.189') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.164 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -17819,7 +18051,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.188') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.189') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.164 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -17862,7 +18094,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.188') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.189') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -17896,7 +18128,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.188') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.189') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -18001,6 +18233,12 @@ function buildContextOverallSentence(context, details) {
     if (!(snapshot.history && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.ok)) {
       addIssue(issues, 'warning', 'HISTORY_REVIEW_TEMPLATE_MISSING', '复盘建议模板与案例经验沉淀面板未完整挂载，填写提示、复制模板或经验沉淀可能不可用', snapshot.history && snapshot.history.reviewTemplateAudit);
     }
+    if (!(snapshot.history && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.functions && snapshot.history.reviewTemplateAudit.functions.apply && snapshot.history.reviewTemplateAudit.functions.usage)) {
+      addIssue(issues, 'warning', 'HISTORY_REVIEW_TEMPLATE_APPLICATION_MISSING', '复盘模板应用草稿或使用次数统计未完整挂载', snapshot.history && snapshot.history.reviewTemplateAudit);
+    }
+    if (!(snapshot.history && snapshot.history.experienceLibraryAudit && snapshot.history.experienceLibraryAudit.ok)) {
+      addIssue(issues, 'warning', 'HISTORY_EXPERIENCE_LIBRARY_MISSING', '案例经验库筛选面板未完整挂载，高分/低分/应期经验快速回看可能不可用', snapshot.history && snapshot.history.experienceLibraryAudit);
+    }
     if (!(snapshot.history && snapshot.history.newContentNightThemeAudit && snapshot.history.newContentNightThemeAudit.ok)) {
       addIssue(issues, 'warning', 'NEW_CONTENT_NIGHT_THEME_MISSING', '新增历史/案例模块暗夜主题覆盖不完整，可能出现浅灰底、浅紫字或低对比内容', snapshot.history && snapshot.history.newContentNightThemeAudit);
     }
@@ -18025,17 +18263,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.188' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.189' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.188') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.189') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (snapshot.historyExport && snapshot.historyExport.ok) passes.push('历史 CSV / 复盘 CSV 导出检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.188') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.189') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -18065,26 +18303,29 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.history && snapshot.history.reviewTrendAudit && snapshot.history.reviewTrendAudit.ok) passes.push('复盘偏差趋势与案例评分检查通过');
     if (snapshot.history && snapshot.history.quickReviewAudit && snapshot.history.quickReviewAudit.ok) passes.push('案例库快捷复查清单检查通过');
     if (snapshot.history && snapshot.history.reviewLoopAudit && snapshot.history.reviewLoopAudit.ok) passes.push('复盘学习闭环检查通过');
+    if (snapshot.history && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.ok) passes.push('复盘建议模板与案例经验沉淀检查通过');
+    if (snapshot.history && snapshot.history.reviewTemplateAudit && snapshot.history.reviewTemplateAudit.functions && snapshot.history.reviewTemplateAudit.functions.apply && snapshot.history.reviewTemplateAudit.functions.usage) passes.push('复盘模板应用草稿与使用次数统计检查通过');
+    if (snapshot.history && snapshot.history.experienceLibraryAudit && snapshot.history.experienceLibraryAudit.ok) passes.push('案例经验库筛选检查通过');
     if (snapshot.history && snapshot.history.newContentNightThemeAudit && snapshot.history.newContentNightThemeAudit.ok) passes.push('新增模块暗夜/阅读模式体检检查通过');
     if (snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) passes.push('结果摘要标签完整性检查通过');
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.188' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.188' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.189' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.189' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.reportExport && snapshot.reportExport.ok) passes.push('Debug 报告导出中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.188') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.189') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.188') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.189') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -18472,7 +18713,7 @@ function buildContextOverallSentence(context, details) {
     try {
       safeLocalSet(STORAGE_DEBUG_EXPORT_LAST, JSON.stringify({
         version: APP_VERSION,
-        source: 'mainline-v10.5.188',
+        source: 'mainline-v10.5.189',
         type: type,
         ok: !!ok,
         at: new Date().toISOString(),
