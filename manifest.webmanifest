@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 · v10.5.176",
-  "short_name": "小六壬 v10.5.176",
-  "description": "小六壬个人网页版 v10.5.176 iPad Excel 导出挂载与体检收口版",
-  "start_url": "./?v=10.5.176",
+  "name": "小六壬占卜 · v10.5.177",
+  "short_name": "小六壬 v10.5.177",
+  "description": "小六壬个人网页版 v10.5.177 历史分析图表钻取与明细联动版",
+  "start_url": "./?v=10.5.177",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.176"
+  "version": "10.5.177"
 }
