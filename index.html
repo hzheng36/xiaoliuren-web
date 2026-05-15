@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.177 历史分析图表钻取与明细联动版</title>
-<meta content="小六壬个人网页版 v10.5.177 历史分析图表钻取与明细联动版：历史分析图表支持点击钻取，按月份、星期、场景、起课方式、六宫、末象、识别类型、复盘准确度等图表项联动当前明细、复盘明细、XLSX、PDF、TXT/CSV 导出范围，并新增 Debug 图表钻取审计。" name="description"/>
+<title>小六壬占卜 · v10.5.178 历史记录批量管理增强版</title>
+<meta content="小六壬个人网页版 v10.5.178 历史记录批量管理增强版：历史记录中心新增批量选择、全选当前筛选、批量收藏/取消收藏、批量删除、选中记录 JSON/CSV 导出和上一次批量操作撤销保护，并纳入 Debug 批量管理审计与发版体检。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -417,6 +417,13 @@
     .dialog-head h3 { margin:0; }
     .dialog-head p { margin:6px 0 0; color: var(--muted); }
     .history-tools { padding: 16px 24px 0; display:flex; gap:10px; flex-wrap:wrap; }
+    .history-bulk-tools { padding: 12px 24px 0; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .history-bulk-tools .history-bulk-status { flex:1 1 220px; color:var(--muted); font-size:.93rem; line-height:1.45; }
+    .history-bulk-tools button { white-space:nowrap; }
+    .history-select-line { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+    .history-select-check { display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:.92rem; font-weight:800; }
+    .history-select-check input { width:18px; height:18px; accent-color:#6753a5; }
+    .history-item.batch-selected { border-color:rgba(103,83,165,.42); background:linear-gradient(180deg,rgba(255,255,255,.99),rgba(244,239,255,.92)); box-shadow:0 10px 28px rgba(70,52,120,.12); }
     .tool-folder-row { padding: 14px 24px 0; display:grid; gap:10px; }
     .tool-folder { background:rgba(255,255,255,.74); border:1px solid var(--line); border-radius:18px; overflow:hidden; }
     .tool-folder summary { list-style:none; cursor:pointer; padding:12px 14px; font-weight:800; color:var(--text); display:flex; align-items:center; justify-content:space-between; gap:10px; }
@@ -686,7 +693,7 @@
 
     #historyDialog { max-height: min(88vh, 860px); overflow:hidden; }
     #historyDialog[open] { display:flex; flex-direction:column; }
-    #historyDialog .dialog-head, #historyDialog .history-search-row, #historyDialog .history-date-row, #historyDialog .history-tools, #historyDialog .tool-folder-row { flex:0 0 auto; }
+    #historyDialog .dialog-head, #historyDialog .history-search-row, #historyDialog .history-date-row, #historyDialog .history-tools, #historyDialog .history-bulk-tools, #historyDialog .tool-folder-row { flex:0 0 auto; }
     #historyDialog .history-list {
       flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; overflow-x:hidden;
       -webkit-overflow-scrolling:touch; padding-bottom:28px;
@@ -704,13 +711,13 @@
       #historyDialog .history-list { padding:14px 18px 30px; }
       #historyDialog .dialog-head { padding:18px; }
       #historyDialog .history-search-row { padding:14px 18px 0; }
-      #historyDialog .history-tools, #historyDialog .tool-folder-row { padding:14px 18px 0; }
+      #historyDialog .history-tools, #historyDialog .history-bulk-tools, #historyDialog .tool-folder-row { padding:14px 18px 0; }
     }
     @media (max-width: 900px) {
       .template-toolbar { grid-template-columns: 1fr; }
       .template-bulk-tools { display:grid; grid-template-columns:1fr; }
       .template-bulk-tools .ghost-btn, .template-bulk-tools .danger-btn, .template-bulk-tools select { width:100%; }
- #reviewDialog { width:calc(100vw - 28px); max-height:82dvh; } #reviewDialog .review-form { padding:14px 18px 24px; } #analyticsDialog { width:calc(100vw - 28px); max-height:82dvh; } #analyticsContent { max-height:calc(82dvh - 112px); padding-bottom:28px; } .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .analytics-date-row { padding:14px 18px 0; align-items:stretch; } .history-date-row { padding:12px 18px 0; align-items:stretch; } .history-date-row label, .analytics-date-row label { flex:1 1 100%; } .history-date-row input, .analytics-date-row input, .analytics-date-row select { width:100%; } .date-picker-shell { width:100%; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
+ #reviewDialog { width:calc(100vw - 28px); max-height:82dvh; } #reviewDialog .review-form { padding:14px 18px 24px; } #analyticsDialog { width:calc(100vw - 28px); max-height:82dvh; } #analyticsContent { max-height:calc(82dvh - 112px); padding-bottom:28px; } .analysis-grid { grid-template-columns:1fr; padding:14px 18px 0; } .analysis-section { padding:16px 18px 0; } .analytics-date-row { padding:14px 18px 0; align-items:stretch; } .history-date-row { padding:12px 18px 0; align-items:stretch; } .history-bulk-tools { padding:12px 18px 0; } .history-date-row label, .analytics-date-row label { flex:1 1 100%; } .history-date-row input, .analytics-date-row input, .analytics-date-row select { width:100%; } .date-picker-shell { width:100%; } .chart-row { grid-template-columns: 78px minmax(0,1fr) 38px; } }
 
 
     /* v8.8 场景规则查询 */
@@ -2716,6 +2723,18 @@ body.reading-theme-night #historyDialog .history-empty {
   color:#d8c8ff !important;
   background:transparent !important;
 }
+
+body.reading-theme-night #historyDialog .history-bulk-tools {
+  background:rgba(15,23,42,.55) !important;
+  border-color:rgba(148,163,184,.18) !important;
+}
+body.reading-theme-night #historyDialog .history-bulk-status,
+body.reading-theme-night #historyDialog .history-select-check { color:#cbd5e1 !important; }
+body.reading-theme-night #historyDialog .history-item.batch-selected {
+  background:rgba(49,46,129,.34) !important;
+  border-color:rgba(165,180,252,.48) !important;
+}
+
 body.reading-theme-night #historyDialog .history-item {
   background:#1b1b28 !important;
   background-image:none !important;
@@ -3152,7 +3171,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.177 历史分析图表钻取与明细联动版</h2>
+<h2>个人占卜台 · v10.5.178 历史记录批量管理增强版</h2>
 <p>本版专门收口 iPad Safari 上的 Excel 导出体检警告：显式挂载 XLSX 导出函数，并把 Excel 检查拆成“核心导出、多工作表、图表数据、原生图表兼容”四层。即使 iPad 对原生图表预览不稳定，也不会再误判为导出功能缺失。</p>
 </div>
 <div class="actions">
@@ -3609,6 +3628,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 <div class="history-search-row"><input id="historySearchInput" placeholder="搜索历史：场景 / 问题 / 宫位" type="search"/><select id="historySceneFilter"><option value="all">全部场景</option></select></div>
 <div class="history-date-row"><label>选择日期<div class="date-picker-shell"><input autocomplete="off" class="date-text-input" id="historyDateInput" inputmode="numeric" maxlength="10" placeholder="YYYY-MM-DD" type="text"/><button aria-label="选择历史日期" class="date-picker-btn" id="historyDatePickBtn" type="button">📅</button><input class="date-native-input" id="historyDatePicker" type="date"/></div></label><button class="ghost-btn" id="clearHistoryDateBtn" type="button">清除日期</button><span class="hint">不选日期时显示全部历史。</span></div>
 <div class="history-tools"><button class="ghost-btn" id="showAllBtn" onclick="showAllHistory()">全部</button><button class="ghost-btn" id="showFavBtn" onclick="showFavHistory()">只看收藏</button></div>
+<div class="history-bulk-tools" id="historyBulkTools"><span class="history-bulk-status" id="historyBulkStatus">批量管理：当前未选择历史记录。</span><button class="ghost-btn" id="selectVisibleHistoryBtn" type="button">全选当前</button><button class="ghost-btn" id="clearHistorySelectionBtn" type="button">取消选择</button><button class="ghost-btn" id="batchFavoriteHistoryBtn" type="button">批量收藏</button><button class="ghost-btn" id="batchUnfavoriteHistoryBtn" type="button">取消收藏</button><button class="ghost-btn" id="exportSelectedHistoryJsonBtn" type="button">选中 JSON</button><button class="ghost-btn" id="exportSelectedHistoryCsvBtn" type="button">选中 CSV</button><button class="ghost-btn" id="undoHistoryBatchBtn" type="button">撤销上次</button><button class="danger-btn" id="batchDeleteHistoryBtn" type="button">删除选中</button></div>
 <div class="tool-folder-row">
 <details class="tool-folder" open="">
 <summary>导出中心</summary>
@@ -3669,7 +3689,7 @@ body.reading-theme-night #questionSection .question-panel label::after { color: 
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.177 历史分析图表钻取与明细联动版';
+    const XLR_SOURCE_VERSION = 'v10.5.178 历史记录批量管理增强版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     let selectedCustomTemplateIds = new Set();
@@ -3974,6 +3994,8 @@ function clearCustomTemplates(){
       return result;
     }
     let historyFilter = 'all';
+    let selectedHistoryIds = new Set();
+    const HISTORY_BATCH_BACKUP_KEY = 'xiaoliuren_history_batch_backup_source';
     function init() { restoreSavedChoices(); renderScenes(); renderQuickPad(); bindEvents(); updateSceneMode(); applyMethodPanel(currentMethod); setNow(); updateEventCount(); updateQuestionCount(); syncQuestionSectionForScene(); initHomeDynamicTime(); updateDateControl('historyDateInput','historyDatePicker'); updateDateControl('analyticsDateInput','analyticsDatePicker'); refreshExportScopeSummaries(); applyUserSettingsToPage(); clearStartupResult(); }
     function sceneButtonHTML(scene){
       return `<button type="button" class="scene-btn ${scene.key === currentScene ? 'active' : ''}" data-scene="${scene.key}"><span class="emoji">${scene.icon}</span><span>${scene.name}</span></button>`;
@@ -4051,6 +4073,15 @@ function clearCustomTemplates(){
       document.getElementById('showFavBtn').addEventListener('click', ()=>{ historyFilter='fav'; renderHistory(); });
       document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
       document.getElementById('historyList').addEventListener('click', handleHistoryActions);
+      document.getElementById('historyList').addEventListener('change', handleHistorySelectionChange);
+      const selectVisibleHistoryBtn = document.getElementById('selectVisibleHistoryBtn'); if (selectVisibleHistoryBtn) selectVisibleHistoryBtn.addEventListener('click', selectVisibleHistory);
+      const clearHistorySelectionBtn = document.getElementById('clearHistorySelectionBtn'); if (clearHistorySelectionBtn) clearHistorySelectionBtn.addEventListener('click', clearHistorySelection);
+      const batchFavoriteHistoryBtn = document.getElementById('batchFavoriteHistoryBtn'); if (batchFavoriteHistoryBtn) batchFavoriteHistoryBtn.addEventListener('click', function(){ batchSetHistoryFavorite(true); });
+      const batchUnfavoriteHistoryBtn = document.getElementById('batchUnfavoriteHistoryBtn'); if (batchUnfavoriteHistoryBtn) batchUnfavoriteHistoryBtn.addEventListener('click', function(){ batchSetHistoryFavorite(false); });
+      const batchDeleteHistoryBtn = document.getElementById('batchDeleteHistoryBtn'); if (batchDeleteHistoryBtn) batchDeleteHistoryBtn.addEventListener('click', batchDeleteSelectedHistory);
+      const exportSelectedHistoryJsonBtn = document.getElementById('exportSelectedHistoryJsonBtn'); if (exportSelectedHistoryJsonBtn) exportSelectedHistoryJsonBtn.addEventListener('click', exportSelectedHistoryJSON);
+      const exportSelectedHistoryCsvBtn = document.getElementById('exportSelectedHistoryCsvBtn'); if (exportSelectedHistoryCsvBtn) exportSelectedHistoryCsvBtn.addEventListener('click', exportSelectedHistoryCSV);
+      const undoHistoryBatchBtn = document.getElementById('undoHistoryBatchBtn'); if (undoHistoryBatchBtn) undoHistoryBatchBtn.addEventListener('click', restoreHistoryBatchBackup);
       const copyResultBtn = document.getElementById('copyResultBtn');
       if (copyResultBtn) copyResultBtn.addEventListener('click', copyCurrentResult);
       document.getElementById('saveBtn').addEventListener('click', saveCurrentResult);
@@ -4709,7 +4740,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -4719,6 +4750,12 @@ function buildPaipanExplanation(result){
       saveCurrent: saveCurrentResult,
       toggleCurrentFavorite: toggleCurrentFavorite,
       toggleFavorite: toggleHistoryFavorite,
+      getBatchAudit: getHistoryBatchAudit,
+      batchSetFavorite: batchSetHistoryFavorite,
+      batchDeleteSelected: batchDeleteSelectedHistory,
+      exportSelectedJSON: exportSelectedHistoryJSON,
+      exportSelectedCSV: exportSelectedHistoryCSV,
+      restoreBatchBackup: restoreHistoryBatchBackup,
       exportHistoryCSV: exportHistoryCSV,
       exportReviewsCSV: exportReviewsCSV,
       exportAnalyticsExcelReport: exportAnalyticsExcelReport,
@@ -4828,7 +4865,7 @@ function buildPaipanExplanation(result){
       const date = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.177',
+        source:'mainline-v10.5.178',
         date,
         scene: sceneEl ? (sceneEl.value || 'all') : 'all',
         sceneLabel: analyticsSelectLabel('analyticsSceneFilter', '全部场景'),
@@ -5076,7 +5113,7 @@ function buildPaipanExplanation(result){
       }
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.177',
+        source:'mainline-v10.5.178',
         center:center || '',
         scopeText,
         historyCount:list.length,
@@ -5111,6 +5148,153 @@ function buildPaipanExplanation(result){
     }
     try { window.buildExportScopePreview = buildExportScopePreview; window.renderExportScopeSummary = renderExportScopeSummary; window.refreshExportScopeSummaries = refreshExportScopeSummaries; } catch(e) {}
     
+
+    function getSelectedHistoryIds(){
+      return Array.from(selectedHistoryIds || []).filter(Boolean);
+    }
+    function historyBatchBackupExists(){
+      try { return !!localStorage.getItem(HISTORY_BATCH_BACKUP_KEY); } catch(e) { return false; }
+    }
+    function pruneSelectedHistoryIds(list){
+      const valid = new Set((list || getHistory()).map(item => item && item.id).filter(Boolean));
+      Array.from(selectedHistoryIds || []).forEach(function(id){ if(!valid.has(id)) selectedHistoryIds.delete(id); });
+    }
+    function renderHistoryBatchStatus(filtered){
+      const box = document.getElementById('historyBulkStatus');
+      if(!box) return;
+      const selected = getSelectedHistoryIds();
+      const filteredCount = Array.isArray(filtered) ? filtered.length : getHistoryDialogFilteredList(getHistory()).length;
+      const undo = historyBatchBackupExists() ? '｜可撤销上一次批量操作' : '｜暂无可撤销批量操作';
+      box.textContent = '批量管理：已选 ' + selected.length + ' 条，当前显示 ' + filteredCount + ' 条。支持批量收藏、取消收藏、删除、导出选中 JSON/CSV。' + undo;
+    }
+    function handleHistorySelectionChange(e){
+      const box = e.target && e.target.closest ? e.target.closest('[data-select-history]') : null;
+      if(!box) return;
+      const id = box.getAttribute('data-select-history');
+      if(!id) return;
+      if(box.checked) selectedHistoryIds.add(id); else selectedHistoryIds.delete(id);
+      const item = document.querySelector('.history-item[data-history-id="' + cssEscapeSafe(id) + '"]');
+      if(item) item.classList.toggle('batch-selected', !!box.checked);
+      renderHistoryBatchStatus();
+    }
+    function cssEscapeSafe(value){
+      try { return CSS && CSS.escape ? CSS.escape(String(value)) : String(value).replace(/"/g, '\\"'); } catch(e) { return String(value).replace(/"/g, '\\"'); }
+    }
+    function selectVisibleHistory(){
+      const ids = getHistoryDialogFilteredList(getHistory()).map(item => item && item.id).filter(Boolean);
+      ids.forEach(id => selectedHistoryIds.add(id));
+      renderHistory();
+    }
+    function clearHistorySelection(){
+      selectedHistoryIds.clear();
+      renderHistory();
+    }
+    function getSelectedHistoryRecords(){
+      const selected = new Set(getSelectedHistoryIds());
+      return getHistory().filter(item => selected.has(item.id));
+    }
+    function saveHistoryBatchBackup(action, beforeList, ids){
+      try {
+        localStorage.setItem(HISTORY_BATCH_BACKUP_KEY, JSON.stringify({
+          version:XLR_SOURCE_VERSION,
+          source:'mainline-v10.5.178',
+          action:action || 'batch',
+          ids:ids || [],
+          count:(ids || []).length,
+          savedAt:new Date().toISOString(),
+          history:beforeList || getHistory()
+        }));
+      } catch(e) {}
+    }
+    function restoreHistoryBatchBackup(){
+      let backup = null;
+      try { backup = JSON.parse(localStorage.getItem(HISTORY_BATCH_BACKUP_KEY) || 'null'); } catch(e) { backup = null; }
+      if(!backup || !Array.isArray(backup.history)) return alert('暂无可撤销的批量操作。');
+      const label = backup.action || '上一次批量操作';
+      if(!confirm('确定撤销“' + label + '”吗？将恢复到该批量操作前的历史记录状态。')) return;
+      setHistory(backup.history, {keepAll:true});
+      selectedHistoryIds.clear();
+      try { localStorage.removeItem(HISTORY_BATCH_BACKUP_KEY); } catch(e) {}
+      refreshHistoryDependents();
+      alert('已撤销上一次批量操作。');
+    }
+    function batchSetHistoryFavorite(value){
+      const ids = getSelectedHistoryIds();
+      if(!ids.length) return alert('请先勾选要处理的历史记录。');
+      const idSet = new Set(ids);
+      const before = getHistory();
+      const next = before.map(function(item){ return idSet.has(item.id) ? Object.assign({}, item, {favorite:!!value}) : item; });
+      saveHistoryBatchBackup(value ? '批量收藏' : '批量取消收藏', before, ids);
+      setHistory(next, {keepAll:true});
+      if(currentResult && idSet.has(currentResult.id)) { currentResult.favorite = !!value; updateCurrentFavoriteButton(); }
+      refreshHistoryDependents();
+    }
+    function batchDeleteSelectedHistory(){
+      const ids = getSelectedHistoryIds();
+      if(!ids.length) return alert('请先勾选要删除的历史记录。');
+      if(!confirm('确定删除选中的 ' + ids.length + ' 条历史记录吗？删除前会自动保存撤销备份。')) return;
+      const idSet = new Set(ids);
+      const before = getHistory();
+      const next = before.filter(item => !idSet.has(item.id));
+      saveHistoryBatchBackup('批量删除', before, ids);
+      setHistory(next, {keepAll:true});
+      selectedHistoryIds.clear();
+      if(currentResult && idSet.has(currentResult.id)) { currentResult = null; try { window.currentResult=null; } catch(e) {} }
+      refreshHistoryDependents();
+    }
+    function exportSelectedHistoryJSON(){
+      const selected = getSelectedHistoryRecords();
+      if(!selected.length) return alert('请先勾选要导出的历史记录。');
+      const payload = {
+        app:'xiaoliuren-web',
+        exportType:'selectedHistoryRecords',
+        sourceVersion:XLR_SOURCE_VERSION,
+        exportedAt:new Date().toISOString(),
+        selectedCount:selected.length,
+        note:'这是选中的历史记录 JSON，只包含当前勾选的历史、收藏、复盘、A/B 对比等记录数据。',
+        history:selected
+      };
+      downloadJSONFile(payload, 'xiaoliuren_selected_history_' + new Date().toISOString().slice(0,10) + '.json');
+    }
+    function exportSelectedHistoryCSV(){
+      const selected = getSelectedHistoryRecords();
+      if(!selected.length) return alert('请先勾选要导出的历史记录。');
+      const rows=historyCsvRows(selected);
+      const headers=['序号','记录ID','收藏','占卜时间','场景','场景Key','识别类型','起课方式','起课说明','占问事项','三数','落宫','本象','中象','末象','末象宫位','综合判断','直接答案','建议条数','复盘条数','最新复盘准确度','最新准确单位','最新实际结果','最新复盘备注','最新复盘时间','本象摘要','中象摘要','末象摘要'];
+      downloadHistoryExportFile('xiaoliuren_selected_history_' + new Date().toISOString().slice(0,10) + '.csv', buildCsv(headers, rows), 'text/csv;charset=utf-8');
+    }
+    function getHistoryBatchAudit(){
+      const selected = getSelectedHistoryIds();
+      const hasBackup = historyBatchBackupExists();
+      return {
+        version:XLR_SOURCE_VERSION,
+        source:'mainline-v10.5.178',
+        hasToolbar:!!document.getElementById('historyBulkTools'),
+        hasStatus:!!document.getElementById('historyBulkStatus'),
+        hasSelectVisible:!!document.getElementById('selectVisibleHistoryBtn'),
+        hasClearSelection:!!document.getElementById('clearHistorySelectionBtn'),
+        hasBatchFavorite:!!document.getElementById('batchFavoriteHistoryBtn'),
+        hasBatchUnfavorite:!!document.getElementById('batchUnfavoriteHistoryBtn'),
+        hasBatchDelete:!!document.getElementById('batchDeleteHistoryBtn'),
+        hasExportSelectedJson:!!document.getElementById('exportSelectedHistoryJsonBtn'),
+        hasExportSelectedCsv:!!document.getElementById('exportSelectedHistoryCsvBtn'),
+        hasUndo:!!document.getElementById('undoHistoryBatchBtn'),
+        selectedCount:selected.length,
+        backupExists:hasBackup,
+        functions:{
+          selectVisible:typeof selectVisibleHistory === 'function',
+          clearSelection:typeof clearHistorySelection === 'function',
+          batchFavorite:typeof batchSetHistoryFavorite === 'function',
+          batchDelete:typeof batchDeleteSelectedHistory === 'function',
+          exportSelectedJSON:typeof exportSelectedHistoryJSON === 'function',
+          exportSelectedCSV:typeof exportSelectedHistoryCSV === 'function',
+          restoreBackup:typeof restoreHistoryBatchBackup === 'function'
+        },
+        ok:!!(document.getElementById('historyBulkTools') && document.getElementById('historyBulkStatus') && document.getElementById('selectVisibleHistoryBtn') && document.getElementById('batchFavoriteHistoryBtn') && document.getElementById('batchDeleteHistoryBtn') && document.getElementById('exportSelectedHistoryJsonBtn') && document.getElementById('exportSelectedHistoryCsvBtn') && document.getElementById('undoHistoryBatchBtn'))
+      };
+    }
+    try { window.getHistoryBatchAudit = getHistoryBatchAudit; window.selectVisibleHistory = selectVisibleHistory; window.clearHistorySelection = clearHistorySelection; window.batchDeleteSelectedHistory = batchDeleteSelectedHistory; window.batchSetHistoryFavorite = batchSetHistoryFavorite; window.exportSelectedHistoryJSON = exportSelectedHistoryJSON; window.exportSelectedHistoryCSV = exportSelectedHistoryCSV; window.restoreHistoryBatchBackup = restoreHistoryBatchBackup; } catch(e) {}
+
     function renderHistory() {
       const list = getHistory();
       const qEl = document.getElementById('historySearchInput');
@@ -5132,11 +5316,13 @@ function buildPaipanExplanation(result){
         }
         return true;
       });
+      pruneSelectedHistoryIds(list);
       renderExportScopeSummary('history');
+      renderHistoryBatchStatus(filtered);
       const container = document.getElementById('historyList');
       if(!container) return;
       const totalText = list.length ? '共 ' + list.length + ' 条，当前显示 ' + filtered.length + ' 条' : '暂无历史记录';
-      if(!filtered.length){ container.innerHTML = '<div class="history-empty">' + totalText + (dateFilter ? '：' + dateFilter : '') + '</div>'; return; }
+      if(!filtered.length){ container.innerHTML = '<div class="history-empty">' + totalText + (dateFilter ? '：' + dateFilter : '') + '</div>'; renderHistoryBatchStatus(filtered); return; }
       container.innerHTML = '<div class="history-empty" style="margin-bottom:10px;">' + totalText + (historyFilter === 'fav' ? '｜只看收藏' : '') + '</div>' + filtered.map(function(raw){
         const item = normalizeHistoryRecord(raw) || raw;
         const rawId = String(item.id || '');
@@ -5148,7 +5334,9 @@ function buildPaipanExplanation(result){
         const method = item.methodNote || item.method || '未记录起课方式';
         const favText = item.favorite ? '取消收藏' : '收藏';
         const favBadge = item.favorite ? ' ★ 已收藏' : '';
-        return '<div class="history-item" data-history-id="' + id + '">' +
+        const checked = selectedHistoryIds.has(rawId);
+        return '<div class="history-item' + (checked ? ' batch-selected' : '') + '" data-history-id="' + id + '">' +
+          '<div class="history-select-line"><label class="history-select-check"><input type="checkbox" data-select-history="' + id + '" ' + (checked ? 'checked' : '') + '>选择</label><span style="color:var(--muted);font-size:.88rem;">ID：' + escapeHTML(rawId.slice(0,18)) + '</span></div>' +
           '<div class="history-row"><strong>' + escapeHTML((item.sceneIcon || '') + ' ' + (item.sceneName || '其他')) + '</strong><span style="color:var(--muted);font-size:.93rem;">' + escapeHTML(formatISO(item.createdAt)) + favBadge + '</span></div>' +
           q +
           '<div class="history-meta"><span>' + escapeHTML(method) + '</span><span>规则：' + escapeHTML(ruleName) + '</span><span>' + escapeHTML(palaces) + '</span></div>' +
@@ -5165,6 +5353,7 @@ function buildPaipanExplanation(result){
       return getReviewEntries(item).map(function(r){ return [reviewAccuracyLabel(r.accuracy), r.actual, r.note].join(' '); }).join(' ');
     }
     function handleHistoryActions(e) {
+      if(e.target && e.target.closest && e.target.closest('[data-select-history]')) return;
       const viewBtn=e.target.closest('[data-view]');
       if(viewBtn){ e.preventDefault(); viewHistoryItem(viewBtn.dataset.view); return; }
       const favBtn=e.target.closest('[data-fav]');
@@ -5177,6 +5366,8 @@ function buildPaipanExplanation(result){
     function clearHistory(){
       if(!confirm('确定清空所有历史记录吗？此操作不会删除阅读设置和问题模板。')) return;
       localStorage.removeItem(STORAGE_KEY);
+      selectedHistoryIds.clear();
+      try { localStorage.removeItem(HISTORY_BATCH_BACKUP_KEY); } catch(e) {}
       refreshHistoryDependents();
     }
     
@@ -5214,7 +5405,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.177' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.178' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -6933,8 +7124,8 @@ function buildContextOverallSentence(context, details) {
 
 
     const XLR_JSON_KNOWLEDGE = {
-      "version": "2.0+extension+family-life-v10.5.177",
-      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览；v10.5.167 将 PDF 历史明细和复盘明细改为舒展卡片式布局，优化长文本换行和分页阅读；v10.5.168 新增 PDF 完整报告/只导出图表/只导出明细三种导出模式，并补强封面元信息和 Debug 导出选项审计；v10.5.169 增强 PDF 章节分页、标题/卡片防断页、打印页眉页脚与报告标题/备注预留结构；v10.5.170 跳过自定义标题输入，继续舒展 PDF 历史明细与复盘明细，优化打印分页和手机阅读可读性，并加入明细拥挤 Debug 检查；v10.5.171 新增 PDF 导出前确认摘要、明细模式封面摘要与导出审计收口；v10.5.172 整合 PDF/Excel/TXT/CSV/JSON 导出中心与格式用途说明；v10.5.173 修正 PDF 明细模式 Debug 体检口径，避免明细模式因封面省略内容提到图表总览而误报；同时在导出中心增加导出前范围预览、记录/复盘数量核对与 Debug 范围确认审计；v10.5.174 最后一次收口明细审计误报，把 PDF 模式检查改为去除 style/script 后的正文结构判断，避免 CSS 中的 chart-section 误触发；v10.5.175 新增历史分析筛选联动，按场景、起课方式、收藏状态和复盘准确度统一驱动页面统计、图表、明细、XLSX、PDF 与导出前范围预览；v10.5.176 修复 iPad Safari 下 Excel 导出体检误报，把 XLSX 检查拆成核心导出、多工作表、图表数据与原生图表兼容四层；v10.5.177 新增历史分析图表点击钻取，联动当前明细、复盘明细、XLSX、PDF、TXT/CSV 导出范围。",
+      "version": "2.0+extension+family-life-v10.5.178",
+      "description": "小六壬各场景详细解读知识库，合并 v1.0 通用库、v2.0 详细专项库、新增专项扩展包、v10.5.134 细分生活场景；v10.5.135 完成暗夜 CSS 覆盖修复，v10.5.136 增强暗夜运行时全量体检，v10.5.137 修复运行时体检与清理旧缓存报错；v10.5.138 修正历史回看 Debug 误报、暗夜标签低对比和深度逻辑巡检；v10.5.139 修复历史分析暗夜白底并提升 Debug 置顶层级；v10.5.140 修复命运命盘暗夜标签低对比；v10.5.141 回到主线升级复盘洞察；v10.5.142 修复复盘明细表移动端排版；v10.5.143 修复手机端滚动到底部时底部导航/浏览器工具栏遮挡内容；v10.5.144 新增首页主题海报并控制图片尺寸与缓存资源；v10.5.145 修复暗夜体检中场景按钮与底部导航按钮的浅色残留/低对比警告；v10.5.146 继续收口暗夜运行时体检并修复快速导读字号审计；v10.5.147 清理重复暗夜/导读字号补丁并归并到主线样式；v10.5.148 新增 Debug 灵敏度档位、误报降级说明与自检统计；v10.5.149 完善 Debug 阻塞分级、已知误报非阻塞标识、issueGroups 分组与用户说明；v10.5.150 修复 JSON 专项场景摘要标签不足导致的 undefined 显示，并新增结果摘要标签审计；v10.5.151 新增显示完整性总审计，并把场景重心改为知识库主线驱动；v10.5.152 新增一键安全修复、安全模式基础能力与 Debug 警告白名单/黑名单；v10.5.153 增强 Debug 名单通配符、当前问题白名单/移出名单与安全修复回滚报告；v10.5.154 新增 Debug 修复中心、修复建议报告、保护数据范围与安全模式状态总览；v10.5.155 新增命运场景免填占问事项与首页公历/农历/时辰动态时间模块；v10.5.156 增加首页时间刷新与同步到时辰起课能力，并把联动状态纳入 Debug 审计；v10.5.157 统一 canonical page state，修复普通问事回看时 destiny-scene 残留导致的 DESTINY_DOM_EMPTY 误报，并新增 PAGE_STATE_MISMATCH 审计；v10.5.158 新增 Debug 报告导出中心，支持 JSON、TXT 与排查摘要三种导出/复制方式，并纳入发版体检；v10.5.159 新增历史记录 CSV 与复盘明细 CSV 导出，作为 Excel 报表/PDF 报告前置结构化数据层；v10.5.160 新增历史分析报表首页式预览，先确认汇总口径、关键发现和复盘质量字段；v10.5.164 在原生图表基础上继续升级为更专业的 Excel 仪表盘图表，改进配色、布局、图表类型与可读性；v10.5.165 应用户反馈回归上一版图表总览样式，并补充 PDF 图表报告预备说明；v10.5.166 新增可打印 PDF 图表报告，包含封面摘要、KPI、关键发现、图表总览、历史明细与复盘明细预览；v10.5.167 将 PDF 历史明细和复盘明细改为舒展卡片式布局，优化长文本换行和分页阅读；v10.5.168 新增 PDF 完整报告/只导出图表/只导出明细三种导出模式，并补强封面元信息和 Debug 导出选项审计；v10.5.169 增强 PDF 章节分页、标题/卡片防断页、打印页眉页脚与报告标题/备注预留结构；v10.5.170 跳过自定义标题输入，继续舒展 PDF 历史明细与复盘明细，优化打印分页和手机阅读可读性，并加入明细拥挤 Debug 检查；v10.5.171 新增 PDF 导出前确认摘要、明细模式封面摘要与导出审计收口；v10.5.172 整合 PDF/Excel/TXT/CSV/JSON 导出中心与格式用途说明；v10.5.173 修正 PDF 明细模式 Debug 体检口径，避免明细模式因封面省略内容提到图表总览而误报；同时在导出中心增加导出前范围预览、记录/复盘数量核对与 Debug 范围确认审计；v10.5.174 最后一次收口明细审计误报，把 PDF 模式检查改为去除 style/script 后的正文结构判断，避免 CSS 中的 chart-section 误触发；v10.5.175 新增历史分析筛选联动，按场景、起课方式、收藏状态和复盘准确度统一驱动页面统计、图表、明细、XLSX、PDF 与导出前范围预览；v10.5.176 修复 iPad Safari 下 Excel 导出体检误报，把 XLSX 检查拆成核心导出、多工作表、图表数据与原生图表兼容四层；v10.5.177 新增历史分析图表点击钻取，联动当前明细、复盘明细、XLSX、PDF、TXT/CSV 导出范围；v10.5.178 新增历史记录批量选择、收藏/取消收藏、删除、选中导出与撤销保护。",
       "disclaimer": "本知识库为传统术数娱乐参考，不替代专业决策。现实重要事项请结合专业意见；健康问题请优先就医，法律/财务/投资问题请咨询专业人士。",
       "scenes": {
             "命运": {
@@ -8359,7 +8550,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.177',
+        source:'mainline-v10.5.178',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -8437,7 +8628,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.177',
+        source:'mainline-v10.5.178',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -8450,7 +8641,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.177') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.178') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -8459,7 +8650,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.177',
+      source:'mainline-v10.5.178',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -8673,7 +8864,7 @@ function buildContextOverallSentence(context, details) {
       if(actualResultDestiny !== expectedResultDestiny) mismatches.push({ className:'result-destiny', actual:actualResultDestiny, expected:expectedResultDestiny, reason:'结果页命盘状态应只由 currentResult.sceneKey / sceneName 判定' });
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.177',
+        source:'mainline-v10.5.178',
         isResultPage,
         isDestinyResultPage,
         isHomeDestinySelected,
@@ -8700,7 +8891,7 @@ function buildContextOverallSentence(context, details) {
       after.changed = before.mismatches && before.mismatches.length ? before.mismatches : [];
       return after;
     }
-    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.177', getState:getCanonicalPageState, sync:syncCanonicalPageState };
+    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.178', getState:getCanonicalPageState, sync:syncCanonicalPageState };
     const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock'];
     const NORMAL_RESULT_HIDDEN_BLOCK_IDS = ['paipanBlock','destinyBoardBlock'];
     function setResultBlockHidden(id, shouldHide){
@@ -8792,7 +8983,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.177',
+        source: 'mainline-v10.5.178',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -8808,7 +8999,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -9913,7 +10104,7 @@ function buildContextOverallSentence(context, details) {
         const zipBytes = buildStoredZip(files);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.177',
+          source:'mainline-v10.5.178',
           ready:true,
           format:chartSpecs.length ? 'OOXML-xlsx-with-native-excel-charts' : 'OOXML-xlsx-multi-sheet-chart-data-fallback',
           nativeChartReady: chartSpecs.length > 0,
@@ -9930,7 +10121,7 @@ function buildContextOverallSentence(context, details) {
           content: preview ? new Uint8Array(0) : zipBytes
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.177', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.178', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
       }
     }
     function auditAnalyticsExcelWorkbook(metrics, list, selectedDate, options){
@@ -9969,7 +10160,7 @@ function buildContextOverallSentence(context, details) {
         const blockingReady = !!(coreReady && multiSheetReady && chartDataReady);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.177',
+          source:'mainline-v10.5.178',
           ready:blockingReady,
           blockingReady:blockingReady,
           coreReady:coreReady,
@@ -9987,7 +10178,7 @@ function buildContextOverallSentence(context, details) {
           error:nativeChartError
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.177', ready:false, blockingReady:false, coreReady:false, multiSheetReady:false, chartDataReady:false, nativeChartReady:false, nativeChartOptional:true, sheetCount:0, chartCount:0, error:String(err && err.message || err) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.178', ready:false, blockingReady:false, coreReady:false, multiSheetReady:false, chartDataReady:false, nativeChartReady:false, nativeChartOptional:true, sheetCount:0, chartCount:0, error:String(err && err.message || err) };
       }
     }
     function exportAnalyticsExcelReport(){
@@ -10175,7 +10366,7 @@ function buildContextOverallSentence(context, details) {
       const includeDetails = pdfMode === 'full' || pdfMode === 'details';
       return {
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.177',
+        source: 'mainline-v10.5.178',
         ready: true,
         mode: pdfMode,
         modeLabel: analyticsPdfModeLabel(pdfMode),
@@ -10244,7 +10435,7 @@ function buildContextOverallSentence(context, details) {
         <section class="section"><h2>下一步建议</h2><ul class="list">${report.nextActions.map(item=>`<li>${escapeHTML(item)}</li>`).join('')}</ul></section>` : `<section class="section detail-export-summary pdf-export-confirm-v10.5.177"><h2>明细导出摘要</h2><p class="note">当前为“${escapeHTML(modeLabel)}”模式，已省略图表模块和部分摘要模块，只保留逐条历史与复盘明细。统计范围、导出条数和省略内容已写入封面与下方确认摘要，方便归档核对。</p>${coverExportSummary}</section>`;
       const chartSection = includeCharts ? `<section class="section chart-section chapter-section"><h2>图表总览</h2><p class="note">包含月份、星期、场景、起课方式、六宫、末象、识别类型、复盘准确度、已复盘场景和按场景准确率等主要图表。</p>${chartSpecs.map(analyticsPdfChartHTML).join('')}</section>` : '';
       return `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHTML(reportOptions.title)}</title>${analyticsPdfReportStyles()}</head><body><div class="pdf-print-header"><span><b>${escapeHTML(reportOptions.title)}</b></span><span>${escapeHTML(report.scope)} · ${escapeHTML(modeLabel)}</span></div><div class="pdf-print-footer"><span>小六壬个人网页版 · 本地生成 · 不联网不上传</span><span class="page-no">${escapeHTML(nowLabel)} · </span></div><main class="pdf-page">
-        <section class="pdf-cover"><p class="eyebrow">PDF Report · v10.5.177</p><h1 class="title">${escapeHTML(reportOptions.title)}</h1><span class="mode-badge">${escapeHTML(modeLabel)}</span><p class="desc">${escapeHTML(analyticsPdfCoverDescription(pdfMode))}</p><div class="cover-meta"><div class="cover-meta-item"><span>导出范围</span><b>${escapeHTML(report.scope)}</b></div><div class="cover-meta-item"><span>筛选说明</span><b>${escapeHTML(report.scope)}</b></div><div class="cover-meta-item"><span>导出模式</span><b>${escapeHTML(modeLabel)}</b></div><div class="cover-meta-item"><span>封面日期</span><b>${escapeHTML(nowLabel)}</b></div><div class="cover-meta-item"><span>明细版式</span><b>舒展卡片</b></div><div class="cover-meta-item"><span>打印优化</span><b>分页防断</b></div><div class="cover-meta-item"><span>历史记录</span><b>${escapeHTML(String(exportPreview.historyCount))} 条</b></div><div class="cover-meta-item"><span>复盘明细</span><b>${escapeHTML(String(exportPreview.reviewCount))} 条</b></div></div><div class="cover-note"><b>报告说明</b>${escapeHTML(reportOptions.remark)}${coverExportSummary}</div><p class="print-tip no-print">提示：系统会打开浏览器打印窗口；在打印选项中选择“保存为 PDF”即可导出 PDF 文件。页码可在浏览器打印设置中打开“页眉和页脚”；本版同时提供报告内页眉页脚，方便手机端保存后阅读。</p><p class="print-tip">${escapeHTML(modeDesc)}</p><div class="kpis">
+        <section class="pdf-cover"><p class="eyebrow">PDF Report · v10.5.178</p><h1 class="title">${escapeHTML(reportOptions.title)}</h1><span class="mode-badge">${escapeHTML(modeLabel)}</span><p class="desc">${escapeHTML(analyticsPdfCoverDescription(pdfMode))}</p><div class="cover-meta"><div class="cover-meta-item"><span>导出范围</span><b>${escapeHTML(report.scope)}</b></div><div class="cover-meta-item"><span>筛选说明</span><b>${escapeHTML(report.scope)}</b></div><div class="cover-meta-item"><span>导出模式</span><b>${escapeHTML(modeLabel)}</b></div><div class="cover-meta-item"><span>封面日期</span><b>${escapeHTML(nowLabel)}</b></div><div class="cover-meta-item"><span>明细版式</span><b>舒展卡片</b></div><div class="cover-meta-item"><span>打印优化</span><b>分页防断</b></div><div class="cover-meta-item"><span>历史记录</span><b>${escapeHTML(String(exportPreview.historyCount))} 条</b></div><div class="cover-meta-item"><span>复盘明细</span><b>${escapeHTML(String(exportPreview.reviewCount))} 条</b></div></div><div class="cover-note"><b>报告说明</b>${escapeHTML(reportOptions.remark)}${coverExportSummary}</div><p class="print-tip no-print">提示：系统会打开浏览器打印窗口；在打印选项中选择“保存为 PDF”即可导出 PDF 文件。页码可在浏览器打印设置中打开“页眉和页脚”；本版同时提供报告内页眉页脚，方便手机端保存后阅读。</p><p class="print-tip">${escapeHTML(modeDesc)}</p><div class="kpis">
           <div class="kpi"><span>统计范围</span><b>${escapeHTML(report.scope)}</b></div><div class="kpi"><span>历史记录</span><b>${report.total} 条</b></div><div class="kpi"><span>复盘覆盖</span><b>${escapeHTML(report.reviewCoverage)}</b></div><div class="kpi"><span>有效准确率</span><b>${escapeHTML(report.reviewRate)}</b></div>
           <div class="kpi"><span>最常问场景</span><b>${escapeHTML(report.topScene)}</b></div><div class="kpi"><span>最常见末象</span><b>${escapeHTML(report.topEnd)}</b></div><div class="kpi"><span>末象风险宫</span><b>${escapeHTML(report.riskRate)}</b></div><div class="kpi"><span>末象顺势宫</span><b>${escapeHTML(report.supportRate)}</b></div>
         </div></section>
@@ -10301,11 +10492,11 @@ function buildContextOverallSentence(context, details) {
       }));
       const scopePreview = { history: buildExportScopePreview('history'), analytics: buildExportScopePreview('analytics') };
       const scopeReady = scopePanels.length >= 2 && scopePanels.every(panel=>panel.ready);
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.177', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.178', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
     }
     window.XLRExportCenterCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.177',
+      source:'mainline-v10.5.178',
       module:'export-center',
       formatKeys:EXPORT_CENTER_FORMATS.map(item=>item.key),
       formats:getExportCenterFormats,
@@ -10516,6 +10707,13 @@ function buildContextOverallSentence(context, details) {
 
     function buildVersionUpdatesHTML(){
       const versions = [
+        { v:'v10.5.178 历史记录批量管理增强版', items:[
+          '历史记录中心新增批量选择工具栏，支持全选当前筛选、取消选择、批量收藏、批量取消收藏和批量删除。',
+          '批量删除前会自动保存上一次批量操作备份，可用“撤销上次”恢复到操作前状态，避免误删历史记录。',
+          '新增选中记录 JSON / CSV 导出，方便只迁移或分析某一批历史记录，不必导出全部历史。',
+          '历史记录卡片新增勾选状态和选中高亮，暗夜模式同步补齐批量工具栏与选中卡片样式。',
+          'Debug 新增 historyBatchAudit 与 history-batch-manager-v178 发版体检项，确认批量按钮、导出和撤销保护完整挂载。'
+        ]},
         { v:'v10.5.177 历史分析图表钻取与明细联动版', items:[
           '历史分析图表支持点击钻取：月份、星期、场景、起课方式、六宫、末象、识别类型、复盘准确度、已复盘场景都可以点选。',
           '点击图表项后，KPI、历史明细表、复盘明细表、报表预览、导出前范围预览会同步收窄到当前图表项。',
@@ -11676,7 +11874,7 @@ function buildContextOverallSentence(context, details) {
       ];
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.177',
+        source:'mainline-v10.5.178',
         ready:true,
         scope,
         total:safeMetrics.total,
@@ -11699,7 +11897,7 @@ function buildContextOverallSentence(context, details) {
       const accuracyChips = report.topAccuracy.length ? report.topAccuracy.map(item => `<span class="analytics-report-chip"><b>${escapeHTML(item.scene)}</b> ${escapeHTML(item.rate)} / ${item.judged} 条</span>`).join('') : '<span class="analytics-report-chip">暂无足够复盘准确率样本</span>';
       return `<div class="analysis-section analytics-report-section"><div class="analytics-report-preview" id="analyticsReportPreview">
         <div class="analytics-report-cover">
-          <p class="analytics-report-eyebrow">XLSX + PDF Export Center · v10.5.177 · Chart Drilldown</p>
+          <p class="analytics-report-eyebrow">XLSX + PDF Export Center · v10.5.178 · History Batch Manager</p>
           <h4 class="analytics-report-title">历史分析报表预览</h4>
           <p class="analytics-report-desc">这是 XLSX 图表报表 / PDF 图表报告共用的页面内预览版，用于确认汇总口径、KPI 字段、关键发现和复盘质量说明；PDF 支持完整报告、只导出图表、只导出明细三种模式；明细继续采用舒展卡片式布局，并增强打印分页、页眉页脚和章节防断页，不改变任何历史数据与断卦逻辑。</p>
           <div class="analytics-report-kpis">
@@ -11839,7 +12037,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -11975,7 +12173,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -13366,7 +13564,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.177'
+      source: 'mainline-v10.5.178'
     };
 
     initExtendedContextRules();
@@ -13383,7 +13581,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.177 历史分析图表钻取与明细联动版';
+  const APP_VERSION = 'v10.5.178 历史记录批量管理增强版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -13457,6 +13655,7 @@ function buildContextOverallSentence(context, details) {
     'xiaoliuren_repair_last_report_source',
     'xiaoliuren_repair_center_logs_source',
     'xiaoliuren_debug_export_last_source',
+    'xiaoliuren_history_batch_backup_source',
     'xlr_destiny_gender_source',
     'xlr_destiny_kinship_source'
   ];
@@ -14533,7 +14732,7 @@ function buildContextOverallSentence(context, details) {
     const historyPdfDetailsBtn = document.getElementById('exportAnalyticsPdfDetailsHistoryBtn');
     return {
       version:APP_VERSION,
-      source:'mainline-v10.5.177',
+      source:'mainline-v10.5.178',
       hasHistoryCsvButton:!!historyCsvBtn,
       hasReviewCsvButton:!!reviewCsvBtn,
       hasAnalyticsExcelButton:!!analyticsExcelBtn,
@@ -14567,10 +14766,13 @@ function buildContextOverallSentence(context, details) {
         reviewCsvRows:typeof window.reviewCsvRows === 'function' || typeof reviewCsvRows === 'function',
         getExportCenterDomStatus:typeof window.getExportCenterDomStatus === 'function' || typeof getExportCenterDomStatus === 'function',
         buildExportScopePreview:typeof window.buildExportScopePreview === 'function' || typeof buildExportScopePreview === 'function',
-        refreshExportScopeSummaries:typeof window.refreshExportScopeSummaries === 'function' || typeof refreshExportScopeSummaries === 'function'
+        refreshExportScopeSummaries:typeof window.refreshExportScopeSummaries === 'function' || typeof refreshExportScopeSummaries === 'function',
+        getHistoryBatchAudit:typeof window.getHistoryBatchAudit === 'function' || typeof getHistoryBatchAudit === 'function',
+        exportSelectedHistoryJSON:typeof window.exportSelectedHistoryJSON === 'function' || typeof exportSelectedHistoryJSON === 'function',
+        exportSelectedHistoryCSV:typeof window.exportSelectedHistoryCSV === 'function' || typeof exportSelectedHistoryCSV === 'function'
       },
-      formats:['history-csv','review-csv','analytics-xlsx-native-charts','analytics-pdf-full-report','analytics-pdf-charts-only','analytics-pdf-details-only','analytics-pdf-print-layout','analytics-pdf-export-confirm','export-center-unified','export-scope-preview','analytics-filter-linkage'],
-      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告支持完整、图表、明细三种打印模式，并增强导出确认、章节分页与页眉页脚；JSON 用于历史迁移，完整备份 JSON 用于换设备或清缓存前保存；v10.5.172 起统一通过导出中心说明各格式用途；v10.5.173 起新增导出前范围预览与范围确认审计；v10.5.174 起收口 PDF 明细模式审计误报，改为去除 style/script 后的正文结构判断；v10.5.175 起历史分析筛选条件联动 KPI、图表、明细、XLSX、PDF 和导出范围预览；v10.5.176 起 Excel 导出体检分层，iPad 原生图表兼容差异不再阻断发布；v10.5.177 起图表点击钻取会联动当前明细和导出范围。',
+      formats:['history-csv','review-csv','analytics-xlsx-native-charts','analytics-pdf-full-report','analytics-pdf-charts-only','analytics-pdf-details-only','analytics-pdf-print-layout','analytics-pdf-export-confirm','export-center-unified','export-scope-preview','analytics-filter-linkage','history-batch-manager'],
+      note:'CSV 导出为 Excel/Numbers/Power BI 友好结构化数据层；XLSX 报表为多工作表 + 原生图表总览；PDF 报告支持完整、图表、明细三种打印模式，并增强导出确认、章节分页与页眉页脚；JSON 用于历史迁移，完整备份 JSON 用于换设备或清缓存前保存；v10.5.172 起统一通过导出中心说明各格式用途；v10.5.173 起新增导出前范围预览与范围确认审计；v10.5.174 起收口 PDF 明细模式审计误报，改为去除 style/script 后的正文结构判断；v10.5.175 起历史分析筛选条件联动 KPI、图表、明细、XLSX、PDF 和导出范围预览；v10.5.176 起 Excel 导出体检分层，iPad 原生图表兼容差异不再阻断发布；v10.5.177 起图表点击钻取会联动当前明细和导出范围；v10.5.178 起历史记录中心支持批量选择、批量收藏/取消收藏、批量删除、选中导出和撤销保护。',
       ok:!!(historyCsvBtn && reviewCsvBtn && analyticsExcelBtn && historyExcelBtn && analyticsPdfBtn && historyPdfBtn && analyticsPdfChartsBtn && analyticsPdfDetailsBtn && historyPdfChartsBtn && historyPdfDetailsBtn && typeof window.exportHistoryCSV === 'function' && typeof window.exportReviewsCSV === 'function' && (typeof window.exportAnalyticsExcelReport === 'function' || !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.exportExcelReport === 'function')) && (typeof window.exportAnalyticsPdfReport === 'function' || !!(window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.exportPdfReport === 'function')))
     };
   }
@@ -14605,6 +14807,7 @@ function buildContextOverallSentence(context, details) {
       hasDateFilter: !!document.getElementById('historyDateInput'),
       hasHistoryImport: !!document.getElementById('historyImportInput'),
       hasBackupImport: !!document.getElementById('backupImportInput'),
+      batchAudit: typeof getHistoryBatchAudit === 'function' ? getHistoryBatchAudit() : null,
       sample
     };
   }
@@ -14639,7 +14842,7 @@ function buildContextOverallSentence(context, details) {
     try { filteredMetrics = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildMetrics === 'function' ? window.XLRAnalyticsCore.buildMetrics(filteredList, { reviewFilter: filterState && filterState.review || 'all', drilldown:currentDrilldown }) : null; } catch (err) { filteredMetrics = { error:String(err && err.message || err) }; }
     const analyticsFilterAudit = {
       version:APP_VERSION,
-      source:'mainline-v10.5.177',
+      source:'mainline-v10.5.178',
       hasControls: !!(document.getElementById('analyticsSceneFilter') && document.getElementById('analyticsMethodFilter') && document.getElementById('analyticsFavoriteFilter') && document.getElementById('analyticsReviewFilter') && document.getElementById('resetAnalyticsFiltersBtn')),
       hasCore: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasFilterLinkage === true && typeof window.XLRAnalyticsCore.getFilters === 'function' && typeof window.XLRAnalyticsCore.getFilteredList === 'function'),
       rawCount: Array.isArray(list) ? list.length : 0,
@@ -14654,7 +14857,7 @@ function buildContextOverallSentence(context, details) {
     try { sampleChartDrilldownHTML = typeof renderBarChart === 'function' ? renderBarChart((metrics && metrics.sceneEntries) || [['样例',1]], 1, 'scene') : ''; } catch(e) { sampleChartDrilldownHTML = ''; }
     const chartDrilldownAudit = {
       version:APP_VERSION,
-      source:'mainline-v10.5.177',
+      source:'mainline-v10.5.178',
       hasCore: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasChartDrilldown === true && typeof window.XLRAnalyticsCore.getDrilldown === 'function' && typeof window.XLRAnalyticsCore.getFilteredList === 'function'),
       clickableRows: document.querySelectorAll('#analyticsContent [data-analytics-drill-type]').length,
       sampleClickableReady: sampleChartDrilldownHTML.indexOf('data-analytics-drill-type') !== -1,
@@ -14766,7 +14969,7 @@ function buildContextOverallSentence(context, details) {
         excelSheetCount: excelAudit && excelAudit.sheetCount ? excelAudit.sheetCount : 0,
         excelCompatibilityAudit: excelAudit || null,
         excelReportError: excelAudit && excelAudit.error ? excelAudit.error : null,
-        pdfReportReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('PDF Report · v10.5.177') !== -1),
+        pdfReportReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('PDF Report · v10.5.178') !== -1),
         pdfDetailCardsReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('detail-card') !== -1 && pdfReport.indexOf('历史明细（舒展版）') !== -1 && pdfReport.indexOf('复盘明细（舒展版）') !== -1),
         pdfChartsOnlyReady: !!(pdfModeAudit.charts && pdfModeAudit.charts.ok),
         pdfDetailsOnlyReady: !!(pdfModeAudit.details && pdfModeAudit.details.ok),
@@ -14775,7 +14978,7 @@ function buildContextOverallSentence(context, details) {
         pdfReportOptionsReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('报告说明') !== -1 && pdfReport.indexOf('明细版式') !== -1 && pdfReport.indexOf('打印优化') !== -1),
         pdfDetailComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-detail-comfort-v10.5.177') !== -1 && pdfReport.indexOf('detail-density-note') !== -1 && pdfReport.indexOf('明细舒展策略') !== -1),
         pdfPrintComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('detail-card{margin-bottom:7mm') !== -1 && pdfReport.indexOf('detail-group') !== -1 && pdfReport.indexOf('page-break-inside:avoid') !== -1),
-        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.177' && pdfExportPreview.modeLabel === '只导出明细'),
+        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.178' && pdfExportPreview.modeLabel === '只导出明细'),
         pdfExportConfirmReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-export-confirm-v10.5.177') !== -1 && pdfReport.indexOf('PDF 导出确认摘要') !== -1 && pdfReport.indexOf('导出确认：已生成摘要') !== -1),
         pdfDetailsCoverSummaryReady: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.indexOf('明细导出摘要') !== -1 && pdfDetailsReport.indexOf('省略内容') !== -1 && pdfDetailsReport.indexOf('复盘明细') !== -1),
         exportCenterReady: !!(window.XLRExportCenterCore && typeof window.XLRExportCenterCore.getDomStatus === 'function' && window.XLRExportCenterCore.getDomStatus().ok),
@@ -14801,7 +15004,7 @@ function buildContextOverallSentence(context, details) {
     try {
       if (window.XLRPageStateCore && typeof window.XLRPageStateCore.getState === 'function') return window.XLRPageStateCore.getState();
     } catch (err) {
-      return { version:APP_VERSION, source:'mainline-v10.5.177', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
+      return { version:APP_VERSION, source:'mainline-v10.5.178', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
     }
     const body=document.body;
     const result=window.currentResult || null;
@@ -14812,7 +15015,7 @@ function buildContextOverallSentence(context, details) {
     const resultSceneKey=result && result.sceneKey ? String(result.sceneKey) : '';
     const currentSceneKey=typeof currentScene !== 'undefined' ? String(currentScene || '') : '';
     const isDestinyResultPage=!!(isResultPage && result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
-    return { version:APP_VERSION, source:'fallback-debug-v10.5.177', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
+    return { version:APP_VERSION, source:'fallback-debug-v10.5.178', isResultPage, isDestinyResultPage, isHomeDestinySelected:!isResultPage && currentSceneKey === 'destiny', effectiveSceneKey:isResultPage ? resultSceneKey : currentSceneKey, resultSceneKey, currentSceneKey, bodyResult, resultVisible, bodyClasses:body ? String(body.className || '') : '', actualClasses:{ destinyScene:!!(body && body.classList.contains('destiny-scene')), resultDestiny:!!(body && body.classList.contains('result-destiny')) }, expectedClasses:{ destinyScene:isResultPage ? isDestinyResultPage : currentSceneKey === 'destiny', resultDestiny:isDestinyResultPage }, mismatches:[], ok:true };
   }
 
   function getDestinyInfo() {
@@ -14871,6 +15074,7 @@ function buildContextOverallSentence(context, details) {
       STORAGE_REPAIR_BACKUP,
       STORAGE_REPAIR_LAST_REPORT,
       STORAGE_DEBUG_EXPORT_LAST,
+      'xiaoliuren_history_batch_backup_source',
       'xlr_destiny_gender_source',
       'xlr_destiny_kinship_source',
       'xlr_custom_question_templates_v1',
@@ -15087,7 +15291,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -15161,7 +15365,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -15170,7 +15374,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.177'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.178'
     };
   }
 
@@ -15351,7 +15555,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.177', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.178', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -15372,7 +15576,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.177', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.178', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -15412,7 +15616,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.177', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.178', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -15455,7 +15659,7 @@ function buildContextOverallSentence(context, details) {
         syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
       }
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.177', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
+    return { version:APP_VERSION, source:'mainline-v10.5.178', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -15464,7 +15668,7 @@ function buildContextOverallSentence(context, details) {
     const pageState = getPageStateInfo();
     const isDestiny = !(pageState && pageState.isResultPage) && currentScene === 'destiny';
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.177', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.178', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -15479,7 +15683,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -15500,7 +15704,7 @@ function buildContextOverallSentence(context, details) {
     const last = safeJsonParse(raw, null);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.177',
+      source: 'mainline-v10.5.178',
       title: 'Debug 报告导出中心',
       formats: ['json','txt','prompt-summary'],
       actions,
@@ -15718,7 +15922,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
       { id:'page-state-v157', label:'页面状态统一审计通过', ok: !!(snapshot.pageState && snapshot.pageState.ok) },
-      { id:'nav-core', label:'导航主源码为 v10.5.177', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.177') },
+      { id:'nav-core', label:'导航主源码为 v10.5.178', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.178') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -15746,12 +15950,13 @@ function buildContextOverallSentence(context, details) {
       { id:'export-scope-preview-v173', label:'导出中心范围预览与确认可用', ok: !!(snapshot.historyExport && snapshot.historyExport.hasExportScopePreview && snapshot.historyExport.exportCenter && snapshot.historyExport.exportCenter.scopeReady && snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasExportScopePreview && snapshot.analytics.metrics && snapshot.analytics.metrics.exportScopePreviewReady) },
       { id:'analytics-filter-linkage-v175', label:'历史分析筛选联动可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasFilterLinkage && snapshot.analytics.filterAudit && snapshot.analytics.filterAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.filterLinkageReady) },
       { id:'analytics-chart-drilldown-v177', label:'历史分析图表钻取与明细联动可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasChartDrilldown && snapshot.analytics.chartDrilldownAudit && snapshot.analytics.chartDrilldownAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.chartDrilldownReady) },
+      { id:'history-batch-manager-v178', label:'历史记录批量管理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.core && snapshot.history.core.source === 'mainline-v10.5.178') },
       { id:'summary-labels-v150', label:'结果摘要标签完整无 undefined', ok: !!(snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) },
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.177' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.177' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.178' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.178' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'debug-report-export-v158', label:'Debug 报告导出中心可用', ok: !!(snapshot.reportExport && snapshot.reportExport.ok) },
       { id:'history-csv-export-v159', label:'历史记录 CSV / 复盘 CSV 导出可用', ok: !!(snapshot.historyExport && snapshot.historyExport.ok) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
@@ -15830,7 +16035,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.177' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.178' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -15845,7 +16050,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.177' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.178' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -15875,7 +16080,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.177') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.178') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.164 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -15903,7 +16108,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.177') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.178') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.164 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -15946,7 +16151,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.177') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.178') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -15980,7 +16185,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.177') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.178') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -16064,6 +16269,9 @@ function buildContextOverallSentence(context, details) {
     if (!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasChartDrilldown && snapshot.analytics.chartDrilldownAudit && snapshot.analytics.chartDrilldownAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.chartDrilldownReady)) {
       addIssue(issues, 'warning', 'ANALYTICS_CHART_DRILLDOWN_MISSING', '历史分析图表钻取未完整挂载，图表点击、当前明细或导出范围联动可能不一致', snapshot.analytics && snapshot.analytics.chartDrilldownAudit);
     }
+    if (!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok)) {
+      addIssue(issues, 'warning', 'HISTORY_BATCH_MANAGER_MISSING', '历史记录批量管理未完整挂载，批量选择、导出、删除或撤销保护可能不可用', snapshot.history && snapshot.history.batchAudit);
+    }
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.failed) {
       addIssue(issues, 'warning', 'RELEASE_CHECKLIST_REVIEW', '发版体检表存在需要复核的项目', snapshot.releaseChecklist.items.filter(item => !item.ok));
     }
@@ -16085,17 +16293,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.177' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.178' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.177') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.178') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (snapshot.historyExport && snapshot.historyExport.ok) passes.push('历史 CSV / 复盘 CSV 导出检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.177') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.178') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -16117,25 +16325,26 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.historyExport && snapshot.historyExport.hasExportScopePreview && snapshot.analytics.core.hasExportScopePreview && snapshot.analytics.metrics && snapshot.analytics.metrics.exportScopePreviewReady) passes.push('导出中心范围预览检查通过');
     if (snapshot.analytics && snapshot.analytics.filterAudit && snapshot.analytics.filterAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.filterLinkageReady) passes.push('历史分析筛选联动检查通过');
     if (snapshot.analytics && snapshot.analytics.chartDrilldownAudit && snapshot.analytics.chartDrilldownAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.chartDrilldownReady) passes.push('历史分析图表钻取与明细联动检查通过');
+    if (snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok) passes.push('历史记录批量管理检查通过');
     if (snapshot.resultSummaryLabelAudit && snapshot.resultSummaryLabelAudit.ok) passes.push('结果摘要标签完整性检查通过');
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.177' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.177' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.178' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.178' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.reportExport && snapshot.reportExport.ok) passes.push('Debug 报告导出中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.177') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.178') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.177') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.178') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -16523,7 +16732,7 @@ function buildContextOverallSentence(context, details) {
     try {
       safeLocalSet(STORAGE_DEBUG_EXPORT_LAST, JSON.stringify({
         version: APP_VERSION,
-        source: 'mainline-v10.5.177',
+        source: 'mainline-v10.5.178',
         type: type,
         ok: !!ok,
         at: new Date().toISOString(),
