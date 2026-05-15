@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.182",
-  "short_name": "小六壬 v10.5.182",
-  "description": "小六壬个人网页版 v10.5.182 历史案例库增强版：新增高价值案例标记、案例库摘要、案例快捷筛选和排序。",
-  "start_url": "./?v=10.5.182",
+  "name": "小六壬占卜 v10.5.183",
+  "short_name": "小六壬 v10.5.183",
+  "description": "小六壬个人网页版 v10.5.183 导出报告联动增强版：TXT/CSV/XLSX/PDF 跟随当前案例库筛选范围导出，JSON/完整备份保留全量安全导出。",
+  "start_url": "./?v=10.5.183",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.182"
+  "version": "10.5.183"
 }
