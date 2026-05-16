@@ -1,8 +1,8 @@
 {
-  "name": "小六壬占卜 v10.5.204",
-  "short_name": "小六壬 v10.5.204",
-  "description": "小六壬个人网页版 v10.5.204 普通问事结果页体验、场景知识库与默认折叠合并增强版：普通问事快速读法、场景知识库提示、设置/历史记录/历史分析默认折叠和 defaultFoldAudit。",
-  "start_url": "./?v=10.5.204",
+  "name": "小六壬占卜 v10.5.205",
+  "short_name": "小六壬 v10.5.205",
+  "description": "小六壬个人网页版 v10.5.205 结果页模块精简、命运页阅读体验与场景规则整理合并版：结果页重点阅读、命运阅读顺序、场景规则分组、移动端导航体验和 xlr205MergedAudit。",
+  "start_url": "./?v=10.5.205",
   "scope": "./",
   "display": "standalone",
   "background_color": "#11121a",
@@ -26,5 +26,5 @@
       "type": "image/png"
     }
   ],
-  "version": "10.5.204"
+  "version": "10.5.205"
 }
