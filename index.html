@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>小六壬占卜 · v10.5.224 关键词字号、场景高亮与失物口诀增强版</title>
-<meta content="小六壬个人网页版 v10.5.224 关键词字号、场景高亮与失物口诀增强版：延续普通问事主线结构，修复关键词胶囊字号过大和暗夜模式场景高亮不明显，并把日加时断、失物寻物口诀归入单宫/双宫断事主线。" name="description"/>
+<title>小六壬占卜 · v10.5.225 命运冗余内容清理与日加时寻物知识库完整版</title>
+<meta content="小六壬个人网页版 v10.5.225 命运冗余内容清理与日加时寻物知识库完整版：清理命运板块的检查清单、反向验证、追问观察和场景重心等冗余内容，并升级日加时断与寻物专项知识库。" name="description"/>
 <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
 <link href="manifest.webmanifest" rel="manifest"/>
@@ -4990,7 +4990,7 @@ body.xlr-debug-night-audit .xlr216-preview-pill{background:rgba(168,143,255,.13)
 
 
 
-/* v10.5.224 关键词字号、场景高亮与失物口诀增强版 */
+/* v10.5.225 命运冗余内容清理与日加时寻物知识库完整版 */
 body.xlr223-ordinary-mainline:not(.result-destiny) #answerSummaryBlock,
 body.xlr223-ordinary-mainline:not(.result-destiny) #sceneFocusBlock,
 body.xlr223-ordinary-mainline:not(.result-destiny) #abChoiceResultBlock,
@@ -5042,7 +5042,7 @@ body.xlr-debug-night-audit.xlr223-ordinary-mainline #resultCard.xlr223-mainline-
 }
 
 
-/* v10.5.224 关键词字号、场景高亮与失物口诀增强版 */
+/* v10.5.225 命运冗余内容清理与日加时寻物知识库完整版 */
 .keyword-row.xlr224-keyword-row{align-items:center;gap:6px 7px;margin:4px 0 10px;}
 .keyword-row .keyword-prefix{display:inline-flex;align-items:center;color:var(--muted);font-size:.78rem;font-weight:800;line-height:1.35;margin-right:1px;}
 .keyword-row.xlr224-keyword-row .keyword-chip,
@@ -5115,14 +5115,55 @@ body.xlr-debug-night-audit .xlr224-day-hour-card{background:linear-gradient(180d
 <div class="feature-list">
 <div class="feature-item"><strong>三法起课</strong><small>数字、时辰、事件三种起课方式，适配不同使用情境。</small></div>
 <div class="feature-item"><strong>六宫排盘</strong><small>把三象直接落入六宫，直观看到本象、中象、末象的分布关系。</small></div>
+
+
+/* v10.5.225 命运冗余内容清理与日加时寻物知识库完整版 */
+body.result-destiny #sceneFocusBlock,
+body.result-destiny #contextAnalysisBlock,
+body.result-destiny #xlr207SceneQuestionBridge,
+body.result-destiny #xlr207PlainAnswerCard,
+body.result-destiny #xlr207ContextDailyNote,
+body.result-destiny #xlr209QuestionAnswerPanel,
+body.result-destiny #xlr212ActionChecklistBlock,
+body.result-destiny #xlr221AnswerFirstPanel,
+body.result-destiny #xlr213SpecialBrief,
+body.result-destiny .xlr213-special-brief,
+body.result-destiny .xlr213-context-compact,
+body.result-destiny .xlr213-context-full{display:none!important;}
+body.result-destiny #answerSummaryBlock .answer-grid,
+body.result-destiny #answerSummaryBlock .answer-card{font-size:.94rem;line-height:1.68;}
+body.result-destiny #answerSummaryBlock .answer-card h5{font-size:1rem;line-height:1.35;margin-bottom:6px;}
+.xlr225-lost-detail{margin-top:10px;border:1px solid rgba(103,83,165,.12);border-radius:14px;background:rgba(103,83,165,.045);padding:8px 10px;}
+.xlr225-lost-detail summary{cursor:pointer;font-weight:850;color:var(--primary);}
+.xlr225-lost-detail ul{margin:8px 0 0 1.1em;padding:0;color:var(--muted);line-height:1.62;}
+.xlr225-lost-combo,.xlr225-lost-special-item{margin-top:8px;padding:8px 10px;border-radius:12px;background:rgba(229,196,138,.09);border:1px solid rgba(188,133,65,.18);color:#6b4a1c;line-height:1.58;}
+.xlr225-dayhour-explain{margin-top:6px;color:var(--muted);line-height:1.62;}
+body.reading-theme-night .xlr225-lost-detail,
+body.xlr-debug-night-audit .xlr225-lost-detail{background:rgba(168,143,255,.08)!important;border-color:rgba(168,143,255,.20)!important;}
+body.reading-theme-night .xlr225-lost-detail summary,
+body.xlr-debug-night-audit .xlr225-lost-detail summary{color:#ddd6fe!important;}
+body.reading-theme-night .xlr225-lost-detail ul,
+body.xlr-debug-night-audit .xlr225-lost-detail ul,
+body.reading-theme-night .xlr225-dayhour-explain,
+body.xlr-debug-night-audit .xlr225-dayhour-explain{color:#cbd5e1!important;}
+body.reading-theme-night .xlr225-lost-combo,
+body.reading-theme-night .xlr225-lost-special-item,
+body.xlr-debug-night-audit .xlr225-lost-combo,
+body.xlr-debug-night-audit .xlr225-lost-special-item{background:rgba(217,182,119,.10)!important;border-color:rgba(217,182,119,.24)!important;color:#f4d79b!important;}
+@media(max-width:760px){
+  body.result-destiny #answerSummaryBlock .answer-card{font-size:.9rem;line-height:1.62;}
+  body.result-destiny #answerSummaryBlock .answer-card h5{font-size:.96rem;}
+  .xlr225-lost-combo,.xlr225-lost-special-item{font-size:.86rem;}
+}
+
 <div class="feature-item"><strong>增强解读</strong><small>增加关键词、方位、颜色、五行、物象、地点和应期参考，并继续接入场景 JSON 专项知识库。</small></div>
 </div>
 </aside>
 <main class="main">
 <header class="hero card" id="homeTopSection">
 <div>
-<h2>个人占卜台 · v10.5.224 关键词字号、场景高亮与失物口诀增强版</h2>
-<p>本版延续普通问事主线结构，不新增顶层大模块；重点修正关键词标签字号、暗夜模式场景选中高亮，并把日加时断与失物专项口诀放回单宫/双宫断事主线中。</p>
+<h2>个人占卜台 · v10.5.225 命运冗余内容清理与日加时寻物知识库完整版</h2>
+<p>本版继续收口结果页：命运板块移除检查清单、反向验证、观察追问和场景重心等后期冗余内容；日加时断升级为原文+白话解释，失物专项补齐单宫、日加时组合与特殊物品断法。</p>
 </div>
 <div class="actions">
 <button class="ghost-btn" id="historyBtn">历史记录</button>
@@ -5942,7 +5983,7 @@ body.xlr-debug-night-audit .xlr224-day-hour-card{background:linear-gradient(180d
 </dialog>
 <script>
 
-    const XLR_SOURCE_VERSION = 'v10.5.224 关键词字号、场景高亮与失物口诀增强版';
+    const XLR_SOURCE_VERSION = 'v10.5.225 命运冗余内容清理与日加时寻物知识库完整版';
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e) {}
     const CUSTOM_TEMPLATE_KEY = 'xlr_custom_question_templates_v1';
     const REVIEW_TEMPLATE_USAGE_KEY = 'xlr_review_template_usage_v1';
@@ -7198,7 +7239,7 @@ function buildPaipanExplanation(result){
     }
     window.XLRHistoryCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       key: STORAGE_KEY,
       maxItems: HISTORY_MAX_ITEMS,
       get: getHistory,
@@ -7371,7 +7412,7 @@ function buildPaipanExplanation(result){
       const date = dateEl && isValidDateString(dateEl.value) ? dateEl.value : '';
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         date,
         scene: sceneEl ? (sceneEl.value || 'all') : 'all',
         sceneLabel: analyticsSelectLabel('analyticsSceneFilter', '全部场景'),
@@ -7655,7 +7696,7 @@ function buildPaipanExplanation(result){
       const pendingTag = tagRows.filter(function(row){ return row.pending > 0; }).sort(function(a,b){ return b.pending - a.pending || b.count - a.count; })[0] || null;
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         total:rows.length,
         tagCount:tagRows.length,
         taggedRecords:taggedRecords,
@@ -7720,7 +7761,7 @@ function buildPaipanExplanation(result){
       try { info = buildHistoryTagInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         hasPanel:!!document.getElementById('historyTagInsightPanel'),
         hasSummary:!!document.getElementById('historyTagInsightSummary'),
         hasKpis:!!document.getElementById('historyTagInsightKpis'),
@@ -7817,7 +7858,7 @@ function buildPaipanExplanation(result){
         return (historyCaseFeatured(b) - historyCaseFeatured(a)) || (historyCaseReviewed(b) - historyCaseReviewed(a)) || (new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
       }).slice(0,6);
       const avg = scored.length ? Math.round(scored.reduce(function(sum,row){ return sum + row.score; }, 0) / scored.length * 100) : null;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', total:rows.length, featuredCount:featured.length, reviewedCount:reviewed.length, pendingCount:pending.length, averageAccuracy:avg, selected:selected, best:scored.length ? scored[0].item : null, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', total:rows.length, featuredCount:featured.length, reviewedCount:reviewed.length, pendingCount:pending.length, averageAccuracy:avg, selected:selected, best:scored.length ? scored[0].item : null, ok:true };
     }
     function renderHistoryCaseLibraryPanel(filtered){
       const panel = document.getElementById('historyCaseLibraryPanel');
@@ -7863,7 +7904,7 @@ function buildPaipanExplanation(result){
     function getHistoryCaseLibraryAudit(){
       let info = null;
       try { info = buildHistoryCaseLibraryInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasToolbar:!!document.getElementById('historyCaseToolbar'), hasPanel:!!document.getElementById('historyCaseLibraryPanel'), hasKpis:!!document.getElementById('historyCaseLibraryKpis'), hasList:!!document.getElementById('historyCaseLibraryList'), hasSort:!!document.getElementById('historyCaseSortMode'), hasBatchFeature:!!document.getElementById('batchFeatureHistoryBtn'), hasBatchUnfeature:!!document.getElementById('batchUnfeatureHistoryBtn'), filter:historyCaseQuickFilter, sort:historyCaseSortMode, featuredCount:info && info.featuredCount || 0, functions:{ render:typeof renderHistoryCaseLibraryPanel === 'function', build:typeof buildHistoryCaseLibraryInsights === 'function', toggle:typeof toggleHistoryCaseFeatured === 'function', batch:typeof batchSetHistoryCaseFeatured === 'function' }, ok:!!(document.getElementById('historyCaseToolbar') && document.getElementById('historyCaseLibraryPanel') && document.getElementById('historyCaseLibraryKpis') && document.getElementById('historyCaseLibraryList') && document.getElementById('historyCaseSortMode') && typeof buildHistoryCaseLibraryInsights === 'function' && typeof renderHistoryCaseLibraryPanel === 'function' && typeof toggleHistoryCaseFeatured === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasToolbar:!!document.getElementById('historyCaseToolbar'), hasPanel:!!document.getElementById('historyCaseLibraryPanel'), hasKpis:!!document.getElementById('historyCaseLibraryKpis'), hasList:!!document.getElementById('historyCaseLibraryList'), hasSort:!!document.getElementById('historyCaseSortMode'), hasBatchFeature:!!document.getElementById('batchFeatureHistoryBtn'), hasBatchUnfeature:!!document.getElementById('batchUnfeatureHistoryBtn'), filter:historyCaseQuickFilter, sort:historyCaseSortMode, featuredCount:info && info.featuredCount || 0, functions:{ render:typeof renderHistoryCaseLibraryPanel === 'function', build:typeof buildHistoryCaseLibraryInsights === 'function', toggle:typeof toggleHistoryCaseFeatured === 'function', batch:typeof batchSetHistoryCaseFeatured === 'function' }, ok:!!(document.getElementById('historyCaseToolbar') && document.getElementById('historyCaseLibraryPanel') && document.getElementById('historyCaseLibraryKpis') && document.getElementById('historyCaseLibraryList') && document.getElementById('historyCaseSortMode') && typeof buildHistoryCaseLibraryInsights === 'function' && typeof renderHistoryCaseLibraryPanel === 'function' && typeof toggleHistoryCaseFeatured === 'function') };
     }
     try { window.setHistoryCaseFilter = setHistoryCaseFilter; window.setHistoryCaseSort = setHistoryCaseSort; window.buildHistoryCaseLibraryInsights = buildHistoryCaseLibraryInsights; window.renderHistoryCaseLibraryPanel = renderHistoryCaseLibraryPanel; window.toggleHistoryCaseFeatured = toggleHistoryCaseFeatured; window.batchSetHistoryCaseFeatured = batchSetHistoryCaseFeatured; window.getHistoryCaseLibraryAudit = getHistoryCaseLibraryAudit; } catch(e) {}
 
@@ -7916,7 +7957,7 @@ function buildPaipanExplanation(result){
         const reason = Array.from(row.reasons.entries()).sort(function(a,b){ return b[1]-a[1]; })[0];
         return Object.assign({}, row, { scene: scene ? scene[0] : '未记录', reason: reason ? reason[0] : '未归类' });
       });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, issueReviewCount:issueReviewCount, learningNoteCount:learningNoteCount, taggedReviewCount:taggedReviewCount, reasonCount:reasonMap.size, learningTagCount:tagMap.size, topReasons:topReasons, topTags:topTags, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, issueReviewCount:issueReviewCount, learningNoteCount:learningNoteCount, taggedReviewCount:taggedReviewCount, reasonCount:reasonMap.size, learningTagCount:tagMap.size, topReasons:topReasons, topTags:topTags, ok:true };
     }
     function renderHistoryReviewLearningPanel(filtered){
       const panel = document.getElementById('historyReviewLearningPanel');
@@ -7947,7 +7988,7 @@ function buildPaipanExplanation(result){
     function getHistoryReviewLearningAudit(){
       let info = null;
       try { info = buildHistoryReviewLearningInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyReviewLearningPanel'), hasKpis:!!document.getElementById('historyReviewLearningKpis'), hasList:!!document.getElementById('historyReviewLearningList'), hasRefresh:!!document.getElementById('historyReviewLearningRefreshBtn'), reasonCount:info && info.reasonCount || 0, learningTagCount:info && info.learningTagCount || 0, functions:{ build:typeof buildHistoryReviewLearningInsights === 'function', render:typeof renderHistoryReviewLearningPanel === 'function', search:typeof applyHistoryReviewLearningSearch === 'function' }, ok:!!(document.getElementById('historyReviewLearningPanel') && document.getElementById('historyReviewLearningKpis') && document.getElementById('historyReviewLearningList') && typeof buildHistoryReviewLearningInsights === 'function' && typeof renderHistoryReviewLearningPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyReviewLearningPanel'), hasKpis:!!document.getElementById('historyReviewLearningKpis'), hasList:!!document.getElementById('historyReviewLearningList'), hasRefresh:!!document.getElementById('historyReviewLearningRefreshBtn'), reasonCount:info && info.reasonCount || 0, learningTagCount:info && info.learningTagCount || 0, functions:{ build:typeof buildHistoryReviewLearningInsights === 'function', render:typeof renderHistoryReviewLearningPanel === 'function', search:typeof applyHistoryReviewLearningSearch === 'function' }, ok:!!(document.getElementById('historyReviewLearningPanel') && document.getElementById('historyReviewLearningKpis') && document.getElementById('historyReviewLearningList') && typeof buildHistoryReviewLearningInsights === 'function' && typeof renderHistoryReviewLearningPanel === 'function') };
     }
     try { window.buildHistoryReviewLearningInsights = buildHistoryReviewLearningInsights; window.renderHistoryReviewLearningPanel = renderHistoryReviewLearningPanel; window.applyHistoryReviewLearningSearch = applyHistoryReviewLearningSearch; window.getHistoryReviewLearningAudit = getHistoryReviewLearningAudit; } catch(e) {}
 
@@ -8031,7 +8072,7 @@ function buildPaipanExplanation(result){
       const scoredCases = rows.map(function(item){ return { item:item, score:historyCaseLearningScore(item) }; }).sort(function(a,b){ return (b.score.score || 0) - (a.score.score || 0) || new Date(b.item && b.item.createdAt || 0) - new Date(a.item && a.item.createdAt || 0); }).slice(0,6);
       const avgAccuracy = judgedCount ? Math.round(scoreUnit / judgedCount * 100) : null;
       const highScoreCount = rows.filter(function(item){ return historyCaseLearningScore(item).score >= 70; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, averageAccuracy:avgAccuracy, timingEarly:timingEarly, timingLate:timingLate, matched:matched, missOrPartial:missOrPartial, timingDeviation:timingEarly + timingLate, monthRows:monthRows, sceneRows:sceneRows, scoredCases:scoredCases, highScoreCount:highScoreCount, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, reviewCount:reviewCount, judgedCount:judgedCount, averageAccuracy:avgAccuracy, timingEarly:timingEarly, timingLate:timingLate, matched:matched, missOrPartial:missOrPartial, timingDeviation:timingEarly + timingLate, monthRows:monthRows, sceneRows:sceneRows, scoredCases:scoredCases, highScoreCount:highScoreCount, ok:true };
     }
     function renderHistoryReviewTrendPanel(filtered){
       const panel = document.getElementById('historyReviewTrendPanel');
@@ -8063,7 +8104,7 @@ function buildPaipanExplanation(result){
     function getHistoryReviewTrendAudit(){
       let info = null;
       try { info = buildHistoryReviewTrendInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyReviewTrendPanel'), hasKpis:!!document.getElementById('historyReviewTrendKpis'), hasList:!!document.getElementById('historyReviewTrendList'), hasRefresh:!!document.getElementById('historyReviewTrendRefreshBtn'), reviewCount:info && info.reviewCount || 0, timingDeviation:info && info.timingDeviation || 0, highScoreCount:info && info.highScoreCount || 0, functions:{ build:typeof buildHistoryReviewTrendInsights === 'function', render:typeof renderHistoryReviewTrendPanel === 'function', score:typeof historyCaseLearningScore === 'function', search:typeof applyHistoryReviewTrendSearch === 'function' }, ok:!!(document.getElementById('historyReviewTrendPanel') && document.getElementById('historyReviewTrendKpis') && document.getElementById('historyReviewTrendList') && typeof buildHistoryReviewTrendInsights === 'function' && typeof renderHistoryReviewTrendPanel === 'function' && typeof historyCaseLearningScore === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyReviewTrendPanel'), hasKpis:!!document.getElementById('historyReviewTrendKpis'), hasList:!!document.getElementById('historyReviewTrendList'), hasRefresh:!!document.getElementById('historyReviewTrendRefreshBtn'), reviewCount:info && info.reviewCount || 0, timingDeviation:info && info.timingDeviation || 0, highScoreCount:info && info.highScoreCount || 0, functions:{ build:typeof buildHistoryReviewTrendInsights === 'function', render:typeof renderHistoryReviewTrendPanel === 'function', score:typeof historyCaseLearningScore === 'function', search:typeof applyHistoryReviewTrendSearch === 'function' }, ok:!!(document.getElementById('historyReviewTrendPanel') && document.getElementById('historyReviewTrendKpis') && document.getElementById('historyReviewTrendList') && typeof buildHistoryReviewTrendInsights === 'function' && typeof renderHistoryReviewTrendPanel === 'function' && typeof historyCaseLearningScore === 'function') };
     }
     try { window.historyCaseLearningScore = historyCaseLearningScore; window.historyCaseLearningScoreText = historyCaseLearningScoreText; window.buildHistoryReviewTrendInsights = buildHistoryReviewTrendInsights; window.renderHistoryReviewTrendPanel = renderHistoryReviewTrendPanel; window.applyHistoryReviewTrendSearch = applyHistoryReviewTrendSearch; window.getHistoryReviewTrendAudit = getHistoryReviewTrendAudit; } catch(e) {}
 
@@ -8109,7 +8150,7 @@ function buildPaipanExplanation(result){
       const missingLearning = rows.filter(function(item){ return historyQuickReviewReasonList(item).some(function(r){ return r.type === 'missingLearning'; }); });
       const pending = rows.filter(function(item){ return historyQuickReviewReasonList(item).some(function(r){ return r.type === 'pending'; }); });
       const selected = rows.filter(function(item){ return historyQuickReviewMatch(item, historyQuickReviewFilter); }).sort(function(a,b){ return historyQuickReviewPriority(b) - historyQuickReviewPriority(a) || new Date(b && b.createdAt || 0) - new Date(a && a.createdAt || 0); });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, reviewCount:allReview.length, lowScoreCount:lowScore.length, timingCount:timing.length, missingReasonCount:missingReason.length, missingLearningCount:missingLearning.length, pendingCount:pending.length, selected:selected.slice(0,8), filter:historyQuickReviewFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, reviewCount:allReview.length, lowScoreCount:lowScore.length, timingCount:timing.length, missingReasonCount:missingReason.length, missingLearningCount:missingLearning.length, pendingCount:pending.length, selected:selected.slice(0,8), filter:historyQuickReviewFilter, ok:true };
     }
     function historyQuickReviewFilterLabel(value){
       const map = { all:'全部复查', lowScore:'低分案例', timing:'应期偏差', missingReason:'未归类', missingLearning:'待补学习要点', pending:'待复盘' };
@@ -8197,7 +8238,7 @@ function buildPaipanExplanation(result){
       const pending = actionRows.find(function(x){ return x.type === 'pending'; }) || { count:0 };
       const loopCount = historyReviewLoopBucketRows(rows, 'all').length;
       const completed = rows.filter(function(item){ return getReviewEntries(item).length && !historyQuickReviewReasonList(item).some(function(r){ return r.type !== 'stable'; }); }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, loopCount:loopCount, completedCount:completed, lowScoreCount:lowScore.count, timingCount:timing.count, missingReasonCount:missingReason.count, missingLearningCount:missingLearning.count, pendingCount:pending.count, actionRows:actionRows, selected:selected, filter:historyReviewLoopFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, loopCount:loopCount, completedCount:completed, lowScoreCount:lowScore.count, timingCount:timing.count, missingReasonCount:missingReason.count, missingLearningCount:missingLearning.count, pendingCount:pending.count, actionRows:actionRows, selected:selected, filter:historyReviewLoopFilter, ok:true };
     }
     function updateHistoryReviewLoopButtons(){
       const toolbar = document.getElementById('historyReviewLoopToolbar');
@@ -8268,7 +8309,7 @@ function buildPaipanExplanation(result){
     function getHistoryReviewLoopAudit(){
       let info = null;
       try { info = buildHistoryReviewLoopInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyReviewLoopPanel'), hasKpis:!!document.getElementById('historyReviewLoopKpis'), hasToolbar:!!document.getElementById('historyReviewLoopToolbar'), hasList:!!document.getElementById('historyReviewLoopList'), hasThemeAuditList:!!document.getElementById('historyThemeAuditList'), hasRefresh:!!document.getElementById('historyReviewLoopRefreshBtn'), loopCount:info && info.loopCount || 0, pendingCount:info && info.pendingCount || 0, filter:historyReviewLoopFilter, functions:{ build:typeof buildHistoryReviewLoopInsights === 'function', render:typeof renderHistoryReviewLoopPanel === 'function', select:typeof selectHistoryReviewLoopBucket === 'function', feature:typeof markHistoryReviewLoopBucketFeatured === 'function', search:typeof applyHistoryReviewLoopSearch === 'function' }, ok:!!(document.getElementById('historyReviewLoopPanel') && document.getElementById('historyReviewLoopKpis') && document.getElementById('historyReviewLoopToolbar') && document.getElementById('historyReviewLoopList') && document.getElementById('historyThemeAuditList') && typeof buildHistoryReviewLoopInsights === 'function' && typeof renderHistoryReviewLoopPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyReviewLoopPanel'), hasKpis:!!document.getElementById('historyReviewLoopKpis'), hasToolbar:!!document.getElementById('historyReviewLoopToolbar'), hasList:!!document.getElementById('historyReviewLoopList'), hasThemeAuditList:!!document.getElementById('historyThemeAuditList'), hasRefresh:!!document.getElementById('historyReviewLoopRefreshBtn'), loopCount:info && info.loopCount || 0, pendingCount:info && info.pendingCount || 0, filter:historyReviewLoopFilter, functions:{ build:typeof buildHistoryReviewLoopInsights === 'function', render:typeof renderHistoryReviewLoopPanel === 'function', select:typeof selectHistoryReviewLoopBucket === 'function', feature:typeof markHistoryReviewLoopBucketFeatured === 'function', search:typeof applyHistoryReviewLoopSearch === 'function' }, ok:!!(document.getElementById('historyReviewLoopPanel') && document.getElementById('historyReviewLoopKpis') && document.getElementById('historyReviewLoopToolbar') && document.getElementById('historyReviewLoopList') && document.getElementById('historyThemeAuditList') && typeof buildHistoryReviewLoopInsights === 'function' && typeof renderHistoryReviewLoopPanel === 'function') };
     }
     let historyReviewTemplateFilter = 'all';
     let historyExperienceFilter = 'all';
@@ -8347,7 +8388,7 @@ function buildPaipanExplanation(result){
       const selected = historyReviewTemplateFilter === 'all' ? cards : cards.filter(function(c){ return c.type === historyReviewTemplateFilter; });
       const recommended = cards.filter(function(c){ return c.count > 0; }).length;
       const usageTotal = cards.reduce(function(sum,c){ return sum + Number(c.usageCount || 0); }, 0);
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, templateCount:cards.length, actionCount:actionCount, stableCount:stableCount, recommendedCount:recommended, usageTotal:usageTotal, selected:selected, filter:historyReviewTemplateFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, templateCount:cards.length, actionCount:actionCount, stableCount:stableCount, recommendedCount:recommended, usageTotal:usageTotal, selected:selected, filter:historyReviewTemplateFilter, ok:true };
     }
     function historyReviewTemplateText(row){
       if(!row) return '';
@@ -8457,7 +8498,7 @@ function buildPaipanExplanation(result){
     function getHistoryReviewTemplateAudit(){
       let info = null;
       try { info = buildHistoryReviewTemplateInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyReviewTemplatePanel'), hasKpis:!!document.getElementById('historyReviewTemplateKpis'), hasToolbar:!!document.getElementById('historyReviewTemplateToolbar'), hasList:!!document.getElementById('historyReviewTemplateList'), hasRefresh:!!document.getElementById('historyReviewTemplateRefreshBtn'), templateCount:info && info.templateCount || 0, actionCount:info && info.actionCount || 0, stableCount:info && info.stableCount || 0, filter:historyReviewTemplateFilter, usageTotal:info && info.usageTotal || 0, functions:{ build:typeof buildHistoryReviewTemplateInsights === 'function', render:typeof renderHistoryReviewTemplatePanel === 'function', search:typeof applyHistoryReviewTemplateSearch === 'function', copy:typeof copyHistoryReviewTemplate === 'function', apply:typeof applyHistoryReviewTemplateDraft === 'function', usage:typeof incrementReviewTemplateUsage === 'function', select:typeof selectHistoryReviewTemplateBucket === 'function' }, ok:!!(document.getElementById('historyReviewTemplatePanel') && document.getElementById('historyReviewTemplateKpis') && document.getElementById('historyReviewTemplateToolbar') && document.getElementById('historyReviewTemplateList') && typeof buildHistoryReviewTemplateInsights === 'function' && typeof renderHistoryReviewTemplatePanel === 'function' && typeof copyHistoryReviewTemplate === 'function' && typeof applyHistoryReviewTemplateDraft === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyReviewTemplatePanel'), hasKpis:!!document.getElementById('historyReviewTemplateKpis'), hasToolbar:!!document.getElementById('historyReviewTemplateToolbar'), hasList:!!document.getElementById('historyReviewTemplateList'), hasRefresh:!!document.getElementById('historyReviewTemplateRefreshBtn'), templateCount:info && info.templateCount || 0, actionCount:info && info.actionCount || 0, stableCount:info && info.stableCount || 0, filter:historyReviewTemplateFilter, usageTotal:info && info.usageTotal || 0, functions:{ build:typeof buildHistoryReviewTemplateInsights === 'function', render:typeof renderHistoryReviewTemplatePanel === 'function', search:typeof applyHistoryReviewTemplateSearch === 'function', copy:typeof copyHistoryReviewTemplate === 'function', apply:typeof applyHistoryReviewTemplateDraft === 'function', usage:typeof incrementReviewTemplateUsage === 'function', select:typeof selectHistoryReviewTemplateBucket === 'function' }, ok:!!(document.getElementById('historyReviewTemplatePanel') && document.getElementById('historyReviewTemplateKpis') && document.getElementById('historyReviewTemplateToolbar') && document.getElementById('historyReviewTemplateList') && typeof buildHistoryReviewTemplateInsights === 'function' && typeof renderHistoryReviewTemplatePanel === 'function' && typeof copyHistoryReviewTemplate === 'function' && typeof applyHistoryReviewTemplateDraft === 'function') };
     }
     try { window.buildHistoryReviewTemplateInsights = buildHistoryReviewTemplateInsights; window.renderHistoryReviewTemplatePanel = renderHistoryReviewTemplatePanel; window.applyHistoryReviewTemplateSearch = applyHistoryReviewTemplateSearch; window.copyHistoryReviewTemplate = copyHistoryReviewTemplate; window.applyHistoryReviewTemplateDraft = applyHistoryReviewTemplateDraft; window.fillReviewFormWithTemplate = fillReviewFormWithTemplate; window.selectHistoryReviewTemplateBucket = selectHistoryReviewTemplateBucket; window.markHistoryReviewTemplateBucketFeatured = markHistoryReviewTemplateBucketFeatured; window.getHistoryReviewTemplateAudit = getHistoryReviewTemplateAudit; } catch(e) {}
 
@@ -8519,7 +8560,7 @@ function buildPaipanExplanation(result){
       const timing = rows.filter(function(row){ return row.timing; }).length;
       const learning = rows.filter(function(row){ return row.hasLearning; }).length;
       const featured = rows.filter(function(row){ return row.featured; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRows:rows.length, selected:selected, selectedCount:filterHistoryExperienceRows(rows, historyExperienceFilter).length, highScore:highScore, lowScore:lowScore, timing:timing, learning:learning, featured:featured, filter:historyExperienceFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRows:rows.length, selected:selected, selectedCount:filterHistoryExperienceRows(rows, historyExperienceFilter).length, highScore:highScore, lowScore:lowScore, timing:timing, learning:learning, featured:featured, filter:historyExperienceFilter, ok:true };
     }
     function experienceRowTitle(row){
       const item = row && row.item || {};
@@ -8577,7 +8618,7 @@ function buildPaipanExplanation(result){
     function getHistoryExperienceLibraryAudit(){
       let info = null;
       try { info = buildHistoryExperienceLibraryInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyExperienceLibraryPanel'), hasKpis:!!document.getElementById('historyExperienceLibraryKpis'), hasToolbar:!!document.getElementById('historyExperienceLibraryToolbar'), hasList:!!document.getElementById('historyExperienceLibraryList'), hasRefresh:!!document.getElementById('historyExperienceLibraryRefreshBtn'), totalRows:info && info.totalRows || 0, highScore:info && info.highScore || 0, timing:info && info.timing || 0, filter:historyExperienceFilter, functions:{ build:typeof buildHistoryExperienceLibraryInsights === 'function', render:typeof renderHistoryExperienceLibraryPanel === 'function', search:typeof applyHistoryExperienceSearch === 'function', copy:typeof copyHistoryExperienceByIndex === 'function' }, ok:!!(document.getElementById('historyExperienceLibraryPanel') && document.getElementById('historyExperienceLibraryKpis') && document.getElementById('historyExperienceLibraryToolbar') && document.getElementById('historyExperienceLibraryList') && typeof buildHistoryExperienceLibraryInsights === 'function' && typeof renderHistoryExperienceLibraryPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyExperienceLibraryPanel'), hasKpis:!!document.getElementById('historyExperienceLibraryKpis'), hasToolbar:!!document.getElementById('historyExperienceLibraryToolbar'), hasList:!!document.getElementById('historyExperienceLibraryList'), hasRefresh:!!document.getElementById('historyExperienceLibraryRefreshBtn'), totalRows:info && info.totalRows || 0, highScore:info && info.highScore || 0, timing:info && info.timing || 0, filter:historyExperienceFilter, functions:{ build:typeof buildHistoryExperienceLibraryInsights === 'function', render:typeof renderHistoryExperienceLibraryPanel === 'function', search:typeof applyHistoryExperienceSearch === 'function', copy:typeof copyHistoryExperienceByIndex === 'function' }, ok:!!(document.getElementById('historyExperienceLibraryPanel') && document.getElementById('historyExperienceLibraryKpis') && document.getElementById('historyExperienceLibraryToolbar') && document.getElementById('historyExperienceLibraryList') && typeof buildHistoryExperienceLibraryInsights === 'function' && typeof renderHistoryExperienceLibraryPanel === 'function') };
     }
     try { window.buildHistoryExperienceLibraryInsights = buildHistoryExperienceLibraryInsights; window.renderHistoryExperienceLibraryPanel = renderHistoryExperienceLibraryPanel; window.setHistoryExperienceFilter = setHistoryExperienceFilter; window.applyHistoryExperienceSearch = applyHistoryExperienceSearch; window.copyHistoryExperienceByIndex = copyHistoryExperienceByIndex; window.getHistoryExperienceLibraryAudit = getHistoryExperienceLibraryAudit; } catch(e) {}
 
@@ -8634,7 +8675,7 @@ function buildPaipanExplanation(result){
       const exportRows = rows.length;
       const reviewed = rows.filter(function(row){ return row.review && row.review.accuracy; }).length;
       const timing = rows.filter(function(row){ return row.timing; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', rows:rows, total:total, averageScore:avg, reviewed:reviewed, timing:timing, highValueCount:highValue.length, exportRows:exportRows, groups:groups, templates:templates, highValue:highValue, filter:historyExperienceFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', rows:rows, total:total, averageScore:avg, reviewed:reviewed, timing:timing, highValueCount:highValue.length, exportRows:exportRows, groups:groups, templates:templates, highValue:highValue, filter:historyExperienceFilter, ok:true };
     }
     function qualityBarHTML(label, count, total){
       const pct = total ? Math.round((Number(count)||0) / total * 100) : 0;
@@ -8814,7 +8855,7 @@ function buildPaipanExplanation(result){
     function getHistoryQualityDashboardAudit(){
       let info = null;
       try { info = buildHistoryQualityDashboardInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyQualityDashboardPanel'), hasKpis:!!document.getElementById('historyQualityDashboardKpis'), hasToolbar:!!document.getElementById('historyQualityDashboardToolbar'), hasList:!!document.getElementById('historyQualityDashboardList'), hasRefresh:!!document.getElementById('historyQualityDashboardRefreshBtn'), exportRows:info && info.exportRows || 0, averageScore:info && info.averageScore || 0, functions:{ build:typeof buildHistoryQualityDashboardInsights === 'function', render:typeof renderHistoryQualityDashboardPanel === 'function', csv:typeof exportHistoryExperienceCSV === 'function', pdf:typeof exportHistoryExperiencePdfReport === 'function', copy:typeof copyHistoryExperienceExportSummary === 'function', select:typeof selectHighValueExperienceRows === 'function' }, ok:!!(document.getElementById('historyQualityDashboardPanel') && document.getElementById('historyQualityDashboardKpis') && document.getElementById('historyQualityDashboardToolbar') && document.getElementById('historyQualityDashboardList') && typeof buildHistoryQualityDashboardInsights === 'function' && typeof renderHistoryQualityDashboardPanel === 'function' && typeof exportHistoryExperienceCSV === 'function' && typeof exportHistoryExperiencePdfReport === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyQualityDashboardPanel'), hasKpis:!!document.getElementById('historyQualityDashboardKpis'), hasToolbar:!!document.getElementById('historyQualityDashboardToolbar'), hasList:!!document.getElementById('historyQualityDashboardList'), hasRefresh:!!document.getElementById('historyQualityDashboardRefreshBtn'), exportRows:info && info.exportRows || 0, averageScore:info && info.averageScore || 0, functions:{ build:typeof buildHistoryQualityDashboardInsights === 'function', render:typeof renderHistoryQualityDashboardPanel === 'function', csv:typeof exportHistoryExperienceCSV === 'function', pdf:typeof exportHistoryExperiencePdfReport === 'function', copy:typeof copyHistoryExperienceExportSummary === 'function', select:typeof selectHighValueExperienceRows === 'function' }, ok:!!(document.getElementById('historyQualityDashboardPanel') && document.getElementById('historyQualityDashboardKpis') && document.getElementById('historyQualityDashboardToolbar') && document.getElementById('historyQualityDashboardList') && typeof buildHistoryQualityDashboardInsights === 'function' && typeof renderHistoryQualityDashboardPanel === 'function' && typeof exportHistoryExperienceCSV === 'function' && typeof exportHistoryExperiencePdfReport === 'function') };
     }
 
     function historyExperienceExportFieldModeLabel(mode){
@@ -8871,7 +8912,7 @@ function buildPaipanExplanation(result){
       const longTextCount = rows.filter(function(row){ const item=row.item||{}; const r=row.review||{}; return String(getQuestionDisplay(item)||'').length > 80 || String(item.overallText||'').length > 120 || String(r.learning||'').length > 80 || String(r.note||'').length > 100; }).length;
       const fieldCount = historyExperienceCsvHeaders(mode).length;
       const printable = Math.min(rows.length, 60);
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', rows:rows, total:rows.length, printable:printable, mode:mode, modeLabel:historyExperienceExportFieldModeLabel(mode), fieldCount:fieldCount, longTextCount:longTextCount, pageBreakReady:true, mobilePrintReady:true, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', rows:rows, total:rows.length, printable:printable, mode:mode, modeLabel:historyExperienceExportFieldModeLabel(mode), fieldCount:fieldCount, longTextCount:longTextCount, pageBreakReady:true, mobilePrintReady:true, ok:true };
     }
     function renderHistoryPrintExportPanel(filtered){
       const panel = document.getElementById('historyPrintExportPanel');
@@ -8903,7 +8944,7 @@ function buildPaipanExplanation(result){
     function getHistoryPrintExportAudit(){
       let info = null;
       try { info = buildHistoryPrintExportInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyPrintExportPanel'), hasKpis:!!document.getElementById('historyPrintExportKpis'), hasToolbar:!!document.getElementById('historyPrintExportToolbar'), hasList:!!document.getElementById('historyPrintExportList'), hasRefresh:!!document.getElementById('historyPrintExportRefreshBtn'), fieldMode:info && info.mode || '', fieldCount:info && info.fieldCount || 0, longTextCount:info && info.longTextCount || 0, functions:{ build:typeof buildHistoryPrintExportInsights === 'function', render:typeof renderHistoryPrintExportPanel === 'function', setMode:typeof setHistoryExperienceExportFieldMode === 'function', csvHeaders:typeof historyExperienceCsvHeaders === 'function', printStyles:typeof historyExperiencePrintStyles === 'function' }, ok:!!(document.getElementById('historyPrintExportPanel') && document.getElementById('historyPrintExportKpis') && document.getElementById('historyPrintExportToolbar') && document.getElementById('historyPrintExportList') && typeof buildHistoryPrintExportInsights === 'function' && typeof renderHistoryPrintExportPanel === 'function' && typeof setHistoryExperienceExportFieldMode === 'function' && typeof historyExperiencePrintStyles === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyPrintExportPanel'), hasKpis:!!document.getElementById('historyPrintExportKpis'), hasToolbar:!!document.getElementById('historyPrintExportToolbar'), hasList:!!document.getElementById('historyPrintExportList'), hasRefresh:!!document.getElementById('historyPrintExportRefreshBtn'), fieldMode:info && info.mode || '', fieldCount:info && info.fieldCount || 0, longTextCount:info && info.longTextCount || 0, functions:{ build:typeof buildHistoryPrintExportInsights === 'function', render:typeof renderHistoryPrintExportPanel === 'function', setMode:typeof setHistoryExperienceExportFieldMode === 'function', csvHeaders:typeof historyExperienceCsvHeaders === 'function', printStyles:typeof historyExperiencePrintStyles === 'function' }, ok:!!(document.getElementById('historyPrintExportPanel') && document.getElementById('historyPrintExportKpis') && document.getElementById('historyPrintExportToolbar') && document.getElementById('historyPrintExportList') && typeof buildHistoryPrintExportInsights === 'function' && typeof renderHistoryPrintExportPanel === 'function' && typeof setHistoryExperienceExportFieldMode === 'function' && typeof historyExperiencePrintStyles === 'function') };
     }
 
     function buildHistoryReportIndexInsights(list){
@@ -8914,7 +8955,7 @@ function buildPaipanExplanation(result){
       const defs = historyExperienceReportPresetDefinitions();
       const groups = historyExperienceGroupedRows(rows.slice(0,60), chapter);
       const largest = groups.slice().sort(function(a,b){ return b.rows.length - a.rows.length; })[0] || null;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', rows:rows, total:rows.length, printable:Math.min(rows.length,60), fieldMode:mode, fieldLabel:historyExperienceExportFieldModeLabel(mode), chapterMode:chapter, chapterLabel:historyExperienceChapterModeLabel(chapter), preset:preset, presetLabel:(defs[preset] && defs[preset].label) || '完整报告', presetDesc:(defs[preset] && defs[preset].desc) || '', groups:groups, groupCount:groups.length, largestChapter:largest, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', rows:rows, total:rows.length, printable:Math.min(rows.length,60), fieldMode:mode, fieldLabel:historyExperienceExportFieldModeLabel(mode), chapterMode:chapter, chapterLabel:historyExperienceChapterModeLabel(chapter), preset:preset, presetLabel:(defs[preset] && defs[preset].label) || '完整报告', presetDesc:(defs[preset] && defs[preset].desc) || '', groups:groups, groupCount:groups.length, largestChapter:largest, ok:true };
     }
     function renderHistoryReportIndexPanel(filtered){
       const panel = document.getElementById('historyReportIndexPanel');
@@ -8946,7 +8987,7 @@ function buildPaipanExplanation(result){
     function getHistoryReportIndexAudit(){
       let info = null;
       try { info = buildHistoryReportIndexInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyReportIndexPanel'), hasKpis:!!document.getElementById('historyReportIndexKpis'), hasToolbar:!!document.getElementById('historyReportIndexToolbar'), hasList:!!document.getElementById('historyReportIndexList'), hasRefresh:!!document.getElementById('historyReportIndexRefreshBtn'), preset:info && info.preset || '', fieldMode:info && info.fieldMode || '', chapterMode:info && info.chapterMode || '', groupCount:info && info.groupCount || 0, functions:{ build:typeof buildHistoryReportIndexInsights === 'function', render:typeof renderHistoryReportIndexPanel === 'function', applyPreset:typeof applyHistoryExperienceReportPreset === 'function', setChapter:typeof setHistoryExperienceReportChapterMode === 'function', group:typeof historyExperienceGroupedRows === 'function' }, ok:!!(document.getElementById('historyReportIndexPanel') && document.getElementById('historyReportIndexKpis') && document.getElementById('historyReportIndexToolbar') && document.getElementById('historyReportIndexList') && typeof buildHistoryReportIndexInsights === 'function' && typeof renderHistoryReportIndexPanel === 'function' && typeof applyHistoryExperienceReportPreset === 'function' && typeof historyExperienceGroupedRows === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyReportIndexPanel'), hasKpis:!!document.getElementById('historyReportIndexKpis'), hasToolbar:!!document.getElementById('historyReportIndexToolbar'), hasList:!!document.getElementById('historyReportIndexList'), hasRefresh:!!document.getElementById('historyReportIndexRefreshBtn'), preset:info && info.preset || '', fieldMode:info && info.fieldMode || '', chapterMode:info && info.chapterMode || '', groupCount:info && info.groupCount || 0, functions:{ build:typeof buildHistoryReportIndexInsights === 'function', render:typeof renderHistoryReportIndexPanel === 'function', applyPreset:typeof applyHistoryExperienceReportPreset === 'function', setChapter:typeof setHistoryExperienceReportChapterMode === 'function', group:typeof historyExperienceGroupedRows === 'function' }, ok:!!(document.getElementById('historyReportIndexPanel') && document.getElementById('historyReportIndexKpis') && document.getElementById('historyReportIndexToolbar') && document.getElementById('historyReportIndexList') && typeof buildHistoryReportIndexInsights === 'function' && typeof renderHistoryReportIndexPanel === 'function' && typeof applyHistoryExperienceReportPreset === 'function' && typeof historyExperienceGroupedRows === 'function') };
     }
 
     function historyChapterSummaryFilterLabel(filter){
@@ -8987,7 +9028,7 @@ function buildPaipanExplanation(result){
       const needsReview = groups.filter(function(g){ return (g.needsReviewCount || 0) > 0; }).length;
       const highScore = groups.filter(function(g){ return (g.avgScore || 0) >= 80 || (g.highScoreCount || 0) > 0; }).length;
       const featured = groups.filter(function(g){ return (g.featuredCount || 0) > 0; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', groups:groups, selected:selected, groupCount:groups.length, totalRows:totalRows, avgScore:avgScore, needsReview:needsReview, highScore:highScore, featured:featured, filter:historyChapterSummaryFilter, chapterMode:getHistoryExperienceReportChapterMode(), ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', groups:groups, selected:selected, groupCount:groups.length, totalRows:totalRows, avgScore:avgScore, needsReview:needsReview, highScore:highScore, featured:featured, filter:historyChapterSummaryFilter, chapterMode:getHistoryExperienceReportChapterMode(), ok:true };
     }
     function renderHistoryChapterSummaryPanel(filtered){
       const panel = document.getElementById('historyChapterSummaryPanel');
@@ -9046,7 +9087,7 @@ function buildPaipanExplanation(result){
     function getHistoryChapterSummaryAudit(){
       let info = null;
       try { info = buildHistoryChapterSummaryInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyChapterSummaryPanel'), hasKpis:!!document.getElementById('historyChapterSummaryKpis'), hasToolbar:!!document.getElementById('historyChapterSummaryToolbar'), hasList:!!document.getElementById('historyChapterSummaryList'), hasRefresh:!!document.getElementById('historyChapterSummaryRefreshBtn'), groupCount:info && info.groupCount || 0, needsReview:info && info.needsReview || 0, filter:historyChapterSummaryFilter, functions:{ build:typeof buildHistoryChapterSummaryInsights === 'function', render:typeof renderHistoryChapterSummaryPanel === 'function', select:typeof selectHistoryChapterSummaryGroup === 'function', feature:typeof markHistoryChapterSummaryGroupFeatured === 'function', search:typeof applyHistoryChapterSummarySearch === 'function' }, ok:!!(document.getElementById('historyChapterSummaryPanel') && document.getElementById('historyChapterSummaryKpis') && document.getElementById('historyChapterSummaryToolbar') && document.getElementById('historyChapterSummaryList') && typeof buildHistoryChapterSummaryInsights === 'function' && typeof renderHistoryChapterSummaryPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyChapterSummaryPanel'), hasKpis:!!document.getElementById('historyChapterSummaryKpis'), hasToolbar:!!document.getElementById('historyChapterSummaryToolbar'), hasList:!!document.getElementById('historyChapterSummaryList'), hasRefresh:!!document.getElementById('historyChapterSummaryRefreshBtn'), groupCount:info && info.groupCount || 0, needsReview:info && info.needsReview || 0, filter:historyChapterSummaryFilter, functions:{ build:typeof buildHistoryChapterSummaryInsights === 'function', render:typeof renderHistoryChapterSummaryPanel === 'function', select:typeof selectHistoryChapterSummaryGroup === 'function', feature:typeof markHistoryChapterSummaryGroupFeatured === 'function', search:typeof applyHistoryChapterSummarySearch === 'function' }, ok:!!(document.getElementById('historyChapterSummaryPanel') && document.getElementById('historyChapterSummaryKpis') && document.getElementById('historyChapterSummaryToolbar') && document.getElementById('historyChapterSummaryList') && typeof buildHistoryChapterSummaryInsights === 'function' && typeof renderHistoryChapterSummaryPanel === 'function') };
     }
 
     try { window.buildHistoryQualityDashboardInsights = buildHistoryQualityDashboardInsights; window.renderHistoryQualityDashboardPanel = renderHistoryQualityDashboardPanel; window.exportHistoryExperienceCSV = exportHistoryExperienceCSV; window.exportHistoryExperiencePdfReport = exportHistoryExperiencePdfReport; window.copyHistoryExperienceExportSummary = copyHistoryExperienceExportSummary; window.selectHighValueExperienceRows = selectHighValueExperienceRows; window.getHistoryQualityDashboardAudit = getHistoryQualityDashboardAudit; window.buildHistoryPrintExportInsights = buildHistoryPrintExportInsights; window.renderHistoryPrintExportPanel = renderHistoryPrintExportPanel; window.setHistoryExperienceExportFieldMode = setHistoryExperienceExportFieldMode; window.getHistoryPrintExportAudit = getHistoryPrintExportAudit; window.buildHistoryReportIndexInsights = buildHistoryReportIndexInsights; window.renderHistoryReportIndexPanel = renderHistoryReportIndexPanel; window.applyHistoryExperienceReportPreset = applyHistoryExperienceReportPreset; window.setHistoryExperienceReportChapterMode = setHistoryExperienceReportChapterMode; window.getHistoryReportIndexAudit = getHistoryReportIndexAudit; window.buildHistoryChapterSummaryInsights = buildHistoryChapterSummaryInsights; window.renderHistoryChapterSummaryPanel = renderHistoryChapterSummaryPanel; window.setHistoryChapterSummaryFilter = setHistoryChapterSummaryFilter; window.selectHistoryChapterSummaryGroup = selectHistoryChapterSummaryGroup; window.markHistoryChapterSummaryGroupFeatured = markHistoryChapterSummaryGroupFeatured; window.getHistoryChapterSummaryAudit = getHistoryChapterSummaryAudit; } catch(e) {}
@@ -9094,7 +9135,7 @@ function buildPaipanExplanation(result){
         { id:'theme', label:'暗夜/阅读模式继承', ok:styleText.indexOf('body.reading-theme-night .history-mobile-audit-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-mobile-audit-card') >= 0, note:'新增移动端总检面板已同步加入暗夜/阅读模式覆盖。' }
       ];
       const okCount = checks.filter(function(x){ return x.ok; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', isSafariLike:isSafariLike, isIOSLike:isIOSLike, selectedCount:selectedCount, filteredCount:filteredCount, buttonCount:buttons.length, missingButtons:missingButtons, missingFunctions:missingFunctions, missingTouchCss:missingTouchCss, toolbarSelectors:toolbarSelectors, checks:checks, okCount:okCount, ok:okCount === checks.length };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', isSafariLike:isSafariLike, isIOSLike:isIOSLike, selectedCount:selectedCount, filteredCount:filteredCount, buttonCount:buttons.length, missingButtons:missingButtons, missingFunctions:missingFunctions, missingTouchCss:missingTouchCss, toolbarSelectors:toolbarSelectors, checks:checks, okCount:okCount, ok:okCount === checks.length };
     }
     function renderHistoryMobileEventAuditPanel(){
       const info = buildHistoryMobileEventAudit();
@@ -9107,7 +9148,7 @@ function buildPaipanExplanation(result){
       return info;
     }
     function getHistoryMobileEventAudit(){
-      try { return buildHistoryMobileEventAudit(); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+      try { return buildHistoryMobileEventAudit(); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.buildHistoryMobileEventAudit = buildHistoryMobileEventAudit; window.renderHistoryMobileEventAuditPanel = renderHistoryMobileEventAuditPanel; window.getHistoryMobileEventAudit = getHistoryMobileEventAudit; } catch(e) {}
 
@@ -9175,7 +9216,7 @@ function buildPaipanExplanation(result){
       const stats = historyLastRenderStats || {};
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         hasPanel:!!document.getElementById('historyPerformancePanel'),
         hasKpis:!!document.getElementById('historyPerformanceKpis'),
         hasList:!!document.getElementById('historyPerformanceList'),
@@ -9247,7 +9288,7 @@ function buildPaipanExplanation(result){
         panel:historyPanelLayoutMode || 'compact',
         filtersCollapsed:!!historyFiltersCollapsed,
         savedAt:new Date().toISOString(),
-        source:'mainline-v10.5.224'
+        source:'mainline-v10.5.225'
       };
     }
     function readHistoryFilterMemory(){
@@ -9356,7 +9397,7 @@ function buildPaipanExplanation(result){
       const chips=historyFilterStateLabels(state);
       const styleText=Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
       const list=Array.isArray(filtered) ? filtered : getHistoryDialogFilteredList(getHistory());
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historySearchMemoryPanel'), hasKpis:!!document.getElementById('historySearchMemoryKpis'), hasActions:!!document.getElementById('historyQuickFilterActions'), hasChips:!!document.getElementById('historyActiveFilterChips'), hasSave:!!document.getElementById('historySaveFilterMemoryBtn'), hasRestore:!!document.getElementById('historyRestoreFilterMemoryBtn'), hasClear:!!document.getElementById('historyClearFiltersBtn'), hasToggle:!!document.getElementById('historyToggleFilterBarBtn'), filteredRows:list.length, activeFilterCount:chips.length, saved:!!saved, filtersCollapsed:!!historyFiltersCollapsed, hasNightCss:styleText.indexOf('body.reading-theme-night .history-search-memory-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-filter-active-chip') >= 0, functions:{ getState:typeof getHistoryFilterState === 'function', applyState:typeof applyHistoryFilterState === 'function', quick:typeof applyHistoryQuickFilterPreset === 'function', clear:typeof clearHistoryAllFilters === 'function', chips:typeof renderHistoryFilterChips === 'function' }, ok:!!(document.getElementById('historySearchMemoryPanel') && document.getElementById('historySearchMemoryKpis') && document.getElementById('historyQuickFilterActions') && document.getElementById('historyActiveFilterChips') && typeof getHistoryFilterState === 'function' && typeof applyHistoryFilterState === 'function' && styleText.indexOf('body.reading-theme-night .history-search-memory-panel') >= 0) };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historySearchMemoryPanel'), hasKpis:!!document.getElementById('historySearchMemoryKpis'), hasActions:!!document.getElementById('historyQuickFilterActions'), hasChips:!!document.getElementById('historyActiveFilterChips'), hasSave:!!document.getElementById('historySaveFilterMemoryBtn'), hasRestore:!!document.getElementById('historyRestoreFilterMemoryBtn'), hasClear:!!document.getElementById('historyClearFiltersBtn'), hasToggle:!!document.getElementById('historyToggleFilterBarBtn'), filteredRows:list.length, activeFilterCount:chips.length, saved:!!saved, filtersCollapsed:!!historyFiltersCollapsed, hasNightCss:styleText.indexOf('body.reading-theme-night .history-search-memory-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-filter-active-chip') >= 0, functions:{ getState:typeof getHistoryFilterState === 'function', applyState:typeof applyHistoryFilterState === 'function', quick:typeof applyHistoryQuickFilterPreset === 'function', clear:typeof clearHistoryAllFilters === 'function', chips:typeof renderHistoryFilterChips === 'function' }, ok:!!(document.getElementById('historySearchMemoryPanel') && document.getElementById('historySearchMemoryKpis') && document.getElementById('historyQuickFilterActions') && document.getElementById('historyActiveFilterChips') && typeof getHistoryFilterState === 'function' && typeof applyHistoryFilterState === 'function' && styleText.indexOf('body.reading-theme-night .history-search-memory-panel') >= 0) };
     }
     function renderHistorySearchMemoryPanel(filtered){
       const info=buildHistorySearchMemoryAudit(filtered || []);
@@ -9378,7 +9419,7 @@ function buildPaipanExplanation(result){
       return info;
     }
     function getHistorySearchMemoryAudit(){
-      try { return buildHistorySearchMemoryAudit(getHistoryDialogFilteredList(getHistory())); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+      try { return buildHistorySearchMemoryAudit(getHistoryDialogFilteredList(getHistory())); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.getHistoryFilterState=getHistoryFilterState; window.applyHistoryFilterState=applyHistoryFilterState; window.applyHistoryQuickFilterPreset=applyHistoryQuickFilterPreset; window.clearHistoryAllFilters=clearHistoryAllFilters; window.renderHistorySearchMemoryPanel=renderHistorySearchMemoryPanel; window.getHistorySearchMemoryAudit=getHistorySearchMemoryAudit; } catch(e) {}
 
@@ -9455,7 +9496,7 @@ function buildPaipanExplanation(result){
       const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         hasPanel:!!document.getElementById('historyBatchSafetyPanel'),
         hasKpis:!!document.getElementById('historyBatchSafetyKpis'),
         hasToolbar:!!document.getElementById('historyBatchSafetyToolbar'),
@@ -9490,7 +9531,7 @@ function buildPaipanExplanation(result){
       return info;
     }
     function getHistoryBatchSafetyAudit(){
-      try { return buildHistoryBatchSafetyAudit(getHistoryDialogFilteredList(getHistory())); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+      try { return buildHistoryBatchSafetyAudit(getHistoryDialogFilteredList(getHistory())); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.getHistoryBatchSafetySettings=getHistoryBatchSafetySettings; window.confirmHistoryBatchAction=confirmHistoryBatchAction; window.renderHistoryBatchSafetyPanel=renderHistoryBatchSafetyPanel; window.getHistoryBatchSafetyAudit=getHistoryBatchSafetyAudit; } catch(e) {}
 
@@ -9548,7 +9589,7 @@ function buildPaipanExplanation(result){
         if(bw!==aw) return bw-aw;
         return new Date(b.item && b.item.createdAt || 0) - new Date(a.item && a.item.createdAt || 0);
       });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, needCompletion:rows.filter(function(r){ return !r.complete; }).length, pendingCount:buckets.pending.length, missingReasonCount:buckets.missingReason.length, missingLearningCount:buckets.missingLearning.length, lowScoreCount:buckets.lowScore.length, completeCount:buckets.complete.length, rows:selected, filter:historyReviewCompletionFilter, ok:true };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, needCompletion:rows.filter(function(r){ return !r.complete; }).length, pendingCount:buckets.pending.length, missingReasonCount:buckets.missingReason.length, missingLearningCount:buckets.missingLearning.length, lowScoreCount:buckets.lowScore.length, completeCount:buckets.complete.length, rows:selected, filter:historyReviewCompletionFilter, ok:true };
     }
     function renderHistoryReviewCompletionPanel(filtered){
       const info=buildHistoryReviewCompletionInsights(filtered || getHistoryDialogFilteredList(getHistory()));
@@ -9648,8 +9689,8 @@ function buildPaipanExplanation(result){
       try {
         const info=buildHistoryReviewCompletionInsights(getHistoryDialogFilteredList(getHistory()));
         const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyReviewCompletionPanel'), hasKpis:!!document.getElementById('historyReviewCompletionKpis'), hasToolbar:!!document.getElementById('historyReviewCompletionToolbar'), hasList:!!document.getElementById('historyReviewCompletionList'), hasSelect:!!document.getElementById('historyReviewCompletionSelectBtn'), hasReason:!!document.getElementById('historyReviewCompletionReasonBtn'), hasLearning:!!document.getElementById('historyReviewCompletionLearningBtn'), needCompletion:info.needCompletion, pendingCount:info.pendingCount, missingReasonCount:info.missingReasonCount, missingLearningCount:info.missingLearningCount, hasNightCss:styleText.indexOf('body.reading-theme-night .history-review-completion-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-review-completion-item') >= 0, functions:{ build:typeof buildHistoryReviewCompletionInsights === 'function', render:typeof renderHistoryReviewCompletionPanel === 'function', select:typeof selectHistoryReviewCompletionRows === 'function', batch:typeof batchCompleteSelectedReviewFields === 'function', open:typeof openFirstHistoryReviewCompletion === 'function' }, ok:!!(document.getElementById('historyReviewCompletionPanel') && document.getElementById('historyReviewCompletionKpis') && document.getElementById('historyReviewCompletionToolbar') && document.getElementById('historyReviewCompletionList') && typeof batchCompleteSelectedReviewFields === 'function' && styleText.indexOf('body.reading-theme-night .history-review-completion-panel') >= 0) };
-      } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyReviewCompletionPanel'), hasKpis:!!document.getElementById('historyReviewCompletionKpis'), hasToolbar:!!document.getElementById('historyReviewCompletionToolbar'), hasList:!!document.getElementById('historyReviewCompletionList'), hasSelect:!!document.getElementById('historyReviewCompletionSelectBtn'), hasReason:!!document.getElementById('historyReviewCompletionReasonBtn'), hasLearning:!!document.getElementById('historyReviewCompletionLearningBtn'), needCompletion:info.needCompletion, pendingCount:info.pendingCount, missingReasonCount:info.missingReasonCount, missingLearningCount:info.missingLearningCount, hasNightCss:styleText.indexOf('body.reading-theme-night .history-review-completion-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-review-completion-item') >= 0, functions:{ build:typeof buildHistoryReviewCompletionInsights === 'function', render:typeof renderHistoryReviewCompletionPanel === 'function', select:typeof selectHistoryReviewCompletionRows === 'function', batch:typeof batchCompleteSelectedReviewFields === 'function', open:typeof openFirstHistoryReviewCompletion === 'function' }, ok:!!(document.getElementById('historyReviewCompletionPanel') && document.getElementById('historyReviewCompletionKpis') && document.getElementById('historyReviewCompletionToolbar') && document.getElementById('historyReviewCompletionList') && typeof batchCompleteSelectedReviewFields === 'function' && styleText.indexOf('body.reading-theme-night .history-review-completion-panel') >= 0) };
+      } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.renderHistoryReviewCompletionPanel=renderHistoryReviewCompletionPanel; window.getHistoryReviewCompletionAudit=getHistoryReviewCompletionAudit; window.setHistoryReviewCompletionFilter=setHistoryReviewCompletionFilter; window.selectHistoryReviewCompletionRows=selectHistoryReviewCompletionRows; window.batchCompleteSelectedReviewFields=batchCompleteSelectedReviewFields; } catch(e) {}
 
@@ -9704,7 +9745,7 @@ function buildPaipanExplanation(result){
         { group:'theme', title:'新内容发版规则', ok:styleText.indexOf('body.reading-theme-night .history-stage-baseline-panel') >= 0, note:'本版新增稳定基准面板也同步加入暗夜/阅读模式 CSS，后续新增内容继续默认检查。', tags:['固定规则','暗夜同步'] }
       ];
       const selectedItems = historyStageBaselineView === 'all' ? items : items.filter(function(x){ return x.group === historyStageBaselineView; });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRows:rows.length, panelCount:existingPanels.length, openPanels:openPanels.length, hiddenPanels:hiddenPanels.length, auditCount:audits.length, failCount:failAudits.length, nightOk:!!(night && night.ok), exportOk:!!(exportAudit && exportAudit.ok), performanceOk:performanceOk, items:items, selectedItems:selectedItems, ok:existingPanels.length >= 18 && failAudits.length === 0 && !!(night && night.ok) && performanceOk };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRows:rows.length, panelCount:existingPanels.length, openPanels:openPanels.length, hiddenPanels:hiddenPanels.length, auditCount:audits.length, failCount:failAudits.length, nightOk:!!(night && night.ok), exportOk:!!(exportAudit && exportAudit.ok), performanceOk:performanceOk, items:items, selectedItems:selectedItems, ok:existingPanels.length >= 18 && failAudits.length === 0 && !!(night && night.ok) && performanceOk };
     }
     function renderHistoryStageBaselinePanel(filtered){
       const info=buildHistoryStageBaselineAudit(filtered || getHistoryDialogFilteredList(getHistory()));
@@ -9738,8 +9779,8 @@ function buildPaipanExplanation(result){
       try {
         const info=buildHistoryStageBaselineAudit(getHistoryDialogFilteredList(getHistory()));
         const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyStageBaselinePanel'), hasKpis:!!document.getElementById('historyStageBaselineKpis'), hasToolbar:!!document.getElementById('historyStageBaselineToolbar'), hasList:!!document.getElementById('historyStageBaselineList'), panelCount:info.panelCount, failCount:info.failCount, nightOk:info.nightOk, exportOk:info.exportOk, performanceOk:info.performanceOk, hasNightCss:styleText.indexOf('body.reading-theme-night .history-stage-baseline-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-stage-baseline-item') >= 0, functions:{ build:typeof buildHistoryStageBaselineAudit === 'function', render:typeof renderHistoryStageBaselinePanel === 'function', view:typeof setHistoryStageBaselineView === 'function' }, ok:!!(document.getElementById('historyStageBaselinePanel') && document.getElementById('historyStageBaselineKpis') && document.getElementById('historyStageBaselineToolbar') && document.getElementById('historyStageBaselineList') && styleText.indexOf('body.reading-theme-night .history-stage-baseline-panel') >= 0) };
-      } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyStageBaselinePanel'), hasKpis:!!document.getElementById('historyStageBaselineKpis'), hasToolbar:!!document.getElementById('historyStageBaselineToolbar'), hasList:!!document.getElementById('historyStageBaselineList'), panelCount:info.panelCount, failCount:info.failCount, nightOk:info.nightOk, exportOk:info.exportOk, performanceOk:info.performanceOk, hasNightCss:styleText.indexOf('body.reading-theme-night .history-stage-baseline-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-stage-baseline-item') >= 0, functions:{ build:typeof buildHistoryStageBaselineAudit === 'function', render:typeof renderHistoryStageBaselinePanel === 'function', view:typeof setHistoryStageBaselineView === 'function' }, ok:!!(document.getElementById('historyStageBaselinePanel') && document.getElementById('historyStageBaselineKpis') && document.getElementById('historyStageBaselineToolbar') && document.getElementById('historyStageBaselineList') && styleText.indexOf('body.reading-theme-night .history-stage-baseline-panel') >= 0) };
+      } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.buildHistoryStageBaselineAudit=buildHistoryStageBaselineAudit; window.renderHistoryStageBaselinePanel=renderHistoryStageBaselinePanel; window.setHistoryStageBaselineView=setHistoryStageBaselineView; window.getHistoryStageBaselineAudit=getHistoryStageBaselineAudit; } catch(e) {}
 
@@ -9775,7 +9816,7 @@ function buildPaipanExplanation(result){
       ];
       const selectedItems = historyMicroTuneView === 'all' ? items : items.filter(function(x){ return x.group === historyMicroTuneView; });
       const failCount = items.filter(function(x){ return !x.ok; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', totalRecords:rows.length, actionButtonCount:existingActionButtons.length, itemCount:items.length, failCount:failCount, themeOk:themeOk, mobileCssOk:mobileCssOk, exportOk:exportOk, debugOk:debugOk, selectedItems:selectedItems, ok:failCount === 0 };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', totalRecords:rows.length, actionButtonCount:existingActionButtons.length, itemCount:items.length, failCount:failCount, themeOk:themeOk, mobileCssOk:mobileCssOk, exportOk:exportOk, debugOk:debugOk, selectedItems:selectedItems, ok:failCount === 0 };
     }
     function renderHistoryMicroTunePanel(filtered){
       const info=buildHistoryMicroTuneAudit(filtered || getHistoryDialogFilteredList(getHistory()));
@@ -9814,8 +9855,8 @@ function buildPaipanExplanation(result){
       try {
         const info=buildHistoryMicroTuneAudit(getHistoryDialogFilteredList(getHistory()));
         const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyMicroTunePanel'), hasKpis:!!document.getElementById('historyMicroTuneKpis'), hasToolbar:!!document.getElementById('historyMicroTuneToolbar'), hasActions:!!document.getElementById('historyMicroTuneActions'), hasList:!!document.getElementById('historyMicroTuneList'), failCount:info.failCount, themeOk:info.themeOk, mobileCssOk:info.mobileCssOk, exportOk:info.exportOk, debugOk:info.debugOk, hasNightCss:styleText.indexOf('body.reading-theme-night .history-micro-tune-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-micro-tune-item') >= 0, functions:{ build:typeof buildHistoryMicroTuneAudit === 'function', render:typeof renderHistoryMicroTunePanel === 'function', view:typeof setHistoryMicroTuneView === 'function', action:typeof applyHistoryMicroTuneAction === 'function' }, ok:!!(document.getElementById('historyMicroTunePanel') && document.getElementById('historyMicroTuneKpis') && document.getElementById('historyMicroTuneToolbar') && document.getElementById('historyMicroTuneList') && styleText.indexOf('body.reading-theme-night .history-micro-tune-panel') >= 0) };
-      } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyMicroTunePanel'), hasKpis:!!document.getElementById('historyMicroTuneKpis'), hasToolbar:!!document.getElementById('historyMicroTuneToolbar'), hasActions:!!document.getElementById('historyMicroTuneActions'), hasList:!!document.getElementById('historyMicroTuneList'), failCount:info.failCount, themeOk:info.themeOk, mobileCssOk:info.mobileCssOk, exportOk:info.exportOk, debugOk:info.debugOk, hasNightCss:styleText.indexOf('body.reading-theme-night .history-micro-tune-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-micro-tune-item') >= 0, functions:{ build:typeof buildHistoryMicroTuneAudit === 'function', render:typeof renderHistoryMicroTunePanel === 'function', view:typeof setHistoryMicroTuneView === 'function', action:typeof applyHistoryMicroTuneAction === 'function' }, ok:!!(document.getElementById('historyMicroTunePanel') && document.getElementById('historyMicroTuneKpis') && document.getElementById('historyMicroTuneToolbar') && document.getElementById('historyMicroTuneList') && styleText.indexOf('body.reading-theme-night .history-micro-tune-panel') >= 0) };
+      } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.buildHistoryMicroTuneAudit=buildHistoryMicroTuneAudit; window.renderHistoryMicroTunePanel=renderHistoryMicroTunePanel; window.setHistoryMicroTuneView=setHistoryMicroTuneView; window.applyHistoryMicroTuneAction=applyHistoryMicroTuneAction; window.getHistoryMicroTuneAudit=getHistoryMicroTuneAudit; } catch(e) {}
 
@@ -9861,7 +9902,7 @@ function buildPaipanExplanation(result){
       const hidden = exists.filter(function(id){ const el=document.getElementById(id); return !!(el && el.classList.contains('history-panel-hidden')); });
       const buttons = ['historyPanelCompactBtn','historyPanelReviewBtn','historyPanelExportBtn','historyPanelExpandAllBtn','historyPanelCollapseAllBtn'].filter(function(id){ return !!document.getElementById(id); });
       const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasOrganizer:!!document.getElementById('historyPanelOrganizer'), hasStatus:!!document.getElementById('historyPanelOrganizerStatus'), buttonCount:buttons.length, panelCount:exists.length, hiddenCount:hidden.length, mode:historyPanelLayoutMode, hasNightCss:styleText.indexOf('body.reading-theme-night .history-panel-organizer') >= 0, hasMobileCss:styleText.indexOf('@media (max-width: 760px)') >= 0 && styleText.indexOf('.history-panel-organizer-actions') >= 0, ok:!!document.getElementById('historyPanelOrganizer') && buttons.length === 5 && exists.length === all.length && styleText.indexOf('body.reading-theme-night .history-panel-organizer') >= 0 };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasOrganizer:!!document.getElementById('historyPanelOrganizer'), hasStatus:!!document.getElementById('historyPanelOrganizerStatus'), buttonCount:buttons.length, panelCount:exists.length, hiddenCount:hidden.length, mode:historyPanelLayoutMode, hasNightCss:styleText.indexOf('body.reading-theme-night .history-panel-organizer') >= 0, hasMobileCss:styleText.indexOf('@media (max-width: 760px)') >= 0 && styleText.indexOf('.history-panel-organizer-actions') >= 0, ok:!!document.getElementById('historyPanelOrganizer') && buttons.length === 5 && exists.length === all.length && styleText.indexOf('body.reading-theme-night .history-panel-organizer') >= 0 };
     }
     try { window.applyHistoryPanelLayout = applyHistoryPanelLayout; window.getHistoryPanelOrganizerAudit = getHistoryPanelOrganizerAudit; } catch(e) {}
 
@@ -9893,7 +9934,7 @@ function buildPaipanExplanation(result){
       const missing = defs.filter(function(def){ return !def.exists; }).map(function(def){ return def.target; });
       const visible = defs.filter(function(def){ return def.exists && !def.hidden; }).length;
       const open = defs.filter(function(def){ return def.exists && def.open; }).length;
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyGroupNavPanel'), hasKpis:!!document.getElementById('historyGroupNavKpis'), hasToolbar:!!document.getElementById('historyGroupNavToolbar'), hasList:!!document.getElementById('historyGroupNavList'), hasRefresh:!!document.getElementById('historyGroupNavRefreshBtn'), groupCount:defs.length, visibleCount:visible, openCount:open, missing:missing, mergedPlanCount:HISTORY_MERGED_UPGRADE_PLAN.length, hasNightCss:styleText.indexOf('body.reading-theme-night .history-group-nav-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-group-nav-card') >= 0 && styleText.indexOf('body.reading-theme-night .history-group-nav-item') >= 0, functions:{ build:typeof buildHistoryGroupNavAudit === 'function', render:typeof renderHistoryGroupNavPanel === 'function', jump:typeof jumpHistoryGroupNav === 'function' }, ok:!!(document.getElementById('historyGroupNavPanel') && document.getElementById('historyGroupNavKpis') && document.getElementById('historyGroupNavToolbar') && document.getElementById('historyGroupNavList') && !missing.length && styleText.indexOf('body.reading-theme-night .history-group-nav-panel') >= 0) };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyGroupNavPanel'), hasKpis:!!document.getElementById('historyGroupNavKpis'), hasToolbar:!!document.getElementById('historyGroupNavToolbar'), hasList:!!document.getElementById('historyGroupNavList'), hasRefresh:!!document.getElementById('historyGroupNavRefreshBtn'), groupCount:defs.length, visibleCount:visible, openCount:open, missing:missing, mergedPlanCount:HISTORY_MERGED_UPGRADE_PLAN.length, hasNightCss:styleText.indexOf('body.reading-theme-night .history-group-nav-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-group-nav-card') >= 0 && styleText.indexOf('body.reading-theme-night .history-group-nav-item') >= 0, functions:{ build:typeof buildHistoryGroupNavAudit === 'function', render:typeof renderHistoryGroupNavPanel === 'function', jump:typeof jumpHistoryGroupNav === 'function' }, ok:!!(document.getElementById('historyGroupNavPanel') && document.getElementById('historyGroupNavKpis') && document.getElementById('historyGroupNavToolbar') && document.getElementById('historyGroupNavList') && !missing.length && styleText.indexOf('body.reading-theme-night .history-group-nav-panel') >= 0) };
     }
     function renderHistoryGroupNavPanel(){
       const info = buildHistoryGroupNavAudit();
@@ -9940,7 +9981,7 @@ function buildPaipanExplanation(result){
       toast('已定位到：' + def.label + '。后续升级将按合并版节奏推进。');
     }
     function getHistoryGroupNavAudit(){
-      try { return buildHistoryGroupNavAudit(); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+      try { return buildHistoryGroupNavAudit(); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.renderHistoryGroupNavPanel=renderHistoryGroupNavPanel; window.jumpHistoryGroupNav=jumpHistoryGroupNav; window.getHistoryGroupNavAudit=getHistoryGroupNavAudit; } catch(e) {}
 
@@ -9960,7 +10001,7 @@ function buildPaipanExplanation(result){
       const ids = getHistoryFoldPanelIds();
       const panels = {};
       ids.forEach(function(id){ const el=document.getElementById(id); if(el && el.tagName && el.tagName.toLowerCase() === 'details') panels[id] = !!el.open; });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', layout:historyPanelLayoutMode || 'compact', savedAt:new Date().toISOString(), panels:panels };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', layout:historyPanelLayoutMode || 'compact', savedAt:new Date().toISOString(), panels:panels };
     }
     function writeHistoryPanelFoldMemory(state){
       try { localStorage.setItem(HISTORY_PANEL_FOLD_KEY, JSON.stringify(state || collectHistoryPanelFoldState())); } catch(e) {}
@@ -10017,7 +10058,7 @@ function buildPaipanExplanation(result){
       const savedPanels = state && state.panels ? Object.keys(state.panels).length : 0;
       const savedOpen = state && state.panels ? Object.keys(state.panels).filter(function(id){ return state.panels[id]; }).length : 0;
       const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyFoldMemoryPanel'), hasKpis:!!document.getElementById('historyFoldMemoryKpis'), hasToolbar:!!document.getElementById('historyFoldMemoryToolbar'), hasList:!!document.getElementById('historyFoldMemoryList'), hasRefresh:!!document.getElementById('historyFoldMemoryRefreshBtn'), totalPanels:ids.length, visiblePanels:visible.length, openPanels:open.length, savedPanels:savedPanels, savedOpen:savedOpen, savedAt:state && state.savedAt || '', layout:historyPanelLayoutMode || 'compact', hasMemory:!!state, hasNightCss:styleText.indexOf('body.reading-theme-night .history-fold-memory-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-fold-memory-card') >= 0, functions:{ save:typeof saveHistoryPanelFoldMemory === 'function', restore:typeof restoreHistoryPanelFoldMemory === 'function', reset:typeof resetHistoryFoldToCompactDefault === 'function', bind:typeof bindHistoryPanelFoldMemoryToggles === 'function' }, ok:!!(document.getElementById('historyFoldMemoryPanel') && document.getElementById('historyFoldMemoryKpis') && document.getElementById('historyFoldMemoryToolbar') && typeof saveHistoryPanelFoldMemory === 'function' && typeof restoreHistoryPanelFoldMemory === 'function' && styleText.indexOf('body.reading-theme-night .history-fold-memory-panel') >= 0) };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyFoldMemoryPanel'), hasKpis:!!document.getElementById('historyFoldMemoryKpis'), hasToolbar:!!document.getElementById('historyFoldMemoryToolbar'), hasList:!!document.getElementById('historyFoldMemoryList'), hasRefresh:!!document.getElementById('historyFoldMemoryRefreshBtn'), totalPanels:ids.length, visiblePanels:visible.length, openPanels:open.length, savedPanels:savedPanels, savedOpen:savedOpen, savedAt:state && state.savedAt || '', layout:historyPanelLayoutMode || 'compact', hasMemory:!!state, hasNightCss:styleText.indexOf('body.reading-theme-night .history-fold-memory-panel') >= 0 && styleText.indexOf('body.reading-theme-night .history-fold-memory-card') >= 0, functions:{ save:typeof saveHistoryPanelFoldMemory === 'function', restore:typeof restoreHistoryPanelFoldMemory === 'function', reset:typeof resetHistoryFoldToCompactDefault === 'function', bind:typeof bindHistoryPanelFoldMemoryToggles === 'function' }, ok:!!(document.getElementById('historyFoldMemoryPanel') && document.getElementById('historyFoldMemoryKpis') && document.getElementById('historyFoldMemoryToolbar') && typeof saveHistoryPanelFoldMemory === 'function' && typeof restoreHistoryPanelFoldMemory === 'function' && styleText.indexOf('body.reading-theme-night .history-fold-memory-panel') >= 0) };
     }
     function renderHistoryFoldMemoryPanel(){
       const info = buildHistoryFoldMemoryAudit();
@@ -10040,20 +10081,20 @@ function buildPaipanExplanation(result){
       return info;
     }
     function getHistoryFoldMemoryAudit(){
-      try { return buildHistoryFoldMemoryAudit(); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', error:String(e && e.message || e), ok:false }; }
+      try { return buildHistoryFoldMemoryAudit(); } catch(e) { return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', error:String(e && e.message || e), ok:false }; }
     }
     try { window.saveHistoryPanelFoldMemory=saveHistoryPanelFoldMemory; window.restoreHistoryPanelFoldMemory=restoreHistoryPanelFoldMemory; window.resetHistoryFoldToCompactDefault=resetHistoryFoldToCompactDefault; window.setVisibleHistoryPanelsOpen=setVisibleHistoryPanelsOpen; window.renderHistoryFoldMemoryPanel=renderHistoryFoldMemoryPanel; window.getHistoryFoldMemoryAudit=getHistoryFoldMemoryAudit; } catch(e) {}
 
     function getHistoryQuickReviewAudit(){
       let info = null;
       try { info = buildHistoryQuickReviewInsights(getHistoryDialogFilteredList(getHistory())); } catch(e) { info = { error:String(e && e.message || e), ok:false }; }
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', hasPanel:!!document.getElementById('historyQuickReviewPanel'), hasKpis:!!document.getElementById('historyQuickReviewKpis'), hasToolbar:!!document.getElementById('historyQuickReviewToolbar'), hasList:!!document.getElementById('historyQuickReviewList'), hasRefresh:!!document.getElementById('historyQuickReviewRefreshBtn'), reviewCount:info && info.reviewCount || 0, lowScoreCount:info && info.lowScoreCount || 0, filter:historyQuickReviewFilter, functions:{ build:typeof buildHistoryQuickReviewInsights === 'function', render:typeof renderHistoryQuickReviewPanel === 'function', search:typeof applyHistoryQuickReviewSearch === 'function' }, ok:!!(document.getElementById('historyQuickReviewPanel') && document.getElementById('historyQuickReviewKpis') && document.getElementById('historyQuickReviewToolbar') && document.getElementById('historyQuickReviewList') && typeof buildHistoryQuickReviewInsights === 'function' && typeof renderHistoryQuickReviewPanel === 'function') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', hasPanel:!!document.getElementById('historyQuickReviewPanel'), hasKpis:!!document.getElementById('historyQuickReviewKpis'), hasToolbar:!!document.getElementById('historyQuickReviewToolbar'), hasList:!!document.getElementById('historyQuickReviewList'), hasRefresh:!!document.getElementById('historyQuickReviewRefreshBtn'), reviewCount:info && info.reviewCount || 0, lowScoreCount:info && info.lowScoreCount || 0, filter:historyQuickReviewFilter, functions:{ build:typeof buildHistoryQuickReviewInsights === 'function', render:typeof renderHistoryQuickReviewPanel === 'function', search:typeof applyHistoryQuickReviewSearch === 'function' }, ok:!!(document.getElementById('historyQuickReviewPanel') && document.getElementById('historyQuickReviewKpis') && document.getElementById('historyQuickReviewToolbar') && document.getElementById('historyQuickReviewList') && typeof buildHistoryQuickReviewInsights === 'function' && typeof renderHistoryQuickReviewPanel === 'function') };
     }
     function getNewContentNightThemeAudit(){
       const styleText = Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n');
       const required = ['.history-review-learning-card','.history-review-trend-card','.history-quick-review-card','.history-quick-review-toolbar','.history-review-loop-card','.history-review-loop-toolbar','.history-theme-audit-card','.history-review-template-card','.history-review-template-toolbar','.history-review-template-note','.history-experience-card','.history-experience-toolbar','.history-experience-note','.history-quality-card','.history-quality-toolbar','.history-quality-note','.history-print-card','.history-print-toolbar','.history-print-note','.history-print-field-pill','.history-report-index-card','.history-report-index-toolbar','.history-report-index-note','.history-report-index-pill','.history-chapter-summary-card','.history-chapter-summary-toolbar','.history-chapter-summary-note','.history-chapter-summary-pill','.review-template-usage-pill','.case-score-pill','.history-case-badge','.review-learning-tag','.quick-review-reason','.export-scope-summary','.export-format-card','.history-panel-organizer','.history-mobile-audit-panel','.history-mobile-audit-card','.history-performance-panel','.history-performance-card','.history-performance-inline','.history-search-memory-panel','.history-search-memory-card','.history-filter-active-chip','.history-batch-safety-panel','.history-batch-safety-card','.history-batch-safety-toolbar','.history-review-completion-panel','.history-review-completion-card','.history-review-completion-item','.history-review-completion-toolbar','.history-stage-baseline-panel','.history-stage-baseline-card','.history-stage-baseline-item','.history-stage-baseline-toolbar','.history-micro-tune-panel','.history-micro-tune-card','.history-micro-tune-item','.history-micro-tune-toolbar','.history-group-nav-panel','.history-group-nav-card','.history-group-nav-item','.history-group-nav-toolbar','.history-fold-memory-panel','.history-fold-memory-card','.history-fold-memory-item','.history-fold-memory-toolbar'];
       const missing = required.filter(function(sel){ return styleText.indexOf('body.reading-theme-night ' + sel) < 0; });
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', required:required, missing:missing, hasQuickReviewPanel:!!document.getElementById('historyQuickReviewPanel'), hasReviewLoopPanel:!!document.getElementById('historyReviewLoopPanel'), hasReviewTemplatePanel:!!document.getElementById('historyReviewTemplatePanel'), hasExperiencePanel:!!document.getElementById('historyExperienceLibraryPanel'), hasQualityDashboardPanel:!!document.getElementById('historyQualityDashboardPanel'), hasPrintExportPanel:!!document.getElementById('historyPrintExportPanel'), hasReportIndexPanel:!!document.getElementById('historyReportIndexPanel'), hasChapterSummaryPanel:!!document.getElementById('historyChapterSummaryPanel'), hasPanelOrganizer:!!document.getElementById('historyPanelOrganizer'), hasPerformancePanel:!!document.getElementById('historyPerformancePanel'), hasSearchMemoryPanel:!!document.getElementById('historySearchMemoryPanel'), hasBatchSafetyPanel:!!document.getElementById('historyBatchSafetyPanel'), hasReviewCompletionPanel:!!document.getElementById('historyReviewCompletionPanel'), hasStageBaselinePanel:!!document.getElementById('historyStageBaselinePanel'), hasMicroTunePanel:!!document.getElementById('historyMicroTunePanel'), hasGroupNavPanel:!!document.getElementById('historyGroupNavPanel'), hasFoldMemoryPanel:!!document.getElementById('historyFoldMemoryPanel'), hasTrendCardCss:styleText.indexOf('body.reading-theme-night .history-review-trend-card') >= 0, hasLearningCardCss:styleText.indexOf('body.reading-theme-night .history-review-learning-card') >= 0, hasCaseScoreCss:styleText.indexOf('body.reading-theme-night .case-score-pill') >= 0, hasLoopCardCss:styleText.indexOf('body.reading-theme-night .history-review-loop-card') >= 0, hasTemplateCardCss:styleText.indexOf('body.reading-theme-night .history-review-template-card') >= 0, hasExperienceCardCss:styleText.indexOf('body.reading-theme-night .history-experience-card') >= 0, hasQualityCardCss:styleText.indexOf('body.reading-theme-night .history-quality-card') >= 0, hasPrintCardCss:styleText.indexOf('body.reading-theme-night .history-print-card') >= 0, hasReportIndexCss:styleText.indexOf('body.reading-theme-night .history-report-index-card') >= 0, hasChapterSummaryCss:styleText.indexOf('body.reading-theme-night .history-chapter-summary-card') >= 0, hasSearchMemoryCss:styleText.indexOf('body.reading-theme-night .history-search-memory-panel') >= 0, hasBatchSafetyCss:styleText.indexOf('body.reading-theme-night .history-batch-safety-panel') >= 0, hasReviewCompletionCss:styleText.indexOf('body.reading-theme-night .history-review-completion-panel') >= 0, note:'以后新增模块、卡片、弹窗、统计面板和导出预览必须同步加入暗夜模式与阅读模式覆盖，并进入 Debug 发版体检。', ok:missing.length === 0 && !!document.getElementById('historyQuickReviewPanel') && !!document.getElementById('historyReviewLoopPanel') && !!document.getElementById('historyReviewTemplatePanel') && !!document.getElementById('historyExperienceLibraryPanel') && !!document.getElementById('historyQualityDashboardPanel') && !!document.getElementById('historyPrintExportPanel') && !!document.getElementById('historyReportIndexPanel') && !!document.getElementById('historyChapterSummaryPanel') && !!document.getElementById('historyPanelOrganizer') && !!document.getElementById('historyPerformancePanel') && !!document.getElementById('historySearchMemoryPanel') && !!document.getElementById('historyBatchSafetyPanel') && !!document.getElementById('historyReviewCompletionPanel') && !!document.getElementById('historyStageBaselinePanel') && !!document.getElementById('historyMicroTunePanel') && !!document.getElementById('historyGroupNavPanel') && !!document.getElementById('historyFoldMemoryPanel') };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', required:required, missing:missing, hasQuickReviewPanel:!!document.getElementById('historyQuickReviewPanel'), hasReviewLoopPanel:!!document.getElementById('historyReviewLoopPanel'), hasReviewTemplatePanel:!!document.getElementById('historyReviewTemplatePanel'), hasExperiencePanel:!!document.getElementById('historyExperienceLibraryPanel'), hasQualityDashboardPanel:!!document.getElementById('historyQualityDashboardPanel'), hasPrintExportPanel:!!document.getElementById('historyPrintExportPanel'), hasReportIndexPanel:!!document.getElementById('historyReportIndexPanel'), hasChapterSummaryPanel:!!document.getElementById('historyChapterSummaryPanel'), hasPanelOrganizer:!!document.getElementById('historyPanelOrganizer'), hasPerformancePanel:!!document.getElementById('historyPerformancePanel'), hasSearchMemoryPanel:!!document.getElementById('historySearchMemoryPanel'), hasBatchSafetyPanel:!!document.getElementById('historyBatchSafetyPanel'), hasReviewCompletionPanel:!!document.getElementById('historyReviewCompletionPanel'), hasStageBaselinePanel:!!document.getElementById('historyStageBaselinePanel'), hasMicroTunePanel:!!document.getElementById('historyMicroTunePanel'), hasGroupNavPanel:!!document.getElementById('historyGroupNavPanel'), hasFoldMemoryPanel:!!document.getElementById('historyFoldMemoryPanel'), hasTrendCardCss:styleText.indexOf('body.reading-theme-night .history-review-trend-card') >= 0, hasLearningCardCss:styleText.indexOf('body.reading-theme-night .history-review-learning-card') >= 0, hasCaseScoreCss:styleText.indexOf('body.reading-theme-night .case-score-pill') >= 0, hasLoopCardCss:styleText.indexOf('body.reading-theme-night .history-review-loop-card') >= 0, hasTemplateCardCss:styleText.indexOf('body.reading-theme-night .history-review-template-card') >= 0, hasExperienceCardCss:styleText.indexOf('body.reading-theme-night .history-experience-card') >= 0, hasQualityCardCss:styleText.indexOf('body.reading-theme-night .history-quality-card') >= 0, hasPrintCardCss:styleText.indexOf('body.reading-theme-night .history-print-card') >= 0, hasReportIndexCss:styleText.indexOf('body.reading-theme-night .history-report-index-card') >= 0, hasChapterSummaryCss:styleText.indexOf('body.reading-theme-night .history-chapter-summary-card') >= 0, hasSearchMemoryCss:styleText.indexOf('body.reading-theme-night .history-search-memory-panel') >= 0, hasBatchSafetyCss:styleText.indexOf('body.reading-theme-night .history-batch-safety-panel') >= 0, hasReviewCompletionCss:styleText.indexOf('body.reading-theme-night .history-review-completion-panel') >= 0, note:'以后新增模块、卡片、弹窗、统计面板和导出预览必须同步加入暗夜模式与阅读模式覆盖，并进入 Debug 发版体检。', ok:missing.length === 0 && !!document.getElementById('historyQuickReviewPanel') && !!document.getElementById('historyReviewLoopPanel') && !!document.getElementById('historyReviewTemplatePanel') && !!document.getElementById('historyExperienceLibraryPanel') && !!document.getElementById('historyQualityDashboardPanel') && !!document.getElementById('historyPrintExportPanel') && !!document.getElementById('historyReportIndexPanel') && !!document.getElementById('historyChapterSummaryPanel') && !!document.getElementById('historyPanelOrganizer') && !!document.getElementById('historyPerformancePanel') && !!document.getElementById('historySearchMemoryPanel') && !!document.getElementById('historyBatchSafetyPanel') && !!document.getElementById('historyReviewCompletionPanel') && !!document.getElementById('historyStageBaselinePanel') && !!document.getElementById('historyMicroTunePanel') && !!document.getElementById('historyGroupNavPanel') && !!document.getElementById('historyFoldMemoryPanel') };
     }
     try { window.buildHistoryQuickReviewInsights = buildHistoryQuickReviewInsights; window.renderHistoryQuickReviewPanel = renderHistoryQuickReviewPanel; window.applyHistoryQuickReviewSearch = applyHistoryQuickReviewSearch; window.getHistoryQuickReviewAudit = getHistoryQuickReviewAudit; window.buildHistoryReviewLoopInsights = buildHistoryReviewLoopInsights; window.renderHistoryReviewLoopPanel = renderHistoryReviewLoopPanel; window.applyHistoryReviewLoopSearch = applyHistoryReviewLoopSearch; window.selectHistoryReviewLoopBucket = selectHistoryReviewLoopBucket; window.markHistoryReviewLoopBucketFeatured = markHistoryReviewLoopBucketFeatured; window.getHistoryReviewLoopAudit = getHistoryReviewLoopAudit; window.getNewContentNightThemeAudit = getNewContentNightThemeAudit; } catch(e) {}
 
@@ -10138,7 +10179,7 @@ function buildPaipanExplanation(result){
     function getHistoryTimelineAudit(){
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         hasModeTools:!!document.getElementById('historyModeTools'),
         hasListButton:!!document.getElementById('historyListModeBtn'),
         hasTimelineButton:!!document.getElementById('historyTimelineModeBtn'),
@@ -10222,7 +10263,7 @@ function buildPaipanExplanation(result){
       const reviewCardsReady = styleText.indexOf('review-detail-card') >= 0 && styleText.indexOf('review-detail-wrap .review-detail-table') >= 0;
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         hasHistoryTools:!!historyTools,
         hasAnalyticsTools:!!analyticsTools,
         historyButtonCount:historyButtons,
@@ -10303,7 +10344,7 @@ function buildPaipanExplanation(result){
       }
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         center:center || '',
         scopeText,
         historyCount:list.length,
@@ -10413,7 +10454,7 @@ function buildPaipanExplanation(result){
       try {
         localStorage.setItem(HISTORY_BATCH_BACKUP_KEY, JSON.stringify({
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.224',
+          source:'mainline-v10.5.225',
           action:action || 'batch',
           ids:ids || [],
           count:(ids || []).length,
@@ -10548,7 +10589,7 @@ function buildPaipanExplanation(result){
       const hasBackup = historyBatchBackupExists();
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         hasToolbar:!!document.getElementById('historyBulkTools'),
         hasStatus:!!document.getElementById('historyBulkStatus'),
         hasSelectVisible:!!document.getElementById('selectVisibleHistoryBtn'),
@@ -10712,7 +10753,7 @@ function buildPaipanExplanation(result){
     function formatISO(iso){ const d=new Date(iso); return iso && !isNaN(d.getTime()) ? formatDateTimeCN(d) : '—'; }
 
 
-    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.224' };
+    const HOME_DYNAMIC_TIME_SOURCE = { version: XLR_SOURCE_VERSION, source: 'mainline-v10.5.225' };
     let homeDynamicTimeTimer = null;
     function weekdayCN(dt){ return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][dt.getDay()] || ''; }
     function formatSolarDynamic(dt){ return `${formatDateTimeCN(dt)} · ${weekdayCN(dt)}`; }
@@ -11489,35 +11530,514 @@ ${nextStep}`;
       return [...new Set([...(a.keywords || []).slice(0, 7), ...(b.keywords || []).slice(0, 7)])];
     }
     const XLR_DAY_HOUR_COMBO_224 = {
-      '大安': {'大安':'大安加大安，事事保平安；失物在家边，病者不须煎。','留连':'大安加留连，事缓两三天；失物西方去，防人口舌缠。','速喜':'大安加速喜，喜事来报你；失物南方见，行人路上喜。','赤口':'大安加赤口，办事多张口；失物西方找，防病且防口。','小吉':'大安加小吉，求财不落空；失物东北去，行人路路通。','空亡':'大安加空亡，谋事不成双；失物已难找，病者不安康。'},
-      '留连': {'大安':'留连加大安，办事两分张；婚姻有喜事，先苦后来甜。','留连':'留连加留连，事缓两三年；失物难寻找，病者苦难言。','速喜':'留连加速喜，事事由自己；婚姻有成意，失物三天里。','赤口':'留连加赤口，病者死人口；失物准丢失，婚姻两分手。','小吉':'留连加小吉，事事不用提；失物东南去，病者出人齐。','空亡':'留连加空亡，病人准死亡；失物不见面，婚姻两分张。'},
-      '速喜': {'大安':'速喜加大安，喜事在眼前；失物家中找，病者不须烦。','留连':'速喜加留连，办事迟几天；失物南方见，行人不久还。','速喜':'速喜加速喜，喜事连千里；失物可寻见，病者自欢喜。','赤口':'速喜加赤口，防口并防斗；失物西方去，病者药难救。','小吉':'速喜加小吉，事事皆顺利；失物东北方，行人归故里。','空亡':'速喜加空亡，空喜欢一场；失物已失落，病者卧空床。'},
-      '赤口': {'大安':'赤口加大安，小事也难安；失物东方找，口舌要防范。','留连':'赤口加留连，病者苦难延；失物西方去，行人不见还。','速喜':'赤口加速喜，口舌一时起；失物南方见，过后便无事。','赤口':'赤口加赤口，口舌不离口；失物已难觅，病者命不久。','小吉':'赤口加小吉，口舌变吉语；失物东北方，行人有归期。','空亡':'赤口加空亡，万事皆黄粱；失物无踪影，病者入膏肓。'},
-      '小吉': {'大安':'小吉加大安，事事保平安；失物家中得，病者不须看。','留连':'小吉加留连，事缓莫急煎；失物东北去，防人把门关。','速喜':'小吉加速喜，喜事在晨曦；失物南方见，行人不再离。','赤口':'小吉加赤口，口舌闹不休；失物西方找，防病又防仇。','小吉':'小吉加小吉，万事皆大吉；失物东北得，病者早脱离。','空亡':'小吉加空亡，空忙一场场；失物已丢失，病者难安康。'},
-      '空亡': {'大安':'空亡加大安，事缓莫心寒；失物东方问，病者慢平安。','留连':'空亡加留连，事事不周全；失物无处找，病者难回天。','速喜':'空亡加速喜，虚喜一场里；失物不重现，病者药无益。','赤口':'空亡加赤口，祸来莫逃走；失物已无踪，病者命不久。','小吉':'空亡加小吉，小事有转机；失物东北问，病者慢得医。','空亡':'空亡加空亡，万事空一场；失物不可得，病者必见丧。'}
-    };
-    const XLR_LOST_OBJECT_CORE_224 = {
-      '大安': { verse:'失物在家不必慌，东边坤方草丛藏。问得申子辰人在，一五七日自还乡。', summary:'失物在家中或常去之处，可找回，但比较慢。', probability:'高', direction:'东 / 西南', places:'家中、办公室、衣柜、抽屉、床附近、草丛、木器旁', finder:'家人收起或自己遗忘；可找属猴/鼠/龙或申子辰日之人帮忙', days:'1、5、7、15日', condition:'完好，被压住或被遮盖', advice:'仔细回忆最后使用地点，翻找积压物品。' },
-      '留连': { verse:'失物被遮水边湿，东南北方女人提。急寻速往南方去，二八十日见依稀。', summary:'失物在隐蔽角落或旧物堆中，反复寻找才能找到。', probability:'中偏低', direction:'东南 / 北，急寻可往南方找线索', places:'水边、厨房、卫生间、阴暗角落、仓库、杂物间', finder:'可能被女性收起或掉入缝隙', days:'2、8、10日或更久', condition:'受潮，被遮盖', advice:'询问女性家人或同事，扩大搜索范围。' },
-      '速喜': { verse:'失物速寻南火光，申午未路问女郎。三六九日当出现，莫待日久空断肠。', summary:'失物很快能找到，多在明亮处或最近去过的地方。', probability:'高', direction:'南 / 申午未路', places:'炉灶旁、电器旁、明亮处、桌面、阳台、路上、近期去过的地点', finder:'女性或活泼好动的人可能提供线索', days:'3、6、9日', condition:'明显可见，未损坏', advice:'马上回想24小时内去过的地方，不要拖延。' },
-      '赤口': { verse:'失物西去白虎乡，金属器旁路中央。男问可得半日事，四七十天难归仓。', summary:'失物难找回，可能被人拿走或损坏，甚至有纠纷。', probability:'低', direction:'西', places:'金属器物旁、路口、公共场所、垃圾箱旁、他人手中', finder:'男性或陌生人可能有线索', days:'4、7、10日，过期更难', condition:'可能损坏或已转手', advice:'贵重物品可报警或调监控，保留证据。' },
-      '小吉': { verse:'失物东北草丛堆，小孩捡走或车推。一五七日坤方问，六合相助不须悲。', summary:'失物在交通工具或流动场所，有一定找回几率。', probability:'较高', direction:'东北 / 西南', places:'公交、出租车、地铁、车站、商场、流动摊位、草丛、柴堆旁', finder:'小孩、年轻人或失物招领处', days:'1、5、7日或次日', condition:'多半被妥善放置', advice:'抓紧联系失物招领、车队或工作人员。' },
-      '空亡': { verse:'失物空亡落泥尘，垃圾堆里或贼人。三六九日空寻找，再买新物莫劳神。', summary:'失物已丢失或完全无头绪，找回希望渺茫。', probability:'极低', direction:'中央 / 模糊难寻', places:'垃圾堆、泥地、高处、已运走的位置', finder:'贪心者藏匿或已销毁', days:'3、6、9日多为空寻', condition:'消失或损坏严重', advice:'准备补办或购买替代品，重要物品可最后按节点复查一次。' }
-    };
-    function buildLostObjectSpecialCard224(details){
+      "大安": {
+            "大安": {
+                  "original": "事事保平安，失物在家边，病者不须煎，行人即刻还。",
+                  "explain": "问事顺利，失物在家中可找回，小病无碍，行人很快回来。"
+            },
+            "留连": {
+                  "original": "事缓两三天，失物西方去，防人口舌缠，病者慢平安。",
+                  "explain": "事情会延迟两三天；失物可能掉在西边；注意口舌是非；病人恢复慢。"
+            },
+            "速喜": {
+                  "original": "喜事来报你，失物南方见，行人路上喜，病者自脱离。",
+                  "explain": "有喜事；失物往南找；行人在路上遇到好事；病人会好转。"
+            },
+            "赤口": {
+                  "original": "办事多张口，失物西方找，防病且防口，行人不久留。",
+                  "explain": "做事易有口舌；失物往西找；注意疾病和争执；行人不会久留他处。"
+            },
+            "小吉": {
+                  "original": "求财不落空，失物东北去，行人路路通，病者得轻松。",
+                  "explain": "求财有收获；失物在东北方向；行人一路顺利；病人病情减轻。"
+            },
+            "空亡": {
+                  "original": "谋事不成双，失物已难找，病者不安康，行人走他乡。",
+                  "explain": "谋事难成；失物基本找不回；病人状况不佳；行人去了远方难归。"
+            }
+      },
+      "留连": {
+            "大安": {
+                  "original": "办事两分张，婚姻有喜事，先苦后来甜，行人归不归？",
+                  "explain": "事情分成两段；婚姻有好事但先经历困难；行人是否归来不确定。"
+            },
+            "留连": {
+                  "original": "事缓两三年，失物难寻找，病者苦难言，行人不见还。",
+                  "explain": "事情拖延很久；失物很难找回；病人痛苦；行人暂时不回来。"
+            },
+            "速喜": {
+                  "original": "事事由自己，婚姻有成意，失物三天里，病人出人齐。",
+                  "explain": "事情自己掌握主动；婚姻对方有诚意；失物三天内可见；病人康复家人齐聚。"
+            },
+            "赤口": {
+                  "original": "病者死人口，失物准丢失，婚姻两分手，行人去无回。",
+                  "explain": "病情危重；失物确定丢失；婚姻会分手；行人一去不返。"
+            },
+            "小吉": {
+                  "original": "事事不用提，失物东南去，病者出人齐，行人得消息。",
+                  "explain": "事情不用多提，自然发展；失物往东南；病人好转；行人会有消息。"
+            },
+            "空亡": {
+                  "original": "病人准死亡，失物不见面，婚姻两分张，行人没主张。",
+                  "explain": "病人情况极差；失物永远找不到；婚姻分离；行人迷茫无方向。"
+            }
+      },
+      "速喜": {
+            "大安": {
+                  "original": "喜事在眼前，失物家中找，病者不须烦，行人不久还。",
+                  "explain": "近期有喜事；失物在家中；病人无大碍；行人很快回来。"
+            },
+            "留连": {
+                  "original": "办事迟几天，失物南方见，行人不久还，病者慢平安。",
+                  "explain": "事情延迟几天；失物在南方；行人不久回来；病人慢慢康复。"
+            },
+            "速喜": {
+                  "original": "喜事连千里，失物可寻见，病者自欢喜，行人归故里。",
+                  "explain": "喜事连连；失物能够找到；病人心情愉快；行人回家。"
+            },
+            "赤口": {
+                  "original": "防口并防斗，失物西方去，病者药难救，行人路上愁。",
+                  "explain": "防止口舌争斗；失物往西；病人药物效果差；行人路上忧愁。"
+            },
+            "小吉": {
+                  "original": "事事皆顺利，失物东北方，行人归故里，病者得痊愈。",
+                  "explain": "诸事顺利；失物在东北；行人回家；病人痊愈。"
+            },
+            "空亡": {
+                  "original": "空喜欢一场，失物已失落，病者卧空床，行人无音信。",
+                  "explain": "空欢喜；失物已经丢失；病人卧床不起；行人无消息。"
+            }
+      },
+      "赤口": {
+            "大安": {
+                  "original": "小事也难安，失物东方找，口舌要防范，行人久不还。",
+                  "explain": "小事也让人不安；失物往东找；注意口舌；行人长期不归。"
+            },
+            "留连": {
+                  "original": "病者苦难延，失物西方去，行人不见还，婚姻有仇怨。",
+                  "explain": "病人痛苦延长；失物往西；行人不见回来；婚姻有积怨。"
+            },
+            "速喜": {
+                  "original": "口舌一时起，失物南方见，过后便无事，行人归有期。",
+                  "explain": "短暂口舌；失物在南方；事后没事；行人归期可待。"
+            },
+            "赤口": {
+                  "original": "口舌不离口，失物已难觅，病者命不久，行人遭人斗。",
+                  "explain": "口舌不断；失物找不到；病人生命垂危；行人遇到争斗。"
+            },
+            "小吉": {
+                  "original": "口舌变吉语，失物东北方，行人有归期，病者得安逸。",
+                  "explain": "坏事变好事；失物在东北；行人会回来；病人安稳。"
+            },
+            "空亡": {
+                  "original": "万事皆黄粱，失物无踪影，病者入膏肓，行人没方向。",
+                  "explain": "万事成空；失物无影无踪；病人病入膏肓；行人迷失方向。"
+            }
+      },
+      "小吉": {
+            "大安": {
+                  "original": "事事保平安，失物家中得，病者不须看，行人即刻还。",
+                  "explain": "诸事平安；失物在家中找回；病人不用就医；行人立即回来。"
+            },
+            "留连": {
+                  "original": "事缓莫急煎，失物东北去，防人把门关，病者慢回还。",
+                  "explain": "事缓不急；失物往东北；注意有人阻碍；病人缓慢恢复。"
+            },
+            "速喜": {
+                  "original": "喜事在晨曦，失物南方见，行人不再离，病者早脱离。",
+                  "explain": "一早有喜事；失物在南方；行人不再离开；病人早日康复。"
+            },
+            "赤口": {
+                  "original": "口舌闹不休，失物西方找，防病又防仇，行人路上忧。",
+                  "explain": "口舌不断；失物往西找；注意疾病和仇怨；行人路上担忧。"
+            },
+            "小吉": {
+                  "original": "万事皆大吉，失物东北得，病者早脱离，行人归故里。",
+                  "explain": "万事大吉；失物在东北找到；病人康复；行人回家。"
+            },
+            "空亡": {
+                  "original": "空忙一场场，失物已丢失，病者难安康，行人走他乡。",
+                  "explain": "白忙活；失物已丢；病人健康难恢复；行人去了他乡。"
+            }
+      },
+      "空亡": {
+            "大安": {
+                  "original": "事缓莫心寒，失物东方问，病者慢平安，行人见缝难。",
+                  "explain": "事缓不要灰心；失物往东方找；病人慢慢恢复；行人很难见到。"
+            },
+            "留连": {
+                  "original": "事事不周全，失物无处找，病者难回天，行人不得还。",
+                  "explain": "诸事不顺；失物找不到；病人回天乏术；行人回不来。"
+            },
+            "速喜": {
+                  "original": "虚喜一场里，失物不重现，病者药无益，行人空手归。",
+                  "explain": "虚假的喜悦；失物不再出现；病人药物无效；行人空手而归。"
+            },
+            "赤口": {
+                  "original": "祸来莫逃走，失物已无踪，病者命不久，行人遇匪徒。",
+                  "explain": "祸事来临不要逃避；失物已消失；病人生命垂危；行人遇到坏人。"
+            },
+            "小吉": {
+                  "original": "小事有转机，失物东北问，病者慢得医，行人得消息。",
+                  "explain": "小事有转机；失物向东北打听；病人慢慢得到医治；行人得到消息。"
+            },
+            "空亡": {
+                  "original": "万事空一场，失物不可得，病者必见丧，行人无主张。",
+                  "explain": "万事皆空；失物不可能找回；病人会去世；行人没有主张。"
+            }
+      }
+};
+    const XLR_DAY_HOUR_COMBO_225 = XLR_DAY_HOUR_COMBO_224;
+    const XLR_LOST_OBJECT_KNOWLEDGE_225 = {
+      "single_palm": {
+            "大安": {
+                  "verse": "失物在家不必慌，东边坤方草丛藏。问得申子辰人在，一五七日自还乡。",
+                  "summary": "失物在家或常去之处，可找回，但慢。",
+                  "probability": "高",
+                  "direction": [
+                        "东",
+                        "西南"
+                  ],
+                  "places": [
+                        "家中",
+                        "衣柜",
+                        "抽屉",
+                        "床附近",
+                        "草丛",
+                        "木器旁"
+                  ],
+                  "days": [
+                        "1",
+                        "5",
+                        "7",
+                        "15"
+                  ],
+                  "finder": "家人收起或自己遗忘；可问属猴、鼠、龙的人。",
+                  "condition": "完好，被压住或被遮盖。",
+                  "advice": "先翻东、西南方的柜子、抽屉、绿植旁、床底和文件堆。",
+                  "detail": [
+                        "东西大概率没有远走，先从家里或常去室内找。",
+                        "“草丛”可理解为低矮、堆积、柔软之处，如衣物下、沙发缝、抽屉内。",
+                        "可在申、子、辰时段或请属猴、鼠、龙的人帮忙找。"
+                  ]
+            },
+            "留连": {
+                  "verse": "失物被遮水边湿，东南北方女人提。急寻速往南方去，二八十日见依稀。",
+                  "summary": "失物在隐蔽角落或潮湿处，反复找可找到。",
+                  "probability": "中偏低",
+                  "direction": [
+                        "东南",
+                        "北",
+                        "南方线索"
+                  ],
+                  "places": [
+                        "水边",
+                        "厨房",
+                        "卫生间",
+                        "杂物间",
+                        "洗衣机旁"
+                  ],
+                  "days": [
+                        "2",
+                        "8",
+                        "10",
+                        "更久"
+                  ],
+                  "finder": "女性收起或移动过，也可能掉入缝隙。",
+                  "condition": "受潮、被遮盖或不完整。",
+                  "advice": "问家中女性，重点查水槽下、洗衣机旁、卫生间置物架和阴暗角落。",
+                  "detail": [
+                        "留连主遮、拖、湿，急找反而容易漏看。",
+                        "东南和北方优先，若无结果再转南方寻找线索。",
+                        "两天后没找到，可隔八天或十天再复查。"
+                  ]
+            },
+            "速喜": {
+                  "verse": "失物速寻南火光，申午未路问女郎。三六九日当出现，莫待日久空断肠。",
+                  "summary": "失物很快能找到，在明亮处或路上。",
+                  "probability": "高",
+                  "direction": [
+                        "南",
+                        "申午未路"
+                  ],
+                  "places": [
+                        "炉灶",
+                        "电器旁",
+                        "桌面",
+                        "阳台",
+                        "路上",
+                        "充电处"
+                  ],
+                  "days": [
+                        "1",
+                        "3",
+                        "6",
+                        "9"
+                  ],
+                  "finder": "年轻女性、路人或活泼好动的人提供线索。",
+                  "condition": "明显可见，多数未损坏。",
+                  "advice": "立即寻找，检查厨房、电器、阳台、充电处和最近走过的路线。",
+                  "detail": [
+                        "速喜重在“快”，越早找越容易出现。",
+                        "南火光包括炉灶、电器、灯光、阳光直射处。",
+                        "超过九天仍无消息，找回概率会明显下降。"
+                  ]
+            },
+            "赤口": {
+                  "verse": "失物西去白虎乡，金属器旁路中央。男问可得半日事，四七十天难归仓。",
+                  "summary": "失物难找回，可能被拿走或损坏。",
+                  "probability": "低",
+                  "direction": [
+                        "西"
+                  ],
+                  "places": [
+                        "金属旁",
+                        "路口",
+                        "垃圾桶",
+                        "公共场所",
+                        "文件柜"
+                  ],
+                  "days": [
+                        "4",
+                        "7",
+                        "10"
+                  ],
+                  "finder": "男性、保安、司机、路人或陌生人可能知道线索。",
+                  "condition": "可能损坏、被清理或已转手。",
+                  "advice": "贵重物品尽快报警、调监控，问保安、男同事或司机。",
+                  "detail": [
+                        "赤口带白虎、金、争执，找物过程容易有口舌。",
+                        "西方、金属器物旁、路口和公共动线是重点。",
+                        "四、七、十天仍无结果，基本要准备放弃。"
+                  ]
+            },
+            "小吉": {
+                  "verse": "失物东北草丛堆，小孩捡走或车推。一五七日坤方问，六合相助不须悲。",
+                  "summary": "失物在交通工具或草丛，有找回希望。",
+                  "probability": "较高",
+                  "direction": [
+                        "东北",
+                        "西南"
+                  ],
+                  "places": [
+                        "公交车",
+                        "出租车",
+                        "车站",
+                        "草丛",
+                        "车上",
+                        "快递堆"
+                  ],
+                  "days": [
+                        "1",
+                        "5",
+                        "7"
+                  ],
+                  "finder": "小孩、司机、工作人员或好心人。",
+                  "condition": "基本完好，可能稍脏或被妥善放置。",
+                  "advice": "联系失物招领、车队、商场前台，也可发社区群消息。",
+                  "detail": [
+                        "小吉有六合相助，常见有人愿意归还或提供线索。",
+                        "东北先找，西南打听；草丛、车内、储物堆都要查。",
+                        "问小孩、司机、保安、工作人员更容易有消息。"
+                  ]
+            },
+            "空亡": {
+                  "verse": "失物空亡落泥尘，垃圾堆里或贼人。三六九日空寻找，再买新物莫劳神。",
+                  "summary": "失物已丢失或销毁，找回希望渺茫。",
+                  "probability": "极低",
+                  "direction": [
+                        "中央",
+                        "模糊难寻"
+                  ],
+                  "places": [
+                        "垃圾堆",
+                        "泥地",
+                        "下水道",
+                        "已运走"
+                  ],
+                  "days": [
+                        "3",
+                        "6",
+                        "9"
+                  ],
+                  "finder": "无明确人物，或已被贪心者藏匿。",
+                  "condition": "可能消失、损坏严重或已被处理。",
+                  "advice": "刚丢可快速翻查垃圾桶一次；重要证件立刻挂失补办。",
+                  "detail": [
+                        "空亡主虚无、不见，方向难定。",
+                        "若已进入垃圾、泥尘、下水或被转移，继续寻找成本高。",
+                        "三、六、九日可最后复查，但不要投入过多精力。"
+                  ]
+            }
+      },
+      "day_hour_combinations": {
+            "大安+大安": "失物在家边，东或西南方，1、5、7天内见。",
+            "大安+留连": "失物西方去，防人口舌，拖延两三天。",
+            "大安+速喜": "失物南方见，当天或3天内可寻。",
+            "大安+赤口": "失物西方找，注意口舌，4、7、10天。",
+            "大安+小吉": "失物东北去，1、5、7天内可得。",
+            "大安+空亡": "失物已难找，基本无望。",
+            "留连+大安": "失物两处分，先苦后甜，东南方。",
+            "留连+留连": "失物难寻找，拖延很久。",
+            "留连+速喜": "失物三天里可见，南方。",
+            "留连+赤口": "失物准丢失，不用白费力气。",
+            "留连+小吉": "失物东南去，有消息但慢。",
+            "留连+空亡": "失物不见面，放弃。",
+            "速喜+大安": "失物家中找，很快出现。",
+            "速喜+留连": "失物南方见，延迟几天。",
+            "速喜+速喜": "失物可寻见，3、6、9天内。",
+            "速喜+赤口": "失物西方去，过后无事但难回。",
+            "速喜+小吉": "失物东北方，顺利找回。",
+            "速喜+空亡": "失物已失落，空欢喜。",
+            "赤口+大安": "失物东方找，小事不安。",
+            "赤口+留连": "失物西方去，寻找拖延。",
+            "赤口+速喜": "失物南方见，短暂口舌。",
+            "赤口+赤口": "失物已难觅，放弃。",
+            "赤口+小吉": "失物东北方，有归期。",
+            "赤口+空亡": "失物无踪影，祸来。",
+            "小吉+大安": "失物家中得，即刻。",
+            "小吉+留连": "失物东北去，防人阻。",
+            "小吉+速喜": "失物南方见，喜事。",
+            "小吉+赤口": "失物西方找，口舌。",
+            "小吉+小吉": "失物东北得，万事吉。",
+            "小吉+空亡": "失物已丢失，空忙。",
+            "空亡+大安": "失物东方问，事缓。",
+            "空亡+留连": "失物无处找，难。",
+            "空亡+速喜": "失物不重现，虚喜。",
+            "空亡+赤口": "失物已无踪，祸来。",
+            "空亡+小吉": "失物东北问，小事转机。",
+            "空亡+空亡": "失物不可得，万空。"
+      },
+      "special_items": {
+            "证件": [
+                  "证件",
+                  "身份证",
+                  "护照",
+                  "驾照",
+                  "文书",
+                  "文件"
+            ],
+            "钥匙": [
+                  "钥匙",
+                  "车钥匙",
+                  "门钥匙"
+            ],
+            "手机": [
+                  "手机",
+                  "电话",
+                  "iphone",
+                  "iPhone"
+            ],
+            "钱包": [
+                  "钱包",
+                  "卡包",
+                  "现金",
+                  "银行卡"
+            ],
+            "首饰": [
+                  "首饰",
+                  "戒指",
+                  "项链",
+                  "手链",
+                  "耳环"
+            ],
+            "宠物": [
+                  "宠物",
+                  "猫",
+                  "狗",
+                  "猫咪",
+                  "狗狗"
+            ]
+      },
+      "special_item_places": {
+            "证件": {
+                  "大安": "抽屉中",
+                  "留连": "旧书包",
+                  "速喜": "桌面",
+                  "赤口": "被扔掉",
+                  "小吉": "车里",
+                  "空亡": "已补办或难寻"
+            },
+            "钥匙": {
+                  "大安": "门边",
+                  "留连": "水槽下",
+                  "速喜": "炉台或充电处旁",
+                  "赤口": "路口",
+                  "小吉": "口袋或车里",
+                  "空亡": "无望"
+            },
+            "手机": {
+                  "大安": "沙发缝",
+                  "留连": "厕所或洗衣机旁",
+                  "速喜": "充电处",
+                  "赤口": "陌生人手中",
+                  "小吉": "出租车或车上",
+                  "空亡": "已关机或难找"
+            },
+            "钱包": {
+                  "大安": "衣柜上",
+                  "留连": "床底",
+                  "速喜": "商店或桌面",
+                  "赤口": "扒手或他人手中",
+                  "小吉": "储物柜",
+                  "空亡": "现金难回"
+            },
+            "首饰": {
+                  "大安": "首饰盒",
+                  "留连": "洗手台",
+                  "速喜": "保险箱或明亮处",
+                  "赤口": "当铺或他人手中",
+                  "小吉": "小孩玩过处",
+                  "空亡": "已丢失"
+            },
+            "宠物": {
+                  "大安": "邻居家",
+                  "留连": "地下室或阴暗处",
+                  "速喜": "公园或南方路上",
+                  "赤口": "被人抱走",
+                  "小吉": "流浪站或好心人处",
+                  "空亡": "难找回"
+            }
+      }
+};
+    const XLR_LOST_OBJECT_CORE_224 = XLR_LOST_OBJECT_KNOWLEDGE_225.single_palm;
+    function detectLostItemType225(result){
+      const q = String((result && (result.question || result.contextText || result.title)) || '').toLowerCase();
+      const map = XLR_LOST_OBJECT_KNOWLEDGE_225.special_items || {};
+      for(const type in map){
+        if((map[type] || []).some(function(k){ return q.indexOf(String(k).toLowerCase()) >= 0; })) return type;
+      }
+      return '';
+    }
+    function buildLostObjectSpecialCard224(details, result){
       const d = details && details[2] ? details[2] : null;
       if(!d) return '';
       const data = XLR_LOST_OBJECT_CORE_224[d.palaceName];
       if(!data) return '';
-      return `<div class="gua-card xlr224-lost-special"><h5>失物专项口诀 · 按末象${escapeHTML(d.palaceName)}</h5><div class="lost-core-verse">${escapeHTML(data.verse)}</div><p><strong>一句话：</strong>${escapeHTML(data.summary)}</p><div class="xlr224-lost-grid"><span><b>找回概率：</b>${escapeHTML(data.probability)}</span><span><b>方位：</b>${escapeHTML(data.direction)}</span><span><b>典型场所：</b>${escapeHTML(data.places)}</span><span><b>关键人物：</b>${escapeHTML(data.finder)}</span><span><b>找回天数：</b>${escapeHTML(data.days)}</span><span><b>物品状态：</b>${escapeHTML(data.condition)}</span></div><p><strong>寻找建议：</strong>${escapeHTML(data.advice)}</p><p><strong>说明：</strong>这里按末象作为“最后能否找回”的专项参考，仍应先结合现实最后出现地点、监控、失物招领和实际搜索。</p></div>`;
+      const day = details && details[1] ? details[1].palaceName : '';
+      const hour = d.palaceName || '';
+      const comboKey = day && hour ? day + '+' + hour : '';
+      const combo = comboKey && XLR_LOST_OBJECT_KNOWLEDGE_225.day_hour_combinations ? XLR_LOST_OBJECT_KNOWLEDGE_225.day_hour_combinations[comboKey] : '';
+      const itemType = detectLostItemType225(result || (typeof currentResult !== 'undefined' ? currentResult : null));
+      const itemMap = itemType && XLR_LOST_OBJECT_KNOWLEDGE_225.special_item_places ? XLR_LOST_OBJECT_KNOWLEDGE_225.special_item_places[itemType] : null;
+      const itemPlace = itemMap ? itemMap[d.palaceName] : '';
+      const places = Array.isArray(data.places) ? data.places.join('、') : data.places;
+      const dirs = Array.isArray(data.direction) ? data.direction.join(' / ') : data.direction;
+      const days = Array.isArray(data.days) ? data.days.join('、') : data.days;
+      const detail = Array.isArray(data.detail) ? data.detail : [];
+      return `<div class="gua-card xlr224-lost-special"><h5>失物专项口诀 · 按末象${escapeHTML(d.palaceName)}</h5><div class="lost-core-verse">${escapeHTML(data.verse)}</div><p><strong>一句话：</strong>${escapeHTML(data.summary)}</p><div class="xlr224-lost-grid"><span><b>找回概率：</b>${escapeHTML(data.probability)}</span><span><b>方位：</b>${escapeHTML(dirs)}</span><span><b>典型场所：</b>${escapeHTML(places)}</span><span><b>关键人物：</b>${escapeHTML(data.finder)}</span><span><b>找回天数：</b>${escapeHTML(days)}</span><span><b>物品状态：</b>${escapeHTML(data.condition)}</span></div>${combo ? `<div class="xlr225-lost-combo"><strong>日加时寻物补充：</strong>${escapeHTML(combo)}</div>` : ''}${itemPlace ? `<div class="xlr225-lost-special-item"><strong>${escapeHTML(itemType)}专项：</strong>${escapeHTML(itemPlace)}</div>` : ''}<p><strong>寻找建议：</strong>${escapeHTML(data.advice)}</p>${detail.length ? `<details class="xlr225-lost-detail"><summary>展开逐句解释</summary><ul>${detail.map(function(x){return `<li>${escapeHTML(x)}</li>`;}).join('')}</ul></details>` : ''}<p><strong>说明：</strong>这里按末象作为“最后能否找回”的专项参考，仍应先结合现实最后出现地点、监控、失物招领和实际搜索。</p></div>`;
     }
     function buildDayHourComboCard224(sceneKey, details){
       const day = details && details[1] ? details[1].palaceName : '';
       const hour = details && details[2] ? details[2].palaceName : '';
-      const text = day && hour && XLR_DAY_HOUR_COMBO_224[day] ? XLR_DAY_HOUR_COMBO_224[day][hour] : '';
-      if(!text) return '';
-      const note = sceneKey === 'lost' ? '失物问题可重点参考其中“失物”句，同时继续以末象和现实寻找顺序为主。' : '日加时断只取中象（日宫）与末象（时宫）的组合，作为专项补充；三象法仍负责看起因、过程和结果。';
-      return `<div class="gua-card xlr224-day-hour-card"><h5>日加时断 · ${escapeHTML(day)}加${escapeHTML(hour)}</h5><p><strong>组合断语：</strong>${escapeHTML(text)}</p><p><strong>用法：</strong>${escapeHTML(note)}</p></div>`;
+      const entry = day && hour && XLR_DAY_HOUR_COMBO_224[day] ? XLR_DAY_HOUR_COMBO_224[day][hour] : null;
+      if(!entry) return '';
+      const original = typeof entry === 'string' ? entry : entry.original;
+      const explain = typeof entry === 'string' ? '' : entry.explain;
+      const comboKey = day + '+' + hour;
+      const lostCombo = sceneKey === 'lost' && XLR_LOST_OBJECT_KNOWLEDGE_225.day_hour_combinations ? XLR_LOST_OBJECT_KNOWLEDGE_225.day_hour_combinations[comboKey] : '';
+      const note = sceneKey === 'lost' ? '失物问题重点看其中“失物”句，并结合末象方位、场所和现实寻找顺序。' : '日加时断只取中象（日宫）与末象（时宫）的组合，作为专项补充；三象法仍负责看起因、过程和结果。';
+      return `<div class="gua-card xlr224-day-hour-card"><h5>日加时断 · ${escapeHTML(day)}加${escapeHTML(hour)}</h5><p><strong>原文：</strong>${escapeHTML(original)}</p>${explain ? `<p class="xlr225-dayhour-explain"><strong>白话：</strong>${escapeHTML(explain)}</p>` : ''}${lostCombo ? `<p class="xlr225-dayhour-explain"><strong>失物补充：</strong>${escapeHTML(lostCombo)}</p>` : ''}<p><strong>用法：</strong>${escapeHTML(note)}</p></div>`;
     }
     function buildReadingCardText(sceneKey, d){
       if(sceneKey === 'lost'){
@@ -11539,7 +12059,7 @@ ${nextStep}`;
         const keyExplain = `这些关键词不是单独判断吉凶，而是提示这一宫的气质：哪些地方容易顺、哪些地方容易卡、现实中应优先注意什么。`;
         return `<div class="gua-card"><h5>${d.positionName} · ${d.palaceName}</h5>${keywordChips(kw, '关键词：')}<p><strong>术语断法：</strong>${term}${SINGLE_PALACE_GUIDE[d.palaceName] || ''}</p><p><strong>白话解读：</strong>${plain}</p><p><strong>关键词用法：</strong>${keyExplain}</p><p><strong>提醒：</strong>这里的“取数”是起课用数，“落宫”才是断事宫位，两者不要混在一起理解。</p></div>`;
       }).join('');
-      return (sceneKey === 'lost' ? buildLostObjectSpecialCard224(details) : '') + normal;
+      return (sceneKey === 'lost' ? buildLostObjectSpecialCard224(details, (typeof currentResult !== 'undefined' ? currentResult : null)) : '') + normal;
     }
     function buildDoublePalaceReadingByScene(sceneKey, details){
       const [a,b,c]=details;
@@ -16311,7 +16831,7 @@ function buildContextOverallSentence(context, details) {
       return {
         schema:'scene-json-v2.0+extension',
         version:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         sceneKey:key,
         sceneName:scene ? scene.name : (jsonScene && jsonScene.name) || key,
         sceneIcon:scene ? scene.icon : '',
@@ -16389,7 +16909,7 @@ function buildContextOverallSentence(context, details) {
         exists:true,
         version:XLR_SOURCE_VERSION,
         knowledgeVersion:XLR_JSON_KNOWLEDGE.version,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         schema:'scene-json-v2.0+extension',
         sceneCount:sceneKeys.length,
         jsonSceneCount:jsonNames.length,
@@ -16402,7 +16922,7 @@ function buildContextOverallSentence(context, details) {
       };
     }
     function knowledgeCoreReady(){
-      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.224') return false;
+      if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.225') return false;
       const summary = window.XLRKnowledgeCore.summary();
       const lost = window.XLRKnowledgeCore.getScenePack('lost');
       const health = window.XLRKnowledgeCore.getScenePack('health');
@@ -16411,7 +16931,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRKnowledgeCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.224',
+      source:'mainline-v10.5.225',
       schema:'scene-json-v2.0+extension',
       raw:XLR_JSON_KNOWLEDGE,
       getScenePack:buildKnowledgePack,
@@ -16428,6 +16948,14 @@ function buildContextOverallSentence(context, details) {
       const realityHints = buildRealityChecklistHints(result);
       const stepPlan = buildThreeStepActionPlan(result);
       const counterHints = buildCounterCheckHints(result);
+      const isDestiny = !!(result && (result.sceneKey === 'destiny' || result.sceneName === '命运'));
+      if(isDestiny){
+        return `<div class="answer-card answer-direct"><h5>命盘摘要</h5><p>${answerDirectByContext(result)}</p></div>
+        <div class="answer-grid">
+          <div class="answer-card"><h5>为什么这么看</h5><p>${buildAnswerReason(result)}</p></div>
+          <div class="answer-card"><h5>需要注意</h5><p>${buildAnswerWarning(result)}</p></div>
+        </div>`;
+      }
       return `<div class="answer-card answer-direct"><h5>直接答案</h5><p>${answerDirectByContext(result)}</p></div>
       <div class="answer-grid">
         <div class="answer-card"><h5>为什么这么看</h5><p>${buildAnswerReason(result)}</p></div>
@@ -16625,7 +17153,7 @@ function buildContextOverallSentence(context, details) {
       if(actualResultDestiny !== expectedResultDestiny) mismatches.push({ className:'result-destiny', actual:actualResultDestiny, expected:expectedResultDestiny, reason:'结果页命盘状态应只由 currentResult.sceneKey / sceneName 判定' });
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         isResultPage,
         isDestinyResultPage,
         isHomeDestinySelected,
@@ -16652,8 +17180,8 @@ function buildContextOverallSentence(context, details) {
       after.changed = before.mismatches && before.mismatches.length ? before.mismatches : [];
       return after;
     }
-    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', getState:getCanonicalPageState, sync:syncCanonicalPageState };
-    const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock'];
+    window.XLRPageStateCore = { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', getState:getCanonicalPageState, sync:syncCanonicalPageState };
+    const DESTINY_RESULT_HIDDEN_BLOCK_IDS = ['singlePalaceBlock','doublePalaceBlock','adviceBlock','sceneFocusBlock','contextAnalysisBlock'];
     const NORMAL_RESULT_HIDDEN_BLOCK_IDS = ['paipanBlock','destinyBoardBlock'];
     function setResultBlockHidden(id, shouldHide){
       const el = document.getElementById(id);
@@ -16744,7 +17272,7 @@ function buildContextOverallSentence(context, details) {
       return {
         exists: true,
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.224',
+        source: 'mainline-v10.5.225',
         isResultPage: !!(document.body && document.body.classList.contains('result-page')),
         scrollY: y,
         resultCardTop: rect ? Math.round(rect.top) : null,
@@ -16760,7 +17288,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRResultPageCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       resetScroll: resetResultPageScroll,
       getState: getResultPageScrollState
     };
@@ -17884,7 +18412,7 @@ function buildContextOverallSentence(context, details) {
         const zipBytes = buildStoredZip(files);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.224',
+          source:'mainline-v10.5.225',
           ready:true,
           format:chartSpecs.length ? 'OOXML-xlsx-with-native-excel-charts' : 'OOXML-xlsx-multi-sheet-chart-data-fallback',
           nativeChartReady: chartSpecs.length > 0,
@@ -17901,7 +18429,7 @@ function buildContextOverallSentence(context, details) {
           content: preview ? new Uint8Array(0) : zipBytes
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', ready:false, error:String(err && err.message || err), sheets:[], content:new Uint8Array(0) };
       }
     }
     function auditAnalyticsExcelWorkbook(metrics, list, selectedDate, options){
@@ -17940,7 +18468,7 @@ function buildContextOverallSentence(context, details) {
         const blockingReady = !!(coreReady && multiSheetReady && chartDataReady);
         return {
           version:XLR_SOURCE_VERSION,
-          source:'mainline-v10.5.224',
+          source:'mainline-v10.5.225',
           ready:blockingReady,
           blockingReady:blockingReady,
           coreReady:coreReady,
@@ -17958,7 +18486,7 @@ function buildContextOverallSentence(context, details) {
           error:nativeChartError
         };
       }catch(err){
-        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', ready:false, blockingReady:false, coreReady:false, multiSheetReady:false, chartDataReady:false, nativeChartReady:false, nativeChartOptional:true, sheetCount:0, chartCount:0, error:String(err && err.message || err) };
+        return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', ready:false, blockingReady:false, coreReady:false, multiSheetReady:false, chartDataReady:false, nativeChartReady:false, nativeChartOptional:true, sheetCount:0, chartCount:0, error:String(err && err.message || err) };
       }
     }
     function exportAnalyticsExcelReport(){
@@ -18156,7 +18684,7 @@ function buildContextOverallSentence(context, details) {
       const includeDetails = pdfMode === 'full' || pdfMode === 'details';
       return {
         version: XLR_SOURCE_VERSION,
-        source: 'mainline-v10.5.224',
+        source: 'mainline-v10.5.225',
         ready: true,
         mode: pdfMode,
         modeLabel: analyticsPdfModeLabel(pdfMode),
@@ -18308,11 +18836,11 @@ function buildContextOverallSentence(context, details) {
       }));
       const scopePreview = { history: buildExportScopePreview('history'), analytics: buildExportScopePreview('analytics') };
       const scopeReady = scopePanels.length >= 2 && scopePanels.every(panel=>panel.ready);
-      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.224', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
+      return { version:XLR_SOURCE_VERSION, source:'mainline-v10.5.225', panels, allFormats, required, missing, scopePanels, scopePreview, scopeReady, ok:panels.length >= 2 && !missing.length && scopeReady };
     }
     window.XLRExportCenterCore = {
       version:XLR_SOURCE_VERSION,
-      source:'mainline-v10.5.224',
+      source:'mainline-v10.5.225',
       module:'export-center',
       formatKeys:EXPORT_CENTER_FORMATS.map(item=>item.key),
       formats:getExportCenterFormats,
@@ -18519,14 +19047,14 @@ function buildContextOverallSentence(context, details) {
       <details><summary>起课注意事项</summary><ul><li>问题要清晰、具体，越具体越容易得到可读的判断。</li><li>一事不二占，一时不起二课，避免同一问题短时间内反复起课。</li><li>问事时心念专一，不疑不妄，把注意力放在当前真正想问的问题上。</li></ul></details>
       <details><summary>起课规则</summary><ul><li>六宫顺序：大安 → 留连 → 速喜 → 赤口 → 小吉 → 空亡。</li><li>三数起课、时辰起课、事件起课采用：三数连续顺推法。</li><li>第一数：从大安起数，落到第一宫。</li><li>第二数：从第一数落宫继续顺推，落到第二宫。</li><li>第三数：从第二数落宫继续顺推，落到第三宫。</li><li>时辰起课：取农历月、农历日、时辰序数，再按连续顺推落宫。</li><li>单数起课：只用一个数字，从大安起数得到主宫，适合快速判断吉凶。</li><li>时辰起课以用户设备显示的当地时间为准；数字起课与事件起课不依赖地理位置。</li></ul></details>
       <details><summary>月日时起课步骤示例</summary><ul><li>口诀：月上起日，日上起时。</li><li>例：农历一月初九，午时。</li><li>第一步起月：从“大安”起一月，一月落大安。</li><li>第二步起日：从大安起初一，顺数至初九，落速喜。</li><li>第三步起时：从速喜起子时，顺数至午时（第7位），仍落速喜。</li><li>最终落位：速喜。用于时辰起课时，本工具会自动换算农历月、农历日与时辰序数。</li></ul></details>
-      <details><summary>如何看结果</summary><ul><li>普通问事先看快速导读和综合判断，抓住本课总方向。</li><li>再看三象解读，把本象、中象、末象串成“起点—过程—结果”。</li><li>最后看单宫断事、双宫断事、术语解释和雷达图；双宫断事中会补充“日加时断”，失物场景会在单宫断事中显示失物口诀。生活白话、行动清单、答案优先等额外模块默认不再显示。</li></ul></details>`;
+      <details><summary>如何看结果</summary><ul><li>普通问事先看快速导读和综合判断，抓住本课总方向。</li><li>再看三象解读，把本象、中象、末象串成“起点—过程—结果”。</li><li>最后看单宫断事、双宫断事、术语解释和雷达图；双宫断事中会补充“日加时断（原文+白话）”，失物场景会在单宫断事中显示寻物口诀、方位、天数和特殊物品提示。生活白话、行动清单、答案优先等额外模块默认不再显示。</li></ul></details>`;
     }
 
 
 
     function buildVersionUpdatesHTML(){
       const versions = [
-        { v:'v10.5.224 关键词字号、场景高亮与失物口诀增强版', items:[
+        { v:'v10.5.225 命运冗余内容清理与日加时寻物知识库完整版', items:[
           '修复占卜结果中关键词胶囊标签字号偏大、比正文更抢眼的问题：关键词前缀改为统一小标签，单个关键词只显示词本身，移动端进一步压缩间距。',
           '修复暗夜模式下场景选中状态不明显的问题：场景按钮同步 active / selected / aria-pressed，并补强高亮背景、边框、阴影和“已选”提示。',
           '接入日加时断 36 组合口诀，归入“双宫断事解卦”主线，只显示当前日宫加时宫的一条组合断语，不新增冗长顶层模块。',
@@ -19964,7 +20492,7 @@ function buildContextOverallSentence(context, details) {
       ];
       return {
         version:XLR_SOURCE_VERSION,
-        source:'mainline-v10.5.224',
+        source:'mainline-v10.5.225',
         ready:true,
         scope,
         total:safeMetrics.total,
@@ -20134,7 +20662,7 @@ function buildContextOverallSentence(context, details) {
     }
     window.XLRAnalyticsCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       open: openAnalyticsDialog,
       close: closeAnalyticsDialog,
       render: renderAnalytics,
@@ -20273,7 +20801,7 @@ function buildContextOverallSentence(context, details) {
        目标：把命运六亲、地支六神、五星、健康婚姻与模板边界检查集中到 XLRDestinyCore，避免命盘逻辑散落或被旧补丁覆盖。 */
     window.XLRDestinyCore = {
       version: XLR_SOURCE_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       module: 'destiny-core',
       storageKeys: { gender: DESTINY_GENDER_SOURCE_KEY, kinship: DESTINY_KINSHIP_SOURCE_KEY },
       requiredDomIds: ['destinyBoardBlock','destinyBoardIntro','destinyBoardGrid','destinyDeepContent','destinyBoardNote','destinyOverviewBlock','destinyReadOrder','destinySelfCard','v10523CareerBlock','destinyFinanceRelationBlock','destinyFamilyDocBlock','destinyRelationBlock','destinyChildrenOutputBlock','destinyMarriageBlock','v1030DestinyHealth','destinyEmotionBlock','destinyLongTermBlock'],
@@ -21361,7 +21889,6 @@ function buildContextOverallSentence(context, details) {
         { id:'resultCard', label:'结果' },
         { id:'xlrQuickGuideBlock', label:'导读' },
         { id:'answerSummaryBlock', label:'答案' },
-        { id:'sceneFocusBlock', label:'重心' },
         { id:'paipanBlock', label:'排盘' },
         { id:'destinyBoardBlock', label:'命盘' },
         { id:'overallBlock', label:'综合' },
@@ -21658,7 +22185,7 @@ function buildContextOverallSentence(context, details) {
       navModeSwitch: true,
       measureAdaptive: function(){ const main=xlrNav$('sectionJumpNav'); const sub=xlrNav$('destinySubNav'); return { mode:getNavFollowMode(), main: main ? { adaptive: main.dataset.navAdaptive||'', navMode:main.dataset.navMode||'', overflow: main.dataset.navOverflow||'', scrollWidth:main.scrollWidth||0, clientWidth:main.clientWidth||0 } : null, sub: sub ? { adaptive: sub.dataset.navAdaptive||'', navMode:sub.dataset.navMode||'', overflow: sub.dataset.navOverflow||'', scrollWidth:sub.scrollWidth||0, clientWidth:sub.clientWidth||0 } : null }; },
       jumpTo: function(id){ const target=xlrNav$(id); if(target) stableJumpToSection(target, id, DESTINY_SUB_TARGETS.some(t=>t.id===id)?'sub':'main'); },
-      source: 'mainline-v10.5.224'
+      source: 'mainline-v10.5.225'
     };
 
     initExtendedContextRules();
@@ -21675,7 +22202,7 @@ function buildContextOverallSentence(context, details) {
 (function () {
   'use strict';
 
-  const APP_VERSION = 'v10.5.224 关键词字号、场景高亮与失物口诀增强版';
+  const APP_VERSION = 'v10.5.225 命运冗余内容清理与日加时寻物知识库完整版';
   const APP_TITLE = `小六壬占卜 · ${APP_VERSION}`;
   const STORAGE_DEBUG_ENABLED = 'xiaoliuren_debug_visible_source';
   const STORAGE_DEBUG_SENSITIVITY = 'xiaoliuren_debug_sensitivity_source';
@@ -22827,7 +23354,7 @@ function buildContextOverallSentence(context, details) {
     const historyPdfDetailsBtn = document.getElementById('exportAnalyticsPdfDetailsHistoryBtn');
     return {
       version:APP_VERSION,
-      source:'mainline-v10.5.224',
+      source:'mainline-v10.5.225',
       hasHistoryCsvButton:!!historyCsvBtn,
       hasReviewCsvButton:!!reviewCsvBtn,
       hasAnalyticsExcelButton:!!analyticsExcelBtn,
@@ -22984,7 +23511,7 @@ function buildContextOverallSentence(context, details) {
     try { filteredMetrics = window.XLRAnalyticsCore && typeof window.XLRAnalyticsCore.buildMetrics === 'function' ? window.XLRAnalyticsCore.buildMetrics(filteredList, { reviewFilter: filterState && filterState.review || 'all', drilldown:currentDrilldown }) : null; } catch (err) { filteredMetrics = { error:String(err && err.message || err) }; }
     const analyticsFilterAudit = {
       version:APP_VERSION,
-      source:'mainline-v10.5.224',
+      source:'mainline-v10.5.225',
       hasControls: !!(document.getElementById('analyticsSceneFilter') && document.getElementById('analyticsMethodFilter') && document.getElementById('analyticsFavoriteFilter') && document.getElementById('analyticsReviewFilter') && document.getElementById('resetAnalyticsFiltersBtn')),
       hasCore: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasFilterLinkage === true && typeof window.XLRAnalyticsCore.getFilters === 'function' && typeof window.XLRAnalyticsCore.getFilteredList === 'function'),
       rawCount: Array.isArray(list) ? list.length : 0,
@@ -22999,7 +23526,7 @@ function buildContextOverallSentence(context, details) {
     try { sampleChartDrilldownHTML = typeof renderBarChart === 'function' ? renderBarChart((metrics && metrics.sceneEntries) || [['样例',1]], 1, 'scene') : ''; } catch(e) { sampleChartDrilldownHTML = ''; }
     const chartDrilldownAudit = {
       version:APP_VERSION,
-      source:'mainline-v10.5.224',
+      source:'mainline-v10.5.225',
       hasCore: !!(window.XLRAnalyticsCore && window.XLRAnalyticsCore.hasChartDrilldown === true && typeof window.XLRAnalyticsCore.getDrilldown === 'function' && typeof window.XLRAnalyticsCore.getFilteredList === 'function'),
       clickableRows: document.querySelectorAll('#analyticsContent [data-analytics-drill-type]').length,
       sampleClickableReady: sampleChartDrilldownHTML.indexOf('data-analytics-drill-type') !== -1,
@@ -23120,7 +23647,7 @@ function buildContextOverallSentence(context, details) {
         pdfReportOptionsReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('报告说明') !== -1 && pdfReport.indexOf('明细版式') !== -1 && pdfReport.indexOf('打印优化') !== -1),
         pdfDetailComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-detail-comfort-v10.5.177') !== -1 && pdfReport.indexOf('detail-density-note') !== -1 && pdfReport.indexOf('明细舒展策略') !== -1),
         pdfPrintComfortReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('detail-card{margin-bottom:7mm') !== -1 && pdfReport.indexOf('detail-group') !== -1 && pdfReport.indexOf('page-break-inside:avoid') !== -1),
-        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.224' && pdfExportPreview.modeLabel === '只导出明细'),
+        pdfExportPreviewReady: !!(pdfExportPreview && pdfExportPreview.ready && pdfExportPreview.source === 'mainline-v10.5.225' && pdfExportPreview.modeLabel === '只导出明细'),
         pdfExportConfirmReady: !!(pdfReport && typeof pdfReport === 'string' && pdfReport.indexOf('pdf-export-confirm-v10.5.177') !== -1 && pdfReport.indexOf('PDF 导出确认摘要') !== -1 && pdfReport.indexOf('导出确认：已生成摘要') !== -1),
         pdfDetailsCoverSummaryReady: !!(pdfDetailsReport && typeof pdfDetailsReport === 'string' && pdfDetailsReport.indexOf('明细导出摘要') !== -1 && pdfDetailsReport.indexOf('省略内容') !== -1 && pdfDetailsReport.indexOf('复盘明细') !== -1),
         exportCenterReady: !!(window.XLRExportCenterCore && typeof window.XLRExportCenterCore.getDomStatus === 'function' && window.XLRExportCenterCore.getDomStatus().ok),
@@ -23146,7 +23673,7 @@ function buildContextOverallSentence(context, details) {
     try {
       if (window.XLRPageStateCore && typeof window.XLRPageStateCore.getState === 'function') return window.XLRPageStateCore.getState();
     } catch (err) {
-      return { version:APP_VERSION, source:'mainline-v10.5.224', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
+      return { version:APP_VERSION, source:'mainline-v10.5.225', error:String(err && err.message || err), ok:false, mismatches:[{ reason:'XLRPageStateCore 读取失败' }] };
     }
     const body=document.body;
     const result=window.currentResult || null;
@@ -23433,7 +23960,7 @@ function buildContextOverallSentence(context, details) {
     const lastReport = getLastRepairReport();
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       safeMode: safeLocalGet(STORAGE_SAFE_MODE) === '1',
       backupExists: !!backup,
       restoreAvailable: !!(backup && backup.values),
@@ -23507,7 +24034,7 @@ function buildContextOverallSentence(context, details) {
     const suggestions = buildRepairSuggestions(storageInfo, repairStatus);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       title: 'Debug 修复中心',
       status: repairStatus,
       protection,
@@ -23516,7 +24043,7 @@ function buildContextOverallSentence(context, details) {
       blockedActions: ['修改起课算法', '重写历史记录内容', '删除模板/复盘数据', '自动改断卦结论'],
       storage: { totalKeys:storageInfo.totalKeys, legacyKeys:storageInfo.legacyKeys || [], cleanupCandidates:storageInfo.cleanupCandidates || [] },
       logs: getRepairCenterLogs(),
-      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.224'
+      ok: !!repairStatus && repairStatus.source === 'mainline-v10.5.225'
     };
   }
 
@@ -23697,7 +24224,7 @@ function buildContextOverallSentence(context, details) {
     });
     const isResult = !!(document.body && document.body.classList && document.body.classList.contains('result-page'));
     const invalid = items.filter(function(item){ return item.badLabel || item.badValue; });
-    return { version:APP_VERSION, source:'mainline-v10.5.224', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.225', isResult:isResult, count:items.length, items:items, invalid:invalid, ok:(!isResult || items.length >= 6) && !invalid.length };
   }
 
 
@@ -23718,7 +24245,7 @@ function buildContextOverallSentence(context, details) {
     if(isResult && profile && profile.title === '一般事项' && window.currentResult && window.currentResult.sceneKey && !/other|message|choice/.test(window.currentResult.sceneKey)) {
       invalid.push({ code:'SCENE_FOCUS_TOO_GENERIC', message:'非通用场景落回一般事项，可能没有接入场景重心主线', sceneKey:window.currentResult.sceneKey });
     }
-    return { version:APP_VERSION, source:'mainline-v10.5.224', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.225', isResult:isResult, profile:profile, cardCount:cards.length, cards:cards, invalid:invalid, ok:!invalid.length };
   }
 
   function getDisplayIntegrityAuditInfo(){
@@ -23758,7 +24285,7 @@ function buildContextOverallSentence(context, details) {
     navBroken.forEach(function(n){ invalid.push({ code:'DISPLAY_NAV_TARGET_BROKEN', target:n.target, text:n.text }); });
     if(summaryInvalid && summaryInvalid.invalid && summaryInvalid.invalid.length) invalid.push({ code:'DISPLAY_SUMMARY_LABEL_INVALID', invalid:summaryInvalid.invalid });
     if(sceneFocusAudit && sceneFocusAudit.invalid && sceneFocusAudit.invalid.length) invalid.push({ code:'DISPLAY_SCENE_FOCUS_INVALID', invalid:sceneFocusAudit.invalid });
-    return { version:APP_VERSION, source:'mainline-v10.5.224', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
+    return { version:APP_VERSION, source:'mainline-v10.5.225', isResult:isResult, sceneKey:result && result.sceneKey || '', moduleCount:modules.length, modules:modules, missing:missing, visibleEmpty:visibleEmpty, clipped:clipped, badTokens:badTokens, navBroken:navBroken, summaryLabelAudit:summaryInvalid, sceneFocusAudit:sceneFocusAudit, invalid:invalid, ok:!invalid.length };
   }
 
   function getDeepLogicAuditInfo(){
@@ -23801,7 +24328,7 @@ function buildContextOverallSentence(context, details) {
         syncCurrentTimeToTimeMethod: typeof window.syncCurrentTimeToTimeMethod === 'function' || typeof syncCurrentTimeToTimeMethod === 'function'
       }
     };
-    return { version:APP_VERSION, source:'mainline-v10.5.224', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
+    return { version:APP_VERSION, source:'mainline-v10.5.225', exists:!!block, visible:block ? visibleOf(block) : false, settingEnabled:ui.showHomeTime !== false, values:values, actions:actions, updatedAt:block ? block.dataset.updatedAt || '' : '', hasNightCss:styleText.indexOf('body.reading-theme-night .home-time-card') >= 0 && styleText.indexOf('.home-time-actions') >= 0, ok:!!block && !!values.solar && !!values.lunar && !!values.shichen && actions.refresh && actions.syncToTimeMethod && actions.hasStatus };
   }
   function getDestinyQuestionModeInfo(){
     const input=document.getElementById('questionInput');
@@ -23810,7 +24337,7 @@ function buildContextOverallSentence(context, details) {
     const pageState = getPageStateInfo();
     const isDestiny = !(pageState && pageState.isResultPage) && currentScene === 'destiny';
     const blankDestinyResultOk = typeof getQuestionDisplay === 'function' && getQuestionDisplay({sceneKey:'destiny', question:''}) === '命运命盘 / 未填写占问事项';
-    return { version:APP_VERSION, source:'mainline-v10.5.224', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
+    return { version:APP_VERSION, source:'mainline-v10.5.225', currentScene:currentScene, isDestiny:isDestiny, inputExists:!!input, title:textOf(title,80), desc:textOf(desc,120), placeholder:input ? input.placeholder : '', blankDestinyResultOk:blankDestinyResultOk, contextHiddenInDestiny:isDestiny ? !visibleOf(document.querySelector('#questionSection .context-controls')) : null, ok:!!input && blankDestinyResultOk };
   }
 
   function getBottomClearanceInfo() {
@@ -23825,7 +24352,7 @@ function buildContextOverallSentence(context, details) {
     const navRect = nav && nav.getBoundingClientRect ? nav.getBoundingClientRect() : null;
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       navReserve,
       dialogReserve,
       bodyPaddingBottom: bodyStyle ? bodyStyle.paddingBottom : '',
@@ -23846,7 +24373,7 @@ function buildContextOverallSentence(context, details) {
     const last = safeJsonParse(raw, null);
     return {
       version: APP_VERSION,
-      source: 'mainline-v10.5.224',
+      source: 'mainline-v10.5.225',
       title: 'Debug 报告导出中心',
       formats: ['json','txt','prompt-summary'],
       actions,
@@ -24007,7 +24534,8 @@ function buildContextOverallSentence(context, details) {
       patchCleanup219: (typeof window.xlr219PatchCleanupAudit === 'function' ? window.xlr219PatchCleanupAudit() : null),
       knowledgeExtension220: (typeof window.xlr220KnowledgeExtensionAudit === 'function' ? window.xlr220KnowledgeExtensionAudit() : null),
       ordinaryMainline223: (typeof window.xlr223OrdinaryMainlineAudit === 'function' ? window.xlr223OrdinaryMainlineAudit() : null),
-      keywordSceneLost224: (typeof window.xlr224KeywordSceneLostAudit === 'function' ? window.xlr224KeywordSceneLostAudit() : null)
+      keywordSceneLost224: (typeof window.xlr224KeywordSceneLostAudit === 'function' ? window.xlr224KeywordSceneLostAudit() : null),
+      destinyDayHourLost225: (typeof window.xlr225DestinyDayHourLostAudit === 'function' ? window.xlr225DestinyDayHourLostAudit() : null)
     };
     snapshot.releaseChecklist = getReleaseChecklistInfo(snapshot);
     state.lastSnapshot = snapshot;
@@ -24082,7 +24610,7 @@ function buildContextOverallSentence(context, details) {
       { id:'duplicate-function', label:'无重复 function 定义', ok: !(snapshot.duplicateFunctionNames && snapshot.duplicateFunctionNames.length) },
       { id:'runtime-errors', label:'recentErrors 为空', ok: !(snapshot.recentErrors && snapshot.recentErrors.length) },
       { id:'page-state-v157', label:'页面状态统一审计通过', ok: !!(snapshot.pageState && snapshot.pageState.ok) },
-      { id:'nav-core', label:'导航主源码为当前主线', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.224') },
+      { id:'nav-core', label:'导航主源码为当前主线', ok: !!(snapshot.navigation && snapshot.navigation.core && snapshot.navigation.core.source === 'mainline-v10.5.225') },
       { id:'nav-mode', label:'导航模式设置可读取', ok: navMode === 'adaptive' || navMode === 'fixed' },
       { id:'scene-copy', label:'场景白话覆盖可用', ok: typeof scenePalaceEffect === 'function' && !!scenePalaceEffect('health','速喜').plain && !!scenePalaceEffect('weather','空亡').plain },
       { id:'context-dialogue', label:'专项解读串联可用', ok: typeof contextStageUseText === 'function' && typeof contextNextCheckLine === 'function' && typeof buildContextConversationSummary === 'function' },
@@ -24096,6 +24624,7 @@ function buildContextOverallSentence(context, details) {
       { id:'knowledge-extension-v220', label:'v10.5.220 扩展场景 JSON 知识库与高风险提示可用', ok: !!(snapshot.knowledgeExtension220 && snapshot.knowledgeExtension220.ok) },
       { id:'ordinary-mainline-result-v223', label:'v10.5.223 普通问事主线结果结构回归可用', ok: !isResult || isDestiny || !!(snapshot.ordinaryMainline223 && snapshot.ordinaryMainline223.ok && snapshot.ordinaryMainline223.oldPanelsGone) },
       { id:'keyword-scene-lost-v224', label:'v10.5.224 关键词字号、场景高亮与失物口诀增强可用', ok: !!(snapshot.keywordSceneLost224 && snapshot.keywordSceneLost224.ok) },
+      { id:'destiny-dayhour-lost-v225', label:'v10.5.225 命运冗余清理与日加时寻物完整版可用', ok: !!(snapshot.destinyDayHourLost225 && snapshot.destinyDayHourLost225.ok) },
       { id:'reading-font-v132', label:'阅读字号审计可用且导读不再反向变小', ok: !!(snapshot.readingFontAudit && snapshot.readingFontAudit.ok) },
       { id:'review-edit-v132', label:'复盘编辑/删除与准确率单位可用', ok: !!(snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete && snapshot.reviewSystem.core.hasScore) },
       { id:'review-insight-v141', label:'复盘洞察主线可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasReviewInsights && snapshot.analytics.metrics && snapshot.analytics.metrics.reviewInsightReady) },
@@ -24114,7 +24643,7 @@ function buildContextOverallSentence(context, details) {
       { id:'export-scope-preview-v173', label:'导出中心范围预览与确认可用', ok: !!(snapshot.historyExport && snapshot.historyExport.hasExportScopePreview && snapshot.historyExport.exportCenter && snapshot.historyExport.exportCenter.scopeReady && snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasExportScopePreview && snapshot.analytics.metrics && snapshot.analytics.metrics.exportScopePreviewReady) },
       { id:'analytics-filter-linkage-v175', label:'历史分析筛选联动可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasFilterLinkage && snapshot.analytics.filterAudit && snapshot.analytics.filterAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.filterLinkageReady) },
       { id:'analytics-chart-drilldown-v177', label:'历史分析图表钻取与明细联动可用', ok: !!(snapshot.analytics && snapshot.analytics.core && snapshot.analytics.core.hasChartDrilldown && snapshot.analytics.chartDrilldownAudit && snapshot.analytics.chartDrilldownAudit.ok && snapshot.analytics.metrics && snapshot.analytics.metrics.chartDrilldownReady) },
-      { id:'history-batch-manager-v178', label:'历史记录批量管理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.core && snapshot.history.core.source === 'mainline-v10.5.224') },
+      { id:'history-batch-manager-v178', label:'历史记录批量管理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.core && snapshot.history.core.source === 'mainline-v10.5.225') },
       { id:'history-tags-archive-v179', label:'历史标签/备注/归档整理可用', ok: !!(snapshot.history && snapshot.history.batchAudit && snapshot.history.batchAudit.ok && snapshot.history.batchAudit.hasTagFilter && snapshot.history.batchAudit.hasArchiveFilter && snapshot.history.batchAudit.hasBatchAddTag && snapshot.history.batchAudit.hasBatchArchive && snapshot.history.hasTagFilter && snapshot.history.hasArchiveFilter) },
       { id:'history-timeline-v180', label:'历史复盘时间线与待复盘入口可用', ok: !!(snapshot.history && snapshot.history.timelineAudit && snapshot.history.timelineAudit.ok) },
       { id:'history-tag-insight-v181', label:'标签统计与复盘洞察可用', ok: !!(snapshot.history && snapshot.history.tagInsightAudit && snapshot.history.tagInsightAudit.ok) },
@@ -24187,8 +24716,8 @@ function buildContextOverallSentence(context, details) {
       { id:'scene-focus-mainline-v151', label:'本场景判断重心主线化可用', ok: !!(snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) },
       { id:'display-integrity-v151', label:'显示完整性总审计通过', ok: !!(snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) },
       { id:'debug-issue-lists-v154', label:'Debug 警告名单增强可用', ok: !!(snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) },
-      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.224' && snapshot.repairStatus.restoreAvailable !== undefined) },
-      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.224' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
+      { id:'safe-repair-v154', label:'一键安全修复/回滚/安全模式可用', ok: !!(snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.225' && snapshot.repairStatus.restoreAvailable !== undefined) },
+      { id:'repair-center-v154', label:'Debug 修复中心状态/建议/保护边界可用', ok: !!(snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.225' && snapshot.repairCenter.protection && Array.isArray(snapshot.repairCenter.suggestions)) },
       { id:'debug-report-export-v158', label:'Debug 报告导出中心可用', ok: !!(snapshot.reportExport && snapshot.reportExport.ok) },
       { id:'history-csv-export-v159', label:'历史记录 CSV / 复盘 CSV 导出可用', ok: !!(snapshot.historyExport && snapshot.historyExport.ok) },
       { id:'destiny-question-v155', label:'命运场景免填占问事项可用', ok: !!(snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) },
@@ -24267,7 +24796,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.resultPageSeparationCoverage || !snapshot.resultPageSeparationCoverage.ok) {
       addIssue(issues, 'error', 'RESULT_PAGE_SEPARATION_COVERAGE_MISSING', '结果页分离关键 CSS 不完整，主页可能混入占卜结果页', snapshot.resultPageSeparationCoverage);
     }
-    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.224' || !snapshot.resultPageScroll.core.hasReset) {
+    if (!snapshot.resultPageScroll || !snapshot.resultPageScroll.core.exists || snapshot.resultPageScroll.core.source !== 'mainline-v10.5.225' || !snapshot.resultPageScroll.core.hasReset) {
       addIssue(issues, 'error', 'RESULT_PAGE_SCROLL_CORE_MISSING', '结果页顶部复位主源码未挂载或版本不一致', snapshot.resultPageScroll);
     }
     if (snapshot.resultPageScroll && snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop) {
@@ -24282,7 +24811,7 @@ function buildContextOverallSentence(context, details) {
     if (!window.XLRDebugCore || window.XLRDebugCore.version !== APP_VERSION) {
       addIssue(issues, 'error', 'DEBUG_CORE_NAMESPACE_MISMATCH', 'window.XLRDebugCore 未挂载或版本不一致', window.XLRDebugCore ? window.XLRDebugCore.version : null);
     }
-    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.224' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
+    if (!window.XLRKnowledgeCore || window.XLRKnowledgeCore.source !== 'mainline-v10.5.225' || typeof knowledgeCoreReady !== 'function' || !knowledgeCoreReady()) {
       addIssue(issues, 'warning', 'KNOWLEDGE_CORE_NOT_READY', 'JSON 知识库主线未就绪，需要先检查场景映射、六宫数据和免责声明', snapshot.knowledge);
     }
 
@@ -24312,7 +24841,7 @@ function buildContextOverallSentence(context, details) {
     }
 
 
-    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.224') {
+    if (!snapshot.history.core.exists || snapshot.history.core.source !== 'mainline-v10.5.225') {
       addIssue(issues, 'error', 'HISTORY_CORE_NAMESPACE_MISSING', 'window.XLRHistoryCore 未挂载或不是 v10.5.164 主源码历史模块', snapshot.history.core);
     }
     if (!snapshot.history.hasDialog || !snapshot.history.hasList) {
@@ -24340,7 +24869,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'warning', 'HISTORY_RECORD_MALFORMED', '历史记录中存在结构不完整项目，已由主源码读取时尽量规范化', { malformed: snapshot.history.malformed, sample: snapshot.history.sample });
     }
 
-    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.224') {
+    if (!snapshot.analytics.core.exists || snapshot.analytics.core.source !== 'mainline-v10.5.225') {
       addIssue(issues, 'error', 'ANALYTICS_CORE_NAMESPACE_MISSING', 'window.XLRAnalyticsCore 未挂载或不是 v10.5.164 主源码分析模块', snapshot.analytics.core);
     }
     if (!snapshot.analytics.hasDialog || !snapshot.analytics.hasContent) {
@@ -24383,7 +24912,7 @@ function buildContextOverallSentence(context, details) {
       addIssue(issues, 'error', 'DEEP_BROKEN_TARGETS', '深度巡检发现断开的导航或模块目标', snapshot.deepLogicAudit.brokenTargets);
     }
 
-    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.224') {
+    if (!snapshot.destiny.core.exists || snapshot.destiny.core.source !== 'mainline-v10.5.225') {
       addIssue(issues, 'error', 'DESTINY_CORE_NAMESPACE_MISSING', 'window.XLRDestinyCore 未挂载或不是 v10.5.153 命盘主源码模块', snapshot.destiny.core);
     }
     if (!snapshot.destiny.core.hasBuildState || !snapshot.destiny.core.hasBoundaryCheck) {
@@ -24417,7 +24946,7 @@ function buildContextOverallSentence(context, details) {
     if (!snapshot.navigation.sub.exists) {
       addIssue(issues, 'warning', 'SUB_NAV_MISSING', '命盘子导航根节点 #destinySubNav 不存在', null);
     }
-    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.224') {
+    if (!snapshot.navigation.core.exists || snapshot.navigation.core.source !== 'mainline-v10.5.225') {
       addIssue(issues, 'error', 'NAV_CORE_NAMESPACE_MISSING', 'window.XLRNavCore 未挂载或不是 v10.5.129 主源码导航', snapshot.navigation.core);
     }
     if (snapshot.navigation.legacyNavNodes && snapshot.navigation.legacyNavNodes.length) {
@@ -24579,17 +25108,17 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.ok) passes.push('暗夜主题关键覆盖检查通过');
     if (snapshot.nightThemeCoverage && snapshot.nightThemeCoverage.runtimeScan && snapshot.nightThemeCoverage.runtimeScan.enabled && !snapshot.nightThemeCoverage.runtimeScan.riskCount) passes.push('暗夜运行时全量渲染体检通过');
     if (snapshot.resultPageSeparationCoverage && snapshot.resultPageSeparationCoverage.ok) passes.push('结果页分离主源码检查通过');
-    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.224' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
+    if (snapshot.resultPageScroll && snapshot.resultPageScroll.core.exists && snapshot.resultPageScroll.core.source === 'mainline-v10.5.225' && snapshot.resultPageScroll.core.hasReset && !(snapshot.resultPageScroll.state && snapshot.resultPageScroll.state.isResultPage && snapshot.resultPageScroll.state.initialWindow && !snapshot.resultPageScroll.state.atTop)) passes.push('结果页顶部复位主源码检查通过');
     if (!snapshot.versionSummaryDuplicates.length) passes.push('版本记录无重复检查通过');
     if (!snapshot.duplicateFunctionNames.length) passes.push('重复函数定义检查通过');
     if (window.XLRDebugCore && window.XLRDebugCore.version === APP_VERSION) passes.push('Debug 主命名空间检查通过');
-    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.224') passes.push('历史记录主命名空间检查通过');
+    if (snapshot.history.core.exists && snapshot.history.core.source === 'mainline-v10.5.225') passes.push('历史记录主命名空间检查通过');
     if (snapshot.history.hasDialog && snapshot.history.hasList) passes.push('历史记录 DOM 检查通过');
     if (snapshot.history.hasSearch && snapshot.history.hasSceneFilter && snapshot.history.hasDateFilter) passes.push('历史筛选控件检查通过');
     if (snapshot.history.hasHistoryImport && snapshot.history.hasBackupImport) passes.push('历史导入控件检查通过');
     if (snapshot.historyExport && snapshot.historyExport.ok) passes.push('历史 CSV / 复盘 CSV 导出检查通过');
     if (!snapshot.history.malformed) passes.push('历史记录结构检查通过');
-    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.224') passes.push('历史分析主命名空间检查通过');
+    if (snapshot.analytics.core.exists && snapshot.analytics.core.source === 'mainline-v10.5.225') passes.push('历史分析主命名空间检查通过');
     if (snapshot.readingFontAudit && snapshot.readingFontAudit.ok) passes.push('阅读字号统一审计检查通过');
     if (snapshot.reviewSystem && snapshot.reviewSystem.core && snapshot.reviewSystem.core.hasEdit && snapshot.reviewSystem.core.hasDelete) passes.push('复盘编辑与准确率单位检查通过');
     if (snapshot.deepLogicAudit && snapshot.deepLogicAudit.ok) passes.push('Debug 深度逻辑巡检检查通过');
@@ -24639,21 +25168,21 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.sceneFocusAudit && snapshot.sceneFocusAudit.ok) passes.push('场景重心主线化检查通过');
     if (snapshot.displayIntegrityAudit && snapshot.displayIntegrityAudit.ok) passes.push('显示完整性总审计检查通过');
     if (snapshot.debugIssueLists && Array.isArray(snapshot.debugIssueLists.blacklist) && Array.isArray(snapshot.debugIssueLists.whitelist) && snapshot.debugIssueLists.wildcardSupport) passes.push('Debug 警告名单增强检查通过');
-    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.224' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
-    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.224' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
+    if (snapshot.repairStatus && snapshot.repairStatus.source === 'mainline-v10.5.225' && snapshot.repairStatus.restoreAvailable !== undefined) passes.push('一键安全修复回滚检查通过');
+    if (snapshot.repairCenter && snapshot.repairCenter.source === 'mainline-v10.5.225' && snapshot.repairCenter.protection) passes.push('Debug 修复中心检查通过');
     if (snapshot.reportExport && snapshot.reportExport.ok) passes.push('Debug 报告导出中心检查通过');
     if (snapshot.destinyQuestionMode && snapshot.destinyQuestionMode.ok) passes.push('命运场景免填占问事项检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.ok) passes.push('首页动态时间检查通过');
     if (snapshot.homeDynamicTime && snapshot.homeDynamicTime.actions && snapshot.homeDynamicTime.actions.syncToTimeMethod) passes.push('首页时间联动起课检查通过');
     if (snapshot.bottomClearance && snapshot.bottomClearance.ok) passes.push('底部导航遮挡安全留白检查通过');
-    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.224') passes.push('命盘主命名空间检查通过');
+    if (snapshot.destiny.core.exists && snapshot.destiny.core.source === 'mainline-v10.5.225') passes.push('命盘主命名空间检查通过');
     if (snapshot.destiny.core.hasBuildState && snapshot.destiny.core.hasBoundaryCheck) passes.push('命盘状态构建与模板边界检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingPaipan)) passes.push('普通问事不显示六宫排盘检查通过');
     if (!(snapshot.destiny.boundary && snapshot.destiny.boundary.normalShowingDestinyBoard)) passes.push('普通问事不串命盘模板检查通过');
     if (!oldDebugAttrs.length) passes.push('旧 Debug DOM 残留检查通过');
     if (!oldControlAttrs.length) passes.push('旧版本锁/延迟补丁检查通过');
     if (!snapshot.collapsible.possibleMismatches.length) passes.push('折叠状态一致性检查通过');
-    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.224') passes.push('导航主命名空间检查通过');
+    if (snapshot.navigation.core.exists && snapshot.navigation.core.source === 'mainline-v10.5.225') passes.push('导航主命名空间检查通过');
     if (snapshot.storage.important && Object.prototype.hasOwnProperty.call(snapshot.storage.important, 'xiaoliuren_user_settings_source')) passes.push('设置 source 主键检查通过');
     if (snapshot.navigation.core.canCenterActive) passes.push('导航随动自动居中检查通过');
     if (snapshot.navigation.core.adaptiveBeta) passes.push('导航自适应/固定指针能力检查通过');
@@ -24676,6 +25205,7 @@ function buildContextOverallSentence(context, details) {
     if (snapshot.patchCleanup219 && snapshot.patchCleanup219.ok) passes.push('v10.5.219 历史回看与补丁清理检查通过');
     if (snapshot.ordinaryMainline223 && snapshot.ordinaryMainline223.ok) passes.push('v10.5.223 普通问事主线结构回归检查通过');
     if (snapshot.keywordSceneLost224 && snapshot.keywordSceneLost224.ok) passes.push('v10.5.224 关键词字号、场景高亮与失物口诀增强检查通过');
+    if (snapshot.destinyDayHourLost225 && snapshot.destinyDayHourLost225.ok) passes.push('v10.5.225 命运冗余清理与日加时寻物完整版检查通过');
     if (snapshot.releaseChecklist && snapshot.releaseChecklist.status === 'pass') passes.push('发布前体检表检查通过');
     if (snapshot.sourceAudit && !snapshot.sourceAudit.strictHitCount) passes.push('严格旧补丁源码关键词检查通过');
     if (infos.length || sensitivity.ignoredIssues.length) passes.push('Debug 灵敏度误报降级/忽略规则已应用');
@@ -25062,7 +25592,7 @@ function buildContextOverallSentence(context, details) {
     try {
       safeLocalSet(STORAGE_DEBUG_EXPORT_LAST, JSON.stringify({
         version: APP_VERSION,
-        source: 'mainline-v10.5.224',
+        source: 'mainline-v10.5.225',
         type: type,
         ok: !!ok,
         at: new Date().toISOString(),
@@ -25290,7 +25820,7 @@ function buildContextOverallSentence(context, details) {
 
     /* v10.5.204 默认折叠、普通问事结果页体验与场景知识库提示 */
     (function(){
-      const DEFAULT_FOLD_SOURCE = 'mainline-v10.5.224';
+      const DEFAULT_FOLD_SOURCE = 'mainline-v10.5.225';
       function q204Fold(id){ return document.getElementById(id); }
       function closeDetailsIn(root){
         if(!root) return 0;
@@ -25456,7 +25986,7 @@ function buildContextOverallSentence(context, details) {
 
     /* v10.5.206 暗夜历史记录显示紧急修复体检 */
     (function(){
-      const SOURCE_206 = 'mainline-v10.5.224';
+      const SOURCE_206 = 'mainline-v10.5.225';
       function cssHasHistoryNight206(){
         try{
           const text = Array.from(document.querySelectorAll('style')).map(function(s){ return s.textContent || ''; }).join('\n');
@@ -25492,7 +26022,7 @@ function buildContextOverallSentence(context, details) {
 
     /* v10.5.205 合并版：结果页模块精简、命运页阅读体验、场景规则整理与移动端导航体验 */
     (function(){
-      const SOURCE_205 = 'mainline-v10.5.224';
+      const SOURCE_205 = 'mainline-v10.5.225';
       const FOCUS_KEY_205 = 'xlr205_result_focus_mode';
       function q205(id){ return document.getElementById(id); }
       function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); }
@@ -25668,7 +26198,7 @@ function buildContextOverallSentence(context, details) {
 
     /* v10.5.207 场景、占问事项、占卜结果联动与日常白话增强 */
     (function(){
-      const SOURCE_207 = 'mainline-v10.5.224';
+      const SOURCE_207 = 'mainline-v10.5.225';
       function q207(sel){ return document.querySelector(sel); }
       function id207(id){ return document.getElementById(id); }
       function esc207(value){
@@ -25864,7 +26394,7 @@ function buildContextOverallSentence(context, details) {
 
 
     (function(){
-      const SOURCE_208 = 'mainline-v10.5.224';
+      const SOURCE_208 = 'mainline-v10.5.225';
       function id208(id){ return document.getElementById(id); }
       function esc208(s){ try { return typeof escapeHTML === 'function' ? escapeHTML(String(s == null ? '' : s)) : String(s == null ? '' : s).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); } catch(e){ return String(s == null ? '' : s); } }
       function scene208(){
@@ -25964,7 +26494,7 @@ function buildContextOverallSentence(context, details) {
     /* v10.5.209 问什么答什么白话总结、场景专项建议与复盘回填 */
 /* v10.5.211 历史总开关间距与移动端折叠体验修正 */
     (function(){
-      const SOURCE_209 = 'mainline-v10.5.224';
+      const SOURCE_209 = 'mainline-v10.5.225';
       const DRAFT_KEY_209 = 'xlr209.reviewDrafts.v1';
       function id209(id){ return document.getElementById(id); }
       function esc209(s){ try { return typeof escapeHTML === 'function' ? escapeHTML(String(s == null ? '' : s)) : String(s == null ? '' : s).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); } catch(e){ return String(s == null ? '' : s); } }
@@ -26129,7 +26659,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.211 历史总开关间距与移动端折叠体验修正 */
 (function(){
-  const SOURCE_210 = 'mainline-v10.5.224';
+  const SOURCE_210 = 'mainline-v10.5.225';
   const VERSION_210 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.210';
   function byId(id){ return document.getElementById(id); }
   function setBtnActive(id, active){ const el=byId(id); if(el) el.classList.toggle('active', !!active); }
@@ -26286,7 +26816,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.211 历史总开关间距与移动端折叠体验修正 */
 (function(){
-  const SOURCE_211 = 'mainline-v10.5.224';
+  const SOURCE_211 = 'mainline-v10.5.225';
   const VERSION_211 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.211';
   function el(id){ return document.getElementById(id); }
   function audit(){
@@ -26324,7 +26854,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.212 结果页行动清单、复盘快捷入口与白话建议合并版 */
 (function(){
-  const SOURCE_212 = 'mainline-v10.5.224';
+  const SOURCE_212 = 'mainline-v10.5.225';
   const VERSION_212 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.212';
   function node(id){ return document.getElementById(id); }
   function html212(value){
@@ -26494,7 +27024,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.213 结果页模块顺序整理、专项建议精简与移动端阅读体验合并版 */
 (function(){
-  const SOURCE_213 = 'mainline-v10.5.224';
+  const SOURCE_213 = 'mainline-v10.5.225';
   const VERSION_213 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.213';
   function id213(id){ return document.getElementById(id); }
   function esc213(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); }
@@ -26627,7 +27157,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.214 结果页重点阅读路径与章节导航同步版 */
 (function(){
-  const SOURCE_214 = 'mainline-v10.5.224';
+  const SOURCE_214 = 'mainline-v10.5.225';
   const VERSION_214 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.214';
   const EXPECTED_214 = ['xlrQuickGuideBlock','answerSummaryBlock','xlr209QuestionAnswerPanel','sceneFocusBlock','contextAnalysisBlock','xlr212ActionChecklistBlock','overallBlock','triReadingBlock','adviceBlock'];
   function id214(id){ return document.getElementById(id); }
@@ -26672,7 +27202,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.216 设置页、工具按钮与阅读模式最终整理版 */
 (function(){
-  const SOURCE_216 = 'mainline-v10.5.224';
+  const SOURCE_216 = 'mainline-v10.5.225';
   const VERSION_216 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.216';
   const LABELS_216 = {
     mode:{day:'白天', night:'暗夜', system:'跟随系统', auto:'夜间自动'},
@@ -26795,7 +27325,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.217 可见问题修复版 1 */
 (function(){
-  const SOURCE_217 = 'mainline-v10.5.224';
+  const SOURCE_217 = 'mainline-v10.5.225';
   const VERSION_217 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.217';
   function style217(){ return Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n'); }
   function audit217(){
@@ -26839,7 +27369,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.218 可见问题修复版 2 / 阶段稳定封版 */
 (function(){
-  const SOURCE_218 = 'mainline-v10.5.224';
+  const SOURCE_218 = 'mainline-v10.5.225';
   const VERSION_218 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.219';
   function collectStyle218(){ return Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n'); }
   function collectScript218(){ return Array.from(document.querySelectorAll('script')).map(function(el){ return el.textContent || ''; }).join('\n'); }
@@ -26885,7 +27415,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.219 阶段封版后补丁清理与历史回看显示修复版 */
 (function(){
-  const SOURCE_219 = 'mainline-v10.5.224';
+  const SOURCE_219 = 'mainline-v10.5.225';
   const VERSION_219 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.219';
   function collectStyle219(){ return Array.from(document.querySelectorAll('style')).map(function(el){ return el.textContent || ''; }).join('\n'); }
   function collectScript219(){ return Array.from(document.querySelectorAll('script')).map(function(el){ return el.textContent || ''; }).join('\n'); }
@@ -26941,7 +27471,7 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.220 扩展场景 JSON 知识库整合与高风险提示版 */
 (function(){
-  const SOURCE_220 = 'mainline-v10.5.224';
+  const SOURCE_220 = 'mainline-v10.5.225';
   const VERSION_220 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.220';
   const REQUIRED_220 = ['geopolitics','macroEconomy','stockMarket','housingMarket','fxCurrency','commodities','jobMarket','industryOutlook','companyOps','fundraising','techRandD','disasterClimate','publicHealth','policyImpact','visaImmigration','diplomacyTalks','sportsEvents','celebrityNews','publicOpinion','creditIssue','cryptoMarket','retirement','childEducation','secondhandTrade','cyberSecurity','meetingNegotiation','skillStudy','medicalDecision','rentRoommate','touristExperience','propertyDispute','domesticService','applianceRepair','petMedical','socialGathering','weddingPrep','carPurchase','autoInsurance','legalConsult','counseling'];
   const HIGH_RISK_220 = ['stockMarket','housingMarket','fxCurrency','commodities','cryptoMarket','publicHealth','medicalDecision','petMedical','counseling','legalConsult','propertyDispute','autoInsurance','visaImmigration','policyImpact'];
@@ -26989,8 +27519,8 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.224 关键词字号、场景高亮与失物口诀增强版 */
 (function(){
-  const SOURCE_223 = 'mainline-v10.5.224';
-  const VERSION_223 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.224 关键词字号、场景高亮与失物口诀增强版';
+  const SOURCE_223 = 'mainline-v10.5.225';
+  const VERSION_223 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.225 命运冗余内容清理与日加时寻物知识库完整版';
   const HIDE_IDS_223 = [
     'answerSummaryBlock','sceneFocusBlock','abChoiceResultBlock','contextAnalysisBlock','summaryGrid','paipanBlock','symbolBlock','adviceBlock',
     'xlr205ReadingMap','ordinaryResultGuide204','sceneKnowledgeHint204','xlr207SceneQuestionBridge','xlr207PlainAnswerCard','xlr207ContextDailyNote',
@@ -27093,8 +27623,8 @@ function buildContextOverallSentence(context, details) {
 
 /* v10.5.224 关键词字号、场景高亮与失物口诀增强版 */
 (function(){
-  const VERSION_224 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.224 关键词字号、场景高亮与失物口诀增强版';
-  const SOURCE_224 = 'mainline-v10.5.224';
+  const VERSION_224 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.225 命运冗余内容清理与日加时寻物知识库完整版';
+  const SOURCE_224 = 'mainline-v10.5.225';
   function q224(s){ return document.querySelector(s); }
   function qa224(s){ return Array.from(document.querySelectorAll(s)); }
   function refreshSceneSelected224(){
@@ -27131,6 +27661,31 @@ function buildContextOverallSentence(context, details) {
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot224, {once:true}); else boot224();
   try{ window.xlr224KeywordSceneLostAudit = audit224; window.XLRKeywordSceneLost224 = { version:VERSION_224, source:SOURCE_224, refresh:refreshSceneSelected224, audit:audit224 }; }catch(e){}
+})();
+
+
+/* v10.5.225 命运冗余内容清理与日加时寻物知识库完整版 */
+(function(){
+  const VERSION_225 = (typeof XLR_SOURCE_VERSION !== 'undefined') ? XLR_SOURCE_VERSION : 'v10.5.225 命运冗余内容清理与日加时寻物知识库完整版';
+  const SOURCE_225 = 'mainline-v10.5.225';
+  function q225(s){ return document.querySelector(s); }
+  function qa225(s){ return Array.from(document.querySelectorAll(s)); }
+  function audit225(){
+    const styleText = qa225('style').map(function(el){return el.textContent||'';}).join('\n');
+    const dayEntry = (typeof XLR_DAY_HOUR_COMBO_224 !== 'undefined' && XLR_DAY_HOUR_COMBO_224['留连']) ? XLR_DAY_HOUR_COMBO_224['留连']['速喜'] : null;
+    const dayHourFull = !!(dayEntry && dayEntry.original && dayEntry.explain);
+    const lostFull = !!(typeof XLR_LOST_OBJECT_KNOWLEDGE_225 !== 'undefined' && XLR_LOST_OBJECT_KNOWLEDGE_225.single_palm && XLR_LOST_OBJECT_KNOWLEDGE_225.day_hour_combinations && XLR_LOST_OBJECT_KNOWLEDGE_225.special_item_places && XLR_LOST_OBJECT_KNOWLEDGE_225.single_palm['大安'] && XLR_LOST_OBJECT_KNOWLEDGE_225.single_palm['大安'].detail);
+    const isDestiny = !!(document.body && document.body.classList.contains('result-destiny'));
+    const sceneFocus = q225('#sceneFocusBlock');
+    const contextBlock = q225('#contextAnalysisBlock');
+    const destinyClean = !isDestiny || !!(sceneFocus && sceneFocus.classList.contains('hidden') && contextBlock && contextBlock.classList.contains('hidden')) || !!(styleText.indexOf('body.result-destiny #sceneFocusBlock') >= 0);
+    const navHasFocus = !!qa225('.section-jump-btn,.bottom-jump-btn,.jump-chip').some(function(el){ return (el.textContent||'').trim() === '重心'; });
+    const hasCss = styleText.indexOf('xlr225-lost-detail') >= 0 && styleText.indexOf('body.result-destiny #sceneFocusBlock') >= 0;
+    const hasNightCss = styleText.indexOf('body.reading-theme-night .xlr225-lost-detail') >= 0;
+    const hasMobileCss = styleText.indexOf('@media(max-width:760px)') >= 0 && styleText.indexOf('xlr225-lost-combo') >= 0;
+    return {version:VERSION_225, source:SOURCE_225, dayHourFull:dayHourFull, lostFull:lostFull, destinyClean:destinyClean, destinyNavFocusVisible:navHasFocus, hasCss:hasCss, hasNightCss:hasNightCss, hasMobileCss:hasMobileCss, ok:!!(dayHourFull && lostFull && destinyClean && hasCss && hasNightCss && hasMobileCss)};
+  }
+  try{ window.xlr225DestinyDayHourLostAudit = audit225; window.XLRDestinyDayHourLost225 = {version:VERSION_225, source:SOURCE_225, audit:audit225}; }catch(e){}
 })();
 
 </script>
